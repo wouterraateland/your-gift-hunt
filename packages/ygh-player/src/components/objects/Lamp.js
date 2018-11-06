@@ -62,6 +62,7 @@ const Lamp = styled.div`
 `
 
 const Light = styled.div`
+  pointer-events: none;
   position: absolute;
   left: calc(50% + 25vw); top: 50%;
   z-index: -1;
@@ -81,6 +82,8 @@ const Light = styled.div`
 `
 
 const Code = styled.div`
+  pointer-events: none;
+  
   position: absolute;
   left: 30vw; top: 0;
 
