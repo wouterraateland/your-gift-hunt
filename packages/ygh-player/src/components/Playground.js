@@ -8,6 +8,9 @@ import Carpet from 'components/objects/Carpet'
 import Puzzle from 'components/objects/Puzzle'
 import Piece from 'components/objects/Piece'
 import Camera from 'components/objects/Camera'
+import Safe from 'components/objects/Safe'
+import Chair from 'components/objects/Chair'
+import Lamp from 'components/objects/Lamp'
 
 import LightMap from 'components/LightMap'
 
@@ -31,9 +34,12 @@ export default memo(() => {
       <Carpet />
       {boards.map(board => <Puzzle key={board.id} {...board} />)}
       {pieces
-        .filter(piece => !piece.challenge.completed)
+        .filter(piece => piece.challenge.type === 'question' && !piece.challenge.completed)
         .map(piece => <Piece key={piece.id} {...piece} />)}
       <Camera />
+      <Safe />
+      <Chair />
+      <Lamp />
       <LightMap />
     </Playground>
   )

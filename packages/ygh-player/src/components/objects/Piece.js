@@ -34,7 +34,7 @@ const Piece = styled.div`
 
 Piece.displayName = 'Piece'
 
-export default ({ id, ...pieceProps }) => {
+export default ({ id }) => {
   const { write } = useContext(StoreContext)
 
   function handleOnClick() { write('selectedPieceId', id) }
@@ -53,7 +53,6 @@ export default ({ id, ...pieceProps }) => {
         <Piece
           {...dragProps}
           onClick={handleOnClick}
-          {...pieceProps}
         />
       ))}
     />

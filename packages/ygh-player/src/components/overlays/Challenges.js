@@ -4,11 +4,14 @@ import StoreContext from 'context/Store'
 
 import Align from 'components/ui/Align'
 import Overlay from 'components/ui/Overlay'
-import Question from 'components/Question'
+
+import Question from 'components/overlays/challenges/Question'
+import Code from 'components/overlays/challenges/Code'
 
 const getChallengeComponent = type => {
   switch (type) {
     case 'question': return Question
+    case 'code': return Code
     default: return null
   }
 }
@@ -19,6 +22,8 @@ export default () => {
   const pieces = read('pieces', [])
   const piece = pieces
     .find(piece => piece.id === selectedPieceId)
+
+  console.log(piece)
 
   const ChallengeComponent = piece && piece.challenge && !piece.challenge.completed
     ? getChallengeComponent(piece.challenge.type)

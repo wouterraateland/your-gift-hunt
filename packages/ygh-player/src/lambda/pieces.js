@@ -32,7 +32,7 @@ const isString = match => s =>
 /*
 Available codes:
  - ofgG59w4 => Fry
- - 7uciossJ =>
+ - 7uciossJ => disney_1
  - cOW0bvGG =>
  - s1Y8LINb =>
  - VZ5zIRz6 =>
@@ -82,14 +82,17 @@ const pieces = [
   {
     id: 4,
     image: '/images/disney_1.jpeg',
-    isAvailable: constant(false),
+    isAvailable: codesCollected(['7uciossJ']),
     challenge: { type: 'none' },
   },
   {
     id: 5,
     image: '/images/disney_2.jpeg',
-    isAvailable: constant(false),
-    challenge: { type: 'none' },
+    isAvailable: constant(true),
+    challenge: {
+      type: 'code',
+      code: '7291',
+    },
   },
   {
     id: 6,
@@ -157,33 +160,37 @@ const pieces = [
   },
 ]
 
+const parseQuestion = ({ validateResponse, ...rest }, response) => ({
+  ...rest,
+  completed: validateResponse(response ? response.response : null)
+})
+
+const parseCode = ({ code, ...rest }, response) => ({
+  ...rest,
+  length: code.length,
+  completed: response && response.response === code,
+})
+
+const parseChallenge = ({ type, ...challenge }, response) => {
+  switch (type) {
+    case 'question': return parseQuestion(challenge, response)
+    case 'code': return parseCode(challenge, response)
+    default: return { completed: true }
+  }
+}
+
 const getPieces = (responses, codes) => {
   return pieces
     .map(({ challenge, ...piece }) => {
-      switch (challenge.type) {
-        case 'question':
-          const response = responses
-            .find(res => res.pieceId === piece.id)
-          const { validateResponse, ...rest } = challenge
+      const response = responses
+        .find(res => res.pieceId === piece.id)
 
-          return {
-            ...piece,
-            challenge: {
-              ...rest,
-              completed: validateResponse(response
-                ? response.response
-                : null
-              )
-            }
-          }
-        default:
-          return {
-            ...piece,
-            challenge: {
-              type: challenge.type,
-              completed: true
-            }
-          }
+      return {
+        ...piece,
+        challenge: {
+          type: challenge.type,
+          ...parseChallenge(challenge, response)
+        }
       }
     })
     .filter((piece, _, pieces) => piece.isAvailable(codes, pieces))

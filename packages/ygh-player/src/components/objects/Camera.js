@@ -7,16 +7,17 @@ import Draggable, { dragStyles } from 'components/Draggable'
 
 const Camera = styled.div`
   position: relative;
-  width: 14vw;
-  height: 4vw;
 
-  border-radius: 1.5vw;
+  width: 6vw;
+  height: 5vw;
+  border-radius: .5vw .5vw 1vw 1vw / .5vw .5vw 4vw 4vw;
+
+  transform-origin: center bottom;
 
   background-color: #263238;
   background-image:
-    linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, .2) 50%),
-    linear-gradient(-45deg, transparent 50%, rgba(255, 255, 255, .2) 50%);
-  background-size: 20% 100%, 20% 100%;
+    radial-gradient(ellipse 10% 80% at 30% 10%, rgba(255, 255, 255, .8), transparent),
+    radial-gradient(ellipse 40% 100% at 40% 0, rgba(255, 255, 255, .5), transparent);
 
   &::before, &::after {
     content: '';
@@ -25,24 +26,25 @@ const Camera = styled.div`
 
   /* The lens */
   &::before {
-    z-index: -1;
-    left: 4vw;
-    top: -5vw;
+    width: 14vw;
+    height: 4vw;
 
-    width: 6vw;
-    height: 5vw;
-    border-radius: .5vw .5vw 1vw 1vw / .5vw .5vw 4vw 4vw;
+    border-radius: 1.5vw;
 
     background-color: #263238;
     background-image:
-      radial-gradient(ellipse 10% 80% at 30% 10%, rgba(255, 255, 255, .8), transparent),
-      radial-gradient(ellipse 40% 100% at 40% 0, rgba(255, 255, 255, .5), transparent);
+      linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, .2) 50%),
+      linear-gradient(-45deg, transparent 50%, rgba(255, 255, 255, .2) 50%);
+    background-size: 20% 100%, 20% 100%;
+
+    left: -4vw;
+    top: 5vw;
   }
 
   /* The button */
   &::after {
-    right: 1.5vw;
-    top: 1.5vw;
+    right: -2.5vw;
+    top: 6.5vw;
 
     width: 2vw;
     height: 1vw;
