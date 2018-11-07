@@ -23,8 +23,6 @@ export default () => {
   const piece = pieces
     .find(piece => piece.id === selectedPieceId)
 
-  console.log(piece)
-
   const ChallengeComponent = piece && piece.challenge && !piece.challenge.completed
     ? getChallengeComponent(piece.challenge.type)
     : null

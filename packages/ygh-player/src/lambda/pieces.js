@@ -76,8 +76,17 @@ const pieces = [
   {
     id: 3,
     image: '/images/leisteen.jpeg',
-    isAvailable: daysPassed(2),
-    challenge: { type: 'none' },
+    isAvailable: (codes, pieces) => daysPassed(2)() && piecesCompleted([2])(codes, pieces),
+    challenge: {
+      type: 'question',
+      question: 'Hoe spel je Amsterdam met 7 letters?',
+      validateResponse: response =>
+        typeof response === 'string' &&
+        (
+          response.toLowerCase().includes('cirkel') ||
+          response.toLowerCase().includes('rond')
+        )
+    },
   },
   {
     id: 4,

@@ -1,10 +1,11 @@
 import React, { memo, useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-const Floor = styled.div`
+const Floor = memo(styled.div`
   position: absolute;
   left: 0; top: 0;
   right: 0; bottom: 0;
+  z-index: -1;
 
   display: flex;
   flex-direction: column;
@@ -27,7 +28,7 @@ const Floor = styled.div`
 
     background-size: 13px, 29px, 37px, 53px;
   }
-`
+`)
 
 const Plank = styled.div`
   width: ${100 / 6}%;
@@ -37,6 +38,9 @@ const Plank = styled.div`
     inset .5vw 0 .25vw rgba(255, 255, 255, .1),
     inset -.5vw 0 .25vw rgba(0, 0, 0, .1),
     inset 0 -.25vw .125vw rgba(0, 0, 0, .1);
+
+  opacity: 0;
+  animation: fadeIn 1s 1s ease-out forwards running;
 `
 
 const divideOne = n => {

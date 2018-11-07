@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react'
+import React, { useContext } from 'react'
 
 import StoreContext from 'context/Store'
 
@@ -18,13 +18,13 @@ const Puzzle = boardProps => {
       rotates
       initialTranslation={{ x: 20 + 60 * Math.random(), y: 20 + 50 * Math.random() }}
       initialRotation={2 * Math.PI * Math.random()}
-      component={memo(dragProps => (
+      component={dragProps => (
         <Board
           {...dragProps}
           onClick={handleOnClick}
           {...boardProps}
         />
-      ))}
+      )}
     />
   )
 }

@@ -5,7 +5,7 @@ import StoreContext from 'context/Store'
 
 import Draggable, { dragStyles } from 'components/Draggable'
 
-const Safe = styled.div`
+const Safe = memo(styled.div`
   position: relative;
 
   width: 20vw;
@@ -44,7 +44,7 @@ const Safe = styled.div`
   }
 
   ${dragStyles(1.5)}
-`
+`)
 
 export default () => {
   const { write } = useContext(StoreContext)
@@ -60,12 +60,12 @@ export default () => {
       rotates
       initialTranslation={{ x: 15, y: 10 }}
       initialRotation={(5 / 6) * Math.PI}
-      component={memo(dragProps => (
+      component={dragProps => (
         <Safe
           {...dragProps}
           onClick={handleOnClick}
         />
-      ))}
+      )}
     />
   )
 }

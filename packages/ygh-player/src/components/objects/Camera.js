@@ -5,7 +5,7 @@ import StoreContext from 'context/Store'
 
 import Draggable, { dragStyles } from 'components/Draggable'
 
-const Camera = styled.div`
+const Camera = memo(styled.div`
   position: relative;
 
   width: 6vw;
@@ -56,7 +56,7 @@ const Camera = styled.div`
   }
 
   ${dragStyles(1)}
-`
+`)
 
 export default () => {
   const { write } = useContext(StoreContext)
@@ -70,12 +70,12 @@ export default () => {
       rotates
       initialTranslation={{ x: 10, y: 90 }}
       initialRotation={(1 / 6) * Math.PI}
-      component={memo(dragProps => (
+      component={dragProps => (
         <Camera
           {...dragProps}
           onClick={handleOnClick}
         />
-      ))}
+      )}
     />
   )
 }

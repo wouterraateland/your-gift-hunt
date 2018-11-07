@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import Draggable, { dragStyles } from 'components/Draggable'
 
-const Carpet = styled.div`
+const Carpet = memo(styled.div`
   width: 90vw;
   height: 110vw;
   border-radius: 2vw;
@@ -28,7 +28,7 @@ const Carpet = styled.div`
     );
 
   ${dragStyles(.2)}
-`
+`)
 Carpet.displayName = 'Carpet'
 
 export default () => {
@@ -40,11 +40,11 @@ export default () => {
       scales
       initialTranslation={{ x: 50, y: 50 }}
       initialRotation={(1 / 6) * Math.PI}
-      component={memo(dragProps => (
+      component={dragProps => (
         <Carpet
           {...dragProps}
         />
-      ))}
+      )}
     />
   )
 }

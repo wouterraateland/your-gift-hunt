@@ -5,10 +5,8 @@ import draggable from 'hooks/draggable'
 const DragContainer = ({ translation: { x, y }, rotation, scale, isDragging, ...rest }) => (
   <div
     draggable
+    className="draggable"
     style={{
-      willChange: 'transform, z-index',
-      touchAction: 'none',
-      position: 'absolute',
       transform: `
         translate(-50%, -50%)
         translate(${x}vw, ${y}vh)
@@ -25,7 +23,7 @@ const Draggable = ({
   translates=true,
   rotates=false,
   scales=false,
-  component:Component,
+  component,
   ...rest
 }) => {
   const { state, handlers } = draggable(rest)
@@ -41,7 +39,7 @@ const Draggable = ({
       {...handlers}
       {...dragState}
     >
-      <Component isDragging={dragState.isDragging} />
+      {component({isDragging: dragState.isDragging})}
     </DragContainer>
   )
 }

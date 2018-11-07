@@ -5,7 +5,7 @@ import StoreContext from 'context/Store'
 
 import Draggable, { dragStyles } from 'components/Draggable'
 
-const Piece = styled.div`
+const Piece = memo(styled.div`
   position: relative;
   overflow: hidden;
 
@@ -30,7 +30,7 @@ const Piece = styled.div`
   }
 
   ${dragStyles(.5)}
-`
+`)
 
 Piece.displayName = 'Piece'
 
@@ -49,12 +49,12 @@ export default ({ id }) => {
         y: 10 + 70 * Math.random(),
       }}
       initialRotation={2 * Math.PI * Math.random()}
-      component={memo(dragProps => (
+      component={dragProps => (
         <Piece
           {...dragProps}
           onClick={handleOnClick}
         />
-      ))}
+      )}
     />
   )
 }

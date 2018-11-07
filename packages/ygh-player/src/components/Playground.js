@@ -3,14 +3,15 @@ import styled from 'styled-components'
 
 import StoreContext from 'context/Store'
 
-import Floor from 'components/objects/Floor'
-import Carpet from 'components/objects/Carpet'
-import Puzzle from 'components/objects/Puzzle'
-import Piece from 'components/objects/Piece'
 import Camera from 'components/objects/Camera'
-import Safe from 'components/objects/Safe'
+import Carpet from 'components/objects/Carpet'
 import Chair from 'components/objects/Chair'
+import Floor from 'components/objects/Floor'
 import Lamp from 'components/objects/Lamp'
+import Piece from 'components/objects/Piece'
+import Plant from 'components/objects/Plant'
+import Puzzle from 'components/objects/Puzzle'
+import Safe from 'components/objects/Safe'
 
 import LightMap from 'components/LightMap'
 
@@ -38,6 +39,7 @@ export default memo(() => {
         .map(piece => <Piece key={piece.id} {...piece} />)}
       <Camera />
       <Safe />
+      <Plant />
       <Chair />
       <Lamp />
       <LightMap />

@@ -5,7 +5,7 @@ import Draggable, { dragStyles } from 'components/Draggable'
 
 const s = 4;
 
-const Chair = styled.div`
+const Chair = memo(styled.div`
   position: relative;
 
   width: 24vw;
@@ -77,7 +77,7 @@ const Chair = styled.div`
   }
 
   ${dragStyles(1.5)}
-`
+`)
 
 export default () => {
   return (
@@ -87,11 +87,11 @@ export default () => {
       rotates
       initialTranslation={{ x: 70, y: 88 }}
       initialRotation={(-1 / 6) * Math.PI}
-      component={memo(dragProps => (
+      component={dragProps => (
         <Chair
           {...dragProps}
         />
-      ))}
+      )}
     />
   )
 }

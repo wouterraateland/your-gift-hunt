@@ -7,7 +7,7 @@ import Draggable, { dragStyles } from 'components/Draggable'
 
 import code from 'assets/code.svg'
 
-const Lamp = styled.div`
+const Lamp = memo(styled.div`
   position: relative;
 
   width: 10vw;
@@ -59,9 +59,9 @@ const Lamp = styled.div`
   }
 
   ${dragStyles(.5)}
-`
+`)
 
-const Light = styled.div`
+const Light = memo(styled.div`
   pointer-events: none;
   position: absolute;
   left: calc(50% + 25vw); top: 50%;
@@ -79,13 +79,14 @@ const Light = styled.div`
   transform: translate(-50%, -50%);
 
   transition: opacity .5s ease-out;
-`
+`)
 
 const Code = styled.div`
   pointer-events: none;
-  
+
   position: absolute;
   left: 30vw; top: 0;
+  z-index: -1;
 
   width: 30vw;
   height: 30vw;
@@ -95,6 +96,8 @@ const Code = styled.div`
   mask: radial-gradient(circle closest-side, #fff 10%, transparent) no-repeat 30vw 30vw;
 
   background: url(${code}) no-repeat center / 10vw;
+
+  will-change: mask-position;
 `
 
 export default () => {
@@ -139,7 +142,7 @@ export default () => {
         onDragEnd={handleOnDragEnd}
         initialTranslation={{ x: 45, y: 90 }}
         initialRotation={(-.5 / 6) * Math.PI}
-        component={memo(dragProps => (
+        component={dragProps => (
           <Lamp
             {...dragProps}
             onClick={handleOnClick}
@@ -149,7 +152,7 @@ export default () => {
               ref={lightEl}
             />
           </Lamp>
-        ))}
+        )}
       />
     </>
   )

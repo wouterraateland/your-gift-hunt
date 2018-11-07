@@ -1,12 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, memo } from 'react'
 import styled, { css } from 'styled-components'
 
 import StoreContext from 'context/Store'
 
 import { dragStyles } from 'components/Draggable'
-import Slot from 'components/objects/Slot'
 
-export const Board = styled.div`
+export const Board = memo(styled.div`
   touch-action: none;
 
   position: relative;
@@ -33,9 +32,30 @@ export const Board = styled.div`
   `}
 
   ${dragStyles(.5)}
-`
+`)
 
 Board.displayName = 'Board'
+
+const Slot = memo(styled.div`
+  float: left;
+  width: ${props => props.width}%;
+  height: ${props => props.height}%;
+
+  border: 1px solid transparent;
+
+  ${props => props.challenge.completed && css`
+    background: #fff url(${props.image}) no-repeat center / cover;
+  `}
+`)
+Slot.displayName = 'Slot'
+
+const Slots = memo(({ pieces, ...slotProps }) => pieces.map(piece =>
+  <Slot
+    key={piece.id}
+    {...piece}
+    {...slotProps}
+  />
+))
 
 export default ({ pieceIds, ...boardProps }) => {
   const { read } = useContext(StoreContext)
@@ -47,13 +67,11 @@ export default ({ pieceIds, ...boardProps }) => {
 
   return (
     <Board {...boardProps} cleared={cleared}>
-      {pieces.map(piece =>
-        <Slot
-          key={piece.id}
-          {...piece}
-          width={100 / boardProps.width}
-          height={100 / boardProps.height}
-        />)}
+      <Slots
+        pieces={pieces}
+        width={100 / boardProps.width}
+        height={100 / boardProps.height}
+      />
     </Board>
   )
 }
