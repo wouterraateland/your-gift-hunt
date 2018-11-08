@@ -1,7 +1,12 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useRef, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
+import StoreContext from 'context/Store'
+
 import Draggable, { dragStyles } from 'components/Draggable'
+
+const dist = (p1, p2) =>
+  Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
 
 const Pot = memo(styled.div`
   position: relative;
@@ -139,10 +144,39 @@ const Plant = memo(plantProps => Array(leafs).fill(0).map((_, i) =>
 ))
 
 export default () => {
-  const [state, setState] = useState(0)
+  const potEl = useRef(null)
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const { read, write } = useContext(StoreContext)
 
-  function handleOnClick() {
-    setState((state + 0) % 3)
+  function updatePosition() {
+    if (potEl.current) {
+      const rect = potEl.current.getClientRects()[0]
+      setPosition({
+        x: rect.x + rect.width / 2,
+        y: rect.y + rect.height / 2,
+      })
+    }
+  }
+
+  function handleOnDrag() {
+    updatePosition()
+  }
+
+  useEffect(updatePosition, [potEl.current])
+
+  const state = read('plant', 0)
+  const seedPosition = read('seed', false)
+  const { lightPosition, lampState } = read('lamp', { lampState: false, lightPosition: false })
+
+  if (state === 0 && seedPosition && dist(seedPosition, position) < 25) {
+    write('plant', 1)
+  }
+  if (state === 1 && lightPosition && lampState && dist(lightPosition, position) < 25) {
+    write('plant', 2)
+    write('responses', responses => [
+      ...(responses || []).filter(res => res.pieceId !== 6),
+      { pieceId: 6, response: 'qroiuqpinvrin' }
+    ])
   }
 
   return (
@@ -153,7 +187,7 @@ export default () => {
       initialTranslation={{ x: 80, y: 10 }}
       initialRotation={0}
       component={dragProps => (
-        <Pot {...dragProps} onClick={handleOnClick}>
+        <Pot {...dragProps} ref={potEl}>
           <Plant planted={state > 0} grown={state > 1} />
         </Pot>
       )}

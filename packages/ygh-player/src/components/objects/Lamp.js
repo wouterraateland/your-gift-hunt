@@ -1,11 +1,9 @@
-import React, { useContext, useRef, memo } from 'react'
+import React, { useContext, useRef, useEffect, memo } from 'react'
 import styled from 'styled-components'
 
 import StoreContext from 'context/Store'
 
 import Draggable, { dragStyles } from 'components/Draggable'
-
-import code from 'assets/code.svg'
 
 const Lamp = memo(styled.div`
   position: relative;
@@ -72,88 +70,78 @@ const Light = memo(styled.div`
   width: 30vw;
   height: 30vw;
 
-  background: rgba(249, 220, 141, 0.7) url(${code}) no-repeat 60vw 20vh fixed;
-
-  mask-image: radial-gradient(circle closest-side, #fff 10%, transparent);
+  background: radial-gradient(circle closest-side, rgba(249, 220, 141, 0.7) 10%, transparent);
 
   transform: translate(-50%, -50%);
 
   transition: opacity .5s ease-out;
 `)
 
-const Code = styled.div`
-  pointer-events: none;
-
-  position: absolute;
-  left: 30vw; top: 0;
-  z-index: -1;
-
-  width: 30vw;
-  height: 30vw;
-
-  opacity: ${props => props.visible ? 1 : 0};
-
-  mask: radial-gradient(circle closest-side, #fff 10%, transparent) no-repeat 30vw 30vw;
-
-  background: url(${code}) no-repeat center / 10vw;
-
-  will-change: mask-position;
-`
-
 export default () => {
   const { read, write } = useContext(StoreContext)
   const lightEl = useRef(null)
-  const codeEl = useRef(null)
+
+  useEffect(() => {
+    write('lamp', state => state
+      ? state
+      : {
+          lampState: false,
+          lightPosition: { x: 0, y: 0 }
+        }
+    )
+  }, [])
 
   function handleOnClick() {
-    write('lampState', state => !state)
+    write('lamp', state => ({
+      ...state,
+      lampState: !state.lampState
+    }))
   }
 
-  function setMaskPosition() {
-    if (lightEl.current && codeEl.current) {
+  function setLightPosition() {
+    if (lightEl.current) {
       const rect = lightEl.current.getClientRects()[0]
-      codeEl.current.style =
-        `-webkit-mask-position: calc(${rect.x + rect.width / 2}px - 45vw) calc(${rect.y + rect.height / 2}px - 15vw)`
+      write('lamp', state => ({
+        ...state,
+        lightPosition: {
+          x: rect.x + rect.width / 2,
+          y: rect.y + rect.height / 2,
+        }
+      }))
     }
   }
 
   function handleOnDrag() {
-    setMaskPosition()
+    setLightPosition()
   }
 
   function handleOnDragEnd() {
-    const interval = setInterval(setMaskPosition, 0)
+    const interval = setInterval(setLightPosition, 0)
     setTimeout(() => clearInterval(interval), 250)
   }
 
-  const on = read('lampState', false)
+  const on = read('lamp', { lampState: false }).lampState
 
   return (
-    <>
-      <Code
-        visible={on}
-        ref={codeEl}
-      />
-      <Draggable
-        id={`lamp`}
-        persistent
-        rotates
-        onDrag={handleOnDrag}
-        onDragEnd={handleOnDragEnd}
-        initialTranslation={{ x: 45, y: 90 }}
-        initialRotation={(-.5 / 6) * Math.PI}
-        component={dragProps => (
-          <Lamp
-            {...dragProps}
-            onClick={handleOnClick}
-          >
-            <Light
-              on={on}
-              ref={lightEl}
-            />
-          </Lamp>
-        )}
-      />
-    </>
+    <Draggable
+      id={`lamp`}
+      persistent
+      rotates
+      onDrag={handleOnDrag}
+      onDragEnd={handleOnDragEnd}
+      initialTranslation={{ x: 45, y: 90 }}
+      initialRotation={(-.5 / 6) * Math.PI}
+      component={dragProps => (
+        <Lamp
+          {...dragProps}
+          onClick={handleOnClick}
+        >
+          <Light
+            on={on}
+            ref={lightEl}
+          />
+        </Lamp>
+      )}
+    />
   )
 }

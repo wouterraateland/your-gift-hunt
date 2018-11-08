@@ -106,8 +106,11 @@ const pieces = [
   {
     id: 6,
     image: '/images/pie.jpeg',
-    isAvailable: constant(false),
-    challenge: { type: 'none' },
+    isAvailable: constant(true),
+    challenge: {
+      type: 'plant',
+      validateResponse: isString('qroiuqpinvrin'),
+    },
   },
   {
     id: 7,
@@ -182,7 +185,8 @@ const parseCode = ({ code, ...rest }, response) => ({
 
 const parseChallenge = ({ type, ...challenge }, response) => {
   switch (type) {
-    case 'question': return parseQuestion(challenge, response)
+    case 'question':
+    case 'plant': return parseQuestion(challenge, response)
     case 'code': return parseCode(challenge, response)
     default: return { completed: true }
   }

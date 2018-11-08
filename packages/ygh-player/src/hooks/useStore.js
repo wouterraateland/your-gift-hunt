@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 const id = x => x
+const constant = x => () => x
 
 const useStore = ({ initialState, rootReducer=id, enhancer=id }) => {
   const [state, setState] = useState(initialState || {})
@@ -23,3 +24,25 @@ const useStore = ({ initialState, rootReducer=id, enhancer=id }) => {
 }
 
 export default useStore
+
+export const createPersistentStoreCreator = ({
+  serialize,
+  deserialize,
+  load,
+  save
+}) => ({
+  name='store',
+  persistKey=constant(true),
+}) => ({
+  initialState: deserialize(load(name)),
+  enhancer: state => {
+    save(
+      name,
+      serialize(Object.keys(state)
+        .filter(persistKey)
+        .reduce((acc, key) => ({ ...acc, [key]: state[key] }), {})
+      )
+    )
+    return state
+  }
+})

@@ -4,6 +4,8 @@ import './index.css'
 import * as serviceWorker from './serviceWorker'
 
 import { StoreProvider } from 'context/Store'
+import { createPersistentStoreCreator } from 'hooks/useStore'
+
 import App from 'components/App'
 
 if (process.env.NODE_ENV !== 'production') {
@@ -11,13 +13,17 @@ if (process.env.NODE_ENV !== 'production') {
   whyDidYouUpdate(React)
 }
 
-const store = {
-	initialState: JSON.parse(window.localStorage.getItem('store')),
-	enhancer: state => {
-		window.localStorage.setItem('store', JSON.stringify(state))
-		return state
-	},
-}
+const localStorageStoreCreator = createPersistentStoreCreator({
+  serialize: JSON.stringify,
+  deserialize: JSON.parse,
+  load: key => window.localStorage.getItem(key),
+  save: (key, value) => window.localStorage.setItem(key, value),
+})
+
+const store = localStorageStoreCreator({
+  name: 'store',
+  persistKey: key => !['selectedPieceId', 'selectedBoardId'].includes(key),
+})
 
 const Root = (
 	<StoreProvider store={store}>
