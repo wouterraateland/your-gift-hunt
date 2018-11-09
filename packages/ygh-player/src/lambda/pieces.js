@@ -33,9 +33,9 @@ const isString = match => s =>
 Available codes:
  - ofgG59w4 => Fry
  - 7uciossJ => disney_1
- - cOW0bvGG =>
- - s1Y8LINb =>
- - VZ5zIRz6 =>
+ - cOW0bvGG => disney_3
+ - s1Y8LINb => disney_5
+ - VZ5zIRz6 => disney_6
  - xN56rM9e => disney_7
 */
 
@@ -115,7 +115,7 @@ const pieces = [
   {
     id: 7,
     image: '/images/disney_3.jpeg',
-    isAvailable: constant(false),
+    isAvailable: codesCollected(['cOW0bvGG']),
     challenge: { type: 'none' },
   },
   {
@@ -127,19 +127,32 @@ const pieces = [
   {
     id: 9,
     image: '/images/disney_5.jpeg',
-    isAvailable: constant(false),
+    isAvailable: codesCollected(['s1Y8LINb']),
     challenge: { type: 'none' },
   },
   {
     id: 10,
     image: '/images/soup.jpeg',
-    isAvailable: constant(false),
-    challenge: { type: 'none' },
+    isAvailable: piecesCompleted([9]),
+    challenge: {
+      type: 'question',
+      question: 'Noem 4 belangrijke ingredienten van goed eten',
+      validateResponse: res => {
+        if (typeof res !== 'string') { return false }
+        const lc = res.toLowerCase()
+        return (
+          (lc.includes('salt') || lc.includes('zout')) &&
+          (lc.includes('fat') || lc.includes('vet')) &&
+          (lc.includes('acid') || lc.includes('zuur')) &&
+          (lc.includes('heat') || lc.includes('hitte'))
+        )
+      }
+    },
   },
   {
     id: 11,
     image: '/images/disney_6.jpeg',
-    isAvailable: constant(false),
+    isAvailable: codesCollected(['VZ5zIRz6']),
     challenge: { type: 'none' },
   },
   {
@@ -167,7 +180,7 @@ const pieces = [
       question: 'Heb je er zin in?',
       validateResponse: res =>
         typeof res === 'string' &&
-        !isString('nee')(res),
+        res.toLowerCase().includes('ja'),
     }
   },
 ]

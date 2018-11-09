@@ -186,6 +186,7 @@ export default () => {
       rotates
       initialTranslation={{ x: 80, y: 10 }}
       initialRotation={0}
+      onDrag={handleOnDrag}
       component={dragProps => (
         <Pot {...dragProps} ref={potEl}>
           <Plant planted={state > 0} grown={state > 1} />

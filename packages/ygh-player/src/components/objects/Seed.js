@@ -47,13 +47,6 @@ export default () => {
     )
   }, [])
 
-  function handleOnClick() {
-    write('lamp', state => ({
-      ...state,
-      lampState: !state.lampState
-    }))
-  }
-
   function setLightPosition() {
     if (seedEl.current) {
       const rect = seedEl.current.getClientRects()[0]
