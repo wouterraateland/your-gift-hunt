@@ -133,7 +133,9 @@ const pieces = [
   {
     id: 10,
     image: '/images/soup.jpeg',
-    isAvailable: piecesCompleted([9]),
+    isAvailable: (codes, pieces) =>
+      codesCollected(['s1Y8LINb'])(codes, pieces) &&
+      piecesCompleted([9])(codes, pieces),
     challenge: {
       type: 'question',
       question: 'Noem 4 belangrijke ingredienten van goed eten',
