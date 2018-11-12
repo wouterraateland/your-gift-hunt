@@ -31,7 +31,7 @@ const draggable = ({
     initialState: {
       translation: initialTranslation,
       rotation: initialRotation,
-      scale: initialScale,
+      scale: Math.max(.1, initialScale),
       prevTouches: [],
     },
     enhancer: persistent
@@ -94,7 +94,7 @@ const draggable = ({
         y: state.translation.y + dy,
       },
       rotation: state.rotation + dr,
-      scale: state.scale * ds,
+      scale: Math.max(.1, state.scale * ds),
       prevTouches: touches,
     })
 
