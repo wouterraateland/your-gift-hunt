@@ -38,13 +38,11 @@ Board.displayName = 'Board'
 
 const Slot = memo(styled.div`
   float: left;
-  width: ${props => props.width}%;
-  height: ${props => props.height}%;
+  width: ${props => props.slotWidth}%;
+  height: ${props => props.slotHeight}%;
 
-  border: 1px solid transparent;
-
-  ${props => props.challenge.completed && css`
-    background: #fff url(${props.image}) no-repeat center / cover;
+  ${props => props.challengeCompleted && css`
+    background: url(${props.bgImage}) no-repeat center / cover;
   `}
 `)
 Slot.displayName = 'Slot'
@@ -52,7 +50,8 @@ Slot.displayName = 'Slot'
 const Slots = memo(({ pieces, ...slotProps }) => pieces.map(piece =>
   <Slot
     key={piece.id}
-    {...piece}
+    bgImage={piece.image}
+    challengeCompleted={piece.challenge.completed}
     {...slotProps}
   />
 ))
@@ -69,8 +68,8 @@ export default ({ pieceIds, ...boardProps }) => {
     <Board {...boardProps} cleared={cleared}>
       <Slots
         pieces={pieces}
-        width={100 / boardProps.width}
-        height={100 / boardProps.height}
+        slotWidth={100 / boardProps.width}
+        slotHeight={100 / boardProps.height}
       />
     </Board>
   )

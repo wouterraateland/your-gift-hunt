@@ -7,7 +7,7 @@ const DAY = 24 * HOUR
 const WEEK = 7 * DAY
 
 const startDate = new Date(2018, 11 - 1, 6) // 5 Nov 2018
-const targetDate = new Date(2018, 12 - 1, 14) // 14 Dec 2018
+const targetDate = new Date(2018, 11 - 1, 22) // 22 Nov 2018
 
 const constant = x => () => x
 
@@ -35,7 +35,7 @@ Available codes:
  - 7uciossJ => disney_1
  - cOW0bvGG => disney_3
  - s1Y8LINb => disney_5
- - VZ5zIRz6 => disney_6
+ - VZ5zlRz6 => disney_6
  - xN56rM9e => disney_7
 */
 
@@ -154,7 +154,7 @@ const pieces = [
   {
     id: 11,
     image: '/images/disney_6.jpeg',
-    isAvailable: codesCollected(['VZ5zIRz6']),
+    isAvailable: codesCollected(['VZ5zlRz6']),
     challenge: { type: 'none' },
   },
   {
