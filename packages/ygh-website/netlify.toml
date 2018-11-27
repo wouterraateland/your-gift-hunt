@@ -1,4 +1,7 @@
 [build]
-  Command = "yarn build"
-  Functions = "lambda"
-  Publish = "build"
+  command = "yarn build"
+  functions = "lambda"
+  publish = "build"
+
+[build.environment]
+  YARN_VERSION = "1.12.3"
