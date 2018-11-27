@@ -121,8 +121,21 @@ const pieces = [
   {
     id: 8,
     image: '/images/disney_4.jpeg',
-    isAvailable: constant(false),
-    challenge: { type: 'none' },
+    isAvailable: constant(true),
+    challenge: {
+      type: 'question',
+      question: 'Je staat in een kamer met 2 deuren en 2 bewakers. Achter een van de deuren is vrijheid en achter de andere deur de dood. Een van de bewakers liegt altijd, de andere vertelt altijd de waarheid. Je moet een deur openen, maar je mag maar 1 vraag stellen aan 1 van de bewakers. Wat vraag je zodat je de goede deur kan kiezen?',
+      validateResponse: response =>
+        typeof response === 'string' &&
+        (
+          response.toLowerCase().includes('ander') &&
+          (
+            response.toLowerCase().includes('waarheen') ||
+            response.toLowerCase().includes('waarnaar') ||
+            response.toLowerCase().includes('wat')
+          )
+        )
+    },
   },
   {
     id: 9,
