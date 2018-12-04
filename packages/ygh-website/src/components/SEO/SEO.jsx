@@ -8,7 +8,7 @@ const SEO = ({ postNode, postPath, postSEO }) => {
   let title, description, image, postURL
 
   if (postSEO) {
-    const postMeta = postNode.frontmatter
+    const postMeta = postNode.frontmatter;
     ({ title } = postMeta)
     description = postMeta.description
       ? postMeta.description
