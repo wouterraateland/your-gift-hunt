@@ -10,7 +10,7 @@ const Nav = styled.nav`
   left: 0; top: 0;
   right: 0;
 
-  height: 4em;
+  height: 4rem;
   line-height: 1;
   font-size: 1rem;
 
@@ -19,13 +19,13 @@ const Nav = styled.nav`
 
 const Img = styled.img`
   display: block;
-  height: 1.5em;
-  margin: 1.25em 0;
+  height: 1.5rem;
+  margin: 1.25rem 0;
 `
 
 const NavLink = styled(Link)`
-  padding: 1.5em 0;
-  margin-left: 2em;
+  padding: 1.5rem 0;
+  margin-left: 2rem;
 
   color: #fff;
 
@@ -33,6 +33,18 @@ const NavLink = styled(Link)`
     font-weight: bold;
     color: ${props => props.theme.color.accent};
   `}
+
+  ${props => !props.primary && css`
+    @media (max-width: 720px) {
+      display: none;
+    }
+  `}
+
+  @media (max-width: 480px) {
+    margin-left: 0;
+    font-size: .7em;
+    line-height: 1rem;
+  }
 `
 
 export default () => {
