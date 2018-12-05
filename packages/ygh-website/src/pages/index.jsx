@@ -3,16 +3,15 @@ import 'utils/RHLFix'
 import React from 'react'
 import styled from 'styled-components'
 import { darken } from 'polished'
-import config from 'data/SiteConfig'
-
-import Helmet from 'react-helmet'
-import Layout from 'layout'
-import SEO from 'components/SEO/SEO'
 
 import { Link } from 'gatsby'
+
+import Layout from 'components/Layout'
+
 import Align from 'components/ui/Align'
 import Header from 'components/Header'
 
+import logo from 'images/logo-light.svg'
 import path from 'images/path.svg'
 import down from 'images/down.svg'
 
@@ -57,11 +56,9 @@ const Block = styled.div`
 export default () => {
   return (
     <Layout>
-      <Helmet title={config.siteTitle} />
-      <SEO />
       <Header>
         <Align.Center>
-          <Img src="/logos/logo-light.svg" alt="Your Gift Hunt" />
+          <Img src={logo} alt="Your Gift Hunt" />
           <h1>Make your gift a unique adventure with a personal scavenger gift hunt.</h1>
           <Subtitle>Create an unforgettable personalised scavenger hunt adventure for someone close to you, leading them to their gift.</Subtitle>
         </Align.Center>

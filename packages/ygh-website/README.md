@@ -13,4 +13,4 @@ Runs the complete project for development.
 
 You can also run `yarn develop:app` and `yarn develop:lambda` separately.
 
-This project is built upon react-advanced starter. For more information, check [their documentation](https://github.com/Vagr9K/gatsby-advanced-starter).
+This project is built upon gatsby-starter-netlify-cms. For more information, check [their documentation](https://github.com/netlify-templates/gatsby-starter-netlify-cms).

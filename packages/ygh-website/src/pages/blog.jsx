@@ -1,43 +1,77 @@
-import 'utils/RHLFix'
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Link, graphql } from 'gatsby'
 
-import React from "react"
-import Helmet from "react-helmet"
-import { graphql } from "gatsby"
-import Layout from "layout"
-import PostListing from "components/PostListing/PostListing"
-import SEO from "components/SEO/SEO"
-import config from "data/SiteConfig"
+import Layout from 'components/Layout'
 
-export default ({ data }) => {
-  const postEdges = data.allMarkdownRemark.edges
+export default class BlogPage extends React.Component {
+  render() {
+    const { data } = this.props
+    const { edges: posts } = data.allMarkdownRemark
 
-  return (
-    <Layout>
-      <Helmet title={`Blog | ${config.siteTitle}`} />
-      <PostListing postEdges={postEdges} />
-    </Layout>
-  )
+    return (
+      <Layout>
+        <section className="section">
+          <div className="container">
+            <div className="content">
+              <h1 className="has-text-weight-bold is-size-2">Latest Stories</h1>
+            </div>
+            {posts
+              .map(({ node: post }) => (
+                <div
+                  className="content"
+                  style={{ border: '1px solid #333', padding: '2em 4em' }}
+                  key={post.id}
+                >
+                  <p>
+                    <Link className="has-text-primary" to={post.fields.slug}>
+                      {post.frontmatter.title}
+                    </Link>
+                    <span> &bull; </span>
+                    <small>{post.frontmatter.date}</small>
+                  </p>
+                  <p>
+                    {post.excerpt}
+                    <br />
+                    <br />
+                    <Link className="button is-small" to={post.fields.slug}>
+                      Keep Reading →
+                    </Link>
+                  </p>
+                </div>
+              ))}
+          </div>
+        </section>
+      </Layout>
+    )
+  }
+}
+
+BlogPage.propTypes = {
+  data: PropTypes.shape({
+    allMarkdownRemark: PropTypes.shape({
+      edges: PropTypes.array,
+    }),
+  }),
 }
 
 export const pageQuery = graphql`
   query BlogQuery {
     allMarkdownRemark(
-      limit: 2000
-      sort: { fields: [fields___date], order: DESC }
+      sort: { order: DESC, fields: [frontmatter___date] },
+      filter: { frontmatter: { templateKey: { eq: "blog-post" } }}
     ) {
       edges {
         node {
+          excerpt(pruneLength: 400)
+          id
           fields {
             slug
-            date
           }
-          excerpt
-          timeToRead
           frontmatter {
             title
-            tags
-            cover
-            date
+            templateKey
+            date(formatString: "MMMM DD, YYYY")
           }
         }
       }

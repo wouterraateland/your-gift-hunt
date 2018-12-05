@@ -3,6 +3,8 @@ import styled from 'styled-components'
 
 import Wrapper from 'components/ui/Wrapper'
 
+import background from 'images/background.jpg'
+
 const Header = styled.header`
   display: flex;
   flex-direction: column;
@@ -12,7 +14,7 @@ const Header = styled.header`
 
   background:
     linear-gradient(#0009 80%, #000),
-    url('/background.jpg') no-repeat center bottom 25% / cover;
+    url(${background}) no-repeat center bottom 25% / cover;
 
   color: #fffc;
 

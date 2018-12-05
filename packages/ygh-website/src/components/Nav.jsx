@@ -5,6 +5,8 @@ import { Link } from 'gatsby'
 import Wrapper from 'components/ui/Wrapper'
 import Float from 'components/ui/Float'
 
+import logoThumb from 'images/logo-thumb-light.svg'
+
 const Nav = styled.nav`
   position: fixed;
   left: 0; top: 0;
@@ -53,7 +55,7 @@ export default () => {
       <Wrapper>
         <Float.Left>
           <Link to="/">
-            <Img src="/logos/logo-thumb-light.svg" alt="Your Gift Hunt" />
+            <Img src={logoThumb} alt="Your Gift Hunt" />
           </Link>
         </Float.Left>
         <Float.Right>
