@@ -18,6 +18,7 @@ exports.createPages = ({ actions, graphql }) => {
             frontmatter {
               tags
               category
+              author
               templateKey
             }
           }
@@ -34,12 +35,14 @@ exports.createPages = ({ actions, graphql }) => {
 
     posts.forEach(edge => {
       const id = edge.node.id
+      const frontmatter = edge.node.frontmatter
       createPage({
         path: edge.node.fields.slug,
-        tags: edge.node.frontmatter.tags,
-        category: edge.node.frontmatter.category,
+        tags: frontmatter.tags,
+        category: frontmatter.category,
+        author: frontmatter.author,
         component: path.resolve(
-          `src/templates/${String(edge.node.frontmatter.templateKey)}.js`
+          `src/templates/${String(frontmatter.templateKey)}.js`
         ),
         // additional data can be passed via context
         context: {
@@ -88,6 +91,28 @@ exports.createPages = ({ actions, graphql }) => {
         component: path.resolve(`src/templates/categories.js`),
         context: {
           category,
+        },
+      })
+    })
+
+    // Author pages:
+    // Iterate through each post, putting all found authors into `authors`
+    // Eliminate duplicate authors
+    const authors = _.uniq(posts.reduce((authors, edge) =>
+      _.get(edge, `node.frontmatter.category`)
+        ? [...authors, edge.node.frontmatter.author]
+        : authors
+      , []))
+
+    // Make author pages
+    authors.forEach(author => {
+      const authorPath = `/authors/${_.kebabCase(author)}/`
+
+      createPage({
+        path: authorPath,
+        component: path.resolve(`src/templates/authors.js`),
+        context: {
+          author,
         },
       })
     })

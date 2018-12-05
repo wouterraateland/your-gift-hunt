@@ -12,6 +12,10 @@ const theme = {
     success:    '#41ac57',
   },
   borderRadius: 0,
+  columns: {
+    count: 12,
+    gap: '2rem',
+  }
 }
 
 export const GlobalStyles = createGlobalStyle`

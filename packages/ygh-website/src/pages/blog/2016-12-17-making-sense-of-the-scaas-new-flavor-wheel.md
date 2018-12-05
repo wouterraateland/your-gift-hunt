@@ -7,7 +7,8 @@ description: The Coffee Taster’s Flavor Wheel, the official resource used by c
 tags:
   - flavor
   - tasting
-category: coffee
+category: Coffee
+author: Wouter Raateland
 ---
 
 ![flavor wheel](/uploads/flavor_wheel.jpg)

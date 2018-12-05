@@ -6,7 +6,8 @@ description: Brewing with a Chemex probably seems like a complicated, time-consu
 tags:
   - brewing
   - chemex
-category: tech
+category: Technology
+author: Wouter Raateland
 ---
 ![chemex](/uploads/chemex.jpg)
 

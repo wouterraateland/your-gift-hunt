@@ -4,17 +4,17 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import PostPage from 'components/PostPage'
 
-const CategoryRoute = ({ data, pageContext }) =>
-  <PostPage data={data} filter={pageContext.category} />
+const AuthorRoute = ({ data, pageContext }) =>
+  <PostPage data={data} filter={pageContext.author} />
 
-export default CategoryRoute
+export default AuthorRoute
 
-export const categoryPageQuery = graphql`
-  query CategoryPage($category: String) {
+export const authorPageQuery = graphql`
+  query AuthorPage($author: String) {
     allMarkdownRemark(
       limit: 1000
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { category: { eq: $category } } }
+      filter: { frontmatter: { author: { eq: $author } } }
     ) {
       totalCount
       edges {

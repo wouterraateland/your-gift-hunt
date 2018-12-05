@@ -11,6 +11,7 @@ const Header = styled.header`
   justify-content: center;
 
   min-height: 80vh;
+  margin-top: -4rem;
 
   background:
     linear-gradient(#0009 80%, #000),
