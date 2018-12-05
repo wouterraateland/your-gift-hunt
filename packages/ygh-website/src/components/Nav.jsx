@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'gatsby'
 
@@ -22,8 +22,8 @@ const Nav = styled.nav`
 
 const Img = styled.img`
   display: block;
-  height: 1.5rem;
-  margin: 1.25rem 0;
+  height: 1.5em;
+  margin: 1.25em 0;
 `
 
 const NavLink = styled(Link)`
@@ -39,7 +39,21 @@ const NavLink = styled(Link)`
 
   ${props => !props.primary && css`
     @media (max-width: 720px) {
-      display: none;
+      display: block;
+      margin-left: 0;
+
+      text-align: center;
+
+      background-color: #000;
+
+      transition:
+        padding .2s ease-out,
+        opacity .2s ease-out,
+        font-size .2s ease-out;
+
+      transition-delay: ${props => props.index * .1}s;
+
+      will-change: padding, opacity, font-size;
     }
   `}
 
@@ -50,7 +64,77 @@ const NavLink = styled(Link)`
   }
 `
 
+const MenuToggle = styled.div`
+  @media (max-width: 720px) {
+    cursor: pointer;
+
+    position: relative;
+
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 1.25rem 0 1.25rem 1rem;
+
+    background: linear-gradient(#fff, #fff) no-repeat center / 100% .15rem;
+
+    transition: background-size .4s ease-out;
+
+    &::before,
+    &::after {
+      content: '';
+
+      position: absolute;
+      left: 0; top: 0;
+      right: 0; bottom: 0;
+
+      width: 100%;
+      height: .15rem;
+      margin: auto;
+
+      background-color: #fff;
+
+      transition: transform .4s ease-out;
+    }
+
+    &::before { transform: translate(0, .5rem); }
+    &::after { transform: translate(0, -.5rem); }
+
+    ${props => props.open && css`
+      background-size: 0 0;
+
+      &::before { transform: rotate(225deg); }
+      &::after { transform: rotate(-225deg); }
+    `}
+  }
+`
+
+const Menu = styled.div`
+  @media (max-width: 720px) {
+    position: absolute;
+    left: 0; top: 4rem;
+    right: 0;
+
+    ${props => !props.open && css`
+      ${NavLink} {
+        font-size: 0;
+        opacity: 0;
+        padding: 0;
+      }
+    `}
+  }
+
+  @media (min-width: 721px) {
+    float: right;
+  }
+`
+
 export default () => {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  function toggleMenu() {
+    setMenuOpen(menuOpen => !menuOpen)
+  }
+
   return (
     <Nav>
       <Wrapper>
@@ -60,11 +144,14 @@ export default () => {
           </Link>
         </Float.Left>
         <Float.Right>
-          <NavLink to="/about">About</NavLink>
-          <NavLink to="/blog">Blog</NavLink>
-          <NavLink to="/pricing">Pricing</NavLink>
           <NavLink primary to="/demo">Play a Demo Hunt for free</NavLink>
+          <MenuToggle open={menuOpen} onClick={toggleMenu} />
         </Float.Right>
+        <Menu open={menuOpen}>
+          <NavLink index={0} to="/about">About</NavLink>
+          <NavLink index={1} to="/blog">Blog</NavLink>
+          <NavLink index={2} to="/pricing">Pricing</NavLink>
+        </Menu>
       </Wrapper>
     </Nav>
   )

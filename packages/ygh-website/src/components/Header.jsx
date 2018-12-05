@@ -11,6 +11,7 @@ const Header = styled.header`
   justify-content: center;
 
   min-height: 80vh;
+  padding: 2em 0;
   margin-top: -4rem;
 
   background:
