@@ -1,29 +1,28 @@
 import React from 'react'
 import ReactDisqusComments from 'react-disqus-comments'
-import urljoin from 'url-join'
+import { StaticQuery, graphql } from 'gatsby'
 
-const Disqus = ({ postNode, config }) => {
-  if (!config.disqusShortname) {
-    return null
-  }
-
-  const post = postNode.frontmatter
-  const url = urljoin(
-    config.siteUrl,
-    config.pathPrefix,
-    postNode.fields.slug
-  )
-
-  return (
-    <ReactDisqusComments
-      shortname={config.disqusShortname}
-      identifier={post.title}
-      title={post.title}
-      url={url}
-      category_id={post.category_id}
-      onNewComment={this.notifyAboutComment}
-    />
-  )
-}
+const Disqus = ({ title, category, url }) => (
+  <StaticQuery
+    query={graphql`
+      query DisqusQuery {
+        site {
+          siteMetadata {
+            disqusShortname
+          }
+        }
+      }
+    `}
+    render={data => (
+      <ReactDisqusComments
+        shortname={data.site.siteMetadata.disqusShortname}
+        identifier={title}
+        title={title}
+        url={url}
+        category_id={category}
+      />
+    )}
+  />
+)
 
 export default Disqus

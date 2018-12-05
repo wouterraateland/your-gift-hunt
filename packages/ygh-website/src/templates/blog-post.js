@@ -3,55 +3,62 @@ import PropTypes from 'prop-types'
 import { kebabCase } from 'lodash'
 import Helmet from 'react-helmet'
 import { graphql, Link } from 'gatsby'
-import Layout from '../components/Layout'
-import Content, { HTMLContent } from '../components/Content'
+
+import Layout from 'components/Layout'
+import Content, { HTMLContent } from 'components/Content'
+import Wrapper from 'components/ui/Wrapper'
+import MailchimpForm from 'components/MailchimpForm'
+import Disqus from 'components/Disqus'
 
 export const BlogPostTemplate = ({
   content,
   contentComponent,
-  description,
-  tags,
+  category,
+  author,
+  date,
   title,
   helmet,
+  slug,
 }) => {
   const PostContent = contentComponent || Content
 
   return (
-    <section className="section">
-      {helmet || ''}
-      <div className="container content">
-        <div className="columns">
-          <div className="column is-10 is-offset-1">
-            <h1 className="title is-size-2 has-text-weight-bold is-bold-light">
-              {title}
-            </h1>
-            <p>{description}</p>
-            <PostContent content={content} />
-            {tags && tags.length ? (
-              <div style={{ marginTop: `4rem` }}>
-                <h4>Tags</h4>
-                <ul className="taglist">
-                  {tags.map(tag => (
-                    <li key={tag + `tag`}>
-                      <Link to={`/tags/${kebabCase(tag)}/`}>{tag}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-          </div>
-        </div>
-      </div>
-    </section>
+    <Wrapper medium>
+      {helmet || null}
+      <article>
+        <small>
+          <span>By </span>
+          <Link to={`/authors/${kebabCase(author)}`}>{author}</Link>
+          <span> in </span>
+          <Link to={`/categorys/${kebabCase(category)}`}>{category}</Link>
+          <span> &bull; </span>
+          {date}
+        </small>
+        <h1>{title}</h1>
+        <PostContent content={content} />
+      </article>
+      <hr />
+      <h2>Newsletter</h2>
+      <MailchimpForm />
+      <hr />
+      <Disqus
+        title={title}
+        url={slug}
+        category={category}
+      />
+    </Wrapper>
   )
 }
 
 BlogPostTemplate.propTypes = {
   content: PropTypes.node.isRequired,
   contentComponent: PropTypes.func,
-  description: PropTypes.string,
+  author: PropTypes.string,
+  category: PropTypes.string,
   title: PropTypes.string,
+  date: PropTypes.string,
   helmet: PropTypes.object,
+  slug: PropTypes.string,
 }
 
 const BlogPost = ({ data }) => {
@@ -62,7 +69,6 @@ const BlogPost = ({ data }) => {
       <BlogPostTemplate
         content={post.html}
         contentComponent={HTMLContent}
-        description={post.frontmatter.description}
         helmet={
           <Helmet
             titleTemplate="%s | Blog"
@@ -71,7 +77,10 @@ const BlogPost = ({ data }) => {
             <meta name="description" content={`${post.frontmatter.description}`} />
           </Helmet>
         }
-        tags={post.frontmatter.tags}
+        slug={post.fields.slug}
+        category={post.frontmatter.category}
+        author={post.frontmatter.author}
+        date={post.frontmatter.date}
         title={post.frontmatter.title}
       />
     </Layout>
@@ -91,11 +100,14 @@ export const pageQuery = graphql`
     markdownRemark(id: { eq: $id }) {
       id
       html
+      fields {
+        slug
+      }
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
         title
-        description
-        tags
+        author
+        category
       }
     }
   }

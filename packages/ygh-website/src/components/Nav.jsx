@@ -11,6 +11,7 @@ const Nav = styled.nav`
   position: fixed;
   left: 0; top: 0;
   right: 0;
+  z-index: 1;
 
   height: 4rem;
   line-height: 1;

@@ -28,6 +28,7 @@ module.exports = {
     siteUrl: urljoin(config.siteUrl, config.pathPrefix),
     pathPrefix: config.pathPrefix,
     userTwitter: config.userTwitter,
+    disqusShortname: config.disqusShortname,
     rssMetadata: {
       site_url: urljoin(config.siteUrl, config.pathPrefix),
       feed_url: urljoin(config.siteUrl, config.pathPrefix, config.siteRss),
