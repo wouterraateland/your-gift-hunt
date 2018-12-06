@@ -21,22 +21,24 @@ const PostSummary = ({ detailed, excerpt, fields, frontmatter }) => (
       }
       {detailed && <p>{excerpt}</p>}
     </Link>
-    <small>
-      {detailed && (
-        <>
-          <span>By </span>
-          <Link to={`/authors/${kebabCase(frontmatter.author)}`}>
-            {frontmatter.author}
-          </Link>
-          <span> in </span>
-          <Link to={`/categories/${kebabCase(frontmatter.category)}`}>
-            {frontmatter.category}
-          </Link>
-          <span> &bull; </span>
-        </>
-      )}
-      {frontmatter.date}
-    </small>
+    <article>
+      <small>
+        {detailed && (
+          <>
+            <span>By </span>
+            <Link to={`/authors/${kebabCase(frontmatter.author)}`}>
+              {frontmatter.author}
+            </Link>
+            <span> in </span>
+            <Link to={`/categories/${kebabCase(frontmatter.category)}`}>
+              {frontmatter.category}
+            </Link>
+            <span> &bull; </span>
+          </>
+        )}
+        {frontmatter.date}
+      </small>
+    </article>
   </StyledPostSummary>
 )
 

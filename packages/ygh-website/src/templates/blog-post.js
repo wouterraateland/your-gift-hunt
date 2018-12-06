@@ -30,7 +30,7 @@ export const BlogPostTemplate = ({
           <span>By </span>
           <Link to={`/authors/${kebabCase(author)}`}>{author}</Link>
           <span> in </span>
-          <Link to={`/categorys/${kebabCase(category)}`}>{category}</Link>
+          <Link to={`/categories/${kebabCase(category)}`}>{category}</Link>
           <span> &bull; </span>
           {date}
         </small>

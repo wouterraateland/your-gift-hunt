@@ -1,59 +1,58 @@
 import React from "react"
 import Helmet from "react-helmet"
-import urljoin from "url-join"
 
-const SEO = ({ config, postNode, postPath, postSEO }) => {
-  let title, description, image, postURL
+const SEO = ({ config, postNode }) => {
+  const url = postNode
+    ? postNode.fields.slug
+    : config.siteUrl
 
-  if (postSEO) {
-    const postMeta = postNode.frontmatter;
-    ({ title } = postMeta)
-    description = postMeta.description
-      ? postMeta.description
+  const title = postNode
+    ? postNode.frontmatter.title
+    : config.siteTitle
+
+  const description = postNode
+    ? postNode.frontmatter.description
+      ? postNode.frontmatter.description
       : postNode.excerpt
+    : config.siteDescription
 
-    image = postMeta.cover
-    postURL = urljoin(config.siteUrl, config.pathPrefix, postPath)
-  } else {
-    title = config.siteTitle
-    description = config.siteDescription
-    image = config.siteLogo
-  }
+  const image = postNode && postNode.frontmatter.cover
+    ? postNode.frontmatter.cover
+    : `${config.siteUrl}${config.siteImage}`
 
-  image = urljoin(config.siteUrl, config.pathPrefix, image)
-  const blogURL = urljoin(config.siteUrl, config.pathPrefix)
   const schemaOrgJSONLD = [
     {
       "@context": "http://schema.org",
       "@type": "WebSite",
-      url: blogURL,
-      name: title,
-      alternateName: config.siteTitleAlt ? config.siteTitleAlt : ""
+      url: config.siteUrl,
+      name: config.siteTitle,
+      alternateName: config.siteTitleAlt,
+      image: `${config.siteUrl}${config.siteImage}`,
     }
   ]
-  if (postSEO) {
+  if (postNode) {
     schemaOrgJSONLD.push(
       {
         "@context": "http://schema.org",
         "@type": "BreadcrumbList",
         itemListElement: [
-        {
+          {
             "@type": "ListItem",
             position: 1,
-          item: {
-              "@id": postURL,
+            item: {
+              "@id": url,
               name: title,
-              image
+              image: image,
+            }
           }
-        }
         ]
       },
       {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        url: blogURL,
+        url: config.siteUrl,
         name: title,
-        alternateName: config.siteTitleAlt ? config.siteTitleAlt : "",
+        alternateName: config.siteTitleAlt,
         headline: title,
         image: {
           "@type": "ImageObject",
@@ -70,14 +69,21 @@ const SEO = ({ config, postNode, postPath, postSEO }) => {
       <meta name="description" content={description} />
       <meta name="image" content={image} />
 
+      <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+      <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#fc3" />
+      <meta name="msapplication-TileColor" content="#000" />
+      <meta name="theme-color" content="#000" />
+
       {/* Schema.org tags */}
       <script type="application/ld+json">
         {JSON.stringify(schemaOrgJSONLD)}
       </script>
 
       {/* OpenGraph tags */}
-      <meta property="og:url" content={postSEO ? postURL : blogURL} />
-      {postSEO ? <meta property="og:type" content="article" /> : null}
+      <meta property="og:url" content={url} />
+      {postNode ? <meta property="og:type" content="article" /> : null}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />

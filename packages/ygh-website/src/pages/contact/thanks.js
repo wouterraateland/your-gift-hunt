@@ -1,15 +1,12 @@
-import React from "react";
-import Layout from '../../components/Layout'
+import React from 'react'
+import Layout from 'components/Layout'
+import { Wrapper } from 'components/ui'
 
 export default () => (
   <Layout>
-        <section className="section">
-          <div className="container">
-            <div className="content">
-                <h1>Thank you!</h1>
-                <p>This is a custom thank you page for form submissions</p>
-            </div>
-          </div>
-          </section>
+    <Wrapper medium>
+      <h1>Thanks for sending your message.</h1>
+      <p>We will come back to you as soon as we can.</p>
+    </Wrapper>
   </Layout>
 );

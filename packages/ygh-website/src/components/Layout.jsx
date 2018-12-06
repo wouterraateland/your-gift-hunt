@@ -5,6 +5,7 @@ import Theme from 'containers/Theme'
 import SEO from 'components/SEO'
 import Nav from 'components/Nav'
 import Body from 'components/Body'
+import Footer from 'components/Footer'
 
 const TemplateWrapper = ({ children }) => (
   <StaticQuery
@@ -16,7 +17,7 @@ const TemplateWrapper = ({ children }) => (
               description,
               siteDescription,
               siteFBAppID,
-              siteLogo,
+              siteImage,
               siteTitle,
               siteTitleAlt,
               siteUrl,
@@ -32,6 +33,7 @@ const TemplateWrapper = ({ children }) => (
         <Theme>
           <Nav />
           <Body>{children}</Body>
+          <Footer />
         </Theme>
       </>
     )}

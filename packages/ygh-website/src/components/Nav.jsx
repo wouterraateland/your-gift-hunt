@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
+import { darken } from 'polished'
 import { Link } from 'gatsby'
 
 import Wrapper from 'components/ui/Wrapper'
@@ -32,9 +33,17 @@ const NavLink = styled(Link)`
 
   color: #fff;
 
+  &:hover {
+    color: ${darken(.1, '#fff')};
+  }
+
   ${props => props.primary && css`
     font-weight: bold;
     color: ${props => props.theme.color.accent};
+
+    &:hover {
+      color: ${props => darken(.1, props.theme.color.accent)};
+    }
   `}
 
   ${props => !props.primary && css`
@@ -57,11 +66,13 @@ const NavLink = styled(Link)`
     }
   `}
 
-  @media (max-width: 480px) {
-    margin-left: 0;
-    font-size: .7em;
-    line-height: 1rem;
-  }
+  ${props => props.primary && css`
+    @media (max-width: 480px) {
+      margin-left: 0;
+      font-size: .7em;
+      line-height: 1rem;
+    }
+  `}
 `
 
 const MenuToggle = styled.div`
@@ -151,6 +162,7 @@ export default () => {
           <NavLink index={0} to="/about">About</NavLink>
           <NavLink index={1} to="/blog">Blog</NavLink>
           <NavLink index={2} to="/pricing">Pricing</NavLink>
+          <NavLink index={2} to="/faq">FAQ</NavLink>
         </Menu>
       </Wrapper>
     </Nav>

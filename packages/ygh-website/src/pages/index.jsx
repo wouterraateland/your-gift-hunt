@@ -8,16 +8,12 @@ import { Link } from 'gatsby'
 
 import Layout from 'components/Layout'
 
-import Align from 'components/ui/Align'
+import { Align } from 'components/ui'
+import { Logo } from 'components/icons'
 import Header from 'components/Header'
 
-import logo from 'images/logo-light.svg'
 import path from 'images/path.svg'
 import down from 'images/down.svg'
-
-const Img = styled.img`
-  height: 8em;
-`
 
 const Subtitle = styled.p`
 
@@ -53,12 +49,16 @@ const Block = styled.div`
   }
 `
 
+const LightLogo = styled(Logo)`
+  color: #fff;
+`
+
 export default () => {
   return (
     <Layout>
       <Header>
         <Align.Center>
-          <Img src={logo} alt="Your Gift Hunt" />
+          <LightLogo size={8} />
           <h1>Make your gift a unique adventure with a personal scavenger gift hunt.</h1>
           <Subtitle>Create an unforgettable personalised scavenger hunt adventure for someone close to you, leading them to their gift.</Subtitle>
         </Align.Center>

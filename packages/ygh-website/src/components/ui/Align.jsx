@@ -1,10 +1,23 @@
 import styled from 'styled-components'
 
-export const Left = styled.div`text-align: left;`
-export const Center = styled.div`text-align: center;`
-export const Justify = styled.div`text-align: justify;`
-export const Right = styled.div`text-align: right;`
+const AlignLeft = styled.div`text-align: left;`
+AlignLeft.displayName = 'AlignLeft'
 
-export default {
-  Left, Center, Justify, Right
-}
+const AlignRight = styled.div`text-align: right;`
+AlignRight.displayName = 'AlignRight'
+
+const AlignCenter = styled.div`text-align: center;`
+AlignCenter.displayName = 'AlignCenter'
+
+const AlignJustify = styled.div`text-align: justify;`
+AlignJustify.displayName = 'AlignJustify'
+
+const Align = styled.div`text-align: inherit;`
+Align.displayName = 'Align'
+
+Align.Left = AlignLeft
+Align.Right = AlignRight
+Align.Center = AlignCenter
+Align.Justify = AlignJustify
+
+export default Align

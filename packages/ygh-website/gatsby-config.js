@@ -22,7 +22,7 @@ module.exports = {
     description: config.siteDescription,
     siteDescription: config.siteDescription,
     siteFBAppID: config.siteFBAppID,
-    siteLogo: config.siteLogo,
+    siteImage: config.siteImage,
     siteTitle: config.siteTitle,
     siteTitleAlt: config.siteTitleAlt,
     siteUrl: urljoin(config.siteUrl, config.pathPrefix),
