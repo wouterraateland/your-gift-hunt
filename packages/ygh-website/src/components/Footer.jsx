@@ -10,6 +10,10 @@ const Footer = styled.footer`
   margin-top: 1.58em;
 `
 
+const FooterLogo = styled(Logo)`
+  margin-bottom: 1.58em;
+`
+
 const SocialLink = styled(OutboundLink)`
   margin: 0 1em;
 `
@@ -19,7 +23,7 @@ export default () => (
     <Wrapper medium>
       <hr />
       <Align.Center>
-        <Logo size={4} />
+        <FooterLogo size={4} />
         <p>
           <Link to="/about">About</Link><br />
           <Link to="/blog">Blog</Link><br />

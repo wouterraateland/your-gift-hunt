@@ -15,6 +15,6 @@ module.exports = {
   dateFromFormat: "YYYY-MM-DD", // Date format used in the frontmatter.
   dateFormat: "DD-MM-YYYY", // Date format for display.
   copyright: `Copyright © ${new Date().getUTCFullYear()}. Your Gift Hunt`, // Copyright string for the footer of the website and RSS feed.
-  themeColor: "#ffcc66", // Used for setting manifest and progress theme colors.
+  themeColor: "#ffd65a", // Used for setting manifest and progress theme colors.
   backgroundColor: "#ffffff" // Used for setting manifest background color.
 };

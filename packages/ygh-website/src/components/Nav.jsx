@@ -47,7 +47,7 @@ const NavLink = styled(Link)`
   `}
 
   ${props => !props.primary && css`
-    @media (max-width: 720px) {
+    @media (max-width: 45em) {
       display: block;
       margin-left: 0;
 
@@ -67,16 +67,18 @@ const NavLink = styled(Link)`
   `}
 
   ${props => props.primary && css`
-    @media (max-width: 480px) {
+    @media (max-width: 30em) {
       margin-left: 0;
-      font-size: .7em;
-      line-height: 1rem;
+    }
+
+    @media (max-width: 23em) {
+      font-size: .8em;
     }
   `}
 `
 
 const MenuToggle = styled.div`
-  @media (max-width: 720px) {
+  @media (max-width: 45em) {
     cursor: pointer;
 
     position: relative;
@@ -120,7 +122,7 @@ const MenuToggle = styled.div`
 `
 
 const Menu = styled.div`
-  @media (max-width: 720px) {
+  @media (max-width: 45em) {
     position: absolute;
     left: 0; top: 4rem;
     right: 0;
@@ -134,7 +136,7 @@ const Menu = styled.div`
     `}
   }
 
-  @media (min-width: 721px) {
+  @media (min-width: 45em) {
     float: right;
   }
 `

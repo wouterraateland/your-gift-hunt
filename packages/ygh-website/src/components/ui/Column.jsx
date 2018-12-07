@@ -8,13 +8,13 @@ const Column = styled.div`
 
   width: ${props => 100 * props.size / props.theme.columns.count}%;
 
-  @media (max-width: 480px) {
+  @media (max-width: 30em) {
     width: ${props => 100 * props.sSize / props.theme.columns.count}%;
   }
-  @media (max-width: 720px) {
+  @media (max-width: 45em) {
     width: ${props => 100 * props.mSize / props.theme.columns.count}%;
   }
-  @media (max-width: 1080px) {
+  @media (max-width: 64em) {
     width: ${props => 100 * props.lSize / props.theme.columns.count}%;
   }
 `

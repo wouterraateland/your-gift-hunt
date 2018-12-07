@@ -6,7 +6,7 @@ const theme = {
   color: {
     text:       '#0009',
     emphasis:   '#000d',
-    accent:     '#ffcc66',
+    accent:     '#ffd65a',
     error:      '#d34d4e',
     warning:    '#f7a600',
     success:    '#41ac57',
@@ -25,11 +25,23 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html {
+    @media (max-width: 30em) {
+      font-size: 90%;
+    }
+
+    @media (min-width: 30em) and (max-width: 64em) {
+      font-size: calc(90% + ((112.5 - 90) / 100) * (100vw - 30rem) / (64 - 30));
+    }
+
+    @media (min-width: 64em) {
+      font-size: 112.5%;
+    }
+  }
+
   body {
     padding: 0;
     margin: 0;
-
-    line-height: 1.58;
 
     color: ${theme.color.text};
   }
@@ -74,22 +86,13 @@ export const GlobalStyles = createGlobalStyle`
   article {
     font-size: 21px;
 
-    @media (max-width: 720px) {
+    @media (max-width: 45em) {
       font-size: 18px;
     }
   }
 
   svg {
     max-width: 100%;
-
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    padding-bottom: 0;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 0;
-    margin-bottom: 1.58em;
   }
 
   @keyframes fadeIn {

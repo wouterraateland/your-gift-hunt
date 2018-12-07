@@ -23,10 +23,6 @@ const Header = styled.header`
   h1 {
     color: #fff;
   }
-
-  @media (min-width: 721px) {
-    ${'' /* font-size: 1.2rem; */}
-  }
 `
 
 export default ({ children }) => {

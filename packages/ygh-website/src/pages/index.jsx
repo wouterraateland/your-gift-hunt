@@ -12,15 +12,15 @@ import { Align } from 'components/ui'
 import { Logo } from 'components/icons'
 import Header from 'components/Header'
 
-import path from 'images/path.svg'
-import down from 'images/down.svg'
+import Path from 'components/icons/Path'
+import Down from 'components/icons/Down'
 
 const Subtitle = styled.p`
 
 `
 
 const HeaderLink = styled(Link)`
-  padding: 1em 1em 1em 3em;
+  padding: 1em;
   font-weight: bold;
 
   color: ${props => props.primary
@@ -34,8 +34,6 @@ const HeaderLink = styled(Link)`
       : '#fff'
     )};
   }
-
-  background: url(${props => props.icon}) no-repeat left 1em top 50% / 1.5em;
 `
 
 const Block = styled.div`
@@ -50,6 +48,8 @@ const Block = styled.div`
 `
 
 const LightLogo = styled(Logo)`
+  margin-bottom: 1.58em;
+  
   color: #fff;
 `
 
@@ -63,8 +63,8 @@ export default () => {
           <Subtitle>Create an unforgettable personalised scavenger hunt adventure for someone close to you, leading them to their gift.</Subtitle>
         </Align.Center>
         <Align.Center>
-          <HeaderLink icon={path} primary to="/demo">Play a Demo Hunt</HeaderLink>
-          <HeaderLink icon={down} to="#info">Learn more</HeaderLink>
+          <HeaderLink primary to="/demo"><Path size={1.5} />&nbsp;&nbsp;Play a Demo Hunt</HeaderLink>
+          <HeaderLink to="#info"><Down size={1.5} />&nbsp;&nbsp;Learn more</HeaderLink>
         </Align.Center>
       </Header>
       <Block id="info">

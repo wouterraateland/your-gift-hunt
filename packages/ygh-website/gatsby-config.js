@@ -156,6 +156,12 @@ module.exports = {
       }
     },
     {
+      resolve: 'gatsby-plugin-drift',
+      options: {
+        appId: 'k9sswgut4mh4',
+      }
+    },
+    {
       resolve: "gatsby-plugin-feed",
       options: {
         setup(ref) {

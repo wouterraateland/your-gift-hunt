@@ -2,7 +2,7 @@ import React from 'react'
 import Icon from './'
 
 export default props => (
-  <Icon viewBox="0 0 32 32" {...props} stroke>
+  <Icon viewBox="0 0 32 32" {...props} colorStroke>
     <path
       fillOpacity={0}
       d="M.5.5h31v31H.5z"
