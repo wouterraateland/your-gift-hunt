@@ -27,8 +27,7 @@ export default () => (
         <p>
           <Link to="/about">About</Link><br />
           <Link to="/blog">Blog</Link><br />
-          <Link to="/pricing">Pricing</Link><br />
-          <Link to="/faq">FAQ</Link>
+          <Link to="/pricing">Pricing</Link>
         </p>
         <p>
           <SocialLink rel="noopener noreferrer" target="_blank" href="https://twitter.com/YourGiftHunt">
@@ -39,8 +38,6 @@ export default () => (
           </SocialLink>
         </p>
         <p>
-          <Link to="/contact">Contact</Link>
-          <span> | </span>
           <Link to="/terms">Terms</Link>
           <span> | </span>
           <Link to="/privacy">Privacy</Link>

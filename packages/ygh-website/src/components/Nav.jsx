@@ -164,7 +164,6 @@ export default () => {
           <NavLink index={0} to="/about">About</NavLink>
           <NavLink index={1} to="/blog">Blog</NavLink>
           <NavLink index={2} to="/pricing">Pricing</NavLink>
-          <NavLink index={2} to="/faq">FAQ</NavLink>
         </Menu>
       </Wrapper>
     </Nav>
