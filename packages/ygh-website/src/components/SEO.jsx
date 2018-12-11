@@ -65,7 +65,9 @@ const SEO = ({ config, postNode }) => {
 
   return (
     <Helmet>
+      <html lang="en" />
       {/* General tags */}
+      <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="image" content={image} />
 

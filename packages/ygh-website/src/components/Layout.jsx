@@ -7,7 +7,7 @@ import Nav from 'components/Nav'
 import Body from 'components/Body'
 import Footer from 'components/Footer'
 
-const TemplateWrapper = ({ children }) => (
+const Layout = ({ children, ...rest }) => (
   <StaticQuery
     query={graphql`
       query HeadingQuery {
@@ -31,7 +31,7 @@ const TemplateWrapper = ({ children }) => (
       <>
         <SEO config={data.site.siteMetadata} />
         <Theme>
-          <Nav />
+          <Nav {...rest} />
           <Body>{children}</Body>
           <Footer />
         </Theme>
@@ -40,4 +40,4 @@ const TemplateWrapper = ({ children }) => (
   />
 )
 
-export default TemplateWrapper
+export default Layout

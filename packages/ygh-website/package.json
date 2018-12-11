@@ -4,9 +4,10 @@
   "version": "0.2.0",
   "author": "Wouter Raateland",
   "dependencies": {
+    "@types/styled-components": "^4.1.4",
     "babel-plugin-styled-components": "^1.9.2",
     "dotenv": "^6.1.0",
-    "gatsby": "^2.0.63",
+    "gatsby": "^2.0.64",
     "gatsby-image": "^2.0.10",
     "gatsby-plugin-drift": "^1.0.0",
     "gatsby-plugin-feed": "^2.0.11",

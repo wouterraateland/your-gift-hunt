@@ -1,5 +1,3 @@
-import 'utils/RHLFix'
-
 import React from 'react'
 import { graphql } from 'gatsby'
 

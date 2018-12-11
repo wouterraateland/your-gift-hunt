@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 const Column = styled.div`
   display: block;
-  float: left;
   padding-left: ${props => props.theme.columns.gap};
   padding-right: ${props => props.theme.columns.gap};
 

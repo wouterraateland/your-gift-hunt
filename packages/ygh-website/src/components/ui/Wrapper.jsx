@@ -5,6 +5,8 @@ const Wrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
 
+  flex-grow: 1;
+
   ${props => !props.nopadding && css`
     padding-left: 2rem;
     padding-right: 2rem;

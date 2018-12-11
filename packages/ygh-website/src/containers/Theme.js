@@ -26,6 +26,8 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html {
+    overflow-x: hidden;
+
     @media (max-width: 30em) {
       font-size: 90%;
     }
@@ -46,6 +48,11 @@ export const GlobalStyles = createGlobalStyle`
     color: ${theme.color.text};
   }
 
+  form {
+    margin-left: -.79em;
+    margin-right: -.79em;
+  }
+
   input, textarea, select, button {
     font: inherit;
     background: transparent;
@@ -53,13 +60,21 @@ export const GlobalStyles = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     color: ${theme.color.emphasis};
+    font-weight: normal;
+
+    max-width: 25em;
   }
 
   strong {
     color: ${theme.color.emphasis};
   }
 
+  p {
+    max-width: 35em;
+  }
+
   hr {
+    clear: both;
     height: .1em;
     background: linear-gradient(90deg, transparent, ${transparentize(.5, theme.color.text)}, transparent);
   }

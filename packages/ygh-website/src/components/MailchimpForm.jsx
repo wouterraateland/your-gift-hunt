@@ -21,7 +21,6 @@ const MailchimpForm = ({ status, message, subscribe }) => {
         disabled={status === 'sending'}
         onSubmit={handleOnSubmit}
       >
-        <p>Subscribe to our newsletter to stay up to date on the newest of the newest.</p>
         <Field>
           <Input
             label="you@example.com"
@@ -32,7 +31,8 @@ const MailchimpForm = ({ status, message, subscribe }) => {
         </Field>
         <Field>
           <Button
-            primary
+            importance="primary"
+            color="accent"
             type="submit"
           >Subscribe</Button>
         </Field>

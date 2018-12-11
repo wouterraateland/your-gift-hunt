@@ -1,7 +1,6 @@
-import 'utils/RHLFix'
-
 import React from 'react'
 import { graphql } from 'gatsby'
+
 import PostPage from 'components/PostPage'
 
 const AuthorRoute = ({ data, pageContext }) =>

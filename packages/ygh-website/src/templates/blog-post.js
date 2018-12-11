@@ -71,10 +71,15 @@ const BlogPost = ({ data }) => {
         contentComponent={HTMLContent}
         helmet={
           <Helmet
-            titleTemplate="%s | Blog"
+            titleTemplate="%s | Your Gift Hunt Blog"
           >
-            <title>{`${post.frontmatter.title}`}</title>
-            <meta name="description" content={`${post.frontmatter.description}`} />
+            <title>{post.frontmatter.title}</title>
+            <meta
+              name="description"
+              content={post.frontmatter.description
+                ? post.frontmatter.description
+                : post.excerpt}
+            />
           </Helmet>
         }
         slug={post.fields.slug}

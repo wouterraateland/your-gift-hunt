@@ -1,19 +1,25 @@
-import 'utils/RHLFix'
-
 import { kebabCase } from 'lodash'
 import React from 'react'
 import { Link, StaticQuery, graphql } from 'gatsby'
+import Helmet from 'react-helmet'
 
 import Layout from 'components/Layout'
-import Wrapper from 'components/ui/Wrapper'
-import Column from 'components/ui/Column'
-import Row from 'components/ui/Row'
+import { Header, Wrapper, Row, Column } from 'components/ui'
 
 import MailchimpForm from 'components/MailchimpForm'
 import PostList from 'components/PostList'
 
 const PostPageWithCategories = ({ postEdges, categories, filter }) => (
-  <Layout>
+  <Layout dark>
+    <Helmet titleTemplate="%s | Your Gift Hunt Blog">
+      <title>{filter ? filter : 'All stories'}</title>
+    </Helmet>
+    <Header>
+      <article>
+        <h1>Blog</h1>
+        <p>We write about new features, incredible puzzles and amazing gifts. <a href="#subscribe">Subscribe to our newsletter</a> for early access and the latest posts.</p>
+      </article>
+    </Header>
     <Wrapper xlarge>
       <Row>
         <Column size={8} mSize={12}>
@@ -25,17 +31,17 @@ const PostPageWithCategories = ({ postEdges, categories, filter }) => (
           <PostList postEdges={postEdges} detailed />
         </Column>
         <Column size={4} mSize={12}>
-          <p><strong>Newsletter</strong></p>
+          <h3 id="#subscribe">Newsletter</h3>
           <MailchimpForm />
           {!filter && (
             <>
-              <p><strong>Categories</strong></p>
+              <h3>Categories</h3>
               {categories.map(category => (
-                <h3 key={category.fieldValue}>
+                <p key={category.fieldValue}>
                   <Link to={`/categories/${kebabCase(category.fieldValue)}/`}>
                     {category.fieldValue}
                   </Link>
-                </h3>
+                </p>
               ))}
             </>
           )}

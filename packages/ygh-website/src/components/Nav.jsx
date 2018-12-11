@@ -1,80 +1,71 @@
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
-import { darken } from 'polished'
+import { lighten, darken } from 'polished'
 import { Link } from 'gatsby'
 
-import Wrapper from 'components/ui/Wrapper'
-import Float from 'components/ui/Float'
+import { Wrapper, Float } from 'components/ui'
+import { Logo } from 'components/icons'
 
-import logoThumb from 'images/logo-thumb-light.svg'
-
-const Nav = styled.nav`
-  position: fixed;
-  left: 0; top: 0;
-  right: 0;
-  z-index: 1;
-
-  height: 4rem;
-  line-height: 1;
-  font-size: 1rem;
-
-  background-color: #000;
+const StyledLink = styled(Link)`
+  color: inherit;
+  &:hover {
+    color: inherit;
+  }
 `
 
-const Img = styled.img`
-  display: block;
-  height: 1.5em;
-  margin: 1.25em 0;
+const StyledLogo = styled(Logo)`
+  margin: 1em 0;
 `
 
-const NavLink = styled(Link)`
-  padding: 1.5rem 0;
+const NavLink = styled(StyledLink)`
+  padding: 2.5rem 0;
   margin-left: 2rem;
 
-  color: #fff;
+  opacity: ${props => props.importance === 'primary' ? 1 : .8};
 
   &:hover {
-    color: ${darken(.1, '#fff')};
+    opacity: ${props => props.importance === 'primary' ? .8 : .6};
   }
 
-  ${props => props.primary && css`
+  ${props => props.importance === 'primary' && css`
     font-weight: bold;
-    color: ${props => props.theme.color.accent};
+
+    &::after {
+      content: '→';
+      margin-left: .5em;
+    }
+  `}
+
+  color: inherit;
+
+  @media (max-width: 45em) {
+    display: block;
+    width: 10em;
+    padding: 1em;
+    margin-left: 0;
+
+    &:nth-child(2n) {
+      background-color: #0001;
+    }
+
+    opacity: 1 !important;
+
+    color: ${lighten(.2, '#000')};
 
     &:hover {
-      color: ${props => darken(.1, props.theme.color.accent)};
-    }
-  `}
-
-  ${props => !props.primary && css`
-    @media (max-width: 45em) {
-      display: block;
-      margin-left: 0;
-
-      text-align: center;
-
-      background-color: #000;
-
-      transition:
-        padding .2s ease-out,
-        opacity .2s ease-out,
-        font-size .2s ease-out;
-
-      transition-delay: ${props => props.index * .1}s;
-
-      will-change: padding, opacity, font-size;
-    }
-  `}
-
-  ${props => props.primary && css`
-    @media (max-width: 30em) {
-      margin-left: 0;
+      background-color: #0002;
     }
 
-    @media (max-width: 23em) {
-      font-size: .8em;
-    }
-  `}
+    ${props => props.importance === 'primary' && css`
+      && {
+        background-color: ${props.theme.color.accent};
+      }
+
+      &:hover {
+        background-color: ${darken(.1, props.theme.color.accent)};
+      }
+    `}
+  }
 `
 
 const MenuToggle = styled.div`
@@ -82,15 +73,18 @@ const MenuToggle = styled.div`
     cursor: pointer;
 
     position: relative;
+    z-index: 1;
 
     display: inline-block;
     width: 1.5rem;
     height: 1.5rem;
     margin: 1.25rem 0 1.25rem 1rem;
 
-    background: linear-gradient(#fff, #fff) no-repeat center / 100% .15rem;
+    background: linear-gradient(currentColor, currentColor) no-repeat center / 100% .15rem;
 
-    transition: background-size .4s ease-out;
+    transition:
+      color ${props => props.open ? 1 : .2}s ${props => props.open ? .2 : 0}s ease-out,
+      background-size .4s ease-out;
 
     &::before,
     &::after {
@@ -104,7 +98,7 @@ const MenuToggle = styled.div`
       height: .15rem;
       margin: auto;
 
-      background-color: #fff;
+      background-color: currentColor;
 
       transition: transform .4s ease-out;
     }
@@ -113,6 +107,8 @@ const MenuToggle = styled.div`
     &::after { transform: translate(0, -.5rem); }
 
     ${props => props.open && css`
+      color: #fff;
+
       background-size: 0 0;
 
       &::before { transform: rotate(225deg); }
@@ -124,16 +120,18 @@ const MenuToggle = styled.div`
 const Menu = styled.div`
   @media (max-width: 45em) {
     position: absolute;
-    left: 0; top: 4rem;
-    right: 0;
+    top: 4em;
+    right: 1em;
 
-    ${props => !props.open && css`
-      ${NavLink} {
-        font-size: 0;
-        opacity: 0;
-        padding: 0;
-      }
-    `}
+    background: #fff;
+    box-shadow: 0 0 60em 60em ${props => props.open ? '#0004' : '#0000'};
+
+    transform-origin: 80% 0;
+    transform: scale(${props => props.open ? 1 : 0});
+
+    transition:
+      transform .2s ${props => props.open ? 0 : .2}s ease-out,
+      box-shadow ${props => props.open ? 1 : .2}s ${props => props.open ? .2 : 0}s ease-out;
   }
 
   @media (min-width: 45em) {
@@ -141,7 +139,39 @@ const Menu = styled.div`
   }
 `
 
-export default () => {
+const Nav = styled.nav`
+  position: absolute;
+  left: 0; top: 0;
+  right: 0;
+  z-index: 1;
+
+  height: 6em;
+  line-height: 1;
+
+  color: ${props => props.dark ? '#fff' : '#000'};
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  ${props => props.index && css `
+    @media (max-width: 45rem) {
+      color: #fff;
+    }
+  `}
+
+  ${props => props.index && css`
+    @media (min-width: 45rem) {
+      ${Menu} {
+        color: #fff;
+      }
+    }
+  `}
+`
+
+export default props => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   function toggleMenu() {
@@ -149,21 +179,21 @@ export default () => {
   }
 
   return (
-    <Nav>
-      <Wrapper>
+    <Nav {...props}>
+      <Wrapper xlarge>
         <Float.Left>
-          <Link to="/">
-            <Img src={logoThumb} alt="Your Gift Hunt" />
-          </Link>
+          <StyledLink to="/">
+            <StyledLogo size={4} />
+          </StyledLink>
         </Float.Left>
         <Float.Right>
-          <NavLink primary to="/demo">Play a Demo Hunt for free</NavLink>
           <MenuToggle open={menuOpen} onClick={toggleMenu} />
         </Float.Right>
         <Menu open={menuOpen}>
-          <NavLink index={0} to="/about">About</NavLink>
-          <NavLink index={1} to="/blog">Blog</NavLink>
-          <NavLink index={2} to="/pricing">Pricing</NavLink>
+          <NavLink to="/about">About</NavLink>
+          <NavLink to="/blog">Blog</NavLink>
+          <NavLink to="/login">Log in</NavLink>
+          <NavLink to="/signup" importance="primary">Sign up</NavLink>
         </Menu>
       </Wrapper>
     </Nav>

@@ -6,41 +6,47 @@ const Button = styled.button`
 
   display: inline-block;
   padding: .85em .7em;
-  border: none;
   border-radius: ${props => props.theme.borderRadius}px;
 
   line-height: 1;
   vertical-align: middle;
   font-weight: bold;
 
-  background-color: #fff;
-  color: ${props => props.theme.color.emphasis};
-
   transition: background-color .2s ease-out;
 
-  &:hover {
-    background-color: ${darken(.1, '#fff')};
-  }
+  ${props => {
+    let color;
 
-  ${props => props.primary && css`
-    background-color: ${props => props.theme.color.emphasis};
-    color: #fff;
-
-    &:hover {
-      background-color: ${props => opacify(.3, props.theme.color.emphasis)};
-      color: #fff;
+    switch (props.color) {
+      case 'accent': color = darken(.1, props.theme.color.accent); break;
+      case 'error': color = props.theme.color.error; break;
+      case 'warning': color = props.theme.color.warning; break;
+      case 'success': color = props.theme.color.success; break;
+      default: color = props.theme.color.emphasis; break;
     }
-  `}
 
-  ${props => props.warning && css`
-    background-color: ${props => props.theme.color.warning};
-    color: #fff;
+    return props.importance === 'primary'
+      ? css`
+          border: none;
 
-    &:hover {
-      background-color: ${props => darken(.1, props.theme.color.warning)};
-      color: #fff;
-    }
-  `}
+          background-color: ${color};
+          color: ${props.theme.color.emphasis};
+
+          &:hover {
+            background-color: ${opacify(.3, darken(.1, color))};
+          }
+        `
+      : css`
+          border: .1em solid;
+
+          background-color: #fff;
+          color: ${color};
+
+          &:hover {
+            background-color: ${darken(.1, '#fff')};
+          }
+        `
+  }}
 
   ${props => props.block && css`
     display: block;
