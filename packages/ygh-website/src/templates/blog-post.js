@@ -6,7 +6,7 @@ import { graphql, Link } from 'gatsby'
 
 import Layout from 'components/Layout'
 import Content, { HTMLContent } from 'components/Content'
-import Wrapper from 'components/ui/Wrapper'
+import { Wrapper, Article } from 'components/ui'
 import MailchimpForm from 'components/MailchimpForm'
 import Disqus from 'components/Disqus'
 
@@ -25,7 +25,7 @@ export const BlogPostTemplate = ({
   return (
     <Wrapper medium>
       {helmet || null}
-      <article>
+      <Article>
         <small>
           <span>By </span>
           <Link to={`/authors/${kebabCase(author)}`}>{author}</Link>
@@ -36,9 +36,10 @@ export const BlogPostTemplate = ({
         </small>
         <h1>{title}</h1>
         <PostContent content={content} />
-      </article>
+      </Article>
       <hr />
       <h2>Newsletter</h2>
+      <p>Liked this story? Subscribe to our newsletter for early access and our latest stories.</p>
       <MailchimpForm />
       <hr />
       <Disqus

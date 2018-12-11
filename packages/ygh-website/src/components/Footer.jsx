@@ -9,7 +9,8 @@ import { Logo, Twitter, Facebook } from 'components/icons'
 
 const Footer = styled.footer`
   font-size: smaller;
-  margin-top: 1.58em;
+  margin-top: 4em;
+  padding-bottom: 3em;
 
   box-shadow:
     inset 0 -.5em ${props => props.theme.color.accent},

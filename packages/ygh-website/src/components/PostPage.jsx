@@ -17,7 +17,7 @@ const PostPageWithCategories = ({ postEdges, categories, filter }) => (
     <Header>
       <article>
         <h1>Blog</h1>
-        <p>We write about new features, incredible puzzles and amazing gifts. <a href="#subscribe">Subscribe to our newsletter</a> for early access and the latest posts.</p>
+        <p>We write about new features, incredible puzzles and amazing gifts. <a href="#subscribe">Subscribe to our newsletter</a> for early access and our latest stories.</p>
       </article>
     </Header>
     <Wrapper xlarge>

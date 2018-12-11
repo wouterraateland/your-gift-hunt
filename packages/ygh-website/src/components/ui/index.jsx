@@ -1,4 +1,5 @@
 export { default as Align } from './Align'
+export { default as Article } from './Article'
 export { default as Button } from './Button'
 export { default as Column } from './Column'
 export { default as Field } from './Field'

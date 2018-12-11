@@ -5,6 +5,8 @@ const Column = styled.div`
   padding-left: ${props => props.theme.columns.gap};
   padding-right: ${props => props.theme.columns.gap};
 
+  direction: ${props => props.rtl ? 'rtl' : 'ltr'};
+
   width: ${props => 100 * props.size / props.theme.columns.count}%;
 
   @media (max-width: 30em) {

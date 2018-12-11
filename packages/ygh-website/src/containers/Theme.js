@@ -61,16 +61,10 @@ export const GlobalStyles = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     color: ${theme.color.emphasis};
     font-weight: normal;
-
-    max-width: 25em;
   }
 
   strong {
     color: ${theme.color.emphasis};
-  }
-
-  p {
-    max-width: 35em;
   }
 
   hr {
@@ -93,17 +87,13 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
+  article {
+    max-width: 35em;
+  }
+
   article a {
     text-decoration: underline;
     text-decoration-color: ${transparentize(.5, theme.color.text)};
-  }
-
-  article {
-    font-size: 21px;
-
-    @media (max-width: 45em) {
-      font-size: 18px;
-    }
   }
 
   svg {
