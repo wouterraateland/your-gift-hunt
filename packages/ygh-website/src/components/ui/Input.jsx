@@ -5,7 +5,7 @@ import { transparentize } from 'polished'
 const Label = styled.label`
   position: relative;
 
-  display: inline-block;
+  display: ${props => props.block ? 'block' : 'inline-block'};
   padding: .5em .7em;
   border: .1em solid ${props => transparentize(.5, props.theme.color.text)};
 
@@ -73,11 +73,16 @@ const Input = styled.input`
 
 Input.displayName = 'Input'
 
-export default ({ label, ...rest }) => (
+const ErrorMessage = styled.small`
+  color: ${props => props.theme.color.error};
+`
+
+export default ({ label, error, ...rest }) => (
   <>
     <Label block={rest.block}>
       <Input {...rest}/>
       <MemoizedLabelText up={rest.value !== ''}>{label}</MemoizedLabelText>
     </Label>
+    {!!error && <ErrorMessage>{error}</ErrorMessage>}
   </>
 )

@@ -2,13 +2,14 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { graphql } from 'gatsby'
 
-import Layout from 'components/Layout'
-import IndexHeader from 'components/IndexHeader'
 import { Wrapper, Row, Column, Align } from 'components/ui'
 import PreviewCompatibleImage from 'components/PreviewCompatibleImage'
-import CTA from 'components/CTA'
-import Trail from 'components/Trail'
-import Cross from 'components/Cross'
+
+import Layout from 'components/landing/Layout'
+import IndexHeader from 'components/landing/IndexHeader'
+import CTA from 'components/landing/CTA'
+import Trail from 'components/landing/Trail'
+import Cross from 'components/landing/Cross'
 
 import map from 'images/map.svg'
 
@@ -35,8 +36,12 @@ const WrapperWithMap = styled(Wrapper)`
 `
 
 const StyledPreviewCompatibleImage = styled(PreviewCompatibleImage)`
-  width: 250%;
+  width: 100%;
   border-radius: 260% 120% 190% 250% / 250% 210% 180% 190%;
+
+  @media (min-width: 45em) {
+    width: 250%;
+  }
 `
 
 export default ({ data }) => {

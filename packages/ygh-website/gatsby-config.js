@@ -1,12 +1,12 @@
 const proxy = require('http-proxy-middleware')
 const config = require('./site-config')
 const urljoin = require('url-join')
+const dotenv = require('dotenv')
 
 const activeEnv = process.env.ACTIVE_ENV || process.env.NODE_ENV || 'development'
 
-require('dotenv').config({
-  path: `.env.${activeEnv}`,
-})
+dotenv.config({ path: `.env` })
+dotenv.config({ path: `.env.${activeEnv}` })
 
 module.exports = {
   developMiddleware: app => (
@@ -73,6 +73,14 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-source-shopify',
+      options: {
+        shopName: process.env.SHOPIFY_STOREFRONT_SHOP_NAME,
+        accessToken: process.env.SHOPIFY_STOREFRONT_API_KEY,
+        verbose: activeEnv === 'development',
+      },
+    },
+    {
       resolve: 'gatsby-plugin-root-import',
       options: {
         content: `${__dirname}/content`,
@@ -129,6 +137,10 @@ module.exports = {
       options: {
         trackingId: config.googleAnalyticsID
       }
+    },
+    {
+      resolve: "gatsby-plugin-create-client-paths",
+      options: { prefixes: ['/creator/*'] }
     },
     "gatsby-plugin-sitemap",
     {
@@ -235,6 +247,7 @@ module.exports = {
       resolve: 'gatsby-plugin-netlify-cms',
       options: {
         modulePath: `${__dirname}/src/cms/cms.js`,
+        enableIdentityWidget: false,
       },
     },
     'gatsby-plugin-netlify', // make sure to keep it last in the array

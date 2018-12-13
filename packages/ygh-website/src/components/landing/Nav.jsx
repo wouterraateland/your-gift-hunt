@@ -192,8 +192,8 @@ export default props => {
         <Menu open={menuOpen}>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/blog">Blog</NavLink>
-          <NavLink to="/login">Log in</NavLink>
-          <NavLink to="/signup" importance="primary">Sign up</NavLink>
+          <NavLink to="/auth/login">Log in</NavLink>
+          <NavLink to="/auth/signup" importance="primary">Sign up</NavLink>
         </Menu>
       </Wrapper>
     </Nav>

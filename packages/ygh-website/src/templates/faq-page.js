@@ -1,12 +1,14 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import Layout from 'components/Layout'
-import { Wrapper } from 'components/ui'
-import Content, { HTMLContent } from 'components/Content'
-import QuestionList from 'components/QuestionList'
+import Helmet from 'react-helmet'
 
-export const FAQPageTemplate = ({ title, content, questions, contentComponent }) => {
+import Content, { HTMLContent } from 'components/Content'
+import { Wrapper } from 'components/ui'
+import Layout from 'components/landing/Layout'
+import QuestionList from 'components/landing/QuestionList'
+
+export const FAQPageTemplate = ({ content, questions, contentComponent }) => {
   const PageContent = contentComponent || Content
 
   return (
@@ -22,9 +24,19 @@ const FAQPage = ({ data }) => {
 
   return (
     <Layout>
+      <Helmet
+        titleTemplate="%s | Your Gift Hunt"
+      >
+        <title>{post.frontmatter.title}</title>
+        <meta
+          name="description"
+          content={post.frontmatter.description
+            ? post.frontmatter.description
+            : post.excerpt}
+        />
+      </Helmet>
       <FAQPageTemplate
         contentComponent={HTMLContent}
-        title={post.frontmatter.title}
         content={post.html}
         questions={post.frontmatter.questions}
       />

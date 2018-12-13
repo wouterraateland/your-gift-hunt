@@ -3,11 +3,12 @@ import React from 'react'
 import { Link, StaticQuery, graphql } from 'gatsby'
 import Helmet from 'react-helmet'
 
-import Layout from 'components/Layout'
 import { Header, Wrapper, Row, Column } from 'components/ui'
 
 import MailchimpForm from 'components/MailchimpForm'
-import PostList from 'components/PostList'
+
+import Layout from 'components/landing/Layout'
+import PostList from 'components/landing/PostList'
 
 const PostPageWithCategories = ({ postEdges, categories, filter }) => (
   <Layout dark>

@@ -5,7 +5,7 @@ import Wrapper from 'components/ui/Wrapper'
 
 import { Row, Column, Hide } from 'components/ui'
 import PreviewCompatibleImage from 'components/PreviewCompatibleImage'
-import CTA from 'components/CTA'
+import CTA from 'components/landing/CTA'
 
 const Header = styled.header`
   padding: 8em 0 2em;
@@ -65,7 +65,7 @@ export default ({ imageInfo }) => {
   return (
     <Header>
       <Wrapper xlarge>
-          <Row rtl>
+          <Row rtl vAlign="top">
             <Column size={7} mSize={12}>
               <StyledPreviewCompatibleImage imageInfo={imageInfo}/>
             </Column>

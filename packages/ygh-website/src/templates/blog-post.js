@@ -4,11 +4,12 @@ import { kebabCase } from 'lodash'
 import Helmet from 'react-helmet'
 import { graphql, Link } from 'gatsby'
 
-import Layout from 'components/Layout'
 import Content, { HTMLContent } from 'components/Content'
-import { Wrapper, Article } from 'components/ui'
 import MailchimpForm from 'components/MailchimpForm'
-import Disqus from 'components/Disqus'
+import { Wrapper, Article } from 'components/ui'
+
+import Layout from 'components/landing/Layout'
+import Disqus from 'components/landing/Disqus'
 
 export const BlogPostTemplate = ({
   content,

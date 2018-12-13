@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Layout from 'components/Layout'
 import { Wrapper } from 'components/ui'
+import Layout from 'components/landing/Layout'
 import Floor from 'components/hunt/objects/Floor'
 
 const FullHeightWrapper = styled(Wrapper)`

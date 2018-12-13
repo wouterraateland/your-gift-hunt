@@ -51,27 +51,27 @@ exports.createPages = ({ actions, graphql }) => {
       })
     })
 
-    // Tag pages:
-    // Iterate through each post, putting all found tags into `tags`
-    // Eliminate duplicate tags
-    const tags = _.uniq(posts.reduce((tags, edge) =>
-      _.get(edge, `node.frontmatter.tags`)
-        ? [...tags, ...edge.node.frontmatter.tags]
-        : tags
-      , []))
-
-    // Make tag pages
-    tags.forEach(tag => {
-      const tagPath = `/tags/${_.kebabCase(tag)}/`
-
-      createPage({
-        path: tagPath,
-        component: path.resolve(`src/templates/tags.js`),
-        context: {
-          tag,
-        },
-      })
-    })
+    // // Tag pages:
+    // // Iterate through each post, putting all found tags into `tags`
+    // // Eliminate duplicate tags
+    // const tags = _.uniq(posts.reduce((tags, edge) =>
+    //   _.get(edge, `node.frontmatter.tags`)
+    //     ? [...tags, ...edge.node.frontmatter.tags]
+    //     : tags
+    //   , []))
+    //
+    // // Make tag pages
+    // tags.forEach(tag => {
+    //   const tagPath = `/tags/${_.kebabCase(tag)}/`
+    //
+    //   createPage({
+    //     path: tagPath,
+    //     component: path.resolve(`src/templates/tags.js`),
+    //     context: {
+    //       tag,
+    //     },
+    //   })
+    // })
 
     // Category pages:
     // Iterate through each post, putting all found categories into `categories`

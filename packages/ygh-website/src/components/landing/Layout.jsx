@@ -2,10 +2,10 @@ import React from 'react'
 import { StaticQuery, graphql } from "gatsby"
 
 import Theme from 'containers/Theme'
-import SEO from 'components/SEO'
-import Nav from 'components/Nav'
-import Body from 'components/Body'
-import Footer from 'components/Footer'
+import SEO from 'components/landing/SEO'
+import Nav from 'components/landing/Nav'
+import Body from 'components/landing/Body'
+import Footer from 'components/landing/Footer'
 
 const Layout = ({ children, ...rest }) => (
   <StaticQuery

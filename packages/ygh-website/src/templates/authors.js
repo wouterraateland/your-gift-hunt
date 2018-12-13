@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import PostPage from 'components/PostPage'
+import PostPage from 'components/landing/PostPage'
 
 const AuthorRoute = ({ data, pageContext }) =>
   <PostPage data={data} filter={pageContext.author} />
