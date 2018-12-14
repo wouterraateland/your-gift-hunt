@@ -151,13 +151,6 @@ export default ({ data }) => {
           </Row>
         </Wrapper>
       </Section>
-      <Section id="cta">
-        <Align.Center>
-          <h2>Be the first to make your own hunt?</h2>
-          <p>Subscribe to our newsletter for early access and our latest stories.</p>
-          <CTA />
-        </Align.Center>
-      </Section>
       <Section darker id="extra">
         <WrapperWithMap xlarge>
           <article>
@@ -166,6 +159,13 @@ export default ({ data }) => {
           </article>
           <sup>*</sup><small>Excluding shipping costs</small>
         </WrapperWithMap>
+      </Section>
+      <Section id="cta">
+        <Align.Center>
+          <h2>Be the first to make your own hunt?</h2>
+          <p>Subscribe to our newsletter for early access and our latest stories.</p>
+          <CTA />
+        </Align.Center>
       </Section>
     </Layout>
   )

@@ -4,7 +4,12 @@ import auth from 'utils/auth'
 import { UserProvider } from 'contexts/User'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+  
   const user = auth.currentUser()
+
   if (!user) {
     navigate(`/auth/login`)
     return null

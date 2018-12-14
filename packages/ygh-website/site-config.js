@@ -4,7 +4,7 @@ module.exports = {
   siteTitleAlt: "Your Gift Hunt", // Alternative site title for SEO.
   siteImage: "/favicons/og-image.jpg", // Logo used for SEO and manifest.
   siteUrl: "https://yourgifthunt.com", // Domain of your website without pathPrefix.
-  pathPrefix: "/", // Prefixes all links. For cases when deployed to example.github.io/gatsby-advanced-starter/.
+  pathPrefix: "", // Prefixes all links. For cases when deployed to example.github.io/gatsby-advanced-starter/.
   siteDescription: "Make your gift a unique adventure with a personal scavenger gift hunt.", // Website description used for RSS feeds/meta description tag.
   siteRss: "/rss.xml", // Path to the RSS file.
   siteFBAppID: "314877482688772", // FB Application ID for using app insights
