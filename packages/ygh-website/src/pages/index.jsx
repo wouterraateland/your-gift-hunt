@@ -10,6 +10,15 @@ import IndexHeader from 'components/landing/IndexHeader'
 import CTA from 'components/landing/CTA'
 import Trail from 'components/landing/Trail'
 import Cross from 'components/landing/Cross'
+import Tip from 'components/landing/Tip'
+import PuzzleTemplate from 'components/landing/PuzzleTemplate'
+
+import location from 'images/icons/location.svg'
+import friend from 'images/icons/friend.svg'
+import time from 'images/icons/time.svg'
+import question from 'images/icons/question.svg'
+import hide from 'images/icons/seek.svg'
+import picture from 'images/icons/picture.svg'
 
 import map from 'images/map.svg'
 
@@ -44,11 +53,26 @@ const StyledPreviewCompatibleImage = styled(PreviewCompatibleImage)`
   }
 `
 
+const IphoneImage = styled(PreviewCompatibleImage)`
+  @media (max-width: 30em) {
+    transform: rotate(90deg);
+    height: calc(100vw - 4em);
+    width: calc(50vw - 2em);
+    margin: -15vw calc(25vw - 1em);
+  }
+`
+
 export default ({ data }) => {
   const headerImageInfo = {
     alt: 'Background',
     image: {
       childImageSharp: data.background.childImageSharp,
+    }
+  }
+  const exciteImageInfo = {
+    alt: 'Excite',
+    image: {
+      childImageSharp: data.excite.childImageSharp,
     }
   }
   const playImageInfo = {
@@ -66,7 +90,7 @@ export default ({ data }) => {
         <Wrapper xlarge>
           <Row>
             <Column rtl size={4} sSize={12}>
-              <StyledPreviewCompatibleImage imageInfo={playImageInfo} />
+              <StyledPreviewCompatibleImage imageInfo={exciteImageInfo} />
             </Column>
             <Column size={8} sSize={12}>
               <h2>Excite</h2>
@@ -89,23 +113,51 @@ export default ({ data }) => {
       <Section id="create">
         <Wrapper xlarge>
           <Row rtl>
-            <Column size={4} sSize={12}>
-                <StyledPreviewCompatibleImage imageInfo={playImageInfo} />
-            </Column>
             <Column size={8} sSize={12}>
-              <h2>1. Create</h2>
-              <p>Choose from a verstile collection of puzle templates and create a unique and personal gift hunt.</p>
+              <article>
+                <h2>1. Create</h2>
+                <p>We created a versatile collection of puzzle templates, so that you can be fully creative and make your unique and personal gift hunt.</p>
+              </article>
               <Row>
-                <Column size={6} sSize={12}>
-                  <h3>Locations</h3>
-                  <p>Using location based puzzles, you can revisit memorable places in the hunt.</p>
+                <Column size={4} sSize={6}>
+                  <PuzzleTemplate
+                    icon={location}
+                    title="Location based puzzles"
+                    exerpt="Revisit memorable and personally meaningful places."
+                  />
                 </Column>
-                <Column size={6} sSize={12}>
-                  <h3>Friends</h3>
-                  <p>Involve your or their friends in the hunt by using friend based puzzles.</p>
+                <Column size={4} sSize={6}>
+                  <PuzzleTemplate
+                    icon={friend}
+                    title="Friend based puzzles"
+                    exerpt="Make the hunt even more fun by involving your or their friends."
+                  />
+                </Column>
+                <Column size={4} sSize={6}>
+                  <PuzzleTemplate
+                    icon={time}
+                    title="Time based puzzles"
+                  />
+                </Column>
+                <Column size={4} sSize={6}>
+                  <PuzzleTemplate
+                    icon={question}
+                    title="Personal questions"
+                  />
+                </Column>
+                <Column size={4} sSize={6}>
+                  <PuzzleTemplate
+                    icon={hide}
+                    title="Hide and seek"
+                  />
+                </Column>
+                <Column size={4} sSize={6}>
+                  <PuzzleTemplate
+                    icon={picture}
+                    title="Picture puzzles"
+                  />
                 </Column>
               </Row>
-              <p><strong>Tip: </strong> A hunt can span multiple days, a few weeks even. Use this to play and to build anticipation for the gift to come.</p>
             </Column>
           </Row>
         </Wrapper>
@@ -115,11 +167,11 @@ export default ({ data }) => {
         <Wrapper xlarge>
           <Row>
             <Column rtl size={4} sSize={12}>
-              <StyledPreviewCompatibleImage imageInfo={playImageInfo} />
+              <IphoneImage imageInfo={playImageInfo} />
             </Column>
             <Column size={8} sSize={12}>
               <h2>2. Play</h2>
-              <p>The hunt </p>
+              <p>The hunt is completely play</p>
               <Row>
                 <Column size={6} sSize={12}>
                   <h3>Track progress</h3>
@@ -130,7 +182,7 @@ export default ({ data }) => {
                   <p>When they are stuck on some puzzle, you can ofcourse help them with hints.</p>
                 </Column>
               </Row>
-              <p><strong>Tip: </strong> A hunt can span multiple days, a few weeks even. Use this to play and to build anticipation for the gift to come.</p>
+              <Tip>A hunt can span multiple days, a few weeks even. Use this to play and to build anticipation for the gift to come.</Tip>
             </Column>
           </Row>
         </Wrapper>
@@ -180,7 +232,14 @@ export const pageQuery = graphql`
         }
       }
     }
-    play: file(relativePath: { eq: "play.jpg" }) {
+    excite: file(relativePath: { eq: "excite.jpg" }) {
+      childImageSharp {
+        fluid(maxWidth: 960, quality: 100) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    play: file(relativePath: { eq: "play.png" }) {
       childImageSharp {
         fluid(maxWidth: 960, quality: 100) {
           ...GatsbyImageSharpFluid
