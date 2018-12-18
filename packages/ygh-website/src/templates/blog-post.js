@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { kebabCase } from 'lodash'
 import Helmet from 'react-helmet'
 import { graphql, Link } from 'gatsby'
+import urljoin from 'url-join'
 
 import Content, { HTMLContent } from 'components/Content'
 import MailchimpForm from 'components/MailchimpForm'
@@ -46,7 +47,6 @@ export const BlogPostTemplate = ({
       <Disqus
         title={title}
         url={slug}
-        category={category}
       />
     </Wrapper>
   )
@@ -64,7 +64,7 @@ BlogPostTemplate.propTypes = {
 }
 
 const BlogPost = ({ data }) => {
-  const { markdownRemark: post } = data
+  const { markdownRemark: post, site } = data
 
   return (
     <Layout>
@@ -84,7 +84,7 @@ const BlogPost = ({ data }) => {
             />
           </Helmet>
         }
-        slug={post.fields.slug}
+        slug={urljoin(site.siteUrl, post.fields.slug)}
         category={post.frontmatter.category}
         author={post.frontmatter.author}
         date={post.frontmatter.date}
@@ -115,6 +115,11 @@ export const pageQuery = graphql`
         title
         author
         category
+      }
+    }
+    site {
+      siteMetadata {
+        siteUrl
       }
     }
   }

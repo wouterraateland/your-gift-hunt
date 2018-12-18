@@ -2,7 +2,11 @@ import React from 'react'
 import ReactDisqusComments from 'react-disqus-comments'
 import { StaticQuery, graphql } from 'gatsby'
 
-const Disqus = ({ title, category, url }) => (
+const Disqus = ({
+  title,
+  categoryId = process.env.DISQUS_DEFAULT_CATEGORY_ID,
+  url
+}) => (
   <StaticQuery
     query={graphql`
       query DisqusQuery {
@@ -19,7 +23,7 @@ const Disqus = ({ title, category, url }) => (
         identifier={title}
         title={title}
         url={url}
-        category_id={category}
+        category_id={categoryId}
       />
     )}
   />
