@@ -2,39 +2,48 @@ import React from 'react'
 import styled from 'styled-components'
 
 const PuzzleTemplate = styled.div`
+  position: relative;
 
-`
+  padding: 1em;
+  margin-bottom: 4em;
+  border-radius: ${props => props.theme.borderRadius};
 
-const Header = styled.div`
-  background-color: #efd9ff;
-  border-radius: .5em;
-`
+  background-color: #3f51b5;
+  color: #fffc;
 
-const Icon = styled.img`
-  display: inline-block;
-  width: 4em;
-  margin-bottom: 0;
+  p {
+    margin: 0;
+  }
 `
 
 const Title = styled.h3`
-  margin: 0;
-  padding: .5em;
+  margin-bottom: .5em;
+
+  color: #fff;
 `
 
-const Body = styled.div`
-  padding: .5em;
-`
+export default ({ icon: Icon, title, exerpt="" }) => {
+  const LeftIcon = styled(Icon)`
+    margin-top: -.5em;
+    margin-left: -.5em;
+  `
 
-export default ({ icon, title, exerpt="" }) => {
+  const Background = styled(Icon)`
+    opacity: .15;
+
+    position: absolute;
+    top: 50%;
+    left: calc(100% - 4em);
+
+    transform: translate(-50%, -50%);
+  `
+
   return (
     <PuzzleTemplate>
-      <Header>
-        <Icon src={icon} alt={title} />
-        <Title>{title}</Title>
-      </Header>
-      <Body>
-        <p>{exerpt}</p>
-      </Body>
+      <LeftIcon size={4} />
+      <Background size={12} />
+      <Title>{title}</Title>
+      <p>{exerpt}</p>
     </PuzzleTemplate>
   )
 }

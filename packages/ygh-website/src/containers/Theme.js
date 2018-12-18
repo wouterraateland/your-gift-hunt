@@ -6,6 +6,7 @@ const theme = {
   color: {
     text:       '#0009',
     emphasis:   '#000d',
+    primary:    '#3f51b5',
     accent:     '#ffd65a',
     error:      '#d34d4e',
     warning:    '#f7a600',
@@ -26,8 +27,6 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    overflow-x: hidden;
-
     @media (max-width: 30em) {
       font-size: 90%;
     }
@@ -42,9 +41,12 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
+    overflow-x: hidden;
+
     padding: 0;
     margin: 0;
 
+    background-color: ${transparentize(.95, theme.color.primary)};
     color: ${theme.color.text};
   }
 

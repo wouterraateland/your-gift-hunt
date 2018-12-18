@@ -23,7 +23,7 @@ const Cross = styled.div`
     height: .2em;
     border-radius: 100% 4% 50% 5% / 40% 10% 40% 70%;
 
-    background: #0008;
+    background: #fa3946;
   }
 
   &::before { transform: rotate(45deg); }

@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import styled, { css } from 'styled-components'
-import { transparentize } from 'polished'
+import { transparentize, opacify, invert } from 'polished'
 
 const Label = styled.label`
   position: relative;
@@ -11,6 +11,8 @@ const Label = styled.label`
 
   line-height: 1;
   vertical-align: middle;
+
+  background-color: ${props => opacify(1, invert(props.theme.color.text))};
 
   ${props => props.block && css`
     width: 100%;

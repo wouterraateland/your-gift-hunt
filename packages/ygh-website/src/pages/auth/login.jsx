@@ -15,7 +15,7 @@ const LoginPage = () => {
     const password = event.target.password.value
 
     try {
-      await auth.login(email, password)
+      await auth.login(email, password, true)
       navigate('/creator')
     } catch (e) {
       if (e.json.error === 'invalid_grant') {

@@ -13,12 +13,14 @@ import Cross from 'components/landing/Cross'
 import Tip from 'components/landing/Tip'
 import PuzzleTemplate from 'components/landing/PuzzleTemplate'
 
-import location from 'images/icons/location.svg'
-import friend from 'images/icons/friend.svg'
-import time from 'images/icons/time.svg'
-import question from 'images/icons/question.svg'
-import hide from 'images/icons/seek.svg'
-import picture from 'images/icons/picture.svg'
+import {
+  Location,
+  Friend,
+  Time,
+  Question,
+  Seek,
+  Picture
+} from 'components/icons'
 
 import map from 'images/map.svg'
 
@@ -29,6 +31,7 @@ const Section = styled.section`
     clear: both;
   }
 
+  position: relative;
   padding: 2em 0;
 
   ${props => props.darker && css`
@@ -44,21 +47,31 @@ const WrapperWithMap = styled(Wrapper)`
   background: url(${map}) no-repeat right bottom / contain;
 `
 
-const StyledPreviewCompatibleImage = styled(PreviewCompatibleImage)`
-  width: 100%;
-  border-radius: 260% 120% 190% 250% / 250% 210% 180% 190%;
-
-  @media (min-width: 45em) {
-    width: 250%;
-  }
-`
-
 const IphoneImage = styled(PreviewCompatibleImage)`
-  @media (max-width: 30em) {
+  @media (max-width: 45em) {
     transform: rotate(90deg);
     height: calc(100vw - 4em);
     width: calc(50vw - 2em);
     margin: -15vw calc(25vw - 1em);
+  }
+`
+
+const BeachSection = styled(Section)`
+  margin-top: 2em;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -10%; top: 0em;
+    right: -10%; bottom: -1em;
+    z-index: -3;
+
+    border-radius: 80% 10% 70% 10% / 20% 10% 100% 10%;
+    box-shadow: 0 -13em 13em -4em #2196f3cc, 0 -4em 4em #3d4fbacc;
+
+    background: linear-gradient(160deg, #ffd65a 30%, transparent 85%);
+
+    transform: skewY(10deg);
   }
 `
 
@@ -85,14 +98,13 @@ export default ({ data }) => {
   return (
     <Layout index>
       <IndexHeader imageInfo={headerImageInfo} />
-      <Trail rtl />
+      <Trail xlarge rtl />
       <Section id="excite">
         <Wrapper xlarge>
           <Row>
-            <Column rtl size={4} sSize={12}>
-              <StyledPreviewCompatibleImage imageInfo={exciteImageInfo} />
+            <Column rtl size={4} mSize={12}>
             </Column>
-            <Column size={8} sSize={12}>
+            <Column size={8} mSize={12}>
               <h2>Excite</h2>
               <p>Build anticipation for the gift to come by playing a scavenger hunt full of puzzles and interpersonal memories.</p>
               <Row>
@@ -109,85 +121,85 @@ export default ({ data }) => {
           </Row>
         </Wrapper>
       </Section>
-      <Trail ltr />
+      <Trail xlarge ltr />
       <Section id="create">
         <Wrapper xlarge>
-          <Row rtl>
-            <Column size={8} sSize={12}>
-              <article>
-                <h2>1. Create</h2>
-                <p>We created a versatile collection of puzzle templates, so that you can be fully creative and make your unique and personal gift hunt.</p>
-              </article>
-              <Row>
-                <Column size={4} sSize={6}>
-                  <PuzzleTemplate
-                    icon={location}
-                    title="Location based puzzles"
-                    exerpt="Revisit memorable and personally meaningful places."
-                  />
-                </Column>
-                <Column size={4} sSize={6}>
-                  <PuzzleTemplate
-                    icon={friend}
-                    title="Friend based puzzles"
-                    exerpt="Make the hunt even more fun by involving your or their friends."
-                  />
-                </Column>
-                <Column size={4} sSize={6}>
-                  <PuzzleTemplate
-                    icon={time}
-                    title="Time based puzzles"
-                  />
-                </Column>
-                <Column size={4} sSize={6}>
-                  <PuzzleTemplate
-                    icon={question}
-                    title="Personal questions"
-                  />
-                </Column>
-                <Column size={4} sSize={6}>
-                  <PuzzleTemplate
-                    icon={hide}
-                    title="Hide and seek"
-                  />
-                </Column>
-                <Column size={4} sSize={6}>
-                  <PuzzleTemplate
-                    icon={picture}
-                    title="Picture puzzles"
-                  />
-                </Column>
-              </Row>
+          <article>
+            <h2>1. Create</h2>
+            <p>We created a versatile collection of puzzle templates, so that you can be fully creative and make your unique and personal gift hunt.</p>
+          </article>
+          <Row vAlign="top">
+            <Column size={4} mSize={6}>
+              <PuzzleTemplate
+                icon={Location}
+                title="Location based challenges"
+                exerpt="Revisit memorable and personally meaningful places."
+              />
+            </Column>
+            <Column size={4} mSize={6}>
+              <PuzzleTemplate
+                icon={Friend}
+                title="Friend based challenges"
+                exerpt="Make the hunt even more fun by involving your or the player's friends."
+              />
+            </Column>
+            <Column size={4} mSize={6}>
+              <PuzzleTemplate
+                icon={Time}
+                title="Time based challenges"
+                exerpt="A challenge on your night out? Just after waking up? you name it."
+              />
+            </Column>
+            <Column size={4} mSize={6}>
+              <PuzzleTemplate
+                icon={Question}
+                title="Personal questions"
+                exerpt="Make sure the player remembers your facts."
+              />
+            </Column>
+            <Column size={4} mSize={6}>
+              <PuzzleTemplate
+                icon={Seek}
+                title="Hide and seek"
+                exerpt="Have the player collect codes and other hints."
+              />
+            </Column>
+            <Column size={4} mSize={6}>
+              <PuzzleTemplate
+                icon={Picture}
+                title="Picture challenges"
+                exerpt="How about a selfie to unlock next challenge..."
+              />
             </Column>
           </Row>
         </Wrapper>
       </Section>
-      <Trail rtl />
-      <Section id="play">
+      <Trail xlarge rtl />
+      <BeachSection id="play">
         <Wrapper xlarge>
           <Row>
-            <Column rtl size={4} sSize={12}>
+            <Column rtl size={4} mSize={12}>
               <IphoneImage imageInfo={playImageInfo} />
             </Column>
-            <Column size={8} sSize={12}>
+            <Column size={8} mSize={12}>
               <h2>2. Play</h2>
               <p>The hunt is completely play</p>
               <Row>
                 <Column size={6} sSize={12}>
                   <h3>Track progress</h3>
-                  <p>You can track their progress using the progress dashboard.</p>
+                  <p>You can track the player's progress using the progress dashboard.</p>
                 </Column>
                 <Column size={6} sSize={12}>
                   <h3>Help with hints</h3>
-                  <p>When they are stuck on some puzzle, you can ofcourse help them with hints.</p>
+                  <p>When the player is stuck on some puzzle, you can of course help them with hints.</p>
                 </Column>
               </Row>
               <Tip>A hunt can span multiple days, a few weeks even. Use this to play and to build anticipation for the gift to come.</Tip>
             </Column>
           </Row>
         </Wrapper>
-      </Section>
-      <Trail ltr />
+      </BeachSection>
+      <Trail xlarge ltr />
       <Section id="give">
         <Wrapper xlarge>
           <Row rtl>
@@ -195,10 +207,10 @@ export default ({ data }) => {
               <Cross />
             </Column>
             <Column size={8} sSize={12}>
-              <Wrapper xlarge>
+              <article>
                 <h2>3. Give</h2>
-                <p>After the hard work of the hunt, it is time to give them what they have been working for. We promise that they will appreciate it more, for they have really earned it.</p>
-              </Wrapper>
+                <p>After the hard work of the hunt, it is time to give the player what he has been working so hard for. We promise that they will appreciate it more, for they have really earned it.</p>
+              </article>
             </Column>
           </Row>
         </Wrapper>

@@ -84,7 +84,7 @@ const BlogPost = ({ data }) => {
             />
           </Helmet>
         }
-        slug={urljoin(site.siteUrl, post.fields.slug)}
+        slug={urljoin(site.siteMetadata.siteUrl, post.fields.slug)}
         category={post.frontmatter.category}
         author={post.frontmatter.author}
         date={post.frontmatter.date}

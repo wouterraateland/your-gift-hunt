@@ -7,7 +7,7 @@ const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: ${props => props.rtl ? 'row-reverse' : 'row'};
-  align-items:  ${props => props.vAlign === 'top' ? 'flex-start' : 'stretch'};
+  align-items:  ${props => props.vAlign === 'top' ? 'stretch' : 'center'};
 `
 
 export default Row

@@ -4,17 +4,23 @@ export { default as Logo } from './Logo'
 export { default as Twitter } from './Twitter'
 export { default as Facebook } from './Facebook'
 
+export { default as Friend } from './challenges/Friend'
+export { default as Location } from './challenges/Location'
+export { default as Picture } from './challenges/Picture'
+export { default as Question } from './challenges/Question'
+export { default as Seek } from './challenges/Seek'
+export { default as Time } from './challenges/Time'
+
 const Icon = styled.svg`
   height: ${props => props.size}em;
 
-  fill: ${props => props.colorFill ? 'currentColor' : 'transparent'};
-  stroke: ${props => props.colorStroke ? 'currentColor' : 'transparent'};
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 0;
 `
 
 Icon.defaultProps = {
   size: 1,
-  colorFill: true,
-  colorStroke: false,
 }
 
 export default Icon
