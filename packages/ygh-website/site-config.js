@@ -2,7 +2,7 @@ module.exports = {
   siteTitle: "Your Gift Hunt", // Site title.
   siteTitleShort: "Your Gift Hunt", // Short site title for homescreen (PWA). Preferably should be under 12 characters to prevent truncation.
   siteTitleAlt: "Your Gift Hunt", // Alternative site title for SEO.
-  siteImage: "/favicons/og-image.jpg", // Logo used for SEO and manifest.
+  siteImage: "/favicons/og-image.png", // Logo used for SEO and manifest.
   siteUrl: "https://yourgifthunt.com", // Domain of your website without pathPrefix.
   pathPrefix: "", // Prefixes all links. For cases when deployed to example.github.io/gatsby-advanced-starter/.
   siteDescription: "Make your gift a unique adventure with a personal scavenger gift hunt.", // Website description used for RSS feeds/meta description tag.

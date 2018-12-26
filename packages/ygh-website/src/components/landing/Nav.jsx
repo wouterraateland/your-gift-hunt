@@ -15,6 +15,23 @@ const StyledLink = styled(Link)`
 
 const StyledLogo = styled(Logo)`
   margin: 1em 0;
+  height: 3em;
+
+  @media (max-width: 45em) {
+    .background { fill: #000; }
+  }
+
+  @media (min-width: 45em) {
+    .background { fill: #fff; }
+  }
+`
+
+const Name = styled.h2`
+  display: inline-block;
+  margin: 1rem 0 1rem 1ch;
+
+  line-height: 3rem;
+  color: inherit;
 `
 
 const NavLink = styled(StyledLink)`
@@ -150,6 +167,8 @@ const Nav = styled.nav`
 
   color: ${props => props.dark ? '#fff' : '#000'};
 
+  .background { fill: ${props => props.dark ? '#000' : '#fff' }; }
+
   &::after {
     content: '';
     display: block;
@@ -184,6 +203,7 @@ export default props => {
         <Float.Left>
           <StyledLink to="/">
             <StyledLogo size={4} />
+            <Name>Your Gift Hunt</Name>
           </StyledLink>
         </Float.Left>
         <Float.Right>

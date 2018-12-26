@@ -9,7 +9,7 @@ const Header = styled.header`
   padding: 8em 0 2em;
 
   background: linear-gradient(#000, #000d);
-  mask: radial-gradient(ellipse 200% 100% at 50% 0%, #fff 99.9%, transparent 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
 
   &, a {
     color: #fffc;

@@ -35,12 +35,11 @@ const Subtitle = styled.p`
 const StyledPreviewCompatibleImage = styled(PreviewCompatibleImage)`
   z-index: -1;
 
-  height: 30em;
-
   @media (max-width: 45em) {
+    height: 30em;
     margin: -8em -4em -22em -4em;
 
-    border-radius: 0 0 100% 100% / 0 0 25% 25%;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
 
     &::after {
       content: '';
@@ -54,10 +53,11 @@ const StyledPreviewCompatibleImage = styled(PreviewCompatibleImage)`
   }
 
   @media (min-width: 45em) {
+    height: 40em;
     margin-right: -10em;
     margin-top: -10em;
 
-    border-radius: 50% 50% 190% 250% / 210% 230% 230% 250%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 70%);
   }
 `
 

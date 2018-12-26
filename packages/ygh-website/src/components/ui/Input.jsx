@@ -6,6 +6,7 @@ const Label = styled.label`
   position: relative;
 
   display: ${props => props.block ? 'block' : 'inline-block'};
+  max-width: 100%;
   padding: .5em .7em;
   border: .1em solid ${props => transparentize(.5, props.theme.color.text)};
 

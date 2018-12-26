@@ -21,13 +21,12 @@ const Cross = styled.div`
 
     width: 1em;
     height: .2em;
-    border-radius: 100% 4% 50% 5% / 40% 10% 40% 70%;
 
     background: #fa3946;
   }
 
-  &::before { transform: rotate(45deg); }
-  &::after { transform: rotate(-45deg); }
+  &::before { transform: scale(1, .52) rotate(45deg); }
+  &::after { transform: scale(1, .52) rotate(-45deg); }
 `
 
 export default Cross

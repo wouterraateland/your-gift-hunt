@@ -6,6 +6,7 @@ const Field = styled.div`
     & { padding: .79em; }
   `}
 
+  max-width: 100%;
   padding: .79em 0;
 `
 

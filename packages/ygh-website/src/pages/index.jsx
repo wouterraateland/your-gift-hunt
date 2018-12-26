@@ -12,6 +12,7 @@ import Trail from 'components/landing/Trail'
 import Cross from 'components/landing/Cross'
 import Tip from 'components/landing/Tip'
 import PuzzleTemplate from 'components/landing/PuzzleTemplate'
+import Present from 'components/landing/Present'
 
 import {
   Location,
@@ -48,12 +49,8 @@ const WrapperWithMap = styled(Wrapper)`
 `
 
 const IphoneImage = styled(PreviewCompatibleImage)`
-  @media (max-width: 45em) {
-    transform: rotate(90deg);
-    height: calc(100vw - 4em);
-    width: calc(50vw - 2em);
-    margin: -15vw calc(25vw - 1em);
-  }
+  max-width: 10em;
+  margin: 0 auto 2em;
 `
 
 const BeachSection = styled(Section)`
@@ -66,13 +63,37 @@ const BeachSection = styled(Section)`
     right: -10%; bottom: -1em;
     z-index: -3;
 
-    border-radius: 80% 10% 70% 10% / 20% 10% 100% 10%;
-    box-shadow: 0 -13em 13em -4em #2196f3cc, 0 -4em 4em #3d4fbacc;
+    ${'' /* box-shadow: 0 -13em 13em -4em #2196f3cc, 0 -4em 4em #3d4fbacc; */}
 
-    background: linear-gradient(160deg, #ffd65a 30%, transparent 85%);
+    background: linear-gradient(160deg, #ffd65a 30%, transparent 90%);
 
     transform: skewY(10deg);
   }
+`
+
+const RelativeColumn = styled(Column)`
+  position: relative;
+  margin: 4em 0 2em;
+`
+
+const PresentOne = styled(Present)`
+  position: absolute;
+  top: -8em;
+  right: 1em;
+
+  width: 7em;
+`
+
+const PresentTwo = styled(PresentOne)`
+  top: 4em;
+  right: -3em;
+  width: 10em;
+`
+
+const PresentThree = styled(PresentOne)`
+  top: 10em;
+  right: 6em;
+  width: 5em;
 `
 
 export default ({ data }) => {
@@ -80,12 +101,6 @@ export default ({ data }) => {
     alt: 'Background',
     image: {
       childImageSharp: data.background.childImageSharp,
-    }
-  }
-  const exciteImageInfo = {
-    alt: 'Excite',
-    image: {
-      childImageSharp: data.excite.childImageSharp,
     }
   }
   const playImageInfo = {
@@ -102,8 +117,6 @@ export default ({ data }) => {
       <Section id="excite">
         <Wrapper xlarge>
           <Row>
-            <Column rtl size={4} mSize={12}>
-            </Column>
             <Column size={8} mSize={12}>
               <h2>Excite</h2>
               <p>Build anticipation for the gift to come by playing a scavenger hunt full of puzzles and interpersonal memories.</p>
@@ -178,18 +191,18 @@ export default ({ data }) => {
       <BeachSection id="play">
         <Wrapper xlarge>
           <Row>
-            <Column rtl size={4} mSize={12}>
+            <Column rtl size={4} sSize={6}>
               <IphoneImage imageInfo={playImageInfo} />
             </Column>
-            <Column size={8} mSize={12}>
+            <Column size={8} sSize={12}>
               <h2>2. Play</h2>
-              <p>The hunt is completely play</p>
+              <p>The hunt is playable completely from the app. You can track the players progress and help them with hints.</p>
               <Row>
-                <Column size={6} sSize={12}>
+                <Column size={6} mSize={12}>
                   <h3>Track progress</h3>
                   <p>You can track the player's progress using the progress dashboard.</p>
                 </Column>
-                <Column size={6} sSize={12}>
+                <Column size={6} mSize={12}>
                   <h3>Help with hints</h3>
                   <p>When the player is stuck on some puzzle, you can of course help them with hints.</p>
                 </Column>
@@ -203,9 +216,12 @@ export default ({ data }) => {
       <Section id="give">
         <Wrapper xlarge>
           <Row rtl>
-            <Column size={4} sSize={12}>
+            <RelativeColumn size={4} sSize={12}>
               <Cross />
-            </Column>
+              <PresentOne />
+              <PresentTwo />
+              <PresentThree />
+            </RelativeColumn>
             <Column size={8} sSize={12}>
               <article>
                 <h2>3. Give</h2>
@@ -238,13 +254,6 @@ export default ({ data }) => {
 export const pageQuery = graphql`
   query IndexQuery {
     background: file(relativePath: { eq: "background.jpg" }) {
-      childImageSharp {
-        fluid(maxWidth: 960, quality: 100) {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    excite: file(relativePath: { eq: "excite.jpg" }) {
       childImageSharp {
         fluid(maxWidth: 960, quality: 100) {
           ...GatsbyImageSharpFluid
