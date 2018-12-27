@@ -1,8 +1,11 @@
 import React from 'react'
+import Theme from 'containers/Theme'
 
 const App = () => {
   return (
-    <div>Creator Your Gift Hunt</div>
+    <Theme>
+      <div>Creator Your Gift Hunt</div>
+    </Theme>
   )
 }
 

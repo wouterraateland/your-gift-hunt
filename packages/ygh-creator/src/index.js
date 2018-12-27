@@ -1,3 +1,6 @@
+import 'typeface-playfair-display'
+import 'typeface-montserrat'
+
 import React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
