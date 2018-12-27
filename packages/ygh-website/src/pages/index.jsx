@@ -13,6 +13,7 @@ import Cross from 'components/landing/Cross'
 import Tip from 'components/landing/Tip'
 import PuzzleTemplate from 'components/landing/PuzzleTemplate'
 import Present from 'components/landing/Present'
+import Tree from 'components/landing/Tree'
 
 import {
   Location,
@@ -128,6 +129,34 @@ const PresentThree = styled(PresentOne)`
   width: 5em;
 `
 
+const IphoneColumn = styled(Column)`
+  position: relative;
+`
+
+const TreeOne = styled(Tree)`
+  position: absolute;
+  bottom: 3em;
+  left: calc(50% + 3em);
+
+  width: 2em;
+
+  filter: drop-shadow(-.5rem .5rem .5rem #0004);
+`
+
+const TreeTwo = styled(TreeOne)`
+  bottom: 2em;
+  left: 50%;
+
+  width: 3em;
+`
+
+const TreeThree = styled(TreeOne)`
+  bottom: 1em;
+  left: calc(50% + 1em);
+
+  width: 1.7em;
+`
+
 export default ({ data }) => {
   const headerImageInfo = {
     alt: 'Background',
@@ -223,9 +252,12 @@ export default ({ data }) => {
       <Section id="play">
         <Wrapper>
           <Row>
-            <Column rtl size={4} sSize={6}>
+            <IphoneColumn rtl size={4} sSize={6}>
               <IphoneImage imageInfo={playImageInfo} />
-            </Column>
+              <TreeOne />
+              <TreeTwo />
+              <TreeThree />
+            </IphoneColumn>
             <Column size={8} sSize={12}>
               <h2>2. Play</h2>
               <p>The hunt is playable completely from the app. You can track the players progress and help them with hints.</p>

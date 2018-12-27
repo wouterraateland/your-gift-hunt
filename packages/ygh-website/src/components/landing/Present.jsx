@@ -1,14 +1,5 @@
 import React from 'react'
-import * as polished from 'polished'
-import { Box } from 'utils/functionals'
-
-const darken = (amount, color) => {
-  // const { hue } = polished.parseToHsl(color)
-  return Box(color)
-    .map(c => polished.adjustHue(360 - amount * 100, c))
-    .map(c => polished.darken(amount, c))
-    .value()
-}
+import { darken } from 'utils/colors'
 
 const Present = ({ boxColor='#fff', ribbonColor='#e60202', ...props }) => (
   <svg {...props} viewBox="0 0 56 67">
