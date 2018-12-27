@@ -9,10 +9,11 @@ import CTA from 'components/landing/CTA'
 
 const Header = styled.header`
   padding: 8em 0 2em;
-  margin: -8em 0 -16em;
+  margin: -8em 0 -4em;
 
   @media (max-width: 45em) {
     height: 30em;
+    margin-bottom: 4em;
   }
 `
 

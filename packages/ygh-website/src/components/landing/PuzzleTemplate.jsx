@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const PuzzleTemplate = styled.div`
   position: relative;
@@ -24,8 +24,16 @@ const Title = styled.h3`
 
 export default ({ icon: Icon, title, exerpt="" }) => {
   const LeftIcon = styled(Icon)`
-    margin-top: -.5em;
-    margin-left: -.5em;
+    position: relative;
+
+    margin-bottom: 1em;
+
+    color: #fff;
+    background-color: #366dc7;
+    box-shadow: -1em .5em 1.5em -.5em #0004;
+
+    transform-origin: left;
+    transform: skewY(-30deg) scale(.82, 1);
   `
 
   const Background = styled(Icon)`

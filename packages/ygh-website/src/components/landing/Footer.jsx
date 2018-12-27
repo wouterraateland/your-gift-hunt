@@ -12,9 +12,14 @@ const Footer = styled.footer`
   margin-top: 4em;
   padding-bottom: 3em;
 
-  box-shadow:
-    inset 0 -.5em ${props => props.theme.color.accent},
-    inset 0 -1em ${props => transparentize(.5, props.theme.color.accent)};
+
+  background: linear-gradient(
+    30deg,
+    ${props => props.theme.color.accent} 10em,
+    ${props => transparentize(.5, props.theme.color.accent)} 10em,
+    ${props => transparentize(.5, props.theme.color.accent)} 12em,
+    transparent 4em
+  );
 `
 
 const FooterLogo = styled(Logo)`
@@ -28,7 +33,7 @@ const SocialLink = styled(OutboundLink)`
 export default () => (
   <Footer>
     <Wrapper xlarge>
-      <Row>
+      <Row vAlign="top">
         <Column size={3} sSize={6}>
           <FooterLogo size={4} />
           <p>
@@ -41,7 +46,7 @@ export default () => (
           <p>
             <Link to="/home">Home</Link><br />
             <Link to="/about">About</Link><br />
-            <Link to="/blog">Blog</Link>
+            {/* <Link to="/blog">Blog</Link> */}
           </p>
         </Column>
         <Column size={3} sSize={6}>

@@ -3,17 +3,17 @@ templateKey: 'info-page'
 path: /about
 title: About us
 ---
-### Shade-grown coffee
-Coffee is a small tree or shrub that grows in the forest understory in its wild form, and traditionally was grown commercially under other trees that provided shade. The forest-like structure of shade coffee farms provides habitat for a great number of migratory and resident species.
 
-### Single origin
-Single-origin coffee is coffee grown within a single known geographic origin. Sometimes, this is a single farm or a specific collection of beans from a single country. The name of the coffee is then usually the place it was grown to whatever degree available.
+# Our Mission
 
-### Sustainable farming
-Sustainable agriculture is farming in sustainable ways based on an understanding of ecosystem services, the study of relationships between organisms and their environment. What grows where and how it is grown are a matter of choice and careful consideration for nature and communities.
+Your Gift Hunt aims to provide the best way to create scavenger hunts leading to gifts that connect the creator and the player of the hunt by means of adventure, personal puzzles, connecting with friends, and through other interplay that occurs during such a scavenger hunt.
 
-### Direct sourcing
-Direct trade is a form of sourcing practiced by some coffee roasters. Advocates of direct trade practices promote direct communication and price negotiation between buyer and farmer, along with systems that encourage and incentivize quality.
+# Our story
 
-### Reinvest profits
-We want to truly empower the communities that bring amazing coffee to you. That’s why we reinvest 20% of our profits into farms, local businesses and schools everywhere our coffee is grown. You can see the communities grow and learn more about coffee farming on our blog.
+The idea for Your Gift Hunt came to existence around two weeks before my birthday. That morning, I found a letter on my bed. A letter from my girlfriend, containing two things: a riddle and puzzle piece. This puzzle piece would be the first of many. During the two weeks before my birthday, I collected the pieces from places all over, from different friends, and finally on my birthday, I completed the jigsaw puzzle. Only to find a hint to the actual present... This puzzle was not over jet.
+
+A few months later, it was my girlfriend her birthday and I decided to make her work for her present even harder. That was when I created my first version of the scavenger hunt. In the form of an online puzzle and she loved it. This laid the foundation for Your Gift Hunt.
+
+I cannot wait to see what you make and I hope that it will bring you as much connection and joy as it did to me.
+
+— Wouter

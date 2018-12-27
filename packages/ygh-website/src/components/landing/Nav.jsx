@@ -35,7 +35,7 @@ const Name = styled.h2`
 `
 
 const NavLink = styled(StyledLink)`
-  padding: 2.5rem 0;
+  padding: 2rem 0;
   margin-left: 2rem;
 
   opacity: ${props => props.importance === 'primary' ? 1 : .8};
@@ -217,7 +217,7 @@ export default props => {
         </Float.Right>
         <Menu open={menuOpen}>
           <NavLink to="/about">About</NavLink>
-          <NavLink to="/blog">Blog</NavLink>
+          {/* <NavLink to="/blog">Blog</NavLink> */}
           <NavLink to="/auth/login">Log in</NavLink>
           <NavLink to="/auth/signup" importance="primary">Sign up</NavLink>
         </Menu>
