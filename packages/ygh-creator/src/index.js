@@ -6,7 +6,7 @@ import configureStore from './store'
 import { Provider } from 'react-redux'
 import App from 'components/App'
 
-const root = document.getElementById('root')
+const root = document.getElementById('app-root')
 const store = configureStore()
 
 const render = (Component) =>
