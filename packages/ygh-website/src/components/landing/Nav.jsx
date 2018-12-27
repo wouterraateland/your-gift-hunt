@@ -178,6 +178,12 @@ const Nav = styled.nav`
   ${props => props.index && css `
     @media (max-width: 45rem) {
       color: #fff;
+
+      ${props => props.index && css`
+        .background {
+          fill: #000;
+        }
+      `}
     }
   `}
 

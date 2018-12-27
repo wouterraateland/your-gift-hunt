@@ -59,15 +59,13 @@ const BeachSection = styled(Section)`
   &::before {
     content: '';
     position: absolute;
-    left: -10%; top: 0em;
-    right: -10%; bottom: -1em;
+    left: 0; top: 0vw;
+    right: 0; bottom: 20vw;
     z-index: -3;
 
-    ${'' /* box-shadow: 0 -13em 13em -4em #2196f3cc, 0 -4em 4em #3d4fbacc; */}
+    background: ${props => props.theme.color.accent};
 
-    background: linear-gradient(160deg, #ffd65a 30%, transparent 90%);
-
-    transform: skewY(10deg);
+    transform: skewY(30deg);
   }
 `
 
@@ -113,9 +111,9 @@ export default ({ data }) => {
   return (
     <Layout index>
       <IndexHeader imageInfo={headerImageInfo} />
-      <Trail xlarge rtl />
+      <Trail rtl />
       <Section id="excite">
-        <Wrapper xlarge>
+        <Wrapper>
           <Row>
             <Column size={8} mSize={12}>
               <h2>Excite</h2>
@@ -134,9 +132,9 @@ export default ({ data }) => {
           </Row>
         </Wrapper>
       </Section>
-      <Trail xlarge ltr />
+      <Trail ltr />
       <Section id="create">
-        <Wrapper xlarge>
+        <Wrapper>
           <article>
             <h2>1. Create</h2>
             <p>We created a versatile collection of puzzle templates, so that you can be fully creative and make your unique and personal gift hunt.</p>
@@ -187,9 +185,9 @@ export default ({ data }) => {
           </Row>
         </Wrapper>
       </Section>
-      <Trail xlarge rtl />
+      <Trail rtl />
       <BeachSection id="play">
-        <Wrapper xlarge>
+        <Wrapper>
           <Row>
             <Column rtl size={4} sSize={6}>
               <IphoneImage imageInfo={playImageInfo} />
@@ -212,15 +210,15 @@ export default ({ data }) => {
           </Row>
         </Wrapper>
       </BeachSection>
-      <Trail xlarge ltr />
+      <Trail ltr />
       <Section id="give">
-        <Wrapper xlarge>
+        <Wrapper>
           <Row rtl>
             <RelativeColumn size={4} sSize={12}>
               <Cross />
               <PresentOne />
-              <PresentTwo />
-              <PresentThree />
+              <PresentTwo boxColor="#22a1e8" ribbonColor="#fa6d07" />
+              <PresentThree boxColor="#ffad33" />
             </RelativeColumn>
             <Column size={8} sSize={12}>
               <article>
@@ -231,7 +229,7 @@ export default ({ data }) => {
           </Row>
         </Wrapper>
       </Section>
-      <Section darker id="extra">
+      {/* <Section darker id="extra">
         <WrapperWithMap xlarge>
           <article>
             <h2>Loved your hunt?</h2>
@@ -239,7 +237,7 @@ export default ({ data }) => {
           </article>
           <sup>*</sup><small>Excluding shipping costs</small>
         </WrapperWithMap>
-      </Section>
+      </Section> */}
       <Section id="cta">
         <Align.Center>
           <h2>Be the first to make your own hunt?</h2>
