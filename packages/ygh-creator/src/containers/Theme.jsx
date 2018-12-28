@@ -69,7 +69,7 @@ export const GlobalStyles = createGlobalStyle`
   a {
     display: inline-block;
 
-    text-decoration: none;
+    text-decoration-color: ${transparentize(.5, theme.color.text)};
 
     color: ${theme.color.text};
 

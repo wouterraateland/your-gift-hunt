@@ -7,10 +7,9 @@ export const firebase = {
   messagingSenderId: "246235939258"
 }
 
-export const rrfConfig = {
+export const rrf = {
   userProfile: 'users',
-  useFirestoreForProfile: true, // Store in Firestore instead of Real Time DB
-  enableLogging: false
+  useFirestoreForProfile: true,
 }
 
-export default { firebase, rrfConfig }
+export default { firebase, rrf }

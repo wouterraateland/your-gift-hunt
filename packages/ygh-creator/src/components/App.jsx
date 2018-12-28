@@ -1,12 +1,12 @@
 import React from 'react'
-import Theme from 'containers/Theme'
 
-const App = () => {
-  return (
-    <Theme>
-      <div>Creator Your Gift Hunt</div>
-    </Theme>
-  )
-}
+import Theme from 'containers/Theme'
+import Router from 'containers/Router'
+
+const App = () => (
+  <Theme>
+    <Router />
+  </Theme>
+)
 
 export default App
