@@ -1,8 +1,10 @@
 import React from 'react'
 import { withFirebase } from 'react-redux-firebase'
 
-import { Wrapper, Paper } from 'your-gift-hunt/ui'
+import { Wrapper, Paper, Float, Input, Button } from 'your-gift-hunt/ui'
 import Nav from 'components/Nav'
+import Footer from 'components/Footer'
+import HuntList from 'components/HuntList'
 
 const OverviewPage = ({ firebase }) => {
   const hunts = firebase && firebase.data
@@ -13,18 +15,25 @@ const OverviewPage = ({ firebase }) => {
       <Nav />
       <Wrapper>
         <Paper>
-          <h1>Here are all your projects</h1>
-          {hunts.length
-            ? (
-              <ul>
-                {hunts.map((hunt, i) =>
-                  <li key={i}>{JSON.stringify(hunt)}</li>
-                )}
-              </ul>
-            )
-            : <p>Looks like you don't have any projects jet</p>}
+          <Paper.Section>
+            <Float.Left>
+              <Input
+                type="search"
+              />
+            </Float.Left>
+            <Float.Right>
+              <Button
+                importance="primary"
+                color="accent"
+              >
+                New hunt
+              </Button>
+            </Float.Right>
+          </Paper.Section>
+          <HuntList hunts={hunts} />
         </Paper>
       </Wrapper>
+      <Footer />
     </div>
   )
 }
