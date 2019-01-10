@@ -11,6 +11,8 @@ export { default as Question } from './challenges/Question'
 export { default as Seek } from './challenges/Seek'
 export { default as Time } from './challenges/Time'
 
+export { default as Edit } from './Edit'
+
 const Icon = styled.svg`
   height: ${props => props.size}em;
 

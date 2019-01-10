@@ -2,6 +2,43 @@ import React, { memo } from 'react'
 import styled, { css } from 'styled-components'
 import { transparentize, opacify, invert } from 'polished'
 
+const BeforeLabel = styled.div`
+  position: relative;
+
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: .7em;
+
+  ${props => props.type === 'search' && css`
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+    }
+
+    &::before {
+      right: .1em; top: .1em;
+
+      width: 1em;
+      height: 1em;
+      border: .2em solid;
+      border-radius: 100%;
+    }
+
+    &::after {
+      left: .4em; bottom: -.2em;
+
+      width: .2em;
+      height: .6em;
+
+      background: currentColor;
+
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+  `}
+`
+
 const Label = styled.label`
   position: relative;
 
@@ -80,9 +117,12 @@ const ErrorMessage = styled.small`
   color: ${props => props.theme.color.error};
 `
 
-export default ({ label, error, ...rest }) => (
+export default ({ icon, label, error, ...rest }) => (
   <>
     <Label block={rest.block}>
+      {(icon || rest.type === 'search') &&
+        <BeforeLabel type={icon || rest.type} />
+      }
       <Input {...rest}/>
       <MemoizedLabelText up={rest.value !== ''}>{label}</MemoizedLabelText>
     </Label>

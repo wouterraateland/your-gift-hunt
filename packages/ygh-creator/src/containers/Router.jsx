@@ -1,8 +1,7 @@
 import React, { useContext } from 'react'
-import { ReactReduxContext } from 'react-redux'
-import { withFirebase } from 'react-redux-firebase'
-
 import { Router, Redirect } from '@reach/router'
+
+import AuthContext from 'contexts/Auth'
 
 import Action from 'pages/auth/action'
 import Login from 'pages/auth/login'
@@ -11,25 +10,32 @@ import Amnesia from 'pages/auth/amnesia'
 
 import Overview from 'pages/overview'
 import Creator from 'pages/creator'
+import Profile from 'pages/profile'
 
 import NotFound from 'pages/404'
 
-const MainRouter = ({ firebase }) => {
-  const { storeState } = useContext(ReactReduxContext)
-  const { auth } = storeState.firebase
+const MainRouter = () => {
+  const { authenticated } = useContext(AuthContext)
 
-  return (
-    <Router>
-      <Action path="/auth/action" />
-      <Login path="/auth/login" />
-      <Signup path="/auth/signup" />
-      <Amnesia path="/auth/amnesia" />
-      {auth.isEmpty && <Redirect from="/" to="/auth/login" noThrow />}
-      {!auth.isEmpty && <Overview path="/" />}
-      {!auth.isEmpty && <Creator path="/:userName/:projectName" />}
-      <NotFound default />
-    </Router>
-  )
+  return authenticated
+    ? (
+      <Router>
+        <Overview path="/" />
+        <Profile path="/profile" />
+        <Creator path="/new" />
+        <Creator path="/edit/:slug" />
+        <NotFound default />
+      </Router>
+    )
+    : (
+      <Router>
+        <Action path="/auth/action" />
+        <Login path="/auth/login" />
+        <Signup path="/auth/signup" />
+        <Amnesia path="/auth/amnesia" />
+        <Redirect from="/" to="/auth/login" default noThrow />
+      </Router>
+    )
 }
 
-export default withFirebase(MainRouter)
+export default MainRouter

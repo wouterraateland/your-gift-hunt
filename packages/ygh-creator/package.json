@@ -10,8 +10,9 @@
     "query-string": "^6.2.0",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
+    "react-error-boundary": "^1.2.3",
     "react-redux": "^6.0.0",
-    "react-redux-firebase": "https://github.com/prescottprue/react-redux-firebase#b10282ebe056ef5a18bb70834e3db030c028be4d",
+    "react-redux-firebase": "^3.0.0-alpha.6",
     "react-router": "^4.3.1",
     "react-scripts": "2.1.2",
     "redux": "^4.0.1",
@@ -33,5 +34,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.7"
+  }
 }

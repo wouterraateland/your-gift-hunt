@@ -19,7 +19,7 @@ const LogoWithMargin = styled(Logo)`
   .background { fill: #fff; }
 `
 
-export default ({ children }) => {
+const AuthLayout = ({ children }) => {
   return (
     <Center>
       <Align.Center>
@@ -33,3 +33,5 @@ export default ({ children }) => {
     </Center>
   )
 }
+
+export default AuthLayout

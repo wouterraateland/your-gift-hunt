@@ -2,6 +2,12 @@ import styled from 'styled-components'
 
 export const PaperSection = styled.div`
   padding: 1em;
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
 `
 
 export const Paper = styled.div`

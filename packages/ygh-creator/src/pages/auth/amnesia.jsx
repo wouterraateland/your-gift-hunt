@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from '@reach/router'
 import { withFirebase } from 'react-redux-firebase'
 
-import Layout from 'components/AuthLayout'
+import Layout from 'layouts/Auth'
 import { Field, Input, Button } from 'your-gift-hunt/ui'
 
 const AmnesiaPage = ({ firebase }) => {

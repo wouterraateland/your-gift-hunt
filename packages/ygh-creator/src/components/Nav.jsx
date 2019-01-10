@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from '@reach/router'
 
 import { Wrapper, Float } from 'your-gift-hunt/ui'
 import { Logo } from 'your-gift-hunt/icons'
@@ -27,15 +28,24 @@ const Title = styled.h1`
   font-weight: bold;
 `
 
-const Nav = () => {
+const NavItem = styled(Link)`
+
+`
+
+const Nav = ({ title, items=[] }) => {
   return (
     <StyledNav>
       <Wrapper>
         <Float.Left>
-          <StyledLogo size={3} />
-          <Title>Creator</Title>
+          <Link to="/">
+            <StyledLogo size={3} />
+          </Link>
+          <Title>{title}</Title>
         </Float.Left>
         <Float.Right>
+          {items.map((item, i) => (
+            <NavItem key={i} {...item} />
+          ))}
           <Profile />
         </Float.Right>
       </Wrapper>

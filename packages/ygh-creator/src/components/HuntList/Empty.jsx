@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from '@reach/router'
-
 import { Align } from 'your-gift-hunt/ui'
 
 import Present from 'components/Present'
@@ -49,12 +47,6 @@ const PresentContainer = styled.div`
   }
 `
 
-const HuntThumb = styled.div`
-  &:nth-child(2n) {
-    background-color: #0001;
-  }
-`
-
 const EmptyHuntList = () => (
   <StyledEmptyHuntList>
     <PresentContainer>
@@ -67,10 +59,4 @@ const EmptyHuntList = () => (
   </StyledEmptyHuntList>
 )
 
-const HuntList = ({ hunts }) => {
-  return hunts.length
-    ? hunts.map((hunt, i) => <HuntThumb key={i} {...hunt} />)
-    : <EmptyHuntList />
-}
-
-export default HuntList
+export default EmptyHuntList

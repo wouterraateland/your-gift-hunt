@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link, navigate } from '@reach/router'
 import { withFirebase } from 'react-redux-firebase'
 
+import AuthContext from 'contexts/Auth'
+
 import { Field, Input, Button } from 'your-gift-hunt/ui'
-import Layout from 'components/AuthLayout'
+import Layout from 'layouts/Auth'
 
 const SignupPage = ({ firebase }) => {
   const [errors, setErrors] = useState({})
+  const { reloadAuth } = useContext(AuthContext)
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -32,7 +35,7 @@ const SignupPage = ({ firebase }) => {
           email,
         }
       )
-      await firebase.reloadAuth()
+      await reloadAuth()
 
       navigate('/')
     } catch (e) {
