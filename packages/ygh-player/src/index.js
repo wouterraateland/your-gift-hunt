@@ -31,7 +31,7 @@ const Root = (
 	</StoreProvider>
 )
 
-const root = document.getElementById('root')
+const root = document.getElementById('app-root')
 
 if (root.hasChildNodes()) {
 	hydrate(Root, root)
