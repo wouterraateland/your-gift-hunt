@@ -1,6 +1,6 @@
 {
-    "name": "Verjaardags puzzel",
-    "short_name": "Verjaardags puzzel",
+    "name": "Your Gift Hunt",
+    "short_name": "Your Gift Hunt",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,9 +13,8 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "start_url": "https://www.marjoleinbouwmeester.com",
-    "display": "standalone",
-    "orientation": "portrait"
+    "theme_color": "#ffd65a",
+    "background_color": "#ffd65a",
+    "start_url": "https://yourgifthunt.com",
+    "display": "standalone"
 }
