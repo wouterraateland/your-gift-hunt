@@ -66,7 +66,7 @@ const Text = styled.span`
 `
 
 const InstructionNote = props => (
-  <PhysicalObject width="2em" height="2em">
+  <PhysicalObject width="2em" height="3em">
     <Note {...props} z={.1}>
       <Paper />
       <PaperClip />
