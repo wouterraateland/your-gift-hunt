@@ -21,9 +21,14 @@ const Flap = styled(PhysicalObject.Part)`
 
   border-radius: .1em .2em .2em .1em;
 
-  box-shadow:
-    inset .1em 0 .2em #0009,
-    inset -.2em 0 .1em -.1em #0004;
+  &::before {
+    width: 100%;
+    height: 100%;
+
+    box-shadow:
+      inset .1em 0 .2em #0009,
+      inset -.2em 0 .1em -.1em #0004;
+  }
 
   transform-origin: 0 50%;
 
@@ -82,11 +87,11 @@ const Package = props => {
   const isOpen = props.state === 'open'
   return (
     <PhysicalObject width="3.5em" height="3.5em">
-      <Bottom {...props} z={.25} />
-      <Flap isOpen={isOpen} z={1} />
-      <Flap isOpen={isOpen} z={1} />
-      <Flap isOpen={isOpen} z={1} />
-      <Flap isOpen={isOpen} z={1} />
+      <Bottom {...props} z={1.5} />
+      <Flap isOpen={isOpen} z={0} />
+      <Flap isOpen={isOpen} z={0} />
+      <Flap isOpen={isOpen} z={0} />
+      <Flap isOpen={isOpen} z={0} />
     </PhysicalObject>
   )
 }

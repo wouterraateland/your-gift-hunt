@@ -4,8 +4,9 @@ import styled, { css } from 'styled-components'
 import PhysicalObject from './PhysicalObject'
 import Plank from './Plank'
 
-const DeskPart = styled(PhysicalObject.Part)`
+const Construction = styled(PhysicalObject.Part)`
   left: 0; top: 0; right: 0; bottom: 0;
+  z-index: -1;
 
   border-radius: .125em;
 
@@ -19,31 +20,35 @@ const DeskPart = styled(PhysicalObject.Part)`
 `
 
 const StyledPlank = styled(Plank)`
+  position: relative;
+  left: 0; top: 0;
   display: inline-block;
   height: 100%;
   width: 31.3333%;
   margin: 0 1%;
 
-  &:nth-child(1) {
+  &:nth-child(1)::before {
     border-radius: 5% 7% 4% 8% / 50% 60% 40% 70%;
   }
 
-  &:nth-child(2) {
+  &:nth-child(2)::before {
     border-radius: 2% 5% 3% 9% / 40% 50% 70% 20%;
   }
 
-  &:nth-child(3) {
+  &:nth-child(3)::before {
     border-radius: 6% 3% 4% 7% / 20% 80% 40% 60%;
   }
 `
 
 const Desk = props => (
   <PhysicalObject width="6em" height="12em">
-    <DeskPart {...props} z={2.5}>
-      <StyledPlank baseColor="#584630" />
-      <StyledPlank baseColor="#584630" />
-      <StyledPlank baseColor="#584630" />
-    </DeskPart>
+    <Construction {...props} z={0} />
+    <StyledPlank
+      as={PhysicalObject.Part} baseColor="#584630" z={2.5} />
+    <StyledPlank
+      as={PhysicalObject.Part} baseColor="#584630" z={2.5} />
+    <StyledPlank
+      as={PhysicalObject.Part} baseColor="#584630" z={2.5} />
   </PhysicalObject>
 )
 

@@ -162,8 +162,8 @@ const Mouse = styled(PhysicalObject.Part)`
 
 const Computer = props => (
   <PhysicalObject width="4em" height="4em">
-    <Keyboard {...props} z={.25} />
-    <Mouse {...props} z={.25} />
+    <Keyboard {...props} z={.25} angle={15} />
+    <Mouse {...props} z={.25} angle={-15} />
     <Standard {...props} z={1} />
     <Screen {...props} z={1} />
   </PhysicalObject>
