@@ -69,8 +69,9 @@ storiesOf('Objects', module)
     Open: 'open',
   }, 'closed')} />)
   .add('Package', () => <Package state={radios('state', {
-    Default: 'default',
-  }, 'default')} />)
+    Closed: 'closed',
+    Open: 'open'
+  }, 'closed')} />)
   .add('Path', () => <Path state={radios('state', {
     Default: 'default',
   }, 'default')} />)
