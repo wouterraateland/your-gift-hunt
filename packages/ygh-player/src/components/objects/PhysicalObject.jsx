@@ -9,6 +9,13 @@ const PhysicalObject = styled.div`
 
 const ObjectPart = styled.div`
   position: absolute;
+
+  &::before,
+  &::after {
+    content: '';
+
+    position: absolute;
+  }
 `
 
 PhysicalObject.Part = ObjectPart

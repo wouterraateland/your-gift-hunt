@@ -4,13 +4,13 @@ import styled from 'styled-components'
 import PhysicalObject from './PhysicalObject'
 
 const Pot = styled(PhysicalObject.Part)`
-  position: relative;
+  width: 4em;
+  height: 4em;
 
-  width: 16vw;
-  height: 16vw;
-  padding: 2vw;
-
+  border: .5em solid #c56849;
   border-radius: 100%;
+
+  background-color: #6d4c41;
 
   &::before,
   &::after {
@@ -25,25 +25,21 @@ const Pot = styled(PhysicalObject.Part)`
   }
 
   &::before {
-    width: 16vw;
-    height: 16vw;
+    width: 4em;
+    height: 4em;
 
     box-shadow:
-      inset .5vw .5vw .5vw 0 rgba(255, 255, 255, .5),
-      inset -.5vw -.5vw .5vw 0 rgba(0, 0, 0, .5) !important;
-
-    background-color: #c56849;
+      inset .125em .125em .125em 0 rgba(255, 255, 255, .5),
+      inset -.125em -.125em .125em 0 rgba(0, 0, 0, .5) !important;
   }
 
   &::after {
-    width: 12vw;
-    height: 12vw;
+    width: 3em;
+    height: 3em;
 
     box-shadow:
-      .5vw .5vw .5vw 0 rgba(255, 255, 255, .5),
-      -.5vw -.5vw .5vw 0 rgba(0, 0, 0, .2);
-
-    background-color: #6d4c41;
+      .125em .125em .125em 0 rgba(255, 255, 255, .5),
+      -.125em -.125em .125em 0 rgba(0, 0, 0, .2);
   }
 `
 
@@ -77,8 +73,8 @@ const Leaf = styled(PhysicalObject.Part)`
   }
 
   &::before {
-    width: 12vw;
-    height: 12vw;
+    width: 3em;
+    height: 3em;
 
     background:
       linear-gradient(135deg, currentColor, transparent, currentColor),
@@ -93,10 +89,10 @@ const Leaf = styled(PhysicalObject.Part)`
     background-color: currentColor;
     border-radius: 100% 100% ${props => props.grown ? 0 : 100}% 100%;
 
-    box-shadow: 0 0 .5vw rgba(0, 0, 0, .2);
+    box-shadow: 0 0 .125em rgba(0, 0, 0, .2);
 
     transform-origin: 0 0;
-    transform: ${props => `translate(-.5vw, -.5vw) skew(${props.grown ? 10 : 0}deg, ${props.grown ? 10 : 0}deg)`};
+    transform: ${props => `translate(-.125em, -.125em) skew(${props.grown ? 10 : 0}deg, ${props.grown ? 10 : 0}deg)`};
 
     transition:
       opacity .5s ease-out,
@@ -108,17 +104,17 @@ const Leaf = styled(PhysicalObject.Part)`
   }
 
   &::after {
-    width: 3vw;
-    height: 1vw;
-    border-radius: .5vw;
+    width: .75em;
+    height: .25em;
+    border-radius: .125em;
 
     background-image:
-      linear-gradient(90deg, #1b5e20 1vw, transparent, currentColor 3vw),
+      linear-gradient(90deg, #1b5e20 .25em, transparent, currentColor .75em),
       linear-gradient(rgba(0, 0, 0, .4), transparent, rgba(0, 0, 0, .4));
     background-color: currentColor;
 
-    transform-origin: .5vw .5vw;
-    transform: translate(-.5vw, -.5vw) rotate(45deg);
+    transform-origin: .125em .125em;
+    transform: translate(-.125em, -.125em) rotate(45deg);
 
     transition:
       opacity: .5s ease-out;
@@ -138,7 +134,7 @@ const Plant = plantProps => Array(leafs).fill(0).map((_, i) =>
 )
 
 const PlantPot = ({ state }) => (
-  <PhysicalObject>
+  <PhysicalObject width="4em" height="4em">
     <Pot z={1.5} />
     <Plant
       planted={state !== 'empty'}
