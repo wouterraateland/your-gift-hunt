@@ -14,12 +14,13 @@ const FloorPart = styled(PhysicalObject.Part)`
 `
 
 const StyledPlank = styled(Plank)`
+  position: relative;
   height: ${props => 100 * props.height}%;
   width: ${100 / 6}%;
 `
 
 const divideOne = n => {
-  const parts = (new Array(n)).fill(0).map(Math.random)
+  const parts = (new Array(n)).fill(0).map(() => .1 + .9 * Math.random())
   const sum = parts.reduce((acc, x) => acc + x, 0)
   return parts.map(x => x / sum)
 }
@@ -36,7 +37,12 @@ const Floor = props => {
     <PhysicalObject width="20em" height="20em">
       <FloorPart {...props} z={0}>
         {planks.map((plank, i) => (
-          <StyledPlank key={i} height={plank} />
+          <StyledPlank
+            key={i}
+            as={PhysicalObject.Part}
+            z={0}
+            height={plank}
+          />
         ))}
       </FloorPart>
     </PhysicalObject>

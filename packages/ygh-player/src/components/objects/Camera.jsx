@@ -55,7 +55,7 @@ const CameraPart = styled(PhysicalObject.Part)`
 `
 
 const Camera = props => (
-  <PhysicalObject width="1.5em" height="1.25em">
+  <PhysicalObject width="3.5em" height="2.25em">
     <CameraPart {...props} z={.5} />
   </PhysicalObject>
 )

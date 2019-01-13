@@ -5,6 +5,8 @@ const PhysicalObject = styled.div`
 
   width: ${props => props.width};
   height: ${props => props.height};
+
+  background: #0001;
 `
 
 const ObjectPart = styled.div`
