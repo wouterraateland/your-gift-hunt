@@ -4,6 +4,8 @@ import styled, { css } from 'styled-components'
 import PhysicalObject from './PhysicalObject'
 import Plank from './Plank'
 
+const PLANK_COUNT = 8
+
 const FloorPart = styled(PhysicalObject.Part)`
   left: 0; top: 0;
   right: 0; bottom: 0;
@@ -16,7 +18,7 @@ const FloorPart = styled(PhysicalObject.Part)`
 const StyledPlank = styled(Plank)`
   position: relative;
   height: ${props => 100 * props.height}%;
-  width: ${100 / 6}%;
+  width: ${100 / PLANK_COUNT}%;
 `
 
 const divideOne = n => {
@@ -29,12 +31,12 @@ const Floor = props => {
   const [planks, setPlanks] = useState([])
 
   useEffect(() => {
-    setPlanks([1, 2, 3, 4, 5, 6]
+    setPlanks(Array(PLANK_COUNT).fill(0)
       .flatMap(() => divideOne(2 + Math.floor(2 * Math.random()))))
   }, [])
 
   return (
-    <PhysicalObject width="20em" height="20em">
+    <PhysicalObject width="28em" height="28em">
       <FloorPart {...props} z={0}>
         {planks.map((plank, i) => (
           <StyledPlank

@@ -17,7 +17,7 @@ const Paper = styled.div`
   left: 0; top: 0;
   right: 0; bottom: 0;
 
-  background: #fff;
+  background: #f5f0d7;
 
   transform: rotate3d(0, 0, 1, 0deg);
 `

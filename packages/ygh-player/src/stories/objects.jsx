@@ -49,8 +49,9 @@ storiesOf('Objects', module)
     Default: 'default',
   }, 'default')} />)
   .add('Door', () => <Door state={radios('state', {
-    Default: 'default',
-  }, 'default')} />)
+    Closed: 'closed',
+    Open: 'open',
+  }, 'closed')} />)
   .add('Floor', () => <Floor state={radios('state', {
     Default: 'default',
   }, 'default')} />)

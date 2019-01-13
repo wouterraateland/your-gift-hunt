@@ -27,16 +27,19 @@ const StyledPlank = styled(Plank)`
   width: 31.3333%;
   margin: 0 1%;
 
-  &:nth-child(1)::before {
-    border-radius: 5% 7% 4% 8% / 50% 60% 40% 70%;
-  }
-
+  &:nth-child(2),
   &:nth-child(2)::before {
-    border-radius: 2% 5% 3% 9% / 40% 50% 70% 20%;
+    border-radius: 5% 7% 4% 8% / 50% 60% .2em 70%;
   }
 
+  &:nth-child(3),
   &:nth-child(3)::before {
-    border-radius: 6% 3% 4% 7% / 20% 80% 40% 60%;
+    border-radius: 2% 5% 3% 9% / .2em 50% 70% 20%;
+  }
+
+  &:nth-child(4),
+  &:nth-child(4)::before {
+    border-radius: 6% 3% 4% 7% / 20% .2em 40% .2em;
   }
 `
 

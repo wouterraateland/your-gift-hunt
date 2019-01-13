@@ -4,15 +4,22 @@ import styled, { css } from 'styled-components'
 import PhysicalObject from './PhysicalObject'
 
 const Safe = styled(PhysicalObject.Part)`
-  left: 0; top: 0;
-
   width: 5em;
   height: 4em;
-  border: .25em solid #263238;
-  border-bottom-width: .125em;
   border-radius: .25em .25em 0 0;
 
   background-color: #37474F;
+
+  &::before {
+    width: 100%;
+    height: 100%;
+
+    border-radius: .25em .25em 0 0;
+
+    box-shadow:
+      inset 0 .4em .8em -.2em #fff4,
+      inset 0 -.2em .4em -.1em #0004;
+  }
 `
 
 const Door = styled(PhysicalObject.Part)`
@@ -20,8 +27,7 @@ const Door = styled(PhysicalObject.Part)`
 
   width: 5em;
   height: 1em;
-  border: .25em solid #263238;
-  border-top-width: .125em;
+
   border-radius: 0 0 .25em .25em;
 
   background-color: #37474F;
@@ -33,6 +39,17 @@ const Door = styled(PhysicalObject.Part)`
   `}
 
   transition: transform .5s ease-in-out;
+
+  &::before {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 0 0 .25em .25em;
+
+    box-shadow:
+      inset 0 .2em .4em -.1em #fff4,
+      inset 0 -.4em .8em -.2em #0004;
+  }
 `
 
 const Wheel = styled(PhysicalObject.Part)`
@@ -44,6 +61,19 @@ const Wheel = styled(PhysicalObject.Part)`
   border-radius: .125em;
 
   background-color: #37474F;
+  background-image:
+    radial-gradient(ellipse 30% 20% at 40% 30%, #fffc, transparent);
+
+  &::before {
+    width: 100%;
+    height: 100%;
+
+    border-radius: .125em;
+
+    box-shadow:
+      inset .2em 0 .4em -.1em #0004,
+      inset -.2em 0 .4em -.1em #0009;
+  }
 
   transform-origin: -1em -1.25em;
 
@@ -53,7 +83,7 @@ const Wheel = styled(PhysicalObject.Part)`
 
   transition: transform .5s ease-in-out;
 
-  &::before {
+  &::after {
     content: '';
     position: absolute;
     left: 1.375em;

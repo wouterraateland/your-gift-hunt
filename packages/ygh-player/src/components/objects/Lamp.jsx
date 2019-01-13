@@ -58,7 +58,10 @@ const Light = styled(PhysicalObject.Part)`
   width: 7.5em;
   height: 7.5em;
 
-  background: radial-gradient(circle closest-side, rgba(249, 220, 141, 0.7) 10%, transparent);
+  background: radial-gradient(
+    circle closest-side,
+    rgba(249, 220, 141, 0.7) 10%, transparent
+  );
 
   transform: translate(-50%, -50%);
 
