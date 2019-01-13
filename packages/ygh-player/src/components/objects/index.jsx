@@ -24,7 +24,7 @@ const ObjectContainer = styled.div`
   position: absolute;
 `
 
-const createPhysicalObject = (Component, id) => (props) => {
+const createPhysicalObject = ({ default: Component, objectId: id }) => props => {
   const object = { id }
 
   return (
@@ -34,21 +34,21 @@ const createPhysicalObject = (Component, id) => (props) => {
   )
 }
 
-export const Armchair = createPhysicalObject(_Armchair.default, _Armchair.objectId)
-export const Camera = createPhysicalObject(_Camera.default, _Camera.objectId)
-export const Carpet = createPhysicalObject(_Carpet.default, _Carpet.objectId)
-export const Computer = createPhysicalObject(_Computer.default, _Computer.objectId)
-export const Desk = createPhysicalObject(_Desk.default, _Desk.objectId)
-export const DeskChair = createPhysicalObject(_DeskChair.default, _DeskChair.objectId)
-export const Door = createPhysicalObject(_Door.default, _Door.objectId)
-export const Floor = createPhysicalObject(_Floor.default, _Floor.objectId)
-export const Grass = createPhysicalObject(_Grass.default, _Grass.objectId)
-export const InstructionNote = createPhysicalObject(_InstructionNote.default, _InstructionNote.objectId)
-export const Lamp = createPhysicalObject(_Lamp.default, _Lamp.objectId)
-export const Mailbox = createPhysicalObject(_Mailbox.default, _Mailbox.objectId)
-export const Package = createPhysicalObject(_Package.default, _Package.objectId)
-export const Path = createPhysicalObject(_Path.default, _Path.objectId)
-export const PlantPot = createPhysicalObject(_PlantPot.default, _PlantPot.objectId)
-export const SafeWithKeyhole = createPhysicalObject(_SafeWithKeyhole.default, _SafeWithKeyhole.objectId)
-export const Sink = createPhysicalObject(_Sink.default, _Sink.objectId)
-export const Wall = createPhysicalObject(_Wall.default, _Wall.objectId)
+export const Armchair = createPhysicalObject(_Armchair)
+export const Camera = createPhysicalObject(_Camera)
+export const Carpet = createPhysicalObject(_Carpet)
+export const Computer = createPhysicalObject(_Computer)
+export const Desk = createPhysicalObject(_Desk)
+export const DeskChair = createPhysicalObject(_DeskChair)
+export const Door = createPhysicalObject(_Door)
+export const Floor = createPhysicalObject(_Floor)
+export const Grass = createPhysicalObject(_Grass)
+export const InstructionNote = createPhysicalObject(_InstructionNote)
+export const Lamp = createPhysicalObject(_Lamp)
+export const Mailbox = createPhysicalObject(_Mailbox)
+export const Package = createPhysicalObject(_Package)
+export const Path = createPhysicalObject(_Path)
+export const PlantPot = createPhysicalObject(_PlantPot)
+export const SafeWithKeyhole = createPhysicalObject(_SafeWithKeyhole)
+export const Sink = createPhysicalObject(_Sink)
+export const Wall = createPhysicalObject(_Wall)

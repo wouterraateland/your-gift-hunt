@@ -11,7 +11,7 @@ const Item = styled.div`
 
 `
 
-const createItem = (Component, id) => (props) => {
+const createItem = ({ default: Component, itemId: id }) => props => {
   const item = { id }
 
   return (
@@ -23,8 +23,8 @@ const createItem = (Component, id) => (props) => {
 
 export default createItem
 
-export const Battery = createItem(_Battery.default, _Battery.itemId)
-export const Flashlight = createItem(_Flashlight.default, _Flashlight.itemId)
-export const SafeKey = createItem(_SafeKey.default, _SafeKey.itemId)
-export const Seeds = createItem(_Seeds.default, _Seeds.itemId)
-export const WateringCan = createItem(_WateringCan.default, _WateringCan.itemId)
+export const Battery = createItem(_Battery)
+export const Flashlight = createItem(_Flashlight)
+export const SafeKey = createItem(_SafeKey)
+export const Seeds = createItem(_Seeds)
+export const WateringCan = createItem(_WateringCan)
