@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import StoreContext from 'context/Store'
+import StoreContext from 'contexts/store'
 
 import Draggable from 'components/Draggable'
 

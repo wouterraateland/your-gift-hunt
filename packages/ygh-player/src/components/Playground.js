@@ -1,7 +1,7 @@
 import React, { useContext, memo } from 'react'
 import styled from 'styled-components'
 
-import StoreContext from 'context/Store'
+import StoreContext from 'contexts/store'
 
 import Camera from 'components/objects/Camera'
 import Carpet from 'components/objects/Carpet'

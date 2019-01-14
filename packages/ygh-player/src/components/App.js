@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react'
 
 import fetchLambda from 'utils/api'
 
-import StoreContext from 'context/Store'
+import StoreContext from 'contexts/store'
 
 import Playground from 'components/Playground'
 

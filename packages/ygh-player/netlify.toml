@@ -1,4 +1,8 @@
 [build]
-  Command = "yarn build"
-  Functions = "lambda"
-  Publish = "build"
+  Command = "yarn build:storybook"
+  Publish = "storybook-static"
+
+# [build]
+#   Command = "yarn build"
+#   Functions = "lambda"
+#   Publish = "build"

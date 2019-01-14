@@ -1,7 +1,7 @@
 import React, { useRef, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 
-import StoreContext from 'context/Store'
+import StoreContext from 'contexts/store'
 
 import code from 'assets/code.svg'
 

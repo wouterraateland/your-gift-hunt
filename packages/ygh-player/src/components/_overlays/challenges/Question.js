@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 
-import StoreContext from 'context/Store'
+import StoreContext from 'contexts/store'
 
 import Input from 'components/ui/Input'
 import Button from 'components/ui/Button'

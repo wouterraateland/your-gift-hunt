@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 
-import StoreContext from 'context/Store'
+import StoreContext from 'contexts/store'
 
 const CodeBackground = styled.form`
   position: relative;

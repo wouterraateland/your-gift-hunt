@@ -3,7 +3,7 @@ import { render, hydrate } from 'react-dom'
 import './index.css'
 import * as serviceWorker from './serviceWorker'
 
-import { StoreProvider } from 'context/Store'
+import { StoreProvider } from 'contexts/store'
 import { createPersistentStoreCreator } from 'hooks/useStore'
 
 import App from 'components/App'

@@ -1,7 +1,7 @@
 import React, { useContext, memo } from 'react'
 import styled, { css } from 'styled-components'
 
-import StoreContext from 'context/Store'
+import StoreContext from 'contexts/store'
 
 import { dragStyles } from 'components/Draggable'
 
