@@ -37,22 +37,22 @@ const Lawn = styled(PhysicalObject.Part)`
     center;
 
   background-size:
-    8% 8%,
-    8% 8%,
-    8% 8%,
-    8% 8%,
-    8% 8%,
-    8% 8%,
-    70% 70%,
-    60% 60%;
+    1.6em 1.6em,
+    1.6em 1.6em,
+    1.6em 1.6em,
+    1.6em 1.6em,
+    1.6em 1.6em,
+    1.6em 1.6em,
+    14em 14em,
+    12em 12em;
 `
 Lawn.defaultProps = {
   baseColor: '#6ab13f'
 }
 
 const Grass = props => (
-  <PhysicalObject width={20} height={20} {...props}>
-    <Lawn {...props} z={0} />
+  <PhysicalObject width={100} height={80} {...props}>
+    <Lawn z={0} />
   </PhysicalObject>
 )
 

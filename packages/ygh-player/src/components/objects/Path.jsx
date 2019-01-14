@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import PhysicalObject from './PhysicalObject'
 
@@ -80,8 +80,8 @@ const Stone = styled(PhysicalObject.Part)
     border-radius: 80% 90% 110% 120% / 120% 110% 90% 80%;
 
     box-shadow: inset
-      ${props => Math.cos((-props.a + 270) * Math.PI /180) * props.s}em
-      ${props => Math.sin((-props.a + 270) * Math.PI /180) * props.s}em
+      ${props => Math.cos((270 - props.a - props.parentAngle) * Math.PI /180) * props.s}em
+      ${props => Math.sin((270 - props.a - props.parentAngle) * Math.PI /180) * props.s}em
       ${props => props.s}em
       #0004;
 

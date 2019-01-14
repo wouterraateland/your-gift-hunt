@@ -31,7 +31,7 @@ const StyledPlank = styled(Plank)`
 
 const Floor = ({ ...props }) => {
   return (
-    <PhysicalObject width={32} height={28} {...props}>
+    <PhysicalObject width={29} height={35} {...props}>
       <FloorPart z={0}>
         {planks.map((plank, i) => (
           <StyledPlank

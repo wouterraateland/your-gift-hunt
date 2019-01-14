@@ -31,11 +31,21 @@ export const GlobalStyles = createGlobalStyle`
 
   html {
     font-family: Montserrat, sans-serif;
+
+    @media (max-width: 20em) {
+      font-size: 70%;
+    }
+
+    @media (min-width: 20em) and (max-width: 30em) {
+      font-size: calc(70% + ((100 - 70) / 100) * (100vw - 20rem) / (30 - 20));
+    }
+
+    @media (min-width: 30em) {
+      font-size: 100%;
+    }
   }
 
   body {
-    overflow-x: hidden;
-
     padding: 0;
     margin: 0;
     color: ${theme.color.text};

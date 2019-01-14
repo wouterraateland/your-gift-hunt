@@ -41,7 +41,7 @@ const DoorPart = styled(PhysicalObject.Part)`
   margin: auto;
   border-radius: 60% 40% .2em 80% / .2em .2em .3em .1em;
 
-  background: #000;
+  background: #584630;
 
   transform-origin: left bottom;
   transform: rotate(${props => props.state === 'open' ? 60 : 0}deg);

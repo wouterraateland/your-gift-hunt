@@ -137,7 +137,7 @@ const PlantPot = ({ state, ...props }) => (
   <PhysicalObject width={4} height={4} {...props}>
     <Pot z={1.5} />
     <Plant
-      planted={state !== 'empty'}
+      planted={state === 'planted' || state === 'grown'}
       grown={state === 'grown'}
     />
   </PhysicalObject>
