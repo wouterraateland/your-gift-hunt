@@ -3,7 +3,8 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { withKnobs, radios } from '@storybook/addon-knobs'
 
-import withStyle from './decorators/withStyle'
+import withTheme from './decorators/withTheme'
+import withCenter from './decorators/withCenter'
 
 import {
   Armchair,
@@ -27,7 +28,8 @@ import {
 } from 'components/objects'
 
 storiesOf('Objects', module)
-  .addDecorator(withStyle(false))
+  .addDecorator(withCenter(false))
+  .addDecorator(withTheme)
   .addDecorator(withKnobs)
   .add('Armchair', () => <Armchair state={radios('state', {
     Default: 'default',

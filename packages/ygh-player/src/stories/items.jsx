@@ -3,7 +3,8 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { withKnobs, radios } from '@storybook/addon-knobs'
 
-import withStyle from './decorators/withStyle'
+import withTheme from './decorators/withTheme'
+import withCenter from './decorators/withCenter'
 
 import {
   Battery,
@@ -14,7 +15,8 @@ import {
 } from 'components/items'
 
 storiesOf('Items', module)
-  .addDecorator(withStyle(true))
+  .addDecorator(withCenter(true))
+  .addDecorator(withTheme)
   .addDecorator(withKnobs)
   .add('Battery', () => <Battery state={radios('state', {
     Default: 'default',

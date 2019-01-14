@@ -28,22 +28,10 @@ const Center = styled.div`
   `}
 `
 
-const GlobalStyles = createGlobalStyle`
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-
-  body {
-    padding: 0;
-    margin: 0;
-  }
-`
-
-const withStyle = isItem => story => (
+const withCenter = isItem => story => (
   <Center isItem={isItem}>
-    <GlobalStyles />
     {story()}
   </Center>
 )
 
-export default withStyle
+export default withCenter
