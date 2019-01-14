@@ -44,7 +44,7 @@ const StyledPlank = styled(Plank)`
 `
 
 const Desk = props => (
-  <PhysicalObject width="6em" height="12em">
+  <PhysicalObject width={6} height={12} {...props}>
     <Construction {...props} z={0} />
     <StyledPlank
       as={PhysicalObject.Part} baseColor="#584630" z={2.5} />

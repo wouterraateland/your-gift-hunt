@@ -6,26 +6,24 @@ import { withKnobs, radios } from '@storybook/addon-knobs'
 import withTheme from './decorators/withTheme'
 import withCenter from './decorators/withCenter'
 
-import {
-  Armchair,
-  Camera,
-  Carpet,
-  Computer,
-  Desk,
-  DeskChair,
-  Door,
-  Floor,
-  Grass,
-  InstructionNote,
-  Lamp,
-  Mailbox,
-  Package,
-  Path,
-  PlantPot,
-  SafeWithKeyhole,
-  Sink,
-  Wall
-} from 'components/objects'
+import Armchair from 'components/objects/Armchair'
+import Camera from 'components/objects/Camera'
+import Carpet from 'components/objects/Carpet'
+import Computer from 'components/objects/Computer'
+import Desk from 'components/objects/Desk'
+import DeskChair from 'components/objects/DeskChair'
+import Door from 'components/objects/Door'
+import Floor from 'components/objects/Floor'
+import Grass from 'components/objects/Grass'
+import InstructionNote from 'components/objects/InstructionNote'
+import Lamp from 'components/objects/Lamp'
+import Mailbox from 'components/objects/Mailbox'
+import Package from 'components/objects/Package'
+import Path from 'components/objects/Path'
+import PlantPot from 'components/objects/PlantPot'
+import SafeWithKeyhole from 'components/objects/SafeWithKeyhole'
+import Sink from 'components/objects/Sink'
+import Wall from 'components/objects/Wall'
 
 storiesOf('Objects', module)
   .addDecorator(withCenter(false))

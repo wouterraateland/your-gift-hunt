@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Children, cloneElement } from 'react'
 import styled from 'styled-components'
 
 import * as _Armchair from './Armchair'
@@ -20,16 +20,35 @@ import * as _SafeWithKeyhole from './SafeWithKeyhole'
 import * as _Sink from './Sink'
 import * as _Wall from './Wall'
 
-const ObjectContainer = styled.div`
+const ObjectContainer = styled.div.attrs(props => ({
+  style: {
+    left: `${props.left}em`,
+    top: `${props.top}em`,
+    transform: `rotate(${props.angle}deg)`
+  }
+}))`
   position: absolute;
 `
 
-const createPhysicalObject = ({ default: Component, objectId: id }) => props => {
+ObjectContainer.defaultProps = {
+  left: 0, top: 0,
+  angle: 0,
+}
+
+const createPhysicalObject = ({ default: Component, objectId: id }) =>
+  ({ children, state, angle=0, parentAngle=0, ...props }) => {
   const object = { id }
 
+  const childrenWithParentAngle = Children.map(children, child =>
+    cloneElement(child, { parentAngle: parentAngle + angle })
+  )
+
+  console.log(parentAngle + angle)
+
   return (
-    <ObjectContainer object={object}>
-      <Component {...props} />
+    <ObjectContainer object={object} angle={angle} {...props}>
+      <Component state={state} parentAngle={angle + parentAngle} />
+      {childrenWithParentAngle}
     </ObjectContainer>
   )
 }

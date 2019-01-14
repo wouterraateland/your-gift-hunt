@@ -133,8 +133,8 @@ const Plant = plantProps => Array(leafs).fill(0).map((_, i) =>
   />
 )
 
-const PlantPot = ({ state }) => (
-  <PhysicalObject width="4em" height="4em">
+const PlantPot = ({ state, ...props }) => (
+  <PhysicalObject width={4} height={4} {...props}>
     <Pot z={1.5} />
     <Plant
       planted={state !== 'empty'}

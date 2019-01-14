@@ -27,7 +27,7 @@ const Frame = styled(PhysicalObject.Part)`
     width: .5em;
     border-radius: .2em .1em .1em .1em / .3em .2em .1em .5em;
 
-    box-shadow: 5.5em 0;
+    box-shadow: 5.5em 0 #000;
 
     background: #000;
   }
@@ -62,7 +62,7 @@ const DoorPart = styled(PhysicalObject.Part)`
 `
 
 const Door = props => (
-  <PhysicalObject width="5em" height="1em">
+  <PhysicalObject width={5} height={1} {...props}>
     <Frame {...props} z={0} />
     <DoorPart {...props} z={2} />
   </PhysicalObject>

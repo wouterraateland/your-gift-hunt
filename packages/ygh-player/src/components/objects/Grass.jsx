@@ -51,7 +51,7 @@ Lawn.defaultProps = {
 }
 
 const Grass = props => (
-  <PhysicalObject width="20em" height="20em">
+  <PhysicalObject width={20} height={20} {...props}>
     <Lawn {...props} z={0} />
   </PhysicalObject>
 )

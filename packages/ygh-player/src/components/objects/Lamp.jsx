@@ -53,7 +53,7 @@ const Light = styled(PhysicalObject.Part)`
   left: calc(50% + 6.25em); top: 50%;
   z-index: -1;
 
-  opacity: ${props => props.state === 'on' ? 1 : 0};
+  opacity: ${props => props.isOn ? 1 : 0};
 
   width: 7.5em;
   height: 7.5em;
@@ -68,14 +68,18 @@ const Light = styled(PhysicalObject.Part)`
   transition: opacity .5s ease-out;
 `
 
-const Lamp = props => (
-  <PhysicalObject width="2.5em" height="2.5em">
-    <Light {...props} z={0} />
-    <Foot {...props} z={.25} />
-    <Head {...props} z={1.25} />
-    <Neck {...props} z={1.5} />
-  </PhysicalObject>
-)
+const Lamp = ({ state, ...props }) => {
+  const isOn = state === 'on'
+
+  return (
+    <PhysicalObject width={2.5} height={2.5} angle={180} {...props}>
+      <Light isOn={isOn} z={0} />
+      <Foot z={.25} />
+      <Head z={1.25} />
+      <Neck z={1.5} />
+    </PhysicalObject>
+  )
+}
 
 export default Lamp
 

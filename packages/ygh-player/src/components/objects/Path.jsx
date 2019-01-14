@@ -89,12 +89,11 @@ const Stone = styled(PhysicalObject.Part)
   }
 `
 
-const Path = props => (
-  <PhysicalObject width="8em" height="16em">
+const Path = ({ state, ...props }) => (
+  <PhysicalObject width={8} height={16} {...props}>
     {stones.map((stone, i) => (
       <Stone
         key={i}
-        {...props}
         {...stone}
         s={Math.min(stone.w, stone.h) / 3}
         angle={stone.a}

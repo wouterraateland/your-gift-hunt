@@ -66,7 +66,7 @@ const Door = styled(PhysicalObject.Part)`
     box-shadow: inset .2em 0 .1em -.1em #0004;
   }
 
-  ${props => props.state === 'open' && css`
+  ${props => props.isOpen && css`
     left: 3em;
 
     width: 1.5em;
@@ -74,12 +74,16 @@ const Door = styled(PhysicalObject.Part)`
   `}
 `
 
-const Mailbox = props => (
-  <PhysicalObject width="3em" height="2em">
-    <Box {...props} z={2} />
-    <Door {...props} z={2} />
-  </PhysicalObject>
-)
+const Mailbox = ({ state, ...props }) => {
+  const isOpen = state === 'open'
+
+  return (
+    <PhysicalObject width={3} height={2} {...props}>
+      <Box z={2} />
+      <Door isOpen={isOpen} z={2} />
+    </PhysicalObject>
+  )
+}
 
 export default Mailbox
 

@@ -34,7 +34,7 @@ const Door = styled(PhysicalObject.Part)`
 
   transform-origin: left top;
 
-  ${props => props.state === 'unlocked' && css`
+  ${props => props.unlocked && css`
     transform: rotate(45deg);
   `}
 
@@ -54,7 +54,7 @@ const Door = styled(PhysicalObject.Part)`
 
 const Wheel = styled(PhysicalObject.Part)`
   left: 1em;
-  top: 5.25em;
+  top: 1.25em;
 
   width: 3em;
   height: .25em;
@@ -75,14 +75,6 @@ const Wheel = styled(PhysicalObject.Part)`
       inset -.2em 0 .4em -.1em #0009;
   }
 
-  transform-origin: -1em -1.25em;
-
-  ${props => props.state === 'unlocked' && css`
-    transform: rotate(45deg);
-  `}
-
-  transition: transform .5s ease-in-out;
-
   &::after {
     content: '';
     position: absolute;
@@ -96,13 +88,18 @@ const Wheel = styled(PhysicalObject.Part)`
   }
 `
 
-const SafeWithKeyhole = props => (
-  <PhysicalObject width="5em" height="5em">
-    <Safe {...props} z={2} />
-    <Door {...props} z={2} />
-    <Wheel {...props} z={1.5} />
-  </PhysicalObject>
-)
+const SafeWithKeyhole = ({ state, ...props }) => {
+  const unlocked = state === 'unlocked'
+
+  return (
+    <PhysicalObject width={5} height={5} {...props}>
+      <Safe z={2} />
+      <Door unlocked={unlocked} z={2} angle={unlocked ? 45 : 0}>
+        <Wheel z={1.5} />
+      </Door>
+    </PhysicalObject>
+  )
+}
 
 export default SafeWithKeyhole
 

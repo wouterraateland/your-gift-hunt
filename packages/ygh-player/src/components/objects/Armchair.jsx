@@ -74,7 +74,7 @@ const ArmchairPart = styled(PhysicalObject.Part)`
 `
 
 const Armchair = props => (
-  <PhysicalObject width="6em" height="5em">
+  <PhysicalObject width={6} height={5}>
     <ArmchairPart {...props} z={1.5} />
   </PhysicalObject>
 )

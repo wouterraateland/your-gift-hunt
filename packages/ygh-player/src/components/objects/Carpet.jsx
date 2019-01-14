@@ -4,30 +4,30 @@ import styled, { css } from 'styled-components'
 import PhysicalObject from './PhysicalObject'
 
 const CarpetPart = styled(PhysicalObject.Part)`
-  width: 22.5em;
-  height: 27.5em;
+  width: 100%;
+  height: 100%;
   border-radius: .5em;
 
   background-color: hsl(34, 53%, 82%);
   background-image:
-    repeating-linear-gradient(45deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
-      hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
-      hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
-      hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
-      hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
-      hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 120px, hsla(197, 62%, 11%, 0.5) 120px, hsla(197, 62%, 11%, 0.5) 140px
+    repeating-linear-gradient(45deg, transparent .25em, hsla(197, 62%, 11%, 0.5) .25em, hsla(197, 62%, 11%, 0.5) .5em,
+      hsla(5, 53%, 63%, 0) .5em, hsla(5, 53%, 63%, 0) 1.75em, hsla(5, 53%, 63%, 0.5) 1.75em, hsla(5, 53%, 63%, 0.5) 2em,
+      hsla(197, 62%, 11%, 0.5) 2em, hsla(197, 62%, 11%, 0.5) 2.5em, hsla(197, 62%, 11%, 0) 2.5em, hsla(197, 62%, 11%, 0) 3em,
+      hsla(5, 53%, 63%, 0.5) 3em, hsla(5, 53%, 63%, 0.5) 3.5em, hsla(35, 91%, 65%, 0.5) 3.5em, hsla(35, 91%, 65%, 0.5) 4em,
+      hsla(35, 91%, 65%, 0) 4em, hsla(35, 91%, 65%, 0) 4.5em, hsla(5, 53%, 63%, 0.5) 4.5em, hsla(5, 53%, 63%, 0.5) 5.5em,
+      hsla(5, 53%, 63%, 0) 5.5em, hsla(5, 53%, 63%, 0) 6em, hsla(197, 62%, 11%, 0.5) 6em, hsla(197, 62%, 11%, 0.5) 7em
     ),
-    repeating-linear-gradient(135deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
-      hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
-      hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
-      hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
-      hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
-      hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 140px, hsla(197, 62%, 11%, 0.5) 140px, hsla(197, 62%, 11%, 0.5) 160px
+    repeating-linear-gradient(135deg, transparent .25em, hsla(197, 62%, 11%, 0.5) .25em, hsla(197, 62%, 11%, 0.5) .5em,
+      hsla(5, 53%, 63%, 0) .5em, hsla(5, 53%, 63%, 0) 1.75em, hsla(5, 53%, 63%, 0.5) 1.75em, hsla(5, 53%, 63%, 0.5) 2em,
+      hsla(197, 62%, 11%, 0.5) 2em, hsla(197, 62%, 11%, 0.5) 2.5em, hsla(197, 62%, 11%, 0) 2.5em, hsla(197, 62%, 11%, 0) 3em,
+      hsla(5, 53%, 63%, 0.5) 3em, hsla(5, 53%, 63%, 0.5) 3.5em, hsla(35, 91%, 65%, 0.5) 3.5em, hsla(35, 91%, 65%, 0.5) 4em,
+      hsla(35, 91%, 65%, 0) 4em, hsla(35, 91%, 65%, 0) 4.5em, hsla(5, 53%, 63%, 0.5) 4.5em, hsla(5, 53%, 63%, 0.5) 5.5em,
+      hsla(5, 53%, 63%, 0) 5.5em, hsla(5, 53%, 63%, 0) 7em, hsla(197, 62%, 11%, 0.5) 7em, hsla(197, 62%, 11%, 0.5) 13em
     );
 `
 
 const Carpet = props => (
-  <PhysicalObject width="22.5em" height="27.5em">
+  <PhysicalObject width={10} height={14}>
     <CarpetPart {...props} z={.25} />
   </PhysicalObject>
 )

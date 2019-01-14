@@ -1,20 +1,25 @@
+import React, { Children, cloneElement } from 'react'
 import styled from 'styled-components'
 
-const PhysicalObject = styled.div`
+const StyledPhysicalObject = styled.div.attrs(({ width, height }) => ({
+  style: {
+    width: `${width}em`,
+    height: `${height}em`,
+  }
+}))`
   position: relative;
-
-  width: ${props => props.width};
-  height: ${props => props.height};
-
-  background: #0001;
 `
 
-const ObjectPart = styled.div`
+const ObjectPart = styled.div.attrs(({ parentAngle, angle, z }) => ({
+  style: {
+    boxShadow: `
+      ${Math.cos(-(-45 + parentAngle + angle) * Math.PI / 180) * z/3}em
+      ${Math.sin(-(-45 + parentAngle + angle) * Math.PI / 180) * z/3}em
+      ${z/2}em ${-z / 8}em
+      #0009`,
+    }
+  }))`
   position: absolute;
-
-  box-shadow: ${({ angle=0, z=1 }) =>
-    `${Math.cos(-angle * Math.PI / 180) * z/3}em ${Math.cos(-angle * Math.PI / 180) * z/3}em ${z/2}em ${-z / 8}em #0009;`
-  }
 
   &::before,
   &::after {
@@ -23,6 +28,30 @@ const ObjectPart = styled.div`
     position: absolute;
   }
 `
+
+ObjectPart.defaultProps = {
+  parentAngle: 0,
+  angle: 0,
+  z: 1,
+}
+
+const PhysicalObject = ({ children, parentAngle, width, height }) => {
+  const childrenWithParentAngle = Children.map(children, child =>
+    cloneElement(child, { parentAngle })
+  )
+
+  return (
+    <StyledPhysicalObject width={width} height={height}>
+      {childrenWithParentAngle}
+    </StyledPhysicalObject>
+  )
+}
+
+PhysicalObject.defaultProps = {
+  parentAngle: 0,
+  width: 1,
+  height: 1,
+}
 
 PhysicalObject.Part = ObjectPart
 

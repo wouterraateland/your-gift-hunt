@@ -83,11 +83,12 @@ const Flap = styled(PhysicalObject.Part)`
   `}
 `
 
-const Package = props => {
-  const isOpen = props.state === 'open'
+const Package = ({ state, ...props }) => {
+  const isOpen = state === 'open'
+
   return (
-    <PhysicalObject width="3.5em" height="3.5em">
-      <Bottom {...props} z={1.5} />
+    <PhysicalObject width={3.5} height={3.5} {...props}>
+      <Bottom z={1.5} />
       <Flap isOpen={isOpen} z={0} />
       <Flap isOpen={isOpen} z={0} />
       <Flap isOpen={isOpen} z={0} />

@@ -66,7 +66,7 @@ const Body = styled(PhysicalObject.Part)`
 `
 
 const Camera = props => (
-  <PhysicalObject width="3.5em" height="2.25em">
+  <PhysicalObject width={3.5} height={2.25}>
     <Lens {...props} z={.4} />
     <Body {...props} z={.5} />
   </PhysicalObject>

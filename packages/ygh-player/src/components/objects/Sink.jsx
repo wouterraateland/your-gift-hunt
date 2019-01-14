@@ -34,7 +34,7 @@ const Worktop = styled(PhysicalObject.Part)`
 `
 
 const SinkPart = styled(PhysicalObject.Part)`
-  left: 25%; top: 1em;
+  left: 20%; top: 1em;
   bottom: .5em;
 
   width: 6em;
@@ -64,6 +64,12 @@ const SinkPart = styled(PhysicalObject.Part)`
       inset 0 .2em .4em -.1em #0004,
       0 .2em .4em -.1em #fff7,
       0 -.2em .4em -.1em #0004;
+
+    transition: background-color 1s linear;
+
+    ${props => props.isConnected && css`
+      background-color: #48f4;
+    `}
   }
 `
 
@@ -223,19 +229,23 @@ const Neck = styled(PhysicalObject.Part)`
   transform: rotate(20deg) translate(-50%, 0);
 `
 
-const Sink = props => (
-  <PhysicalObject width="20em" height="6em">
-    <Worktop {...props} z={2} />
-    <SinkPart {...props} z={.1}>
-      <Well {...props} z={0} />
-      <Faucet {...props} z={.1}>
-        <Cold {...props} z={.2} angle={-60} />
-        <Warm {...props} z={.2} angle={60} />
-        <Neck {...props} z={.5} angle={10} />
-      </Faucet>
-    </SinkPart>
-  </PhysicalObject>
-)
+const Sink = ({ state, ...props }) => {
+  const isConnected = state === 'connected'
+
+  return (
+    <PhysicalObject width={15} height={6} {...props}>
+      <Worktop z={2} />
+      <SinkPart isConnected={isConnected} z={.1}>
+        <Well z={0} />
+        <Faucet z={.1}>
+          <Cold z={.2} angle={-60} />
+          <Warm z={.2} angle={60} />
+          <Neck z={.5} angle={10} />
+        </Faucet>
+      </SinkPart>
+    </PhysicalObject>
+  )
+}
 
 export default Sink
 

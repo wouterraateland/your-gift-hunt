@@ -77,7 +77,7 @@ const Backrest = styled(PhysicalObject.Part)`
 `
 
 const DeskChair = props => (
-  <PhysicalObject width="4em" height="4em">
+  <PhysicalObject width={4} height={4} {...props}>
     <Seat {...props} z={1} />
     <Backrest {...props} z={1.5} />
   </PhysicalObject>
