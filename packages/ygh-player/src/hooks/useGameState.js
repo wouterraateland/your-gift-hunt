@@ -14,7 +14,10 @@ const useGameState = () => {
   return {
     items: entities.filter(entity => entity.isItem),
     objects: entities.filter(entity => entity.isObject),
-    currentScreen: null,
+    questions: entities.filter(entity => entity.entity === '/entities/question'),
+    codes: entities.filter(entity => entity.entity === '/entities/code'),
+    inputs: entities.filter(entity => entity.entity === '/entities/input'),
+    notes: entities.filter(entity => entity.entity === '/entities/note'),
   }
 }
 

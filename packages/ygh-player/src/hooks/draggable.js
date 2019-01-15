@@ -3,24 +3,14 @@ import useStore from 'hooks/useStore'
 
 import _ from 'utils'
 
-// .draggable {
-//   will-change: transform, z-index;
-//   touch-action: none;
-//   position: absolute;
-//
-//   opacity: 0;
-//
-//   animation: fadeIn 1s 1s ease-out forwards running;
-// }
-
 const getTouches = event => event.touches
   ? [].slice.call(event.touches).map(touch => ({
-      x: touch.clientX * 100 / window.innerWidth,
-      y: touch.clientY * 100 / window.innerHeight,
+      x: touch.clientX,
+      y: touch.clientY,
     }))
   : [{
-      x: event.clientX * 100 / window.innerWidth,
-      y: event.clientY * 100 / window.innerHeight,
+      x: event.clientX,
+      y: event.clientY,
     }]
 
 const draggable = ({
@@ -67,7 +57,7 @@ const draggable = ({
 
     write('prevTouches', getTouches(event))
 
-    onDragStart(event)
+    onDragStart(state, setState)
   }
 
   function handleOnDrag(event) {
@@ -104,12 +94,12 @@ const draggable = ({
       prevTouches: touches,
     })
 
-    onDrag(state)
+    onDrag(state, setState)
   }
 
-  function handleOnDragEnd(event) {
+  function handleOnDragEnd() {
     write('prevTouches', [])
-    onDragEnd(state)
+    onDragEnd(state, setState)
   }
 
   return {

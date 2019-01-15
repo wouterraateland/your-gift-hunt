@@ -23,7 +23,7 @@ const DefaultScene = () => {
         <Object.Lamp left={25.5} top={24.5} angle={160} />
 
         <Object.PlantPot left={1.5} top={12.5} />
-        <Object.Sink left={-4} top={23} angle={90} />
+        <Object.Sink left={-4.25} top={23} angle={90} />
 
         <Object.SafeWithKeyhole left={21.5} top={2.5} angle={30} />
 

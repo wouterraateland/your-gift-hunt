@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
-import Screen from 'components/screens'
+import ScreenContext from 'contexts/Screen'
 
-const ScreenContainer = ({ currentScreen }) => {
-  return currentScreen
-    ? <Screen screen={currentScreen} />
+const ScreenContainer = () => {
+  const { screen, close } = useContext(ScreenContext)
+  const Component = screen ? screen.component : null
+
+  return Component
+    ? <Component {...screen.props} isVisible close={close} />
     : null
 }
 

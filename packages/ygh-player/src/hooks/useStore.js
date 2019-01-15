@@ -1,9 +1,12 @@
 import { useState } from 'react'
 
-const id = x => x
-const constant = x => () => x
+import _ from 'utils'
 
-const useStore = ({ initialState, rootReducer=id, enhancer=id }) => {
+const useStore = ({
+  initialState,
+  rootReducer=_.identity,
+  enhancer=_.identity
+}) => {
   const [state, setState] = useState(initialState || {})
 
   return {
@@ -32,7 +35,7 @@ export const createPersistentStoreCreator = ({
   save
 }) => ({
   name='store',
-  persistKey=constant(true),
+  persistKey=_.constant(true),
 }) => ({
   initialState: deserialize(load(name)),
   enhancer: state => {

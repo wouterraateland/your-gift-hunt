@@ -1,6 +1,6 @@
 {
-  "name": "cadeau-marjo",
-  "version": "0.1.0",
+  "name": "your-gift-hunt-player",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "polished": "^2.3.3",

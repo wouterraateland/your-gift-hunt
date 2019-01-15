@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
-import Item from 'components/items'
+import ScreenContext from 'contexts/Screen'
+
+import Item from 'your-gift-hunt/items'
 import ItemScreen from 'components/screens/Item'
+
+import ItemDragContainer from 'components/ItemDragContainer'
 
 const InventoryContainer = styled.div`
   position: fixed;
   left: 0;
   bottom: 0; right: 0;
-
-  overflow-x: auto;
 
   height: 7em;
   padding: .5em;
@@ -32,26 +34,21 @@ const ItemSlot = styled.div`
 `
 
 const Inventory = ({ items }) => {
-  const [selectedItem, selectItem] = useState(null)
+  const { popup } = useContext(ScreenContext)
 
   return (
-    <>
-      <InventoryContainer>
-        {items.map(item => (
-          <ItemSlot
-            key={item.id}
-            onClick={() => selectItem(selectedItem === item ? null : item)}
-          >
+    <InventoryContainer>
+      {items.map(item => (
+        <ItemSlot
+          key={item.id}
+          onClick={() => popup(ItemScreen, { entity: item })}
+        >
+          <ItemDragContainer>
             <Item {...item} />
-          </ItemSlot>
-        ))}
-      </InventoryContainer>
-      <ItemScreen
-        isVisible={selectedItem !== null}
-        entity={selectedItem}
-        close={() => selectItem(null)}
-      />
-    </>
+          </ItemDragContainer>
+        </ItemSlot>
+      ))}
+    </InventoryContainer>
   )
 }
 

@@ -8,6 +8,7 @@ const StyledPhysicalObject = styled.div.attrs(({ width, height }) => ({
   }
 }))`
   position: relative;
+  pointer-events: ${props => props.interactive ? 'auto' : 'none'};
 `
 
 const ObjectPart = styled.div.attrs(({ parentAngle, angle, z }) => ({
@@ -35,13 +36,17 @@ ObjectPart.defaultProps = {
   z: 1,
 }
 
-const PhysicalObject = memo(({ children, parentAngle, width, height }) => {
+const PhysicalObject = memo(({
+  children,
+  parentAngle,
+  ...props
+}) => {
   const childrenWithParentAngle = Children.map(children, child =>
     cloneElement(child, { parentAngle })
   )
 
   return (
-    <StyledPhysicalObject width={width} height={height}>
+    <StyledPhysicalObject {...props}>
       {childrenWithParentAngle}
     </StyledPhysicalObject>
   )
@@ -51,6 +56,7 @@ PhysicalObject.defaultProps = {
   parentAngle: 0,
   width: 1,
   height: 1,
+  interactive: true,
 }
 
 PhysicalObject.Part = memo(ObjectPart)

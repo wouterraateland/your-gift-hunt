@@ -6,7 +6,7 @@ import Theme from 'containers/Theme'
 
 import Viewport from 'components/Viewport'
 import Inventory from 'components/Inventory'
-// import ScreenContainer from 'components/ScreenContainer'
+import ScreenContainer from 'components/ScreenContainer'
 import DefaultScene from 'components/scenes/default'
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
         <DefaultScene objects={objects} />
       </Viewport>
       <Inventory items={items} />
-      {/* <ScreenContainer currentScreen={currentScreen} /> */}
+      <ScreenContainer />
     </Theme>
   )
 }

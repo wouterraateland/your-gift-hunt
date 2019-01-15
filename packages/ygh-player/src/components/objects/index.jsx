@@ -28,6 +28,7 @@ const ObjectContainer = styled.div.attrs(props => ({
   }
 }))`
   position: absolute;
+  pointer-events: none;
 `
 
 ObjectContainer.defaultProps = {

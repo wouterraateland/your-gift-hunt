@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 
 import { GameProvider } from 'contexts/Game'
+import { ScreenProvider } from 'contexts/Screen'
 
 import App from 'components/App'
 
@@ -16,7 +17,9 @@ const root = document.getElementById('app-root')
 const render = (Component) =>
   ReactDOM.render(
     <GameProvider>
-      <Component />
+      <ScreenProvider>
+        <Component />
+      </ScreenProvider>
     </GameProvider>,
     root
   )

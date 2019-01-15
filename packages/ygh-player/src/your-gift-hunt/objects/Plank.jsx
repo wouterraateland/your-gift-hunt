@@ -47,6 +47,7 @@ export const Plank = styled.div`
   }
 }
 `
+Plank.displayName = 'Plank'
 
 Plank.defaultProps = {
   baseColor: '#b38d5c'

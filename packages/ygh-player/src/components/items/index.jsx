@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import * as _Battery from './Battery'
-import * as _Flashlight from './Flashlight'
-import * as _SafeKey from './SafeKey'
-import * as _Seeds from './Seeds'
-import * as _WateringCan from './WateringCan'
+import Battery from './Battery'
+import Flashlight from './Flashlight'
+import SafeKey from './SafeKey'
+import Seeds from './Seeds'
+import WateringCan from './WateringCan'
 
 const ItemContainer = styled.div`
   position: relative;
@@ -14,22 +14,6 @@ const ItemContainer = styled.div`
   width: 2em;
   height: 2em;
 `
-
-const createItem = ({ default: Component, itemId: id }) => props => {
-  const item = { id }
-
-  return (
-    <ItemContainer item={item}>
-      <Component {...props} />
-    </ItemContainer>
-  )
-}
-
-export const Battery = createItem(_Battery)
-export const Flashlight = createItem(_Flashlight)
-export const SafeKey = createItem(_SafeKey)
-export const Seeds = createItem(_Seeds)
-export const WateringCan = createItem(_WateringCan)
 
 const getItemComponent = (item) => {
   switch (item) {
@@ -42,12 +26,16 @@ const getItemComponent = (item) => {
   }
 }
 
-const Item = ({ entity, ...props }) => {
-  const Component = getItemComponent(entity)
+const Item = ({ ...props }) => {
+  const Component = getItemComponent(props.entity)
 
-  return Component
-    ? <Component {...props} />
-    : <ItemContainer>{entity}</ItemContainer>
+  return (
+    <ItemContainer>
+      {Component
+        ? <Component {...props} />
+        : props.entity}
+    </ItemContainer>
+  )
 }
 
 export default Item
