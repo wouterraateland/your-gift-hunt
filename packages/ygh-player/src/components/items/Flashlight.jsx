@@ -1,18 +1,17 @@
+import React from 'react'
 import styled, { css } from 'styled-components'
 
-const Flashlight = styled.div`
-  position: relative;
+import _ from 'utils'
 
+import Item from './Item'
+
+const FlashlightBody = styled(Item)`
   width: 2em;
   height: .5em;
 
   border-radius: .1em;
 
   background:
-    radial-gradient(
-      ellipse 8% 20% at 45% 50%,
-      #000, #444 95%, transparent 100%
-    ),
     radial-gradient(
       ellipse 30% 20% at 40% 35%,
       #fff9, transparent
@@ -23,12 +22,6 @@ const Flashlight = styled.div`
     );
 
   transform: rotate(-45deg);
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-  }
 
   &::before {
     ${props => props.state === 'on'
@@ -87,6 +80,38 @@ const Flashlight = styled.div`
       inset 0 .1em .2em -.1em #0009;
   }
 `
+FlashlightBody.displayName = "FlashlightBody"
+
+const FlashlightButton = styled.div`
+  cursor: pointer;
+
+  position: absolute;
+  left: 45%; top: 50%;
+
+  width: .3em;
+  height: .2em;
+  border-radius: 100%;
+
+  background:
+    radial-gradient(
+      ellipse 50% 50% at 50% 50%,
+      #000, #444
+    );
+
+  transform: translate(-50%, -50%);
+`
+
+const Flashlight = ({ state, onTransform }) => (
+  <FlashlightBody state={state}>
+    <FlashlightButton
+      onClick={() => state !== 'empty' && onTransform('TOGGLE_POWER')}
+    />
+  </FlashlightBody>
+)
+
+Flashlight.defaultProps = {
+  onTransform: _.noop
+}
 
 export default Flashlight
 

@@ -10,6 +10,9 @@ import * as _WateringCan from './WateringCan'
 const ItemContainer = styled.div`
   position: relative;
   z-index: 1;
+
+  width: 2em;
+  height: 2em;
 `
 
 const createItem = ({ default: Component, itemId: id }) => props => {
@@ -39,12 +42,12 @@ const getItemComponent = (item) => {
   }
 }
 
-const Item = ({ item, state }) => {
-  const Component = getItemComponent(item)
+const Item = ({ entity, ...props }) => {
+  const Component = getItemComponent(entity)
 
   return Component
-    ? <Component state={state} />
-    : <ItemContainer>{item}</ItemContainer>
+    ? <Component {...props} />
+    : <ItemContainer>{entity}</ItemContainer>
 }
 
 export default Item

@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
-import useGameState from 'hooks/useGameState'
+import GameContext from 'contexts/Game'
 
 import Theme from 'containers/Theme'
 
 import Viewport from 'components/Viewport'
 import Inventory from 'components/Inventory'
-import ScreenContainer from 'components/ScreenContainer'
+// import ScreenContainer from 'components/ScreenContainer'
 import DefaultScene from 'components/scenes/default'
 
 const App = () => {
-  const { items, objects, currentScreen } = useGameState()
+  const { state } = useContext(GameContext)
+  const { items, objects } = state
 
   return (
     <Theme>
@@ -18,7 +19,7 @@ const App = () => {
         <DefaultScene objects={objects} />
       </Viewport>
       <Inventory items={items} />
-      <ScreenContainer currentScreen={currentScreen} />
+      {/* <ScreenContainer currentScreen={currentScreen} /> */}
     </Theme>
   )
 }

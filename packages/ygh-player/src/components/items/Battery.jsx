@@ -1,8 +1,9 @@
+import React from 'react'
 import styled from 'styled-components'
 
-const Battery = styled.div`
-  position: relative;
+import Item from './Item'
 
+const Battery = styled(Item)`
   width: 1em;
   height: 2em;
   border-radius: .1em;
@@ -15,9 +16,6 @@ const Battery = styled.div`
   transform: rotate(45deg);
 
   &::before {
-    content: '';
-
-    position: absolute;
     left: 50%; bottom: 100%;
 
     width: .5em;
@@ -33,6 +31,8 @@ const Battery = styled.div`
   }
 `
 
-export default Battery
+export default () => (
+  <Battery />
+)
 
 export const itemId = 'battery'

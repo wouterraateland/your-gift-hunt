@@ -1,6 +1,9 @@
+import React from 'react'
 import styled from 'styled-components'
 
-const Seeds = styled.div`
+import Item from './Item'
+
+const Seeds = styled(Item)`
   width: 2em;
   height: 2em;
 
@@ -23,6 +26,8 @@ const Seeds = styled.div`
   transform: skew(15deg, 15deg) scale(.85) translate(-.1em, -.1em);
 `
 
-export default Seeds
+export default () => (
+  <Seeds />
+)
 
 export const itemId = 'seeds'

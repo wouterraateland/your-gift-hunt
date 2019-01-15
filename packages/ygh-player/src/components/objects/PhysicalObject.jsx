@@ -1,4 +1,4 @@
-import React, { Children, cloneElement } from 'react'
+import React, { Children, cloneElement, memo } from 'react'
 import styled from 'styled-components'
 
 const StyledPhysicalObject = styled.div.attrs(({ width, height }) => ({
@@ -35,7 +35,7 @@ ObjectPart.defaultProps = {
   z: 1,
 }
 
-const PhysicalObject = ({ children, parentAngle, width, height }) => {
+const PhysicalObject = memo(({ children, parentAngle, width, height }) => {
   const childrenWithParentAngle = Children.map(children, child =>
     cloneElement(child, { parentAngle })
   )
@@ -45,7 +45,7 @@ const PhysicalObject = ({ children, parentAngle, width, height }) => {
       {childrenWithParentAngle}
     </StyledPhysicalObject>
   )
-}
+})
 
 PhysicalObject.defaultProps = {
   parentAngle: 0,
@@ -53,6 +53,6 @@ PhysicalObject.defaultProps = {
   height: 1,
 }
 
-PhysicalObject.Part = ObjectPart
+PhysicalObject.Part = memo(ObjectPart)
 
 export default PhysicalObject

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import Item from 'components/items'
+import ItemScreen from 'components/screens/Item'
 
 const InventoryContainer = styled.div`
   position: fixed;
@@ -11,6 +12,7 @@ const InventoryContainer = styled.div`
   overflow-x: auto;
 
   height: 7em;
+  padding: .5em;
 
   white-space: nowrap;
 
@@ -22,7 +24,7 @@ const ItemSlot = styled.div`
   width: 3em;
   height: 3em;
   padding: .5em;
-  margin: .5em;
+  margin: 0 .25em;
   border-radius: 1em;
   font-size: 1.5em;
 
@@ -30,16 +32,26 @@ const ItemSlot = styled.div`
 `
 
 const Inventory = ({ items }) => {
-  items.push({ id: '1234', item: '/entities/watering-can', state: 'empty' })
+  const [selectedItem, selectItem] = useState(null)
 
   return (
-    <InventoryContainer>
-      {items.map(item => (
-        <ItemSlot key={item.id}>
-          <Item item={item.item} state={item.state} />
-        </ItemSlot>
-      ))}
-    </InventoryContainer>
+    <>
+      <InventoryContainer>
+        {items.map(item => (
+          <ItemSlot
+            key={item.id}
+            onClick={() => selectItem(selectedItem === item ? null : item)}
+          >
+            <Item {...item} />
+          </ItemSlot>
+        ))}
+      </InventoryContainer>
+      <ItemScreen
+        isVisible={selectedItem !== null}
+        entity={selectedItem}
+        close={() => selectItem(null)}
+      />
+    </>
   )
 }
 

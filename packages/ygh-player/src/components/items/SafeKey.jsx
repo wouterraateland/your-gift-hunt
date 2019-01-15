@@ -1,8 +1,9 @@
+import React from 'react'
 import styled from 'styled-components'
 
-const SafeKey = styled.div`
-  position: relative;
+import Item from './Item'
 
+const SafeKey = styled(Item)`
   width: .5em;
   height: .5em;
 
@@ -16,13 +17,6 @@ const SafeKey = styled.div`
   color: #9a8d7d;
 
   transform: translate(-.6em, .55em) scale(.46);
-
-  &::before,
-  &::after {
-    content: '';
-
-    position: absolute;
-  }
 
   &::before {
     width: .5em;
@@ -60,6 +54,8 @@ const SafeKey = styled.div`
   }
 `
 
-export default SafeKey
+export default () => (
+  <SafeKey />
+)
 
 export const itemId = 'safe-key'

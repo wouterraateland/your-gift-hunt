@@ -2,8 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 
-import { StoreProvider } from 'contexts/Store'
-import { localStorageStoreCreator } from 'hooks/useStore'
+import { GameProvider } from 'contexts/Game'
 
 import App from 'components/App'
 
@@ -12,18 +11,13 @@ if (process.env.NODE_ENV !== 'production') {
   whyDidYouUpdate(React)
 }
 
-const store = localStorageStoreCreator({
-  name: 'store',
-  persistKey: key => !['selectedPieceId', 'selectedBoardId'].includes(key),
-})
-
 const root = document.getElementById('app-root')
 
 const render = (Component) =>
   ReactDOM.render(
-    <StoreProvider store={store}>
+    <GameProvider>
       <Component />
-    </StoreProvider>,
+    </GameProvider>,
     root
   )
 

@@ -1,8 +1,9 @@
+import React from 'react'
 import styled, { css } from 'styled-components'
 
-const WateringCan = styled.div`
-  position: relative;
+import Item from './Item'
 
+const WateringCan = styled(Item)`
   width: 1em;
   height: 1.5em;
   margin-top: .5em;
@@ -16,17 +17,10 @@ const WateringCan = styled.div`
   color: #1b74ad;
   background-color: currentColor;
 
-  ${props => props.state === 'filled' && css`
+  ${props => props.isFilled && css`
     background-image:
       linear-gradient(transparent 30%, #0004 30%);
   `}
-
-  &::before,
-  &::after {
-    content: '';
-
-    position: absolute;
-  }
 
   &::before {
     left: -.25em;
@@ -59,7 +53,7 @@ const WateringCan = styled.div`
 
     background-color: currentColor;
     background-image:
-      ${props => props.state === 'filled'
+      ${props => props.isFilled
         ? `linear-gradient(45deg, #0006 58%, transparent 58%),`
         : ``}
       radial-gradient(ellipse 70% 80% at 40% 100%, #0009 60%, transparent);
@@ -68,6 +62,8 @@ const WateringCan = styled.div`
   }
 `
 
-export default WateringCan
+export default ({ state }) => (
+  <WateringCan isFilled={state === 'filled'} />
+)
 
 export const itemId = 'watering-can'
