@@ -1,10 +1,9 @@
 import React from 'react'
-import { render, hydrate } from 'react-dom'
-import './index.css'
+import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 
-import { StoreProvider } from 'contexts/store'
-import { createPersistentStoreCreator } from 'hooks/useStore'
+import { StoreProvider } from 'contexts/Store'
+import { localStorageStoreCreator } from 'hooks/useStore'
 
 import App from 'components/App'
 
@@ -13,30 +12,27 @@ if (process.env.NODE_ENV !== 'production') {
   whyDidYouUpdate(React)
 }
 
-const localStorageStoreCreator = createPersistentStoreCreator({
-  serialize: JSON.stringify,
-  deserialize: JSON.parse,
-  load: key => window.localStorage.getItem(key),
-  save: (key, value) => window.localStorage.setItem(key, value),
-})
-
 const store = localStorageStoreCreator({
   name: 'store',
   persistKey: key => !['selectedPieceId', 'selectedBoardId'].includes(key),
 })
 
-const Root = (
-	<StoreProvider store={store}>
-		<App />
-	</StoreProvider>
-)
-
 const root = document.getElementById('app-root')
 
-if (root.hasChildNodes()) {
-	hydrate(Root, root)
-} else {
-	render(Root, root)
+const render = (Component) =>
+  ReactDOM.render(
+    <StoreProvider store={store}>
+      <Component />
+    </StoreProvider>,
+    root
+  )
+
+render(App)
+
+if (module.hot) {
+  module.hot.accept('./components/App', () =>
+    render(require('./components/App').default)
+  )
 }
 
 // If you want your app to work offline and load faster, you can change

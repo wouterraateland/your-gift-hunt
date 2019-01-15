@@ -6,7 +6,7 @@ const WateringCan = styled.div`
   width: 1em;
   height: 1.5em;
   margin-top: .5em;
-  margin-right: .5em;
+  margin-left: .4em;
   border-radius: 20% 15% 10% 10% / 80% 40% 10% 10%;
 
   box-shadow:

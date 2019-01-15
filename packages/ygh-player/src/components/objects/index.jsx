@@ -1,4 +1,4 @@
-import React, { Children, cloneElement } from 'react'
+import React, { memo, Children, cloneElement } from 'react'
 import styled from 'styled-components'
 
 import * as _Armchair from './Armchair'
@@ -36,14 +36,12 @@ ObjectContainer.defaultProps = {
 }
 
 const createPhysicalObject = ({ default: Component, objectId: id }) =>
-  ({ children, state, angle=0, parentAngle=0, ...props }) => {
+  memo(({ children, state, angle=0, parentAngle=0, ...props }) => {
   const object = { id }
 
   const childrenWithParentAngle = Children.map(children, child =>
     cloneElement(child, { parentAngle: parentAngle + angle })
   )
-
-  console.log(parentAngle + angle)
 
   return (
     <ObjectContainer object={object} angle={angle} {...props}>
@@ -51,7 +49,7 @@ const createPhysicalObject = ({ default: Component, objectId: id }) =>
       {childrenWithParentAngle}
     </ObjectContainer>
   )
-}
+})
 
 export const Armchair = createPhysicalObject(_Armchair)
 export const Camera = createPhysicalObject(_Camera)

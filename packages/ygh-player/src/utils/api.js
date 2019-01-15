@@ -7,6 +7,7 @@ const fetchLambda = async (lambda, params) => {
     ...params,
     body: params.body ? JSON.stringify(params.body) : null
   })
+
   const json = await response.json()
   return json
 }

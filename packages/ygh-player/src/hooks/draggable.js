@@ -1,11 +1,17 @@
 import { useEffect } from 'react'
 import useStore from 'hooks/useStore'
 
-const identity = x => x
-const noop = () => {}
-const mean = xs => xs.reduce((acc, x) => acc + x, 0) / xs.length
-const angle = (p1, p2) => Math.atan2(p2.y - p1.y, p2.x - p1.x)
-const dist = (p1, p2) => Math.sqrt(Math.pow(p2.y - p1.y, 2) + Math.pow(p2.x - p1.x, 2))
+import _ from 'utils'
+
+// .draggable {
+//   will-change: transform, z-index;
+//   touch-action: none;
+//   position: absolute;
+//
+//   opacity: 0;
+//
+//   animation: fadeIn 1s 1s ease-out forwards running;
+// }
 
 const getTouches = event => event.touches
   ? [].slice.call(event.touches).map(touch => ({
@@ -18,9 +24,9 @@ const getTouches = event => event.touches
     }]
 
 const draggable = ({
-  onDragStart=noop,
-  onDrag=noop,
-  onDragEnd=noop,
+  onDragStart=_.noop,
+  onDrag=_.noop,
+  onDragEnd=_.noop,
   initialTranslation={ x: 0, y: 0 },
   initialRotation=0,
   initialScale=1,
@@ -45,7 +51,7 @@ const draggable = ({
           }
           return state
         }
-      : identity
+      : _.identity
   })
 
   useEffect(() => {
@@ -73,19 +79,19 @@ const draggable = ({
     const l = prevTouches.length
 
     const dx = l > 0
-      ? mean(nextTouches.map(t => t.x)) - mean(prevTouches.map(t => t.x))
+      ? _.mean(nextTouches.map(t => t.x)) - _.mean(prevTouches.map(t => t.x))
       : 0
 
     const dy = l > 0
-      ? mean(nextTouches.map(t => t.y)) - mean(prevTouches.map(t => t.y))
+      ? _.mean(nextTouches.map(t => t.y)) - _.mean(prevTouches.map(t => t.y))
       : 0
 
     const dr = l === 2
-      ? angle(...nextTouches) - angle(...prevTouches)
+      ? _.angle(...nextTouches) - _.angle(...prevTouches)
       : 0
 
     const ds = l === 2
-      ? dist(...nextTouches) / dist(...prevTouches)
+      ? _.dist(...nextTouches) / _.dist(...prevTouches)
       : 1
 
     setState({

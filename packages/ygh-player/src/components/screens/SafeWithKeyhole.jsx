@@ -170,6 +170,7 @@ const SafeWithKeyholeScreen = forwardRef(({
   isVisible,
   entity,
   onWheelTurn,
+  close,
 }, refs) => {
   const keyhole = refs ? refs.keyhole : null
   const unlocked = entity.state === 'unlocked'
