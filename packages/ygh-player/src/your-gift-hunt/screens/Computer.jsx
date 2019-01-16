@@ -53,6 +53,10 @@ const Computer = styled.div`
 
     transform: translate(-50%, 1em);
   }
+
+  label {
+    display: block;
+  }
 `
 
 const AnswerInput = styled.input`
@@ -78,91 +82,125 @@ const Cursor = styled.span`
   }
 `
 
-const Prompt = styled.span`color: #ff0;`
+const PromptText = styled.span`color: #ff0;`
 const AnswerMarker = styled.span`color: #0ff;`
 const SuccessMarker = styled.span`color: #0f0;`
 const ErrorMarker = styled.span`color: #f00;`
+
+const Prompt = ({ text, children }) => {
+  const [display, setDisplay] = useState('')
+
+  useEffect(() => {
+    setDisplay('')
+    const i = setInterval(() => {
+      setDisplay(display => {
+        if (display.length === text.length) {
+          clearInterval(i)
+        }
+        return text.substr(0, display.length + 1)
+      })
+    }, 50)
+    return () => {
+      clearInterval(i)
+    }
+  }, [text])
+
+  return (
+    <>
+      <PromptText>{display}</PromptText>
+      {display.length === text.length && children}
+    </>
+  )
+}
 
 const ComputerScreen = ({
   isVisible,
   close,
   entities,
-  onSubmitAnswer,
-  error=null
+  onSubmitAnswer
 }) => {
   const input = useRef(null)
-
-  const [prompt, setPrompt] = useState(entities.length > 0
-    ? 'New questions available.' : 'No new questions available.')
-  const [entity, setEntity] = useState(null)
-  const [display, setDisplay] = useState('')
+  const [entityIndex, setEntityIndex] = useState(-1)
   const [answer, setAnswer] = useState('')
 
   useEffect(() => {
     input.current && input.current.focus()
   }, [])
 
-  useEffect(() => {
-    setDisplay('')
-    const i = setInterval(() => {
-      setDisplay(display => {
-        if (display.length === prompt.length) {
-          clearInterval(i)
-        }
-        return prompt.substr(0, display.length + 1)
-      })
-    }, 50)
-    return () => {
-      clearInterval(i)
-    }
-  }, [prompt])
-
   function handleOnSubmit(event) {
     event.preventDefault()
 
-    onSubmitAnswer && onSubmitAnswer(entity, answer)
+    onSubmitAnswer && onSubmitAnswer(entity.id, answer)
   }
 
-  function goToEntity(entity) {
-    setEntity(entity)
-    setPrompt(entity.fieldValues.question)
+  function goToEntity(index) {
+    setEntityIndex(index)
   }
+
+  const entity = entityIndex === -1
+    ? null : entities[entityIndex]
 
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>
       <Computer isVisible={isVisible}>
         <form onSubmit={handleOnSubmit}>
           <label>
-            <AnswerInput
-              ref={input}
-              onChange={event => setAnswer(event.target.value)}
-              value={answer}
-            />
-            <Prompt>{display}</Prompt>
-            <br /><br />
-            {display.length === prompt.length &&
-              (entity
-                ? (
+            {entity && entity.state === 'unanswered' && (
+              <AnswerInput
+                ref={input}
+                onKeyPress={event => event.keyCode === 13
+                  ? handleOnSubmit(event) : true}
+                onChange={event => setAnswer(event.target.value)}
+                value={answer}
+              />
+            )}
+            <Prompt text={entity === null
+              ? (entities.length
+                ? 'New questions available.'
+                : 'No new questions available.'
+              )
+              : entity.fieldValues.question
+            }>
+              <br /><br />
+              {entity === null
+                ? (entities.length > 0
+                  ? (
+                    <span onClick={() => goToEntity(0)}>
+                      Show question
+                    </span>
+                  )
+                  : null
+                )
+                : (
                   <>
                     <AnswerMarker>&gt;</AnswerMarker>
                     {' '}
                     {entity.state === 'answered'
-                      ? entity.inputValues.answer
+                      ? entities.inputValues.answer
                       : answer}
-                    <Cursor />
+                    {entity.state === 'unanswered' && <Cursor />}
                     {' '}
                     {entity.state === 'answered' && (
                       <SuccessMarker>✔</SuccessMarker>
                     )}
-                    {entity.state === 'unanswered' && error !== null &&
+                    {entity.state === 'unanswered' &&
                       entity.inputValues.answer === answer && (
                       <ErrorMarker>✘</ErrorMarker>
                     )}
+                    <br /><br /><br /><br />
+                    <span onClick={() => goToEntity(entityIndex - 1)}>
+                      ◀
+                    </span>
+                    {'  '}
+                    {(entityIndex < entities.length - 1) && (
+                      <span onClick={() => goToEntity(entityIndex + 1)}>
+                        ▶
+                      </span>
+                    )}
                   </>
-                  )
-                : null
-              )
-            }
+                )
+              }
+            </Prompt>
           </label>
         </form>
       </Computer>

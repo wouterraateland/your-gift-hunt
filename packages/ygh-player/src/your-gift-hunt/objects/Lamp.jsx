@@ -80,7 +80,6 @@ const Lamp = ({ state, ...props }) => {
     </PhysicalObject>
   )
 }
+Lamp.entityId = 'lamp'
 
 export default Lamp
-
-export const objectId = 'lamp'

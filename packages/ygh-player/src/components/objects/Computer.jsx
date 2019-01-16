@@ -5,7 +5,7 @@ import ScreenContext from 'contexts/Screen'
 import { Computer } from 'your-gift-hunt/objects'
 import ComputerScreen from 'components/screens/Computer'
 
-export default (props) => {
+const EnhancedComputer = (props) => {
   const { popup } = useContext(ScreenContext)
 
   return (
@@ -15,3 +15,6 @@ export default (props) => {
     />
   )
 }
+EnhancedComputer.entityId = Computer.entityId
+
+export default EnhancedComputer

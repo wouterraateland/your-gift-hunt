@@ -246,7 +246,6 @@ const Sink = ({ state, ...props }) => {
     </PhysicalObject>
   )
 }
+Sink.entityId = 'sink'
 
 export default Sink
-
-export const objectId = 'sink'

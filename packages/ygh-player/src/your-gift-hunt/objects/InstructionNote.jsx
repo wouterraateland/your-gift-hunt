@@ -75,7 +75,6 @@ const InstructionNote = props => (
     </Note>
   </PhysicalObject>
 )
+InstructionNote.entityId = 'instruction-note'
 
 export default InstructionNote
-
-export const objectId = 'instruction-note'

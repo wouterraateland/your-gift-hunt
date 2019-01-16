@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 import Item from './Item'
@@ -53,9 +52,7 @@ const SafeKey = styled(Item)`
     transform: rotate(-45deg);
   }
 `
+SafeKey.displayName = 'SafeKey'
+SafeKey.entityId = 'safe-key'
 
-export default () => (
-  <SafeKey />
-)
-
-export const itemId = 'safe-key'
+export default SafeKey

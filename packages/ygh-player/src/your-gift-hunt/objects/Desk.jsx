@@ -56,7 +56,6 @@ const Desk = props => (
       as={PhysicalObject.Part} baseColor="#584630" z={2.5} />
   </PhysicalObject>
 )
+Desk.entityId = 'desk'
 
 export default Desk
-
-export const objectId = 'desk'

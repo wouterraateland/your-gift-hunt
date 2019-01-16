@@ -6,10 +6,6 @@ import GameContext from 'contexts/Game'
 import Screen from './Screen'
 import Item from 'components/items'
 
-const StyledScreen = styled(Screen)`
-  bottom: 7em;
-`
-
 const ItemContainer = styled.div`
   position: relative;
   text-align: center;
@@ -31,7 +27,7 @@ const ItemScreen = ({
   const { dispatchAction } = useContext(GameContext)
 
   return (
-    <StyledScreen isVisible={isVisible} onClick={close} centerContent>
+    <Screen isVisible={isVisible} onClick={close} centerContent>
       <ItemContainer>
         <h2>{entity ? entity.name : null}</h2>
         <Item
@@ -45,7 +41,7 @@ const ItemScreen = ({
           }
         />
       </ItemContainer>
-    </StyledScreen>
+    </Screen>
   )
 }
 

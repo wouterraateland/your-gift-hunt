@@ -172,7 +172,6 @@ const Computer = props => (
     <Screen z={1} />
   </PhysicalObject>
 )
+Computer.entityId = 'computer'
 
 export default Computer
-
-export const objectId = 'computer'

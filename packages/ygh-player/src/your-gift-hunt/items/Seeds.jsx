@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 import Item from './Item'
@@ -25,9 +24,7 @@ const Seeds = styled(Item)`
 
   transform: skew(15deg, 15deg) scale(.85) translate(-.1em, -.1em);
 `
+Seeds.displayName = 'Seeds'
+Seeds.entityId = 'seeds'
 
-export default () => (
-  <Seeds />
-)
-
-export const itemId = 'seeds'
+export default Seeds

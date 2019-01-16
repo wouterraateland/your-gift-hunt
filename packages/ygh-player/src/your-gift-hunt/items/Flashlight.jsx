@@ -114,7 +114,6 @@ const Flashlight = forwardRef(({ state }, refs) => {
 Flashlight.defaultProps = {
   onTransform: _.noop
 }
+Flashlight.entityId = 'flashlight'
 
 export default Flashlight
-
-export const itemId = 'flashlight'

@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 import Item from './Item'
@@ -30,9 +29,7 @@ const Battery = styled(Item)`
     transform: translate(-50%, 0);
   }
 `
+Battery.displayName = 'Battery'
+Battery.entityId = 'battery'
 
-export default () => (
-  <Battery />
-)
-
-export const itemId = 'battery'
+export default Battery

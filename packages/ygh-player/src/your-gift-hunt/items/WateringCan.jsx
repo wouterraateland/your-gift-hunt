@@ -62,8 +62,10 @@ const WateringCan = styled(Item)`
   }
 `
 
-export default ({ state }) => (
+const StatefulWateringCan = ({ state }) => (
   <WateringCan isFilled={state === 'filled'} />
 )
 
-export const itemId = 'watering-can'
+StatefulWateringCan.entityId = 'watering-can'
+
+export default StatefulWateringCan

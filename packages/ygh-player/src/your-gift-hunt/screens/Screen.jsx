@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 const Screen = styled.div`
   position: fixed;
   left: 0; top: 0;
-  right: 0; bottom: 0;
+  right: 0; bottom: 7em;
   z-index: 2;
 
   overflow-x: hidden;
@@ -17,7 +17,7 @@ const Screen = styled.div`
     flex-direction: column;
   `}
 
-  background-color: #0002;
+  background-color: #0004;
 
   transition: opacity .2s ease-out;
 

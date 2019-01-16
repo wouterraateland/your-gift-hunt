@@ -79,6 +79,6 @@ const Armchair = props => (
     <ArmchairPart z={1.5} />
   </PhysicalObject>
 )
-Armchair.objectId = 'armchair'
+Armchair.entityId = 'armchair'
 
 export default Armchair

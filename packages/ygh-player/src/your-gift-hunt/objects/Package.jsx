@@ -96,7 +96,6 @@ const Package = ({ state, ...props }) => {
     </PhysicalObject>
   )
 }
+Package.entityId = 'package'
 
 export default Package
-
-export const objectId = 'package'

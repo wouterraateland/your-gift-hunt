@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 
+import { Float } from 'your-gift-hunt/ui'
 import Screen from './Screen'
+import { Note } from './Note'
 
 const Mailbox = styled.div`
   position: relative;
@@ -181,21 +183,94 @@ const Letter = styled.div`
   &:nth-child(5) { transform: translate(-2.9em, -2.5em) rotate(-26deg); }
 `
 
+const MailView = styled.div`
+  position: absolute;
+  left: 0; top: 0;
+  right: 0; bottom: 0;
+
+  pointer-events: none;
+
+  & > * {
+    pointer-events: auto;
+  }
+`
+
+const MailNavigation = styled.div`
+  padding: 2em;
+
+  color: #fff;
+
+  & span {
+    cursor: pointer;
+  }
+`
+
 const MailboxScreen = ({
   isVisible,
-  onNoteClick,
+  onReadNote,
   entities,
   close,
 }) => {
+  const [entityIndex, setEntityIndex] = useState(-1)
+
+  function readNote() {
+    if (entityIndex !== -1) {
+      onReadNote(entities[entityIndex].id)
+    }
+  }
+
+  function goToNote(i) {
+    readNote()
+    setEntityIndex(i)
+  }
+
+  function exit() {
+    readNote()
+    close()
+  }
+
+  const entity = entityIndex === -1
+    ? null : entities[entityIndex]
+
   return (
-    <Screen isVisible={isVisible} onClick={close} centerContent>
-      <Mailbox isVisible={isVisible}>
+    <Screen isVisible={isVisible} onClick={exit} centerContent>
+      <Mailbox
+        isVisible={isVisible}
+        onClick={() => entities.length ? setEntityIndex(0) : true}
+      >
         {entities.slice(0, 5).map((_, i) => (
           <Letter key={i} />
         ))}
         <Pole />
         <Flag />
       </Mailbox>
+      {entity !== null && (
+        <MailView>
+          <MailNavigation>
+            <Float.Left>
+              <span
+                onClick={() => goToNote(entityIndex - 1)}
+              >Previous</span>
+            </Float.Left>
+            {entityIndex < entities.length - 1 && (
+              <Float.Right>
+                <span
+                  onClick={() => goToNote(entityIndex + 1)}
+                >
+                  Next
+                </span>
+              </Float.Right>
+            )}
+          </MailNavigation>
+          <Note
+            isVisible
+            entity={entity}
+            isNew={entity.state === 'unread'}
+          >
+            <p>{entity.fieldValues.text}</p>
+          </Note>
+        </MailView>
+      )}
     </Screen>
   )
 }

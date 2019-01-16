@@ -142,7 +142,6 @@ const PlantPot = ({ state, ...props }) => (
     />
   </PhysicalObject>
 )
+PlantPot.entityId = 'plant-pot'
 
 export default PlantPot
-
-export const objectId = 'plant-pot'

@@ -82,7 +82,6 @@ const DeskChair = props => (
     <Backrest z={1.5} />
   </PhysicalObject>
 )
+DeskChair.entityId = 'desk-chair'
 
 export default DeskChair
-
-export const objectId = 'desk-chair'

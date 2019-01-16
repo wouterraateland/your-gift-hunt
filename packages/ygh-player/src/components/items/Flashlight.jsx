@@ -9,7 +9,7 @@ export default (props) => {
 
   function handleClickPowerButton() {
     dispatchAction({
-      entity: props.entity,
+      entity: props.id,
       type: '/actions/transform',
       payload: {
         transformation: 'TOGGLE_POWER'

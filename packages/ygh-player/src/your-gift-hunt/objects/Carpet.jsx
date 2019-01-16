@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import PhysicalObject from './PhysicalObject'
 
-const Carpet = styled(PhysicalObject.Part)`
+const StyledCarpet = styled(PhysicalObject.Part)`
   width: 100%;
   height: 100%;
   border-radius: .5em;
@@ -25,12 +25,13 @@ const Carpet = styled(PhysicalObject.Part)`
       hsla(5, 53%, 63%, 0) 5.5em, hsla(5, 53%, 63%, 0) 7em, hsla(197, 62%, 11%, 0.5) 7em, hsla(197, 62%, 11%, 0.5) 13em
     );
 `
-Carpet.displayName = 'Carpet'
+StyledCarpet.displayName = 'StyledCarpet'
 
-export default (props) => (
+const Carpet = (props) => (
   <PhysicalObject width={10} height={14} {...props}>
-    <Carpet z={.25} />
+    <StyledCarpet z={.25} />
   </PhysicalObject>
 )
+Carpet.entityId = 'carpet'
 
-export const objectId = 'carpet'
+export default Carpet

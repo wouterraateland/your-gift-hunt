@@ -100,7 +100,6 @@ const SafeWithKeyhole = ({ state, ...props }) => {
     </PhysicalObject>
   )
 }
+SafeWithKeyhole.entityId = 'safe-with-keyhole'
 
 export default SafeWithKeyhole
-
-export const objectId = 'safe-with-keyhole'

@@ -84,7 +84,6 @@ const Mailbox = ({ state, ...props }) => {
     </PhysicalObject>
   )
 }
+Mailbox.entityId = 'mailbox'
 
 export default Mailbox
-
-export const objectId = 'mailbox'

@@ -67,7 +67,6 @@ const Door = props => (
     <DoorPart z={2} />
   </PhysicalObject>
 )
+Door.entityId = 'door'
 
 export default Door
-
-export const objectId = 'door'

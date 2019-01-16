@@ -55,7 +55,6 @@ const Grass = props => (
     <Lawn z={0} />
   </PhysicalObject>
 )
+Grass.entityId = 'grass'
 
 export default Grass
-
-export const objectId = 'grass'

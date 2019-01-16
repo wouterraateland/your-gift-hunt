@@ -5,6 +5,10 @@ import QrReader from 'react-qr-reader'
 
 import Screen from './Screen'
 
+const StyledScreen = styled(Screen)`
+  bottom: 0;
+`
+
 const CameraBackground = styled.div`
   position: absolute;
   left: 0; top: 0;
@@ -119,7 +123,7 @@ const CameraScreen = ({
   }
 
   return (
-    <Screen isVisible={isVisible}>
+    <StyledScreen isVisible={isVisible}>
       <CameraBackground isVisible={isVisible}>
         <CloseButton onClick={close} />
         {isVisible && <StyledQrReader
@@ -138,7 +142,7 @@ const CameraScreen = ({
           <Message>{JSON.stringify(state.error)}</Message>
         )}
       </CameraBackground>
-    </Screen>
+    </StyledScreen>
   )
 }
 

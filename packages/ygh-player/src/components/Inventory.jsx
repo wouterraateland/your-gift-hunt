@@ -12,6 +12,7 @@ const InventoryContainer = styled.div`
   position: fixed;
   left: 0;
   bottom: 0; right: 0;
+  z-index: 4;
 
   height: 7em;
   padding: .5em;
