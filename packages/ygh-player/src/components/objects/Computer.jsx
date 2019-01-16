@@ -11,7 +11,7 @@ const EnhancedComputer = (props) => {
   return (
     <Computer
       {...props}
-      onClick={() => popup(ComputerScreen, {})}
+      onClick={() => popup(ComputerScreen)}
     />
   )
 }

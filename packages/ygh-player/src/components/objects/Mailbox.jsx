@@ -11,7 +11,7 @@ const EnhancedMailbox = (props) => {
   return (
     <Mailbox
       {...props}
-      onClick={() => popup(MailboxScreen, {})}
+      onClick={() => popup(MailboxScreen)}
     />
   )
 }

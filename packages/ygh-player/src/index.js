@@ -2,25 +2,28 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 
+import { DragProvider } from 'contexts/Drag'
 import { GameProvider } from 'contexts/Game'
 import { ScreenProvider } from 'contexts/Screen'
 
 import App from 'components/App'
 
-if (process.env.NODE_ENV !== 'production') {
-  const {whyDidYouUpdate} = require('why-did-you-update')
-  whyDidYouUpdate(React)
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   const {whyDidYouUpdate} = require('why-did-you-update')
+//   whyDidYouUpdate(React)
+// }
 
 const root = document.getElementById('app-root')
 
 const render = (Component) =>
   ReactDOM.render(
-    <GameProvider>
-      <ScreenProvider>
-        <Component />
-      </ScreenProvider>
-    </GameProvider>,
+    <DragProvider>
+      <GameProvider>
+        <ScreenProvider>
+          <Component />
+        </ScreenProvider>
+      </GameProvider>
+    </DragProvider>,
     root
   )
 

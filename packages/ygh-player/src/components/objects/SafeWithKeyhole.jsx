@@ -5,15 +5,15 @@ import ScreenContext from 'contexts/Screen'
 import { SafeWithKeyhole } from 'your-gift-hunt/objects'
 import SafeWithKeyholeScreen from 'components/screens/SafeWithKeyhole'
 
-const EnhancedSafeWithKeyhole = ({ entity, ...props }) => {
+const EnhancedSafeWithKeyhole = (props) => {
   const { popup } = useContext(ScreenContext)
 
   return (
     <SafeWithKeyhole
       {...props}
-      onClick={() => {
-        entity && entity.state === 'locked' && popup(SafeWithKeyholeScreen, { entity })
-      }}
+      onClick={() => props.state === 'locked' &&
+        popup(SafeWithKeyholeScreen, { instanceId: props.id })
+      }
     />
   )
 }

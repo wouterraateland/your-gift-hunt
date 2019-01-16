@@ -93,7 +93,7 @@ const CameraScreen = ({
   isVisible,
   close,
   onScanCode,
-  entities,
+  instances,
   error,
 }) => {
   const initialState = {
@@ -113,7 +113,7 @@ const CameraScreen = ({
 
   function handleOnScan(data) {
     if (data !== null && data !== state.data) {
-      if (!entities.some(entity => entity.inputValues.code === data)) {
+      if (!instances.some(instance => instance.inputValues.code === data)) {
         setState({ data })
         onScanCode && onScanCode(data)
       } else {

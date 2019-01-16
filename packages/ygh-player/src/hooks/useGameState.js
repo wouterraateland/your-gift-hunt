@@ -3,21 +3,28 @@ import { useState, useEffect } from 'react'
 import fetchLambda from 'utils/api'
 
 const useGameState = () => {
-  const [entities, setEntities] = useState([])
+  const [instances, setInstances] = useState([])
 
   useEffect(() => {
-    fetchLambda('entities', {})
-      .then(setEntities)
+    fetchLambda('instances', {})
+      .then(setInstances)
       .catch(console.error)
   }, [])
 
   return {
-    items: entities.filter(entity => entity.isItem),
-    objects: entities.filter(entity => entity.isObject),
-    questions: entities.filter(entity => entity.entity === '/entities/question'),
-    codes: entities.filter(entity => entity.entity === '/entities/code'),
-    inputs: entities.filter(entity => entity.entity === '/entities/input'),
-    notes: entities.filter(entity => entity.entity === '/entities/note'),
+    all: instances,
+    items: instances
+      .filter(instance => instance.entity.isItem),
+    objects: instances
+      .filter(instance => instance.entity.isObject),
+    questions: instances
+      .filter(instance => instance.entity.id === '/entities/question'),
+    codes: instances
+      .filter(instance => instance.entity.id === '/entities/code'),
+    inputs: instances
+      .filter(instance => instance.entity.id === '/entities/input'),
+    notes: instances
+      .filter(instance => instance.entity.id === '/entities/note'),
   }
 }
 

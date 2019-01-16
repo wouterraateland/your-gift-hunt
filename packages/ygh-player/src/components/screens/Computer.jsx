@@ -11,14 +11,13 @@ export default (props) => {
   return (
     <Computer
       {...props}
-      onSubmitAnswer={(entity, answer) => {
+      onSubmitAnswer={(instanceId, answer) => {
         dispatchAction({
-          entity,
           type: '/actions/act',
-          payload: { answer },
+          payload: { instanceId, answer },
         })
       }}
-      entities={[...questions, ...inputs]}
+      instances={[...questions, ...inputs]}
     />
   )
 }

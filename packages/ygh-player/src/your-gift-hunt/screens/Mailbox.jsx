@@ -208,20 +208,20 @@ const MailNavigation = styled.div`
 const MailboxScreen = ({
   isVisible,
   onReadNote,
-  entities,
+  instances,
   close,
 }) => {
-  const [entityIndex, setEntityIndex] = useState(-1)
+  const [instanceIndex, setInstanceIndex] = useState(-1)
 
   function readNote() {
-    if (entityIndex !== -1) {
-      onReadNote(entities[entityIndex].id)
+    if (instanceIndex !== -1) {
+      onReadNote(instances[instanceIndex].id)
     }
   }
 
   function goToNote(i) {
     readNote()
-    setEntityIndex(i)
+    setInstanceIndex(i)
   }
 
   function exit() {
@@ -229,33 +229,33 @@ const MailboxScreen = ({
     close()
   }
 
-  const entity = entityIndex === -1
-    ? null : entities[entityIndex]
+  const instance = instanceIndex === -1
+    ? null : instances[instanceIndex]
 
   return (
     <Screen isVisible={isVisible} onClick={exit} centerContent>
       <Mailbox
         isVisible={isVisible}
-        onClick={() => entities.length ? setEntityIndex(0) : true}
+        onClick={() => instances.length ? setInstanceIndex(0) : true}
       >
-        {entities.slice(0, 5).map((_, i) => (
+        {instances.slice(0, 5).map((_, i) => (
           <Letter key={i} />
         ))}
         <Pole />
         <Flag />
       </Mailbox>
-      {entity !== null && (
+      {instance !== null && (
         <MailView>
           <MailNavigation>
             <Float.Left>
               <span
-                onClick={() => goToNote(entityIndex - 1)}
+                onClick={() => goToNote(instanceIndex - 1)}
               >Previous</span>
             </Float.Left>
-            {entityIndex < entities.length - 1 && (
+            {instanceIndex < instances.length - 1 && (
               <Float.Right>
                 <span
-                  onClick={() => goToNote(entityIndex + 1)}
+                  onClick={() => goToNote(instanceIndex + 1)}
                 >
                   Next
                 </span>
@@ -264,10 +264,10 @@ const MailboxScreen = ({
           </MailNavigation>
           <Note
             isVisible
-            entity={entity}
-            isNew={entity.state === 'unread'}
+            instance={instance}
+            isNew={instance.state === 'unread'}
           >
-            <p>{entity.fieldValues.text}</p>
+            <p>{instance.fieldValues.text}</p>
           </Note>
         </MailView>
       )}

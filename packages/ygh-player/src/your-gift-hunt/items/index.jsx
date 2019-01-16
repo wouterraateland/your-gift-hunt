@@ -26,14 +26,14 @@ const getItemComponent = (item) => {
   }
 }
 
-const Item = ({ ...props }) => {
-  const Component = getItemComponent(props.entity)
+const Item = (props) => {
+  const Component = getItemComponent(props.entity.id)
 
   return (
     <ItemContainer>
       {Component
         ? <Component {...props} />
-        : props.entity}
+        : props.entity.id}
     </ItemContainer>
   )
 }

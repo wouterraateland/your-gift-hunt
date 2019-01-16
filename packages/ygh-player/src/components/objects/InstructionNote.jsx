@@ -5,13 +5,13 @@ import ScreenContext from 'contexts/Screen'
 import { InstructionNote } from 'your-gift-hunt/objects'
 import NoteScreen from 'components/screens/Note'
 
-const EnhancedInstructionNote = ({ entity, ...props }) => {
+const EnhancedInstructionNote = (props) => {
   const { popup } = useContext(ScreenContext)
 
   return (
     <InstructionNote
       {...props}
-      onClick={() => popup(NoteScreen, { entity })}
+      onClick={() => popup(NoteScreen, { instanceId: props.id })}
     />
   )
 }

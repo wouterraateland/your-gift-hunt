@@ -6,7 +6,7 @@ import ScreenContext from 'contexts/Screen'
 import Item from 'your-gift-hunt/items'
 import ItemScreen from 'components/screens/Item'
 
-import ItemDragContainer from 'components/ItemDragContainer'
+import DragContainer from 'components/DragContainer'
 
 const InventoryContainer = styled.div`
   position: fixed;
@@ -42,11 +42,11 @@ const Inventory = ({ items }) => {
       {items.map(item => (
         <ItemSlot
           key={item.id}
-          onClick={() => popup(ItemScreen, { entity: item })}
+          onClick={() => popup(ItemScreen, { instanceId: item.id })}
         >
-          <ItemDragContainer>
+          <DragContainer data={item}>
             <Item {...item} />
-          </ItemDragContainer>
+          </DragContainer>
         </ItemSlot>
       ))}
     </InventoryContainer>

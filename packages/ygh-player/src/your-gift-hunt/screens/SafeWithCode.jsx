@@ -63,7 +63,7 @@ const Code = styled.span`
 
 const SafeWithCodeScreen = ({
   isVisible,
-  entity,
+  instance,
   onSubmitCode,
   error=null,
 }) => {
@@ -92,14 +92,14 @@ const SafeWithCodeScreen = ({
               onChange={handleOnChange}
             />
             <Code
-              correct={entity.state === 'unlocked'}
-              wrong={error !== null && code === entity.inputValues.code}
+              correct={instance.state === 'unlocked'}
+              wrong={error !== null && code === instance.inputValues.code}
             >
-              {entity.state === 'unlocked'
-                ? entity.inputValues.code : code}
+              {instance.state === 'unlocked'
+                ? instance.inputValues.code : code}
             </Code>
-            <Gray>{'0'.repeat(4 - (entity.state === 'unlocked'
-                ? entity.inputValues.code : code).length)}</Gray>
+            <Gray>{'0'.repeat(4 - (instance.state === 'unlocked'
+                ? instance.inputValues.code : code).length)}</Gray>
           </CodeLabel>
           <SafeButton type="submit" />
         </form>

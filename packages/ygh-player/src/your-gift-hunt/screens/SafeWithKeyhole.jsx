@@ -168,12 +168,12 @@ const Bars = styled.div`
 
 const SafeWithKeyholeScreen = forwardRef(({
   isVisible,
-  entity,
+  instance,
   onWheelTurn,
   close,
 }, refs) => {
   const keyhole = refs ? refs.keyhole : null
-  const unlocked = entity.state === 'unlocked'
+  const unlocked = instance.state === 'unlocked'
 
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>

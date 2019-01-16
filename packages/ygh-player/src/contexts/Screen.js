@@ -7,7 +7,7 @@ export const ScreenProvider = ({ children }) => {
 
   const value = {
     screen,
-    popup: (component, props) => setScreen({
+    popup: (component, props={}) => setScreen({
       component,
       props
     }),

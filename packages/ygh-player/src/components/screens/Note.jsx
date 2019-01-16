@@ -10,11 +10,10 @@ export default (props) => {
   return (
     <Note
       {...props}
-      onReadNote={(entity) => {
+      onReadNote={(instanceId) => {
         dispatchAction({
-          entity,
           type: '/actions/act',
-          payload: {},
+          payload: { instanceId },
         })
       }}
     />

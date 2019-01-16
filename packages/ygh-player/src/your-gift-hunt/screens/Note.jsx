@@ -39,13 +39,13 @@ export const Note = styled.div`
 
 const NoteScreen = ({
   isVisible,
-  entity,
+  instance,
   onReadNote,
   close
 }) => {
   const exit = () => {
     close && close()
-    onReadNote && onReadNote(entity.id)
+    onReadNote && onReadNote(instance.id)
   }
 
   return (
@@ -53,9 +53,9 @@ const NoteScreen = ({
       <Note
         isVisible={isVisible}
         onClick={exit}
-        isNew={entity.state === 'unread'}
+        isNew={instance.state === 'unread'}
       >
-        <p>{entity.fieldValues.text}</p>
+        <p>{instance.fieldValues.text}</p>
       </Note>
     </Screen>
   )

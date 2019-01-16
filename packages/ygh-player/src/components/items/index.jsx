@@ -15,8 +15,8 @@ const ItemContainer = styled.div`
   height: 2em;
 `
 
-const getItemComponent = (item) => {
-  switch (item) {
+const getItemComponent = (entityId) => {
+  switch (entityId) {
     case '/entities/battery': return Battery
     case '/entities/flashlight': return Flashlight
     case '/entities/safe-key': return SafeKey
@@ -26,14 +26,14 @@ const getItemComponent = (item) => {
   }
 }
 
-const Item = ({ ...props }) => {
-  const Component = getItemComponent(props.entity)
+const Item = (props) => {
+  const Component = getItemComponent(props.entity.id)
 
   return (
     <ItemContainer>
       {Component
         ? <Component {...props} />
-        : props.entity}
+        : props.entity.id}
     </ItemContainer>
   )
 }

@@ -11,7 +11,7 @@ const EnhancedCamera = (props) => {
   return (
     <Camera
       {...props}
-      onClick={() => popup(CameraScreen, {})}
+      onClick={() => popup(CameraScreen)}
     />
   )
 }

@@ -11,9 +11,9 @@ const EnhancedDoor = (props) => {
     <Door
       {...props}
       onClick={() => dispatchAction({
-        entity: null,
         type: '/actions/transform',
         payload: {
+          instanceId: props.id,
           transformation: props.state === 'open' ? 'CLOSE' : 'OPEN'
         }
       })}

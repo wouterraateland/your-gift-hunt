@@ -46,10 +46,9 @@ const createPhysicalObject = Component => memo(({
 }) => {
   const { state: { objects } } = useContext(GameContext)
 
-  const entity = Component.entityId
-    ? objects.find(o => o.entity === `/entities/${Component.entityId}`)
+  const instance = Component.entityId
+    ? objects.find(o => o.entity.id === `/entities/${Component.entityId}`)
     : null
-  const state = entity ? entity.state : null
 
   const childrenWithParentAngle = Children.map(children, child =>
     cloneElement(child, { parentAngle: parentAngle + angle })
@@ -58,8 +57,7 @@ const createPhysicalObject = Component => memo(({
   return (
     <ObjectContainer angle={angle} {...props}>
       <Component
-        entity={entity}
-        state={state}
+        {...instance}
         parentAngle={angle + parentAngle}
       />
       {childrenWithParentAngle}

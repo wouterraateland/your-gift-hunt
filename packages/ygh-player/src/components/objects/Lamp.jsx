@@ -4,16 +4,16 @@ import GameContext from 'contexts/Game'
 
 import { Lamp } from 'your-gift-hunt/objects'
 
-const EnhancedLamp = ({ entity, ...props }) => {
+const EnhancedLamp = (props) => {
   const { dispatchAction } = useContext(GameContext)
 
   return (
     <Lamp
       {...props}
       onClick={() => dispatchAction({
-        entity: entity && entity.id,
         type: '/actions/transform',
         payload: {
+          instanceId: props.id,
           transformation: 'TOGGLE_POWER'
         }
       })}

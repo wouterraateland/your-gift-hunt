@@ -21,7 +21,7 @@ const ItemContainer = styled.div`
 
 const ItemScreen = ({
   isVisible,
-  entity,
+  instance,
   close,
 }) => {
   const { dispatchAction } = useContext(GameContext)
@@ -29,12 +29,12 @@ const ItemScreen = ({
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>
       <ItemContainer>
-        <h2>{entity ? entity.name : null}</h2>
+        <h2>{instance ? instance.name : null}</h2>
         <Item
-          {...entity}
+          {...instance}
           onTransform={transformation =>
             dispatchAction({
-              entityId: entity.id,
+              instanceId: instance.id,
               type: '/actions/transform',
               payload: { transformation }
             })

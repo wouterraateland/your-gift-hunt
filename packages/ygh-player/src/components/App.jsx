@@ -7,6 +7,8 @@ import Theme from 'containers/Theme'
 import Viewport from 'components/Viewport'
 import Inventory from 'components/Inventory'
 import ScreenContainer from 'components/ScreenContainer'
+import DragImage from 'components/DragImage'
+
 import DefaultScene from 'components/scenes/default'
 
 const App = () => {
@@ -20,6 +22,7 @@ const App = () => {
       </Viewport>
       <Inventory items={items} />
       <ScreenContainer />
+      <DragImage />
     </Theme>
   )
 }

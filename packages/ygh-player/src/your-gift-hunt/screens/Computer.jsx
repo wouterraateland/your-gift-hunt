@@ -116,11 +116,11 @@ const Prompt = ({ text, children }) => {
 const ComputerScreen = ({
   isVisible,
   close,
-  entities,
+  instances,
   onSubmitAnswer
 }) => {
   const input = useRef(null)
-  const [entityIndex, setEntityIndex] = useState(-1)
+  const [instanceIndex, setInstanceIndex] = useState(-1)
   const [answer, setAnswer] = useState('')
 
   useEffect(() => {
@@ -130,22 +130,22 @@ const ComputerScreen = ({
   function handleOnSubmit(event) {
     event.preventDefault()
 
-    onSubmitAnswer && onSubmitAnswer(entity.id, answer)
+    onSubmitAnswer && onSubmitAnswer(instance.id, answer)
   }
 
-  function goToEntity(index) {
-    setEntityIndex(index)
+  function goToInstance(index) {
+    setInstanceIndex(index)
   }
 
-  const entity = entityIndex === -1
-    ? null : entities[entityIndex]
+  const instance = instanceIndex === -1
+    ? null : instances[instanceIndex]
 
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>
       <Computer isVisible={isVisible}>
         <form onSubmit={handleOnSubmit}>
           <label>
-            {entity && entity.state === 'unanswered' && (
+            {instance && instance.state === 'unanswered' && (
               <AnswerInput
                 ref={input}
                 onKeyPress={event => event.keyCode === 13
@@ -154,18 +154,18 @@ const ComputerScreen = ({
                 value={answer}
               />
             )}
-            <Prompt text={entity === null
-              ? (entities.length
+            <Prompt text={instance === null
+              ? (instances.length
                 ? 'New questions available.'
                 : 'No new questions available.'
               )
-              : entity.fieldValues.question
+              : instance.fieldValues.question
             }>
               <br /><br />
-              {entity === null
-                ? (entities.length > 0
+              {instance === null
+                ? (instances.length > 0
                   ? (
-                    <span onClick={() => goToEntity(0)}>
+                    <span onClick={() => goToInstance(0)}>
                       Show question
                     </span>
                   )
@@ -175,25 +175,25 @@ const ComputerScreen = ({
                   <>
                     <AnswerMarker>&gt;</AnswerMarker>
                     {' '}
-                    {entity.state === 'answered'
-                      ? entities.inputValues.answer
+                    {instance.state === 'answered'
+                      ? instance.inputValues.answer
                       : answer}
-                    {entity.state === 'unanswered' && <Cursor />}
+                    {instance.state === 'unanswered' && <Cursor />}
                     {' '}
-                    {entity.state === 'answered' && (
+                    {instance.state === 'answered' && (
                       <SuccessMarker>✔</SuccessMarker>
                     )}
-                    {entity.state === 'unanswered' &&
-                      entity.inputValues.answer === answer && (
+                    {instance.state === 'unanswered' &&
+                      instance.inputValues.answer === answer && (
                       <ErrorMarker>✘</ErrorMarker>
                     )}
                     <br /><br /><br /><br />
-                    <span onClick={() => goToEntity(entityIndex - 1)}>
+                    <span onClick={() => goToInstance(instanceIndex - 1)}>
                       ◀
                     </span>
                     {'  '}
-                    {(entityIndex < entities.length - 1) && (
-                      <span onClick={() => goToEntity(entityIndex + 1)}>
+                    {(instanceIndex < instances.length - 1) && (
+                      <span onClick={() => goToInstance(instanceIndex + 1)}>
                         ▶
                       </span>
                     )}

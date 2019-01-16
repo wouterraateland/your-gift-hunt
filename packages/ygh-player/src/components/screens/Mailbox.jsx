@@ -11,14 +11,13 @@ export default (props) => {
   return (
     <Mailbox
       {...props}
-      onReadNote={(entity) => {
+      onReadNote={(instanceId) => {
         dispatchAction({
-          entity,
           type: '/actions/act',
-          payload: {},
+          payload: { instanceId },
         })
       }}
-      entities={[...notes]}
+      instances={[...notes]}
     />
   )
 }
