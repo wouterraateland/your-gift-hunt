@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled, { css } from 'styled-components'
+import _ from 'utils'
 
 import PhysicalObject from './PhysicalObject'
 
@@ -229,13 +230,14 @@ const Neck = styled(PhysicalObject.Part)`
   transform: rotate(20deg) translate(-50%, 0);
 `
 
-const Sink = ({ state, ...props }) => {
-  const isConnected = state === 'connected'
+const Sink = forwardRef((props, refs) => {
+  const sink = refs ? refs.sink : null
+  const isConnected = _.hasState('sink', 'connected')(props)
 
   return (
     <PhysicalObject width={15} height={6} {...props}>
       <Worktop z={2} />
-      <SinkPart isConnected={isConnected} z={.1}>
+      <SinkPart ref={sink} isConnected={isConnected} z={.1}>
         <Well z={0} />
         <Faucet z={.1}>
           <Cold z={.2} angle={-60} />
@@ -245,7 +247,7 @@ const Sink = ({ state, ...props }) => {
       </SinkPart>
     </PhysicalObject>
   )
-}
+})
 Sink.entityId = 'sink'
 
 export default Sink

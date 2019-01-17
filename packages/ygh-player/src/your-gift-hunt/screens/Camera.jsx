@@ -7,6 +7,7 @@ import Screen from './Screen'
 
 const StyledScreen = styled(Screen)`
   bottom: 0;
+  z-index: 5;
 `
 
 const CameraBackground = styled.div`
@@ -108,6 +109,7 @@ const CameraScreen = ({
   }, [isVisible])
 
   function handleOnError(error) {
+    console.error(error)
     setState({ error })
   }
 

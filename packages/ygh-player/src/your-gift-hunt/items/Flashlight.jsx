@@ -24,7 +24,7 @@ const FlashlightBody = styled(Item)`
   transform: rotate(-45deg);
 
   &::before {
-    ${props => props.state === 'on'
+    ${props => props.isOn
       ? css`
         left: 100%;
         top: 50%;
@@ -44,7 +44,7 @@ const FlashlightBody = styled(Item)`
         bottom: 100%;
 
         width: .7em;
-        height: ${props.state === 'empty' ? .3 : 0}em;
+        height: ${props.isEmpty ? .3 : 0}em;
 
         border-radius: .1em .1em 0 0;
 
@@ -101,19 +101,19 @@ const FlashlightButton = styled.div`
   transform: translate(-50%, -50%);
 `
 
-const Flashlight = forwardRef(({ state }, refs) => {
+const Flashlight = forwardRef((props, refs) => {
   const powerButton = refs ? refs.powerButton : null
+  const body = refs ? refs.body : null
+
+  const isOn = _.hasState('flashlight', 'on')(props)
+  const isEmpty = _.hasState('flashlight', 'empty')(props)
 
   return (
-    <FlashlightBody state={state}>
+    <FlashlightBody ref={body} isOn={isOn} isEmpty={isEmpty}>
       <FlashlightButton ref={powerButton} />
     </FlashlightBody>
   )
 })
-
-Flashlight.defaultProps = {
-  onTransform: _.noop
-}
 Flashlight.entityId = 'flashlight'
 
 export default Flashlight

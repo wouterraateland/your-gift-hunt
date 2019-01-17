@@ -9,8 +9,10 @@ export const handler = async (event, context) => {
     statusCode: 200,
     body: JSON.stringify([
       {
-        id: '1',
-        state: 'default',
+        id: '/hunts/pioneer/entities/battery',
+        state: {
+          id: '/entities/battery/states/default',
+        },
         fieldValues: {},
         inputValues: {},
         entity: {
@@ -20,8 +22,10 @@ export const handler = async (event, context) => {
         },
       },
       {
-        id: '2',
-        state: 'off',
+        id: '/hunts/pioneer/entities/flashlight',
+        state: {
+          id: '/entities/flashlight/states/empty',
+        },
         fieldValues: {},
         inputValues: {},
         entity: {
@@ -32,8 +36,10 @@ export const handler = async (event, context) => {
         },
       },
       {
-        id: '3',
-        state: 'default',
+        id: '/hunts/pioneer/entities/safe-key',
+        state: {
+          id: '/entities/safe-key/states/default',
+        },
         fieldValues: {},
         inputValues: {},
         entity: {
@@ -44,8 +50,10 @@ export const handler = async (event, context) => {
         },
       },
       {
-        id: '4',
-        state: 'default',
+        id: '/hunts/pioneer/entities/seeds',
+        state: {
+          id: '/entities/seeds/states/default',
+        },
         fieldValues: {},
         inputValues: {},
         entity: {
@@ -56,8 +64,10 @@ export const handler = async (event, context) => {
         },
       },
       {
-        id: '5',
-        state: 'empty',
+        id: '/hunts/pioneer/entities/watering-can',
+        state: {
+          id: '/entities/watering-can/states/empty',
+        },
         fieldValues: {},
         inputValues: {},
         entity: {
@@ -68,8 +78,10 @@ export const handler = async (event, context) => {
         },
       },
       {
-        id: '6',
-        state: 'unanswered',
+        id: '/hunts/pioneer/entities/question-one',
+        state: {
+          id: '/entities/question/states/unanswered',
+        },
         fieldValues: {
           question: 'What is the highest mountain?',
           answer: [
@@ -87,8 +99,10 @@ export const handler = async (event, context) => {
         }
       },
       {
-        id: '7',
-        state: 'unread',
+        id: '/hunts/pioneer/entities/welcome-note',
+        state: {
+          id: '/entities/note/states/unread',
+        },
         fieldValues: {
           text: 'Hi there, Pioneer. What a pleasure to find you in my game. I made this game for you and only for you. Play it well and who knows what good may come to you... Enjoy - The creator',
         },
@@ -101,7 +115,9 @@ export const handler = async (event, context) => {
       },
       {
         id: '/hunts/pioneer/entities/lamp',
-        state: 'on',
+        state: {
+          id: '/entities/lamp/states/on',
+        },
         fieldValues: {},
         inputValues: {},
         entity: {
@@ -111,8 +127,36 @@ export const handler = async (event, context) => {
         },
       },
       {
+        id: '/hunts/pioneer/entities/sink',
+        state: {
+          id: '/entities/sink/states/connected',
+        },
+        fieldValues: {},
+        inputValues: {},
+        entity: {
+          id: '/entities/sink',
+          isItem: false,
+          isObject: true,
+        },
+      },
+      {
+        id: '/hunts/pioneer/entities/plant-pot',
+        state: {
+          id: '/entities/plant-pot/states/empty',
+        },
+        fieldValues: {},
+        inputValues: {},
+        entity: {
+          id: '/entities/plant-pot',
+          isItem: false,
+          isObject: true,
+        },
+      },
+      {
         id: '/hunts/pioneer/entities/safe-with-keyhole',
-        state: 'locked',
+        state: {
+          id: '/entities/safe-with-keyhole/states/locked',
+        },
         fieldValues: {},
         inputValues: {},
         entity: {
@@ -123,7 +167,9 @@ export const handler = async (event, context) => {
       },
       {
         id: '/hunts/pioneer/entities/instruction-note',
-        state: 'unread',
+        state: {
+          id: '/entities/instruction-note/states/unread',
+        },
         fieldValues: {
           text: 'Hello, here is how this works. I hope you understand now.'
         },

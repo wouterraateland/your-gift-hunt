@@ -6,7 +6,7 @@ const GameContext = createContext({})
 
 export const GameProvider = ({ children }) => {
   const value = {
-    state: useGameState(),
+    instances: useGameState(),
     dispatchAction: console.log,
   }
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled, { keyframes } from 'styled-components'
+import _ from 'utils'
 
 import { Float } from 'your-gift-hunt/ui'
 import Screen from './Screen'
@@ -265,7 +266,7 @@ const MailboxScreen = ({
           <Note
             isVisible
             instance={instance}
-            isNew={instance.state === 'unread'}
+            isNew={_.hasState('note', 'unread')(instance)}
           >
             <p>{instance.fieldValues.text}</p>
           </Note>

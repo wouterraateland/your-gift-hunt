@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import _ from 'utils'
 
 import ScreenContext from 'contexts/Screen'
 
@@ -11,7 +12,7 @@ const EnhancedSafeWithKeyhole = (props) => {
   return (
     <SafeWithKeyhole
       {...props}
-      onClick={() => props.state === 'locked' &&
+      onClick={() => _.hasState('safe-with-keyhole', 'locked')(props) &&
         popup(SafeWithKeyholeScreen, { instanceId: props.id })
       }
     />

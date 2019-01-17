@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import _ from 'utils'
 
 import Screen from './Screen'
 
@@ -43,6 +44,8 @@ const NoteScreen = ({
   onReadNote,
   close
 }) => {
+  const isNew = _.hasState(['note', 'instruction-note'], 'unread')(instance)
+
   const exit = () => {
     close && close()
     onReadNote && onReadNote(instance.id)
@@ -53,7 +56,7 @@ const NoteScreen = ({
       <Note
         isVisible={isVisible}
         onClick={exit}
-        isNew={instance.state === 'unread'}
+        isNew={isNew}
       >
         <p>{instance.fieldValues.text}</p>
       </Note>

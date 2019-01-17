@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import _ from 'utils'
+
 import PhysicalObject from './PhysicalObject'
 
 const Foot = styled(PhysicalObject.Part)`
@@ -68,8 +70,8 @@ const Light = styled(PhysicalObject.Part)`
   transition: opacity .5s ease-out;
 `
 
-const Lamp = ({ state, ...props }) => {
-  const isOn = state === 'on'
+const Lamp = (props) => {
+  const isOn = _.hasState('lamp', 'on')(props)
 
   return (
     <PhysicalObject width={2.5} height={2.5} angle={180} {...props}>

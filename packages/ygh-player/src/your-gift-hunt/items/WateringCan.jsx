@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import _ from 'utils'
 
 import Item from './Item'
 
@@ -62,10 +63,15 @@ const WateringCan = styled(Item)`
   }
 `
 
-const StatefulWateringCan = ({ state }) => (
-  <WateringCan isFilled={state === 'filled'} />
-)
-
+const StatefulWateringCan = (props) => {
+  const isFilled = _.hasState('watering-can', 'filled')(props)
+  
+  return (
+    <WateringCan
+      isFilled={isFilled}
+    />
+  )
+}
 StatefulWateringCan.entityId = 'watering-can'
 
 export default StatefulWateringCan

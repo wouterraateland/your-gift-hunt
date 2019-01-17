@@ -12,8 +12,8 @@ import DragImage from 'components/DragImage'
 import DefaultScene from 'components/scenes/default'
 
 const App = () => {
-  const { state } = useContext(GameContext)
-  const { items, objects } = state
+  const { instances } = useContext(GameContext)
+  const { items, objects } = instances
 
   return (
     <Theme>

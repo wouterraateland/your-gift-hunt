@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 
+import _ from 'utils'
+
 import Screen from './Screen'
 
 const Computer = styled.div`
@@ -140,12 +142,15 @@ const ComputerScreen = ({
   const instance = instanceIndex === -1
     ? null : instances[instanceIndex]
 
+  const isAnswered = _.hasState('question', 'answered')(instance)
+  const isUnanswered = _.hasState('question', 'unanswered')(instance)
+
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>
       <Computer isVisible={isVisible}>
         <form onSubmit={handleOnSubmit}>
           <label>
-            {instance && instance.state === 'unanswered' && (
+            {isUnanswered && (
               <AnswerInput
                 ref={input}
                 onKeyPress={event => event.keyCode === 13
@@ -175,15 +180,15 @@ const ComputerScreen = ({
                   <>
                     <AnswerMarker>&gt;</AnswerMarker>
                     {' '}
-                    {instance.state === 'answered'
+                    {isAnswered
                       ? instance.inputValues.answer
                       : answer}
-                    {instance.state === 'unanswered' && <Cursor />}
+                    {isUnanswered && <Cursor />}
                     {' '}
-                    {instance.state === 'answered' && (
+                    {isAnswered && (
                       <SuccessMarker>✔</SuccessMarker>
                     )}
-                    {instance.state === 'unanswered' &&
+                    {isUnanswered &&
                       instance.inputValues.answer === answer && (
                       <ErrorMarker>✘</ErrorMarker>
                     )}

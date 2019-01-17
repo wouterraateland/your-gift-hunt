@@ -5,8 +5,7 @@ import GameContext from 'contexts/Game'
 import { Mailbox } from 'your-gift-hunt/screens'
 
 export default (props) => {
-  const { dispatchAction, state } = useContext(GameContext)
-  const { notes } = state
+  const { dispatchAction, instances: { notes } } = useContext(GameContext)
 
   return (
     <Mailbox

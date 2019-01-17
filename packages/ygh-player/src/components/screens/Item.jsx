@@ -2,15 +2,17 @@ import React, { useContext } from 'react'
 
 import GameContext from 'contexts/Game'
 
-import { Item } from 'your-gift-hunt/screens'
+import Item from 'components/items'
+import { Item as ItemScreen } from 'your-gift-hunt/screens'
 
 export default ({ instanceId, ...props }) => {
-  const { state: { all } } = useContext(GameContext)
+  const { instances: { all } } = useContext(GameContext)
   const instance = all.find(instance => instance.id === instanceId)
 
   return (
-    <Item
+    <ItemScreen
       instance={instance}
+      component={() => (<Item {...instance} />)}
       {...props}
     />
   )

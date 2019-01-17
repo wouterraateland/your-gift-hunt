@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { darken } from 'utils/colors'
+import _ from 'utils'
 
 import PhysicalObject from './PhysicalObject'
 
@@ -10,8 +10,8 @@ const Bottom = styled(PhysicalObject.Part)`
   border-radius: .1em;
 
   background: radial-gradient(
-    ${darken(.1, '#b38d5c')},
-    ${darken(.15, '#b38d5c')}
+    ${_.darken(.1, '#b38d5c')},
+    ${_.darken(.15, '#b38d5c')}
   )
 `
 
@@ -43,7 +43,7 @@ const Flap = styled(PhysicalObject.Part)`
   ${({ isOpen }) => css`
     ${isOpen
       ? css`
-        background-color: ${darken(.05, '#b38d5c')};
+        background-color: ${_.darken(.05, '#b38d5c')};
 
         &:nth-child(2),
         &:nth-child(3) {
@@ -62,7 +62,7 @@ const Flap = styled(PhysicalObject.Part)`
 
         &:nth-child(4),
         &:nth-child(5) {
-          background-color: ${darken(-.05, '#b38d5c')};
+          background-color: ${_.darken(-.05, '#b38d5c')};
           transition-delay: .6s;
         }
       `
@@ -83,8 +83,8 @@ const Flap = styled(PhysicalObject.Part)`
   `}
 `
 
-const Package = ({ state, ...props }) => {
-  const isOpen = state === 'open'
+const Package = (props) => {
+  const isOpen = _.hasState('package', 'open')(props)
 
   return (
     <PhysicalObject width={3.5} height={3.5} {...props}>

@@ -44,7 +44,7 @@ const createPhysicalObject = Component => memo(({
   parentAngle=0,
   ...props
 }) => {
-  const { state: { objects } } = useContext(GameContext)
+  const { instances: { objects } } = useContext(GameContext)
 
   const instance = Component.entityId
     ? objects.find(o => o.entity.id === `/entities/${Component.entityId}`)

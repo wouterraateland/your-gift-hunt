@@ -5,8 +5,10 @@ import GameContext from 'contexts/Game'
 import { Computer } from 'your-gift-hunt/screens'
 
 export default (props) => {
-  const { dispatchAction, state } = useContext(GameContext)
-  const { questions, inputs } = state
+  const {
+    dispatchAction,
+    instances: { questions, inputs }
+  } = useContext(GameContext)
 
   return (
     <Computer

@@ -5,8 +5,7 @@ import GameContext from 'contexts/Game'
 import { Camera } from 'your-gift-hunt/screens'
 
 export default (props) => {
-  const { dispatchAction, state } = useContext(GameContext)
-  const { codes } = state
+  const { dispatchAction, instances: { codes } } = useContext(GameContext)
 
   return (
     <Camera

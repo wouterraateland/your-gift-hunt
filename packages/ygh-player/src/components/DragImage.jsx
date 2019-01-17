@@ -12,7 +12,7 @@ const Container = styled.div.attrs(props => ({
   pointer-events: none;
   position: fixed;
   z-index: 10;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(4);
   opacity: ${props => props.canDrop ? 1 : .5};
 `
 
@@ -31,11 +31,13 @@ const DragImage = () => {
     window.addEventListener('mousemove', updatePosition)
     window.addEventListener('touchmove', updatePosition)
     window.addEventListener('mouseup', drop)
+    window.addEventListener('touchend', drop)
 
     return () => {
       window.removeEventListener('mousemove', updatePosition)
       window.removeEventListener('touchmove', updatePosition)
-      window.addEventListener('mouseup', drop)
+      window.removeEventListener('mouseup', drop)
+      window.removeEventListener('touchend', drop)
     }
   }, [])
 

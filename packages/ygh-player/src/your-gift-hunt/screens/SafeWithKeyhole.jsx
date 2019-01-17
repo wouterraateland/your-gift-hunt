@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react'
 import styled, { keyframes } from 'styled-components'
+import _ from 'utils'
 
 import Screen from './Screen'
 import Safe from './Safe'
@@ -173,7 +174,7 @@ const SafeWithKeyholeScreen = forwardRef(({
   close,
 }, refs) => {
   const keyhole = refs ? refs.keyhole : null
-  const unlocked = instance.state === 'unlocked'
+  const unlocked = _.hasState('safe-with-keyhole', 'unlocked')(instance)
 
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>

@@ -1,6 +1,8 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+import _ from 'utils'
+
 import PhysicalObject from './PhysicalObject'
 
 const Safe = styled(PhysicalObject.Part)`
@@ -34,7 +36,7 @@ const Door = styled(PhysicalObject.Part)`
 
   transform-origin: left top;
 
-  ${props => props.unlocked && css`
+  ${props => props.isUnlocked && css`
     transform: rotate(45deg);
   `}
 
@@ -88,13 +90,13 @@ const Wheel = styled(PhysicalObject.Part)`
   }
 `
 
-const SafeWithKeyhole = ({ state, ...props }) => {
-  const unlocked = state === 'unlocked'
+const SafeWithKeyhole = (props) => {
+  const isUnlocked = _.hasState('safe-with-keyhole', 'unlocked')(props)
 
   return (
     <PhysicalObject width={5} height={5} {...props}>
       <Safe z={2} />
-      <Door unlocked={unlocked} z={2} angle={unlocked ? 45 : 0}>
+      <Door isUnlocked={isUnlocked} z={2} angle={isUnlocked ? 45 : 0}>
         <Wheel z={1.5} />
       </Door>
     </PhysicalObject>

@@ -1,10 +1,13 @@
 import React, { useRef, useEffect, useContext } from 'react'
 import { Flashlight } from 'your-gift-hunt/items'
 
+import acceptDrop from 'hooks/acceptDrop'
 import GameContext from 'contexts/Game'
 
 export default (props) => {
   const powerButton = useRef(null)
+  const body = useRef(null)
+
   const { dispatchAction } = useContext(GameContext)
 
   function handleClickPowerButton() {
@@ -25,10 +28,22 @@ export default (props) => {
     }
   }, [])
 
+  acceptDrop({
+    element: body,
+    instance: props,
+    items: [
+      {
+        item: { entityId: 'battery', stateId: 'default' },
+        target: { entityId: 'flashlight', stateId: 'empty' },
+      }
+    ]
+  })
+
   return (
     <Flashlight
       {...props}
       ref={{
+        body,
         powerButton
       }}
     />

@@ -1,6 +1,8 @@
 import React from 'react'
 import styled, { css, keyframes } from 'styled-components'
 
+import _ from 'utils'
+
 import PhysicalObject from './PhysicalObject'
 
 const flagWave = keyframes`
@@ -74,8 +76,8 @@ const Door = styled(PhysicalObject.Part)`
   `}
 `
 
-const Mailbox = ({ state, ...props }) => {
-  const isOpen = state === 'open'
+const Mailbox = (props) => {
+  const isOpen = _.hasState('mailbox', 'open')(props)
 
   return (
     <PhysicalObject width={3} height={2} {...props}>

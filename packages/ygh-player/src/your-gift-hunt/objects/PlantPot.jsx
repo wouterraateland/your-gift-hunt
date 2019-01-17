@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
+
+import _ from 'utils'
 
 import PhysicalObject from './PhysicalObject'
 
@@ -44,6 +46,8 @@ const Pot = styled(PhysicalObject.Part)`
 `
 
 const Leaf = styled(PhysicalObject.Part)`
+  pointer-events: none;
+  
   position: absolute;
   left: 50%; top: 50%;
   z-index: ${props => 1 + Math.round((props.size - .8) * 50)};
@@ -51,7 +55,7 @@ const Leaf = styled(PhysicalObject.Part)`
   transform-origin: 0 0;
   transform: ${props => `
     rotate(${props.angle}deg)
-    scale(${props.size * (.2 + .8 * props.grown)})
+    scale(${props.size * (.2 + .8 * props.isGrown)})
   `};
 
   transition:
@@ -61,7 +65,7 @@ const Leaf = styled(PhysicalObject.Part)`
 
   will-change: transform, color;
 
-  color: ${props => props.grown ? '#4caf50' : '#cddc39'};
+  color: ${props => props.isGrown ? '#4caf50' : '#cddc39'};
 
   &::before, &::after {
     content: '';
@@ -69,7 +73,7 @@ const Leaf = styled(PhysicalObject.Part)`
     position: absolute;
     left: 0; top: 0;
 
-    opacity: ${props => props.planted ? 1 : 0};
+    opacity: ${props => props.isPlanted ? 1 : 0};
   }
 
   &::before {
@@ -87,12 +91,12 @@ const Leaf = styled(PhysicalObject.Part)`
         rgba(0, 0, 0, .1)
       );
     background-color: currentColor;
-    border-radius: 100% 100% ${props => props.grown ? 0 : 100}% 100%;
+    border-radius: 100% 100% ${props => props.isGrown ? 0 : 100}% 100%;
 
     box-shadow: 0 0 .125em rgba(0, 0, 0, .2);
 
     transform-origin: 0 0;
-    transform: ${props => `translate(-.125em, -.125em) skew(${props.grown ? 10 : 0}deg, ${props.grown ? 10 : 0}deg)`};
+    transform: ${props => `translate(-.125em, -.125em) skew(${props.isGrown ? 10 : 0}deg, ${props.isGrown ? 10 : 0}deg)`};
 
     transition:
       opacity .5s ease-out,
@@ -133,15 +137,23 @@ const Plant = plantProps => Array(leafs).fill(0).map((_, i) =>
   />
 )
 
-const PlantPot = ({ state, ...props }) => (
-  <PhysicalObject width={4} height={4} {...props}>
-    <Pot z={1.5} />
-    <Plant
-      planted={state === 'planted' || state === 'grown'}
-      grown={state === 'grown'}
-    />
-  </PhysicalObject>
-)
+const PlantPot = forwardRef((props, refs) => {
+  const plantPot = refs ? refs.plantPot : null
+
+  const isPlanted = _.hasState('plant-pot', 'planted')(props)
+  const isGrown = _.hasState('plant-pot', 'grown')(props)
+
+  return (
+    <PhysicalObject width={4} height={4} {...props}>
+      <Pot ref={plantPot} z={1.5} />
+      <Plant
+        isPlanted={isPlanted || isGrown}
+        isGrown={isGrown}
+      />
+    </PhysicalObject>
+  )
+})
+
 PlantPot.entityId = 'plant-pot'
 
 export default PlantPot

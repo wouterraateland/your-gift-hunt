@@ -1,10 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-import GameContext from 'contexts/Game'
-
 import Screen from './Screen'
-import Item from 'components/items'
 
 const ItemContainer = styled.div`
   position: relative;
@@ -22,24 +19,14 @@ const ItemContainer = styled.div`
 const ItemScreen = ({
   isVisible,
   instance,
+  component: Component,
   close,
 }) => {
-  const { dispatchAction } = useContext(GameContext)
-
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>
       <ItemContainer>
-        <h2>{instance ? instance.name : null}</h2>
-        <Item
-          {...instance}
-          onTransform={transformation =>
-            dispatchAction({
-              instanceId: instance.id,
-              type: '/actions/transform',
-              payload: { transformation }
-            })
-          }
-        />
+        <h2>{instance.entity.name}</h2>
+        <Component />
       </ItemContainer>
     </Screen>
   )
