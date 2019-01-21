@@ -24,10 +24,10 @@
     "build": "run-p build:**",
     "build:app": "react-scripts build",
     "build:lambda": "netlify-lambda build src/lambda",
-    "build:storybook": "build-storybook -s public",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 9009 -s public"
+    "storybook": "start-storybook -p 9009 -s public",
+    "storybook-build": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
