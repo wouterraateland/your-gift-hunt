@@ -17,11 +17,11 @@ const ItemContainer = styled.div`
 
 const getItemComponent = (item) => {
   switch (item) {
-    case '/entities/battery': return Battery
-    case '/entities/flashlight': return Flashlight
-    case '/entities/safe-key': return SafeKey
-    case '/entities/seeds': return Seeds
-    case '/entities/watering-can': return WateringCan
+    case 'battery': return Battery
+    case 'flashlight': return Flashlight
+    case 'safe-key': return SafeKey
+    case 'seeds': return Seeds
+    case 'watering-can': return WateringCan
     default: return null
   }
 }

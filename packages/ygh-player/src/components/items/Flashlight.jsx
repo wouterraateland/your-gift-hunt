@@ -12,10 +12,12 @@ export default (props) => {
 
   function handleClickPowerButton() {
     dispatchAction({
-      type: '/actions/transform',
+      type: 'input',
       payload: {
         instanceId: props.id,
-        transformation: 'TOGGLE_POWER'
+        inputValues: {
+          power: props.state === 'off' ? 'on' : 'off'
+        }
       }
     })
   }

@@ -47,7 +47,7 @@ const createPhysicalObject = Component => memo(({
   const { instances: { objects } } = useContext(GameContext)
 
   const instance = Component.entityId
-    ? objects.find(o => o.entity.id === `/entities/${Component.entityId}`)
+    ? objects.find(o => o.entity.id === Component.entityId)
     : null
 
   const childrenWithParentAngle = Children.map(children, child =>

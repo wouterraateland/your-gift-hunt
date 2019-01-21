@@ -15,8 +15,11 @@ export default (props) => {
       {...props}
       onSubmitAnswer={(instanceId, answer) => {
         dispatchAction({
-          type: '/actions/act',
-          payload: { instanceId, answer },
+          type: 'input',
+          payload: {
+            instanceId,
+            inputValues: { answer },
+          },
         })
       }}
       instances={[...questions, ...inputs]}

@@ -1,14 +1,11 @@
 import React, { createContext } from 'react'
 
-import useGameState from 'hooks/useGameState'
+import useGame from 'hooks/useGame'
 
 const GameContext = createContext({})
 
 export const GameProvider = ({ children }) => {
-  const value = {
-    instances: useGameState(),
-    dispatchAction: console.log,
-  }
+  const value = useGame()
 
   return (
     <GameContext.Provider

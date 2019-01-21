@@ -12,7 +12,7 @@ export default (props) => {
       {...props}
       onScanCode={(code) => {
         dispatchAction({
-          type: '/actions/scan',
+          type: 'scan',
           payload: { code },
         })
       }}

@@ -1,4 +1,4 @@
-const fetchLambda = async (lambda, params) => {
+const fetchLambda = async (lambda, params={}) => {
   const response = await fetch(`/.netlify/functions/${lambda}`, {
     headers: {
       'Accept': 'application/json',

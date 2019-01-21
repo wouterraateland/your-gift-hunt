@@ -12,8 +12,11 @@ export default (props) => {
       {...props}
       onReadNote={(instanceId) => {
         dispatchAction({
-          type: '/actions/act',
-          payload: { instanceId },
+          type: 'input',
+          payload: {
+            instanceId,
+            inputValues: {},
+          },
         })
       }}
       instances={[...notes]}

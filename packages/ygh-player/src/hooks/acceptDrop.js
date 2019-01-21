@@ -10,6 +10,13 @@ const isChildOrSame = (element, parent) =>
     isChildOrSame(element.parentElement, parent)
   )
 
+const targets = (event, target) => {
+  const cursor = event.changedTouches ? event.changedTouches[0] : event
+  const touchTarget = document.elementFromPoint(cursor.clientX, cursor.clientY)
+
+  return isChildOrSame(touchTarget, target)
+}
+
 const acceptDrop = ({ element, instance, items }) => {
   const { data, enableDrop } = useContext(DragContext)
   const { dispatchAction } = useContext(GameContext)
@@ -23,33 +30,32 @@ const acceptDrop = ({ element, instance, items }) => {
     ) {
       const handleMouseMove = enableDrop
 
-      const handleTouchMove = (event) => {
-        const cursor = event.touches ? event.touches[0] : event
-        const touchTarget = document.elementFromPoint(cursor.clientX, cursor.clientY)
+      const handleTouchMove = (event) =>
+        targets(event, element.current) && handleMouseMove(event)
 
-        if (isChildOrSame(touchTarget, element.current)) {
-          handleMouseMove(event)
-        }
-      }
+      const handleTouchEnd = (event) =>
+        targets(event, element.current) && handleDrop(event)
 
       const handleDrop = () => dispatchAction({
-        type: '/actions/use',
+        type: 'use',
         payload: {
-          itemId: data.id,
           instanceId: instance.id,
+          itemId: data.id,
         }
       })
 
       element.current.setAttribute('can-drop', true)
       window.addEventListener('touchmove', handleTouchMove)
+      window.addEventListener('touchend', handleTouchEnd)
+      window.addEventListener('touchcancel', handleTouchEnd)
       element.current.addEventListener('mousemove', handleMouseMove)
-      element.current.addEventListener('touchend', handleDrop, false)
       element.current.addEventListener('mouseup', handleDrop, false)
 
       return () => {
         window.removeEventListener('touchmove', handleTouchMove)
+        window.removeEventListener('touchend', handleTouchEnd)
+        window.removeEventListener('touchcancel', handleTouchEnd)
         element.current.removeEventListener('mousemove', handleMouseMove)
-        element.current.removeEventListener('touchend', handleDrop)
         element.current.removeEventListener('mouseup', handleDrop, false)
       }
     } else {

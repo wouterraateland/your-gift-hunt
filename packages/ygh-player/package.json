@@ -3,6 +3,10 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
+    "@firebase/app": "^0.3.7",
+    "@firebase/auth": "^0.9.1",
+    "@firebase/firestore": "^1.0.0",
+    "dotenv": "^6.2.0",
     "polished": "^2.3.3",
     "react": "^16.8.0-alpha.0",
     "react-dom": "^16.8.0-alpha.0",
@@ -10,7 +14,8 @@
     "react-scripts": "2.1.0",
     "styled-components": "^4.0.3",
     "typeface-montserrat": "^0.0.54",
-    "typeface-playfair-display": "^0.0.54"
+    "typeface-playfair-display": "^0.0.54",
+    "xmlhttprequest": "^1.8.0"
   },
   "scripts": {
     "start": "run-p start:**",

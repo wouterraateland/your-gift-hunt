@@ -11,10 +11,12 @@ const EnhancedLamp = (props) => {
     <Lamp
       {...props}
       onClick={() => dispatchAction({
-        type: '/actions/transform',
+        type: 'input',
         payload: {
           instanceId: props.id,
-          transformation: 'TOGGLE_POWER'
+          inputValues: {
+            power: props.state === 'on' ? 'off' : 'on'
+          }
         }
       })}
     />
