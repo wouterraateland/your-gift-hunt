@@ -211,6 +211,12 @@ export const handler = async (event, context) => {
         const instance = newState.instances
           .find(({ id }) => id === instanceId.id)
 
+        const instanceNode = hunt.nodes.find(({ entity }) => (
+          entity &&
+          entity.ref === instance.id &&
+          entity.state === instance.state
+        ))
+
         if (to === null) {
           newActions.push(await saveAction({
             type: actionsRef.doc('disappear'),
@@ -237,11 +243,6 @@ export const handler = async (event, context) => {
           nodes: hunt.nodes,
         })
 
-        const instanceNode = hunt.nodes.find(({ entity }) => (
-          entity &&
-          entity.ref === instance.id &&
-          entity.state === instance.state
-        ))
         for (let eventListener of instanceNode
           .eventListeners
           .filter(({ on }) => on === 'transform')

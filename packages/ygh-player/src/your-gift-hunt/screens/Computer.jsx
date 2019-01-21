@@ -136,14 +136,21 @@ const ComputerScreen = ({
   }
 
   function goToInstance(index) {
+    setAnswer('')
     setInstanceIndex(index)
   }
 
   const instance = instanceIndex === -1
     ? null : instances[instanceIndex]
 
-  const isAnswered = _.hasState('question', 'answered')(instance)
-  const isUnanswered = _.hasState('question', 'unanswered')(instance)
+  const isAnswered = (
+    _.hasState('question', 'answered')(instance) ||
+    _.hasState('input', 'filled')(instance)
+  )
+  const isUnanswered = (
+    _.hasState('question', 'unanswered')(instance) ||
+    _.hasState('input', 'empty')(instance)
+  )
 
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>
