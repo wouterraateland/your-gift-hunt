@@ -15,25 +15,25 @@ const ItemContainer = styled.div`
   height: 2em;
 `
 
-const getItemComponent = (entityId) => {
-  switch (entityId) {
-    case 'battery': return Battery
-    case 'flashlight': return Flashlight
-    case 'safe-key': return SafeKey
-    case 'seeds': return Seeds
-    case 'watering-can': return WateringCan
+const getItemComponent = (itemName) => {
+  switch (itemName) {
+    case 'Battery': return Battery
+    case 'Flashlight': return Flashlight
+    case 'Safe key': return SafeKey
+    case 'Seeds': return Seeds
+    case 'Watering can': return WateringCan
     default: return null
   }
 }
 
 const Item = (props) => {
-  const Component = getItemComponent(props.entity.id)
+  const Component = getItemComponent(props.entity.name)
 
   return (
     <ItemContainer>
       {Component
         ? <Component {...props} />
-        : props.entity.id}
+        : props.entity.name}
     </ItemContainer>
   )
 }

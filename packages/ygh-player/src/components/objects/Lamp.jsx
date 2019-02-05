@@ -1,27 +1,27 @@
-import React, { useContext } from 'react'
+import React, { useContext } from "react"
+import _ from "utils"
+import { createInputAction } from "actions/creators"
 
-import GameContext from 'contexts/Game'
+import GameContext from "contexts/Game"
 
-import { Lamp } from 'your-gift-hunt/objects'
+import { Lamp } from "your-gift-hunt/objects"
 
-const EnhancedLamp = (props) => {
+const EnhancedLamp = props => {
   const { dispatchAction } = useContext(GameContext)
 
   return (
     <Lamp
       {...props}
-      onClick={() => dispatchAction({
-        type: 'input',
-        payload: {
-          instanceId: props.id,
-          inputValues: {
-            power: props.state === 'on' ? 'off' : 'on'
-          }
-        }
-      })}
+      onClick={() =>
+        dispatchAction(
+          createInputAction(props.id, {
+            power: _.hasState("on")(props) ? "off" : "on"
+          })
+        )
+      }
     />
   )
 }
-EnhancedLamp.entityId = Lamp.entityId
+EnhancedLamp.entityName = Lamp.entityName
 
 export default EnhancedLamp

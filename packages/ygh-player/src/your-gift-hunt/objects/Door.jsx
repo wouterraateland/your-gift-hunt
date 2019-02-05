@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-import _ from 'utils'
+import _ from "utils"
 
-import PhysicalObject from './PhysicalObject'
+import PhysicalObject from "./PhysicalObject"
 
 const Frame = styled(PhysicalObject.Part)`
   width: 100%;
@@ -13,21 +13,21 @@ const Frame = styled(PhysicalObject.Part)`
     width: 100%;
     height: 100%;
 
-    border-radius: 60% 40% 50% 80% / .15em .1em .15em .1em;
+    border-radius: 60% 40% 50% 80% / 0.15em 0.1em 0.15em 0.1em;
 
-    box-shadow:
-      inset 0 .2em .4em -.1em #fff4,
-      inset 0 -.2em .4em -.1em #0004;
+    box-shadow: inset 0 0.2em 0.4em -0.1em #fff4,
+      inset 0 -0.2em 0.4em -0.1em #0004;
 
     background: #859756; /* #856a46; */
   }
 
   &::after {
-    left: -.5em; top: -.25em;
-    bottom: -.25em;
+    left: -0.5em;
+    top: -0.25em;
+    bottom: -0.25em;
 
-    width: .5em;
-    border-radius: .2em .1em .1em .1em / .3em .2em .1em .5em;
+    width: 0.5em;
+    border-radius: 0.2em 0.1em 0.1em 0.1em / 0.3em 0.2em 0.1em 0.5em;
 
     box-shadow: 5.5em 0 #000;
 
@@ -36,25 +36,26 @@ const Frame = styled(PhysicalObject.Part)`
 `
 
 const DoorPart = styled(PhysicalObject.Part)`
-  top: .25em;
-  bottom: .25em;
+  top: 0.25em;
+  bottom: 0.25em;
   width: 100%;
-  height: .5em;
+  height: 0.5em;
   margin: auto;
-  border-radius: 60% 40% .2em 80% / .2em .2em .3em .1em;
+  border-radius: 60% 40% 0.2em 80% / 0.2em 0.2em 0.3em 0.1em;
 
   background: #584630;
 
   transform-origin: left bottom;
-  transform: rotate(${props => props.isOpen ? 60 : 0}deg);
+  transform: rotate(${props => (props.isOpen ? 60 : 0)}deg);
 
   transition: transform 1s ease-in-out;
 
   &::before {
-    left: 0; bottom: 0;
+    left: 0;
+    bottom: 0;
 
-    width: .5em;
-    height: .5em;
+    width: 0.5em;
+    height: 0.5em;
     border-radius: 100% 90% 90% 110%;
 
     background: #000;
@@ -63,8 +64,8 @@ const DoorPart = styled(PhysicalObject.Part)`
   }
 `
 
-const Door = (props) => {
-  const isOpen = _.hasState('door', 'open')(props)
+const Door = props => {
+  const isOpen = _.hasState("open")(props)
 
   return (
     <PhysicalObject width={5} height={1} {...props}>
@@ -74,6 +75,6 @@ const Door = (props) => {
   )
 }
 
-Door.entityId = 'door'
+Door.entityName = "Door"
 
 export default Door

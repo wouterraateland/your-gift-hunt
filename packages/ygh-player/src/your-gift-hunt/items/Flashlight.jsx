@@ -1,83 +1,69 @@
-import React, { forwardRef } from 'react'
-import styled, { css } from 'styled-components'
+import React, { forwardRef } from "react"
+import styled, { css } from "styled-components"
 
-import _ from 'utils'
+import _ from "utils"
 
-import Item from './Item'
+import Item from "./Item"
 
 const FlashlightBody = styled(Item)`
   width: 2em;
-  height: .5em;
+  height: 0.5em;
 
-  border-radius: .1em;
+  border-radius: 0.1em;
 
-  background:
-    radial-gradient(
-      ellipse 30% 20% at 40% 35%,
-      #fff9, transparent
-    ),
-    linear-gradient(
-      90deg,
-      #444 20%, #ffd65a 20%
-    );
+  background: radial-gradient(ellipse 30% 20% at 40% 35%, #fff9, transparent),
+    linear-gradient(90deg, #444 20%, #ffd65a 20%);
 
   transform: rotate(-45deg);
 
   &::before {
-    ${props => props.isOn
-      ? css`
-        left: 100%;
-        top: 50%;
+    ${props =>
+      props.isOn
+        ? css`
+            left: 100%;
+            top: 50%;
 
-        width: .75em;
-        height: .75em;
+            width: 0.75em;
+            height: 0.75em;
 
-        background:
-          radial-gradient(
-            ellipse 100% 50% at 0% 50%, #b9e6ff, transparent
-          );
+            background: radial-gradient(
+              ellipse 100% 50% at 0% 50%,
+              #b9e6ff,
+              transparent
+            );
 
-        transform: translate(0, -50%);
-      `
-      : css`
-        left: .45em;
-        bottom: 100%;
+            transform: translate(0, -50%);
+          `
+        : css`
+            left: 0.45em;
+            bottom: 100%;
 
-        width: .7em;
-        height: ${props.isEmpty ? .3 : 0}em;
+            width: 0.7em;
+            height: ${props.isEmpty ? 0.3 : 0}em;
 
-        border-radius: .1em .1em 0 0;
+            border-radius: 0.1em 0.1em 0 0;
 
-        background:
-          linear-gradient(#222, #444);
-      `
-    }
+            background: linear-gradient(#222, #444);
+          `}
   }
 
   &::after {
     right: 0;
-    top: -.125em;
+    top: -0.125em;
 
-    width: .75em;
-    height: .75em;
+    width: 0.75em;
+    height: 0.75em;
 
-    border-radius: .5em .1em .1em .5em / .125em .1em .1em .125em;
+    border-radius: 0.5em 0.1em 0.1em 0.5em / 0.125em 0.1em 0.1em 0.125em;
 
-    background:
-      radial-gradient(
-        ellipse 40% 20% at 40% 35%,
-        #fff9, transparent
-      ),
-      linear-gradient(
-        90deg,
-        #ffd65a 60%, #444 60%
-      );
+    background: radial-gradient(ellipse 40% 20% at 40% 35%, #fff9, transparent),
+      linear-gradient(90deg, #ffd65a 60%, #444 60%);
   }
 
-  &, &::after {
-    box-shadow:
-      inset 0 -.2em .4em -.2em #000,
-      inset 0 .1em .2em -.1em #0009;
+  &,
+  &::after {
+    box-shadow: inset 0 -0.2em 0.4em -0.2em #000,
+      inset 0 0.1em 0.2em -0.1em #0009;
   }
 `
 FlashlightBody.displayName = "FlashlightBody"
@@ -86,17 +72,14 @@ const FlashlightButton = styled.div`
   cursor: pointer;
 
   position: absolute;
-  left: 45%; top: 50%;
+  left: 45%;
+  top: 50%;
 
-  width: .3em;
-  height: .2em;
+  width: 0.3em;
+  height: 0.2em;
   border-radius: 100%;
 
-  background:
-    radial-gradient(
-      ellipse 50% 50% at 50% 50%,
-      #000, #444
-    );
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, #000, #444);
 
   transform: translate(-50%, -50%);
 `
@@ -105,8 +88,8 @@ const Flashlight = forwardRef((props, refs) => {
   const powerButton = refs ? refs.powerButton : null
   const body = refs ? refs.body : null
 
-  const isOn = _.hasState('flashlight', 'on')(props)
-  const isEmpty = _.hasState('flashlight', 'empty')(props)
+  const isOn = _.hasState("on")(props)
+  const isEmpty = _.hasState("empty")(props)
 
   return (
     <FlashlightBody ref={body} isOn={isOn} isEmpty={isEmpty}>
@@ -114,6 +97,6 @@ const Flashlight = forwardRef((props, refs) => {
     </FlashlightBody>
   )
 })
-Flashlight.entityId = 'flashlight'
+Flashlight.entityName = "Flashlight"
 
 export default Flashlight

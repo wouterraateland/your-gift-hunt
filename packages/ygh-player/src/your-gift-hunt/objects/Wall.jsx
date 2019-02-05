@@ -93,6 +93,6 @@ const Wall = props => (
     ))}
   </PhysicalObject>
 )
-Wall.entityId = 'wall'
+Wall.entityName = 'Wall'
 
 export default Wall

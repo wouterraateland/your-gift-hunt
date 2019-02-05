@@ -25,6 +25,6 @@ const Seeds = styled(Item)`
   transform: skew(15deg, 15deg) scale(.85) translate(-.1em, -.1em);
 `
 Seeds.displayName = 'Seeds'
-Seeds.entityId = 'seeds'
+Seeds.entityName = 'Seeds'
 
 export default Seeds

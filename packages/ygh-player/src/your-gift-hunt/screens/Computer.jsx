@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react'
-import styled, { keyframes } from 'styled-components'
+import React, { useRef, useEffect, useState } from "react"
+import styled, { keyframes } from "styled-components"
 
-import _ from 'utils'
+import _ from "utils"
 
-import Screen from './Screen'
+import Screen from "./Screen"
 
 const Computer = styled.div`
   position: relative;
@@ -11,36 +11,41 @@ const Computer = styled.div`
   width: 24em;
   height: 13.5em;
   padding: 1em;
-  border: .5em solid #eee;
-  border-width: 1em .5em 2em .5em;
-  border-radius: .5em;
+  border: 0.5em solid #eee;
+  border-width: 1em 0.5em 2em 0.5em;
+  border-radius: 0.5em;
 
-  box-shadow: .4em .4em 2.4em -.2em #0004;
+  box-shadow: 0.4em 0.4em 2.4em -0.2em #0004;
 
   font-family: monospace;
 
-  background: ${props => props.isVisible ? '#030739' : '#111'};
+  background: ${props => (props.isVisible ? "#030739" : "#111")};
   color: #fff;
 
-  transition: background .5s .4s ease-out;
+  transition: background 0.5s 0.4s ease-out;
 
   &::before,
   &::after {
-    content: '';
+    content: "";
 
     position: absolute;
-    left: 50%; top: 100%;
+    left: 50%;
+    top: 100%;
     z-index: -1;
   }
 
   &::before {
     width: 6em;
     height: 4em;
-    border-radius: 1em 1em .25em .25em / 3.5em 3.5em .25em .25em;
-    box-shadow: .4em .4em 2.4em -.2em #0004;
+    border-radius: 1em 1em 0.25em 0.25em / 3.5em 3.5em 0.25em 0.25em;
+    box-shadow: 0.4em 0.4em 2.4em -0.2em #0004;
 
     background-image: linear-gradient(
-      #ccc, #eee 3.25em, #ccc 3.5em, #eee 3.75em, #aaa 4em
+      #ccc,
+      #eee 3.25em,
+      #ccc 3.5em,
+      #eee 3.75em,
+      #aaa 4em
     );
 
     transform: translate(-50%, 1.5em);
@@ -51,7 +56,7 @@ const Computer = styled.div`
     height: 3em;
     border-radius: 100%;
 
-    box-shadow: inset .4em .4em 2.4em -.2em #0004;
+    box-shadow: inset 0.4em 0.4em 2.4em -0.2em #0004;
 
     transform: translate(-50%, 1em);
   }
@@ -74,7 +79,7 @@ const blink = keyframes`
 const Cursor = styled.span`
   display: inline-block;
   height: 1em;
-  border-bottom: .1em solid;
+  border-bottom: 0.1em solid;
 
   color: #fff0;
 
@@ -84,16 +89,24 @@ const Cursor = styled.span`
   }
 `
 
-const PromptText = styled.span`color: #ff0;`
-const AnswerMarker = styled.span`color: #0ff;`
-const SuccessMarker = styled.span`color: #0f0;`
-const ErrorMarker = styled.span`color: #f00;`
+const PromptText = styled.span`
+  color: #ff0;
+`
+const AnswerMarker = styled.span`
+  color: #0ff;
+`
+const SuccessMarker = styled.span`
+  color: #0f0;
+`
+const ErrorMarker = styled.span`
+  color: #f00;
+`
 
 const Prompt = ({ text, children }) => {
-  const [display, setDisplay] = useState('')
+  const [display, setDisplay] = useState("")
 
   useEffect(() => {
-    setDisplay('')
+    setDisplay("")
     const i = setInterval(() => {
       setDisplay(display => {
         if (display.length === text.length) {
@@ -115,15 +128,10 @@ const Prompt = ({ text, children }) => {
   )
 }
 
-const ComputerScreen = ({
-  isVisible,
-  close,
-  instances,
-  onSubmitAnswer
-}) => {
+const ComputerScreen = ({ isVisible, close, instances, onSubmitAnswer }) => {
   const input = useRef(null)
   const [instanceIndex, setInstanceIndex] = useState(-1)
-  const [answer, setAnswer] = useState('')
+  const [answer, setAnswer] = useState("")
 
   useEffect(() => {
     input.current && input.current.focus()
@@ -136,21 +144,16 @@ const ComputerScreen = ({
   }
 
   function goToInstance(index) {
-    setAnswer('')
+    setAnswer("")
     setInstanceIndex(index)
   }
 
-  const instance = instanceIndex === -1
-    ? null : instances[instanceIndex]
+  const instance = instanceIndex === -1 ? null : instances[instanceIndex]
 
-  const isAnswered = (
-    _.hasState('question', 'answered')(instance) ||
-    _.hasState('input', 'filled')(instance)
-  )
-  const isUnanswered = (
-    _.hasState('question', 'unanswered')(instance) ||
-    _.hasState('input', 'empty')(instance)
-  )
+  const isAnswered =
+    _.hasState("answered")(instance) || _.hasState("filled")(instance)
+  const isUnanswered =
+    _.hasState("unanswered")(instance) || _.hasState("empty")(instance)
 
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>
@@ -160,58 +163,72 @@ const ComputerScreen = ({
             {isUnanswered && (
               <AnswerInput
                 ref={input}
-                onKeyPress={event => event.keyCode === 13
-                  ? handleOnSubmit(event) : true}
+                onKeyPress={event =>
+                  event.keyCode === 13 ? handleOnSubmit(event) : true
+                }
                 onChange={event => setAnswer(event.target.value)}
                 value={answer}
               />
             )}
-            <Prompt text={instance === null
-              ? (instances.length
-                ? 'New questions available.'
-                : 'No new questions available.'
-              )
-              : instance.fieldValues.question
-            }>
-              <br /><br />
-              {instance === null
-                ? (instances.length > 0
-                  ? (
-                    <span onClick={() => goToInstance(0)}>
-                      Show question
-                    </span>
-                  )
-                  : null
-                )
-                : (
-                  <>
-                    <AnswerMarker>&gt;</AnswerMarker>
-                    {' '}
-                    {isAnswered
-                      ? instance.inputValues.answer
-                      : answer}
-                    {isUnanswered && <Cursor />}
-                    {' '}
-                    {isAnswered && (
-                      <SuccessMarker>✔</SuccessMarker>
-                    )}
-                    {isUnanswered &&
-                      instance.inputValues.answer === answer && (
+            <Prompt
+              text={
+                instance === null
+                  ? instances.some(
+                      instance =>
+                        _.hasState("unanswered")(instance) ||
+                        _.hasState("empty")(instance)
+                    )
+                    ? "New questions available."
+                    : "No new questions available."
+                  : _.getFieldValue("Question")(instance) ||
+                    _.getFieldValue("Prompt")(instance)
+              }
+            >
+              <br />
+              <br />
+              {instance === null ? (
+                instances.length > 0 ? (
+                  <span
+                    onClick={() => {
+                      const firstUnreadIndex = instances.findIndex(
+                        instance =>
+                          _.hasState("unanswered")(instance) ||
+                          _.hasState("empty")(instance)
+                      )
+
+                      goToInstance(
+                        firstUnreadIndex === -1 && instances.length
+                          ? 0
+                          : firstUnreadIndex
+                      )
+                    }}
+                  >
+                    Show question
+                  </span>
+                ) : null
+              ) : (
+                <>
+                  <AnswerMarker>&gt;</AnswerMarker>{" "}
+                  {isAnswered ? _.getInputValue("answer")(instance) : answer}
+                  {isUnanswered && <Cursor />}{" "}
+                  {isAnswered && <SuccessMarker>✔</SuccessMarker>}
+                  {isUnanswered &&
+                    _.getInputValue("answer")(instance) === answer && (
                       <ErrorMarker>✘</ErrorMarker>
                     )}
-                    <br /><br /><br /><br />
-                    <span onClick={() => goToInstance(instanceIndex - 1)}>
-                      ◀
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <span onClick={() => goToInstance(instanceIndex - 1)}>◀</span>
+                  {"  "}
+                  {instanceIndex < instances.length - 1 && (
+                    <span onClick={() => goToInstance(instanceIndex + 1)}>
+                      ▶
                     </span>
-                    {'  '}
-                    {(instanceIndex < instances.length - 1) && (
-                      <span onClick={() => goToInstance(instanceIndex + 1)}>
-                        ▶
-                      </span>
-                    )}
-                  </>
-                )
-              }
+                  )}
+                </>
+              )}
             </Prompt>
           </label>
         </form>

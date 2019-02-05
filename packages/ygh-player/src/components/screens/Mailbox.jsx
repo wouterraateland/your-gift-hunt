@@ -1,23 +1,21 @@
-import React, { useContext } from 'react'
+import React, { useContext } from "react"
+import { createInputAction } from "actions/creators"
 
-import GameContext from 'contexts/Game'
+import GameContext from "contexts/Game"
 
-import { Mailbox } from 'your-gift-hunt/screens'
+import { Mailbox } from "your-gift-hunt/screens"
 
-export default (props) => {
-  const { dispatchAction, instances: { notes } } = useContext(GameContext)
+export default props => {
+  const {
+    dispatchAction,
+    instances: { notes }
+  } = useContext(GameContext)
 
   return (
     <Mailbox
       {...props}
-      onReadNote={(instanceId) => {
-        dispatchAction({
-          type: 'input',
-          payload: {
-            instanceId,
-            inputValues: {},
-          },
-        })
+      onReadNote={instanceId => {
+        dispatchAction(createInputAction(instanceId))
       }}
       instances={[...notes]}
     />

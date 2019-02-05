@@ -75,6 +75,6 @@ const Camera = props => {
     </PhysicalObject>
   )
 }
-Camera.entityId = 'camera'
+Camera.entityName = 'Camera'
 
 export default Camera

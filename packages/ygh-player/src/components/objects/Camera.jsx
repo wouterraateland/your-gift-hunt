@@ -15,6 +15,6 @@ const EnhancedCamera = (props) => {
     />
   )
 }
-EnhancedCamera.entityId = Camera.entityId
+EnhancedCamera.entityName = Camera.entityName
 
 export default EnhancedCamera

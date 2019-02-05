@@ -50,6 +50,6 @@ const Floor = ({ ...props }) => {
     </PhysicalObject>
   )
 }
-Floor.entityId = 'floor'
+Floor.entityName = 'Floor'
 
 export default Floor

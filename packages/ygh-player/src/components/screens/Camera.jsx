@@ -1,19 +1,22 @@
-import React, { useContext } from 'react'
+import React, { useContext } from "react"
 
-import GameContext from 'contexts/Game'
+import GameContext from "contexts/Game"
 
-import { Camera } from 'your-gift-hunt/screens'
+import { Camera } from "your-gift-hunt/screens"
 
-export default (props) => {
-  const { dispatchAction, instances: { codes } } = useContext(GameContext)
+export default props => {
+  const {
+    dispatchAction,
+    instances: { codes }
+  } = useContext(GameContext)
 
   return (
     <Camera
       {...props}
-      onScanCode={(code) => {
+      onScanCode={code => {
         dispatchAction({
-          type: 'scan',
-          payload: { code },
+          type: "SCAN",
+          payload: { code }
         })
       }}
       instances={[...codes]}

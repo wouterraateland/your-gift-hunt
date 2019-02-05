@@ -30,6 +30,6 @@ const Battery = styled(Item)`
   }
 `
 Battery.displayName = 'Battery'
-Battery.entityId = 'battery'
+Battery.entityName = 'Battery'
 
 export default Battery

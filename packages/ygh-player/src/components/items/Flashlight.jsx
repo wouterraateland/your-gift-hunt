@@ -1,32 +1,31 @@
-import React, { useRef, useEffect, useContext } from 'react'
-import { Flashlight } from 'your-gift-hunt/items'
+import React, { useRef, useEffect, useContext } from "react"
+import _ from "utils"
+import { createInputAction } from "actions/creators"
 
-import acceptDrop from 'hooks/acceptDrop'
-import GameContext from 'contexts/Game'
+import { Flashlight } from "your-gift-hunt/items"
 
-export default (props) => {
+import acceptDrop from "hooks/acceptDrop"
+import GameContext from "contexts/Game"
+
+export default props => {
   const powerButton = useRef(null)
   const body = useRef(null)
 
   const { dispatchAction } = useContext(GameContext)
 
   function handleClickPowerButton() {
-    dispatchAction({
-      type: 'input',
-      payload: {
-        instanceId: props.id,
-        inputValues: {
-          power: props.state === 'off' ? 'on' : 'off'
-        }
-      }
-    })
+    dispatchAction(
+      createInputAction(props.id, {
+        power: _.hasState("off")(props) ? "on" : "off"
+      })
+    )
   }
 
   useEffect(() => {
-    powerButton.current.addEventListener('click', handleClickPowerButton)
+    powerButton.current.addEventListener("click", handleClickPowerButton)
 
     return () => {
-      powerButton.current.removeEventListener('click', handleClickPowerButton)
+      powerButton.current.removeEventListener("click", handleClickPowerButton)
     }
   }, [])
 
@@ -35,8 +34,8 @@ export default (props) => {
     instance: props,
     items: [
       {
-        item: { entityId: 'battery', stateId: 'default' },
-        target: { entityId: 'flashlight', stateId: 'empty' },
+        item: { entityName: "Battery", stateName: "default" },
+        target: { entityName: "Flashlight", stateName: "empty" }
       }
     ]
   })

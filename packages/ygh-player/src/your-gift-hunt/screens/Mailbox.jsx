@@ -1,56 +1,56 @@
-import React, { useState } from 'react'
-import styled, { keyframes } from 'styled-components'
-import _ from 'utils'
+import React, { useState } from "react"
+import styled, { keyframes } from "styled-components"
+import _ from "utils"
 
-import { Float } from 'your-gift-hunt/ui'
-import Screen from './Screen'
-import { Note } from './Note'
+import { Float } from "your-gift-hunt/ui"
+import Screen from "./Screen"
+import { Note } from "./Note"
 
 const Mailbox = styled.div`
   position: relative;
   width: 20em;
   height: 18em;
 
-  border-radius: 12em 12em .5em .5em;
-  box-shadow:
-    inset .2em .2em .4em -.1em #fff8,
-    inset -.2em -.2em .4em -.1em #0004,
-    inset 0em 0em 0em .5em #fa300c;
+  border-radius: 12em 12em 0.5em 0.5em;
+  box-shadow: inset 0.2em 0.2em 0.4em -0.1em #fff8,
+    inset -0.2em -0.2em 0.4em -0.1em #0004, inset 0em 0em 0em 0.5em #fa300c;
 
   background-color: #7c2617;
 
   &::before,
   &::after {
-    content: '';
+    content: "";
 
     position: absolute;
   }
 
   &::before {
-    left: .5em; top: .5em;
-    right: .5em; bottom: .5em;
+    left: 0.5em;
+    top: 0.5em;
+    right: 0.5em;
+    bottom: 0.5em;
 
-    border-radius: 12em 12em .5em .5em;
-    box-shadow:
-      .2em .2em .4em -.1em #fff8,
-      -.2em -.2em .4em -.1em #0004;
+    border-radius: 12em 12em 0.5em 0.5em;
+    box-shadow: 0.2em 0.2em 0.4em -0.1em #fff8, -0.2em -0.2em 0.4em -0.1em #0004;
   }
 
   &::after {
-    left: 0; top: calc(100% - .5em);
+    left: 0;
+    top: calc(100% - 0.5em);
     right: 0;
 
     height: 2em;
-    border-radius: .5em;
+    border-radius: 0.5em;
 
-    box-shadow:
-      inset .2em .2em .4em -.1em #fff8,
-      inset -.2em -.2em .4em -.1em #0004;
+    box-shadow: inset 0.2em 0.2em 0.4em -0.1em #fff8,
+      inset -0.2em -0.2em 0.4em -0.1em #0004;
 
     background-color: #fa300c;
-    background-image:
-      radial-gradient(ellipse 2% 40% at 30% 45%,
-        #fff9, transparent),
+    background-image: radial-gradient(
+        ellipse 2% 40% at 30% 45%,
+        #fff9,
+        transparent
+      ),
       linear-gradient(90deg, #0006, #0002, #0000 40%, #0002, #0006);
   }
 `
@@ -63,17 +63,16 @@ const Pole = styled.div`
   width: 2em;
   height: 15em;
   border-radius: 1em;
-  border-bottom-left-radius: .5em 100%;
+  border-bottom-left-radius: 0.5em 100%;
 
-  box-shadow:
-    inset .4em .2em .4em -.1em #0003,
-    inset -.6em -.2em 1em -.1em #0008;
+  box-shadow: inset 0.4em 0.2em 0.4em -0.1em #0003,
+    inset -0.6em -0.2em 1em -0.1em #0008;
 
   background-color: #b38d5c;
 
   &::before,
   &::after {
-    content: '';
+    content: "";
 
     position: absolute;
   }
@@ -84,28 +83,27 @@ const Pole = styled.div`
 
     width: 2.2em;
     height: 3em;
-    border-radius: .2em 0 0 .2em;
+    border-radius: 0.2em 0 0 0.2em;
 
-    box-shadow:
-      inset -.4em 0 .4em -.2em #0004,
-      inset .8em .1em .8em -.2em #fff9;
+    box-shadow: inset -0.4em 0 0.4em -0.2em #0004,
+      inset 0.8em 0.1em 0.8em -0.2em #fff9;
 
     background-color: #999;
   }
 
   &::after {
-    left: 4em; top: 6em;
+    left: 4em;
+    top: 6em;
 
     width: 2em;
     height: 8em;
 
     border-bottom-left-radius: 2em 1.4em;
     border-top-left-radius: 2em;
-    border-top-right-radius: .5em 60%;
+    border-top-right-radius: 0.5em 60%;
 
-    box-shadow:
-      inset .4em .2em .4em -.1em #0003,
-      inset -.6em -.2em 1em -.1em #0008;
+    box-shadow: inset 0.4em 0.2em 0.4em -0.1em #0003,
+      inset -0.6em -0.2em 1em -0.1em #0008;
 
     background-color: #b38d5c;
 
@@ -120,17 +118,18 @@ const flagWave = keyframes`
 
 const Flag = styled.div`
   position: absolute;
-  right: -.5em; bottom: 3em;
+  right: -0.5em;
+  bottom: 3em;
 
-  width: .5em;
+  width: 0.5em;
   height: 15em;
-  border-radius: .25em;
+  border-radius: 0.25em;
 
   background-color: #1427a2;
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
   }
 
@@ -138,18 +137,18 @@ const Flag = styled.div`
     left: 0;
     bottom: 2em;
 
-    width: .7em;
+    width: 0.7em;
     height: 2em;
 
-    border-radius: 0 .2em .2em 0;
-    box-shadow:
-      inset -.2em -.2em .4em -.1em #0004;
+    border-radius: 0 0.2em 0.2em 0;
+    box-shadow: inset -0.2em -0.2em 0.4em -0.1em #0004;
 
     background-color: #999;
   }
 
   &::after {
-    left: .25em; top: .5em;
+    left: 0.25em;
+    top: 0.5em;
 
     border: 2em solid;
     border-right-color: transparent;
@@ -163,31 +162,42 @@ const Flag = styled.div`
 const Letter = styled.div`
   position: absolute;
   left: 0;
-  right: 0; bottom: .5em;
+  right: 0;
+  bottom: 0.5em;
 
   width: 10em;
-  height: .4em;
+  height: 0.4em;
   margin: auto;
 
   border-radius: 100% / 50%;
 
-  box-shadow:
-    inset 0 -.1em .2em -.05em #0004,
-    .2em .2em .4em -.1em #0004;
+  box-shadow: inset 0 -0.1em 0.2em -0.05em #0004, 0.2em 0.2em 0.4em -0.1em #0004;
 
   background: #fff;
 
-  &:nth-child(1) { transform: translate(0, 0) rotate(0deg); }
-  &:nth-child(2) { transform: translate(-4em, -.4em) rotate(-6deg); }
-  &:nth-child(3) { transform: translate(3em, -.9em) rotate(11deg); }
-  &:nth-child(4) { transform: translate(2.2em, -1.5em) rotate(9deg); }
-  &:nth-child(5) { transform: translate(-2.9em, -2.5em) rotate(-26deg); }
+  &:nth-child(1) {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  &:nth-child(2) {
+    transform: translate(-4em, -0.4em) rotate(-6deg);
+  }
+  &:nth-child(3) {
+    transform: translate(3em, -0.9em) rotate(11deg);
+  }
+  &:nth-child(4) {
+    transform: translate(2.2em, -1.5em) rotate(9deg);
+  }
+  &:nth-child(5) {
+    transform: translate(-2.9em, -2.5em) rotate(-26deg);
+  }
 `
 
 const MailView = styled.div`
   position: absolute;
-  left: 0; top: 0;
-  right: 0; bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 
   pointer-events: none;
 
@@ -206,12 +216,7 @@ const MailNavigation = styled.div`
   }
 `
 
-const MailboxScreen = ({
-  isVisible,
-  onReadNote,
-  instances,
-  close,
-}) => {
+const MailboxScreen = ({ isVisible, onReadNote, instances, close }) => {
   const [instanceIndex, setInstanceIndex] = useState(-1)
 
   function readNote() {
@@ -230,14 +235,18 @@ const MailboxScreen = ({
     close()
   }
 
-  const instance = instanceIndex === -1
-    ? null : instances[instanceIndex]
+  const instance = instanceIndex === -1 ? null : instances[instanceIndex]
 
   return (
     <Screen isVisible={isVisible} onClick={exit} centerContent>
       <Mailbox
         isVisible={isVisible}
-        onClick={() => instances.length ? setInstanceIndex(0) : true}
+        onClick={() => {
+          const firstUnreadIndex = instances.findIndex(_.hasState("unread"))
+          setInstanceIndex(
+            firstUnreadIndex === -1 && instances.length ? 0 : firstUnreadIndex
+          )
+        }}
       >
         {instances.slice(0, 5).map((_, i) => (
           <Letter key={i} />
@@ -249,26 +258,20 @@ const MailboxScreen = ({
         <MailView>
           <MailNavigation>
             <Float.Left>
-              <span
-                onClick={() => goToNote(instanceIndex - 1)}
-              >Previous</span>
+              <span onClick={() => goToNote(instanceIndex - 1)}>Previous</span>
             </Float.Left>
             {instanceIndex < instances.length - 1 && (
               <Float.Right>
-                <span
-                  onClick={() => goToNote(instanceIndex + 1)}
-                >
-                  Next
-                </span>
+                <span onClick={() => goToNote(instanceIndex + 1)}>Next</span>
               </Float.Right>
             )}
           </MailNavigation>
           <Note
             isVisible
             instance={instance}
-            isNew={_.hasState('note', 'unread')(instance)}
+            isNew={_.hasState("unread")(instance)}
           >
-            <p>{instance.fieldValues.text}</p>
+            <p>{_.getFieldValue("Text")(instance)}</p>
           </Note>
         </MailView>
       )}

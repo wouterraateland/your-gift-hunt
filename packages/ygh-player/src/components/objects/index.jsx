@@ -1,26 +1,24 @@
-import React, { memo, Children, cloneElement, useContext } from 'react'
-import styled from 'styled-components'
+import React, { memo, Children, cloneElement } from "react"
+import styled from "styled-components"
 
-import GameContext from 'contexts/Game'
-
-import _Armchair from './Armchair'
-import _Camera from './Camera'
-import _Carpet from './Carpet'
-import _Computer from './Computer'
-import _Desk from './Desk'
-import _DeskChair from './DeskChair'
-import _Door from './Door'
-import _Floor from './Floor'
-import _Grass from './Grass'
-import _InstructionNote from './InstructionNote'
-import _Lamp from './Lamp'
-import _Mailbox from './Mailbox'
-import _Package from './Package'
-import _Path from './Path'
-import _PlantPot from './PlantPot'
-import _SafeWithKeyhole from './SafeWithKeyhole'
-import _Sink from './Sink'
-import _Wall from './Wall'
+import _Armchair from "./Armchair"
+import _Camera from "./Camera"
+import _Carpet from "./Carpet"
+import _Computer from "./Computer"
+import _Desk from "./Desk"
+import _DeskChair from "./DeskChair"
+import _Door from "./Door"
+import _Floor from "./Floor"
+import _Grass from "./Grass"
+import _InstructionNote from "./InstructionNote"
+import _Lamp from "./Lamp"
+import _Mailbox from "./Mailbox"
+import _Package from "./Package"
+import _Path from "./Path"
+import _PlantPot from "./PlantPot"
+import _SafeWithKeyhole from "./SafeWithKeyhole"
+import _Sink from "./Sink"
+import _Wall from "./Wall"
 
 const ObjectContainer = styled.div.attrs(props => ({
   style: {
@@ -34,36 +32,24 @@ const ObjectContainer = styled.div.attrs(props => ({
 `
 
 ObjectContainer.defaultProps = {
-  left: 0, top: 0,
-  angle: 0,
+  left: 0,
+  top: 0,
+  angle: 0
 }
 
-const createPhysicalObject = Component => memo(({
-  children,
-  angle=0,
-  parentAngle=0,
-  ...props
-}) => {
-  const { instances: { objects } } = useContext(GameContext)
+const createPhysicalObject = Component =>
+  memo(({ children, angle = 0, parentAngle = 0, instance, ...props }) => {
+    const childrenWithParentAngle = Children.map(children, child =>
+      cloneElement(child, { parentAngle: parentAngle + angle })
+    )
 
-  const instance = Component.entityId
-    ? objects.find(o => o.entity.id === Component.entityId)
-    : null
-
-  const childrenWithParentAngle = Children.map(children, child =>
-    cloneElement(child, { parentAngle: parentAngle + angle })
-  )
-
-  return (
-    <ObjectContainer angle={angle} {...props}>
-      <Component
-        {...instance}
-        parentAngle={angle + parentAngle}
-      />
-      {childrenWithParentAngle}
-    </ObjectContainer>
-  )
-})
+    return (
+      <ObjectContainer angle={angle} {...props}>
+        <Component {...instance} parentAngle={angle + parentAngle} />
+        {childrenWithParentAngle}
+      </ObjectContainer>
+    )
+  })
 
 export const Armchair = createPhysicalObject(_Armchair)
 export const Camera = createPhysicalObject(_Camera)

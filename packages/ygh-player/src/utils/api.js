@@ -1,5 +1,5 @@
 const fetchLambda = async (lambda, params={}) => {
-  const response = await fetch(`/.netlify/functions/${lambda}`, {
+  const response = await fetch(`https://ygh-api.herokuapp.com/${lambda}`, {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'

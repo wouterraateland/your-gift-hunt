@@ -103,6 +103,6 @@ const Path = ({ state, ...props }) => (
     ))}
   </PhysicalObject>
 )
-Path.entityId = 'path'
+Path.entityName = 'Path'
 
 export default Path

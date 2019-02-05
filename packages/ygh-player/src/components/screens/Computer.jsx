@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext } from "react"
+import { createInputAction } from "actions/creators"
 
-import GameContext from 'contexts/Game'
+import GameContext from "contexts/Game"
 
-import { Computer } from 'your-gift-hunt/screens'
+import { Computer } from "your-gift-hunt/screens"
 
-export default (props) => {
+export default props => {
   const {
     dispatchAction,
     instances: { questions, inputs }
@@ -14,13 +15,7 @@ export default (props) => {
     <Computer
       {...props}
       onSubmitAnswer={(instanceId, answer) => {
-        dispatchAction({
-          type: 'input',
-          payload: {
-            instanceId,
-            inputValues: { answer },
-          },
-        })
+        dispatchAction(createInputAction(instanceId, { answer }))
       }}
       instances={[...questions, ...inputs]}
     />

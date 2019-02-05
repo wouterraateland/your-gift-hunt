@@ -2,10 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 
-import { DragProvider } from 'contexts/Drag'
-import { GameProvider } from 'contexts/Game'
-import { ScreenProvider } from 'contexts/Screen'
-
 import App from 'components/App'
 
 // if (process.env.NODE_ENV !== 'production') {
@@ -16,16 +12,7 @@ import App from 'components/App'
 const root = document.getElementById('app-root')
 
 const render = (Component) =>
-  ReactDOM.render(
-    <DragProvider>
-      <GameProvider>
-        <ScreenProvider>
-          <Component />
-        </ScreenProvider>
-      </GameProvider>
-    </DragProvider>,
-    root
-  )
+  ReactDOM.render(<Component />, root)
 
 render(App)
 

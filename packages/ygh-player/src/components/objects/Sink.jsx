@@ -1,10 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useRef } from "react"
 
-import acceptDrop from 'hooks/acceptDrop'
+import acceptDrop from "hooks/acceptDrop"
 
-import { Sink } from 'your-gift-hunt/objects'
+import { Sink } from "your-gift-hunt/objects"
 
-const EnhancedSink = (props) => {
+const EnhancedSink = props => {
   const sink = useRef(null)
 
   acceptDrop({
@@ -12,19 +12,14 @@ const EnhancedSink = (props) => {
     instance: props,
     items: [
       {
-        item: { entityId: 'watering-can', stateId: 'empty' },
-        target: { entityId: 'sink', stateId: 'connected' },
+        item: { entityName: "Watering can", stateName: "empty" },
+        target: { entityName: "Sink", stateName: "connected" }
       }
     ]
   })
 
-  return (
-    <Sink
-      ref={{ sink }}
-      {...props}
-    />
-  )
+  return <Sink ref={{ sink }} {...props} />
 }
 
-EnhancedSink.entityId = Sink.entityId
+EnhancedSink.entityName = Sink.entityName
 export default EnhancedSink

@@ -1,38 +1,27 @@
-import React, { useContext } from 'react'
+import React from 'react'
+import { Router, Redirect } from '@reach/router'
 
-import GameContext from 'contexts/Game'
+import { DragProvider } from 'contexts/Drag'
+import { GameProvider } from 'contexts/Game'
+import { ScreenProvider } from 'contexts/Screen'
 
-import Theme from 'containers/Theme'
+import Game from 'components/Game'
 
-import Loader from 'components/Loader'
-import Viewport from 'components/Viewport'
-import Inventory from 'components/Inventory'
-import ScreenContainer from 'components/ScreenContainer'
-import DragImage from 'components/DragImage'
+const GamePage = ({ creatorSlug, gameSlug }) => (
+  <DragProvider>
+    <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
+      <ScreenProvider>
+        <Game />
+      </ScreenProvider>
+    </GameProvider>
+  </DragProvider>
+)
 
-import DefaultScene from 'components/scenes/default'
-
-const App = () => {
-  const { instances, isLoading } = useContext(GameContext)
-  const { items, objects } = instances
-
-  return (
-    <Theme>
-      {isLoading
-        ? <Loader />
-        : (
-          <>
-            <Viewport>
-              <DefaultScene objects={objects} />
-            </Viewport>
-            <Inventory items={items} />
-            <ScreenContainer />
-            <DragImage />
-          </>
-        )
-      }
-    </Theme>
-  )
-}
+const App = () => (
+  <Router>
+    <GamePage path="/:creatorSlug/:gameSlug" />
+    <Redirect from="/" to="/wouter-raateland/pioneer-hunt" />
+  </Router>
+)
 
 export default App

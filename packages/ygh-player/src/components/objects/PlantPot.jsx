@@ -1,10 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useRef } from "react"
 
-import acceptDrop from 'hooks/acceptDrop'
+import acceptDrop from "hooks/acceptDrop"
 
-import { PlantPot } from 'your-gift-hunt/objects'
+import { PlantPot } from "your-gift-hunt/objects"
 
-const EnhancedPlantPot = (props) => {
+const EnhancedPlantPot = props => {
   const plantPot = useRef(null)
 
   acceptDrop({
@@ -12,27 +12,22 @@ const EnhancedPlantPot = (props) => {
     instance: props,
     items: [
       {
-        item: { entityId: 'seeds', stateId: 'default' },
-        target: { entityId: 'plant-pot', stateId: 'empty' },
+        item: { entityName: "Seeds", stateName: "default" },
+        target: { entityName: "Plant pot", stateName: "empty" }
       },
       {
-        item: { entityId: 'watering-can', stateId: 'filled' },
-        target: { entityId: 'plant-pot', stateId: 'planted' },
+        item: { entityName: "Watering can", stateName: "filled" },
+        target: { entityName: "Plant pot", stateName: "planted" }
       },
       {
-        item: { entityId: 'flashlight', stateId: 'on' },
-        target: { entityId: 'plant-pot', stateId: 'planted' },
-      },
+        item: { entityName: "Flashlight", stateName: "on" },
+        target: { entityName: "Plant pot", stateName: "planted" }
+      }
     ]
   })
 
-  return (
-    <PlantPot
-      ref={{ plantPot }}
-      {...props}
-    />
-  )
+  return <PlantPot ref={{ plantPot }} {...props} />
 }
 
-EnhancedPlantPot.entityId = PlantPot.entityId
+EnhancedPlantPot.entityName = PlantPot.entityName
 export default EnhancedPlantPot

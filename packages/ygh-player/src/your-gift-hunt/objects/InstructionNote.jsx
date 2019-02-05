@@ -1,21 +1,24 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-import PhysicalObject from './PhysicalObject'
+import PhysicalObject from "./PhysicalObject"
 
 const Note = styled(PhysicalObject.Part)`
   width: 2em;
   height: 3em;
-  padding: .25em;
+  padding: 0.25em;
 
   perspective: 100px;
   transform-style: preserve-3d;
+  user-select: none;
 `
 
 const Paper = styled.div`
   position: absolute;
-  left: 0; top: 0;
-  right: 0; bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 
   background: #f5f0d7;
 
@@ -24,14 +27,14 @@ const Paper = styled.div`
 
 const PaperClip = styled.div`
   position: absolute;
-  right: .3em;
-  top: -.1em;
+  right: 0.3em;
+  top: -0.1em;
 
-  width: .3em;
+  width: 0.3em;
   height: 1em;
 
-  border: .05em solid #999;
-  border-radius: .15em .15em .1em .1em;
+  border: 0.05em solid #999;
+  border-radius: 0.15em 0.15em 0.1em 0.1em;
 
   transform: rotate3d(1, 10, 0, -5deg);
 `
@@ -60,14 +63,14 @@ const Text = styled.span`
   white-space: nowrap;
 
   font-family: cursive;
-  font-size: .6em;
+  font-size: 0.6em;
 
-  transform: translate(-.5em, 1em) rotate(90deg);
+  transform: translate(-0.5em, 1em) rotate(90deg);
 `
 
 const InstructionNote = props => (
   <PhysicalObject width={2} height={3} {...props}>
-    <Note z={.1}>
+    <Note z={0.1}>
       <Paper />
       <PaperClip />
       <PaperClip2 />
@@ -75,6 +78,6 @@ const InstructionNote = props => (
     </Note>
   </PhysicalObject>
 )
-InstructionNote.entityId = 'instruction-note'
+InstructionNote.entityName = "Instruction note"
 
 export default InstructionNote

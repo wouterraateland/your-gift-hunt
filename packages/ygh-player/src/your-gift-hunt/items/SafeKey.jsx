@@ -53,6 +53,6 @@ const SafeKey = styled(Item)`
   }
 `
 SafeKey.displayName = 'SafeKey'
-SafeKey.entityId = 'safe-key'
+SafeKey.entityName = 'Safe key'
 
 export default SafeKey

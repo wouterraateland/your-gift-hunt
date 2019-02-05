@@ -15,6 +15,6 @@ const EnhancedInstructionNote = (props) => {
     />
   )
 }
-EnhancedInstructionNote.entityId = InstructionNote.entityId
+EnhancedInstructionNote.entityName = InstructionNote.entityName
 
 export default EnhancedInstructionNote

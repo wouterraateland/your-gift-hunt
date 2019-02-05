@@ -32,6 +32,6 @@ const Carpet = (props) => (
     <StyledCarpet z={.25} />
   </PhysicalObject>
 )
-Carpet.entityId = 'carpet'
+Carpet.entityName = 'Carpet'
 
 export default Carpet

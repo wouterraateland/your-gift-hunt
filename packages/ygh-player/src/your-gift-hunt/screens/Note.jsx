@@ -1,8 +1,8 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import _ from 'utils'
+import React from "react"
+import styled, { css } from "styled-components"
+import _ from "utils"
 
-import Screen from './Screen'
+import Screen from "./Screen"
 
 export const Note = styled.div`
   position: relative;
@@ -13,23 +13,26 @@ export const Note = styled.div`
 
   background-color: #f5f0d7;
 
-  transform: translate(0, ${props => props.isVisible ? 0 : 100}vh);
+  transform: translate(0, ${props => (props.isVisible ? 0 : 100)}vh);
 
-  transition: transform .2s .2s ease-out;
+  transition: transform 0.2s 0.2s ease-out;
 
-  ${props => props.isNew && css`
-    &::after {
-      content: 'New';
+  ${props =>
+    props.isNew &&
+    css`
+      &::after {
+        content: "New";
 
-      position: absolute;
-      left: 2em; top: 1.5em;
+        position: absolute;
+        left: 2em;
+        top: 1.5em;
 
-      text-transform: uppercase;
-      font-weight: bold;
+        text-transform: uppercase;
+        font-weight: bold;
 
-      color: #f129;
-    }
-  `}
+        color: #f129;
+      }
+    `}
 
   p {
     font-size: 1.5em;
@@ -38,13 +41,9 @@ export const Note = styled.div`
   }
 `
 
-const NoteScreen = ({
-  isVisible,
-  instance,
-  onReadNote,
-  close
-}) => {
-  const isNew = _.hasState(['note', 'instruction-note'], 'unread')(instance)
+const NoteScreen = ({ isVisible, instance, onReadNote, close }) => {
+  const isNew = _.hasState("unread")(instance)
+  const text = _.getFieldValue("Text")(instance)
 
   const exit = () => {
     close && close()
@@ -53,12 +52,8 @@ const NoteScreen = ({
 
   return (
     <Screen isVisible={isVisible} onClick={exit}>
-      <Note
-        isVisible={isVisible}
-        onClick={exit}
-        isNew={isNew}
-      >
-        <p>{instance.fieldValues.text}</p>
+      <Note isVisible={isVisible} onClick={exit} isNew={isNew}>
+        <p>{text}</p>
       </Note>
     </Screen>
   )
