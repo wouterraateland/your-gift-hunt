@@ -18,8 +18,12 @@ const AmnesiaPage = () => {
     try {
       await requestPasswordRecovery(email)
       setSent(true)
-    } catch (e) {
-      console.log(e)
+    } catch ({ json }) {
+      if (json.code === 404) {
+        setSent(true)
+      } else {
+        console.log(json)
+      }
     }
   }
 
@@ -28,23 +32,26 @@ const AmnesiaPage = () => {
       {isSent ? (
         <p>Check your inbox for your reset link.</p>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <>
+          <form onSubmit={handleSubmit}>
+            <p>
+              To reset your password, enter the email address you use to sign
+              in.
+            </p>
+            <Field block>
+              <Input block label="Email" name="email" type="email" required />
+            </Field>
+            <Field block>
+              <Button block type="submit" color="accent" importance="primary">
+                Get reset link
+              </Button>
+            </Field>
+          </form>
           <p>
-            To reset your password, enter the email address you use to sign in.
+            Nevermind! <Link to="/auth/login">Take me back to login</Link>
           </p>
-          <Field block>
-            <Input block label="Email" name="email" type="email" required />
-          </Field>
-          <Field block>
-            <Button block type="submit" color="accent" importance="primary">
-              Get reset link
-            </Button>
-          </Field>
-        </form>
+        </>
       )}
-      <p>
-        Nevermind! <Link to="/auth/login">Take me back to login</Link>
-      </p>
     </Layout>
   )
 }

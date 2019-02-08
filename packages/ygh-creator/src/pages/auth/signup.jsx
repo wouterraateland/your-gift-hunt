@@ -33,8 +33,12 @@ const SignupPage = () => {
       })
 
       navigate("/")
-    } catch (e) {
-      console.log(e)
+    } catch ({ json }) {
+      if (json.code === 400) {
+        setErrors({ email: json.msg })
+      } else {
+        console.log(json)
+      }
     }
   }
 

@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect } from "react"
-import * as queryString from "query-string"
+import React, { useContext, useState } from "react"
 import { navigate } from "@reach/router"
 
 import AuthContext from "contexts/Auth"
@@ -7,41 +6,29 @@ import AuthContext from "contexts/Auth"
 import Layout from "layouts/Auth"
 import { Field, Input, Button } from "your-gift-hunt/ui"
 
-const PasswordResetPage = ({ location }) => {
-  const { token } = queryString.parse(location.search)
-  const { recover, updateUser } = useContext(AuthContext)
-  const [isValid, setValid] = useState(false)
+const PasswordResetPage = () => {
+  const { isLoggedIn, updateUser } = useContext(AuthContext)
   const [errors, setErrors] = useState({})
-
-  async function tryRecover(token) {
-    try {
-      await recover(token)
-      setValid(true)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  useEffect(() => {
-    tryRecover(token)
-  }, [])
 
   async function handleSubmit(event) {
     event.preventDefault()
 
     const password = event.target.newPassword.value
 
-    try {
-      await updateUser({ password })
-      navigate("/")
-    } catch (e) {
-      console.log(e)
+    if (password.length < 8) {
+      setErrors({ newPassword: "Password requires at least 8 characters" })
+      try {
+        await updateUser({ password })
+        navigate("/")
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 
   return (
     <Layout>
-      {isValid ? (
+      {isLoggedIn ? (
         <form onSubmit={handleSubmit}>
           <p>Type your new password.</p>
           <Field block>
@@ -61,7 +48,7 @@ const PasswordResetPage = ({ location }) => {
           </Field>
         </form>
       ) : (
-        <p>{errors["code"]}</p>
+        <p>Invalid reset code.</p>
       )}
     </Layout>
   )

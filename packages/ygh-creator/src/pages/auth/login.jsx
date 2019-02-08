@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react"
-import { Link, navigate } from "@reach/router"
+import { Link } from "@reach/router"
 
 import AuthContext from "contexts/Auth"
 

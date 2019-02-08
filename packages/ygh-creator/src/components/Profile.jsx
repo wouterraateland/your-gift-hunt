@@ -17,7 +17,7 @@ const Avatar = styled.div`
 `
 
 const Profile = () => {
-  const { logout } = useContext(AuthContext)
+  const { logoutUser } = useContext(AuthContext)
 
   return (
     <Menu.Container>
@@ -26,7 +26,7 @@ const Profile = () => {
         <Menu.Item as={Link} to="/profile">
           Profile
         </Menu.Item>
-        <Menu.Item onClick={logout}>Log out</Menu.Item>
+        <Menu.Item onClick={logoutUser}>Log out</Menu.Item>
       </Menu>
     </Menu.Container>
   )

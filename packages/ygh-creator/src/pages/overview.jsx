@@ -9,7 +9,7 @@ import Layout from "layouts/Overview"
 import HuntList from "components/HuntList"
 
 const OverviewPage = () => {
-  const { userRef } = useContext(AuthContext)
+  useContext(AuthContext)
   const allHunts = []
   // const allHunts = useFirestoreListener(
   //   {
