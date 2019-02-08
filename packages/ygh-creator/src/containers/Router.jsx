@@ -23,6 +23,7 @@ const MainRouter = () => {
       <Profile path="/profile" />
       <Creator path="/new" />
       <Creator path="/edit/:slug" />
+      <Redirect from="/auth/login" to="/" noThrow />
       <NotFound default />
     </Router>
   ) : (
@@ -31,7 +32,7 @@ const MainRouter = () => {
       <Signup path="/auth/signup" />
       <Amnesia path="/auth/amnesia" />
       <PasswordReset path="/auth/reset-password" />
-      <Redirect from="/" to="/auth/login" default noThrow />
+      <Login path="/" default />
     </Router>
   )
 }

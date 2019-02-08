@@ -18,7 +18,6 @@ const LoginPage = () => {
 
     try {
       await loginUser(email, password)
-      navigate("/")
     } catch ({ json: { error, error_description } }) {
       switch (error) {
         case "invalid_grant":

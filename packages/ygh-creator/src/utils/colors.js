@@ -7,6 +7,5 @@ export const darken = (amount, color) => {
 
   return Identity(color)
     .map(c => polished.adjustHue(360 + direction * amount * 100, c))
-    .map(c => polished.darken(amount, c))
-    .value()
+    .fold(c => polished.darken(amount, c))
 }
