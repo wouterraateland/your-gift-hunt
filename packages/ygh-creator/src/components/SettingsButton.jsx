@@ -1,7 +1,5 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
-const SettingsButton = styled.button`
-  
-`
+const SettingsButton = styled.button``
 
 export default SettingsButton

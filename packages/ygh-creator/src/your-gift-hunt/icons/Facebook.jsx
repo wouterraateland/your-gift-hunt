@@ -1,5 +1,5 @@
-import React from 'react'
-import Icon from './'
+import React from "react"
+import Icon from "./"
 
 export default props => (
   <Icon viewBox="0 0 60.733 60.733" {...props}>

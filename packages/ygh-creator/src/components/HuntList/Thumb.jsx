@@ -1,12 +1,12 @@
-import React, { useContext } from 'react'
-import styled from 'styled-components'
-import moment from 'moment'
-import { Link } from '@reach/router'
+import React, { useContext } from "react"
+import styled from "styled-components"
+import moment from "moment"
+import { Link } from "@reach/router"
 
-import AuthContext from 'contexts/Auth'
+import AuthContext from "contexts/Auth"
 
-import { Edit } from 'your-gift-hunt/icons'
-import Menu from 'components/Menu'
+import { Edit } from "your-gift-hunt/icons"
+import Menu from "components/Menu"
 
 const StyledHuntThumb = styled.div`
   display: flex;
@@ -40,7 +40,7 @@ const EditProject = styled(Link)`
   position: relative;
   width: 2em;
   height: 2em;
-  padding: .25em .675em;
+  padding: 0.25em 0.675em;
 `
 
 const StyledHuntThumbActions = styled.div`
@@ -64,11 +64,7 @@ const HuntThumb = ({ id, meta, slug, creator }) => {
       <HuntTitle>{meta.name}</HuntTitle>
       <HuntMeta>
         <strong>
-          Created by
-          {' '}
-          {creator.id === currentUser.uid
-            ? 'you'
-            : creator.name}
+          Created by {creator.id === currentUser.uid ? "you" : creator.name}
         </strong>
         <br />
         Last edited {moment(meta.updatedAt.toDate()).fromNow()}

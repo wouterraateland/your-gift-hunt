@@ -1,16 +1,15 @@
-import { useState } from 'react'
+import { useState } from "react"
 
-const getValue = (obj, key) => (
-  key.split('.').reduce((v, part) => v[part], obj)
-)
+const getValue = (obj, key) => key.split(".").reduce((v, part) => v[part], obj)
 
-const isMatch = (obj, key, query) => (
+const isMatch = (obj, key, query) =>
   !query ||
-  getValue(obj, key).toLowerCase().includes(query.toLowerCase())
-)
+  getValue(obj, key)
+    .toLowerCase()
+    .includes(query.toLowerCase())
 
-const useQuery = (data=[], keys=[]) => {
-  const [query, setQuery] = useState('')
+const useQuery = (data = [], keys = []) => {
+  const [query, setQuery] = useState("")
 
   return {
     query,

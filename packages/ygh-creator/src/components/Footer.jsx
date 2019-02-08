@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import moment from 'moment'
+import React from "react"
+import styled from "styled-components"
+import moment from "moment"
 
-import { Wrapper } from 'your-gift-hunt/ui'
+import { Wrapper } from "your-gift-hunt/ui"
 
 const StyledFooter = styled.footer`
   padding: 2em 0;
@@ -26,7 +26,7 @@ const Footer = () => (
         <a href="https://yourgifthunt.com/terms">Terms</a>
       </p>
       <p>
-        <small>© {moment().format('YYYY')} Your Gift Hunt</small>
+        <small>© {moment().format("YYYY")} Your Gift Hunt</small>
       </p>
     </Wrapper>
   </StyledFooter>

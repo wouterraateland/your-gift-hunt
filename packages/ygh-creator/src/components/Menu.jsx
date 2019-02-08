@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 export const MenuContainer = styled.div`
   position: relative;
@@ -33,16 +33,17 @@ const MenuToggle = styled.div`
   }
 
   &::before {
-    content: '';
+    content: "";
 
     position: absolute;
-    left: 50%; top: 50%;
+    left: 50%;
+    top: 50%;
 
-    width: .3em;
-    height: .3em;
+    width: 0.3em;
+    height: 0.3em;
 
     border-radius: 100%;
-    box-shadow: 0 -.6em, 0 .6em;
+    box-shadow: 0 -0.6em, 0 0.6em;
 
     background: currentColor;
 
@@ -52,7 +53,8 @@ const MenuToggle = styled.div`
 
 export const Menu = styled.div`
   position: absolute;
-  right: calc(50% - 1em); top: calc(100% + 1em);
+  right: calc(50% - 1em);
+  top: calc(100% + 1em);
   z-index: 3;
 
   width: 16em;
@@ -64,13 +66,11 @@ export const Menu = styled.div`
   transform-origin: 90% 0;
   transform: scale(0);
 
-  transition:
-    transform .2s .2s ease-out,
-    box-shadow .2s 0s ease-out;
+  transition: transform 0.2s 0.2s ease-out, box-shadow 0.2s 0s ease-out;
 
   &::before,
   &::after {
-    content: '';
+    content: "";
 
     position: absolute;
     display: block;
@@ -78,21 +78,23 @@ export const Menu = styled.div`
 
   &::before {
     position: absolute;
-    left: 0; top: -2em;
-    right: 0; bottom: 100%;
+    left: 0;
+    top: -2em;
+    right: 0;
+    bottom: 100%;
   }
 
   &::after {
-    right: .675em;
-    top: -.3375em;
+    right: 0.675em;
+    top: -0.3375em;
 
-    width: .7em;
-    height: .7em;
+    width: 0.7em;
+    height: 0.7em;
 
     border-style: solid;
-    border-width: .35em;
+    border-width: 0.35em;
     border-color: #fff transparent transparent #fff;
-    border-top-left-radius: .125em;
+    border-top-left-radius: 0.125em;
 
     transform: rotate(45deg);
   }
@@ -102,9 +104,7 @@ export const Menu = styled.div`
 
     transform: scale(1);
 
-    transition:
-      transform .2s 0s ease-out,
-      box-shadow 1s .2s ease-out;
+    transition: transform 0.2s 0s ease-out, box-shadow 1s 0.2s ease-out;
   }
 `
 

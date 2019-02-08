@@ -1,15 +1,14 @@
-import React, { useState, useContext } from 'react'
-import { Link, navigate } from '@reach/router'
-import { withFirebase } from 'react-redux-firebase'
+import React, { useState, useContext } from "react"
+import { Link, navigate } from "@reach/router"
 
-import AuthContext from 'contexts/Auth'
+import AuthContext from "contexts/Auth"
 
-import { Field, Input, Button } from 'your-gift-hunt/ui'
-import Layout from 'layouts/Auth'
+import { Field, Input, Button } from "your-gift-hunt/ui"
+import Layout from "layouts/Auth"
 
-const LoginPage = ({ firebase }) => {
+const LoginPage = () => {
   const [errors, setErrors] = useState({})
-  const { reloadAuth } = useContext(AuthContext)
+  const { loginUser } = useContext(AuthContext)
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -18,19 +17,15 @@ const LoginPage = ({ firebase }) => {
     const password = event.target.password.value
 
     try {
-      await firebase.login({
-        email,
-        password
-      })
-      await reloadAuth()
-      navigate('/')
-    } catch (e) {
-      switch (e.code) {
-        case 'auth/user-not-found':
-          setErrors({ email: e.message }); break;
-        case 'auth/wrong-password':
-          setErrors({ password: e.message }); break;
-        default: console.log(e)
+      await loginUser(email, password)
+      navigate("/")
+    } catch ({ json: { error, error_description } }) {
+      switch (error) {
+        case "invalid_grant":
+          setErrors({ email: error_description })
+          break
+        default:
+          console.log(error, error_description)
       }
     }
   }
@@ -45,7 +40,7 @@ const LoginPage = ({ firebase }) => {
             label="Email"
             name="email"
             type="email"
-            error={errors['email']}
+            error={errors["email"]}
             required
           />
         </Field>
@@ -55,23 +50,24 @@ const LoginPage = ({ firebase }) => {
             label="Password"
             name="password"
             type="password"
-            error={errors['password']}
+            error={errors["password"]}
             required
           />
         </Field>
-        <small><Link to="/auth/amnesia">Forgot your password?</Link></small>
+        <small>
+          <Link to="/auth/amnesia">Forgot your password?</Link>
+        </small>
         <Field block>
-          <Button
-            block
-            type="submit"
-            color="accent"
-            importance="primary"
-          >Log in</Button>
+          <Button block type="submit" color="accent" importance="primary">
+            Log in
+          </Button>
         </Field>
       </form>
-      <p>Don't have an account yet? <Link to="/auth/signup">Sign up</Link></p>
+      <p>
+        Don't have an account yet? <Link to="/auth/signup">Sign up</Link>
+      </p>
     </Layout>
   )
 }
 
-export default withFirebase(LoginPage)
+export default LoginPage

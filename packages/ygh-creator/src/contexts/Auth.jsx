@@ -1,13 +1,12 @@
-import React, { createContext } from 'react'
+import React, { createContext } from "react"
+import { useNetlifyIdentity } from "react-netlify-identity"
 
 const AuthContext = createContext(null)
 
-export const AuthProvider = ({ auth, ...rest }) => {
+export const AuthProvider = ({ children }) => {
+  const identity = useNetlifyIdentity("https://create.yourgifthunt.com")
   return (
-    <AuthContext.Provider
-      value={auth}
-      {...rest}
-    />
+    <AuthContext.Provider value={identity}>{children}</AuthContext.Provider>
   )
 }
 

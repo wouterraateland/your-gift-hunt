@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Link } from '@reach/router'
+import React from "react"
+import styled from "styled-components"
+import { Link } from "@reach/router"
 
-import { Wrapper, Float } from 'your-gift-hunt/ui'
-import { Logo } from 'your-gift-hunt/icons'
+import { Wrapper, Float } from "your-gift-hunt/ui"
+import { Logo } from "your-gift-hunt/icons"
 
-import Profile from 'components/Profile'
+import Profile from "components/Profile"
 
 const StyledNav = styled.nav`
   height: 12em;
@@ -17,7 +17,9 @@ const StyledNav = styled.nav`
 
 const StyledLogo = styled(Logo)`
   color: #000;
-  .background { fill: #fff; }
+  .background {
+    fill: #fff;
+  }
 `
 
 const Title = styled.h1`
@@ -28,11 +30,9 @@ const Title = styled.h1`
   font-weight: bold;
 `
 
-const NavItem = styled(Link)`
+const NavItem = styled(Link)``
 
-`
-
-const Nav = ({ title, items=[] }) => {
+const Nav = ({ title, items = [] }) => {
   return (
     <StyledNav>
       <Wrapper>

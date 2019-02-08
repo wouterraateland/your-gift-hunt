@@ -1,0 +1,218 @@
+interface Description {
+  name: String!
+  description: String @default(value: null)
+}
+
+type Entity implements Description {
+  id: ID! @unique
+
+  name: String!
+  description: String @default(value: null)
+
+  isTrigger: Boolean! @default(value: false)
+  isItem: Boolean! @default(value: false)
+  isObject: Boolean! @default(value: false)
+
+  fields: [EntityField!]! @relation(name: "FieldsOnEntity" onDelete: CASCADE)
+  states: [EntityState!]! @relation(name: "StatesOnEntity" onDelete: CASCADE)
+
+  defaultState: EntityState
+    @default(value: null) @relation(name: "DefaultStateOnEntity")
+
+  instances: [EntityInstance!]!
+    @relation(name: "InstantiationsOnEntity" onDelete: CASCADE)
+}
+
+type EntityField {
+  id: ID! @unique
+
+  info: String @default(value: null)
+  label: String!
+  type: FieldType! @default(value: STRING)
+  isMulti: Boolean! @default(value: false)
+  isSecret: Boolean! @default(value: false)
+
+  entity: Entity! @relation(name: "FieldsOnEntity")
+}
+
+type EntityState implements Description {
+  id: ID! @unique
+
+  name: String! @default(value: "Default")
+  description: String @default(value: null)
+
+  outgoingTransitions: [EntityStateTransition!]!
+    @relation(name: "OutgoingTransitions" onDelete: CASCADE)
+  incomingTransitions: [EntityStateTransition!]!
+    @relation(name: "IncomingTransitions" onDelete: CASCADE)
+
+  entity: Entity! @relation(name: "StatesOnEntity")
+}
+
+type EntityStateTransition {
+  id: ID! @unique
+
+  requiredActions: [ActionRequirement!]!
+  from: EntityState! @relation(name: "OutgoingTransitions")
+  to: EntityState @relation(name: "IncomingTransitions")
+}
+
+type ActionRequirement {
+  id: ID! @unique
+
+  type: ActionType! @default(value: USE)
+  hints: [String!]!
+  payload: ActionRequirementPayload!
+    @relation(name: "PayloadOnActionRequirement" onDelete: CASCADE)
+}
+
+type ActionRequirementPayload {
+  id: ID! @unique
+
+  requiredEntity: ActionRequirementPayloadEntity
+    @relation(name: "EntityOnActionRequirementPayload" onDelete: CASCADE)
+  requiredValues: [ActionRequirementPayloadInputValue!]
+    @relation(name: "ValuesOnActionRequirementPayload" onDelete: CASCADE)
+
+  actionRequirement: ActionRequirement!
+    @relation(name: "PayloadOnActionRequirement")
+}
+
+type ActionRequirementPayloadEntity {
+  id: ID! @unique
+
+  entity: Entity!
+  state: EntityState!
+
+  payload: ActionRequirementPayload!
+    @relation(name: "EntityOnActionRequirementPayload")
+}
+
+type ActionRequirementPayloadInputValue {
+  id: ID! @unique
+
+  key: String!
+  eqField: EntityField @default(value: null) @relation(name: "EqualToField")
+  neqField: EntityField @default(value: null) @relation(name: "NotEqualToField")
+  eqValue: String @default(value: null)
+  neqValue: String @default(value: null)
+
+  payload: ActionRequirementPayload!
+    @relation(name: "ValuesOnActionRequirementPayload")
+}
+
+type EntityInstance implements Description {
+  id: ID! @unique
+
+  name: String @default(value: null)
+  description: String @default(value: null)
+
+  game: Game! @relation(name: "EntityInstancesOnGame")
+  entity: Entity! @relation(name: "InstantiationsOnEntity")
+
+  fields: [EntityInstanceField!]!
+    @relation(name: "FieldsOnEntityInstance" onDelete: CASCADE)
+  states: [EntityInstanceState!]!
+    @relation(name: "StatesOnEntityInstance" onDelete: CASCADE)
+}
+
+type EntityInstanceField {
+  id: ID! @unique
+
+  field: EntityField!
+  value: String
+}
+
+type EntityInstanceState {
+  id: ID! @unique
+
+  state: EntityState!
+  outgoingTransitions: [EntityInstanceStateTransition!]!
+    @relation(name: "OutgoingTransitionsOnEntityInstance" onDelete: CASCADE)
+  incomingTransitions: [EntityInstanceStateTransition!]!
+    @relation(name: "IncomingTransitionsOnEntityInstance" onDelete: CASCADE)
+
+  unlockedBy: EntityInstanceStateTransition
+    @relation(name: "UnlocksOnEntityStateTransition")
+
+  instance: EntityInstance! @relation(name: "StatesOnEntityInstance")
+}
+
+type EntityInstanceStateTransition {
+  id: ID! @unique
+
+  from: EntityInstanceState!
+    @relation(name: "OutgoingTransitionsOnEntityInstance")
+  to: EntityInstanceState
+    @relation(name: "IncomingTransitionsOnEntityInstance")
+
+  unlocks: [EntityInstanceState!]!
+    @relation(name: "UnlocksOnEntityStateTransition" onDelete: SET_NULL)
+}
+
+type Game implements Description {
+  id: ID! @unique
+
+  name: String!
+  slug: String!
+  description: String @default(value: null)
+
+  creator: User @relation(name: "CreatorOnGame")
+  instances: [EntityInstance!]!
+    @relation(name: "EntityInstancesOnGame" onDelete: CASCADE)
+  plays: [GamePlay!]!
+    @relation(name: "GamePlaysOnGame" onDelete: CASCADE)
+}
+
+type GamePlay {
+  id: ID! @unique
+
+  game: Game! @relation(name: "GamePlaysOnGame")
+  player: User @relation(name: "GamePlaysOnUser")
+  actions: [Action!]! @relation(name: "ActionsOnGamePlay" onDelete: CASCADE)
+}
+
+type User {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  name: String!
+  slug: String!
+
+  netlifyUserId: String
+
+  games: [Game!]! @relation(name: "CreatorOnGame" onDelete: SET_NULL)
+  plays: [GamePlay!]! @relation(name: "GamePlaysOnUser" onDelete: SET_NULL)
+}
+
+type Action {
+  id: ID! @unique
+  createdAt: DateTime!
+
+  type: ActionType!
+  payload: ActionPayload! @relation(name: "PayloadOnAction" onDelete: SET_NULL)
+
+  gamePlay: GamePlay! @relation(name: "ActionsOnGamePlay")
+}
+
+type ActionPayload {
+  id: ID! @unique
+
+  instance: EntityInstance @relation(name: "TargetedEntityInstance")
+  ## Only non-null for ActionTypes TRANSFORM and UNLOCK
+  state: EntityState
+  # Only non-null for ActionTypes USE and TARGET_OF_USE
+  item: EntityInstance @relation(name: "UsedItem")
+  # Only non-null for ActionType INPUT
+  inputValues: [ActionPayloadInputValue!]
+
+  action: Action @relation(name: "PayloadOnAction" onDelete: CASCADE)
+}
+
+type ActionPayloadInputValue {
+  id: ID! @unique
+
+  key: String!
+  value: String
+}

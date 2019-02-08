@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Align } from 'your-gift-hunt/ui'
+import React from "react"
+import styled from "styled-components"
+import { Align } from "your-gift-hunt/ui"
 
-import Present from 'components/Present'
+import Present from "components/Present"
 
 const StyledEmptyHuntList = styled(Align.Center)`
   padding: 2em 0;
@@ -27,8 +27,8 @@ const PresentContainer = styled.div`
     &:nth-child(1) {
       width: 6em;
 
-      left: calc(50% + .5em);
-      bottom: calc(50% - .5em);
+      left: calc(50% + 0.5em);
+      bottom: calc(50% - 0.5em);
     }
 
     &:nth-child(2) {

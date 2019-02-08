@@ -1,66 +1,70 @@
-import React, { useState, useEffect } from 'react'
-import { withFirebase } from 'react-redux-firebase'
+import React, { useContext, useState, useEffect } from "react"
+import * as queryString from "query-string"
+import { navigate } from "@reach/router"
 
-import Layout from 'layouts/Auth'
-import { Field, Input, Button } from 'your-gift-hunt/ui'
+import AuthContext from "contexts/Auth"
 
-const PasswordResetPage = ({ code, firebase }) => {
+import Layout from "layouts/Auth"
+import { Field, Input, Button } from "your-gift-hunt/ui"
+
+const PasswordResetPage = ({ location }) => {
+  const { token } = queryString.parse(location.search)
+  const { recover, updateUser } = useContext(AuthContext)
   const [isValid, setValid] = useState(false)
   const [errors, setErrors] = useState({})
 
+  async function tryRecover(token) {
+    try {
+      await recover(token)
+      setValid(true)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   useEffect(() => {
-    firebase.auth().verifyPasswordResetCode(code)
-      .then(() => setValid(true))
-      .catch((e) => setErrors({ code: e.message }))
+    tryRecover(token)
   }, [])
 
   async function handleSubmit(event) {
     event.preventDefault()
 
-    const newPassword = event.target.newPassword.value
+    const password = event.target.newPassword.value
 
     try {
-      const response = await firebase.auth().confirmPasswordReset(code, newPassword)
-      console.log(response)
+      await updateUser({ password })
+      navigate("/")
     } catch (e) {
-      switch (e.code) {
-        case 'auth/weak-password':
-          setErrors({ newPassword: e.message }); break;
-        default: console.log(e)
-      }
+      console.log(e)
     }
   }
 
   return (
     <Layout>
-      {isValid
-        ? (
-          <form onSubmit={handleSubmit}>
-            <p>Type your new password.</p>
-            <Field block>
-              <Input
-                block
-                label="New password"
-                name="newPassword"
-                type="password"
-                error={errors['newPassword']}
-                required
-              />
-            </Field>
-            <Field block>
-              <Button
-                block
-                type="submit"
-                color="accent"
-                importance="primary"
-              >Reset password</Button>
-            </Field>
-          </form>
-        )
-        : <p>{errors['code']}</p>
-      }
+      {isValid ? (
+        <form onSubmit={handleSubmit}>
+          <p>Type your new password.</p>
+          <Field block>
+            <Input
+              block
+              label="New password"
+              name="newPassword"
+              type="password"
+              error={errors["newPassword"]}
+              required
+            />
+          </Field>
+          <Field block>
+            <Button block type="submit" color="accent" importance="primary">
+              Reset password
+            </Button>
+          </Field>
+        </form>
+      ) : (
+        <p>{errors["code"]}</p>
+      )}
     </Layout>
   )
 }
 
-export default withFirebase(PasswordResetPage)
+export default PasswordResetPage

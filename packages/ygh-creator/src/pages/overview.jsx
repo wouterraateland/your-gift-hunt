@@ -1,26 +1,25 @@
-import React, { useContext } from 'react'
-import { Link } from '@reach/router'
+import React, { useContext } from "react"
+import { Link } from "@reach/router"
 
-import AuthContext from 'contexts/Auth'
-import useQuery from 'hooks/useQuery'
-import useFirestoreListener from 'hooks/useFirestoreListener'
+import AuthContext from "contexts/Auth"
+import useQuery from "hooks/useQuery"
 
-import { Wrapper, Paper, Float, Input, Button } from 'your-gift-hunt/ui'
-import Layout from 'layouts/Overview'
-import HuntList from 'components/HuntList'
+import { Wrapper, Paper, Float, Input, Button } from "your-gift-hunt/ui"
+import Layout from "layouts/Overview"
+import HuntList from "components/HuntList"
 
 const OverviewPage = () => {
   const { userRef } = useContext(AuthContext)
-  const allHunts = useFirestoreListener({
-    collection: 'hunts',
-    where: ['creator', '==', userRef]
-  }, 'hunts')
+  const allHunts = []
+  // const allHunts = useFirestoreListener(
+  //   {
+  //     collection: "hunts",
+  //     where: ["creator", "==", userRef]
+  //   },
+  //   "hunts"
+  // )
 
-  const {
-    query,
-    setQuery,
-    filteredData: hunts,
-  } = useQuery(allHunts, ['meta.name'])
+  const { query, setQuery, filteredData: hunts } = useQuery(allHunts, ["name"])
 
   return (
     <Layout>
@@ -35,12 +34,7 @@ const OverviewPage = () => {
               />
             </Float.Left>
             <Float.Right>
-              <Button
-                importance="primary"
-                color="accent"
-                as={Link}
-                to="/new"
-              >
+              <Button importance="primary" color="accent" as={Link} to="/new">
                 New hunt
               </Button>
             </Float.Right>

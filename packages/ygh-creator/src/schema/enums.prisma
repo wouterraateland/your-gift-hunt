@@ -1,0 +1,19 @@
+enum ActionType {
+  USE
+  TARGET_OF_USE
+  INPUT
+
+  TRANSFORM
+  TRIGGER
+
+  UNLOCK
+  IDENTIFY_HELPER
+}
+
+enum FieldType {
+  STRING
+  NUMBER
+  BOOLEAN
+  TIMESTAMP
+  GEOPOINT
+}

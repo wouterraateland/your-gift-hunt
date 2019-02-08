@@ -1,9 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import { withFirebase } from 'react-redux-firebase'
-import { Link } from '@reach/router'
+import React, { useContext } from "react"
+import styled from "styled-components"
+import { Link } from "@reach/router"
 
-import Menu from 'components/Menu'
+import AuthContext from "contexts/Auth"
+
+import Menu from "components/Menu"
 
 const Avatar = styled.div`
   width: 3em;
@@ -11,19 +12,24 @@ const Avatar = styled.div`
 
   border-radius: 100%;
 
-  background: ${props => props.theme.color.text} url(${props => props.src}) no-repeat center / cover;
+  background: ${props => props.theme.color.text} url(${props => props.src})
+    no-repeat center / cover;
 `
 
-const Profile = ({ firebase }) => {
+const Profile = () => {
+  const { logout } = useContext(AuthContext)
+
   return (
     <Menu.Container>
       <Avatar src={null} />
       <Menu>
-        <Menu.Item as={Link} to="/profile">Profile</Menu.Item>
-        <Menu.Item onClick={() => firebase.logout()}>Log out</Menu.Item>
+        <Menu.Item as={Link} to="/profile">
+          Profile
+        </Menu.Item>
+        <Menu.Item onClick={logout}>Log out</Menu.Item>
       </Menu>
     </Menu.Container>
   )
 }
 
-export default withFirebase(Profile)
+export default Profile

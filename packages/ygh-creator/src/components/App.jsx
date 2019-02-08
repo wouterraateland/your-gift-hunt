@@ -1,18 +1,18 @@
-import React from 'react'
+import React from "react"
 
-import ErrorBoundary from 'react-error-boundary'
+import ErrorBoundary from "react-error-boundary"
+import { AuthProvider } from "contexts/Auth"
 
-import Theme from 'containers/Theme'
-import Auth from 'containers/Auth'
-import Router from 'containers/Router'
+import Theme from "containers/Theme"
+import Router from "containers/Router"
 
 const App = () => (
   <Theme>
-    <Auth>
+    <AuthProvider>
       <ErrorBoundary>
         <Router />
       </ErrorBoundary>
-    </Auth>
+    </AuthProvider>
   </Theme>
 )
 

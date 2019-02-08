@@ -1,15 +1,14 @@
-import React, { useState, useContext } from 'react'
-import { Link, navigate } from '@reach/router'
-import { withFirebase } from 'react-redux-firebase'
+import React, { useState, useContext } from "react"
+import { Link, navigate } from "@reach/router"
 
-import AuthContext from 'contexts/Auth'
+import AuthContext from "contexts/Auth"
 
-import { Field, Input, Button } from 'your-gift-hunt/ui'
-import Layout from 'layouts/Auth'
+import { Field, Input, Button } from "your-gift-hunt/ui"
+import Layout from "layouts/Auth"
 
-const SignupPage = ({ firebase }) => {
+const SignupPage = () => {
   const [errors, setErrors] = useState({})
-  const { reloadAuth } = useContext(AuthContext)
+  const { signupUser } = useContext(AuthContext)
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -25,28 +24,17 @@ const SignupPage = ({ firebase }) => {
       : `${first_name} ${last_name}`
 
     try {
-      await firebase.createUser(
-        { email, password },
-        {
-          first_name,
-          middle_name,
-          last_name,
-          full_name,
-          email,
-        }
-      )
-      await reloadAuth()
+      await signupUser(email, password, {
+        first_name,
+        middle_name,
+        last_name,
+        full_name,
+        email
+      })
 
-      navigate('/')
+      navigate("/")
     } catch (e) {
-      switch (e.code) {
-        case 'auth/email-already-in-use':
-        case 'auth/user-disabled':
-          setErrors({ email: e.message }); break;
-        case 'auth/weak-password':
-          setErrors({ password: e.message }); break;
-        default: console.log(e)
-      }
+      console.log(e)
     }
   }
 
@@ -64,12 +52,7 @@ const SignupPage = ({ firebase }) => {
           />
         </Field>
         <Field block>
-          <Input
-            block
-            label="Middle name"
-            name="middle_name"
-            type="text"
-          />
+          <Input block label="Middle name" name="middle_name" type="text" />
         </Field>
         <Field block>
           <Input
@@ -86,7 +69,7 @@ const SignupPage = ({ firebase }) => {
             label="Email"
             name="email"
             type="email"
-            error={errors['email']}
+            error={errors["email"]}
             required
           />
         </Field>
@@ -96,22 +79,21 @@ const SignupPage = ({ firebase }) => {
             label="Password"
             name="password"
             type="password"
-            error={errors['password']}
+            error={errors["password"]}
             required
           />
         </Field>
         <Field block>
-          <Button
-            block
-            type="submit"
-            color="accent"
-            importance="primary"
-          >Sign up</Button>
+          <Button block type="submit" color="accent" importance="primary">
+            Sign up
+          </Button>
         </Field>
       </form>
-      <p>Already have an account? <Link to="/auth/login">Log in</Link></p>
+      <p>
+        Already have an account? <Link to="/auth/login">Log in</Link>
+      </p>
     </Layout>
   )
 }
 
-export default withFirebase(SignupPage)
+export default SignupPage
