@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import { Link } from "@reach/router"
 
 import AuthContext from "contexts/Auth"
-import useQuery from "hooks/useQuery"
+import useSearchQuery from "hooks/useSearchQuery"
 
 import { Wrapper, Paper, Float, Input, Button } from "your-gift-hunt/ui"
 import Layout from "layouts/Overview"
@@ -19,7 +19,9 @@ const OverviewPage = () => {
   //   "hunts"
   // )
 
-  const { query, setQuery, filteredData: hunts } = useQuery(allHunts, ["name"])
+  const { query, setQuery, filteredData: hunts } = useSearchQuery(allHunts, [
+    "name"
+  ])
 
   return (
     <Layout>

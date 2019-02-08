@@ -1,9 +1,37 @@
 import { useEffect } from "react"
 import { useNetlifyIdentity } from "react-netlify-identity"
 import { navigate } from "@reach/router"
+import { useMutation } from "react-apollo-hooks"
+import { CREATE_USER } from "gql/mutations"
 
 const useAuth = url => {
   const identity = useNetlifyIdentity(url)
+  const createUser = useMutation(CREATE_USER)
+
+  useEffect(() => {
+    const user = identity.user
+    if (user && user.user_metadata && !user.user_metadata.prismaUserId) {
+      const { full_name } = user.user_metadata
+
+      createUser({
+        variables: {
+          netlifyUserId: user.id,
+          name: full_name,
+          slug: full_name.replace(/ /g, "-").toLowerCase()
+        }
+      })
+        .then(response =>
+          identity.updateUser({
+            data: {
+              prismaUserId: response.data.createUser.id
+            }
+          })
+        )
+        .catch(e => {
+          console.log(e)
+        })
+    }
+  }, [identity.user])
 
   useEffect(() => {
     const hash = window.location.hash.substring(1)

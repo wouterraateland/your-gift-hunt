@@ -33,11 +33,15 @@ const SignupPage = () => {
       })
 
       navigate("/")
-    } catch ({ json }) {
-      if (json.code === 400) {
-        setErrors({ email: json.msg })
+    } catch (error) {
+      if (error.json) {
+        if (error.json.code === 400) {
+          setErrors({ email: error.json.msg })
+        } else {
+          console.log(error.json)
+        }
       } else {
-        console.log(json)
+        console.log(error)
       }
     }
   }

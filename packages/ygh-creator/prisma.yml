@@ -1,8 +1,0 @@
-endpoint: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-datamodel:
-  - ./src/schema/enums.prisma
-  - ./src/schema/types.prisma
-
-generate:
-  - generator: javascript-client
-    output: ./src/prisma-client/

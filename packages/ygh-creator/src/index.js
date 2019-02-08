@@ -6,9 +6,23 @@ import ReactDOM from "react-dom"
 import * as serviceWorker from "./serviceWorker"
 
 import App from "components/App"
+
+import ApolloClient from "apollo-boost"
+import { ApolloProvider } from "react-apollo-hooks"
+
 const root = document.getElementById("app-root")
 
-const render = Component => ReactDOM.render(<Component />, root)
+const client = new ApolloClient({
+  uri: "https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev"
+})
+
+const render = Component =>
+  ReactDOM.render(
+    <ApolloProvider client={client}>
+      <Component />
+    </ApolloProvider>,
+    root
+  )
 
 render(App)
 
