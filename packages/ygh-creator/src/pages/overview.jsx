@@ -1,27 +1,30 @@
-import React, { useContext } from "react"
+import React, { Suspense, useContext, useState } from "react"
 import { Link } from "@reach/router"
+import { useQuery } from "react-apollo-hooks"
+import { CREATED_GAMES } from "gql/queries"
 
 import AuthContext from "contexts/Auth"
-import useSearchQuery from "hooks/useSearchQuery"
+import useDebounce from "hooks/useDebounce"
 
-import { Wrapper, Paper, Float, Input, Button } from "your-gift-hunt/ui"
+import { Wrapper, Paper, Float, Input, Button, Loader } from "your-gift-hunt/ui"
 import Layout from "layouts/Overview"
 import HuntList from "components/HuntList"
 
-const OverviewPage = () => {
-  useContext(AuthContext)
-  const allHunts = []
-  // const allHunts = useFirestoreListener(
-  //   {
-  //     collection: "hunts",
-  //     where: ["creator", "==", userRef]
-  //   },
-  //   "hunts"
-  // )
+const Overview = ({ searchQuery }) => {
+  const { user } = useContext(AuthContext)
+  const { data, error } = useQuery(CREATED_GAMES, {
+    variables: {
+      creatorId: user.user_metadata.prismaUserId,
+      slugPrefix: searchQuery.replace(/ /g, "-").toLowerCase()
+    }
+  })
 
-  const { query, setQuery, filteredData: hunts } = useSearchQuery(allHunts, [
-    "name"
-  ])
+  return <HuntList hunts={data.games} error={error} />
+}
+
+const OverviewPage = () => {
+  const [query, setQuery] = useState("")
+  const debouncedQuery = useDebounce(query, 500)
 
   return (
     <Layout>
@@ -41,7 +44,9 @@ const OverviewPage = () => {
               </Button>
             </Float.Right>
           </Paper.Section>
-          <HuntList hunts={hunts} />
+          <Suspense fallback={<Loader />}>
+            <Overview searchQuery={debouncedQuery} />
+          </Suspense>
         </Paper>
       </Wrapper>
     </Layout>
@@ -49,28 +54,3 @@ const OverviewPage = () => {
 }
 
 export default OverviewPage
-
-/*
-  const allHunts = [
-    {
-      id: 1,
-      name: 'Pioneer hunt',
-      slug: 'pioneer-hunt',
-      creator: {
-        id: 2,
-        name: "Wouter"
-      },
-      updatedAt: moment().subtract(2, 'days')
-    },
-    {
-      id: 4,
-      name: 'Another hunt',
-      slug: 'another-hunt',
-      creator: {
-        id: 3,
-        name: "Swaab"
-      },
-      updatedAt: moment().subtract(4, 'days')
-    }
-  ]
-*/

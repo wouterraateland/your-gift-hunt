@@ -1,4 +1,6 @@
 import React from "react"
+import { useQuery } from "react-apollo-hooks"
+import { GAME_BY_SLUG } from "gql/queries"
 
 import Layout from "layouts/Creator"
 
@@ -9,21 +11,23 @@ const creator = hunt => {
   return (
     <Layout hunt={hunt}>
       <EditorPane>
-        {hunt.triggers && hunt.triggers.length} triggers
-        <br />
-        {hunt.entities && hunt.entities.length} entities
-        <br />
-        {hunt.nodes && hunt.nodes.length} nodes
+        {hunt.instances && hunt.instances.length} instances
       </EditorPane>
       <DetailPane />
     </Layout>
   )
 }
 
-const CreatorPage = ({ slug }) => {
-  const hunts = []
+const CreatorPage = ({ creatorSlug, gameSlug }) => {
+  const { data, error } = useQuery(GAME_BY_SLUG, {
+    variables: { creatorSlug, gameSlug }
+  })
 
-  return hunts && hunts.length ? creator(hunts[0]) : null
+  return error
+    ? `Error: ${error.message}`
+    : data.games.length === 1
+    ? creator(data.games[0])
+    : null
 }
 
 export default CreatorPage

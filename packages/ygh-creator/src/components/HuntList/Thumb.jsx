@@ -27,7 +27,7 @@ const HuntMeta = styled.p`
   margin: 0;
 `
 
-const MoreActions = ({ projectId, slug }) => (
+const MoreActions = ({ game }) => (
   <Menu.Container>
     <Menu.Toggle />
     <Menu>
@@ -47,29 +47,33 @@ const StyledHuntThumbActions = styled.div`
   display: flex;
 `
 
-const HuntThumbActions = ({ projectId, slug }) => (
+const HuntThumbActions = ({ game }) => (
   <StyledHuntThumbActions>
-    <MoreActions projectId={projectId} slug={slug} />
-    <EditProject to={`/edit/${slug}`}>
+    <MoreActions game={game} />
+    <EditProject to={`/${game.creator.slug}/${game.slug}`}>
       <Edit size={1.5} />
     </EditProject>
   </StyledHuntThumbActions>
 )
 
-const HuntThumb = ({ id, meta, slug, creator }) => {
-  const { currentUser } = useContext(AuthContext)
+const HuntThumb = ({ game }) => {
+  const { user } = useContext(AuthContext)
+  const { name, updatedAt, creator } = game
 
   return (
     <StyledHuntThumb>
-      <HuntTitle>{meta.name}</HuntTitle>
+      <HuntTitle>{name}</HuntTitle>
       <HuntMeta>
         <strong>
-          Created by {creator.id === currentUser.uid ? "you" : creator.name}
+          Created by{" "}
+          {creator.id === user.user_metadata.prismaUserId
+            ? "you"
+            : creator.name}
         </strong>
         <br />
-        Last edited {moment(meta.updatedAt.toDate()).fromNow()}
+        Last edited {moment(updatedAt).fromNow()}
       </HuntMeta>
-      <HuntThumbActions projectId={id} slug={slug} />
+      <HuntThumbActions game={game} />
     </StyledHuntThumb>
   )
 }
