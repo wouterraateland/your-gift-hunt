@@ -1,19 +1,22 @@
-import React from "react"
+import React, { useState } from "react"
 import { useQuery } from "react-apollo-hooks"
 import { GAME_BY_SLUG } from "gql/queries"
 
 import Layout from "layouts/Creator"
 
-import EditorPane from "components/EditorPane"
-import DetailPane from "components/DetailPane"
+import EditorPane from "containers/EditorPane"
+import DetailPane from "containers/DetailPane"
 
 const creator = hunt => {
+  const [selectedInstance, selectInstance] = useState(null)
   return (
     <Layout hunt={hunt}>
-      <EditorPane>
-        {hunt.instances && hunt.instances.length} instances
-      </EditorPane>
-      <DetailPane />
+      <EditorPane hunt={hunt} onCardClick={selectInstance} />
+      <DetailPane
+        selectedInstance={hunt.instances.find(
+          ({ id }) => id === selectedInstance
+        )}
+      />
     </Layout>
   )
 }

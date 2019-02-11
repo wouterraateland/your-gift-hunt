@@ -5,6 +5,7 @@ import { Paper } from "your-gift-hunt/ui"
 
 const StyledDetailPane = styled(Paper)`
   width: 20em;
+  padding: 2em;
 `
 
 const DetailPane = ({ children }) => {

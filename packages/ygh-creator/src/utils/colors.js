@@ -1,11 +1,11 @@
 import * as polished from "polished"
-import { Identity } from "utils/functionals"
+import S from "sanctuary"
 
-export const darken = (amount, color) => {
-  const { hue } = polished.parseToHsl(color)
-  const direction = hue > 180 ? 1 : -1
-
-  return Identity(color)
-    .map(c => polished.adjustHue(360 + direction * amount * 100, c))
-    .fold(c => polished.darken(amount, c))
-}
+export const darken = amount => color =>
+  S.pipe([
+    polished.parseToHsl,
+    ({ hue }) => (hue > 180 ? 1 : -1),
+    direction => 360 + direction * amount * 100,
+    S.flip(polished.adjustHue)(color),
+    polished.darken(amount)
+  ])(color)

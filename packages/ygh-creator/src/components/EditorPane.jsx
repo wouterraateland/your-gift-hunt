@@ -2,6 +2,8 @@ import React from "react"
 import styled from "styled-components"
 
 const StyledEditorPane = styled.div`
+  padding: 1em;
+
   flex-grow: 1;
 
   background-color: #f5f6fb;

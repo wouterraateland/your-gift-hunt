@@ -1,51 +1,62 @@
-import { useEffect } from "react"
-import { useNetlifyIdentity } from "react-netlify-identity"
-import { navigate } from "@reach/router"
-import { useMutation } from "react-apollo-hooks"
-import { CREATE_USER } from "gql/mutations"
+// import { useEffect } from "react"
+// import { useNetlifyIdentity } from "react-netlify-identity"
+// import { navigate } from "@reach/router"
+// import { useMutation } from "react-apollo-hooks"
+// import { CREATE_USER } from "gql/mutations"
 
-const useAuth = url => {
-  const identity = useNetlifyIdentity(url)
-  const createUser = useMutation(CREATE_USER)
-
-  useEffect(() => {
-    const user = identity.user
-    if (user && user.user_metadata && !user.user_metadata.prismaUserId) {
-      const { full_name } = user.user_metadata
-
-      createUser({
-        variables: {
-          netlifyUserId: user.id,
-          name: full_name,
-          slug: full_name.replace(/ /g, "-").toLowerCase()
-        }
-      })
-        .then(response =>
-          identity.updateUser({
-            data: {
-              prismaUserId: response.data.createUser.id
-            }
-          })
-        )
-        .catch(e => {
-          console.log(e)
-        })
+const useAuth = () => {
+  return {
+    isLoggedIn: true,
+    user: {
+      user_metadata: {
+        prismaUserId: "cjrw8q9hl0048083350x6rril"
+      }
     }
-  }, [identity.user])
-
-  useEffect(() => {
-    const hash = window.location.hash.substring(1)
-    if (hash.slice(0, 15) === "recovery_token=") {
-      // we are in a recovery!
-      const token = hash.slice(15)
-      identity
-        .recoverAccount(token, true)
-        .then(() => navigate("/auth/password-reset"))
-        .catch(() => navigate("/auth/password-reset"))
-    }
-  }, [])
-
-  return identity
+  }
 }
+
+// const useAuth = url => {
+//   const identity = useNetlifyIdentity(url)
+//   const createUser = useMutation(CREATE_USER)
+//
+//   useEffect(() => {
+//     const user = identity.user
+//     if (user && user.user_metadata && !user.user_metadata.prismaUserId) {
+//       const { full_name } = user.user_metadata
+//
+//       createUser({
+//         variables: {
+//           netlifyUserId: user.id,
+//           name: full_name,
+//           slug: full_name.replace(/ /g, "-").toLowerCase()
+//         }
+//       })
+//         .then(response =>
+//           identity.updateUser({
+//             data: {
+//               prismaUserId: response.data.createUser.id
+//             }
+//           })
+//         )
+//         .catch(e => {
+//           console.log(e)
+//         })
+//     }
+//   }, [identity.user])
+//
+//   useEffect(() => {
+//     const hash = window.location.hash.substring(1)
+//     if (hash.slice(0, 15) === "recovery_token=") {
+//       // we are in a recovery!
+//       const token = hash.slice(15)
+//       identity
+//         .recoverAccount(token, true)
+//         .then(() => navigate("/auth/password-reset"))
+//         .catch(() => navigate("/auth/password-reset"))
+//     }
+//   }, [])
+//
+//   return identity
+// }
 
 export default useAuth

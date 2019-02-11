@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Sat Feb 09 2019 12:29:50 GMT+0100 (Midden-Europese standaardtijd)
+# timestamp: Mon Feb 11 2019 18:04:54 GMT+0100 (Midden-Europese standaardtijd)
 
 type Action implements Node {
   id: ID!
@@ -2269,6 +2269,7 @@ type Entity implements Node {
   isObject: Boolean!
   fields(where: EntityFieldWhereInput, orderBy: EntityFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityField!]
   states(where: EntityStateWhereInput, orderBy: EntityStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityState!]
+  featuredField: EntityField
   defaultState: EntityState
   instances(where: EntityInstanceWhereInput, orderBy: EntityInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstance!]
 }
@@ -2291,6 +2292,7 @@ input EntityCreateInput {
   isObject: Boolean
   fields: EntityFieldCreateManyWithoutEntityInput
   states: EntityStateCreateManyWithoutEntityInput
+  featuredField: EntityFieldCreateOneInput
   defaultState: EntityStateCreateOneInput
   instances: EntityInstanceCreateManyWithoutEntityInput
 }
@@ -2322,6 +2324,7 @@ input EntityCreateWithoutFieldsInput {
   isItem: Boolean
   isObject: Boolean
   states: EntityStateCreateManyWithoutEntityInput
+  featuredField: EntityFieldCreateOneInput
   defaultState: EntityStateCreateOneInput
   instances: EntityInstanceCreateManyWithoutEntityInput
 }
@@ -2334,6 +2337,7 @@ input EntityCreateWithoutInstancesInput {
   isObject: Boolean
   fields: EntityFieldCreateManyWithoutEntityInput
   states: EntityStateCreateManyWithoutEntityInput
+  featuredField: EntityFieldCreateOneInput
   defaultState: EntityStateCreateOneInput
 }
 
@@ -2344,6 +2348,7 @@ input EntityCreateWithoutStatesInput {
   isItem: Boolean
   isObject: Boolean
   fields: EntityFieldCreateManyWithoutEntityInput
+  featuredField: EntityFieldCreateOneInput
   defaultState: EntityStateCreateOneInput
   instances: EntityInstanceCreateManyWithoutEntityInput
 }
@@ -5270,6 +5275,7 @@ input EntityUpdateDataInput {
   isObject: Boolean
   fields: EntityFieldUpdateManyWithoutEntityInput
   states: EntityStateUpdateManyWithoutEntityInput
+  featuredField: EntityFieldUpdateOneInput
   defaultState: EntityStateUpdateOneInput
   instances: EntityInstanceUpdateManyWithoutEntityInput
 }
@@ -5282,6 +5288,7 @@ input EntityUpdateInput {
   isObject: Boolean
   fields: EntityFieldUpdateManyWithoutEntityInput
   states: EntityStateUpdateManyWithoutEntityInput
+  featuredField: EntityFieldUpdateOneInput
   defaultState: EntityStateUpdateOneInput
   instances: EntityInstanceUpdateManyWithoutEntityInput
 }
@@ -5329,6 +5336,7 @@ input EntityUpdateWithoutFieldsDataInput {
   isItem: Boolean
   isObject: Boolean
   states: EntityStateUpdateManyWithoutEntityInput
+  featuredField: EntityFieldUpdateOneInput
   defaultState: EntityStateUpdateOneInput
   instances: EntityInstanceUpdateManyWithoutEntityInput
 }
@@ -5341,6 +5349,7 @@ input EntityUpdateWithoutInstancesDataInput {
   isObject: Boolean
   fields: EntityFieldUpdateManyWithoutEntityInput
   states: EntityStateUpdateManyWithoutEntityInput
+  featuredField: EntityFieldUpdateOneInput
   defaultState: EntityStateUpdateOneInput
 }
 
@@ -5351,6 +5360,7 @@ input EntityUpdateWithoutStatesDataInput {
   isItem: Boolean
   isObject: Boolean
   fields: EntityFieldUpdateManyWithoutEntityInput
+  featuredField: EntityFieldUpdateOneInput
   defaultState: EntityStateUpdateOneInput
   instances: EntityInstanceUpdateManyWithoutEntityInput
 }
@@ -5522,6 +5532,7 @@ input EntityWhereInput {
   states_every: EntityStateWhereInput
   states_some: EntityStateWhereInput
   states_none: EntityStateWhereInput
+  featuredField: EntityFieldWhereInput
   defaultState: EntityStateWhereInput
   instances_every: EntityInstanceWhereInput
   instances_some: EntityInstanceWhereInput

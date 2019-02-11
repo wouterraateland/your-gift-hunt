@@ -8,6 +8,28 @@ export const GAME_BY_SLUG = gql`
       instances {
         id
         name
+        states {
+          id
+          state {
+            name
+          }
+        }
+        fields {
+          value
+          field {
+            id
+          }
+        }
+        entity {
+          name
+          description
+          isItem
+          isObject
+          isTrigger
+          featuredField {
+            id
+          }
+        }
       }
     }
   }
