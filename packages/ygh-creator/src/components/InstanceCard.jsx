@@ -62,14 +62,20 @@ const EntityPreview = styled.div`
   background: #ddd;
 `
 
-const Scaled = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%)
-    rotate(${props => (props.rotate ? 45 : 0)}deg)
-    scale(${props => props.scale});
-`
+const Scaled = ({ isRotated, scale, ...otherProps }) => (
+  <div
+    style={{
+      position: "absolute",
+      left: "50%",
+      top: "50%",
+      transform: `
+      translate(-50%, -50%)
+      rotate(${isRotated ? 45 : 0}deg)
+      scale(${scale})`
+    }}
+    {...otherProps}
+  />
+)
 
 const InstanceCard = ({ instance, onClick }) => {
   const { state, entity, fields } = instance
@@ -96,7 +102,7 @@ const InstanceCard = ({ instance, onClick }) => {
       )}
       {entity && (
         <EntityPreview>
-          <Scaled scale={scale} rotate={entity.isObject}>
+          <Scaled scale={scale} isRotated={entity.isObject}>
             {entity.isItem && <GenericItem {...instance} />}
             {entity.isObject && <GenericObject {...instance} />}
           </Scaled>

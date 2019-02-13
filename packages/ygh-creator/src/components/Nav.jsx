@@ -12,6 +12,8 @@ const StyledNav = styled.nav`
   padding: 1em 0;
   margin-bottom: -7em;
 
+  flex-shrink: 0;
+
   background-color: ${props => props.theme.color.accent};
 `
 

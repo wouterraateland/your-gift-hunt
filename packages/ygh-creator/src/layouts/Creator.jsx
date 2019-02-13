@@ -6,6 +6,7 @@ import Nav from "components/Nav"
 import SettingsButton from "components/SettingsButton"
 
 const Main = styled.main`
+  position: relative;
   display: flex;
   flex-direction: row;
 

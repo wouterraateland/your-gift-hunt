@@ -1,14 +1,15 @@
-import React from "react"
+import React, { forwardRef } from "react"
 import _ from "utils"
 
-import DetailPaneBackground from "components/DetailPane"
+import DetailPaneContainer from "components/DetailPane/Container"
+import InstancePreview from "components/DetailPane/InstancePreview"
 
-const DetailPane = ({ selectedInstance }) => {
+const DetailPane = forwardRef(({ open, selectedInstance }, ref) => {
   return (
-    <DetailPaneBackground>
-      <p>{selectedInstance && selectedInstance.name}</p>
-    </DetailPaneBackground>
+    <DetailPaneContainer open={open} ref={ref}>
+      {!!selectedInstance && <InstancePreview instance={selectedInstance} />}
+    </DetailPaneContainer>
   )
-}
+})
 
 export default DetailPane
