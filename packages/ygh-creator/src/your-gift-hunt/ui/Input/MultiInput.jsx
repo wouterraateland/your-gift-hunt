@@ -7,6 +7,8 @@ const MultiInputContainer = styled.span`
   display: inline-block;
   width: 15em;
   max-width: 100%;
+  margin-bottom: -0.25em;
+  margin-right: -0.25em;
 `
 
 const InputValue = styled.span`
@@ -61,7 +63,7 @@ const MultiInput = ({ value, onChange }) => {
 
   return (
     <MultiInputContainer>
-      {value.map((v, i) => (
+      {(value || []).map((v, i) => (
         <InputValue key={i}>
           {v} <Close onClick={() => removeValue(i)}>&times;</Close>
         </InputValue>

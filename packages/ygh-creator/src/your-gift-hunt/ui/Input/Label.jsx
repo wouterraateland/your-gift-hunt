@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components"
 import { opacify, invert, transparentize } from "polished"
 
+import { LabelText } from "./LabelText"
+
 const Label = styled.label`
   position: relative;
 
@@ -20,6 +22,14 @@ const Label = styled.label`
       width: 100%;
       display: block;
     `}
+
+  &:focus-within {
+    ${LabelText} {
+      left: 0;
+      top: -1.7em;
+      font-size: 0.7em;
+    }
+  }
 `
 
 Label.displayName = "Label"

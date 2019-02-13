@@ -32,5 +32,8 @@ const Input = styled.input`
 `
 
 Input.displayName = "Input"
+Input.defaultProps = {
+  value: ""
+}
 
 export default Input

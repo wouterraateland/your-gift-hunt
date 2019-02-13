@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
 import { Input, Field } from "your-gift-hunt/ui"
@@ -28,12 +28,27 @@ const getFieldValueMap = ({ fields }) =>
     {}
   )
 
+const toInputType = type => {
+  switch (type) {
+    case "STRING":
+      return "text"
+    case "NUMBER":
+      return "number"
+    default:
+      return type
+  }
+}
+
 const DetailBody = ({ instance }) => {
   const [fieldValues, setFieldValues] = useState(getFieldValueMap(instance))
   const { entity, fields } = instance
 
   const updateFieldValue = (id, value) =>
     setFieldValues(fieldValues => ({ ...fieldValues, [id]: value }))
+
+  useEffect(() => {
+    setFieldValues(getFieldValueMap(instance))
+  }, [instance])
 
   return (
     <DetailBodyContainer>
@@ -47,10 +62,11 @@ const DetailBody = ({ instance }) => {
           switch (type) {
             default:
               return (
-                <Field>
+                <Field key={`${instance.id}${id}`}>
                   <Input
-                    key={id}
                     {...field}
+                    type={toInputType(type)}
+                    showType
                     value={fieldValues[id]}
                     onChange={event => updateFieldValue(id, event.target.value)}
                   />
