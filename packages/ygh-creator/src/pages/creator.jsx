@@ -11,8 +11,10 @@ import DetailPane from "containers/DetailPane"
 
 const creator = hunt => {
   const detailPane = useRef(null)
-  const [selectedInstance, selectInstance] = useState(null)
-  const [detailsVisibility, setDetailsVisibility] = useState(false)
+  const [selectedInstance, selectInstance] = useState(
+    "cjrki9ro800cx0860vdtroo0b"
+  ) //null)
+  const [detailsVisibility, setDetailsVisibility] = useState(true) //false)
 
   useClickOutside({
     ref: detailPane,

@@ -18,6 +18,11 @@ export const GAME_BY_SLUG = gql`
           value
           field {
             id
+            label
+            info
+            type
+            isMulti
+            isSecret
           }
         }
         entity {
