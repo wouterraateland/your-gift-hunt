@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 import styled from "styled-components"
-import usePanning from "hooks/usePanning"
+import usePanZoom from "use-pan-and-zoom"
 
 const StyledEditorPane = styled.div`
   overflow: hidden;
@@ -36,28 +36,28 @@ const PanContainer = styled.div`
 
 const EditorPane = ({ children }) => {
   const container = useRef(null)
-  const { scale, translation, panHandlers } = usePanning({
-    zoom: true,
+  const {
+    transform,
+    pan: { x, y },
+    zoom,
+    panZoomHandlers
+  } = usePanZoom({
+    container,
+    enableZoom: true,
     minZoom: 0.1,
-    maxZoom: 1,
-    container
+    maxZoom: 1
   })
-  const { x, y } = translation
 
   return (
     <StyledEditorPane
       ref={container}
-      {...panHandlers}
+      {...panZoomHandlers}
       style={{
-        backgroundSize: `${2 * scale}em ${2 * scale}em`,
+        backgroundSize: `${2 * zoom}em ${2 * zoom}em`,
         backgroundPosition: `${x}px ${y}px`
       }}
     >
-      <PanContainer
-        style={{ transform: `translate3D(${x}px, ${y}px, 0) scale(${scale})` }}
-      >
-        {children}
-      </PanContainer>
+      <PanContainer style={{ transform }}>{children}</PanContainer>
     </StyledEditorPane>
   )
 }

@@ -9974,6 +9974,11 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
+use-pan-and-zoom@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/use-pan-and-zoom/-/use-pan-and-zoom-0.1.0.tgz#c082930d7c80d3ca4295ae2a8836da3713a4154c"
+  integrity sha512-Wgh5HEYJpL8oSLCFMqWjKmzmvXHesD80tLS57YJ0EYjnqJ5/4a0iQzkiqACFX6Of2WW6+YHDgZnbZ1NLE+h4PQ==
+
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
