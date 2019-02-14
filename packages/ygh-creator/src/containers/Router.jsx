@@ -21,7 +21,7 @@ const MainRouter = () => {
     <Router>
       <Overview path="/" />
       <Profile path="/profile" />
-      <Creator path="/:creatorSlug/:gameSlug" />
+      <Creator path="/:creatorSlug/:gameSlug/*" />
       <PasswordReset path="/auth/password-reset" />
       <Redirect from="/auth/login" to="/" noThrow />
       <NotFound default />

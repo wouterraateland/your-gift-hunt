@@ -86,6 +86,11 @@ export const GlobalStyles = createGlobalStyle`
   img, svg {
     max-width: 100%;
   }
+
+  #modal-root {
+    position: fixed;
+    left: 0; top: 0; right: 0; bottom: 0;
+  }
 `
 
 export default ({ children }) => (
