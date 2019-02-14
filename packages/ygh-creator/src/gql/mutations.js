@@ -9,3 +9,19 @@ export const CREATE_USER = gql`
     }
   }
 `
+
+export const UPDATE_ENTITY_INSTANCE_FIELD = gql`
+  mutation updateEntityInstanceField(
+    $entityInstanceFieldId: ID!
+    $value: String!
+  ) {
+    updateEntityInstanceField(
+      where: { id: $entityInstanceFieldId }
+      data: { value: $value }
+    ) {
+      field {
+        id
+      }
+    }
+  }
+`

@@ -15,6 +15,7 @@ export const GAME_BY_SLUG = gql`
           }
         }
         fields {
+          id
           value
           field {
             id
