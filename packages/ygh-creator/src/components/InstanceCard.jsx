@@ -6,7 +6,7 @@ import GenericObject, { getObjectComponent } from "your-gift-hunt/objects"
 import S from "sanctuary"
 
 const Card = styled.div`
-  position: relative;
+  position: absolute;
 
   display: flex;
   flex-direction: column;
@@ -15,7 +15,6 @@ const Card = styled.div`
   width: 12em;
   height: 6em;
   padding: 0.5em;
-  margin: 2em;
   border: 0.1em solid #0004;
 
   background: #fff;
@@ -77,7 +76,7 @@ const Scaled = ({ isRotated, scale, ...otherProps }) => (
   />
 )
 
-const InstanceCard = ({ instance, onClick }) => {
+const InstanceCard = ({ instance, position, onClick }) => {
   const { state, entity, fields } = instance
   const scale = entity.isObject
     ? S.pipe([
@@ -89,7 +88,7 @@ const InstanceCard = ({ instance, onClick }) => {
     : 1
 
   return (
-    <Card onClick={onClick}>
+    <Card onClick={onClick} style={position}>
       <InstanceName>{entity.name}</InstanceName>
       {state !== "default" && <InstanceState>{state}</InstanceState>}
       {entity.featuredField && (

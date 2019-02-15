@@ -10,8 +10,22 @@ export const GAME_BY_SLUG = gql`
         name
         states {
           id
+          unlockedBy {
+            from {
+              id
+            }
+            to {
+              id
+            }
+          }
           state {
+            id
             name
+            incomingTransitions {
+              from {
+                id
+              }
+            }
           }
         }
         fields {

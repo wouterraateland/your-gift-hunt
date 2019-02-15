@@ -104,25 +104,29 @@ const DetailBody = ({ instance }) => {
       <EntityName>{entity.name}</EntityName>
       <EntityDescription>{entity.description}</EntityDescription>
       <InstanceFieldsForm>
-        {fields.map(({ field: { id, type, ...field } }) => {
-          if (!id) {
-            return null
-          }
-          switch (type) {
-            default:
-              return (
-                <Field key={`${instance.id}${id}`}>
-                  <Input
-                    {...field}
-                    type={toInputType(type)}
-                    showType
-                    value={fieldValues[id].value}
-                    onChange={event => updateFieldValue(id, event.target.value)}
-                  />
-                </Field>
-              )
-          }
-        })}
+        {fields
+          .filter(({ field: { id } }) => fieldValues[id])
+          .map(({ field: { id, type, ...field } }) => {
+            if (!id) {
+              return null
+            }
+            switch (type) {
+              default:
+                return (
+                  <Field key={`${instance.id}${id}`}>
+                    <Input
+                      {...field}
+                      type={toInputType(type)}
+                      showType
+                      value={fieldValues[id].value}
+                      onChange={event =>
+                        updateFieldValue(id, event.target.value)
+                      }
+                    />
+                  </Field>
+                )
+            }
+          })}
       </InstanceFieldsForm>
     </DetailBodyContainer>
   )
