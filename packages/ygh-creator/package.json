@@ -5,20 +5,22 @@
   "dependencies": {
     "@reach/router": "^1.2.1",
     "apollo-boost": "^0.1.27",
+    "apollo-client": "^2.4.13",
     "gotrue-js": "^0.9.24",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "moment": "^2.23.0",
     "polished": "^2.3.1",
-    "react": "^16.7.0-alpha.2",
+    "prop-types": "15.6.2",
+    "react": "^16.8.2",
     "react-apollo": "^2.4.1",
     "react-apollo-hooks": "^0.3.1",
-    "react-dom": "^16.7.0-alpha.2",
+    "react-dom": "^16.8.2",
     "react-error-boundary": "^1.2.3",
     "react-netlify-identity": "^0.0.6",
-    "react-redux": "^6.0.0",
     "react-router": "^4.3.1",
     "react-scripts": "2.1.2",
+    "react-use-form-state": "^0.4.0",
     "sanctuary": "^0.15.0",
     "sanctuary-identity": "^1.0.0",
     "styled-components": "^4.1.3",
@@ -40,8 +42,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "redux-devtools-extension": "^2.13.7"
-  }
+  ]
 }

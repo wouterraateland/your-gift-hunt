@@ -20,7 +20,7 @@ const Button = styled.button`
 
     switch (props.color) {
       case "accent":
-        color = darken(0.1)(props.theme.color.accent)
+        color = darken(0.05)(props.theme.color.accent)
         break
       case "error":
         color = props.theme.color.error
@@ -44,7 +44,7 @@ const Button = styled.button`
           color: ${props.theme.color.emphasis};
 
           &:hover {
-            background-color: ${opacify(0.3, darken(0.1)(color))};
+            background-color: ${opacify(0.3, darken(0.05)(color))};
           }
         `
       : css`
@@ -54,7 +54,7 @@ const Button = styled.button`
           color: ${color};
 
           &:hover {
-            background-color: ${darken(0.1)("#fff")};
+            background-color: ${darken(0.05)("#fff")};
           }
         `
   }}

@@ -16,11 +16,15 @@ const Input = styled.input`
   &:active {
     outline: none;
 
-    & + ${LabelText} {
-      left: 0;
-      top: -1.7em;
-      font-size: 0.7em;
-    }
+    ${props =>
+      !props.isSelect &&
+      css`
+        & + ${LabelText} {
+          left: 0;
+          top: -1.7em;
+          font-size: 0.7em;
+        }
+      `}
   }
 
   ${props =>

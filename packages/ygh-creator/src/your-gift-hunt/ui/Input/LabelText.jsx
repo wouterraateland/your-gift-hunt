@@ -10,15 +10,33 @@ export const LabelText = styled.span`
   transition: left 0.2s ease-out, top 0.2s ease-out, font-size 0.2s ease-out;
 
   ${props =>
-    props.up
+    props.isSelect
       ? css`
-          left: 0;
-          top: -1.7em;
-          font-size: 0.7em;
+          left: 2em;
+          top: 0.7em;
+          & small {
+            display: block;
+          }
         `
       : css`
-          left: 0.7rem;
-          top: 0.7em;
+          & small {
+            &::before {
+              content: "(";
+            }
+            &::after {
+              content: ")";
+            }
+          }
+          ${props.up
+            ? css`
+                left: 0;
+                top: -1.7em;
+                font-size: 0.7em;
+              `
+            : css`
+                left: 0.7rem;
+                top: 0.7em;
+              `}
         `}
 `
 

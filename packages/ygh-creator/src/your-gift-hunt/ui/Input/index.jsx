@@ -8,42 +8,52 @@ import MultiInput from "./MultiInput"
 import ErrorMessage from "./ErrorMessage"
 import InputType from "./InputType"
 
-export default ({
+const Input = ({
   icon,
   label,
-  error,
+  info,
   isMulti,
   isSecret,
+  isSelect,
   showType,
   ...otherProps
 }) => (
+  <Label block={otherProps.block} isSelect={isSelect}>
+    {(icon || otherProps.type === "search") && (
+      <BeforeLabel type={icon || otherProps.type} />
+    )}
+    {isMulti ? (
+      <MultiInput {...otherProps} />
+    ) : (
+      <SingleInput {...otherProps} isSelect={isSelect} />
+    )}
+    <LabelText
+      isSelect={isSelect}
+      up={
+        otherProps.value !== undefined &&
+        otherProps.value !== null &&
+        (isMulti ? otherProps.value.length > 0 : otherProps.value !== "")
+      }
+    >
+      {label}
+      {info && <small>{info}</small>}
+      {showType && (
+        <InputType
+          type={otherProps.type}
+          isMulti={isMulti}
+          isSecret={isSecret}
+        />
+      )}
+    </LabelText>
+  </Label>
+)
+
+export default ({ error, ...otherProps }) => (
   <>
-    <Label block={otherProps.block}>
-      {(icon || otherProps.type === "search") && (
-        <BeforeLabel type={icon || otherProps.type} />
-      )}
-      {isMulti ? (
-        <MultiInput {...otherProps} />
-      ) : (
-        <SingleInput {...otherProps} />
-      )}
-      <LabelText
-        up={
-          otherProps.value !== undefined &&
-          otherProps.value !== null &&
-          (isMulti ? otherProps.value.length > 0 : otherProps.value !== "")
-        }
-      >
-        {label}
-        {showType && (
-          <InputType
-            type={otherProps.type}
-            isMulti={isMulti}
-            isSecret={isSecret}
-          />
-        )}
-      </LabelText>
-    </Label>
+    <Input
+      {...otherProps}
+      isSelect={["radio", "checkbox"].includes(otherProps.type)}
+    />
     {!!error && <ErrorMessage>{error}</ErrorMessage>}
   </>
 )

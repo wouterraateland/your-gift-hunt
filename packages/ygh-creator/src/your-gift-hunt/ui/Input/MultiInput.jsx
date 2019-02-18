@@ -54,8 +54,7 @@ const MultiInput = ({ value, onChange }) => {
   }
 
   function handleOnKeyPress(event) {
-    // ENTER
-    if (event.key === "Enter") {
+    if (["Tab", "Enter"].includes(event.key)) {
       setValue([...value, nextValue])
       setNextValue("")
     }
@@ -73,6 +72,7 @@ const MultiInput = ({ value, onChange }) => {
         value={nextValue}
         onChange={updateNextValue}
         onKeyPress={handleOnKeyPress}
+        isSelect={false}
       />
     </MultiInputContainer>
   )

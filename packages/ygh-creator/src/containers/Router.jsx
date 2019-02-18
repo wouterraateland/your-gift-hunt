@@ -9,6 +9,7 @@ import Signup from "pages/auth/signup"
 import Amnesia from "pages/auth/amnesia"
 
 import Overview from "pages/overview"
+import NewGame from "pages/new-game"
 import Creator from "pages/creator"
 import Profile from "pages/profile"
 
@@ -19,11 +20,13 @@ const MainRouter = () => {
 
   return isLoggedIn ? (
     <Router>
+      <Redirect from="/auth/login" to="/" noThrow />
+      <PasswordReset path="/auth/password-reset" />
+
       <Overview path="/" />
       <Profile path="/profile" />
+      <NewGame path="/new" />
       <Creator path="/:creatorSlug/:gameSlug/*" />
-      <PasswordReset path="/auth/password-reset" />
-      <Redirect from="/auth/login" to="/" noThrow />
       <NotFound default />
     </Router>
   ) : (

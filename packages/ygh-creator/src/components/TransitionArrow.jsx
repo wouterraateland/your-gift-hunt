@@ -5,6 +5,7 @@ export const TRANSFORM_TRANSITION = "transform"
 export const UNLOCK_TRANSITION = "unlock"
 
 const Arrow = styled.svg`
+  pointer-events: none;
   position: absolute;
 
   color: ${({ type }) => {
