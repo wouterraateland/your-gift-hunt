@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { opacify, invert, transparentize } from "polished"
+import { mix, opacify, invert, transparentize } from "polished"
 
 import { LabelText } from "./LabelText"
 
@@ -18,7 +18,14 @@ const Label = styled.label`
   line-height: 1;
   vertical-align: middle;
 
-  background-color: ${props => opacify(1, invert(props.theme.color.text))};
+  background-color: ${props =>
+    props.disabled
+      ? mix(
+          0.2,
+          props.theme.color.text,
+          opacify(1, invert(props.theme.color.text))
+        )
+      : opacify(1, invert(props.theme.color.text))};
 
   ${props =>
     props.block &&

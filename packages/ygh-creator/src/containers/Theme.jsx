@@ -69,7 +69,7 @@ export const GlobalStyles = createGlobalStyle`
     )}, transparent);
   }
 
-  a {
+  a, u {
     display: inline-block;
 
     text-decoration-color: ${transparentize(0.5, theme.color.text)};
@@ -78,7 +78,7 @@ export const GlobalStyles = createGlobalStyle`
 
     transition: color .2s ease-out;
 
-    &:hover {
+    a:hover {
       color: ${opacify(0.3, theme.color.text)};
     }
   }

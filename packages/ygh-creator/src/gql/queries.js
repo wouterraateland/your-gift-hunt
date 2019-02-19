@@ -56,7 +56,7 @@ export const GAME_BY_SLUG = gql`
 `
 
 export const CREATED_GAMES = gql`
-  query userByNetlifyUserId($creatorId: ID!, $slugPrefix: String) {
+  query createdGames($creatorId: ID!, $slugPrefix: String) {
     games(
       where: { creator: { id: $creatorId }, slug_starts_with: $slugPrefix }
     ) {
@@ -70,6 +70,14 @@ export const CREATED_GAMES = gql`
         name
         slug
       }
+    }
+  }
+`
+
+export const USER_SLUG = gql`
+  query userSlug($userId: ID!) {
+    user(where: { id: $userId }) {
+      slug
     }
   }
 `

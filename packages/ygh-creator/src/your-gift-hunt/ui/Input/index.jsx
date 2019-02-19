@@ -6,7 +6,6 @@ import BeforeLabel from "./BeforeLabel"
 import SingleInput from "./SingleInput"
 import MultiInput from "./MultiInput"
 import ErrorMessage from "./ErrorMessage"
-import InputType from "./InputType"
 
 const Input = ({
   icon,
@@ -18,7 +17,11 @@ const Input = ({
   showType,
   ...otherProps
 }) => (
-  <Label block={otherProps.block} isSelect={isSelect}>
+  <Label
+    block={otherProps.block}
+    isSelect={isSelect}
+    disabled={otherProps.disabled}
+  >
     {(icon || otherProps.type === "search") && (
       <BeforeLabel type={icon || otherProps.type} />
     )}
@@ -34,17 +37,13 @@ const Input = ({
         otherProps.value !== null &&
         (isMulti ? otherProps.value.length > 0 : otherProps.value !== "")
       }
-    >
-      {label}
-      {info && <small>{info}</small>}
-      {showType && (
-        <InputType
-          type={otherProps.type}
-          isMulti={isMulti}
-          isSecret={isSecret}
-        />
-      )}
-    </LabelText>
+      label={label}
+      info={info}
+      showType={showType}
+      type={otherProps.type}
+      isMulti={isMulti}
+      isSecret={isSecret}
+    />
   </Label>
 )
 

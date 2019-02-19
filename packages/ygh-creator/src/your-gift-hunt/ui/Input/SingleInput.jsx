@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components"
+import { transparentize } from "polished"
 
 import { LabelText } from "./LabelText"
 
@@ -7,10 +8,14 @@ const Input = styled.input`
   max-width: 100%;
   height: 1.5em;
   padding: 0;
+  margin: 0;
   border: none;
 
   background: transparent;
-  color: ${props => props.theme.color.text};
+  color: ${props =>
+    props.disabled
+      ? transparentize(0.2, props.theme.color.text)
+      : props.theme.color.text};
 
   &:focus,
   &:active {

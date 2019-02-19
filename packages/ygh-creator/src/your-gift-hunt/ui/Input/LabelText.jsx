@@ -1,8 +1,11 @@
-import { memo } from "react"
+import React from "react"
 import styled, { css } from "styled-components"
 import { transparentize } from "polished"
+import InputType from "./InputType"
 
 export const LabelText = styled.span`
+  pointer-events: none;
+
   position: absolute;
 
   color: ${props => transparentize(0.2, props.theme.color.text)};
@@ -14,12 +17,18 @@ export const LabelText = styled.span`
       ? css`
           left: 2em;
           top: 0.7em;
+          font-weight: bold;
+          color: ${props.theme.color.emphasis};
           & small {
             display: block;
+            font-weight: normal;
+            color: ${props.theme.color.text};
           }
         `
       : css`
           & small {
+            margin-left: 0.5em;
+            line-height: 1.2;
             &::before {
               content: "(";
             }
@@ -42,4 +51,20 @@ export const LabelText = styled.span`
 
 LabelText.displayName = "LabelText"
 
-export default memo(LabelText)
+export default ({
+  label,
+  info,
+  showType,
+  type,
+  isMulti,
+  isSecret,
+  ...otherProps
+}) => (
+  <LabelText {...otherProps}>
+    {label}
+    {info && <small>{info}</small>}
+    {showType && (
+      <InputType type={otherProps.type} isMulti={isMulti} isSecret={isSecret} />
+    )}
+  </LabelText>
+)
