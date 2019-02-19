@@ -74,10 +74,21 @@ export const CREATED_GAMES = gql`
   }
 `
 
-export const USER_SLUG = gql`
-  query userSlug($userId: ID!) {
+export const USER = gql`
+  query user($userId: ID!) {
     user(where: { id: $userId }) {
+      name
       slug
+    }
+  }
+`
+
+export const USER_COUNT_BY_SLUG = gql`
+  query userCountBySlug($slug: String!) {
+    usersConnection(where: { slug: $slug }) {
+      aggregate {
+        count
+      }
     }
   }
 `

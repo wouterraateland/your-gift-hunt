@@ -19,7 +19,7 @@ import {
 } from "your-gift-hunt/ui"
 import Present from "components/Present"
 
-import { USER_SLUG } from "gql/queries"
+import { USER } from "gql/queries"
 import { accessOptions, nameOptions } from "./data"
 
 const CornerDecoration = styled(Float.Right)`
@@ -29,12 +29,13 @@ const CornerDecoration = styled(Float.Right)`
     content: "";
     position: absolute;
     right: -1em;
-    top: -7em;
+    top: -1em;
 
     width: 20em;
     height: 11em;
-    background: #0001;
-    transform: skewY(30deg);
+    border-style: solid;
+    border-width: 5.5em 10em;
+    border-color: #0001 #0001 transparent transparent;
   }
 
   & svg {
@@ -64,7 +65,7 @@ const Slash = styled.span`
 
 const NewGamePage = () => {
   const { user } = useContext(AuthContext)
-  const { data, error } = useQuery(USER_SLUG, {
+  const { data, error } = useQuery(USER, {
     variables: {
       userId: user.user_metadata.prismaUserId
     }

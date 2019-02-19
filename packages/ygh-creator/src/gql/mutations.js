@@ -10,6 +10,14 @@ export const CREATE_USER = gql`
   }
 `
 
+export const UPDATE_USER_SLUG = gql`
+  mutation updateUserSlug($userId: ID!, $slug: String!) {
+    updateUser(where: { id: $userId }, data: { slug: $slug }) {
+      slug
+    }
+  }
+`
+
 export const UPDATE_ENTITY_INSTANCE_FIELD = gql`
   mutation updateEntityInstanceField(
     $entityInstanceFieldId: ID!

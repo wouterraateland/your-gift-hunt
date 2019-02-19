@@ -15,7 +15,7 @@ const theme = {
   borderRadius: 0,
   columns: {
     count: 12,
-    gap: "2rem"
+    gap: ".5em"
   }
 }
 
