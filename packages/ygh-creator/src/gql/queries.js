@@ -5,6 +5,14 @@ export const GAME_BY_SLUG = gql`
     games(where: { creator: { slug: $creatorSlug }, slug: $gameSlug }) {
       id
       name
+      description
+      privacy
+      accessType
+      accessCode
+      creator {
+        name
+        slug
+      }
       instances {
         id
         name

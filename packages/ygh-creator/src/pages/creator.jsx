@@ -12,10 +12,8 @@ import SettingsModal from "components/modals/Settings"
 
 const Creator = ({ hunt }) => {
   const detailPane = useRef(null)
-  const [selectedInstance, selectInstance] = useState(
-    "cjrki9ro800cx0860vdtroo0b"
-  ) //null)
-  const [detailsVisibility, setDetailsVisibility] = useState(true) //false)
+  const [selectedInstance, selectInstance] = useState(null)
+  const [detailsVisibility, setDetailsVisibility] = useState(false)
 
   useClickOutside({
     ref: detailPane,

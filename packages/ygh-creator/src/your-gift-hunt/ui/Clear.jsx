@@ -1,19 +1,23 @@
 import styled from "styled-components"
 
+export const Both = styled.div`
+  clear: both;
+`
 export const Left = styled.div`
-  float: left;
+  clear: left;
 `
 export const None = styled.div`
-  float: none;
+  clear: none;
 `
 export const Right = styled.div`
-  float: right;
+  clear: right;
 `
 export const Inherit = styled.div`
-  float: inherit;
+  clear: inherit;
 `
 
 export default {
+  Both,
   Left,
   None,
   Right,

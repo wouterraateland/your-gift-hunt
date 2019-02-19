@@ -62,11 +62,9 @@ export const GlobalStyles = createGlobalStyle`
 
   hr {
     clear: both;
-    height: .1em;
-    background: linear-gradient(90deg, transparent, ${transparentize(
-      0.5,
-      theme.color.text
-    )}, transparent);
+    height: .2em;
+    background: ${transparentize(0.5, theme.color.text)};
+    border: none;
   }
 
   a, u {

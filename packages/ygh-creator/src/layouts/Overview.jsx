@@ -9,9 +9,9 @@ const Main = styled.main`
   flex-grow: 1;
 `
 
-const OverviewLayout = ({ children }) => (
+const OverviewLayout = ({ title, children }) => (
   <PageContainer>
-    <Nav />
+    <Nav title={title} />
     <Main>{children}</Main>
     <Footer />
   </PageContainer>

@@ -16,6 +16,8 @@ import {
   Input,
   Button
 } from "your-gift-hunt/ui"
+import BackButton from "components/BackButton"
+import StatusMessage from "components/StatusMessage"
 
 import { USER, USER_COUNT_BY_SLUG } from "gql/queries"
 import { UPDATE_USER_SLUG } from "gql/mutations"
@@ -25,6 +27,7 @@ const Form = styled.form`
 `
 
 const NewGamePage = () => {
+  const [state, setState] = useState(null)
   const { user, updateUser } = useContext(AuthContext)
   const { data, error } = useQuery(USER, {
     variables: {
@@ -55,16 +58,18 @@ const NewGamePage = () => {
       }
     })
 
-    setUsernameExistence(res.data.usersConnection.aggregate.count !== 0)
+    return res.data.usersConnection.aggregate.count !== 0
   }
 
   useEffect(() => {
     setUsernameExistence(false)
-    checkUsernameExistence(formState.values.username)
+    checkUsernameExistence(formState.values.username).then(setUsernameExistence)
   }, [formState.values.username])
 
   async function onSubmit(event) {
     event.preventDefault()
+
+    setState("loading")
 
     const { first_name, middle_name, last_name, username } = formState.values
 
@@ -86,17 +91,20 @@ const NewGamePage = () => {
           slug: username
         }
       })
-    } catch (e) {
-      console.log(e)
+      setState("success")
+    } catch (error) {
+      console.log(error)
+      setState("error")
     }
   }
 
   return (
-    <Layout>
+    <Layout title="Profile">
       <Wrapper size="large">
         <Paper>
           <Paper.Section>
-            <h1>Edit profile</h1>
+            <BackButton />
+            <h1>Edit your profile</h1>
             <Form onSubmit={onSubmit}>
               <Field block>
                 <Row>
@@ -131,9 +139,15 @@ const NewGamePage = () => {
               </small>
               <hr />
               <Field block>
-                <Button block type="submit" importance="primary" color="accent">
+                <Button
+                  type="submit"
+                  importance="primary"
+                  color="accent"
+                  disabled={state === "loading"}
+                >
                   Update profile
-                </Button>
+                </Button>{" "}
+                <StatusMessage status={state} />
               </Field>
             </Form>
           </Paper.Section>

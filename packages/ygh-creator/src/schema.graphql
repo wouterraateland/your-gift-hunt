@@ -1,5 +1,10 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Mon Feb 11 2019 18:04:54 GMT+0100 (Midden-Europese standaardtijd)
+# timestamp: Tue Feb 19 2019 16:06:46 GMT+0100 (Midden-Europese standaardtijd)
+
+enum AccessType {
+  NONE
+  CODE
+}
 
 type Action implements Node {
   id: ID!
@@ -5558,6 +5563,9 @@ type Game implements Node {
   name: String!
   slug: String!
   description: String
+  privacy: PrivacyType!
+  accessType: AccessType!
+  accessCode: String
   creator: User
   instances(where: EntityInstanceWhereInput, orderBy: EntityInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstance!]
   plays(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GamePlay!]
@@ -5577,6 +5585,9 @@ input GameCreateInput {
   name: String!
   slug: String!
   description: String
+  privacy: PrivacyType!
+  accessType: AccessType!
+  accessCode: String
   creator: UserCreateOneWithoutGamesInput
   instances: EntityInstanceCreateManyWithoutGameInput
   plays: GamePlayCreateManyWithoutGameInput
@@ -5601,6 +5612,9 @@ input GameCreateWithoutCreatorInput {
   name: String!
   slug: String!
   description: String
+  privacy: PrivacyType!
+  accessType: AccessType!
+  accessCode: String
   instances: EntityInstanceCreateManyWithoutGameInput
   plays: GamePlayCreateManyWithoutGameInput
 }
@@ -5609,6 +5623,9 @@ input GameCreateWithoutInstancesInput {
   name: String!
   slug: String!
   description: String
+  privacy: PrivacyType!
+  accessType: AccessType!
+  accessCode: String
   creator: UserCreateOneWithoutGamesInput
   plays: GamePlayCreateManyWithoutGameInput
 }
@@ -5617,6 +5634,9 @@ input GameCreateWithoutPlaysInput {
   name: String!
   slug: String!
   description: String
+  privacy: PrivacyType!
+  accessType: AccessType!
+  accessCode: String
   creator: UserCreateOneWithoutGamesInput
   instances: EntityInstanceCreateManyWithoutGameInput
 }
@@ -5643,6 +5663,12 @@ enum GameOrderByInput {
   slug_DESC
   description_ASC
   description_DESC
+  privacy_ASC
+  privacy_DESC
+  accessType_ASC
+  accessType_DESC
+  accessCode_ASC
+  accessCode_DESC
 }
 
 type GamePlay implements Node {
@@ -5952,6 +5978,9 @@ type GamePreviousValues {
   name: String!
   slug: String!
   description: String
+  privacy: PrivacyType!
+  accessType: AccessType!
+  accessCode: String
 }
 
 input GameScalarWhereInput {
@@ -6167,6 +6196,66 @@ input GameScalarWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  privacy: PrivacyType
+
+  """All values that are not equal to given value."""
+  privacy_not: PrivacyType
+
+  """All values that are contained in given list."""
+  privacy_in: [PrivacyType!]
+
+  """All values that are not contained in given list."""
+  privacy_not_in: [PrivacyType!]
+  accessType: AccessType
+
+  """All values that are not equal to given value."""
+  accessType_not: AccessType
+
+  """All values that are contained in given list."""
+  accessType_in: [AccessType!]
+
+  """All values that are not contained in given list."""
+  accessType_not_in: [AccessType!]
+  accessCode: String
+
+  """All values that are not equal to given value."""
+  accessCode_not: String
+
+  """All values that are contained in given list."""
+  accessCode_in: [String!]
+
+  """All values that are not contained in given list."""
+  accessCode_not_in: [String!]
+
+  """All values less than the given value."""
+  accessCode_lt: String
+
+  """All values less than or equal the given value."""
+  accessCode_lte: String
+
+  """All values greater than the given value."""
+  accessCode_gt: String
+
+  """All values greater than or equal the given value."""
+  accessCode_gte: String
+
+  """All values containing the given string."""
+  accessCode_contains: String
+
+  """All values not containing the given string."""
+  accessCode_not_contains: String
+
+  """All values starting with the given string."""
+  accessCode_starts_with: String
+
+  """All values not starting with the given string."""
+  accessCode_not_starts_with: String
+
+  """All values ending with the given string."""
+  accessCode_ends_with: String
+
+  """All values not ending with the given string."""
+  accessCode_not_ends_with: String
 }
 
 type GameSubscriptionPayload {
@@ -6212,6 +6301,9 @@ input GameUpdateInput {
   name: String
   slug: String
   description: String
+  privacy: PrivacyType
+  accessType: AccessType
+  accessCode: String
   creator: UserUpdateOneWithoutGamesInput
   instances: EntityInstanceUpdateManyWithoutGameInput
   plays: GamePlayUpdateManyWithoutGameInput
@@ -6221,12 +6313,18 @@ input GameUpdateManyDataInput {
   name: String
   slug: String
   description: String
+  privacy: PrivacyType
+  accessType: AccessType
+  accessCode: String
 }
 
 input GameUpdateManyMutationInput {
   name: String
   slug: String
   description: String
+  privacy: PrivacyType
+  accessType: AccessType
+  accessCode: String
 }
 
 input GameUpdateManyWithoutCreatorInput {
@@ -6263,6 +6361,9 @@ input GameUpdateWithoutCreatorDataInput {
   name: String
   slug: String
   description: String
+  privacy: PrivacyType
+  accessType: AccessType
+  accessCode: String
   instances: EntityInstanceUpdateManyWithoutGameInput
   plays: GamePlayUpdateManyWithoutGameInput
 }
@@ -6271,6 +6372,9 @@ input GameUpdateWithoutInstancesDataInput {
   name: String
   slug: String
   description: String
+  privacy: PrivacyType
+  accessType: AccessType
+  accessCode: String
   creator: UserUpdateOneWithoutGamesInput
   plays: GamePlayUpdateManyWithoutGameInput
 }
@@ -6279,6 +6383,9 @@ input GameUpdateWithoutPlaysDataInput {
   name: String
   slug: String
   description: String
+  privacy: PrivacyType
+  accessType: AccessType
+  accessCode: String
   creator: UserUpdateOneWithoutGamesInput
   instances: EntityInstanceUpdateManyWithoutGameInput
 }
@@ -6517,6 +6624,66 @@ input GameWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  privacy: PrivacyType
+
+  """All values that are not equal to given value."""
+  privacy_not: PrivacyType
+
+  """All values that are contained in given list."""
+  privacy_in: [PrivacyType!]
+
+  """All values that are not contained in given list."""
+  privacy_not_in: [PrivacyType!]
+  accessType: AccessType
+
+  """All values that are not equal to given value."""
+  accessType_not: AccessType
+
+  """All values that are contained in given list."""
+  accessType_in: [AccessType!]
+
+  """All values that are not contained in given list."""
+  accessType_not_in: [AccessType!]
+  accessCode: String
+
+  """All values that are not equal to given value."""
+  accessCode_not: String
+
+  """All values that are contained in given list."""
+  accessCode_in: [String!]
+
+  """All values that are not contained in given list."""
+  accessCode_not_in: [String!]
+
+  """All values less than the given value."""
+  accessCode_lt: String
+
+  """All values less than or equal the given value."""
+  accessCode_lte: String
+
+  """All values greater than the given value."""
+  accessCode_gt: String
+
+  """All values greater than or equal the given value."""
+  accessCode_gte: String
+
+  """All values containing the given string."""
+  accessCode_contains: String
+
+  """All values not containing the given string."""
+  accessCode_not_contains: String
+
+  """All values starting with the given string."""
+  accessCode_starts_with: String
+
+  """All values not starting with the given string."""
+  accessCode_not_starts_with: String
+
+  """All values ending with the given string."""
+  accessCode_ends_with: String
+
+  """All values not ending with the given string."""
+  accessCode_not_ends_with: String
   creator: UserWhereInput
   instances_every: EntityInstanceWhereInput
   instances_some: EntityInstanceWhereInput
@@ -6665,6 +6832,11 @@ type PageInfo {
 
   """When paginating forwards, the cursor to continue."""
   endCursor: String
+}
+
+enum PrivacyType {
+  PRIVATE
+  PUBLIC
 }
 
 type Query {

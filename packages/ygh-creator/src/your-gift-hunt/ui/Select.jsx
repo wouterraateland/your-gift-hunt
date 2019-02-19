@@ -23,12 +23,16 @@ const SelectWithLabel = ({
   showType,
   isSecret,
   onChange,
+  value,
+  options,
   ...otherProps
 }) => (
   <Label block={otherProps.block}>
     <StyledSelect
       {...otherProps}
-      onChange={value => onChange({ target: { value } })}
+      options={options}
+      value={options.find(option => option.value === value)}
+      onChange={({ value }) => onChange({ target: { value } })}
     />
     <LabelText
       up

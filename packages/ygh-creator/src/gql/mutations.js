@@ -33,3 +33,11 @@ export const UPDATE_ENTITY_INSTANCE_FIELD = gql`
     }
   }
 `
+
+export const UPDATE_GAME = gql`
+  mutation updateGame($gameId: ID!, $values: GameUpdateInput!) {
+    updateGame(where: { id: $gameId }, data: $values) {
+      id
+    }
+  }
+`

@@ -1,3 +1,4 @@
+import React from "react"
 import styled, { css } from "styled-components"
 import { transparentize } from "polished"
 
@@ -45,4 +46,6 @@ Input.defaultProps = {
   value: ""
 }
 
-export default Input
+export default ({ value, ...otherProps }) => (
+  <Input value={value === null ? "" : value} {...otherProps} />
+)

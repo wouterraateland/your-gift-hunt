@@ -64,7 +64,7 @@ export default ({
     {label}
     {info && <small>{info}</small>}
     {showType && (
-      <InputType type={otherProps.type} isMulti={isMulti} isSecret={isSecret} />
+      <InputType type={type} isMulti={isMulti} isSecret={isSecret} />
     )}
   </LabelText>
 )

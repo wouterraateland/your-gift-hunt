@@ -1,6 +1,16 @@
+export const ACCESS_TYPES = {
+  CODE: "CODE",
+  NONE: "NONE"
+}
+
+export const PRIVACY = {
+  PUBLIC: "PUBLIC",
+  PRIVATE: "PRIVATE"
+}
+
 export const accessOptions = [
-  { label: "Access token", value: "access_token" },
-  { label: "None", value: "none" }
+  { label: "Access code", value: ACCESS_TYPES.CODE },
+  { label: "None", value: ACCESS_TYPES.NONE }
 ]
 
 export const nameOptions = {

@@ -27,7 +27,7 @@ const OverviewPage = () => {
   const debouncedQuery = useDebounce(query, 500)
 
   return (
-    <Layout>
+    <Layout title="Creator">
       <Wrapper>
         <Paper>
           <Paper.Section>
@@ -36,6 +36,7 @@ const OverviewPage = () => {
                 type="search"
                 value={query}
                 onChange={event => setQuery(event.target.value)}
+                placeholder="Search hunts"
               />
             </Float.Left>
             <Float.Right>
