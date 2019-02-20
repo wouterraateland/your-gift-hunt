@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react"
-import { useQuery } from "react-apollo-hooks"
-import { GAME_BY_SLUG } from "gql/queries"
+
+import { GameProvider } from "contexts/Game"
 
 import useClickOutside from "hooks/useClickOutside"
 
@@ -10,9 +10,9 @@ import EditorPane from "containers/EditorPane"
 import DetailPane from "containers/DetailPane"
 import SettingsModal from "components/modals/Settings"
 
-const Creator = ({ hunt }) => {
+const Creator = () => {
   const detailPane = useRef(null)
-  const [selectedInstance, selectInstance] = useState(null)
+  const [selectedNodeId, selectNode] = useState(null)
   const [detailsVisibility, setDetailsVisibility] = useState(false)
 
   useClickOutside({
@@ -21,40 +21,27 @@ const Creator = ({ hunt }) => {
   })
 
   return (
-    <Layout hunt={hunt}>
+    <Layout>
       <EditorPane
-        hunt={hunt}
-        onCardClick={id => {
-          selectInstance(id)
+        onNodeClick={id => {
+          selectNode(id)
           setDetailsVisibility(true)
         }}
       />
       <DetailPane
         ref={detailPane}
         open={detailsVisibility}
-        selectedInstance={hunt.instances.find(
-          ({ id }) => id === selectedInstance
-        )}
+        nodeId={selectedNodeId}
       />
     </Layout>
   )
 }
 
-const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => {
-  const { data, error } = useQuery(GAME_BY_SLUG, {
-    variables: { creatorSlug, gameSlug }
-  })
-
-  if (error) {
-    throw error
-  }
-
-  return data.games.length === 1 ? (
-    <>
-      <Creator hunt={data.games[0]} />
-      {otherProps["*"] === "settings" && <SettingsModal game={data.games[0]} />}
-    </>
-  ) : null
-}
+const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => (
+  <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
+    <Creator />
+    {otherProps["*"] === "settings" && <SettingsModal />}
+  </GameProvider>
+)
 
 export default CreatorPage

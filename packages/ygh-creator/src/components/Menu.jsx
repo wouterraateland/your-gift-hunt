@@ -2,6 +2,8 @@ import styled from "styled-components"
 
 export const MenuContainer = styled.div`
   position: relative;
+  display: inline-block;
+  vertical-align: middle;
 `
 
 export const MenuItem = styled.div`

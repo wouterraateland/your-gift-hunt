@@ -1,4 +1,4 @@
-import React from "react"
+import React, { forwardRef } from "react"
 import styled, { css } from "styled-components"
 import { transparentize } from "polished"
 
@@ -46,6 +46,6 @@ Input.defaultProps = {
   value: ""
 }
 
-export default ({ value, ...otherProps }) => (
-  <Input value={value === null ? "" : value} {...otherProps} />
-)
+export default forwardRef(({ value, ...otherProps }, ref) => (
+  <Input ref={ref} value={value === null ? "" : value} {...otherProps} />
+))

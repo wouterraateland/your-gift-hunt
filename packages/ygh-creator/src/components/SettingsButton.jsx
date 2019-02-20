@@ -19,8 +19,8 @@ const SettingsButton = styled(Link)`
   }
 `
 
-export default props => (
-  <SettingsButton {...props} to="settings">
+export default () => (
+  <SettingsButton to="settings">
     <Cog size={0.8} />
   </SettingsButton>
 )

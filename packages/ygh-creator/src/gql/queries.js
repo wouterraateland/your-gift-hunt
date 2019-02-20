@@ -55,6 +55,9 @@ export const GAME_BY_SLUG = gql`
           isItem
           isObject
           isTrigger
+          defaultState {
+            id
+          }
           featuredField {
             id
           }

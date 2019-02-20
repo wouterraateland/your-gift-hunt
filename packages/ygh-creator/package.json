@@ -9,7 +9,7 @@
     "gotrue-js": "^0.9.24",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
-    "moment": "^2.23.0",
+    "moment": "^2.24.0",
     "polished": "^2.3.1",
     "prop-types": "15.6.2",
     "randomstring": "^1.1.5",

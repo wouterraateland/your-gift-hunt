@@ -11,10 +11,6 @@ export const getFieldValue = fieldName => instance =>
     S.map(f => f.value),
     S.map(JSON.parse)
   ])(instance)
-// S.Maybe(instance)
-//   .map(i => i.fieldValues.find(({ label }) => label === fieldName))
-//   .map(f => f.value)
-//   .fold(JSON.parse)
 
 // getInputValue :: String => EntityInstance => Maybe any
 export const getInputValue = fieldName => instance =>
@@ -24,7 +20,3 @@ export const getInputValue = fieldName => instance =>
     S.map(f => f.value),
     S.map(JSON.parse)
   ])(instance)
-// Maybe(instance)
-//   .map(i => i.inputValues.find(({ key }) => key === fieldName))
-//   .map(f => f.value)
-//   .fold(JSON.parse)

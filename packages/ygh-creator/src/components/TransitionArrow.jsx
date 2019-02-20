@@ -23,11 +23,11 @@ const Arrow = styled.svg`
 const TransitionArrow = ({ x1, y1, x2, y2, type }) => (
   <Arrow
     viewBox={`
-      ${Math.min(x1, x2) - 10} ${Math.min(y1, y2) - 32}
-      ${Math.abs(x2 - x1) + 20} ${Math.abs(y2 - y1) + 64}`}
+      ${Math.min(x1, x2) - 32} ${Math.min(y1, y2) - 32}
+      ${Math.abs(x2 - x1) + 64} ${Math.abs(y2 - y1) + 64}`}
     height={Math.abs(y2 - y1) + 64}
     style={{
-      left: `${Math.min(x1, x2) - 10}px`,
+      left: `${Math.min(x1, x2) - 32}px`,
       top: `${Math.min(y1, y2) - 32}px`
     }}
     type={type}
@@ -47,7 +47,12 @@ const TransitionArrow = ({ x1, y1, x2, y2, type }) => (
       </marker>
     </defs>
     <path
-      d={`M ${x1} ${y1} C ${x1} ${y1 + 64}, ${x2} ${y2 - 64}, ${x2} ${y2}`}
+      d={
+        x1 === x2 && y1 > y2
+          ? `M ${x1} ${y1} C ${x1 + 64} ${y1 + 64}, ${x2 - 64} ${y2 -
+              64}, ${x2} ${y2}`
+          : `M ${x1} ${y1} C ${x1} ${y1 + 64}, ${x2} ${y2 - 64}, ${x2} ${y2}`
+      }
       stroke="currentColor"
       strokeWidth={2}
       fill="none"

@@ -76,8 +76,9 @@ const Scaled = ({ isRotated, scale, ...otherProps }) => (
   />
 )
 
-const InstanceCard = ({ instance, position, onClick }) => {
-  const { state, entity, fields } = instance
+const InstanceCard = ({ instance, state, position, onClick }) => {
+  const { entity, fields } = instance
+
   const scale = entity.isObject
     ? S.pipe([
         S.map(({ width, height }) => 2.5 / Math.max(width, height)),
@@ -102,8 +103,8 @@ const InstanceCard = ({ instance, position, onClick }) => {
       {entity && (
         <EntityPreview>
           <Scaled scale={scale} isRotated={entity.isObject}>
-            {entity.isItem && <GenericItem {...instance} />}
-            {entity.isObject && <GenericObject {...instance} />}
+            {entity.isItem && <GenericItem {...instance} state={state} />}
+            {entity.isObject && <GenericObject {...instance} state={state} />}
           </Scaled>
         </EntityPreview>
       )}

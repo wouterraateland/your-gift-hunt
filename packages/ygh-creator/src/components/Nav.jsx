@@ -8,6 +8,7 @@ import { Logo } from "your-gift-hunt/icons"
 import Profile from "components/Profile"
 
 const StyledNav = styled.nav`
+  position: relative;
   height: 12em;
   padding: 1em 0;
   margin-bottom: -7em;
@@ -31,10 +32,25 @@ const Title = styled.h1`
 
   font-weight: bold;
 `
+const Center = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 2.5em;
 
-const NavItem = styled(Link)``
+  transform: translate(-50%, -50%);
+`
 
-const Nav = ({ title, items = [] }) => {
+const NavItem = styled(Link)`
+  cursor: pointer;
+
+  display: inline-block;
+  margin-right: 1em;
+
+  vertical-align: middle;
+  font-weight: bold;
+`
+
+const Nav = ({ title, children, items = [] }) => {
   return (
     <StyledNav>
       <Wrapper>
@@ -44,9 +60,12 @@ const Nav = ({ title, items = [] }) => {
           </Link>
           <Title>{title}</Title>
         </Float.Left>
+        <Center>{children}</Center>
         <Float.Right>
-          {items.map((item, i) => (
-            <NavItem key={i} {...item} />
+          {items.map(({ label, ...item }, i) => (
+            <NavItem key={i} {...item}>
+              {label}
+            </NavItem>
           ))}
           <Profile />
         </Float.Right>
