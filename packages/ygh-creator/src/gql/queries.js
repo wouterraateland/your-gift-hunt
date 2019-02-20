@@ -5,6 +5,7 @@ export const GAME_BY_SLUG = gql`
     games(where: { creator: { slug: $creatorSlug }, slug: $gameSlug }) {
       id
       name
+      slug
       description
       privacy
       accessType
@@ -85,6 +86,7 @@ export const CREATED_GAMES = gql`
 export const USER = gql`
   query user($userId: ID!) {
     user(where: { id: $userId }) {
+      id
       name
       slug
     }
@@ -94,6 +96,18 @@ export const USER = gql`
 export const USER_COUNT_BY_SLUG = gql`
   query userCountBySlug($slug: String!) {
     usersConnection(where: { slug: $slug }) {
+      aggregate {
+        count
+      }
+    }
+  }
+`
+
+export const GAME_COUNT_BY_SLUG = gql`
+  query gameCountBySlug($creatorSlug: String!, $gameSlug: String!) {
+    gamesConnection(
+      where: { slug: $gameSlug, creator: { slug: $creatorSlug } }
+    ) {
       aggregate {
         count
       }

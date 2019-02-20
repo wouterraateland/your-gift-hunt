@@ -34,6 +34,32 @@ export const UPDATE_ENTITY_INSTANCE_FIELD = gql`
   }
 `
 
+export const CREATE_GAME = gql`
+  mutation createGame(
+    $name: String!
+    $slug: String!
+    $description: String
+    $creatorId: ID!
+    $privacy: PrivacyType!
+    $accessType: AccessType!
+    $accessCode: String
+  ) {
+    createGame(
+      data: {
+        name: $name
+        slug: $slug
+        description: $description
+        creator: { connect: { id: $creatorId } }
+        privacy: $privacy
+        accessType: $accessType
+        accessCode: $accessCode
+      }
+    ) {
+      id
+    }
+  }
+`
+
 export const UPDATE_GAME = gql`
   mutation updateGame($gameId: ID!, $values: GameUpdateInput!) {
     updateGame(where: { id: $gameId }, data: $values) {

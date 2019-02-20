@@ -1,5 +1,6 @@
 import React from "react"
 
+import Container from "./Container"
 import Label from "./Label"
 import LabelText from "./LabelText"
 import BeforeLabel from "./BeforeLabel"
@@ -48,11 +49,11 @@ const Input = ({
 )
 
 export default ({ error, ...otherProps }) => (
-  <>
+  <Container block={otherProps.block}>
     <Input
       {...otherProps}
       isSelect={["radio", "checkbox"].includes(otherProps.type)}
     />
     {!!error && <ErrorMessage>{error}</ErrorMessage>}
-  </>
+  </Container>
 )

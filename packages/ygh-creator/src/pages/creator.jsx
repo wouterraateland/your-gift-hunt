@@ -45,9 +45,11 @@ const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => {
     variables: { creatorSlug, gameSlug }
   })
 
-  return error ? (
-    `Error: ${error.message}`
-  ) : data.games.length === 1 ? (
+  if (error) {
+    throw error
+  }
+
+  return data.games.length === 1 ? (
     <>
       <Creator hunt={data.games[0]} />
       {otherProps["*"] === "settings" && <SettingsModal game={data.games[0]} />}

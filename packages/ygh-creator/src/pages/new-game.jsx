@@ -1,9 +1,11 @@
-import React, { useMemo, useContext } from "react"
+import React, { useMemo, useContext, useState, useEffect } from "react"
+import { navigate } from "@reach/router"
 import styled from "styled-components"
 import randomstring from "randomstring"
+import _ from "utils"
 
 import { useFormState } from "react-use-form-state"
-import { useQuery } from "react-apollo-hooks"
+import { useQuery, useMutation, useApolloClient } from "react-apollo-hooks"
 
 import AuthContext from "contexts/Auth"
 
@@ -20,8 +22,10 @@ import {
 } from "your-gift-hunt/ui"
 import Present from "components/Present"
 import BackButton from "components/BackButton"
+import StatusMessage from "components/StatusMessage"
 
-import { USER } from "gql/queries"
+import { USER, GAME_COUNT_BY_SLUG } from "gql/queries"
+import { CREATE_GAME } from "gql/mutations"
 import { ACCESS_TYPES, PRIVACY, accessOptions, nameOptions } from "../data"
 
 const CornerDecoration = styled(Float.Right)`
@@ -59,10 +63,10 @@ const Form = styled.form`
 `
 
 const Slash = styled.span`
-  margin: 0 1em;
+  display: inline-block;
+  margin: 0.7em 1em;
 
   font-weight: bold;
-  vertical-align: middle;
 `
 
 const NewGamePage = () => {
@@ -73,7 +77,7 @@ const NewGamePage = () => {
     }
   })
   if (error) {
-    throw new Error(error)
+    throw error
   }
   const userSlug = data.user.slug
   const exampleName = useMemo(
@@ -87,15 +91,59 @@ const NewGamePage = () => {
   )
 
   const [formState, { text, radio, select }] = useFormState({
-    access_type: ACCESS_TYPES.CODE,
-    access_code: randomstring.generate(10)
+    accessType: ACCESS_TYPES.CODE,
+    accessCode: randomstring.generate(10)
   })
-  const accessCodeProps = text("access_code")
+  const accessCodeProps = text("accessCode")
+  const createGame = useMutation(CREATE_GAME)
+  const client = useApolloClient()
 
-  function onSubmit(event) {
+  const [state, setState] = useState(null)
+  const [nameExists, setNameExistence] = useState(false)
+
+  async function checkNameExistence(name) {
+    const res = await client.query({
+      query: GAME_COUNT_BY_SLUG,
+      variables: {
+        creatorSlug: userSlug,
+        gameSlug: _.toSlug(name)
+      }
+    })
+
+    return res.data.gamesConnection.aggregate.count !== 0
+  }
+
+  useEffect(() => {
+    setNameExistence(false)
+    checkNameExistence(formState.values.name).then(setNameExistence)
+  }, [formState.values.name])
+
+  async function onSubmit(event) {
     event.preventDefault()
 
-    console.log(formState)
+    setState("loading")
+
+    try {
+      const gameSlug = _.toSlug(formState.values.name)
+
+      await createGame({
+        variables: {
+          name: formState.values.name,
+          slug: gameSlug,
+          description: formState.values.description,
+          creatorId: data.user.id,
+          privacy: formState.values.privacy,
+          accessType: formState.values.accessType,
+          accessCode: formState.values.accessCode
+        }
+      })
+
+      setState("success")
+      navigate(`/${userSlug}/${gameSlug}`)
+    } catch (error) {
+      console.error(error)
+      setState("error")
+    }
   }
 
   function onGenerateClick() {
@@ -123,7 +171,12 @@ const NewGamePage = () => {
               <Field block>
                 <Input label="Owner" value={userSlug} disabled />
                 <Slash>/</Slash>
-                <Input {...text("name")} required label="Hunt name" />
+                <Input
+                  {...text("name")}
+                  required
+                  label="Hunt name"
+                  error={nameExists ? "This name is already taken" : null}
+                />
               </Field>
               <small>
                 A good hunt name is short and descriptive. Need some
@@ -160,13 +213,13 @@ const NewGamePage = () => {
                 <>
                   <Field block>
                     <Select
-                      {...select("access_type")}
+                      {...select("accessType")}
                       options={accessOptions}
                       label="Protection type"
                       info=""
                     />
                   </Field>
-                  {formState.values.access_type === ACCESS_TYPES.CODE && (
+                  {formState.values.accessType === ACCESS_TYPES.CODE && (
                     <>
                       <Field block>
                         <Input block {...accessCodeProps} label="Access code" />
@@ -188,9 +241,15 @@ const NewGamePage = () => {
               )}
               <hr />
               <Field block>
-                <Button type="submit" importance="primary" color="accent">
+                <Button
+                  type="submit"
+                  importance="primary"
+                  color="accent"
+                  disabled={state === "loading" || nameExists}
+                >
                   Create
-                </Button>
+                </Button>{" "}
+                <StatusMessage status={state} />
               </Field>
             </Form>
           </Paper.Section>

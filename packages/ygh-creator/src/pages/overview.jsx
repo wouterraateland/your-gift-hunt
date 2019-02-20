@@ -1,21 +1,24 @@
 import React, { Suspense, useContext, useState } from "react"
-import { Link } from "@reach/router"
-import { useQuery } from "react-apollo-hooks"
-import { CREATED_GAMES } from "gql/queries"
+import _ from "utils"
 
 import AuthContext from "contexts/Auth"
+
+import { useQuery } from "react-apollo-hooks"
 import useDebounce from "hooks/useDebounce"
 
+import { Link } from "@reach/router"
 import { Wrapper, Paper, Float, Input, Button, Loader } from "your-gift-hunt/ui"
 import Layout from "layouts/Overview"
 import HuntList from "components/HuntList"
+
+import { CREATED_GAMES } from "gql/queries"
 
 const Overview = ({ searchQuery }) => {
   const { user } = useContext(AuthContext)
   const { data, error } = useQuery(CREATED_GAMES, {
     variables: {
       creatorId: user.user_metadata.prismaUserId,
-      slugPrefix: searchQuery.replace(/ /g, "-").toLowerCase()
+      slugPrefix: _.toSlug(searchQuery)
     }
   })
 

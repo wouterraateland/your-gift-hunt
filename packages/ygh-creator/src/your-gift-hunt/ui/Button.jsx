@@ -65,6 +65,11 @@ const Button = styled.button`
       display: block;
       width: 100%;
     `}
+
+  &:disabled {
+    pointer-events: none;
+    filter: grayscale(50%);
+  }
 `
 
 export default Button

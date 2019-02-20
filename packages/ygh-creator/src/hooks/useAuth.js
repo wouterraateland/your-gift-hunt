@@ -3,6 +3,7 @@
 // import { navigate } from "@reach/router"
 // import { useMutation } from "react-apollo-hooks"
 // import { CREATE_USER } from "gql/mutations"
+// import _ from "utils"
 
 const useAuth = () => {
   return {
@@ -28,7 +29,7 @@ const useAuth = () => {
 //         variables: {
 //           netlifyUserId: user.id,
 //           name: full_name,
-//           slug: full_name.replace(/ /g, "-").toLowerCase()
+//           slug: _.toSlug(full_name)
 //         }
 //       })
 //         .then(response =>

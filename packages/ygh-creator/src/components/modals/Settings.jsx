@@ -1,15 +1,17 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import styled from "styled-components"
+import _ from "utils"
 
 import useClickOutside from "hooks/useClickOutside"
 import { useFormState } from "react-use-form-state"
-import { useMutation } from "react-apollo-hooks"
+import { useMutation, useApolloClient } from "react-apollo-hooks"
 
 import Modal from "containers/Modal"
 import { Paper, Field, Input, Select, Button } from "your-gift-hunt/ui"
 import StatusMessage from "components/StatusMessage"
 
 import { accessOptions, PRIVACY, ACCESS_TYPES } from "../../data"
+import { GAME_COUNT_BY_SLUG } from "gql/queries"
 import { UPDATE_GAME } from "gql/mutations"
 
 const StyledPaper = styled(Paper)`
@@ -41,6 +43,32 @@ const SettingsModal = ({ game }) => {
     accessCode: game.accessCode
   })
 
+  const client = useApolloClient()
+  const [nameExists, setNameExistence] = useState(false)
+
+  async function checkNameExistence(name) {
+    const slug = _.toSlug(name)
+
+    if (slug === game.slug) {
+      return false
+    }
+
+    const res = await client.query({
+      query: GAME_COUNT_BY_SLUG,
+      variables: {
+        creatorSlug: game.creator.slug,
+        gameSlug: slug
+      }
+    })
+
+    return res.data.gamesConnection.aggregate.count !== 0
+  }
+
+  useEffect(() => {
+    setNameExistence(false)
+    checkNameExistence(formState.values.name).then(setNameExistence)
+  }, [formState.values.name])
+
   const updateGameSettings = useMutation(UPDATE_GAME)
 
   async function handleSubmit(event) {
@@ -51,7 +79,10 @@ const SettingsModal = ({ game }) => {
       await updateGameSettings({
         variables: {
           gameId: game.id,
-          values: formState.values
+          values: {
+            ...formState.values,
+            slug: _.toSlug(formState.values.name)
+          }
         }
       })
       setState("success")
@@ -74,7 +105,12 @@ const SettingsModal = ({ game }) => {
           </Tagline>
           <Form onSubmit={handleSubmit}>
             <Field block>
-              <Input block {...text("name")} label="Hunt name" />
+              <Input
+                block
+                {...text("name")}
+                label="Hunt name"
+                error={nameExists ? "This name is already taken" : null}
+              />
             </Field>
             <small>
               Available at{" "}
@@ -117,7 +153,7 @@ const SettingsModal = ({ game }) => {
                 type="submit"
                 importance="primary"
                 color="accent"
-                disabled={state === "loading"}
+                disabled={state === "loading" || nameExists}
               >
                 Update settings
               </Button>{" "}
