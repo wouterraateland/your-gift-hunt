@@ -8,6 +8,8 @@ const Arrow = styled.svg`
   pointer-events: none;
   position: absolute;
 
+  max-width: none;
+
   color: ${({ type }) => {
     switch (type) {
       case TRANSFORM_TRANSITION:
@@ -49,7 +51,7 @@ const TransitionArrow = ({ x1, y1, x2, y2, type }) => (
     <path
       d={
         x1 === x2 && y1 > y2
-          ? `M ${x1} ${y1} C ${x1 + 64} ${y1 + 64}, ${x2 - 64} ${y2 -
+          ? `M ${x1} ${y1} C ${x1 + 96} ${y1 + 64}, ${x2 - 96} ${y2 -
               64}, ${x2} ${y2}`
           : `M ${x1} ${y1} C ${x1} ${y1 + 64}, ${x2} ${y2 - 64}, ${x2} ${y2}`
       }

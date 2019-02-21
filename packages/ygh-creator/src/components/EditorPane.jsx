@@ -2,6 +2,8 @@ import React, { useRef } from "react"
 import styled from "styled-components"
 import usePanZoom from "use-pan-and-zoom"
 
+import ZoomControls from "components/ZoomControls"
+
 const StyledEditorPane = styled.div`
   overflow: hidden;
 
@@ -40,12 +42,13 @@ const EditorPane = ({ children }) => {
     transform,
     pan: { x, y },
     zoom,
+    setZoom,
     panZoomHandlers
   } = usePanZoom({
     container,
     enableZoom: true,
     minZoom: 0.1,
-    maxZoom: 1
+    maxZoom: 2
   })
 
   return (
@@ -58,6 +61,11 @@ const EditorPane = ({ children }) => {
       }}
     >
       <PanContainer style={{ transform }}>{children}</PanContainer>
+      <ZoomControls
+        steps={[0.1, 0.25, 0.5, 1, 1.5, 2]}
+        zoom={zoom}
+        setZoom={setZoom}
+      />
     </StyledEditorPane>
   )
 }

@@ -10165,10 +10165,10 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-pan-and-zoom@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/use-pan-and-zoom/-/use-pan-and-zoom-0.1.1.tgz#0af6195c20177fe25b9a54ce746ae60eb80e6073"
-  integrity sha512-HnRqK/cvTUQQu+bb+0iL0tUXKAiaPrORnoUA/zRWtOjGjjw5tAkqJfWMe2qvnsoY4cxcRFk1obQlGyTXIrLcng==
+use-pan-and-zoom@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/use-pan-and-zoom/-/use-pan-and-zoom-0.2.1.tgz#1d2a77047bdb76b53fa85696d2d1cbb7870e1b7d"
+  integrity sha512-luv9WtCSOIcdaaXC6yq6qiaTM8t/RBa+TMSlyNldsOcxLmvsNmMjlR5xYqTbENk2tutLBMRTjYUndLb2MYx5sA==
 
 use@^3.1.0:
   version "3.1.1"
