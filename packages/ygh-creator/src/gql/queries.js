@@ -21,17 +21,24 @@ export const GAME_BY_SLUG = gql`
           id
           unlockedBy {
             from {
+              instance {
+                id
+              }
+            }
+          }
+          outgoingTransitions {
+            to {
               id
             }
-            to {
+            unlocks {
               id
             }
           }
           state {
             id
             name
-            incomingTransitions {
-              from {
+            outgoingTransitions {
+              to {
                 id
               }
             }

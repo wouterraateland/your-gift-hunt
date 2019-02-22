@@ -18,50 +18,107 @@ const useGameData = ({ creatorSlug, gameSlug }) => {
   return data.games.length === 1 ? data.games[0] : null
 }
 
-const getNodes = instances =>
-  instances.flatMap(({ states, ...instance }) =>
-    states.map(state => ({
-      id: state.id,
+const getStartInstanceIds = instances =>
+  instances
+    .filter(({ entity }) => entity.name === "Start trigger")
+    .map(({ id }) => id)
+
+const getNodes = (startInstanceIds, instances) => [
+  ...instances
+    .filter(({ states }) =>
+      states.some(
+        ({ unlockedBy }) =>
+          unlockedBy && startInstanceIds.includes(unlockedBy.from.instance.id)
+      )
+    )
+    .map(instance => ({
+      id: `${instance.id}-entry`,
       instance,
-      state
+      state: null,
+      type: "entry"
+    })),
+  ...instances
+    .filter(({ id }) => !startInstanceIds.includes(id))
+    .flatMap(({ states, ...instance }) =>
+      states.map(state => ({
+        id: state.id,
+        instance,
+        state,
+        type: "state"
+      }))
+    ),
+  ...instances
+    .filter(({ states }) =>
+      states.some(({ state: { outgoingTransitions } }) =>
+        outgoingTransitions.some(({ to }) => to === null)
+      )
+    )
+    .map(instance => ({
+      id: `${instance.id}-exit`,
+      instance,
+      state: null,
+      type: "exit"
     }))
-  )
+]
+
+const getStartTransitions = (startInstanceIds, nodes) =>
+  nodes
+    .filter(
+      ({ state }) =>
+        state &&
+        state.unlockedBy &&
+        startInstanceIds.includes(state.unlockedBy.from.instance.id)
+    )
+    .map(({ id, instance }) => ({
+      from: `${instance.id}-entry`,
+      to: id,
+      type: TransitionArrow.TRANSFORM_TRANSITION
+    }))
 
 const getTransformTransitions = nodes =>
   nodes.flatMap(node =>
-    node.state.state.incomingTransitions.map(({ from }) => ({
-      from: nodes.find(
-        ({ instance, state: { state } }) =>
-          instance.id === node.instance.id && state.id === from.id
-      ).id,
-      to: node.id,
-      type: TransitionArrow.TRANSFORM_TRANSITION
-    }))
+    node.state
+      ? node.state.state.outgoingTransitions.map(({ to }) => ({
+          from: node.id,
+          to: nodes.find(
+            ({ instance, state, type }) =>
+              instance.id === node.instance.id &&
+              (to ? state && state.state.id === to.id : type === "exit")
+          ).id,
+          type: TransitionArrow.TRANSFORM_TRANSITION
+        }))
+      : []
   )
 
 const getUnlockTransitions = nodes =>
   nodes
-    .filter(({ state: { unlockedBy } }) => unlockedBy)
-    .map(node => ({
-      from: node.state.unlockedBy.from.id,
-      to: node.id,
-      type: TransitionArrow.UNLOCK_TRANSITION
-    }))
+    .filter(({ state }) => state && state.outgoingTransitions.length > 0)
+    .flatMap(node =>
+      node.state.outgoingTransitions.flatMap(({ to, unlocks }) =>
+        unlocks.map(unlock => ({
+          from: node.id,
+          to: to ? to.id : `${node.instance.id}-exit`,
+          unlocks: unlock.id,
+          type: TransitionArrow.UNLOCK_TRANSITION
+        }))
+      )
+    )
 
-const getEdges = nodes =>
-  [...getTransformTransitions(nodes), ...getUnlockTransitions(nodes)].map(
-    ({ from, to, type }) => ({
-      id: [from, to, type],
-      from,
-      to,
-      type
-    })
-  )
+const getEdges = (startInstanceIds, nodes) =>
+  [
+    ...getStartTransitions(startInstanceIds, nodes),
+    ...getTransformTransitions(nodes),
+    ...getUnlockTransitions(nodes)
+  ].map(({ from, to, unlocks, type }) => ({
+    id: [from, to, unlocks, type],
+    from,
+    to,
+    unlocks,
+    type
+  }))
 
 const findPositions = (nodes, edges) => {
   const nodeIds = nodes.map(({ id }) => id)
-  const edgeEndpoints = edges.map(({ to }) => to)
-  const startNodeIds = nodeIds.filter(id => !edgeEndpoints.includes(id))
 
   const occupiedPositions = new Set()
   const nodePositions = new Map()
@@ -77,8 +134,10 @@ const findPositions = (nodes, edges) => {
 
     edges
       .filter(
-        ({ from, to }) =>
-          (from === nodeId && todo.has(to)) || (to === nodeId && todo.has(from))
+        ({ from, to, unlocks }) =>
+          (from === nodeId && todo.has(to)) ||
+          (to === nodeId && todo.has(from)) ||
+          (unlocks === nodeId && todo.has(from))
       )
       .forEach(edge => nextUp.add(edge))
   }
@@ -92,44 +151,37 @@ const findPositions = (nodes, edges) => {
   }
 
   const positionNextUpNodes = () => {
-    while (nextUp.size > 0) {
-      const edge = nextUp.values().next().value
-      nextUp.delete(edge)
+    while (todo.size > 0) {
+      positionStartNode(todo.values().next().value)
+      while (nextUp.size > 0) {
+        const edge = nextUp.values().next().value
+        nextUp.delete(edge)
 
-      if (todo.has(edge.to)) {
-        const { x, y } = nodePositions.get(edge.from)
+        if (nodePositions.has(edge.from)) {
+          const { x, y } = nodePositions.get(edge.from)
 
-        let p = 0
-        while (positionIsOccupied(x + p, y + 1)) {
-          p++
+          let p = 0
+          while (positionIsOccupied(x + p, y + 1)) {
+            p++
+          }
+
+          positionNode(edge.to, { x: x + p, y: y + 1 })
+        } else {
+          const { x, y } =
+            edge.type === TransitionArrow.UNLOCK_TRANSITION
+              ? nodePositions.get(edge.unlocks)
+              : nodePositions.get(edge.to)
+
+          let p = 0
+          while (positionIsOccupied(x + p, y - 1)) {
+            p++
+          }
+
+          positionNode(edge.from, { x: x + p, y: y - 1 })
         }
-
-        positionNode(edge.to, { x: x + p, y: y + 1 })
-      } else {
-        const { x, y } = nodePositions.get(edge.to)
-
-        let p = 0
-        while (positionIsOccupied(x + p, y - 1)) {
-          p++
-        }
-
-        positionNode(edge.from, { x: x + p, y: y - 1 })
       }
     }
   }
-
-  startNodeIds.forEach(positionStartNode)
-
-  positionNextUpNodes()
-
-  nodes
-    .filter(
-      node =>
-        todo.has(node.id) &&
-        node.instance.entity.defaultState &&
-        node.instance.entity.defaultState.id === node.state.state.id
-    )
-    .forEach(({ id }) => positionStartNode(id))
 
   positionNextUpNodes()
 
@@ -163,8 +215,9 @@ const useGame = params => {
 
   const game = useGameData(params)
 
-  const nodes = getNodes(game.instances)
-  const edges = getEdges(nodes)
+  const startInstanceIds = getStartInstanceIds(game.instances)
+  const nodes = getNodes(startInstanceIds, game.instances)
+  const edges = getEdges(startInstanceIds, nodes)
   const nodePositions = toGrid(findPositions(nodes, edges))
 
   async function save() {

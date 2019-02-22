@@ -36,6 +36,21 @@ const TransitionArrow = ({ x1, y1, x2, y2, type }) => (
   >
     <defs>
       <marker
+        id={`circle-${type}`}
+        viewBox="0 0 10 10"
+        refX="5"
+        refY="5"
+        markerWidth="5"
+        markerHeight="5"
+        markerUnits="strokeWidth"
+        orient="auto"
+      >
+        <path
+          d="M 5, 5 m -5, 0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0"
+          fill="currentColor"
+        />
+      </marker>
+      <marker
         id={`arrow-${type}`}
         viewBox="0 0 10 10"
         refX="5"
@@ -58,6 +73,7 @@ const TransitionArrow = ({ x1, y1, x2, y2, type }) => (
       stroke="currentColor"
       strokeWidth={2}
       fill="none"
+      markerStart={type === UNLOCK_TRANSITION ? `url(#circle-${type})` : null}
       markerEnd={`url(#arrow-${type})`}
     />
   </Arrow>
