@@ -32,11 +32,11 @@ const findPositions = (nodes, edges) => {
 
   const findUnoccupiedPositionAround = (x, y) => {
     for (let p = 0; p < 10000; p++) {
-      if (!positionIsOccupied(x + p, y)) {
-        return { x: x + p, y }
+      if (!positionIsOccupied(x > 0 ? x - p : x + p, y)) {
+        return { x: x > 0 ? x - p : x + p, y }
       }
-      if (!positionIsOccupied(x - p, y)) {
-        return { x: x - p, y }
+      if (!positionIsOccupied(x > 0 ? x + p : x - p, y)) {
+        return { x: x > 0 ? x + p : x - p, y }
       }
     }
     return { x, y }
