@@ -76,7 +76,7 @@ const getTransformTransitions = nodes =>
                 ? state && state.state.id === to.id
                 : type === NODE_TYPES.EXIT)
           ).id,
-          type: EDGE_TYPES.TRANSFORM
+          type: to ? EDGE_TYPES.TRANSFORM : EDGE_TYPES.EXIT
         }))
       : []
   )

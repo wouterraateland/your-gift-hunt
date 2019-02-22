@@ -36,6 +36,7 @@ export const NODE_TYPES = {
 
 export const EDGE_TYPES = {
   ENTRY: "entry",
+  EXIT: "exit",
   TRANSFORM: "transform",
   UNLOCK: "unlock",
   USE: "use"

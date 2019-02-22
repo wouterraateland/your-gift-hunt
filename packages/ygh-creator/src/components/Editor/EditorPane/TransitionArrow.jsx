@@ -12,6 +12,7 @@ const Arrow = styled.svg`
   color: ${({ type }) => {
     switch (type) {
       case EDGE_TYPES.TRANSFORM:
+      case EDGE_TYPES.EXIT:
         return "#f93"
       case EDGE_TYPES.UNLOCK:
         return "#39f"

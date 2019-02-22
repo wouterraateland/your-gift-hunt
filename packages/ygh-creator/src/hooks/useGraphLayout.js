@@ -10,6 +10,7 @@ const nodePriority = {
 
 const edgePriority = {
   [EDGE_TYPES.ENTRY]: 0,
+  [EDGE_TYPES.EXIT]: 0,
   [EDGE_TYPES.TRANSFORM]: 1,
   [EDGE_TYPES.USE]: 2,
   [EDGE_TYPES.UNLOCK]: 3
@@ -17,8 +18,7 @@ const edgePriority = {
 
 const cmp = (a, b) => (a < b ? -1 : a > b ? 1 : 0)
 
-const findPositions = (nodes, edges, maxNodes = 1) => {
-  let nodeCount = 0
+const findPositions = (nodes, edges) => {
   const occupiedPositions = new Set()
   const nodePositions = new Map()
   const todo = nodes
@@ -60,18 +60,22 @@ const findPositions = (nodes, edges, maxNodes = 1) => {
             (type === EDGE_TYPES.UNLOCK ? unlocks === nodeId : to === nodeId))
       )
       .forEach(edge => nextUp.push(edge))
-
-    // Temporary, for showing incremental graph
-    if (++nodeCount >= maxNodes) {
-      todo.splice(0, todo.length)
-      while (nextUp.length > 0) {
-        nextUp.pop()
-      }
-    }
   }
 
   const positionStartNode = nodeId => {
-    positionNode(nodeId, findUnoccupiedPositionAround(0, 0))
+    let possible
+    for (let x = 0; x < 1000; x++) {
+      possible = true
+      for (let y = -3; y <= 3; y++) {
+        if (positionIsOccupied(x, y)) {
+          possible = false
+        }
+      }
+      if (possible) {
+        positionNode(nodeId, { x, y: 0 })
+        return
+      }
+    }
   }
 
   while (todo.length > 0) {
@@ -80,14 +84,42 @@ const findPositions = (nodes, edges, maxNodes = 1) => {
     while (nextUp.length > 0) {
       const edge = nextUp.pop()
 
-      const endPoint = edge.type === EDGE_TYPES.UNLOCK ? edge.unlocks : edge.to
+      if (
+        nextUp.data.find(
+          ({ from, to }) => from === edge.to && to === edge.from
+        ) &&
+        nodes.find(
+          ({ id, state, instance }) =>
+            id === edge.to &&
+            state &&
+            instance.entity.defaultState &&
+            state.state.id === instance.entity.defaultState.id
+        )
+      ) {
+        continue
+      }
 
-      if (nodePositions.has(edge.from) && !nodePositions.has(endPoint)) {
-        const { x, y } = nodePositions.get(edge.from)
+      const isUnlock = edge.type === EDGE_TYPES.UNLOCK
+      const endPoint = isUnlock ? edge.unlocks : edge.to
 
-        positionNode(endPoint, findUnoccupiedPositionAround(x, y + 1))
-      } else if (!nodePositions.has(edge.from)) {
-        const { x, y } = nodePositions.get(endPoint)
+      if (nodePositions.has(edge.from)) {
+        if (!nodePositions.has(endPoint)) {
+          const { x, y } = nodePositions.get(edge.from)
+
+          positionNode(endPoint, findUnoccupiedPositionAround(x, y + 1))
+        }
+      } else if (isUnlock) {
+        if (nodePositions.has(edge.unlocks)) {
+          const { x, y } = nodePositions.get(edge.unlocks)
+
+          positionNode(edge.to, findUnoccupiedPositionAround(x, y))
+        } else if (nodePositions.has(edge.to)) {
+          const { x, y } = nodePositions.get(edge.to)
+
+          positionNode(edge.unlocks, findUnoccupiedPositionAround(x, y))
+        }
+      } else {
+        const { x, y } = nodePositions.get(edge.to)
 
         positionNode(edge.from, findUnoccupiedPositionAround(x, y - 1))
       }
@@ -110,8 +142,8 @@ const toGrid = nodePositionMap => {
   return nodePositions
 }
 
-const useGraphLayout = ({ nodes, edges }, maxNodes) => {
-  const nodePositions = toGrid(findPositions(nodes, edges, maxNodes))
+const useGraphLayout = ({ nodes, edges }) => {
+  const nodePositions = toGrid(findPositions(nodes, edges))
 
   return {
     getNodePosition: nodeId =>
