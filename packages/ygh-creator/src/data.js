@@ -27,3 +27,16 @@ export const nameOptions = {
   ],
   last: ["hunt", "game", "challenge", "trip"]
 }
+
+export const NODE_TYPES = {
+  ENTRY: "entry",
+  EXIT: "exit",
+  STATE: "state"
+}
+
+export const EDGE_TYPES = {
+  ENTRY: "entry",
+  TRANSFORM: "transform",
+  UNLOCK: "unlock",
+  USE: "use"
+}

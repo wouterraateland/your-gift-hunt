@@ -10,15 +10,10 @@ const ExitNode = styled.div.attrs(({ position: { left, top } }) => ({
 
   width: 2em;
   height: 2em;
+  border: .1em solid #0009
   border-radius: 100%;
 
-  background-image: radial-gradient(
-    ellipse 50% 50% at 50% 50%,
-    #0009 50%,
-    #0000 55%,
-    #0000 80%,
-    #0009 85%
-  );
+  background-image: radial-gradient(#0009, #0000 50%);
 
   transform: translate(-50%, -50%);
 `

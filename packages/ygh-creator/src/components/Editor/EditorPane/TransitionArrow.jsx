@@ -1,8 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-export const TRANSFORM_TRANSITION = "transform"
-export const UNLOCK_TRANSITION = "unlock"
+import { EDGE_TYPES } from "data"
 
 const Arrow = styled.svg`
   pointer-events: none;
@@ -12,10 +11,12 @@ const Arrow = styled.svg`
 
   color: ${({ type }) => {
     switch (type) {
-      case TRANSFORM_TRANSITION:
+      case EDGE_TYPES.TRANSFORM:
         return "#f93"
-      case UNLOCK_TRANSITION:
+      case EDGE_TYPES.UNLOCK:
         return "#39f"
+      case EDGE_TYPES.USE:
+        return "#3f9"
       default:
         return "#ccc"
     }
@@ -73,12 +74,10 @@ const TransitionArrow = ({ x1, y1, x2, y2, type }) => (
       stroke="currentColor"
       strokeWidth={2}
       fill="none"
-      markerStart={type === UNLOCK_TRANSITION ? `url(#circle-${type})` : null}
+      markerStart={type === EDGE_TYPES.UNLOCK ? `url(#circle-${type})` : null}
       markerEnd={`url(#arrow-${type})`}
     />
   </Arrow>
 )
-TransitionArrow.TRANSFORM_TRANSITION = TRANSFORM_TRANSITION
-TransitionArrow.UNLOCK_TRANSITION = UNLOCK_TRANSITION
 
 export default TransitionArrow

@@ -6,8 +6,8 @@ import useClickOutside from "hooks/useClickOutside"
 
 import Layout from "layouts/Creator"
 
-import EditorPane from "containers/EditorPane"
-import DetailPane from "containers/DetailPane"
+import EditorPane from "components/Editor/EditorPane"
+import DetailPane from "components/Editor/DetailPane"
 import SettingsModal from "components/modals/Settings"
 
 const Creator = () => {

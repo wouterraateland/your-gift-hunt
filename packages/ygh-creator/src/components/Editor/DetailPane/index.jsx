@@ -2,9 +2,9 @@ import React, { forwardRef, useContext } from "react"
 
 import GameContext from "contexts/Game"
 
-import DetailPaneContainer from "components/DetailPane/Container"
-import InstancePreview from "components/DetailPane/InstancePreview"
-import DetailPaneBody from "components/DetailPane/Body"
+import DetailPaneContainer from "./Container"
+import InstancePreview from "./InstancePreview"
+import DetailPaneBody from "./Body"
 
 const DetailPane = forwardRef(({ open, nodeId }, ref) => {
   const { nodes } = useContext(GameContext)

@@ -41,6 +41,19 @@ export const GAME_BY_SLUG = gql`
               to {
                 id
               }
+              requiredActions {
+                type
+                payload {
+                  requiredEntity {
+                    entity {
+                      id
+                    }
+                    state {
+                      id
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -57,6 +70,7 @@ export const GAME_BY_SLUG = gql`
           }
         }
         entity {
+          id
           name
           description
           isItem

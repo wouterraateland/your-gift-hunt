@@ -2,7 +2,7 @@ import React, { useRef } from "react"
 import styled from "styled-components"
 import usePanZoom from "use-pan-and-zoom"
 
-import ZoomControls from "components/ZoomControls"
+import ZoomControls from "./ZoomControls"
 
 const StyledEditorPane = styled.div`
   overflow: hidden;
