@@ -1,11 +1,9 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 const ToolTip = styled.div`
   pointer-events: none;
 
   position: absolute;
-  left: 50%;
-  bottom: 100%;
 
   padding: 0.5em;
   border-radius: 0.25em;
@@ -23,7 +21,6 @@ const ToolTip = styled.div`
   }
 
   opacity: 0;
-  transform: translate(-50%, 0);
 
   transition-property: opacity, transform;
   transition-duration: 0.2s;
@@ -33,20 +30,53 @@ const ToolTip = styled.div`
     content: "";
 
     position: absolute;
-    left: 50%;
-    top: 100%;
 
     border: 0.3em solid;
     border-color: transparent #000c #000c transparent;
     border-bottom-right-radius: 0.25em;
-
-    transform: translate(-50%, -50%) rotate(45deg);
   }
 
   *:hover > & {
     opacity: 1;
-    transform: translate(-50%, -0.5em);
   }
+
+  ${props =>
+    props.right
+      ? css`
+          left: 100%;
+          top: 50%;
+
+          transform: translate(0, -50%);
+
+          &::after {
+            right: 100%;
+            top: 50%;
+
+            transform: translate(50%, -50%) rotate(135deg);
+          }
+
+          *:hover > & {
+            transform: translate(0.5em, -50%);
+          }
+        `
+      : css`
+          left: 50%;
+          bottom: 100%;
+          transform: translate(-50%, 0);
+          &::after {
+            left: 50%;
+            top: 100%;
+
+            border-color: transparent #000c #000c transparent;
+            border-bottom-right-radius: 0.25em;
+
+            transform: translate(-50%, -50%) rotate(45deg);
+          }
+
+          *:hover > & {
+            transform: translate(-50%, -0.5em);
+          }
+        `}
 `
 
 export default ToolTip

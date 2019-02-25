@@ -8,6 +8,7 @@ import Layout from "layouts/Creator"
 
 import EditorPane from "components/Editor/EditorPane"
 import DetailPane from "components/Editor/DetailPane"
+import Toolbox from "components/Editor/Toolbox"
 import SettingsModal from "components/modals/Settings"
 
 const Creator = () => {
@@ -33,6 +34,7 @@ const Creator = () => {
         open={detailsVisibility}
         nodeId={selectedNodeId}
       />
+      <Toolbox />
     </Layout>
   )
 }

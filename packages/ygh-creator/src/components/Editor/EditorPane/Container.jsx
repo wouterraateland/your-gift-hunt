@@ -10,23 +10,7 @@ const StyledEditorPane = styled.div`
   flex-grow: 1;
 
   background-color: #f5f6fb;
-  background-image: repeating-linear-gradient(
-      transparent 0%,
-      transparent 48%,
-      #0001 48%,
-      #0001 52%,
-      transparent 52%,
-      transparent 100%
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0%,
-      transparent 48%,
-      #0001 48%,
-      #0001 52%,
-      transparent 52%,
-      transparent 100%
-    );
+  background-image: radial-gradient(#0001 8%, transparent 10%);
 `
 
 const PanContainer = styled.div`

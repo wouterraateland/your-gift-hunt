@@ -67,6 +67,7 @@ const CreatorLayout = ({ children }) => {
   return (
     <PageContainer>
       <Nav
+        compact
         title={
           <>
             {game.name}
