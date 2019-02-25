@@ -1,24 +1,34 @@
 import React, { forwardRef, useContext } from "react"
 
 import GameContext from "contexts/Game"
+import InspectorContext from "contexts/Inspector"
 
-import DetailPaneContainer from "./Container"
+import Container from "./Container"
 import InstancePreview from "./InstancePreview"
-import DetailPaneBody from "./Body"
+import Body from "./Body"
+import Meta from "./Meta"
+import Fields from "./Fields"
+import Relations from "./Relations"
 
-const DetailPane = forwardRef(({ open, nodeId }, ref) => {
+const DetailPane = forwardRef((_, ref) => {
+  const { isOpen, nodeId } = useContext(InspectorContext)
   const { nodes } = useContext(GameContext)
+
   const node = nodes.find(({ id }) => nodeId === id)
 
   return (
-    <DetailPaneContainer open={open} ref={ref}>
+    <Container isOpen={isOpen} ref={ref}>
       {!!node && (
         <>
-          <InstancePreview instance={node.instance} />
-          <DetailPaneBody instance={node.instance} />
+          <InstancePreview node={node} />
+          <Body>
+            <Meta node={node} />
+            <Fields node={node} />
+            <Relations node={node} />
+          </Body>
         </>
       )}
-    </DetailPaneContainer>
+    </Container>
   )
 })
 

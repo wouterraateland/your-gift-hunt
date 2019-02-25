@@ -14,12 +14,14 @@ const InstancePreviewContainer = styled.div`
   background: #0001;
 `
 
-const InstancePreview = ({ instance }) => {
+const InstancePreview = ({ node }) => {
+  const { instance } = node
   const { entity } = instance
+  const state = node.state ? node.state.state.name : null
   return entity.isItem || entity.isObject ? (
     <InstancePreviewContainer>
-      {entity.isItem && <GenericItem {...instance} />}
-      {entity.isObject && <GenericObject {...instance} />}
+      {entity.isItem && <GenericItem {...instance} state={state} />}
+      {entity.isObject && <GenericObject {...instance} state={state} />}
     </InstancePreviewContainer>
   ) : null
 }

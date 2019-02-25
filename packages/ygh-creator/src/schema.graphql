@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Tue Feb 19 2019 16:06:46 GMT+0100 (Midden-Europese standaardtijd)
+# timestamp: Mon Feb 25 2019 16:05:52 GMT+0100 (Midden-Europese standaardtijd)
 
 enum AccessType {
   NONE
@@ -673,6 +673,7 @@ type ActionPreviousValues {
 
 type ActionRequirement implements Node {
   id: ID!
+  name: String
   type: ActionType!
   hints: [String!]!
   payload: ActionRequirementPayload!
@@ -693,6 +694,7 @@ input ActionRequirementCreatehintsInput {
 }
 
 input ActionRequirementCreateInput {
+  name: String
   type: ActionType
   hints: ActionRequirementCreatehintsInput
   payload: ActionRequirementPayloadCreateOneWithoutActionRequirementInput!
@@ -709,6 +711,7 @@ input ActionRequirementCreateOneWithoutPayloadInput {
 }
 
 input ActionRequirementCreateWithoutPayloadInput {
+  name: String
   type: ActionType
   hints: ActionRequirementCreatehintsInput
 }
@@ -725,6 +728,8 @@ type ActionRequirementEdge {
 enum ActionRequirementOrderByInput {
   id_ASC
   id_DESC
+  name_ASC
+  name_DESC
   type_ASC
   type_DESC
   updatedAt_ASC
@@ -1660,6 +1665,7 @@ input ActionRequirementPayloadWhereUniqueInput {
 
 type ActionRequirementPreviousValues {
   id: ID!
+  name: String
   type: ActionType!
   hints: [String!]!
 }
@@ -1713,6 +1719,46 @@ input ActionRequirementScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
   type: ActionType
 
   """All values that are not equal to given value."""
@@ -1765,6 +1811,7 @@ input ActionRequirementSubscriptionWhereInput {
 }
 
 input ActionRequirementUpdateDataInput {
+  name: String
   type: ActionType
   hints: ActionRequirementUpdatehintsInput
   payload: ActionRequirementPayloadUpdateOneRequiredWithoutActionRequirementInput
@@ -1775,12 +1822,14 @@ input ActionRequirementUpdatehintsInput {
 }
 
 input ActionRequirementUpdateInput {
+  name: String
   type: ActionType
   hints: ActionRequirementUpdatehintsInput
   payload: ActionRequirementPayloadUpdateOneRequiredWithoutActionRequirementInput
 }
 
 input ActionRequirementUpdateManyDataInput {
+  name: String
   type: ActionType
   hints: ActionRequirementUpdatehintsInput
 }
@@ -1797,6 +1846,7 @@ input ActionRequirementUpdateManyInput {
 }
 
 input ActionRequirementUpdateManyMutationInput {
+  name: String
   type: ActionType
   hints: ActionRequirementUpdatehintsInput
 }
@@ -1814,6 +1864,7 @@ input ActionRequirementUpdateOneRequiredWithoutPayloadInput {
 }
 
 input ActionRequirementUpdateWithoutPayloadDataInput {
+  name: String
   type: ActionType
   hints: ActionRequirementUpdatehintsInput
 }
@@ -1883,6 +1934,46 @@ input ActionRequirementWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
   type: ActionType
 
   """All values that are not equal to given value."""

@@ -1,6 +1,8 @@
-import React, { useState, useRef } from "react"
+import React, { useContext, useRef } from "react"
 
+import { EntitiesProvider } from "contexts/Entities"
 import { GameProvider } from "contexts/Game"
+import InspectorContext, { InspectorProvider } from "contexts/Inspector"
 
 import useClickOutside from "hooks/useClickOutside"
 
@@ -13,37 +15,31 @@ import SettingsModal from "components/modals/Settings"
 
 const Creator = () => {
   const detailPane = useRef(null)
-  const [selectedNodeId, selectNode] = useState(null)
-  const [detailsVisibility, setDetailsVisibility] = useState(false)
+  const { closeInspector } = useContext(InspectorContext)
 
   useClickOutside({
     ref: detailPane,
-    onClickOutside: () => setDetailsVisibility(false)
+    onClickOutside: closeInspector
   })
 
   return (
     <Layout>
-      <EditorPane
-        onNodeClick={id => {
-          selectNode(id)
-          setDetailsVisibility(true)
-        }}
-      />
-      <DetailPane
-        ref={detailPane}
-        open={detailsVisibility}
-        nodeId={selectedNodeId}
-      />
+      <EditorPane />
+      <DetailPane ref={detailPane} />
       <Toolbox />
     </Layout>
   )
 }
 
 const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => (
-  <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
-    <Creator />
-    {otherProps["*"] === "settings" && <SettingsModal />}
-  </GameProvider>
+  <EntitiesProvider>
+    <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
+      <InspectorProvider>
+        <Creator />
+        {otherProps["*"] === "settings" && <SettingsModal />}
+      </InspectorProvider>
+    </GameProvider>
+  </EntitiesProvider>
 )
 
 export default CreatorPage

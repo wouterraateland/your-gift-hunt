@@ -1,3 +1,4 @@
+import hash from "object-hash"
 import { NODE_TYPES, EDGE_TYPES } from "data"
 
 const getStartInstanceIds = instances =>
@@ -48,6 +49,19 @@ const getNodes = (startInstanceIds, instances) => [
     }))
 ]
 
+const getNodeByInstanceAndState = nodes => (
+  instance,
+  state,
+  type = NODE_TYPES.EXIT
+) =>
+  nodes.find(
+    node =>
+      node.instance.id === instance.id &&
+      (state
+        ? node.state && node.state.state.id === state.id
+        : node.type === type)
+  )
+
 const getStartTransitions = (startInstanceIds, nodes) =>
   nodes
     .filter(
@@ -65,21 +79,15 @@ const getStartTransitions = (startInstanceIds, nodes) =>
     }))
 
 const getTransformTransitions = nodes =>
-  nodes.flatMap(node =>
-    node.state
-      ? node.state.state.outgoingTransitions.map(({ to }) => ({
-          from: node.id,
-          to: nodes.find(
-            ({ instance, state, type }) =>
-              instance.id === node.instance.id &&
-              (to
-                ? state && state.state.id === to.id
-                : type === NODE_TYPES.EXIT)
-          ).id,
-          type: to ? EDGE_TYPES.TRANSFORM : EDGE_TYPES.EXIT
-        }))
-      : []
-  )
+  nodes
+    .filter(({ state }) => state && state.state.outgoingTransitions.length > 0)
+    .flatMap(node =>
+      node.state.state.outgoingTransitions.map(({ to }) => ({
+        from: node.id,
+        to: getNodeByInstanceAndState(nodes)(node.instance, to).id,
+        type: to ? EDGE_TYPES.TRANSFORM : EDGE_TYPES.EXIT
+      }))
+    )
 
 const getUnlockTransitions = nodes =>
   nodes
@@ -122,7 +130,7 @@ const getEdges = (startInstanceIds, nodes) =>
     ...getUnlockTransitions(nodes),
     ...getUseTransitions(nodes)
   ].map(({ from, to, unlocks, type }) => ({
-    id: [from, to, unlocks, type],
+    id: hash([from, to, unlocks, type]),
     from,
     to,
     unlocks,
@@ -136,7 +144,8 @@ const useGameGraph = instances => {
 
   return {
     nodes,
-    edges
+    edges,
+    getNodeByInstanceAndState: getNodeByInstanceAndState(nodes)
   }
 }
 

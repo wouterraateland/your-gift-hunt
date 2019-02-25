@@ -1,20 +1,16 @@
-import React from "react"
-import _ from "utils"
+import { NODE_TYPES } from "data"
+
+import React, { useContext } from "react"
+
+import InspectorContext from "contexts/Inspector"
 
 import EntryNode from "./EntryNode"
 import ExitNode from "./ExitNode"
 import InstanceCard from "./InstanceCard"
 
-import { NODE_TYPES } from "data"
+const Node = ({ id, instance, position, state, type }) => {
+  const { inspectNode } = useContext(InspectorContext)
 
-const Node = ({
-  id,
-  instance,
-  position,
-  state,
-  type,
-  onNodeClick = _.noop
-}) => {
   switch (type) {
     case NODE_TYPES.ENTRY:
       return <EntryNode position={position} />
@@ -25,7 +21,7 @@ const Node = ({
           position={position}
           instance={instance}
           state={state.state.name}
-          onClick={() => onNodeClick(id)}
+          onClick={() => inspectNode(id)}
         />
       )
     case NODE_TYPES.EXIT:

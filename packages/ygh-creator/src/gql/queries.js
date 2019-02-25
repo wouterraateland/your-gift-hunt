@@ -1,5 +1,75 @@
 import gql from "graphql-tag"
 
+export const ENTITIES = gql`
+  query {
+    entities {
+      id
+      name
+      description
+      isItem
+      isObject
+      isTrigger
+      defaultState {
+        id
+      }
+      states {
+        id
+        name
+        description
+
+        incomingTransitions {
+          from {
+            id
+          }
+        }
+        outgoingTransitions {
+          to {
+            id
+          }
+          requiredActions {
+            name
+            hints
+
+            type
+            payload {
+              requiredEntity {
+                entity {
+                  id
+                }
+                state {
+                  id
+                }
+              }
+              requiredValues {
+                key
+                eqValue
+                neqValue
+                eqField {
+                  id
+                }
+                neqField {
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+      featuredField {
+        id
+      }
+      fields {
+        id
+        label
+        info
+        type
+        isMulti
+        isSecret
+      }
+    }
+  }
+`
+
 export const GAME_BY_SLUG = gql`
   query gameBySlug($creatorSlug: String!, $gameSlug: String!) {
     games(where: { creator: { slug: $creatorSlug }, slug: $gameSlug }) {
@@ -37,11 +107,13 @@ export const GAME_BY_SLUG = gql`
           state {
             id
             name
+            description
             outgoingTransitions {
               to {
                 id
               }
               requiredActions {
+                name
                 type
                 payload {
                   requiredEntity {
@@ -49,6 +121,17 @@ export const GAME_BY_SLUG = gql`
                       id
                     }
                     state {
+                      id
+                    }
+                  }
+                  requiredValues {
+                    key
+                    eqValue
+                    neqValue
+                    eqField {
+                      id
+                    }
+                    neqField {
                       id
                     }
                   }

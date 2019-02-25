@@ -81,6 +81,13 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
+  blockquote {
+    padding-left: .5em;
+    margin: 1em 0;
+
+    border-left: .5em solid #0002;
+  }
+
   img, svg {
     max-width: 100%;
   }

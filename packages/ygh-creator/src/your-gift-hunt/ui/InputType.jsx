@@ -1,7 +1,7 @@
 import React from "react"
 import styled, { css } from "styled-components"
 
-import ToolTip from "../ToolTip"
+import ToolTip from "./ToolTip"
 
 const DefaultType = styled.div`
   position: relative;

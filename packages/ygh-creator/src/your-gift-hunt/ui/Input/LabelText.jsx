@@ -1,7 +1,7 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import { transparentize } from "polished"
-import InputType from "./InputType"
+import InputType from "../InputType"
 
 export const LabelText = styled.span`
   pointer-events: none;

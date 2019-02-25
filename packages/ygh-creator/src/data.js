@@ -1,3 +1,11 @@
+export const ACTION_TYPES = {
+  USE: "USE",
+  TARGET_OF_USE: "TARGET_OF_USE",
+  INPUT: "INPUT",
+  TRANSFORM: "TRANSFORM",
+  UNLOCK: "UNLOCK"
+}
+
 export const ACCESS_TYPES = {
   CODE: "CODE",
   NONE: "NONE"
