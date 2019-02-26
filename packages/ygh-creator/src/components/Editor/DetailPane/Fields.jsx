@@ -8,7 +8,7 @@ import useDebounce from "hooks/useDebounce"
 import { Input, Field } from "your-gift-hunt/ui"
 
 const Form = styled.form`
-  margin-top: 2em;
+  margin: 2em 0 0;
 `
 
 const getFieldValueMap = ({ fields }) =>
@@ -104,8 +104,9 @@ const FieldsForm = ({ node: { instance } }) => {
           switch (type) {
             default:
               return (
-                <Field key={`${instance.id}${id}`}>
+                <Field block key={`${instance.id}${id}`}>
                   <Input
+                    block
                     {...field}
                     type={toInputType(type)}
                     showType

@@ -1,13 +1,13 @@
-import { ACTION_TYPES, NODE_TYPES } from "data"
+import { ACTION_TYPES, EDGE_TYPES, NODE_TYPES } from "data"
 
-import React, { Fragment, useContext } from "react"
+import React, { Fragment, useState, useContext } from "react"
 import styled from "styled-components"
 
 import EntitiesContext from "contexts/Entities"
 import InspectorContext from "contexts/Inspector"
 import GameContext from "contexts/Game"
 
-import { InputType } from "your-gift-hunt/ui"
+import { InputType, Select } from "your-gift-hunt/ui"
 import EntityTag from "../EntityTag"
 import StateTag from "../StateTag"
 
@@ -25,23 +25,48 @@ const Arrow = styled.span`
   color: #f93;
 `
 
-const ActionRequirementList = styled.ul`
+const Label = styled.span`
+  font-size: 0.7em;
+  color: #0006;
+`
+
+const TransitionList = styled.ul`
   padding: 0;
-  margin: 1em 0 0;
+  margin: 0;
 `
 
 const Li = styled.li`
   display: block;
   padding: 0;
+  margin-bottom: .5em;
 
   &::before {
-    content: "\u2192";
+    content: "${props => {
+      switch (props.type) {
+        case "entry":
+          return "\u2022"
+        case "add":
+          return "+"
+        default:
+          return "\u2192"
+      }
+    }}";
 
     font-weight: bold;
 
     margin-right: 0.5em;
 
-    color: ${props => (props.type === "use" ? "#3f9" : "currentColor")};
+    color: ${props => {
+      switch (props.type) {
+        case "use":
+          return "#3f9"
+        case "unlock":
+        case "entry":
+          return "#39f"
+        default:
+          return "currentColor"
+      }
+    }};
   }
 `
 
@@ -55,6 +80,19 @@ const ClickableStateTag = ({ id, type, state }) => {
   ) : (
     <StateTag type={type} />
   )
+}
+
+const NodeTag = ({ instance, state, type, ...otherProps }) => (
+  <span style={{ cursor: "pointer" }} {...otherProps}>
+    {instance && <EntityTag {...instance.entity} />}
+    <StateTag type={type}>{state && state.state.name}</StateTag>
+  </span>
+)
+
+const ClickableNodeTag = ({ id, ...otherProps }) => {
+  const { inspectNode } = useContext(InspectorContext)
+
+  return <NodeTag {...otherProps} onMouseDown={() => inspectNode(id)} />
 }
 
 const toInputType = type => {
@@ -82,17 +120,6 @@ const FieldLabel = ({ fieldId }) => {
         isSecret={isSecret}
       />
     </strong>
-  )
-}
-
-const ClickableNodeTag = ({ id, instance, state, type }) => {
-  const { inspectNode } = useContext(InspectorContext)
-
-  return (
-    <span style={{ cursor: "pointer" }} onClick={() => inspectNode(id)}>
-      <EntityTag {...instance.entity} />
-      <StateTag type={type}>{state && state.state.name}</StateTag>
-    </span>
   )
 }
 
@@ -151,14 +178,69 @@ const Transition = ({ withEntity, from, to }) => (
   </>
 )
 
+const SelectLabel = ({ data }) => <ClickableNodeTag {...data.label} />
+
+const SelectOptionContainer = styled.div`
+  padding: 0.5em;
+  &:not(:last-child) {
+    border-bottom: 1px solid #0001;
+  }
+`
+
+const SelectOption = ({ innerProps, data }) => {
+  return (
+    <SelectOptionContainer {...innerProps}>
+      <NodeTag {...data.label} />
+    </SelectOptionContainer>
+  )
+}
+
+const TransitionUnlocks = ({ from, to }) => {
+  const { edges, nodes } = useContext(GameContext)
+  const unlockEdges = edges.filter(
+    edge =>
+      edge.type === EDGE_TYPES.UNLOCK &&
+      edge.from === from.id &&
+      edge.to === to.id
+  )
+  const [state, setState] = useState(unlockEdges.map(({ unlocks }) => unlocks))
+
+  const onChange = event => setState(event.target.value)
+
+  return (
+    <>
+      <Select
+        label="Unlocks"
+        placeholder="Nothing"
+        block
+        isMulti
+        components={{
+          MultiValueLabel: SelectLabel,
+          Option: SelectOption
+        }}
+        onChange={onChange}
+        options={nodes
+          .filter(({ type }) => type === NODE_TYPES.STATE)
+          .map(node => ({ label: node, value: node.id }))}
+        value={state}
+      />
+    </>
+  )
+}
+
 const TransitionWithRequirements = ({ from, to, requiredActions = [] }) => (
   <TransitionContainer>
-    <Transition from={from} to={to} /> when:
-    <ActionRequirementList>
+    <Transition from={from} to={to} />
+    <br />
+    <br />
+    <Label>When</Label>
+    <TransitionList>
       {requiredActions.map((actionRequirement, i) => (
         <ActionRequirement key={i} {...actionRequirement} />
       ))}
-    </ActionRequirementList>
+    </TransitionList>
+    <br />
+    <TransitionUnlocks from={from} to={to} />
   </TransitionContainer>
 )
 
@@ -188,14 +270,14 @@ const Unlocks = ({ unlocks }) =>
     <>
       <h3>Unlocked when</h3>
       {unlocks.map(({ from, to }, i) => (
-        <Fragment key={i}>
+        <Li key={i} type={from.type === NODE_TYPES.ENTRY ? "entry" : "unlock"}>
           {i !== 0 && " and "}
           {from.type === NODE_TYPES.ENTRY ? (
-            <StateTag type={NODE_TYPES.ENTRY} />
+            "Game starts"
           ) : (
             <Transition withEntity from={from} to={to} />
           )}
-        </Fragment>
+        </Li>
       ))}
     </>
   ) : null

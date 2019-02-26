@@ -31,8 +31,17 @@ const SelectWithLabel = ({
     <StyledSelect
       {...otherProps}
       options={options}
-      value={options.find(option => option.value === value)}
-      onChange={({ value }) => onChange({ target: { value } })}
+      value={
+        otherProps.isMulti
+          ? options.filter(option => value.includes(option.value))
+          : options.find(option => option.value === value)
+      }
+      onChange={
+        otherProps.isMulti
+          ? values =>
+              onChange({ target: { value: values.map(({ value }) => value) } })
+          : ({ value }) => onChange({ target: { value } })
+      }
     />
     <LabelText
       up
