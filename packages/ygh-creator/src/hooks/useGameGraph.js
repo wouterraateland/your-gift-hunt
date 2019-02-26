@@ -137,6 +137,8 @@ const getEdges = (startInstanceIds, nodes) =>
     type
   }))
 
+const getNodeById = nodes => nodeId => nodes.find(({ id }) => id === nodeId)
+
 const useGameGraph = instances => {
   const startInstanceIds = getStartInstanceIds(instances)
   const nodes = getNodes(startInstanceIds, instances)
@@ -145,6 +147,7 @@ const useGameGraph = instances => {
   return {
     nodes,
     edges,
+    getNodeById: getNodeById(nodes),
     getNodeByInstanceAndState: getNodeByInstanceAndState(nodes)
   }
 }

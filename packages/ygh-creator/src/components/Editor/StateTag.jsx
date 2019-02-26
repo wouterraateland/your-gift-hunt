@@ -6,6 +6,8 @@ import styled from "styled-components"
 import EntryState from "./EntryState"
 import ExitState from "./ExitState"
 
+import { ToolTip } from "your-gift-hunt/ui"
+
 const SpecialTag = styled.span`
   position: relative;
 
@@ -36,12 +38,14 @@ export default ({ type, ...otherProps }) => {
       return (
         <SpecialTag>
           <EntryState />
+          <ToolTip>Game starts</ToolTip>
         </SpecialTag>
       )
     case NODE_TYPES.EXIT:
       return (
         <SpecialTag>
           <ExitState />
+          <ToolTip>Exit state</ToolTip>
         </SpecialTag>
       )
     default:

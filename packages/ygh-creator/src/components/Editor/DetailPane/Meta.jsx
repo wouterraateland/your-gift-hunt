@@ -1,5 +1,7 @@
 import React from "react"
 import styled from "styled-components"
+
+import EntityTypeIcon from "../EntityTypeIcon"
 import StateTag from "../StateTag"
 
 const Name = styled.h2`
@@ -15,7 +17,9 @@ const Meta = ({
   }
 }) => (
   <>
-    <Name>{entity.name}</Name>
+    <Name>
+      <EntityTypeIcon {...entity} /> {entity.name}
+    </Name>
     <StateTag>{state.name}</StateTag>
     <Description>
       {entity.description} {state.description}

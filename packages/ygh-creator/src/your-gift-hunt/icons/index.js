@@ -19,12 +19,16 @@ export { default as Trigger } from "./entities/Trigger"
 export { default as Edit } from "./Edit"
 export { default as Cog } from "./Cog"
 
-const Icon = styled.svg`
-  height: ${props => props.size}em;
-
+const Icon = styled.svg.attrs(({ size }) => ({
+  style: {
+    height: `${size}em`
+  }
+}))`
   fill: currentColor;
   stroke: currentColor;
   stroke-width: 0;
+
+  vertical-align: -0.1em;
 `
 
 Icon.defaultProps = {

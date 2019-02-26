@@ -2,7 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import GenericItem from "your-gift-hunt/items"
 import GenericObject, { getObjectComponent } from "your-gift-hunt/objects"
-import StateTag from "components/Editor/StateTag"
+import EntityTypeIcon from "../EntityTypeIcon"
+import StateTag from "../StateTag"
 
 import S from "sanctuary"
 
@@ -82,7 +83,9 @@ const InstanceCard = ({ instance, state, position, onClick }) => {
 
   return (
     <Card onClick={onClick} style={position}>
-      <InstanceName>{entity.name}</InstanceName>
+      <InstanceName>
+        <EntityTypeIcon {...entity} /> {entity.name}
+      </InstanceName>
       {state !== "default" && <StateTag>{state}</StateTag>}
       {entity.featuredField && (
         <FeaturedFieldValue>

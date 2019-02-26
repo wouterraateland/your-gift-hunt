@@ -15,6 +15,7 @@ const Arrow = styled.svg`
       case EDGE_TYPES.EXIT:
         return "#f93"
       case EDGE_TYPES.UNLOCK:
+      case EDGE_TYPES.ENTRY:
         return "#39f"
       case EDGE_TYPES.USE:
         return "#3f9"

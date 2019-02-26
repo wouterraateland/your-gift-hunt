@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import * as Icon from "your-gift-hunt/icons"
+import EntityTypeIcon from "./EntityTypeIcon"
 
 const EntityTag = styled.span`
   display: inline-block;
@@ -12,12 +12,8 @@ const EntityTag = styled.span`
   background-color: ${props => props.theme.color.accent};
 `
 
-export default ({ isItem, isObject, isTrigger, children }) => (
+export default ({ name, ...otherProps }) => (
   <EntityTag>
-    {isItem && <Icon.Item size={1} />}
-    {isObject && <Icon.Object size={1} />}
-    {isTrigger && <Icon.Trigger size={1} />}
-    {!isItem && !isObject && !isTrigger && <Icon.Challenge size={1} />}
-    {children}
+    <EntityTypeIcon {...otherProps} /> {name}
   </EntityTag>
 )

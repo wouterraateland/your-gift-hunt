@@ -7,7 +7,7 @@ const EntryState = styled.div`
   height: 1em;
   border-radius: 100%;
 
-  background-color: #0009;
+  background-color: #39f;
 
   transform: translate(-50%, -50%);
 `

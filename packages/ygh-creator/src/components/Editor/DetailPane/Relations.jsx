@@ -1,6 +1,6 @@
 import { ACTION_TYPES, NODE_TYPES } from "data"
 
-import React, { useContext } from "react"
+import React, { Fragment, useContext } from "react"
 import styled from "styled-components"
 
 import EntitiesContext from "contexts/Entities"
@@ -85,6 +85,17 @@ const FieldLabel = ({ fieldId }) => {
   )
 }
 
+const ClickableNodeTag = ({ id, instance, state, type }) => {
+  const { inspectNode } = useContext(InspectorContext)
+
+  return (
+    <span style={{ cursor: "pointer" }} onClick={() => inspectNode(id)}>
+      <EntityTag {...instance.entity} />
+      <StateTag type={type}>{state && state.state.name}</StateTag>
+    </span>
+  )
+}
+
 const ActionRequirement = ({ type, payload }) => {
   const { requiredValues, requiredEntity } = payload
 
@@ -92,7 +103,6 @@ const ActionRequirement = ({ type, payload }) => {
     case ACTION_TYPES.USE:
     case ACTION_TYPES.TARGET_OF_USE:
       const { entity, state } = requiredEntity
-      const { inspectNode } = useContext(InspectorContext)
       const { nodes } = useContext(GameContext)
 
       const node = nodes.find(
@@ -105,15 +115,7 @@ const ActionRequirement = ({ type, payload }) => {
       return (
         <Li type="use">
           {type === ACTION_TYPES.USE && "Used on"}{" "}
-          <span
-            style={{ cursor: "pointer" }}
-            onClick={() => inspectNode(node.id)}
-          >
-            <EntityTag {...node.instance.entity}>
-              {node.instance.entity.name}
-            </EntityTag>
-            <StateTag>{node.state.state.name}</StateTag>
-          </span>{" "}
+          <ClickableNodeTag {...node} />{" "}
           {type === ACTION_TYPES.TARGET_OF_USE && "is used on this"}
         </Li>
       )
@@ -140,11 +142,18 @@ const ActionRequirement = ({ type, payload }) => {
   }
 }
 
-const Transition = ({ from, to, requiredActions }) => (
-  <TransitionContainer>
+const Transition = ({ withEntity, from, to }) => (
+  <>
+    {withEntity && <EntityTag {...from.instance.entity} />}
     <ClickableStateTag {...from} />
     <Arrow>&rarr;</Arrow>
-    <ClickableStateTag {...to} /> when:
+    <ClickableStateTag {...to} />
+  </>
+)
+
+const TransitionWithRequirements = ({ from, to, requiredActions = [] }) => (
+  <TransitionContainer>
+    <Transition from={from} to={to} /> when:
     <ActionRequirementList>
       {requiredActions.map((actionRequirement, i) => (
         <ActionRequirement key={i} {...actionRequirement} />
@@ -153,18 +162,57 @@ const Transition = ({ from, to, requiredActions }) => (
   </TransitionContainer>
 )
 
-const Relations = ({ node }) => {
-  const { getNodeByInstanceAndState } = useContext(GameContext)
-  const outgoingTransitions = node.state.state.outgoingTransitions
+const PreviousStates = ({
+  node,
+  incomingTransitions,
+  getNodeByInstanceAndState
+}) =>
+  incomingTransitions.length ? (
+    <>
+      <h3>Previous state{incomingTransitions.length > 1 && "s"}</h3>
+      {incomingTransitions.map(({ from }, i) => {
+        const prevNode = getNodeByInstanceAndState(node.instance, from)
 
-  return outgoingTransitions.length ? (
+        return (
+          <Fragment key={i}>
+            {i !== 0 && " or "}
+            <ClickableStateTag {...prevNode} />
+          </Fragment>
+        )
+      })}
+    </>
+  ) : null
+
+const Unlocks = ({ unlocks }) =>
+  unlocks.length ? (
+    <>
+      <h3>Unlocked when</h3>
+      {unlocks.map(({ from, to }, i) => (
+        <Fragment key={i}>
+          {i !== 0 && " and "}
+          {from.type === NODE_TYPES.ENTRY ? (
+            <StateTag type={NODE_TYPES.ENTRY} />
+          ) : (
+            <Transition withEntity from={from} to={to} />
+          )}
+        </Fragment>
+      ))}
+    </>
+  ) : null
+
+const OutgoingTransitions = ({
+  node,
+  outgoingTransitions,
+  getNodeByInstanceAndState
+}) =>
+  outgoingTransitions.length ? (
     <>
       <h3>Transitions</h3>
       {outgoingTransitions.map(transition => {
         const nextNode = getNodeByInstanceAndState(node.instance, transition.to)
 
         return (
-          <Transition
+          <TransitionWithRequirements
             key={[node.id, nextNode.id]}
             from={node}
             to={nextNode}
@@ -174,6 +222,42 @@ const Relations = ({ node }) => {
       })}
     </>
   ) : null
+
+const Relations = ({ node }) => {
+  const { getNodeByInstanceAndState, edges, getNodeById } = useContext(
+    GameContext
+  )
+  const { getEntityStateById } = useContext(EntitiesContext)
+
+  const entityState = getEntityStateById(node.state.state.id)
+  const incomingTransitions = entityState.incomingTransitions
+  const outgoingTransitions = entityState.outgoingTransitions
+  const unlocks = edges
+    .filter(
+      ({ unlocks, type, to }) =>
+        unlocks === node.id || (type === NODE_TYPES.ENTRY && to === node.id)
+    )
+    .map(({ from, to }) => ({
+      from: getNodeById(from),
+      to: getNodeById(to)
+    }))
+
+  return (
+    <>
+      <Unlocks unlocks={unlocks} />
+      <PreviousStates
+        node={node}
+        incomingTransitions={incomingTransitions}
+        getNodeByInstanceAndState={getNodeByInstanceAndState}
+        unlocks={unlocks}
+      />
+      <OutgoingTransitions
+        node={node}
+        outgoingTransitions={outgoingTransitions}
+        getNodeByInstanceAndState={getNodeByInstanceAndState}
+      />
+    </>
+  )
 }
 
 export default Relations
