@@ -38,6 +38,10 @@ const Center = styled.div`
   top: 2em;
 
   transform: translate(-50%, -50%);
+
+  @media (max-width: 35em) {
+    display: none;
+  }
 `
 
 const NavItem = styled(Link)`
@@ -49,6 +53,12 @@ const NavItem = styled(Link)`
 
   vertical-align: middle;
   font-weight: bold;
+`
+
+const FloatRight = styled(Float.Right)`
+  @media (max-width: 20em) {
+    display: none;
+  }
 `
 
 const NavContainer = ({ compact, children }) =>
@@ -70,14 +80,14 @@ const Nav = ({ title, children, items = [], compact }) => {
         <Title compact={compact}>{title}</Title>
       </Float.Left>
       <Center>{children}</Center>
-      <Float.Right>
+      <FloatRight>
         {items.map(({ label, ...item }, i) => (
           <NavItem key={i} {...item}>
             {label}
           </NavItem>
         ))}
         {!compact && <Profile />}
-      </Float.Right>
+      </FloatRight>
     </NavContainer>
   )
 }

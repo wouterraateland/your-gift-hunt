@@ -25,8 +25,8 @@ const Creator = () => {
   return (
     <Layout>
       <EditorPane />
-      <DetailPane ref={detailPane} />
       <Toolbox />
+      <DetailPane ref={detailPane} />
     </Layout>
   )
 }

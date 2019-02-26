@@ -7,6 +7,8 @@ const DetailPaneContainer = styled(Paper)`
   top: 0;
   right: 0;
   bottom: 0;
+  overflow-y: auto;
+
   width: 25em;
   max-width: 100%;
 

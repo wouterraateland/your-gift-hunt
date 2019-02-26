@@ -9,6 +9,7 @@ import Body from "./Body"
 import Meta from "./Meta"
 import Fields from "./Fields"
 import Relations from "./Relations"
+import CloseButton from "./CloseButton"
 
 const DetailPane = forwardRef((_, ref) => {
   const { isOpen, nodeId } = useContext(InspectorContext)
@@ -28,6 +29,7 @@ const DetailPane = forwardRef((_, ref) => {
           </Body>
         </>
       )}
+      <CloseButton />
     </Container>
   )
 })
