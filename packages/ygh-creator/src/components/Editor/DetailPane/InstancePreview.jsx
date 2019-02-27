@@ -9,9 +9,7 @@ const InstancePreviewContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  height: 10em;
-
-  background: #0001;
+  height: 8em;
 `
 
 const InstancePreview = ({ node }) => {

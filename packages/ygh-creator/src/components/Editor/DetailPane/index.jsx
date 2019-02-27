@@ -5,10 +5,12 @@ import InspectorContext from "contexts/Inspector"
 
 import Container from "./Container"
 import InstancePreview from "./InstancePreview"
-import Body from "./Body"
 import Meta from "./Meta"
 import Fields from "./Fields"
-import Relations from "./Relations"
+import PreviousStates from "./PreviousStates"
+import UnlockConditions from "./UnlockConditions"
+import OutgoingTransitions from "./OutgoingTransitions"
+
 import CloseButton from "./CloseButton"
 
 const DetailPane = forwardRef((_, ref) => {
@@ -22,11 +24,11 @@ const DetailPane = forwardRef((_, ref) => {
       {!!node && (
         <>
           <InstancePreview node={node} />
-          <Body>
-            <Meta node={node} />
-            <Fields node={node} />
-            <Relations node={node} />
-          </Body>
+          <Meta node={node} />
+          <Fields node={node} />
+          <PreviousStates node={node} />
+          <UnlockConditions node={node} />
+          <OutgoingTransitions node={node} />
         </>
       )}
       <CloseButton />

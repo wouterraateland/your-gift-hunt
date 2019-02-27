@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react"
-import styled from "styled-components"
 
 import { UPDATE_ENTITY_INSTANCE_FIELD } from "gql/mutations"
 import { useMutation } from "react-apollo-hooks"
 import useDebounce from "hooks/useDebounce"
 
-import { Input, Field } from "your-gift-hunt/ui"
-
-const Form = styled.form`
-  margin: 2em 0 0;
-`
+import { Paper, Input, Field } from "your-gift-hunt/ui"
 
 const getFieldValueMap = ({ fields }) =>
   fields.reduce(
@@ -93,32 +88,37 @@ const FieldsForm = ({ node: { instance } }) => {
     [debouncedFieldValues]
   )
 
-  return (
-    <Form>
-      {fields
-        .filter(({ field: { id } }) => fieldValues[id])
-        .map(({ field: { id, type, ...field } }) => {
-          if (!id) {
-            return null
-          }
-          switch (type) {
-            default:
-              return (
-                <Field block key={`${instance.id}${id}`}>
-                  <Input
-                    block
-                    {...field}
-                    type={toInputType(type)}
-                    showType
-                    value={fieldValues[id].value}
-                    onChange={event => updateFieldValue(id, event.target.value)}
-                  />
-                </Field>
-              )
-          }
-        })}
-    </Form>
-  )
+  return fields.length ? (
+    <Paper as="form">
+      <Paper.Section>
+        <Paper.Title size={3}>Properties</Paper.Title>
+        {fields
+          .filter(({ field: { id } }) => fieldValues[id])
+          .map(({ field: { id, type, ...field } }) => {
+            if (!id) {
+              return null
+            }
+            switch (type) {
+              default:
+                return (
+                  <Field block key={`${instance.id}${id}`}>
+                    <Input
+                      block
+                      {...field}
+                      type={toInputType(type)}
+                      showType
+                      value={fieldValues[id].value}
+                      onChange={event =>
+                        updateFieldValue(id, event.target.value)
+                      }
+                    />
+                  </Field>
+                )
+            }
+          })}
+      </Paper.Section>
+    </Paper>
+  ) : null
 }
 
 export default FieldsForm

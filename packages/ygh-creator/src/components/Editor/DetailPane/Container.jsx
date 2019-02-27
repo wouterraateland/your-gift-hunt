@@ -10,9 +10,12 @@ const DetailPaneContainer = styled(Paper)`
   overflow-y: auto;
 
   width: 25em;
+  padding: 1em;
   max-width: 100%;
 
   transform: translate3D(${props => (props.isOpen ? 0 : 100)}%, 0, 0);
+
+  background-color: #f2f2f2;
 
   transition: transform ease-in-out 0.3s;
 `
