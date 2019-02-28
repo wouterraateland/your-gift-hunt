@@ -25,7 +25,7 @@ const Close = styled.strong`
   cursor: pointer;
 `
 
-const setWidth = el => {
+const setSize = el => {
   if (el) {
     el.style.width = "0"
     const offset = el.offsetWidth
@@ -37,9 +37,12 @@ const MultiInput = ({ value, onChange }) => {
   const input = useRef(null)
   const [nextValue, setNextValue] = useState("")
 
-  useEffect(() => {
-    setWidth(input.current)
-  }, [nextValue])
+  useEffect(
+    () => {
+      setSize(input.current)
+    },
+    [nextValue]
+  )
 
   function updateNextValue(event) {
     setNextValue(event.target.value)

@@ -1,5 +1,7 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useContext, useState, useCallback, useEffect } from "react"
 import styled from "styled-components"
+
+import GameContext from "contexts/Game"
 
 import { Input, Button } from "your-gift-hunt/ui"
 
@@ -20,8 +22,12 @@ const Form = styled.form`
 `
 
 const EditableInstanceName = ({ instance }) => {
-  const [{ editable, value }, setState] = useState({
+  const { updateInstanceName } = useContext(GameContext)
+
+  const [{ editable, isLoading, error, value }, setState] = useState({
     editable: false,
+    isLoading: false,
+    error: null,
     value: instance.name
   })
 
@@ -29,6 +35,8 @@ const EditableInstanceName = ({ instance }) => {
     () => {
       setState({
         editable: false,
+        isLoading: false,
+        error: null,
         value: instance.name
       })
     },
@@ -40,10 +48,25 @@ const EditableInstanceName = ({ instance }) => {
     []
   )
 
-  const onSubmit = useCallback(event => {
-    event.preventDefault()
-    setState(state => ({ ...state, editable: false }))
-  }, [])
+  const onSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      setState(state => ({ ...state, isLoading: true }))
+      updateInstanceName(instance.id, value)
+        .then(
+          setState(state => ({
+            ...state,
+            editable: false,
+            isLoading: false,
+            error: null
+          }))
+        )
+        .catch(err =>
+          setState(state => ({ ...state, isLoading: false, error: err }))
+        )
+    },
+    [value]
+  )
 
   const onChange = useCallback(
     ({ target: { value } }) => setState(state => ({ ...state, value })),
@@ -52,8 +75,19 @@ const EditableInstanceName = ({ instance }) => {
 
   return editable ? (
     <Form onSubmit={onSubmit}>
-      <Input value={value} onChange={onChange} />
-      <Button size="medium" type="submit" importance="tertiary" color="success">
+      <Input
+        value={value}
+        onChange={onChange}
+        disabled={isLoading}
+        error={error}
+      />
+      <Button
+        size="medium"
+        type="submit"
+        importance="tertiary"
+        color="success"
+        disabled={isLoading}
+      >
         ✓
       </Button>
     </Form>

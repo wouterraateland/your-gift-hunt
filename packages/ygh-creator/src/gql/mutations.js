@@ -70,3 +70,12 @@ export const UPDATE_GAME = gql`
     }
   }
 `
+
+export const UPDATE_INSTANCE_NAME = gql`
+  mutation updateInstanceName($instanceId: ID!, $name: String!) {
+    updateEntityInstance(where: { id: $instanceId }, data: { name: $name }) {
+      id
+      name
+    }
+  }
+`
