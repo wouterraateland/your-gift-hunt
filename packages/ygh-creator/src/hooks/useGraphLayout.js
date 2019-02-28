@@ -12,7 +12,7 @@ const edgePriority = {
   [EDGE_TYPES.ENTRY]: 0,
   [EDGE_TYPES.EXIT]: 0,
   [EDGE_TYPES.TRANSFORM]: 1,
-  [EDGE_TYPES.USE]: 2,
+  [EDGE_TYPES.USE]: 4,
   [EDGE_TYPES.UNLOCK]: 3
 }
 
@@ -30,20 +30,54 @@ const findPositions = (nodes, edges) => {
 
   const positionIsOccupied = (x, y) => occupiedPositions.has(`${x} ${y}`)
 
-  const findUnoccupiedPositionAround = (x, y) => {
-    for (let p = 0; p < 10000; p++) {
-      if (!positionIsOccupied(x > 0 ? x - p : x + p, y)) {
-        return { x: x > 0 ? x - p : x + p, y }
-      }
-      if (!positionIsOccupied(x > 0 ? x + p : x - p, y)) {
-        return { x: x > 0 ? x + p : x - p, y }
-      }
+  const findUnoccupiedPositionAround = (x, y, algorithm = "state") => {
+    let possible
+    const xMult = x > 0 ? -1 : 1
+    switch (algorithm) {
+      case "start":
+        for (let dx = 0; dx < 1000; dx++) {
+          possible = true
+          for (let dy = -3; dy <= 3; dy++) {
+            if (positionIsOccupied(x + dx, y + dy)) {
+              possible = false
+            }
+          }
+          if (possible) {
+            return { x: x + dx, y }
+          }
+        }
+        break
+      case "aside-up":
+      case "aside-down":
+        const yMult = algorithm === "aside-up" ? -1 : 1
+        for (let p = 0; p < 10000; p++) {
+          if (!positionIsOccupied(x + xMult, y + p * yMult)) {
+            return { x: x + xMult, y: y + p * yMult }
+          }
+          if (!positionIsOccupied(x - xMult, y + p * yMult)) {
+            return { x: x - xMult, y: y + p * yMult }
+          }
+        }
+        break
+      default:
+        for (let p = 0; p < 10000; p++) {
+          if (!positionIsOccupied(x + p * xMult, y)) {
+            return { x: x + p * xMult, y }
+          }
+          if (!positionIsOccupied(x - p * xMult, y)) {
+            return { x: x - p * xMult, y }
+          }
+        }
+        break
     }
     return { x, y }
   }
 
   const positionNode = (nodeId, pos) => {
     nodePositions.set(nodeId, pos)
+
+    // const node = nodes.find(({ id}) => nodeId === id)
+    // if (node.type)
     occupiedPositions.add(`${pos.x} ${pos.y}`)
 
     const todoIndex = todo.findIndex(node => node.id === nodeId)
@@ -62,24 +96,8 @@ const findPositions = (nodes, edges) => {
       .forEach(edge => nextUp.push(edge))
   }
 
-  const positionStartNode = nodeId => {
-    let possible
-    for (let x = 0; x < 1000; x++) {
-      possible = true
-      for (let y = -3; y <= 3; y++) {
-        if (positionIsOccupied(x, y)) {
-          possible = false
-        }
-      }
-      if (possible) {
-        positionNode(nodeId, { x, y: 0 })
-        return
-      }
-    }
-  }
-
   while (todo.length > 0) {
-    positionStartNode(todo[0].id)
+    positionNode(todo[0].id, findUnoccupiedPositionAround(0, 0, "start"))
 
     while (nextUp.length > 0) {
       const edge = nextUp.pop()
@@ -106,7 +124,14 @@ const findPositions = (nodes, edges) => {
         if (!nodePositions.has(endPoint)) {
           const { x, y } = nodePositions.get(edge.from)
 
-          positionNode(endPoint, findUnoccupiedPositionAround(x, y + 1))
+          positionNode(
+            endPoint,
+            findUnoccupiedPositionAround(
+              x,
+              y + 1,
+              edge.type === EDGE_TYPES.USE ? "aside-down" : "state"
+            )
+          )
         }
       } else if (isUnlock) {
         if (nodePositions.has(edge.unlocks)) {
@@ -121,7 +146,18 @@ const findPositions = (nodes, edges) => {
       } else {
         const { x, y } = nodePositions.get(edge.to)
 
-        positionNode(edge.from, findUnoccupiedPositionAround(x, y - 1))
+        const node = nodes.find(({ id }) => edge.from === id)
+
+        positionNode(
+          edge.from,
+          node.type === NODE_TYPES.ENTRY
+            ? { x, y: y - 1 }
+            : findUnoccupiedPositionAround(
+                x,
+                y - 1,
+                edge.type === EDGE_TYPES.USE ? "aside-up" : "state"
+              )
+        )
       }
     }
   }

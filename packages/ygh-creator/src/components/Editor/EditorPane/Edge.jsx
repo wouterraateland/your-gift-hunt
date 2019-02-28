@@ -22,6 +22,29 @@ const Edge = ({ id, type, from, to, unlocks, getNodePosition }) => {
           type={type}
         />
       )
+    case EDGE_TYPES.USE:
+      const d = fromPosition.left < toPosition.left ? 1 : -1
+      return (
+        <TransitionArrow
+          key={id}
+          x1={fromPosition.left + 96 + 96 * d}
+          y1={fromPosition.top + 48}
+          x2={toPosition.left + 96 - 96 * d}
+          y2={toPosition.top + 48}
+          type={type}
+        />
+      )
+    case EDGE_TYPES.ENTRY:
+      return (
+        <TransitionArrow
+          key={id}
+          x1={fromPosition.left + 96}
+          y1={fromPosition.top + 112}
+          x2={toPosition.left + 96}
+          y2={toPosition.top}
+          type={type}
+        />
+      )
     default:
       return (
         <TransitionArrow
