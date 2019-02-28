@@ -4,8 +4,8 @@ import useGame from "hooks/useGame"
 const GameContext = createContext(null)
 
 export const GameProvider = ({ children, ...otherProps }) => {
-  const game = useGame(otherProps)
-  return <GameContext.Provider value={game}>{children}</GameContext.Provider>
+  const value = useGame(otherProps)
+  return <GameContext.Provider value={value}>{children}</GameContext.Provider>
 }
 
 export default GameContext

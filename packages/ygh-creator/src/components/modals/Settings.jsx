@@ -1,10 +1,12 @@
-import React, { useRef, useState, useEffect } from "react"
+import React, { useContext, useRef, useState, useEffect } from "react"
 import styled from "styled-components"
 import _ from "utils"
 
+import GameContext from "contexts/Game"
+
 import useClickOutside from "hooks/useClickOutside"
 import { useFormState } from "react-use-form-state"
-import { useMutation, useApolloClient } from "react-apollo-hooks"
+import { useApolloClient } from "react-apollo-hooks"
 
 import Modal from "containers/Modal"
 import { Paper, Field, Input, Select, Button } from "your-gift-hunt/ui"
@@ -12,7 +14,6 @@ import StatusMessage from "components/StatusMessage"
 
 import { accessOptions, PRIVACY, ACCESS_TYPES } from "../../data"
 import { GAME_COUNT_BY_SLUG } from "gql/queries"
-import { UPDATE_GAME } from "gql/mutations"
 
 const StyledPaper = styled(Paper)`
   width: 45em;
@@ -31,9 +32,11 @@ const Tagline = styled.p`
   margin-bottom: 2em;
 `
 
-const SettingsModal = ({ game }) => {
+const SettingsModal = () => {
   const ref = useRef(null)
   useClickOutside({ ref, onClickOutside: () => window.history.back() })
+
+  const { game, updateGameSettings } = useContext(GameContext)
 
   const [state, setState] = useState(null)
   const [formState, { text, select }] = useFormState({
@@ -64,26 +67,22 @@ const SettingsModal = ({ game }) => {
     return res.data.gamesConnection.aggregate.count !== 0
   }
 
-  useEffect(() => {
-    setNameExistence(false)
-    checkNameExistence(formState.values.name).then(setNameExistence)
-  }, [formState.values.name])
-
-  const updateGameSettings = useMutation(UPDATE_GAME)
+  useEffect(
+    () => {
+      setNameExistence(false)
+      checkNameExistence(formState.values.name).then(setNameExistence)
+    },
+    [formState.values.name]
+  )
 
   async function handleSubmit(event) {
     event.preventDefault()
 
     setState("loading")
     try {
-      await updateGameSettings({
-        variables: {
-          gameId: game.id,
-          values: {
-            ...formState.values,
-            slug: _.toSlug(formState.values.name)
-          }
-        }
+      await updateGameSettings(game.id, {
+        ...formState.values,
+        slug: _.toSlug(formState.values.name)
       })
       setState("success")
     } catch (error) {

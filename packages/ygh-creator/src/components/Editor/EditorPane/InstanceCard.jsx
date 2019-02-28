@@ -24,7 +24,7 @@ const Card = styled.div`
 `
 
 const InstanceName = styled.h2`
-  margin: 0 4rem 0.25rem 0;
+  margin: 0 ${props => (props.hasPreview ? 4 : 0)}rem 0.25rem 0;
   font-size: 1.25em;
   line-height: 1;
 `
@@ -72,6 +72,7 @@ const Scaled = ({ isRotated, scale, ...otherProps }) => (
 const InstanceCard = ({ instance, state, position, onClick }) => {
   const { entity, fields } = instance
 
+  const hasPreview = entity && (entity.isItem || entity.isObject)
   const scale = entity.isObject
     ? S.pipe([
         S.map(({ width, height }) => 2.5 / Math.max(width, height)),
@@ -83,8 +84,8 @@ const InstanceCard = ({ instance, state, position, onClick }) => {
 
   return (
     <Card onClick={onClick} style={position}>
-      <InstanceName>
-        <EntityTypeIcon {...entity} /> {entity.name}
+      <InstanceName hasPreview={hasPreview}>
+        <EntityTypeIcon {...entity} /> {instance.name}
       </InstanceName>
       {state !== "default" && <StateTag>{state}</StateTag>}
       {entity.featuredField && (
@@ -95,7 +96,7 @@ const InstanceCard = ({ instance, state, position, onClick }) => {
           )}
         </FeaturedFieldValue>
       )}
-      {entity && (entity.isItem || entity.isObject) && (
+      {hasPreview && (
         <EntityPreview>
           <Scaled scale={scale} isRotated={entity.isObject}>
             {entity.isItem && <GenericItem {...instance} state={state} />}

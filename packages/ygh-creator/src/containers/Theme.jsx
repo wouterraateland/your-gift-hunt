@@ -16,6 +16,10 @@ const theme = {
   columns: {
     count: 12,
     gap: ".5em"
+  },
+  font: {
+    copy: "Montserrat, sans-serif",
+    heading: '"Playfair Display", serif'
   }
 }
 
@@ -31,7 +35,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    font-family: Montserrat, sans-serif;
+    font-family: ${theme.font.copy};
   }
 
   body {
@@ -57,7 +61,7 @@ export const GlobalStyles = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     color: ${theme.color.emphasis};
     font-weight: normal;
-    font-family: "Playfair Display", serif;
+    font-family: ${theme.font.heading};
   }
 
   strong {

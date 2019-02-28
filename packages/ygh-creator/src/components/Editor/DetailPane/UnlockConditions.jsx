@@ -85,9 +85,9 @@ const styles = {
 }
 
 const getValue = ({ from, to }) =>
-  `${from.instance.entity.name}(${
-    from.state ? from.state.state.name : "entry"
-  }) -> (${to.state ? to.state.state.name : "exit"})`
+  `${from.instance.name}(${from.state ? from.state.state.name : "entry"}) -> (${
+    to.state ? to.state.state.name : "exit"
+  })`
 
 const UnlockConditions = ({ node }) => {
   const { edges, getNodeById } = useContext(GameContext)

@@ -44,6 +44,7 @@ const NumberType = styled(DefaultType)`
 const getBaseComponent = type => {
   switch (type) {
     case "text":
+    case "textarea":
       return TextType
     case "number":
       return NumberType

@@ -1,7 +1,8 @@
-import React, { useContext, useRef } from "react"
+import React, { useContext, useEffect, useRef } from "react"
+import { navigate } from "@reach/router"
 
 import { EntitiesProvider } from "contexts/Entities"
-import { GameProvider } from "contexts/Game"
+import GameContext, { GameProvider } from "contexts/Game"
 import InspectorContext, { InspectorProvider } from "contexts/Inspector"
 
 import useClickOutside from "hooks/useClickOutside"
@@ -31,12 +32,31 @@ const Creator = () => {
   )
 }
 
+const CreatorWithModal = props => {
+  const { gameExists } = useContext(GameContext)
+
+  useEffect(
+    () => {
+      if (!gameExists) {
+        navigate("/")
+      }
+    },
+    [gameExists]
+  )
+
+  return gameExists ? (
+    <>
+      <Creator />
+      {props["*"] === "settings" && <SettingsModal />}
+    </>
+  ) : null
+}
+
 const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => (
   <EntitiesProvider>
     <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
       <InspectorProvider>
-        <Creator />
-        {otherProps["*"] === "settings" && <SettingsModal />}
+        <CreatorWithModal {...otherProps} />
       </InspectorProvider>
     </GameProvider>
   </EntitiesProvider>

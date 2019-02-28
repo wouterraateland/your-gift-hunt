@@ -2,26 +2,22 @@ import moment from "moment"
 
 import { useState } from "react"
 
-// TODO: Implement real saving
-async function saveGame(game) {
-  return new Promise(resolve => setTimeout(() => resolve(game), 1000))
-}
-
-const useGameSave = game => {
+const useSaveState = () => {
   const [saveState, setSaveState] = useState({
     isSaving: false,
     isDirty: false,
     lastSaved: null
   })
 
-  async function save() {
+  const save = f => async (...args) => {
     setSaveState(saveState => ({ ...saveState, isSaving: true }))
-    await saveGame(game)
+    const res = await f(...args)
     setSaveState({
       isDirty: false,
       isSaving: false,
       lastSaved: moment()
     })
+    return res
   }
 
   return {
@@ -30,4 +26,4 @@ const useGameSave = game => {
   }
 }
 
-export default useGameSave
+export default useSaveState

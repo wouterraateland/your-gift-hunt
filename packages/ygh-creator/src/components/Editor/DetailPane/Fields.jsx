@@ -18,7 +18,7 @@ const getFieldValueMap = ({ fields }) =>
 const toInputType = type => {
   switch (type) {
     case "STRING":
-      return "text"
+      return "textarea"
     case "NUMBER":
       return "number"
     default:

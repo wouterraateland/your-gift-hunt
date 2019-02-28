@@ -84,7 +84,7 @@ const styles = {
   })
 }
 
-const getValue = node => `${node.instance.entity.name} ${node.state.state.name}`
+const getValue = node => `${node.instance.name} ${node.state.state.name}`
 
 const Unlocks = ({ from, to }) => {
   const { edges, nodes, getNodeById } = useContext(GameContext)

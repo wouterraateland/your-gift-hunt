@@ -2,7 +2,7 @@ import { NODE_TYPES } from "data"
 import React from "react"
 import styled from "styled-components"
 
-import EntityTag from "../EntityTag"
+import InstanceTag from "../InstanceTag"
 import ClickableStateTag from "./ClickableStateTag"
 
 const Arrow = styled.span`
@@ -17,7 +17,7 @@ const Transition = ({ withEntity, from, to }) =>
     "Game starts"
   ) : (
     <>
-      {withEntity && <EntityTag {...from.instance.entity} />}
+      {withEntity && <InstanceTag {...from.instance} />}
       <ClickableStateTag {...from} />
       <Arrow>&rarr;</Arrow>
       <ClickableStateTag {...to} />

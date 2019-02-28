@@ -65,6 +65,8 @@ export const UPDATE_GAME = gql`
   mutation updateGame($gameId: ID!, $values: GameUpdateInput!) {
     updateGame(where: { id: $gameId }, data: $values) {
       id
+      name
+      description
     }
   }
 `
