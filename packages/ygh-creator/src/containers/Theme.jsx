@@ -26,6 +26,10 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html, body, #app-root {
+    height: 100%;
+  }
+
   html {
     font-family: Montserrat, sans-serif;
   }

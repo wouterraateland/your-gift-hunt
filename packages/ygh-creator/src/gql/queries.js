@@ -18,21 +18,26 @@ export const ENTITIES = gql`
         description
 
         incomingTransitions {
+          id
           from {
             id
           }
         }
         outgoingTransitions {
+          id
           to {
             id
           }
           requiredActions {
+            id
             name
             hints
 
             type
             payload {
+              id
               requiredEntity {
+                id
                 entity {
                   id
                 }
@@ -41,6 +46,7 @@ export const ENTITIES = gql`
                 }
               }
               requiredValues {
+                id
                 key
                 eqValue
                 neqValue
@@ -81,6 +87,7 @@ export const GAME_BY_SLUG = gql`
       accessType
       accessCode
       creator {
+        id
         name
         slug
       }
@@ -90,13 +97,16 @@ export const GAME_BY_SLUG = gql`
         states {
           id
           unlockedBy {
+            id
             from {
+              id
               instance {
                 id
               }
             }
           }
           outgoingTransitions {
+            id
             to {
               id
             }
@@ -109,14 +119,18 @@ export const GAME_BY_SLUG = gql`
             name
             description
             outgoingTransitions {
+              id
               to {
                 id
               }
               requiredActions {
+                id
                 name
                 type
                 payload {
+                  id
                   requiredEntity {
+                    id
                     entity {
                       id
                     }
@@ -125,6 +139,7 @@ export const GAME_BY_SLUG = gql`
                     }
                   }
                   requiredValues {
+                    id
                     key
                     eqValue
                     neqValue
