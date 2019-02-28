@@ -8,10 +8,9 @@ import TransitionWithRequirements from "./TransitionWithRequirements"
 
 const TransitionList = ({ transitions }) =>
   transitions.map(transition => (
-    <TransitionWithRequirements
-      key={[transition.from.id, transition.to.id]}
-      {...transition}
-    />
+    <Paper.Section key={[transition.from.id, transition.to.id]}>
+      <TransitionWithRequirements {...transition} />
+    </Paper.Section>
   ))
 
 const OutgoingTransitions = ({ node }) => {
@@ -28,12 +27,12 @@ const OutgoingTransitions = ({ node }) => {
   )
 
   return outgoingTransitions.length ? (
-    <Paper>
-      <Paper.Section>
-        <Paper.Title size={3}>Transitions</Paper.Title>
+    <>
+      <h4>Transitions</h4>
+      <Paper>
         <TransitionList transitions={outgoingTransitions} />
-      </Paper.Section>
-    </Paper>
+      </Paper>
+    </>
   ) : null
 }
 

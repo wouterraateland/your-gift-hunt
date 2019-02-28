@@ -95,7 +95,7 @@ const InstanceCard = ({ instance, state, position, onClick }) => {
           )}
         </FeaturedFieldValue>
       )}
-      {entity && (
+      {entity && (entity.isItem || entity.isObject) && (
         <EntityPreview>
           <Scaled scale={scale} isRotated={entity.isObject}>
             {entity.isItem && <GenericItem {...instance} state={state} />}

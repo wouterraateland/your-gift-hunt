@@ -4,53 +4,118 @@ import styled from "styled-components"
 
 import GameContext from "contexts/Game"
 
-import { Select } from "your-gift-hunt/ui"
+import Select from "react-select"
+import { Button } from "your-gift-hunt/ui"
 import NodeTag from "../NodeTag"
 import ClickableNodeTag from "./ClickableNodeTag"
 
-const SelectLabel = ({ data }) => <ClickableNodeTag {...data.label} />
+const MultiValueLabel = ({ data }) => <ClickableNodeTag {...data.label} />
 
-const SelectOptionContainer = styled.div`
+const DropdownIndicator = ({ innerProps }) => (
+  <Button {...innerProps} size="small" importance="primary" color="accent">
+    + Add unlock
+  </Button>
+)
+
+const OptionContainer = styled.div`
   padding: 0.5em;
   &:not(:last-child) {
     border-bottom: 1px solid #0001;
   }
 `
 
-const SelectOption = ({ innerProps, data }) => {
+const Option = ({ innerProps, data }) => {
   return (
-    <SelectOptionContainer {...innerProps}>
+    <OptionContainer {...innerProps}>
       <NodeTag {...data.label} />
-    </SelectOptionContainer>
+    </OptionContainer>
   )
 }
 
+const styles = {
+  control: () => ({
+    position: "relative"
+  }),
+  indicatorContainer: () => ({
+    marginTop: ".5em"
+  }),
+  indicatorSeparator: () => ({
+    display: "inline-block",
+    ":not(:first-child)": {
+      width: ".5em"
+    }
+  }),
+  placeholder: () => ({
+    marginBottom: ".5em",
+    fontStyle: "italic",
+    color: "#0006"
+  }),
+  input: () => ({
+    display: "none"
+  }),
+  valueContainer: () => ({
+    display: "block"
+  }),
+  multiValue: () => ({
+    display: "block",
+    marginBottom: ".5em",
+    "::before": {
+      content: '"\u2192"',
+      marginRight: ".5em",
+      fontWeight: "bold",
+      color: "#39f"
+    }
+  }),
+  multiValueRemove: () => ({
+    cursor: "pointer",
+    display: "inline-block",
+    width: "1.4em",
+    height: "1.4em",
+    padding: ".1em",
+    marginLeft: ".5em",
+    borderRadius: "100%",
+    fontSize: "smaller",
+    textAlign: "center",
+    backgroundColor: "#0002",
+    ":hover": {
+      backgroundColor: "#FFBDAD",
+      color: "#DE350B"
+    }
+  })
+}
+
+const getValue = node => `${node.instance.entity.name} ${node.state.state.name}`
+
 const Unlocks = ({ from, to }) => {
-  const { edges, nodes } = useContext(GameContext)
+  const { edges, nodes, getNodeById } = useContext(GameContext)
   const unlockEdges = edges.filter(
     edge =>
       edge.type === EDGE_TYPES.UNLOCK &&
       edge.from === from.id &&
       edge.to === to.id
   )
-  const [state, setState] = useState(unlockEdges.map(({ unlocks }) => unlocks))
-
-  const onChange = event => setState(event.target.value)
+  const [state, setState] = useState(
+    unlockEdges
+      .map(({ unlocks }) => getNodeById(unlocks))
+      .map(node => ({ label: node, value: getValue(node) }))
+  )
 
   return (
     <Select
-      label="Unlocks"
       placeholder="Nothing"
-      block
       isMulti
+      menuPlacement="auto"
+      isClearable={false}
       components={{
-        MultiValueLabel: SelectLabel,
-        Option: SelectOption
+        MultiValueLabel,
+        Option,
+        DropdownIndicator
       }}
-      onChange={onChange}
+      styles={styles}
+      onChange={v => setState(v)}
       options={nodes
         .filter(({ type }) => type === NODE_TYPES.STATE)
-        .map(node => ({ label: node, value: node.id }))}
+        .map(node => ({ label: node, value: getValue(node) }))}
       value={state}
     />
   )

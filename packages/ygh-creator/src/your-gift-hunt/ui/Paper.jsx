@@ -8,6 +8,10 @@ export const PaperTitle = styled.h2`
 export const PaperSection = styled.div`
   padding: 1em;
 
+  & + & {
+    border-top: 1px solid #0002;
+  }
+
   &::after {
     content: "";
     display: block;

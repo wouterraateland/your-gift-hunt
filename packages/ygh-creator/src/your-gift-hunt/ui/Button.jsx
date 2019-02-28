@@ -6,7 +6,14 @@ const Button = styled.button`
   cursor: pointer;
 
   display: inline-block;
-  padding: 0.85em 0.7em;
+  padding: ${props => {
+    switch (props.size) {
+      case "small":
+        return "0.5em 0.4em"
+      default:
+        return "0.85em 0.7em"
+    }
+  }};
   border-radius: ${props => props.theme.borderRadius}px;
 
   line-height: 1;
@@ -36,8 +43,9 @@ const Button = styled.button`
         break
     }
 
-    return props.importance === "primary"
-      ? css`
+    switch (props.importance) {
+      case "primary":
+        return css`
           border: none;
 
           background-color: ${color};
@@ -47,7 +55,19 @@ const Button = styled.button`
             background-color: ${opacify(0.3, darken(0.05)(color))};
           }
         `
-      : css`
+      case "tertiary":
+        return css`
+          border: none;
+
+          background-color: #fff;
+          color: ${color};
+
+          &:hover {
+            background-color: ${darken(0.05)("#fff")};
+          }
+        `
+      default:
+        return css`
           border: 0.1em solid;
 
           background-color: #fff;
@@ -57,6 +77,7 @@ const Button = styled.button`
             background-color: ${darken(0.05)("#fff")};
           }
         `
+    }
   }}
 
   ${props =>
