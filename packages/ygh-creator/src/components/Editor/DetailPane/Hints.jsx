@@ -34,6 +34,7 @@ const Hints = ({ id, defaultHints, customHints }) => {
   const {
     getNodeById,
     createHint,
+    updateHint,
     deleteHint,
     connectActionRequirementToEntityInstance,
     disconnectActionRequirementFromEntityInstance
@@ -46,7 +47,7 @@ const Hints = ({ id, defaultHints, customHints }) => {
 
   const hints = hasCustomHints ? customHints : defaultHints
 
-  const makeEditable = () =>
+  const generateCustomHints = () =>
     hasCustomHints
       ? null
       : Promise.all([
@@ -55,33 +56,27 @@ const Hints = ({ id, defaultHints, customHints }) => {
         ])
 
   const restoreDefaults = () =>
-    Promise.all([
-      disconnectActionRequirementFromEntityInstance(instance.id, id),
-      ...customHints.map(hint => deleteHint(hint.id))
-    ])
+    hasCustomHints
+      ? Promise.all([
+          disconnectActionRequirementFromEntityInstance(instance.id, id),
+          ...customHints.map(hint => deleteHint(hint.id))
+        ])
+      : null
 
-  const addHint = async () => {
-    await makeEditable()
-  }
-
-  const deleteCustomHint = async id => {
-    await makeEditable()
-    await deleteHint(id)
-  }
-
-  const editCustomHint = async id => {
-    await makeEditable()
-    console.log(id)
-  }
+  const addHint = async () => {}
 
   return (
     <HintsContainer>
       <Label>
         Hints{" "}
-        {hasCustomHints && (
+        {hasCustomHints ? (
           <Button importance="tertiary" size="small" onClick={restoreDefaults}>
             Restore defaults
           </Button>
+        ) : (
+          <ActionButton onClick={generateCustomHints}>
+            <Pen />
+          </ActionButton>
         )}
       </Label>
       {hints.length ? (
@@ -89,12 +84,16 @@ const Hints = ({ id, defaultHints, customHints }) => {
           {hints.map(({ id, text, delay }) => (
             <li key={id}>
               {text} <Em>After {delay}s</Em>{" "}
-              <ActionButton color="error" onClick={() => deleteCustomHint(id)}>
-                <Bin />
-              </ActionButton>
-              <ActionButton onClick={() => editCustomHint(id)}>
-                <Pen />
-              </ActionButton>
+              {hasCustomHints && (
+                <>
+                  <ActionButton color="error" onClick={() => deleteHint(id)}>
+                    <Bin />
+                  </ActionButton>
+                  <ActionButton onClick={() => updateHint(id, { text, delay })}>
+                    <Pen />
+                  </ActionButton>
+                </>
+              )}
             </li>
           ))}
         </Ol>
@@ -103,14 +102,16 @@ const Hints = ({ id, defaultHints, customHints }) => {
           <Em>None</Em>
         </p>
       )}
-      <Button
-        size="small"
-        importance="primary"
-        color="accent"
-        onClick={addHint}
-      >
-        + Add hint
-      </Button>
+      {hasCustomHints && (
+        <Button
+          size="small"
+          importance="primary"
+          color="accent"
+          onClick={addHint}
+        >
+          + Add hint
+        </Button>
+      )}
     </HintsContainer>
   )
 }
