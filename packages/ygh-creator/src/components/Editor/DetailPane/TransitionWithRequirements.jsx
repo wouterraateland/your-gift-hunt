@@ -20,7 +20,7 @@ const Label = styled.strong`
 const TransitionWithRequirements = ({ from, to, requiredActions = [] }) => (
   <>
     <Transition from={from} to={to} />
-    <Label>When</Label>
+    <Label>Required actions</Label>
     <TransitionList>
       {requiredActions.map((actionRequirement, i) => (
         <ActionRequirement key={i} {...actionRequirement} />

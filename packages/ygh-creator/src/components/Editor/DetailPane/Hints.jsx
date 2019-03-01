@@ -9,6 +9,7 @@ import { Bin, Pen } from "your-gift-hunt/icons"
 
 const HintsContainer = styled.div`
   padding: 1em;
+  margin-bottom: 1em;
 
   background-color: #0001;
 `
