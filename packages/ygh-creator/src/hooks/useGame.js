@@ -4,10 +4,10 @@ import useGameGraph from "hooks/useGameGraph"
 import useGraphLayout from "hooks/useGraphLayout"
 import useSaveState from "hooks/useSaveState"
 
-const useGame = params => {
+const useGame = variables => {
   const saveState = useSaveState()
 
-  const game = useGameData(params)
+  const game = useGameData(variables)
 
   if (!game) {
     return {
@@ -15,7 +15,7 @@ const useGame = params => {
     }
   }
 
-  const mutations = useGameMutations(saveState.save)
+  const mutations = useGameMutations(variables, saveState.save)
   const graph = useGameGraph(game.instances)
   const graphLayout = useGraphLayout(graph)
 

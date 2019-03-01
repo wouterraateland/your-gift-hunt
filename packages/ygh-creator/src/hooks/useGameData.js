@@ -1,10 +1,8 @@
 import { useQuery } from "react-apollo-hooks"
 import { GAME_BY_SLUG } from "gql/queries"
 
-const useGameData = ({ creatorSlug, gameSlug }) => {
-  const { data, error } = useQuery(GAME_BY_SLUG, {
-    variables: { creatorSlug, gameSlug }
-  })
+const useGameData = variables => {
+  const { data, error } = useQuery(GAME_BY_SLUG, { variables })
 
   if (error) {
     throw error

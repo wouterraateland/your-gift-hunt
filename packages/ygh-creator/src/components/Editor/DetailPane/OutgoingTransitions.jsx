@@ -22,7 +22,15 @@ const OutgoingTransitions = ({ node }) => {
     transition => ({
       from: node,
       to: getNodeByInstanceAndState(node.instance, transition.to),
-      requiredActions: transition.requiredActions
+      requiredActions: transition.requiredActions.map(
+        ({ hints, ...actionRequirement }) => ({
+          ...actionRequirement,
+          defaultHints: hints,
+          customHints: node.instance.hints.filter(
+            hint => hint.actionRequirement.id === actionRequirement.id
+          )
+        })
+      )
     })
   )
 

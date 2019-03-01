@@ -5,6 +5,7 @@ import React from "react"
 import ListItem from "./ListItem"
 import EntityRequirement from "./EntityRequirement"
 import ValueRequirement from "./ValueRequirement"
+import Hints from "./Hints"
 
 const ActionRequirement = ({ type, payload }) => {
   switch (type) {
@@ -27,4 +28,11 @@ const ActionRequirement = ({ type, payload }) => {
   }
 }
 
-export default ActionRequirement
+const ActionRequirementWithHints = props => (
+  <>
+    <ActionRequirement {...props} />
+    <Hints {...props} />
+  </>
+)
+
+export default ActionRequirementWithHints

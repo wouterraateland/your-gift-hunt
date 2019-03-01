@@ -16,7 +16,6 @@ export const ENTITIES = gql`
         id
         name
         description
-
         incomingTransitions {
           id
           from {
@@ -31,7 +30,11 @@ export const ENTITIES = gql`
           requiredActions {
             id
             name
-            hints
+            hints(where: { entityInstance: null }) {
+              id
+              text
+              delay
+            }
 
             type
             payload {
@@ -94,6 +97,9 @@ export const GAME_BY_SLUG = gql`
       instances {
         id
         name
+        actionRequirementsWithCustomHints {
+          id
+        }
         states {
           id
           unlockedBy {
@@ -165,6 +171,14 @@ export const GAME_BY_SLUG = gql`
             type
             isMulti
             isSecret
+          }
+        }
+        hints {
+          id
+          text
+          delay
+          actionRequirement {
+            id
           }
         }
         entity {

@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Fri Mar 01 2019 13:06:08 GMT+0100 (Midden-Europese standaardtijd)
+# timestamp: Fri Mar 01 2019 17:31:30 GMT+0100 (Midden-Europese standaardtijd)
 
 enum AccessType {
   NONE
@@ -675,8 +675,9 @@ type ActionRequirement implements Node {
   id: ID!
   name: String
   type: ActionType!
-  hints: [String!]!
+  hints(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hint!]
   payload: ActionRequirementPayload!
+  entityInstancesWhereCustomHints(where: EntityInstanceWhereInput, orderBy: EntityInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstance!]
 }
 
 """A connection to a list of items."""
@@ -689,15 +690,12 @@ type ActionRequirementConnection {
   aggregate: AggregateActionRequirement!
 }
 
-input ActionRequirementCreatehintsInput {
-  set: [String!]
-}
-
 input ActionRequirementCreateInput {
   name: String
   type: ActionType
-  hints: ActionRequirementCreatehintsInput
+  hints: HintCreateManyWithoutActionRequirementInput
   payload: ActionRequirementPayloadCreateOneWithoutActionRequirementInput!
+  entityInstancesWhereCustomHints: EntityInstanceCreateManyWithoutActionRequirementsWithCustomHintsInput
 }
 
 input ActionRequirementCreateManyInput {
@@ -705,15 +703,40 @@ input ActionRequirementCreateManyInput {
   connect: [ActionRequirementWhereUniqueInput!]
 }
 
+input ActionRequirementCreateManyWithoutEntityInstancesWhereCustomHintsInput {
+  create: [ActionRequirementCreateWithoutEntityInstancesWhereCustomHintsInput!]
+  connect: [ActionRequirementWhereUniqueInput!]
+}
+
+input ActionRequirementCreateOneWithoutHintsInput {
+  create: ActionRequirementCreateWithoutHintsInput
+  connect: ActionRequirementWhereUniqueInput
+}
+
 input ActionRequirementCreateOneWithoutPayloadInput {
   create: ActionRequirementCreateWithoutPayloadInput
   connect: ActionRequirementWhereUniqueInput
 }
 
+input ActionRequirementCreateWithoutEntityInstancesWhereCustomHintsInput {
+  name: String
+  type: ActionType
+  hints: HintCreateManyWithoutActionRequirementInput
+  payload: ActionRequirementPayloadCreateOneWithoutActionRequirementInput!
+}
+
+input ActionRequirementCreateWithoutHintsInput {
+  name: String
+  type: ActionType
+  payload: ActionRequirementPayloadCreateOneWithoutActionRequirementInput!
+  entityInstancesWhereCustomHints: EntityInstanceCreateManyWithoutActionRequirementsWithCustomHintsInput
+}
+
 input ActionRequirementCreateWithoutPayloadInput {
   name: String
   type: ActionType
-  hints: ActionRequirementCreatehintsInput
+  hints: HintCreateManyWithoutActionRequirementInput
+  entityInstancesWhereCustomHints: EntityInstanceCreateManyWithoutActionRequirementsWithCustomHintsInput
 }
 
 """An edge in a connection."""
@@ -1667,7 +1690,6 @@ type ActionRequirementPreviousValues {
   id: ID!
   name: String
   type: ActionType!
-  hints: [String!]!
 }
 
 input ActionRequirementScalarWhereInput {
@@ -1813,25 +1835,22 @@ input ActionRequirementSubscriptionWhereInput {
 input ActionRequirementUpdateDataInput {
   name: String
   type: ActionType
-  hints: ActionRequirementUpdatehintsInput
+  hints: HintUpdateManyWithoutActionRequirementInput
   payload: ActionRequirementPayloadUpdateOneRequiredWithoutActionRequirementInput
-}
-
-input ActionRequirementUpdatehintsInput {
-  set: [String!]
+  entityInstancesWhereCustomHints: EntityInstanceUpdateManyWithoutActionRequirementsWithCustomHintsInput
 }
 
 input ActionRequirementUpdateInput {
   name: String
   type: ActionType
-  hints: ActionRequirementUpdatehintsInput
+  hints: HintUpdateManyWithoutActionRequirementInput
   payload: ActionRequirementPayloadUpdateOneRequiredWithoutActionRequirementInput
+  entityInstancesWhereCustomHints: EntityInstanceUpdateManyWithoutActionRequirementsWithCustomHintsInput
 }
 
 input ActionRequirementUpdateManyDataInput {
   name: String
   type: ActionType
-  hints: ActionRequirementUpdatehintsInput
 }
 
 input ActionRequirementUpdateManyInput {
@@ -1848,7 +1867,17 @@ input ActionRequirementUpdateManyInput {
 input ActionRequirementUpdateManyMutationInput {
   name: String
   type: ActionType
-  hints: ActionRequirementUpdatehintsInput
+}
+
+input ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput {
+  create: [ActionRequirementCreateWithoutEntityInstancesWhereCustomHintsInput!]
+  connect: [ActionRequirementWhereUniqueInput!]
+  disconnect: [ActionRequirementWhereUniqueInput!]
+  delete: [ActionRequirementWhereUniqueInput!]
+  update: [ActionRequirementUpdateWithWhereUniqueWithoutEntityInstancesWhereCustomHintsInput!]
+  updateMany: [ActionRequirementUpdateManyWithWhereNestedInput!]
+  deleteMany: [ActionRequirementScalarWhereInput!]
+  upsert: [ActionRequirementUpsertWithWhereUniqueWithoutEntityInstancesWhereCustomHintsInput!]
 }
 
 input ActionRequirementUpdateManyWithWhereNestedInput {
@@ -1863,15 +1892,49 @@ input ActionRequirementUpdateOneRequiredWithoutPayloadInput {
   upsert: ActionRequirementUpsertWithoutPayloadInput
 }
 
+input ActionRequirementUpdateOneWithoutHintsInput {
+  create: ActionRequirementCreateWithoutHintsInput
+  connect: ActionRequirementWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: ActionRequirementUpdateWithoutHintsDataInput
+  upsert: ActionRequirementUpsertWithoutHintsInput
+}
+
+input ActionRequirementUpdateWithoutEntityInstancesWhereCustomHintsDataInput {
+  name: String
+  type: ActionType
+  hints: HintUpdateManyWithoutActionRequirementInput
+  payload: ActionRequirementPayloadUpdateOneRequiredWithoutActionRequirementInput
+}
+
+input ActionRequirementUpdateWithoutHintsDataInput {
+  name: String
+  type: ActionType
+  payload: ActionRequirementPayloadUpdateOneRequiredWithoutActionRequirementInput
+  entityInstancesWhereCustomHints: EntityInstanceUpdateManyWithoutActionRequirementsWithCustomHintsInput
+}
+
 input ActionRequirementUpdateWithoutPayloadDataInput {
   name: String
   type: ActionType
-  hints: ActionRequirementUpdatehintsInput
+  hints: HintUpdateManyWithoutActionRequirementInput
+  entityInstancesWhereCustomHints: EntityInstanceUpdateManyWithoutActionRequirementsWithCustomHintsInput
 }
 
 input ActionRequirementUpdateWithWhereUniqueNestedInput {
   where: ActionRequirementWhereUniqueInput!
   data: ActionRequirementUpdateDataInput!
+}
+
+input ActionRequirementUpdateWithWhereUniqueWithoutEntityInstancesWhereCustomHintsInput {
+  where: ActionRequirementWhereUniqueInput!
+  data: ActionRequirementUpdateWithoutEntityInstancesWhereCustomHintsDataInput!
+}
+
+input ActionRequirementUpsertWithoutHintsInput {
+  update: ActionRequirementUpdateWithoutHintsDataInput!
+  create: ActionRequirementCreateWithoutHintsInput!
 }
 
 input ActionRequirementUpsertWithoutPayloadInput {
@@ -1883,6 +1946,12 @@ input ActionRequirementUpsertWithWhereUniqueNestedInput {
   where: ActionRequirementWhereUniqueInput!
   update: ActionRequirementUpdateDataInput!
   create: ActionRequirementCreateInput!
+}
+
+input ActionRequirementUpsertWithWhereUniqueWithoutEntityInstancesWhereCustomHintsInput {
+  where: ActionRequirementWhereUniqueInput!
+  update: ActionRequirementUpdateWithoutEntityInstancesWhereCustomHintsDataInput!
+  create: ActionRequirementCreateWithoutEntityInstancesWhereCustomHintsInput!
 }
 
 input ActionRequirementWhereInput {
@@ -1984,7 +2053,13 @@ input ActionRequirementWhereInput {
 
   """All values that are not contained in given list."""
   type_not_in: [ActionType!]
+  hints_every: HintWhereInput
+  hints_some: HintWhereInput
+  hints_none: HintWhereInput
   payload: ActionRequirementPayloadWhereInput
+  entityInstancesWhereCustomHints_every: EntityInstanceWhereInput
+  entityInstancesWhereCustomHints_some: EntityInstanceWhereInput
+  entityInstancesWhereCustomHints_none: EntityInstanceWhereInput
 }
 
 input ActionRequirementWhereUniqueInput {
@@ -2342,6 +2417,10 @@ type AggregateGame {
 }
 
 type AggregateGamePlay {
+  count: Int!
+}
+
+type AggregateHint {
   count: Int!
 }
 
@@ -2982,6 +3061,8 @@ type EntityInstance implements Node {
   entity: Entity!
   fields(where: EntityInstanceFieldWhereInput, orderBy: EntityInstanceFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceField!]
   states(where: EntityInstanceStateWhereInput, orderBy: EntityInstanceStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceState!]
+  actionRequirementsWithCustomHints(where: ActionRequirementWhereInput, orderBy: ActionRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirement!]
+  hints(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hint!]
 }
 
 """A connection to a list of items."""
@@ -3001,6 +3082,13 @@ input EntityInstanceCreateInput {
   entity: EntityCreateOneWithoutInstancesInput!
   fields: EntityInstanceFieldCreateManyInput
   states: EntityInstanceStateCreateManyWithoutInstanceInput
+  actionRequirementsWithCustomHints: ActionRequirementCreateManyWithoutEntityInstancesWhereCustomHintsInput
+  hints: HintCreateManyWithoutEntityInstanceInput
+}
+
+input EntityInstanceCreateManyWithoutActionRequirementsWithCustomHintsInput {
+  create: [EntityInstanceCreateWithoutActionRequirementsWithCustomHintsInput!]
+  connect: [EntityInstanceWhereUniqueInput!]
 }
 
 input EntityInstanceCreateManyWithoutEntityInput {
@@ -3018,9 +3106,24 @@ input EntityInstanceCreateOneInput {
   connect: EntityInstanceWhereUniqueInput
 }
 
+input EntityInstanceCreateOneWithoutHintsInput {
+  create: EntityInstanceCreateWithoutHintsInput
+  connect: EntityInstanceWhereUniqueInput
+}
+
 input EntityInstanceCreateOneWithoutStatesInput {
   create: EntityInstanceCreateWithoutStatesInput
   connect: EntityInstanceWhereUniqueInput
+}
+
+input EntityInstanceCreateWithoutActionRequirementsWithCustomHintsInput {
+  name: String
+  description: String
+  game: GameCreateOneWithoutInstancesInput!
+  entity: EntityCreateOneWithoutInstancesInput!
+  fields: EntityInstanceFieldCreateManyInput
+  states: EntityInstanceStateCreateManyWithoutInstanceInput
+  hints: HintCreateManyWithoutEntityInstanceInput
 }
 
 input EntityInstanceCreateWithoutEntityInput {
@@ -3029,6 +3132,8 @@ input EntityInstanceCreateWithoutEntityInput {
   game: GameCreateOneWithoutInstancesInput!
   fields: EntityInstanceFieldCreateManyInput
   states: EntityInstanceStateCreateManyWithoutInstanceInput
+  actionRequirementsWithCustomHints: ActionRequirementCreateManyWithoutEntityInstancesWhereCustomHintsInput
+  hints: HintCreateManyWithoutEntityInstanceInput
 }
 
 input EntityInstanceCreateWithoutGameInput {
@@ -3037,6 +3142,18 @@ input EntityInstanceCreateWithoutGameInput {
   entity: EntityCreateOneWithoutInstancesInput!
   fields: EntityInstanceFieldCreateManyInput
   states: EntityInstanceStateCreateManyWithoutInstanceInput
+  actionRequirementsWithCustomHints: ActionRequirementCreateManyWithoutEntityInstancesWhereCustomHintsInput
+  hints: HintCreateManyWithoutEntityInstanceInput
+}
+
+input EntityInstanceCreateWithoutHintsInput {
+  name: String
+  description: String
+  game: GameCreateOneWithoutInstancesInput!
+  entity: EntityCreateOneWithoutInstancesInput!
+  fields: EntityInstanceFieldCreateManyInput
+  states: EntityInstanceStateCreateManyWithoutInstanceInput
+  actionRequirementsWithCustomHints: ActionRequirementCreateManyWithoutEntityInstancesWhereCustomHintsInput
 }
 
 input EntityInstanceCreateWithoutStatesInput {
@@ -3045,6 +3162,8 @@ input EntityInstanceCreateWithoutStatesInput {
   game: GameCreateOneWithoutInstancesInput!
   entity: EntityCreateOneWithoutInstancesInput!
   fields: EntityInstanceFieldCreateManyInput
+  actionRequirementsWithCustomHints: ActionRequirementCreateManyWithoutEntityInstancesWhereCustomHintsInput
+  hints: HintCreateManyWithoutEntityInstanceInput
 }
 
 """An edge in a connection."""
@@ -4231,6 +4350,8 @@ input EntityInstanceUpdateDataInput {
   entity: EntityUpdateOneRequiredWithoutInstancesInput
   fields: EntityInstanceFieldUpdateManyInput
   states: EntityInstanceStateUpdateManyWithoutInstanceInput
+  actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
+  hints: HintUpdateManyWithoutEntityInstanceInput
 }
 
 input EntityInstanceUpdateInput {
@@ -4240,6 +4361,8 @@ input EntityInstanceUpdateInput {
   entity: EntityUpdateOneRequiredWithoutInstancesInput
   fields: EntityInstanceFieldUpdateManyInput
   states: EntityInstanceStateUpdateManyWithoutInstanceInput
+  actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
+  hints: HintUpdateManyWithoutEntityInstanceInput
 }
 
 input EntityInstanceUpdateManyDataInput {
@@ -4250,6 +4373,17 @@ input EntityInstanceUpdateManyDataInput {
 input EntityInstanceUpdateManyMutationInput {
   name: String
   description: String
+}
+
+input EntityInstanceUpdateManyWithoutActionRequirementsWithCustomHintsInput {
+  create: [EntityInstanceCreateWithoutActionRequirementsWithCustomHintsInput!]
+  connect: [EntityInstanceWhereUniqueInput!]
+  disconnect: [EntityInstanceWhereUniqueInput!]
+  delete: [EntityInstanceWhereUniqueInput!]
+  update: [EntityInstanceUpdateWithWhereUniqueWithoutActionRequirementsWithCustomHintsInput!]
+  updateMany: [EntityInstanceUpdateManyWithWhereNestedInput!]
+  deleteMany: [EntityInstanceScalarWhereInput!]
+  upsert: [EntityInstanceUpsertWithWhereUniqueWithoutActionRequirementsWithCustomHintsInput!]
 }
 
 input EntityInstanceUpdateManyWithoutEntityInput {
@@ -4295,12 +4429,33 @@ input EntityInstanceUpdateOneRequiredWithoutStatesInput {
   upsert: EntityInstanceUpsertWithoutStatesInput
 }
 
+input EntityInstanceUpdateOneWithoutHintsInput {
+  create: EntityInstanceCreateWithoutHintsInput
+  connect: EntityInstanceWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: EntityInstanceUpdateWithoutHintsDataInput
+  upsert: EntityInstanceUpsertWithoutHintsInput
+}
+
+input EntityInstanceUpdateWithoutActionRequirementsWithCustomHintsDataInput {
+  name: String
+  description: String
+  game: GameUpdateOneRequiredWithoutInstancesInput
+  entity: EntityUpdateOneRequiredWithoutInstancesInput
+  fields: EntityInstanceFieldUpdateManyInput
+  states: EntityInstanceStateUpdateManyWithoutInstanceInput
+  hints: HintUpdateManyWithoutEntityInstanceInput
+}
+
 input EntityInstanceUpdateWithoutEntityDataInput {
   name: String
   description: String
   game: GameUpdateOneRequiredWithoutInstancesInput
   fields: EntityInstanceFieldUpdateManyInput
   states: EntityInstanceStateUpdateManyWithoutInstanceInput
+  actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
+  hints: HintUpdateManyWithoutEntityInstanceInput
 }
 
 input EntityInstanceUpdateWithoutGameDataInput {
@@ -4309,6 +4464,18 @@ input EntityInstanceUpdateWithoutGameDataInput {
   entity: EntityUpdateOneRequiredWithoutInstancesInput
   fields: EntityInstanceFieldUpdateManyInput
   states: EntityInstanceStateUpdateManyWithoutInstanceInput
+  actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
+  hints: HintUpdateManyWithoutEntityInstanceInput
+}
+
+input EntityInstanceUpdateWithoutHintsDataInput {
+  name: String
+  description: String
+  game: GameUpdateOneRequiredWithoutInstancesInput
+  entity: EntityUpdateOneRequiredWithoutInstancesInput
+  fields: EntityInstanceFieldUpdateManyInput
+  states: EntityInstanceStateUpdateManyWithoutInstanceInput
+  actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
 }
 
 input EntityInstanceUpdateWithoutStatesDataInput {
@@ -4317,6 +4484,13 @@ input EntityInstanceUpdateWithoutStatesDataInput {
   game: GameUpdateOneRequiredWithoutInstancesInput
   entity: EntityUpdateOneRequiredWithoutInstancesInput
   fields: EntityInstanceFieldUpdateManyInput
+  actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
+  hints: HintUpdateManyWithoutEntityInstanceInput
+}
+
+input EntityInstanceUpdateWithWhereUniqueWithoutActionRequirementsWithCustomHintsInput {
+  where: EntityInstanceWhereUniqueInput!
+  data: EntityInstanceUpdateWithoutActionRequirementsWithCustomHintsDataInput!
 }
 
 input EntityInstanceUpdateWithWhereUniqueWithoutEntityInput {
@@ -4334,9 +4508,20 @@ input EntityInstanceUpsertNestedInput {
   create: EntityInstanceCreateInput!
 }
 
+input EntityInstanceUpsertWithoutHintsInput {
+  update: EntityInstanceUpdateWithoutHintsDataInput!
+  create: EntityInstanceCreateWithoutHintsInput!
+}
+
 input EntityInstanceUpsertWithoutStatesInput {
   update: EntityInstanceUpdateWithoutStatesDataInput!
   create: EntityInstanceCreateWithoutStatesInput!
+}
+
+input EntityInstanceUpsertWithWhereUniqueWithoutActionRequirementsWithCustomHintsInput {
+  where: EntityInstanceWhereUniqueInput!
+  update: EntityInstanceUpdateWithoutActionRequirementsWithCustomHintsDataInput!
+  create: EntityInstanceCreateWithoutActionRequirementsWithCustomHintsInput!
 }
 
 input EntityInstanceUpsertWithWhereUniqueWithoutEntityInput {
@@ -4488,6 +4673,12 @@ input EntityInstanceWhereInput {
   states_every: EntityInstanceStateWhereInput
   states_some: EntityInstanceStateWhereInput
   states_none: EntityInstanceStateWhereInput
+  actionRequirementsWithCustomHints_every: ActionRequirementWhereInput
+  actionRequirementsWithCustomHints_some: ActionRequirementWhereInput
+  actionRequirementsWithCustomHints_none: ActionRequirementWhereInput
+  hints_every: HintWhereInput
+  hints_some: HintWhereInput
+  hints_none: HintWhereInput
 }
 
 input EntityInstanceWhereUniqueInput {
@@ -6851,6 +7042,430 @@ input GameWhereUniqueInput {
   id: ID
 }
 
+type Hint implements Node {
+  id: ID!
+  text: String!
+  delay: Int
+  entityInstance: EntityInstance
+  actionRequirement: ActionRequirement
+}
+
+"""A connection to a list of items."""
+type HintConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [HintEdge]!
+  aggregate: AggregateHint!
+}
+
+input HintCreateInput {
+  text: String!
+  delay: Int
+  entityInstance: EntityInstanceCreateOneWithoutHintsInput
+  actionRequirement: ActionRequirementCreateOneWithoutHintsInput
+}
+
+input HintCreateManyWithoutActionRequirementInput {
+  create: [HintCreateWithoutActionRequirementInput!]
+  connect: [HintWhereUniqueInput!]
+}
+
+input HintCreateManyWithoutEntityInstanceInput {
+  create: [HintCreateWithoutEntityInstanceInput!]
+  connect: [HintWhereUniqueInput!]
+}
+
+input HintCreateWithoutActionRequirementInput {
+  text: String!
+  delay: Int
+  entityInstance: EntityInstanceCreateOneWithoutHintsInput
+}
+
+input HintCreateWithoutEntityInstanceInput {
+  text: String!
+  delay: Int
+  actionRequirement: ActionRequirementCreateOneWithoutHintsInput
+}
+
+"""An edge in a connection."""
+type HintEdge {
+  """The item at the end of the edge."""
+  node: Hint!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum HintOrderByInput {
+  id_ASC
+  id_DESC
+  text_ASC
+  text_DESC
+  delay_ASC
+  delay_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type HintPreviousValues {
+  id: ID!
+  text: String!
+  delay: Int
+}
+
+input HintScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [HintScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [HintScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [HintScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  text: String
+
+  """All values that are not equal to given value."""
+  text_not: String
+
+  """All values that are contained in given list."""
+  text_in: [String!]
+
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
+
+  """All values less than the given value."""
+  text_lt: String
+
+  """All values less than or equal the given value."""
+  text_lte: String
+
+  """All values greater than the given value."""
+  text_gt: String
+
+  """All values greater than or equal the given value."""
+  text_gte: String
+
+  """All values containing the given string."""
+  text_contains: String
+
+  """All values not containing the given string."""
+  text_not_contains: String
+
+  """All values starting with the given string."""
+  text_starts_with: String
+
+  """All values not starting with the given string."""
+  text_not_starts_with: String
+
+  """All values ending with the given string."""
+  text_ends_with: String
+
+  """All values not ending with the given string."""
+  text_not_ends_with: String
+  delay: Int
+
+  """All values that are not equal to given value."""
+  delay_not: Int
+
+  """All values that are contained in given list."""
+  delay_in: [Int!]
+
+  """All values that are not contained in given list."""
+  delay_not_in: [Int!]
+
+  """All values less than the given value."""
+  delay_lt: Int
+
+  """All values less than or equal the given value."""
+  delay_lte: Int
+
+  """All values greater than the given value."""
+  delay_gt: Int
+
+  """All values greater than or equal the given value."""
+  delay_gte: Int
+}
+
+type HintSubscriptionPayload {
+  mutation: MutationType!
+  node: Hint
+  updatedFields: [String!]
+  previousValues: HintPreviousValues
+}
+
+input HintSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [HintSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [HintSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [HintSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: HintWhereInput
+}
+
+input HintUpdateInput {
+  text: String
+  delay: Int
+  entityInstance: EntityInstanceUpdateOneWithoutHintsInput
+  actionRequirement: ActionRequirementUpdateOneWithoutHintsInput
+}
+
+input HintUpdateManyDataInput {
+  text: String
+  delay: Int
+}
+
+input HintUpdateManyMutationInput {
+  text: String
+  delay: Int
+}
+
+input HintUpdateManyWithoutActionRequirementInput {
+  create: [HintCreateWithoutActionRequirementInput!]
+  connect: [HintWhereUniqueInput!]
+  disconnect: [HintWhereUniqueInput!]
+  delete: [HintWhereUniqueInput!]
+  update: [HintUpdateWithWhereUniqueWithoutActionRequirementInput!]
+  updateMany: [HintUpdateManyWithWhereNestedInput!]
+  deleteMany: [HintScalarWhereInput!]
+  upsert: [HintUpsertWithWhereUniqueWithoutActionRequirementInput!]
+}
+
+input HintUpdateManyWithoutEntityInstanceInput {
+  create: [HintCreateWithoutEntityInstanceInput!]
+  connect: [HintWhereUniqueInput!]
+  disconnect: [HintWhereUniqueInput!]
+  delete: [HintWhereUniqueInput!]
+  update: [HintUpdateWithWhereUniqueWithoutEntityInstanceInput!]
+  updateMany: [HintUpdateManyWithWhereNestedInput!]
+  deleteMany: [HintScalarWhereInput!]
+  upsert: [HintUpsertWithWhereUniqueWithoutEntityInstanceInput!]
+}
+
+input HintUpdateManyWithWhereNestedInput {
+  where: HintScalarWhereInput!
+  data: HintUpdateManyDataInput!
+}
+
+input HintUpdateWithoutActionRequirementDataInput {
+  text: String
+  delay: Int
+  entityInstance: EntityInstanceUpdateOneWithoutHintsInput
+}
+
+input HintUpdateWithoutEntityInstanceDataInput {
+  text: String
+  delay: Int
+  actionRequirement: ActionRequirementUpdateOneWithoutHintsInput
+}
+
+input HintUpdateWithWhereUniqueWithoutActionRequirementInput {
+  where: HintWhereUniqueInput!
+  data: HintUpdateWithoutActionRequirementDataInput!
+}
+
+input HintUpdateWithWhereUniqueWithoutEntityInstanceInput {
+  where: HintWhereUniqueInput!
+  data: HintUpdateWithoutEntityInstanceDataInput!
+}
+
+input HintUpsertWithWhereUniqueWithoutActionRequirementInput {
+  where: HintWhereUniqueInput!
+  update: HintUpdateWithoutActionRequirementDataInput!
+  create: HintCreateWithoutActionRequirementInput!
+}
+
+input HintUpsertWithWhereUniqueWithoutEntityInstanceInput {
+  where: HintWhereUniqueInput!
+  update: HintUpdateWithoutEntityInstanceDataInput!
+  create: HintCreateWithoutEntityInstanceInput!
+}
+
+input HintWhereInput {
+  """Logical AND on all given filters."""
+  AND: [HintWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [HintWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [HintWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  text: String
+
+  """All values that are not equal to given value."""
+  text_not: String
+
+  """All values that are contained in given list."""
+  text_in: [String!]
+
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
+
+  """All values less than the given value."""
+  text_lt: String
+
+  """All values less than or equal the given value."""
+  text_lte: String
+
+  """All values greater than the given value."""
+  text_gt: String
+
+  """All values greater than or equal the given value."""
+  text_gte: String
+
+  """All values containing the given string."""
+  text_contains: String
+
+  """All values not containing the given string."""
+  text_not_contains: String
+
+  """All values starting with the given string."""
+  text_starts_with: String
+
+  """All values not starting with the given string."""
+  text_not_starts_with: String
+
+  """All values ending with the given string."""
+  text_ends_with: String
+
+  """All values not ending with the given string."""
+  text_not_ends_with: String
+  delay: Int
+
+  """All values that are not equal to given value."""
+  delay_not: Int
+
+  """All values that are contained in given list."""
+  delay_in: [Int!]
+
+  """All values that are not contained in given list."""
+  delay_not_in: [Int!]
+
+  """All values less than the given value."""
+  delay_lt: Int
+
+  """All values less than or equal the given value."""
+  delay_lte: Int
+
+  """All values greater than the given value."""
+  delay_gt: Int
+
+  """All values greater than or equal the given value."""
+  delay_gte: Int
+  entityInstance: EntityInstanceWhereInput
+  actionRequirement: ActionRequirementWhereInput
+}
+
+input HintWhereUniqueInput {
+  id: ID
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -6859,6 +7474,7 @@ scalar Long
 
 type Mutation {
   createEntityStateTransition(data: EntityStateTransitionCreateInput!): EntityStateTransition!
+  createHint(data: HintCreateInput!): Hint!
   createActionRequirementPayload(data: ActionRequirementPayloadCreateInput!): ActionRequirementPayload!
   createActionRequirementPayloadEntity(data: ActionRequirementPayloadEntityCreateInput!): ActionRequirementPayloadEntity!
   createActionRequirementPayloadInputValue(data: ActionRequirementPayloadInputValueCreateInput!): ActionRequirementPayloadInputValue!
@@ -6877,6 +7493,7 @@ type Mutation {
   createEntityField(data: EntityFieldCreateInput!): EntityField!
   createEntity(data: EntityCreateInput!): Entity!
   updateEntityStateTransition(data: EntityStateTransitionUpdateInput!, where: EntityStateTransitionWhereUniqueInput!): EntityStateTransition
+  updateHint(data: HintUpdateInput!, where: HintWhereUniqueInput!): Hint
   updateActionRequirementPayload(data: ActionRequirementPayloadUpdateInput!, where: ActionRequirementPayloadWhereUniqueInput!): ActionRequirementPayload
   updateActionRequirementPayloadEntity(data: ActionRequirementPayloadEntityUpdateInput!, where: ActionRequirementPayloadEntityWhereUniqueInput!): ActionRequirementPayloadEntity
   updateActionRequirementPayloadInputValue(data: ActionRequirementPayloadInputValueUpdateInput!, where: ActionRequirementPayloadInputValueWhereUniqueInput!): ActionRequirementPayloadInputValue
@@ -6895,6 +7512,7 @@ type Mutation {
   updateEntityField(data: EntityFieldUpdateInput!, where: EntityFieldWhereUniqueInput!): EntityField
   updateEntity(data: EntityUpdateInput!, where: EntityWhereUniqueInput!): Entity
   deleteEntityStateTransition(where: EntityStateTransitionWhereUniqueInput!): EntityStateTransition
+  deleteHint(where: HintWhereUniqueInput!): Hint
   deleteActionRequirementPayload(where: ActionRequirementPayloadWhereUniqueInput!): ActionRequirementPayload
   deleteActionRequirementPayloadEntity(where: ActionRequirementPayloadEntityWhereUniqueInput!): ActionRequirementPayloadEntity
   deleteActionRequirementPayloadInputValue(where: ActionRequirementPayloadInputValueWhereUniqueInput!): ActionRequirementPayloadInputValue
@@ -6913,6 +7531,7 @@ type Mutation {
   deleteEntityField(where: EntityFieldWhereUniqueInput!): EntityField
   deleteEntity(where: EntityWhereUniqueInput!): Entity
   upsertEntityStateTransition(where: EntityStateTransitionWhereUniqueInput!, create: EntityStateTransitionCreateInput!, update: EntityStateTransitionUpdateInput!): EntityStateTransition!
+  upsertHint(where: HintWhereUniqueInput!, create: HintCreateInput!, update: HintUpdateInput!): Hint!
   upsertActionRequirementPayload(where: ActionRequirementPayloadWhereUniqueInput!, create: ActionRequirementPayloadCreateInput!, update: ActionRequirementPayloadUpdateInput!): ActionRequirementPayload!
   upsertActionRequirementPayloadEntity(where: ActionRequirementPayloadEntityWhereUniqueInput!, create: ActionRequirementPayloadEntityCreateInput!, update: ActionRequirementPayloadEntityUpdateInput!): ActionRequirementPayloadEntity!
   upsertActionRequirementPayloadInputValue(where: ActionRequirementPayloadInputValueWhereUniqueInput!, create: ActionRequirementPayloadInputValueCreateInput!, update: ActionRequirementPayloadInputValueUpdateInput!): ActionRequirementPayloadInputValue!
@@ -6930,6 +7549,7 @@ type Mutation {
   upsertEntityInstanceField(where: EntityInstanceFieldWhereUniqueInput!, create: EntityInstanceFieldCreateInput!, update: EntityInstanceFieldUpdateInput!): EntityInstanceField!
   upsertEntityField(where: EntityFieldWhereUniqueInput!, create: EntityFieldCreateInput!, update: EntityFieldUpdateInput!): EntityField!
   upsertEntity(where: EntityWhereUniqueInput!, create: EntityCreateInput!, update: EntityUpdateInput!): Entity!
+  updateManyHints(data: HintUpdateManyMutationInput!, where: HintWhereInput): BatchPayload!
   updateManyActionRequirementPayloadInputValues(data: ActionRequirementPayloadInputValueUpdateManyMutationInput!, where: ActionRequirementPayloadInputValueWhereInput): BatchPayload!
   updateManyGames(data: GameUpdateManyMutationInput!, where: GameWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -6942,6 +7562,7 @@ type Mutation {
   updateManyEntityFields(data: EntityFieldUpdateManyMutationInput!, where: EntityFieldWhereInput): BatchPayload!
   updateManyEntities(data: EntityUpdateManyMutationInput!, where: EntityWhereInput): BatchPayload!
   deleteManyEntityStateTransitions(where: EntityStateTransitionWhereInput): BatchPayload!
+  deleteManyHints(where: HintWhereInput): BatchPayload!
   deleteManyActionRequirementPayloads(where: ActionRequirementPayloadWhereInput): BatchPayload!
   deleteManyActionRequirementPayloadEntities(where: ActionRequirementPayloadEntityWhereInput): BatchPayload!
   deleteManyActionRequirementPayloadInputValues(where: ActionRequirementPayloadInputValueWhereInput): BatchPayload!
@@ -6995,6 +7616,7 @@ enum PrivacyType {
 
 type Query {
   entityStateTransitions(where: EntityStateTransitionWhereInput, orderBy: EntityStateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityStateTransition]!
+  hints(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hint]!
   actionRequirementPayloads(where: ActionRequirementPayloadWhereInput, orderBy: ActionRequirementPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirementPayload]!
   actionRequirementPayloadEntities(where: ActionRequirementPayloadEntityWhereInput, orderBy: ActionRequirementPayloadEntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirementPayloadEntity]!
   actionRequirementPayloadInputValues(where: ActionRequirementPayloadInputValueWhereInput, orderBy: ActionRequirementPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirementPayloadInputValue]!
@@ -7013,6 +7635,7 @@ type Query {
   entityFields(where: EntityFieldWhereInput, orderBy: EntityFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityField]!
   entities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity]!
   entityStateTransition(where: EntityStateTransitionWhereUniqueInput!): EntityStateTransition
+  hint(where: HintWhereUniqueInput!): Hint
   actionRequirementPayload(where: ActionRequirementPayloadWhereUniqueInput!): ActionRequirementPayload
   actionRequirementPayloadEntity(where: ActionRequirementPayloadEntityWhereUniqueInput!): ActionRequirementPayloadEntity
   actionRequirementPayloadInputValue(where: ActionRequirementPayloadInputValueWhereUniqueInput!): ActionRequirementPayloadInputValue
@@ -7031,6 +7654,7 @@ type Query {
   entityField(where: EntityFieldWhereUniqueInput!): EntityField
   entity(where: EntityWhereUniqueInput!): Entity
   entityStateTransitionsConnection(where: EntityStateTransitionWhereInput, orderBy: EntityStateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityStateTransitionConnection!
+  hintsConnection(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HintConnection!
   actionRequirementPayloadsConnection(where: ActionRequirementPayloadWhereInput, orderBy: ActionRequirementPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementPayloadConnection!
   actionRequirementPayloadEntitiesConnection(where: ActionRequirementPayloadEntityWhereInput, orderBy: ActionRequirementPayloadEntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementPayloadEntityConnection!
   actionRequirementPayloadInputValuesConnection(where: ActionRequirementPayloadInputValueWhereInput, orderBy: ActionRequirementPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementPayloadInputValueConnection!
@@ -7058,6 +7682,7 @@ type Query {
 
 type Subscription {
   entityStateTransition(where: EntityStateTransitionSubscriptionWhereInput): EntityStateTransitionSubscriptionPayload
+  hint(where: HintSubscriptionWhereInput): HintSubscriptionPayload
   actionRequirementPayload(where: ActionRequirementPayloadSubscriptionWhereInput): ActionRequirementPayloadSubscriptionPayload
   actionRequirementPayloadEntity(where: ActionRequirementPayloadEntitySubscriptionWhereInput): ActionRequirementPayloadEntitySubscriptionPayload
   actionRequirementPayloadInputValue(where: ActionRequirementPayloadInputValueSubscriptionWhereInput): ActionRequirementPayloadInputValueSubscriptionPayload
@@ -7760,4 +8385,5 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  slug: String
 }

@@ -98,3 +98,91 @@ export const UPDATE_ENTITY_INSTANCE_FIELD = gql`
     }
   }
 `
+
+export const CONNECT_ACTION_REQUIREMENT_TO_ENTITY_INSTANCE = gql`
+  mutation connectActionRequirementToEntityInstance(
+    $entityInstanceId: ID!
+    $actionRequirementId: ID!
+  ) {
+    updateEntityInstance(
+      where: { id: $entityInstanceId }
+      data: {
+        actionRequirementsWithCustomHints: {
+          connect: [{ id: $actionRequirementId }]
+        }
+      }
+    ) {
+      id
+      actionRequirementsWithCustomHints {
+        id
+      }
+    }
+  }
+`
+
+export const DISCONNECT_ACTION_REQUIREMENT_FROM_ENTITY_INSTANCE = gql`
+  mutation disconnectActionRequirementFromEntityInstance(
+    $entityInstanceId: ID!
+    $actionRequirementId: ID!
+  ) {
+    updateEntityInstance(
+      where: { id: $entityInstanceId }
+      data: {
+        actionRequirementsWithCustomHints: {
+          disconnect: [{ id: $actionRequirementId }]
+        }
+      }
+    ) {
+      id
+      actionRequirementsWithCustomHints {
+        id
+      }
+    }
+  }
+`
+
+export const CREATE_HINT = gql`
+  mutation createHint(
+    $entityInstanceId: ID!
+    $actionRequirementId: ID!
+    $text: String!
+    $delay: Int
+  ) {
+    createHint(
+      data: {
+        text: $text
+        delay: $delay
+        entityInstance: { connect: { id: $entityInstanceId } }
+        actionRequirement: { connect: { id: $actionRequirementId } }
+      }
+    ) {
+      id
+      text
+      delay
+      entityInstance {
+        id
+      }
+      actionRequirement {
+        id
+      }
+    }
+  }
+`
+
+export const UPDATE_HINT = gql`
+  mutation updateHint($hintId: ID!, $text: String!, $delay: Int) {
+    updateHint(where: { id: $hintId }, data: { text: $text, delay: $delay }) {
+      id
+      text
+      delay
+    }
+  }
+`
+
+export const DELETE_HINT = gql`
+  mutation deleteHint($hintId: ID!) {
+    deleteHint(where: { id: $hintId }) {
+      id
+    }
+  }
+`

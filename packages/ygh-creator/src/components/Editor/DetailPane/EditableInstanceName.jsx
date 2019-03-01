@@ -1,18 +1,17 @@
-import React, { useContext, useState, useCallback, useEffect } from "react"
+import React, {
+  useRef,
+  useContext,
+  useState,
+  useCallback,
+  useEffect
+} from "react"
 import styled from "styled-components"
 
 import GameContext from "contexts/Game"
+import useClickOutside from "hooks/useClickOutside"
 
-import { Input, Button } from "your-gift-hunt/ui"
-
-const EditButton = styled(Button)`
-  font-size: 1rem;
-  font-family: ${props => props.theme.font.copy};
-  opacity: 0.5;
-  span:hover > & {
-    opacity: 1;
-  }
-`
+import { Input, ActionButton, Button } from "your-gift-hunt/ui"
+import { Pen } from "your-gift-hunt/icons"
 
 const Form = styled.form`
   display: inline-block;
@@ -22,19 +21,26 @@ const Form = styled.form`
 `
 
 const EditableInstanceName = ({ instance }) => {
+  const ref = useRef(null)
   const { updateEntityInstanceName } = useContext(GameContext)
 
-  const [{ editable, isLoading, error, value }, setState] = useState({
-    editable: false,
+  const [{ isEditable, isLoading, error, value }, setState] = useState({
+    isEditable: false,
     isLoading: false,
     error: null,
     value: instance.name
   })
 
+  useClickOutside({
+    ref,
+    onClickOutside: () =>
+      setState(state => ({ ...state, isEditable: false, value: instance.name }))
+  })
+
   useEffect(
     () => {
       setState({
-        editable: false,
+        isEditable: false,
         isLoading: false,
         error: null,
         value: instance.name
@@ -44,7 +50,7 @@ const EditableInstanceName = ({ instance }) => {
   )
 
   const onEditClick = useCallback(
-    () => setState(state => ({ ...state, editable: true })),
+    () => setState(state => ({ ...state, isEditable: true })),
     []
   )
 
@@ -56,7 +62,7 @@ const EditableInstanceName = ({ instance }) => {
         .then(
           setState(state => ({
             ...state,
-            editable: false,
+            isEditable: false,
             isLoading: false,
             error: null
           }))
@@ -73,8 +79,8 @@ const EditableInstanceName = ({ instance }) => {
     []
   )
 
-  return editable ? (
-    <Form onSubmit={onSubmit}>
+  return isEditable ? (
+    <Form onSubmit={onSubmit} ref={ref}>
       <Input
         value={value}
         onChange={onChange}
@@ -94,14 +100,9 @@ const EditableInstanceName = ({ instance }) => {
   ) : (
     <span>
       {value}{" "}
-      <EditButton
-        size="small"
-        importance="tertiary"
-        color="accent"
-        onClick={onEditClick}
-      >
-        Edit
-      </EditButton>
+      <ActionButton onClick={onEditClick}>
+        <Pen />
+      </ActionButton>
     </span>
   )
 }

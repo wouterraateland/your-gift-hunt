@@ -16,8 +16,10 @@ export { default as Item } from "./entities/Item"
 export { default as Object } from "./entities/Object"
 export { default as Trigger } from "./entities/Trigger"
 
-export { default as Edit } from "./Edit"
+export { default as Bin } from "./Bin"
 export { default as Cog } from "./Cog"
+export { default as Edit } from "./Edit"
+export { default as Pen } from "./Pen"
 
 const Icon = styled.svg.attrs(({ size }) => ({
   style: {

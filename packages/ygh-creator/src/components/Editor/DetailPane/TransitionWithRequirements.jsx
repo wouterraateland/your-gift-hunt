@@ -10,11 +10,11 @@ const TransitionList = styled.ul`
   margin: 0;
 `
 
-const Label = styled.p`
-  margin-bottom: 0.5em;
+const Label = styled.strong`
+  display: block;
+  margin: 1em 0 0.5em;
 
   font-size: smaller;
-  font-weight: bold;
 `
 
 const TransitionWithRequirements = ({ from, to, requiredActions = [] }) => (
