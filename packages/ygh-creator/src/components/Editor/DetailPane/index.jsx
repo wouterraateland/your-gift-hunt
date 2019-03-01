@@ -15,9 +15,9 @@ import CloseButton from "./CloseButton"
 
 const DetailPane = forwardRef((_, ref) => {
   const { isOpen, nodeId } = useContext(InspectorContext)
-  const { nodes } = useContext(GameContext)
+  const { getNodeById } = useContext(GameContext)
 
-  const node = nodes.find(({ id }) => nodeId === id)
+  const node = getNodeById(nodeId)
 
   return (
     <Container isOpen={isOpen} ref={ref}>

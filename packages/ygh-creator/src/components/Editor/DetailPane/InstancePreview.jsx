@@ -16,6 +16,7 @@ const InstancePreview = ({ node }) => {
   const { instance } = node
   const { entity } = instance
   const state = node.state ? node.state.state.name : null
+
   return entity.isItem || entity.isObject ? (
     <InstancePreviewContainer>
       {entity.isItem && <GenericItem {...instance} state={state} />}

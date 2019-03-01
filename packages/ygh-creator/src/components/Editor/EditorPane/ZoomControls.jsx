@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import styled from "styled-components"
 
 const Container = styled.div`
@@ -35,11 +35,16 @@ const Display = styled.span`
 `
 
 const ZoomControls = ({ steps, zoom, setZoom }) => {
-  const zoomOut = () =>
-    setZoom(steps[Math.max(0, steps.findIndex(step => step >= zoom) - 1)])
+  const zoomOut = useCallback(
+    () =>
+      setZoom(steps[Math.max(0, steps.findIndex(step => step >= zoom) - 1)]),
+    [steps, zoom]
+  )
 
-  const zoomIn = () =>
-    setZoom(steps.find(step => step > zoom) || steps[steps.length - 1])
+  const zoomIn = useCallback(
+    () => setZoom(steps.find(step => step > zoom) || steps[steps.length - 1]),
+    [steps, zoom]
+  )
 
   return (
     <Container>
