@@ -90,9 +90,10 @@ const SettingsModal = () => {
 
       setState("loading")
       try {
+        const slug = _.toSlug(formState.values.name)
         await updateGameSettings(game.id, {
           ...formState.values,
-          slug: _.toSlug(formState.values.name)
+          slug
         })
         setState("success")
       } catch (error) {

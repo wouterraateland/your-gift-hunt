@@ -56,7 +56,15 @@ const MoreActions = ({ game }) => {
     <Menu.Container>
       <Menu.Toggle />
       <Menu>
-        <Menu.Item>Test</Menu.Item>
+        <Menu.Item
+          as="a"
+          href={`https://play.yourgifthunt.com/${game.creator.slug}/${
+            game.slug
+          }`}
+          target="_blank"
+        >
+          Test
+        </Menu.Item>
         <Menu.Item color="error" onClick={deleteGame}>
           Delete
         </Menu.Item>
