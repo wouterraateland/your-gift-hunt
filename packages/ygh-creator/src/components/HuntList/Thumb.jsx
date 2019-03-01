@@ -6,7 +6,7 @@ import { Link } from "@reach/router"
 import AuthContext from "contexts/Auth"
 
 import { Edit } from "your-gift-hunt/icons"
-import Menu from "components/Menu"
+import MoreActions from "./MoreActions"
 
 const StyledHuntThumb = styled.div`
   display: flex;
@@ -26,15 +26,6 @@ const HuntTitle = styled.h2`
 const HuntMeta = styled.p`
   margin: 0;
 `
-
-const MoreActions = ({ game }) => (
-  <Menu.Container>
-    <Menu.Toggle />
-    <Menu>
-      <Menu.Item>Test</Menu.Item>
-    </Menu>
-  </Menu.Container>
-)
 
 const EditProject = styled(Link)`
   position: relative;

@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Mon Feb 25 2019 16:05:52 GMT+0100 (Midden-Europese standaardtijd)
+# timestamp: Fri Mar 01 2019 13:06:08 GMT+0100 (Midden-Europese standaardtijd)
 
 enum AccessType {
   NONE
@@ -5658,6 +5658,7 @@ type Game implements Node {
   accessType: AccessType!
   accessCode: String
   creator: User
+  cooperators(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   instances(where: EntityInstanceWhereInput, orderBy: EntityInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstance!]
   plays(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GamePlay!]
 }
@@ -5679,9 +5680,15 @@ input GameCreateInput {
   privacy: PrivacyType!
   accessType: AccessType!
   accessCode: String
-  creator: UserCreateOneWithoutGamesInput
+  creator: UserCreateOneWithoutGamesCreatedInput
+  cooperators: UserCreateManyWithoutGamesInput
   instances: EntityInstanceCreateManyWithoutGameInput
   plays: GamePlayCreateManyWithoutGameInput
+}
+
+input GameCreateManyWithoutCooperatorsInput {
+  create: [GameCreateWithoutCooperatorsInput!]
+  connect: [GameWhereUniqueInput!]
 }
 
 input GameCreateManyWithoutCreatorInput {
@@ -5699,6 +5706,18 @@ input GameCreateOneWithoutPlaysInput {
   connect: GameWhereUniqueInput
 }
 
+input GameCreateWithoutCooperatorsInput {
+  name: String!
+  slug: String!
+  description: String
+  privacy: PrivacyType!
+  accessType: AccessType!
+  accessCode: String
+  creator: UserCreateOneWithoutGamesCreatedInput
+  instances: EntityInstanceCreateManyWithoutGameInput
+  plays: GamePlayCreateManyWithoutGameInput
+}
+
 input GameCreateWithoutCreatorInput {
   name: String!
   slug: String!
@@ -5706,6 +5725,7 @@ input GameCreateWithoutCreatorInput {
   privacy: PrivacyType!
   accessType: AccessType!
   accessCode: String
+  cooperators: UserCreateManyWithoutGamesInput
   instances: EntityInstanceCreateManyWithoutGameInput
   plays: GamePlayCreateManyWithoutGameInput
 }
@@ -5717,7 +5737,8 @@ input GameCreateWithoutInstancesInput {
   privacy: PrivacyType!
   accessType: AccessType!
   accessCode: String
-  creator: UserCreateOneWithoutGamesInput
+  creator: UserCreateOneWithoutGamesCreatedInput
+  cooperators: UserCreateManyWithoutGamesInput
   plays: GamePlayCreateManyWithoutGameInput
 }
 
@@ -5728,7 +5749,8 @@ input GameCreateWithoutPlaysInput {
   privacy: PrivacyType!
   accessType: AccessType!
   accessCode: String
-  creator: UserCreateOneWithoutGamesInput
+  creator: UserCreateOneWithoutGamesCreatedInput
+  cooperators: UserCreateManyWithoutGamesInput
   instances: EntityInstanceCreateManyWithoutGameInput
 }
 
@@ -6395,7 +6417,8 @@ input GameUpdateInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
-  creator: UserUpdateOneWithoutGamesInput
+  creator: UserUpdateOneWithoutGamesCreatedInput
+  cooperators: UserUpdateManyWithoutGamesInput
   instances: EntityInstanceUpdateManyWithoutGameInput
   plays: GamePlayUpdateManyWithoutGameInput
 }
@@ -6416,6 +6439,17 @@ input GameUpdateManyMutationInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
+}
+
+input GameUpdateManyWithoutCooperatorsInput {
+  create: [GameCreateWithoutCooperatorsInput!]
+  connect: [GameWhereUniqueInput!]
+  disconnect: [GameWhereUniqueInput!]
+  delete: [GameWhereUniqueInput!]
+  update: [GameUpdateWithWhereUniqueWithoutCooperatorsInput!]
+  updateMany: [GameUpdateManyWithWhereNestedInput!]
+  deleteMany: [GameScalarWhereInput!]
+  upsert: [GameUpsertWithWhereUniqueWithoutCooperatorsInput!]
 }
 
 input GameUpdateManyWithoutCreatorInput {
@@ -6448,6 +6482,18 @@ input GameUpdateOneRequiredWithoutPlaysInput {
   upsert: GameUpsertWithoutPlaysInput
 }
 
+input GameUpdateWithoutCooperatorsDataInput {
+  name: String
+  slug: String
+  description: String
+  privacy: PrivacyType
+  accessType: AccessType
+  accessCode: String
+  creator: UserUpdateOneWithoutGamesCreatedInput
+  instances: EntityInstanceUpdateManyWithoutGameInput
+  plays: GamePlayUpdateManyWithoutGameInput
+}
+
 input GameUpdateWithoutCreatorDataInput {
   name: String
   slug: String
@@ -6455,6 +6501,7 @@ input GameUpdateWithoutCreatorDataInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
+  cooperators: UserUpdateManyWithoutGamesInput
   instances: EntityInstanceUpdateManyWithoutGameInput
   plays: GamePlayUpdateManyWithoutGameInput
 }
@@ -6466,7 +6513,8 @@ input GameUpdateWithoutInstancesDataInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
-  creator: UserUpdateOneWithoutGamesInput
+  creator: UserUpdateOneWithoutGamesCreatedInput
+  cooperators: UserUpdateManyWithoutGamesInput
   plays: GamePlayUpdateManyWithoutGameInput
 }
 
@@ -6477,8 +6525,14 @@ input GameUpdateWithoutPlaysDataInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
-  creator: UserUpdateOneWithoutGamesInput
+  creator: UserUpdateOneWithoutGamesCreatedInput
+  cooperators: UserUpdateManyWithoutGamesInput
   instances: EntityInstanceUpdateManyWithoutGameInput
+}
+
+input GameUpdateWithWhereUniqueWithoutCooperatorsInput {
+  where: GameWhereUniqueInput!
+  data: GameUpdateWithoutCooperatorsDataInput!
 }
 
 input GameUpdateWithWhereUniqueWithoutCreatorInput {
@@ -6494,6 +6548,12 @@ input GameUpsertWithoutInstancesInput {
 input GameUpsertWithoutPlaysInput {
   update: GameUpdateWithoutPlaysDataInput!
   create: GameCreateWithoutPlaysInput!
+}
+
+input GameUpsertWithWhereUniqueWithoutCooperatorsInput {
+  where: GameWhereUniqueInput!
+  update: GameUpdateWithoutCooperatorsDataInput!
+  create: GameCreateWithoutCooperatorsInput!
 }
 
 input GameUpsertWithWhereUniqueWithoutCreatorInput {
@@ -6776,6 +6836,9 @@ input GameWhereInput {
   """All values not ending with the given string."""
   accessCode_not_ends_with: String
   creator: UserWhereInput
+  cooperators_every: UserWhereInput
+  cooperators_some: UserWhereInput
+  cooperators_none: UserWhereInput
   instances_every: EntityInstanceWhereInput
   instances_some: EntityInstanceWhereInput
   instances_none: EntityInstanceWhereInput
@@ -7021,6 +7084,7 @@ type User implements Node {
   name: String!
   slug: String!
   netlifyUserId: String
+  gamesCreated(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game!]
   games(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game!]
   plays(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GamePlay!]
 }
@@ -7039,12 +7103,18 @@ input UserCreateInput {
   name: String!
   slug: String!
   netlifyUserId: String
-  games: GameCreateManyWithoutCreatorInput
+  gamesCreated: GameCreateManyWithoutCreatorInput
+  games: GameCreateManyWithoutCooperatorsInput
   plays: GamePlayCreateManyWithoutPlayerInput
 }
 
-input UserCreateOneWithoutGamesInput {
-  create: UserCreateWithoutGamesInput
+input UserCreateManyWithoutGamesInput {
+  create: [UserCreateWithoutGamesInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutGamesCreatedInput {
+  create: UserCreateWithoutGamesCreatedInput
   connect: UserWhereUniqueInput
 }
 
@@ -7053,10 +7123,19 @@ input UserCreateOneWithoutPlaysInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateWithoutGamesCreatedInput {
+  name: String!
+  slug: String!
+  netlifyUserId: String
+  games: GameCreateManyWithoutCooperatorsInput
+  plays: GamePlayCreateManyWithoutPlayerInput
+}
+
 input UserCreateWithoutGamesInput {
   name: String!
   slug: String!
   netlifyUserId: String
+  gamesCreated: GameCreateManyWithoutCreatorInput
   plays: GamePlayCreateManyWithoutPlayerInput
 }
 
@@ -7064,7 +7143,8 @@ input UserCreateWithoutPlaysInput {
   name: String!
   slug: String!
   netlifyUserId: String
-  games: GameCreateManyWithoutCreatorInput
+  gamesCreated: GameCreateManyWithoutCreatorInput
+  games: GameCreateManyWithoutCooperatorsInput
 }
 
 """An edge in a connection."""
@@ -7098,6 +7178,221 @@ type UserPreviousValues {
   name: String!
   slug: String!
   netlifyUserId: String
+}
+
+input UserScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  slug: String
+
+  """All values that are not equal to given value."""
+  slug_not: String
+
+  """All values that are contained in given list."""
+  slug_in: [String!]
+
+  """All values that are not contained in given list."""
+  slug_not_in: [String!]
+
+  """All values less than the given value."""
+  slug_lt: String
+
+  """All values less than or equal the given value."""
+  slug_lte: String
+
+  """All values greater than the given value."""
+  slug_gt: String
+
+  """All values greater than or equal the given value."""
+  slug_gte: String
+
+  """All values containing the given string."""
+  slug_contains: String
+
+  """All values not containing the given string."""
+  slug_not_contains: String
+
+  """All values starting with the given string."""
+  slug_starts_with: String
+
+  """All values not starting with the given string."""
+  slug_not_starts_with: String
+
+  """All values ending with the given string."""
+  slug_ends_with: String
+
+  """All values not ending with the given string."""
+  slug_not_ends_with: String
+  netlifyUserId: String
+
+  """All values that are not equal to given value."""
+  netlifyUserId_not: String
+
+  """All values that are contained in given list."""
+  netlifyUserId_in: [String!]
+
+  """All values that are not contained in given list."""
+  netlifyUserId_not_in: [String!]
+
+  """All values less than the given value."""
+  netlifyUserId_lt: String
+
+  """All values less than or equal the given value."""
+  netlifyUserId_lte: String
+
+  """All values greater than the given value."""
+  netlifyUserId_gt: String
+
+  """All values greater than or equal the given value."""
+  netlifyUserId_gte: String
+
+  """All values containing the given string."""
+  netlifyUserId_contains: String
+
+  """All values not containing the given string."""
+  netlifyUserId_not_contains: String
+
+  """All values starting with the given string."""
+  netlifyUserId_starts_with: String
+
+  """All values not starting with the given string."""
+  netlifyUserId_not_starts_with: String
+
+  """All values ending with the given string."""
+  netlifyUserId_ends_with: String
+
+  """All values not ending with the given string."""
+  netlifyUserId_not_ends_with: String
 }
 
 type UserSubscriptionPayload {
@@ -7143,8 +7438,15 @@ input UserUpdateInput {
   name: String
   slug: String
   netlifyUserId: String
-  games: GameUpdateManyWithoutCreatorInput
+  gamesCreated: GameUpdateManyWithoutCreatorInput
+  games: GameUpdateManyWithoutCooperatorsInput
   plays: GamePlayUpdateManyWithoutPlayerInput
+}
+
+input UserUpdateManyDataInput {
+  name: String
+  slug: String
+  netlifyUserId: String
 }
 
 input UserUpdateManyMutationInput {
@@ -7153,13 +7455,29 @@ input UserUpdateManyMutationInput {
   netlifyUserId: String
 }
 
-input UserUpdateOneWithoutGamesInput {
-  create: UserCreateWithoutGamesInput
+input UserUpdateManyWithoutGamesInput {
+  create: [UserCreateWithoutGamesInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutGamesInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+  deleteMany: [UserScalarWhereInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutGamesInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneWithoutGamesCreatedInput {
+  create: UserCreateWithoutGamesCreatedInput
   connect: UserWhereUniqueInput
   disconnect: Boolean
   delete: Boolean
-  update: UserUpdateWithoutGamesDataInput
-  upsert: UserUpsertWithoutGamesInput
+  update: UserUpdateWithoutGamesCreatedDataInput
+  upsert: UserUpsertWithoutGamesCreatedInput
 }
 
 input UserUpdateOneWithoutPlaysInput {
@@ -7171,10 +7489,19 @@ input UserUpdateOneWithoutPlaysInput {
   upsert: UserUpsertWithoutPlaysInput
 }
 
+input UserUpdateWithoutGamesCreatedDataInput {
+  name: String
+  slug: String
+  netlifyUserId: String
+  games: GameUpdateManyWithoutCooperatorsInput
+  plays: GamePlayUpdateManyWithoutPlayerInput
+}
+
 input UserUpdateWithoutGamesDataInput {
   name: String
   slug: String
   netlifyUserId: String
+  gamesCreated: GameUpdateManyWithoutCreatorInput
   plays: GamePlayUpdateManyWithoutPlayerInput
 }
 
@@ -7182,17 +7509,29 @@ input UserUpdateWithoutPlaysDataInput {
   name: String
   slug: String
   netlifyUserId: String
-  games: GameUpdateManyWithoutCreatorInput
+  gamesCreated: GameUpdateManyWithoutCreatorInput
+  games: GameUpdateManyWithoutCooperatorsInput
 }
 
-input UserUpsertWithoutGamesInput {
-  update: UserUpdateWithoutGamesDataInput!
-  create: UserCreateWithoutGamesInput!
+input UserUpdateWithWhereUniqueWithoutGamesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutGamesDataInput!
+}
+
+input UserUpsertWithoutGamesCreatedInput {
+  update: UserUpdateWithoutGamesCreatedDataInput!
+  create: UserCreateWithoutGamesCreatedInput!
 }
 
 input UserUpsertWithoutPlaysInput {
   update: UserUpdateWithoutPlaysDataInput!
   create: UserCreateWithoutPlaysInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutGamesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutGamesDataInput!
+  create: UserCreateWithoutGamesInput!
 }
 
 input UserWhereInput {
@@ -7408,6 +7747,9 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   netlifyUserId_not_ends_with: String
+  gamesCreated_every: GameWhereInput
+  gamesCreated_some: GameWhereInput
+  gamesCreated_none: GameWhereInput
   games_every: GameWhereInput
   games_some: GameWhereInput
   games_none: GameWhereInput

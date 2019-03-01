@@ -191,6 +191,7 @@ export const USER_GAMES = gql`
     user(where: { id: $userId }) {
       id
       games(where: { slug_starts_with: $slugPrefix }) {
+        id
         name
         slug
         createdAt

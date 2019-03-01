@@ -24,7 +24,7 @@ import Present from "components/Present"
 import BackButton from "components/BackButton"
 import StatusMessage from "components/StatusMessage"
 
-import { USER, GAME_COUNT_BY_SLUG } from "gql/queries"
+import { USER, USER_GAMES, GAME_COUNT_BY_SLUG } from "gql/queries"
 import { CREATE_GAME } from "gql/mutations"
 import { ACCESS_TYPES, PRIVACY, accessOptions, nameOptions } from "../data"
 
@@ -113,10 +113,13 @@ const NewGamePage = () => {
     return res.data.gamesConnection.aggregate.count !== 0
   }
 
-  useEffect(() => {
-    setNameExistence(false)
-    checkNameExistence(formState.values.name).then(setNameExistence)
-  }, [formState.values.name])
+  useEffect(
+    () => {
+      setNameExistence(false)
+      checkNameExistence(formState.values.name).then(setNameExistence)
+    },
+    [formState.values.name]
+  )
 
   async function onSubmit(event) {
     event.preventDefault()
@@ -126,15 +129,27 @@ const NewGamePage = () => {
     try {
       const gameSlug = _.toSlug(formState.values.name)
 
+      const creatorId = data.user.id
+
       await createGame({
         variables: {
           name: formState.values.name,
           slug: gameSlug,
           description: formState.values.description,
-          creatorId: data.user.id,
+          creatorId,
           privacy: formState.values.privacy,
           accessType: formState.values.accessType,
           accessCode: formState.values.accessCode
+        },
+        update: (proxy, { data: { createGame } }) => {
+          const query = {
+            query: USER_GAMES,
+            variables: { userId: creatorId, slugPrefix: "" }
+          }
+          const data = proxy.readQuery(query)
+          data.user.games.push(createGame)
+
+          proxy.writeQuery({ ...query, data })
         }
       })
 

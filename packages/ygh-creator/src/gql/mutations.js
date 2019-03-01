@@ -42,6 +42,15 @@ export const CREATE_GAME = gql`
       }
     ) {
       id
+      name
+      slug
+      createdAt
+      updatedAt
+      creator {
+        id
+        name
+        slug
+      }
     }
   }
 `
@@ -54,6 +63,14 @@ export const UPDATE_GAME_SETTINGS = gql`
       description
       accessType
       accessCode
+    }
+  }
+`
+
+export const DELETE_GAME = gql`
+  mutation deleteGame($gameId: ID!) {
+    deleteGame(where: { id: $gameId }) {
+      id
     }
   }
 `

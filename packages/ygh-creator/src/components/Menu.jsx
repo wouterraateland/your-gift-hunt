@@ -21,6 +21,9 @@ export const MenuItem = styled.div`
   &:hover {
     background: #0002;
   }
+
+  color: ${props =>
+    (props.color && props.theme.color[props.color]) || "currentColor"};
 `
 
 const MenuToggle = styled.div`
