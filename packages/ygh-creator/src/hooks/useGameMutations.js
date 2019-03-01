@@ -1,13 +1,22 @@
 import { useMutation } from "react-apollo-hooks"
 
-import { UPDATE_GAME, UPDATE_INSTANCE_NAME } from "gql/mutations"
+import {
+  UPDATE_GAME_SETTINGS,
+  UPDATE_ENTITY_INSTANCE_NAME,
+  UPDATE_ENTITY_INSTANCE_FIELD
+} from "gql/mutations"
+
+const useMutationWith = save => (mutation, transform) => {
+  const actualMutation = useMutation(mutation)
+  return save((...args) => actualMutation(transform(...args)))
+}
 
 const useGameMutations = save => {
-  const updateGameSettingsMutation = useMutation(UPDATE_GAME)
-  const updateInstanceNameMutation = useMutation(UPDATE_INSTANCE_NAME)
+  const useMutationWithSave = useMutationWith(save)
 
-  const updateGameSettings = save((gameId, values) =>
-    updateGameSettingsMutation({
+  const updateGameSettings = useMutationWithSave(
+    UPDATE_GAME_SETTINGS,
+    (gameId, values) => ({
       variables: {
         gameId,
         values
@@ -15,8 +24,9 @@ const useGameMutations = save => {
     })
   )
 
-  const updateInstanceName = save((instanceId, name) =>
-    updateInstanceNameMutation({
+  const updateEntityInstanceName = useMutationWithSave(
+    UPDATE_ENTITY_INSTANCE_NAME,
+    (instanceId, name) => ({
       variables: {
         instanceId,
         name
@@ -24,9 +34,20 @@ const useGameMutations = save => {
     })
   )
 
+  const updateEntityInstanceField = useMutationWithSave(
+    UPDATE_ENTITY_INSTANCE_FIELD,
+    (entityInstanceFieldId, value) => ({
+      variables: {
+        entityInstanceFieldId,
+        value
+      }
+    })
+  )
+
   return {
     updateGameSettings,
-    updateInstanceName
+    updateEntityInstanceName,
+    updateEntityInstanceField
   }
 }
 

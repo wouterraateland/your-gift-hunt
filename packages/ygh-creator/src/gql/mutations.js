@@ -19,22 +19,6 @@ export const UPDATE_USER_SLUG = gql`
   }
 `
 
-export const UPDATE_ENTITY_INSTANCE_FIELD = gql`
-  mutation updateEntityInstanceField(
-    $entityInstanceFieldId: ID!
-    $value: String!
-  ) {
-    updateEntityInstanceField(
-      where: { id: $entityInstanceFieldId }
-      data: { value: $value }
-    ) {
-      field {
-        id
-      }
-    }
-  }
-`
-
 export const CREATE_GAME = gql`
   mutation createGame(
     $name: String!
@@ -61,7 +45,7 @@ export const CREATE_GAME = gql`
   }
 `
 
-export const UPDATE_GAME = gql`
+export const UPDATE_GAME_SETTINGS = gql`
   mutation updateGame($gameId: ID!, $values: GameUpdateInput!) {
     updateGame(where: { id: $gameId }, data: $values) {
       id
@@ -71,11 +55,26 @@ export const UPDATE_GAME = gql`
   }
 `
 
-export const UPDATE_INSTANCE_NAME = gql`
-  mutation updateInstanceName($instanceId: ID!, $name: String!) {
+export const UPDATE_ENTITY_INSTANCE_NAME = gql`
+  mutation updateEntityInstanceName($instanceId: ID!, $name: String!) {
     updateEntityInstance(where: { id: $instanceId }, data: { name: $name }) {
       id
       name
+    }
+  }
+`
+
+export const UPDATE_ENTITY_INSTANCE_FIELD = gql`
+  mutation updateEntityInstanceField(
+    $entityInstanceFieldId: ID!
+    $value: String!
+  ) {
+    updateEntityInstanceField(
+      where: { id: $entityInstanceFieldId }
+      data: { value: $value }
+    ) {
+      id
+      value
     }
   }
 `

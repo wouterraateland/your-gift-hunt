@@ -22,7 +22,7 @@ const Form = styled.form`
 `
 
 const EditableInstanceName = ({ instance }) => {
-  const { updateInstanceName } = useContext(GameContext)
+  const { updateEntityInstanceName } = useContext(GameContext)
 
   const [{ editable, isLoading, error, value }, setState] = useState({
     editable: false,
@@ -52,7 +52,7 @@ const EditableInstanceName = ({ instance }) => {
     event => {
       event.preventDefault()
       setState(state => ({ ...state, isLoading: true }))
-      updateInstanceName(instance.id, value)
+      updateEntityInstanceName(instance.id, value)
         .then(
           setState(state => ({
             ...state,
