@@ -51,6 +51,8 @@ export const UPDATE_GAME_SETTINGS = gql`
       id
       name
       description
+      accessType
+      accessCode
     }
   }
 `
