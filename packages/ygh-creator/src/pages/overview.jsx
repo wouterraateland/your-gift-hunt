@@ -11,18 +11,18 @@ import { Wrapper, Paper, Float, Input, Button, Loader } from "your-gift-hunt/ui"
 import Layout from "layouts/Overview"
 import HuntList from "components/HuntList"
 
-import { CREATED_GAMES } from "gql/queries"
+import { USER_GAMES } from "gql/queries"
 
 const Overview = ({ searchQuery }) => {
   const { user } = useContext(AuthContext)
-  const { data, error } = useQuery(CREATED_GAMES, {
+  const { data, error } = useQuery(USER_GAMES, {
     variables: {
-      creatorId: user.user_metadata.prismaUserId,
+      userId: user.user_metadata.prismaUserId,
       slugPrefix: _.toSlug(searchQuery)
     }
   })
 
-  return <HuntList hunts={data.games} error={error} />
+  return <HuntList hunts={data.user.games} error={error} />
 }
 
 const OverviewPage = () => {

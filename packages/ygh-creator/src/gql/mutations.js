@@ -35,6 +35,7 @@ export const CREATE_GAME = gql`
         slug: $slug
         description: $description
         creator: { connect: { id: $creatorId } }
+        cooperators: { connect: [{ id: $creatorId }] }
         privacy: $privacy
         accessType: $accessType
         accessCode: $accessCode

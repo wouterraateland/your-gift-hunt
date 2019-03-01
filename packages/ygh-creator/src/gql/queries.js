@@ -186,20 +186,20 @@ export const GAME_BY_SLUG = gql`
   }
 `
 
-export const CREATED_GAMES = gql`
-  query createdGames($creatorId: ID!, $slugPrefix: String) {
-    games(
-      where: { creator: { id: $creatorId }, slug_starts_with: $slugPrefix }
-    ) {
+export const USER_GAMES = gql`
+  query createdGames($userId: ID!, $slugPrefix: String) {
+    user(where: { id: $userId }) {
       id
-      name
-      slug
-      createdAt
-      updatedAt
-      creator {
-        id
+      games(where: { slug_starts_with: $slugPrefix }) {
         name
         slug
+        createdAt
+        updatedAt
+        creator {
+          id
+          name
+          slug
+        }
       }
     }
   }

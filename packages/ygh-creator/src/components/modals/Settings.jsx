@@ -1,4 +1,10 @@
-import React, { useContext, useRef, useState, useEffect } from "react"
+import React, {
+  useContext,
+  useRef,
+  useState,
+  useEffect,
+  useCallback
+} from "react"
 import styled from "styled-components"
 import _ from "utils"
 
@@ -49,23 +55,26 @@ const SettingsModal = () => {
   const client = useApolloClient()
   const [nameExists, setNameExistence] = useState(false)
 
-  async function checkNameExistence(name) {
-    const slug = _.toSlug(name)
+  const checkNameExistence = useCallback(
+    async name => {
+      const slug = _.toSlug(name)
 
-    if (slug === game.slug) {
-      return false
-    }
-
-    const res = await client.query({
-      query: GAME_COUNT_BY_SLUG,
-      variables: {
-        creatorSlug: game.creator.slug,
-        gameSlug: slug
+      if (slug === game.slug) {
+        return false
       }
-    })
 
-    return res.data.gamesConnection.aggregate.count !== 0
-  }
+      const res = await client.query({
+        query: GAME_COUNT_BY_SLUG,
+        variables: {
+          creatorSlug: game.creator.slug,
+          gameSlug: slug
+        }
+      })
+
+      return res.data.gamesConnection.aggregate.count !== 0
+    },
+    [client]
+  )
 
   useEffect(
     () => {
@@ -75,21 +84,24 @@ const SettingsModal = () => {
     [formState.values.name]
   )
 
-  async function handleSubmit(event) {
-    event.preventDefault()
+  const handleSubmit = useCallback(
+    async event => {
+      event.preventDefault()
 
-    setState("loading")
-    try {
-      await updateGameSettings(game.id, {
-        ...formState.values,
-        slug: _.toSlug(formState.values.name)
-      })
-      setState("success")
-    } catch (error) {
-      console.log(error)
-      setState("error")
-    }
-  }
+      setState("loading")
+      try {
+        await updateGameSettings(game.id, {
+          ...formState.values,
+          slug: _.toSlug(formState.values.name)
+        })
+        setState("success")
+      } catch (error) {
+        console.log(error)
+        setState("error")
+      }
+    },
+    [game.id, formState.values]
+  )
 
   return (
     <Modal>

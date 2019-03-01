@@ -7,6 +7,7 @@ import { LabelText } from "./LabelText"
 const Input = styled.input`
   width: 15em;
   max-width: 100%;
+  height: 1.5em;
   min-height: 1.5em;
   padding: 0;
   margin: 0;
