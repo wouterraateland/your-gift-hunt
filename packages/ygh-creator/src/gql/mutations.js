@@ -186,3 +186,49 @@ export const DELETE_HINT = gql`
     }
   }
 `
+
+export const ADD_UNLOCK_TO_ENTITY_INSTANCE_STATE_TRANSITION = gql`
+  mutation addUnlockToEntityInstanceStateTransition(
+    $entityInstanceStateTransitionId: ID!
+    $entityInstanceStateId: ID!
+  ) {
+    updateEntityInstanceStateTransition(
+      where: { id: $entityInstanceStateTransitionId }
+      data: { unlocks: { connect: [{ id: $entityInstanceStateId }] } }
+    ) {
+      id
+      from {
+        id
+        instance {
+          id
+        }
+      }
+      unlocks {
+        id
+      }
+    }
+  }
+`
+
+export const REMOVE_UNLOCK_FROM_ENTITY_INSTANCE_STATE_TRANSITION = gql`
+  mutation removeUnlockFromEntityInstanceStateTransition(
+    $entityInstanceStateTransitionId: ID!
+    $entityInstanceStateId: ID!
+  ) {
+    updateEntityInstanceStateTransition(
+      where: { id: $entityInstanceStateTransitionId }
+      data: { unlocks: { disconnect: [{ id: $entityInstanceStateId }] } }
+    ) {
+      id
+      from {
+        id
+        instance {
+          id
+        }
+      }
+      unlocks {
+        id
+      }
+    }
+  }
+`

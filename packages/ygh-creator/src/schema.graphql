@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Fri Mar 01 2019 17:31:30 GMT+0100 (Midden-Europese standaardtijd)
+# timestamp: Mon Mar 04 2019 16:31:42 GMT+0100 (Midden-Europese standaardtijd)
 
 enum AccessType {
   NONE
@@ -3652,7 +3652,7 @@ type EntityInstanceState implements Node {
   state: EntityState!
   outgoingTransitions(where: EntityInstanceStateTransitionWhereInput, orderBy: EntityInstanceStateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceStateTransition!]
   incomingTransitions(where: EntityInstanceStateTransitionWhereInput, orderBy: EntityInstanceStateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceStateTransition!]
-  unlockedBy: EntityInstanceStateTransition
+  unlockedBy(where: EntityInstanceStateTransitionWhereInput, orderBy: EntityInstanceStateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceStateTransition!]
   instance: EntityInstance!
 }
 
@@ -3670,7 +3670,7 @@ input EntityInstanceStateCreateInput {
   state: EntityStateCreateOneInput!
   outgoingTransitions: EntityInstanceStateTransitionCreateManyWithoutFromInput
   incomingTransitions: EntityInstanceStateTransitionCreateManyWithoutToInput
-  unlockedBy: EntityInstanceStateTransitionCreateOneWithoutUnlocksInput
+  unlockedBy: EntityInstanceStateTransitionCreateManyWithoutUnlocksInput
   instance: EntityInstanceCreateOneWithoutStatesInput!
 }
 
@@ -3697,7 +3697,7 @@ input EntityInstanceStateCreateOneWithoutOutgoingTransitionsInput {
 input EntityInstanceStateCreateWithoutIncomingTransitionsInput {
   state: EntityStateCreateOneInput!
   outgoingTransitions: EntityInstanceStateTransitionCreateManyWithoutFromInput
-  unlockedBy: EntityInstanceStateTransitionCreateOneWithoutUnlocksInput
+  unlockedBy: EntityInstanceStateTransitionCreateManyWithoutUnlocksInput
   instance: EntityInstanceCreateOneWithoutStatesInput!
 }
 
@@ -3705,13 +3705,13 @@ input EntityInstanceStateCreateWithoutInstanceInput {
   state: EntityStateCreateOneInput!
   outgoingTransitions: EntityInstanceStateTransitionCreateManyWithoutFromInput
   incomingTransitions: EntityInstanceStateTransitionCreateManyWithoutToInput
-  unlockedBy: EntityInstanceStateTransitionCreateOneWithoutUnlocksInput
+  unlockedBy: EntityInstanceStateTransitionCreateManyWithoutUnlocksInput
 }
 
 input EntityInstanceStateCreateWithoutOutgoingTransitionsInput {
   state: EntityStateCreateOneInput!
   incomingTransitions: EntityInstanceStateTransitionCreateManyWithoutToInput
-  unlockedBy: EntityInstanceStateTransitionCreateOneWithoutUnlocksInput
+  unlockedBy: EntityInstanceStateTransitionCreateManyWithoutUnlocksInput
   instance: EntityInstanceCreateOneWithoutStatesInput!
 }
 
@@ -3867,9 +3867,9 @@ input EntityInstanceStateTransitionCreateManyWithoutToInput {
   connect: [EntityInstanceStateTransitionWhereUniqueInput!]
 }
 
-input EntityInstanceStateTransitionCreateOneWithoutUnlocksInput {
-  create: EntityInstanceStateTransitionCreateWithoutUnlocksInput
-  connect: EntityInstanceStateTransitionWhereUniqueInput
+input EntityInstanceStateTransitionCreateManyWithoutUnlocksInput {
+  create: [EntityInstanceStateTransitionCreateWithoutUnlocksInput!]
+  connect: [EntityInstanceStateTransitionWhereUniqueInput!]
 }
 
 input EntityInstanceStateTransitionCreateWithoutFromInput {
@@ -4025,13 +4025,14 @@ input EntityInstanceStateTransitionUpdateManyWithoutToInput {
   upsert: [EntityInstanceStateTransitionUpsertWithWhereUniqueWithoutToInput!]
 }
 
-input EntityInstanceStateTransitionUpdateOneWithoutUnlocksInput {
-  create: EntityInstanceStateTransitionCreateWithoutUnlocksInput
-  connect: EntityInstanceStateTransitionWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: EntityInstanceStateTransitionUpdateWithoutUnlocksDataInput
-  upsert: EntityInstanceStateTransitionUpsertWithoutUnlocksInput
+input EntityInstanceStateTransitionUpdateManyWithoutUnlocksInput {
+  create: [EntityInstanceStateTransitionCreateWithoutUnlocksInput!]
+  connect: [EntityInstanceStateTransitionWhereUniqueInput!]
+  disconnect: [EntityInstanceStateTransitionWhereUniqueInput!]
+  delete: [EntityInstanceStateTransitionWhereUniqueInput!]
+  update: [EntityInstanceStateTransitionUpdateWithWhereUniqueWithoutUnlocksInput!]
+  deleteMany: [EntityInstanceStateTransitionScalarWhereInput!]
+  upsert: [EntityInstanceStateTransitionUpsertWithWhereUniqueWithoutUnlocksInput!]
 }
 
 input EntityInstanceStateTransitionUpdateWithoutFromDataInput {
@@ -4059,9 +4060,9 @@ input EntityInstanceStateTransitionUpdateWithWhereUniqueWithoutToInput {
   data: EntityInstanceStateTransitionUpdateWithoutToDataInput!
 }
 
-input EntityInstanceStateTransitionUpsertWithoutUnlocksInput {
-  update: EntityInstanceStateTransitionUpdateWithoutUnlocksDataInput!
-  create: EntityInstanceStateTransitionCreateWithoutUnlocksInput!
+input EntityInstanceStateTransitionUpdateWithWhereUniqueWithoutUnlocksInput {
+  where: EntityInstanceStateTransitionWhereUniqueInput!
+  data: EntityInstanceStateTransitionUpdateWithoutUnlocksDataInput!
 }
 
 input EntityInstanceStateTransitionUpsertWithWhereUniqueWithoutFromInput {
@@ -4074,6 +4075,12 @@ input EntityInstanceStateTransitionUpsertWithWhereUniqueWithoutToInput {
   where: EntityInstanceStateTransitionWhereUniqueInput!
   update: EntityInstanceStateTransitionUpdateWithoutToDataInput!
   create: EntityInstanceStateTransitionCreateWithoutToInput!
+}
+
+input EntityInstanceStateTransitionUpsertWithWhereUniqueWithoutUnlocksInput {
+  where: EntityInstanceStateTransitionWhereUniqueInput!
+  update: EntityInstanceStateTransitionUpdateWithoutUnlocksDataInput!
+  create: EntityInstanceStateTransitionCreateWithoutUnlocksInput!
 }
 
 input EntityInstanceStateTransitionWhereInput {
@@ -4140,7 +4147,7 @@ input EntityInstanceStateUpdateInput {
   state: EntityStateUpdateOneRequiredInput
   outgoingTransitions: EntityInstanceStateTransitionUpdateManyWithoutFromInput
   incomingTransitions: EntityInstanceStateTransitionUpdateManyWithoutToInput
-  unlockedBy: EntityInstanceStateTransitionUpdateOneWithoutUnlocksInput
+  unlockedBy: EntityInstanceStateTransitionUpdateManyWithoutUnlocksInput
   instance: EntityInstanceUpdateOneRequiredWithoutStatesInput
 }
 
@@ -4183,7 +4190,7 @@ input EntityInstanceStateUpdateOneWithoutIncomingTransitionsInput {
 input EntityInstanceStateUpdateWithoutIncomingTransitionsDataInput {
   state: EntityStateUpdateOneRequiredInput
   outgoingTransitions: EntityInstanceStateTransitionUpdateManyWithoutFromInput
-  unlockedBy: EntityInstanceStateTransitionUpdateOneWithoutUnlocksInput
+  unlockedBy: EntityInstanceStateTransitionUpdateManyWithoutUnlocksInput
   instance: EntityInstanceUpdateOneRequiredWithoutStatesInput
 }
 
@@ -4191,13 +4198,13 @@ input EntityInstanceStateUpdateWithoutInstanceDataInput {
   state: EntityStateUpdateOneRequiredInput
   outgoingTransitions: EntityInstanceStateTransitionUpdateManyWithoutFromInput
   incomingTransitions: EntityInstanceStateTransitionUpdateManyWithoutToInput
-  unlockedBy: EntityInstanceStateTransitionUpdateOneWithoutUnlocksInput
+  unlockedBy: EntityInstanceStateTransitionUpdateManyWithoutUnlocksInput
 }
 
 input EntityInstanceStateUpdateWithoutOutgoingTransitionsDataInput {
   state: EntityStateUpdateOneRequiredInput
   incomingTransitions: EntityInstanceStateTransitionUpdateManyWithoutToInput
-  unlockedBy: EntityInstanceStateTransitionUpdateOneWithoutUnlocksInput
+  unlockedBy: EntityInstanceStateTransitionUpdateManyWithoutUnlocksInput
   instance: EntityInstanceUpdateOneRequiredWithoutStatesInput
 }
 
@@ -4296,7 +4303,9 @@ input EntityInstanceStateWhereInput {
   incomingTransitions_every: EntityInstanceStateTransitionWhereInput
   incomingTransitions_some: EntityInstanceStateTransitionWhereInput
   incomingTransitions_none: EntityInstanceStateTransitionWhereInput
-  unlockedBy: EntityInstanceStateTransitionWhereInput
+  unlockedBy_every: EntityInstanceStateTransitionWhereInput
+  unlockedBy_some: EntityInstanceStateTransitionWhereInput
+  unlockedBy_none: EntityInstanceStateTransitionWhereInput
   instance: EntityInstanceWhereInput
 }
 

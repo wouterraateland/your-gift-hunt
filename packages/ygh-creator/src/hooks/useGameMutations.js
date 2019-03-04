@@ -9,7 +9,9 @@ import {
   DISCONNECT_ACTION_REQUIREMENT_FROM_ENTITY_INSTANCE,
   CREATE_HINT,
   UPDATE_HINT,
-  DELETE_HINT
+  DELETE_HINT,
+  ADD_UNLOCK_TO_ENTITY_INSTANCE_STATE_TRANSITION,
+  REMOVE_UNLOCK_FROM_ENTITY_INSTANCE_STATE_TRANSITION
 } from "gql/mutations"
 
 const useMutationWith = save => (mutation, transform) => {
@@ -129,17 +131,72 @@ const useGameMutations = (variables, save) => {
     }
   }))
 
+  const addUnlockToEntityInstanceStateTransition = useMutationWithSave(
+    ADD_UNLOCK_TO_ENTITY_INSTANCE_STATE_TRANSITION,
+    (entityInstanceStateTransitionId, entityInstanceStateId) => ({
+      variables: { entityInstanceStateTransitionId, entityInstanceStateId },
+      update: (proxy, { data: { updateEntityInstanceStateTransition } }) => {
+        const data = proxy.readQuery(query)
+
+        data.games[0].instances.forEach(instance => {
+          instance.states.forEach(state => {
+            if (state.id === entityInstanceStateId) {
+              const index = state.unlockedBy.findIndex(
+                ({ id }) => entityInstanceStateTransitionId === id
+              )
+              if (index === -1) {
+                const { unlocks, ...rest } = updateEntityInstanceStateTransition
+                state.unlockedBy.push(rest)
+              }
+            }
+          })
+        })
+
+        proxy.writeQuery({ ...query, data })
+      }
+    })
+  )
+
+  const removeUnlockFromEntityInstanceStateTransition = useMutationWithSave(
+    REMOVE_UNLOCK_FROM_ENTITY_INSTANCE_STATE_TRANSITION,
+    (entityInstanceStateTransitionId, entityInstanceStateId) => ({
+      variables: { entityInstanceStateTransitionId, entityInstanceStateId },
+      update: proxy => {
+        const data = proxy.readQuery(query)
+
+        data.games[0].instances.forEach(instance => {
+          instance.states.forEach(state => {
+            if (state.id === entityInstanceStateId) {
+              const index = state.unlockedBy.findIndex(
+                ({ id }) => entityInstanceStateTransitionId === id
+              )
+              if (index !== -1) {
+                state.unlockedBy.splice(index, 1)
+              }
+            }
+          })
+        })
+
+        proxy.writeQuery({ ...query, data })
+      }
+    })
+  )
+
   return {
     updateGameSettings,
     updateEntityInstanceName,
     updateEntityInstanceField,
 
-    // Hint related actions
+    // Hint mutations
     connectActionRequirementToEntityInstance,
     disconnectActionRequirementFromEntityInstance,
     createHint,
     updateHint,
-    deleteHint
+    deleteHint,
+
+    // Unlock mutations
+    addUnlockToEntityInstanceStateTransition,
+    removeUnlockFromEntityInstanceStateTransition
   }
 }
 

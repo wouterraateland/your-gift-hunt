@@ -5,6 +5,8 @@ import { darken } from "utils/colors"
 const Button = styled.button`
   cursor: pointer;
 
+  position: relative;
+
   display: inline-block;
   padding: ${props => {
     switch (props.size) {

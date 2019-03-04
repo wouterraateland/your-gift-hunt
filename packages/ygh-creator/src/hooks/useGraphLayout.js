@@ -148,16 +148,18 @@ const findPositions = (nodes, edges) => {
 
         const node = nodes.find(({ id }) => edge.from === id)
 
-        positionNode(
-          edge.from,
-          node.type === NODE_TYPES.ENTRY
-            ? { x, y: y - 1 }
-            : findUnoccupiedPositionAround(
-                x,
-                y - 1,
-                edge.type === EDGE_TYPES.USE ? "aside-up" : "state"
-              )
-        )
+        if (node) {
+          positionNode(
+            edge.from,
+            node.type === NODE_TYPES.ENTRY
+              ? { x, y: y - 1 }
+              : findUnoccupiedPositionAround(
+                  x,
+                  y - 1,
+                  edge.type === EDGE_TYPES.USE ? "aside-up" : "state"
+                )
+          )
+        }
       }
     }
   }

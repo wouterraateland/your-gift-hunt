@@ -251,3 +251,13 @@ export const GAME_COUNT_BY_SLUG = gql`
     }
   }
 `
+
+export const ENTITY_INSTANCE_STATE_TRANSITIONS = gql`
+  query entityInstanceStateTransitions($from: ID!, $to: ID!) {
+    entityInstanceStateTransitions(
+      where: { from: { id: $from }, to: { id: $to } }
+    ) {
+      id
+    }
+  }
+`

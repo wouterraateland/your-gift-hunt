@@ -1,5 +1,6 @@
 import hash from "object-hash"
 import { NODE_TYPES, EDGE_TYPES } from "data"
+import _ from "utils"
 
 const getStartInstanceIds = instances =>
   instances
@@ -11,11 +12,12 @@ const getNodes = (startInstanceIds, instances) => [
     .filter(
       ({ id, states }) =>
         !startInstanceIds.includes(id) &&
-        (states.some(
-          ({ unlockedBy }) =>
-            unlockedBy && startInstanceIds.includes(unlockedBy.from.instance.id)
+        (states.some(({ unlockedBy }) =>
+          unlockedBy.some(({ from }) =>
+            startInstanceIds.includes(from.instance.id)
+          )
         ) ||
-          states.every(({ unlockedBy }) => !unlockedBy))
+          states.every(({ unlockedBy }) => unlockedBy.length === 0))
     )
     .map(instance => ({
       id: `${instance.id}-${NODE_TYPES.ENTRY}`,
@@ -67,8 +69,10 @@ const getStartTransitions = (startInstanceIds, nodes) =>
     .filter(
       ({ state, instance }) =>
         state &&
-        (state.unlockedBy
-          ? startInstanceIds.includes(state.unlockedBy.from.instance.id)
+        (state.unlockedBy.length
+          ? state.unlockedBy.some(({ from }) =>
+              startInstanceIds.includes(from.instance.id)
+            )
           : instance.entity.defaultState &&
             instance.entity.defaultState.id === state.state.id)
     )
@@ -139,6 +143,20 @@ const getEdges = (startInstanceIds, nodes) =>
 
 const getNodeById = nodes => nodeId => nodes.find(({ id }) => id === nodeId)
 
+const getEdgeById = (nodes, edges) =>
+  _.compose(
+    edge =>
+      edge
+        ? {
+            ...edge,
+            from: getNodeById(nodes)(edge.from),
+            to: getNodeById(nodes)(edge.to),
+            unlocks: getNodeById(nodes)(edge.unlocks)
+          }
+        : edge,
+    edgeId => edges.find(({ id }) => id === edgeId)
+  )
+
 const useGameGraph = instances => {
   const startInstanceIds = getStartInstanceIds(instances)
   const nodes = getNodes(startInstanceIds, instances)
@@ -148,7 +166,8 @@ const useGameGraph = instances => {
     nodes,
     edges,
     getNodeById: getNodeById(nodes),
-    getNodeByInstanceAndState: getNodeByInstanceAndState(nodes)
+    getNodeByInstanceAndState: getNodeByInstanceAndState(nodes),
+    getEdgeById: getEdgeById(nodes, edges)
   }
 }
 

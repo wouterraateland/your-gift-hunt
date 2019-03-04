@@ -1,6 +1,7 @@
 export const identity = x => x
 export const noop = () => {}
 export const constant = x => () => x
+export const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x)
 
 export const mean = xs => xs.reduce((acc, x) => acc + x, 0) / xs.length
 
@@ -14,6 +15,7 @@ export const toSlug = s => s.toLowerCase().replace(/ /g, "-")
 export default {
   identity,
   noop,
+  compose,
   mean,
   angle,
   dist
