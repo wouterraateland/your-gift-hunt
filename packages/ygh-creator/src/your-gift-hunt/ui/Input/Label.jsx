@@ -45,6 +45,10 @@ const Label = styled.label`
         }
       }
     `}
+
+  & textarea {
+    line-height: 1.5em;
+  }
 `
 
 Label.displayName = "Label"

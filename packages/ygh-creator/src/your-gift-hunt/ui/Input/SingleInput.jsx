@@ -1,6 +1,7 @@
 import React, { forwardRef, useRef, useEffect } from "react"
 import styled, { css } from "styled-components"
 import { transparentize } from "polished"
+import _ from "utils"
 
 import { LabelText } from "./LabelText"
 
@@ -57,22 +58,36 @@ const setHeight = el => {
   }
 }
 
-export default forwardRef(({ value, ...otherProps }, ref) => {
-  const myRef = useRef(null)
+export default forwardRef(
+  ({ value, onChange = _.noop, ...otherProps }, ref) => {
+    const myRef = useRef(null)
 
-  useEffect(
-    () => {
-      myRef && myRef.current && setHeight(myRef.current)
-    },
-    [value]
-  )
+    useEffect(
+      () => {
+        myRef && myRef.current && setHeight(myRef.current)
+      },
+      [value]
+    )
 
-  return (
-    <Input
-      as={otherProps.type === "textarea" ? "textarea" : "input"}
-      ref={otherProps.type === "textarea" ? myRef : ref}
-      value={value === null ? "" : value}
-      {...otherProps}
-    />
-  )
-})
+    return (
+      <Input
+        as={otherProps.type === "textarea" ? "textarea" : "input"}
+        ref={otherProps.type === "textarea" ? myRef : ref}
+        value={value === null ? "" : value}
+        onChange={
+          otherProps.type === "number"
+            ? event =>
+                onChange({
+                  ...event,
+                  target: {
+                    ...event.target,
+                    value: parseInt(event.target.value, 10)
+                  }
+                })
+            : onChange
+        }
+        {...otherProps}
+      />
+    )
+  }
+)

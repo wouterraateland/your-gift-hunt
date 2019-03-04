@@ -18,6 +18,8 @@ const ActionButton = styled.button`
 
   background-color: #0002;
 
+  transition: background-color 0.2s ease-out;
+
   &:hover {
     background-color: ${props =>
       (props.color && props.theme.color[props.color]) || "#0004"};
