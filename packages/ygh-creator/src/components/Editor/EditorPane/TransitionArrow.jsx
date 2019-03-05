@@ -30,6 +30,8 @@ const getD = (x1, y1, x2, y2, type) => {
     case EDGE_TYPES.USE:
       return x1 < x2
         ? `M ${x1} ${y1} C ${x1 + 64} ${y1}, ${x2 - 64} ${y2}, ${x2} ${y2}`
+        : x1 === x2
+        ? `M ${x1} ${y1} C ${x1 - 32} ${y1}, ${x2 - 32} ${y2}, ${x2} ${y2}`
         : `M ${x1} ${y1} C ${x1 - 64} ${y1}, ${x2 + 64} ${y2}, ${x2} ${y2}`
     case EDGE_TYPES.UNLOCK:
       return x1 === x2 && y1 > y2

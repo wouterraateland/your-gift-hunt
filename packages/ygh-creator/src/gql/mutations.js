@@ -232,3 +232,33 @@ export const REMOVE_UNLOCK_FROM_ENTITY_INSTANCE_STATE_TRANSITION = gql`
     }
   }
 `
+
+export const CREATE_ENTITY_INSTANCE_STATE_TRANSITION = gql`
+  mutation createEntityInstanceStateTransition(
+    $from: ID!
+    $to: ID!
+    $unlocks: ID!
+  ) {
+    createEntityInstanceStateTransition(
+      data: {
+        from: { connect: { id: $from } }
+        to: { connect: { id: $to } }
+        unlocks: { connect: [{ id: $unlocks }] }
+      }
+    ) {
+      id
+      from {
+        id
+        instance {
+          id
+        }
+      }
+      to {
+        id
+      }
+      unlocks {
+        id
+      }
+    }
+  }
+`

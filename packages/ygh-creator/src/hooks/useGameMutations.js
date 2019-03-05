@@ -11,7 +11,8 @@ import {
   UPDATE_HINT,
   DELETE_HINT,
   ADD_UNLOCK_TO_ENTITY_INSTANCE_STATE_TRANSITION,
-  REMOVE_UNLOCK_FROM_ENTITY_INSTANCE_STATE_TRANSITION
+  REMOVE_UNLOCK_FROM_ENTITY_INSTANCE_STATE_TRANSITION,
+  CREATE_ENTITY_INSTANCE_STATE_TRANSITION
 } from "gql/mutations"
 
 const useMutationWith = save => (mutation, transform) => {
@@ -182,6 +183,31 @@ const useGameMutations = (variables, save) => {
     })
   )
 
+  const createEntityInstanceStateTransition = useMutationWithSave(
+    CREATE_ENTITY_INSTANCE_STATE_TRANSITION,
+    (from, to, unlocks) => ({
+      variables: { from, to, unlocks },
+      update: (proxy, { data: { createEntityInstanceStateTransition } }) => {
+        const data = proxy.readQuery(query)
+
+        data.games[0].instances.forEach(instance => {
+          instance.states.forEach(state => {
+            if (state.id === unlocks) {
+              const {
+                to,
+                unlocks,
+                ...rest
+              } = createEntityInstanceStateTransition
+              state.unlockedBy.push(rest)
+            }
+          })
+        })
+
+        proxy.writeQuery({ ...query, data })
+      }
+    })
+  )
+
   return {
     updateGameSettings,
     updateEntityInstanceName,
@@ -196,7 +222,8 @@ const useGameMutations = (variables, save) => {
 
     // Unlock mutations
     addUnlockToEntityInstanceStateTransition,
-    removeUnlockFromEntityInstanceStateTransition
+    removeUnlockFromEntityInstanceStateTransition,
+    createEntityInstanceStateTransition
   }
 }
 

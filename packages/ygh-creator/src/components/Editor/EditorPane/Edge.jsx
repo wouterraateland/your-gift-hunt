@@ -23,13 +23,14 @@ const Edge = ({ id, type, from, to, unlocks, getNodePosition }) => {
         />
       )
     case EDGE_TYPES.USE:
-      const d = fromPosition.left < toPosition.left ? 1 : -1
+      const e = fromPosition.left === toPosition.left
+      const d = e ? 0 : fromPosition.left < toPosition.left ? 1 : -1
       return (
         <TransitionArrow
           key={id}
-          x1={fromPosition.left + 96 + 96 * d}
+          x1={fromPosition.left + 96 + 96 * d - 96 * e}
           y1={fromPosition.top + 48}
-          x2={toPosition.left + 96 - 96 * d}
+          x2={toPosition.left + 96 - 96 * d - 96 * e}
           y2={toPosition.top + 48}
           type={type}
         />

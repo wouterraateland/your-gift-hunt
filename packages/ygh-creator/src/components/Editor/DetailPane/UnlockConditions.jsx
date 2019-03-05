@@ -9,7 +9,7 @@ import useAsync from "hooks/useAsync"
 
 import { ENTITY_INSTANCE_STATE_TRANSITIONS } from "gql/queries"
 
-import { Paper, ActionButton, Button } from "your-gift-hunt/ui"
+import { Paper, ActionButton, Button, Message } from "your-gift-hunt/ui"
 import { Bin } from "your-gift-hunt/icons"
 
 import Options from "./Options"
@@ -58,7 +58,8 @@ const EditableUnlockConditions = ({ node }) => {
     getNodeById,
     startTriggerStateTransition,
     addUnlockToEntityInstanceStateTransition,
-    removeUnlockFromEntityInstanceStateTransition
+    removeUnlockFromEntityInstanceStateTransition,
+    createEntityInstanceStateTransition
   } = useContext(GameContext)
 
   const client = useApolloClient()
@@ -86,7 +87,7 @@ const EditableUnlockConditions = ({ node }) => {
     )
 
   const [optionsVisible, setOptionsVisibility] = useState(false)
-  const [{ isLoading }, runAsync] = useAsync()
+  const [{ isLoading, error }, runAsync] = useAsync()
 
   const addUnlockCondition = useCallback(
     runAsync(async id => {
@@ -109,10 +110,16 @@ const EditableUnlockConditions = ({ node }) => {
           variables: { from: edge.from.id, to: edge.to.id }
         })
 
-        await addUnlockToEntityInstanceStateTransition(
-          entityInstanceStateTransitions[0].id,
-          node.state.id
-        )
+        await (entityInstanceStateTransitions.length
+          ? addUnlockToEntityInstanceStateTransition(
+              entityInstanceStateTransitions[0].id,
+              node.state.id
+            )
+          : createEntityInstanceStateTransition(
+              edge.from.id,
+              edge.to.id,
+              node.state.id
+            ))
       }
     }),
     [edges, unlockConditions]
@@ -184,6 +191,7 @@ const EditableUnlockConditions = ({ node }) => {
       >
         + Add condition
       </Button>
+      {error && <Message.Error>{error.message}</Message.Error>}
     </>
   )
 }
