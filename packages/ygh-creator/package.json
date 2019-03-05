@@ -28,7 +28,7 @@
     "tinyqueue": "^2.0.0",
     "typeface-montserrat": "^0.0.54",
     "typeface-playfair-display": "^0.0.54",
-    "use-pan-and-zoom": "0.2.1"
+    "use-pan-and-zoom": "0.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

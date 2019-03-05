@@ -4,9 +4,9 @@ const useClickOutside = ({ ref, onClickOutside }) => {
   const onClick = event => event.path.includes(ref.current) || onClickOutside()
 
   useEffect(() => {
-    window.addEventListener("click", onClick, true)
+    window.addEventListener("mouseup", onClick)
     return () => {
-      window.removeEventListener("click", onClick, true)
+      window.removeEventListener("mouseup", onClick)
     }
   }, [])
 }
