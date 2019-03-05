@@ -1,123 +1,179 @@
 import { NODE_TYPES, EDGE_TYPES } from "data"
-import React, { useContext, useState } from "react"
+import React, { useCallback, useContext, useState } from "react"
 import styled from "styled-components"
 
 import GameContext from "contexts/Game"
 
-import Select from "react-select"
-import { Button } from "your-gift-hunt/ui"
+import { useApolloClient } from "react-apollo-hooks"
+import useAsync from "hooks/useAsync"
+
+import { ActionButton, Button } from "your-gift-hunt/ui"
+import { Bin } from "your-gift-hunt/icons"
 import NodeTag from "../NodeTag"
 import ClickableNodeTag from "./ClickableNodeTag"
+import Options from "./Options"
 
-const MultiValueLabel = ({ data }) => <ClickableNodeTag {...data.label} />
+import { ENTITY_INSTANCE_STATE_TRANSITIONS } from "gql/queries"
 
-const DropdownIndicator = ({ innerProps }) => (
-  <Button {...innerProps} size="small" importance="primary" color="accent">
-    + Add unlock
-  </Button>
-)
+const UnlockContainer = styled.div`
+  display: block;
+  margin-bottom: 0.5em;
 
-const OptionContainer = styled.div`
-  padding: 0.5em;
-  &:not(:last-child) {
-    border-bottom: 1px solid #0001;
+  &::before {
+    content: "\u2192";
+
+    margin-right: 0.5em;
+
+    font-weight: bold;
+
+    color: #39f;
   }
 `
 
-const Option = ({ innerProps, data }) => {
-  return (
-    <OptionContainer {...innerProps}>
-      <NodeTag {...data.label} />
-    </OptionContainer>
-  )
-}
+const Unlock = ({ data, isDeletable = true, onDeleteClick }) => (
+  <UnlockContainer>
+    <ClickableNodeTag {...data} />
+    {isDeletable && (
+      <ActionButton color="error" onClick={onDeleteClick}>
+        <Bin />
+      </ActionButton>
+    )}
+  </UnlockContainer>
+)
 
-const styles = {
-  control: () => ({
-    position: "relative"
-  }),
-  indicatorContainer: () => ({
-    marginTop: ".5em"
-  }),
-  indicatorSeparator: () => ({
-    display: "inline-block",
-    ":not(:first-child)": {
-      width: ".5em"
-    }
-  }),
-  placeholder: () => ({
-    marginBottom: ".5em",
-    fontStyle: "italic",
-    color: "#0006"
-  }),
-  input: () => ({
-    display: "none"
-  }),
-  valueContainer: () => ({
-    display: "block"
-  }),
-  multiValue: () => ({
-    display: "block",
-    marginBottom: ".5em",
-    "::before": {
-      content: '"\u2192"',
-      marginRight: ".5em",
-      fontWeight: "bold",
-      color: "#39f"
-    }
-  }),
-  multiValueRemove: () => ({
-    cursor: "pointer",
-    display: "inline-block",
-    width: "1.4em",
-    height: "1.4em",
-    padding: ".1em",
-    marginLeft: ".5em",
-    borderRadius: "100%",
-    fontSize: "smaller",
-    textAlign: "center",
-    backgroundColor: "#0002",
-    ":hover": {
-      backgroundColor: "#FFBDAD",
-      color: "#DE350B"
-    }
-  })
-}
-
-const getValue = node => `${node.instance.name} ${node.state.state.name}`
+const Em = styled.em`
+  display: block;
+  margin-bottom: 0.5em;
+`
 
 const Unlocks = ({ from, to }) => {
-  const { edges, nodes, getNodeById } = useContext(GameContext)
+  const {
+    edges,
+    nodes,
+    getNodeById,
+    addUnlockToEntityInstanceStateTransition,
+    removeUnlockFromEntityInstanceStateTransition,
+    startTriggerStateTransition
+  } = useContext(GameContext)
+
   const unlockEdges = edges.filter(
     edge =>
       edge.type === EDGE_TYPES.UNLOCK &&
       edge.from === from.id &&
       edge.to === to.id
   )
-  const [state, setState] = useState(
-    unlockEdges
-      .map(({ unlocks }) => getNodeById(unlocks))
-      .map(node => ({ label: node, value: getValue(node) }))
+
+  const unlocks = unlockEdges.map(({ unlocks }) => getNodeById(unlocks))
+
+  const client = useApolloClient()
+  const [optionsVisible, setOptionsVisibility] = useState(false)
+  const [{ isLoading }, runAsync] = useAsync()
+
+  const options = nodes.filter(
+    ({ id, instance, type }) =>
+      type === NODE_TYPES.STATE &&
+      !instance.entity.isObject &&
+      !edges.some(({ type, to }) => type === EDGE_TYPES.TRANSFORM && to === id)
   )
 
+  const addUnlock = useCallback(
+    runAsync(async id => {
+      if (!unlocks.find(unlock => unlock.id === id)) {
+        const unlockConditions = edges.filter(({ unlocks }) => unlocks === id)
+
+        if (unlockConditions.length === 0) {
+          // If we add the first unlock condition to a node, remove the unlock condition from the start trigger
+          await removeUnlockFromEntityInstanceStateTransition(
+            startTriggerStateTransition.id,
+            id
+          )
+        }
+
+        const {
+          data: { entityInstanceStateTransitions }
+        } = await client.query({
+          query: ENTITY_INSTANCE_STATE_TRANSITIONS,
+          variables: { from: from.id, to: to.id }
+        })
+
+        await addUnlockToEntityInstanceStateTransition(
+          entityInstanceStateTransitions[0].id,
+          id
+        )
+      }
+    }),
+    [unlocks, from, to]
+  )
+
+  const removeUnlock = useCallback(
+    runAsync(async id => {
+      // if (unlocks.find(unlock => unlock.id === id)) {
+      //   if (unlocks.length === 1) {
+      //     // If we remove the only unlock condition, replace it with an unlock from a start trigger
+      //     await addUnlockToEntityInstanceStateTransition(
+      //       startTriggerStateTransition.id,
+      //       node.state.id
+      //     )
+      //   }
+      //
+      //   const edge = getEdgeById(id)
+      //   const {
+      //     data: { entityInstanceStateTransitions }
+      //   } = await client.query({
+      //     query: ENTITY_INSTANCE_STATE_TRANSITIONS,
+      //     variables: { from: edge.from.id, to: edge.to.id }
+      //   })
+      //
+      //   await removeUnlockFromEntityInstanceStateTransition(
+      //     entityInstanceStateTransitions[0].id,
+      //     node.state.id
+      //   )
+      // }
+    }),
+    [edges, unlocks]
+  )
+
+  const onAddButtonClick = useCallback(() => setOptionsVisibility(true), [])
+  const onOptionsClose = useCallback(() => setOptionsVisibility(false), [])
+  const onOptionClick = useCallback(id => addUnlock(id), [addUnlock])
+
   return (
-    <Select
-      placeholder="Nothing"
-      isMulti
-      menuPlacement="auto"
-      isClearable={false}
-      components={{
-        MultiValueLabel,
-        Option,
-        DropdownIndicator
-      }}
-      styles={styles}
-      onChange={v => setState(v)}
-      options={nodes
-        .filter(({ type }) => type === NODE_TYPES.STATE)
-        .map(node => ({ label: node, value: getValue(node) }))}
-      value={state}
-    />
+    <>
+      {unlocks.length ? (
+        unlocks.map(unlock => (
+          <Unlock
+            key={unlock.id}
+            data={unlock}
+            onDeleteClick={() => removeUnlock(unlock.id)}
+          />
+        ))
+      ) : (
+        <Em>Nothing</Em>
+      )}
+      <Options
+        closeOnClick
+        components={{
+          Option: ({ data }) => <NodeTag {...data} />
+        }}
+        options={options.filter(
+          ({ id, instance }) =>
+            instance.id !== from.instance.id &&
+            !unlocks.find(unlock => unlock.id === id)
+        )}
+        onClose={onOptionsClose}
+        onOptionClick={onOptionClick}
+        isVisible={optionsVisible}
+      />
+      <Button
+        disabled={isLoading}
+        onClick={onAddButtonClick}
+        size="small"
+        importance="primary"
+        color="accent"
+      >
+        + Add unlock
+      </Button>
+    </>
   )
 }
 
