@@ -10,6 +10,7 @@ const InstancePreviewContainer = styled.div`
   justify-content: center;
 
   height: 8em;
+  margin-top: -1em;
 `
 
 const InstancePreview = ({ node }) => {

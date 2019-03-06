@@ -30,6 +30,10 @@ const TypeEntryContainer = styled.div`
     border-radius: 0 0 ${props => props.theme.borderRadius}
       ${props => props.theme.borderRadius};
   }
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #0004;
+  }
 `
 
 const TypeEntry = ({ icon: Icon, label, isSelected, ...otherProps }) => (

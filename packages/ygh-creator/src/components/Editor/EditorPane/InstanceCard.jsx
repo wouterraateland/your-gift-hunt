@@ -13,7 +13,7 @@ const Card = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: flex-start;
 
   width: 12em;
@@ -22,7 +22,16 @@ const Card = styled.div`
   border-radius: ${props => props.theme.borderRadius};
   box-shadow: ${props => props.theme.boxShadow.medium};
 
-  background: #fff;
+  background-color: #fff;
+  ${props =>
+    props.hasPreview &&
+    css`
+      background-image: radial-gradient(
+        ellipse 6em 6em at 100% 0,
+        #39f6,
+        transparent
+      );
+    `}
 
   ${props =>
     props.mayBeDeleted &&
@@ -44,7 +53,7 @@ const Card = styled.div`
 `
 
 const InstanceName = styled.h2`
-  margin: 0 ${props => (props.hasPreview ? 4 : 0)}rem 0.25rem 0;
+  margin: 0 ${props => (props.hasPreview ? 3.5 : 0)}rem 0.25rem 0;
   font-size: 1.25em;
   line-height: 1;
 `
@@ -66,12 +75,6 @@ const EntityPreview = styled.div`
 
   width: 4em;
   height: 4em;
-  border-width: 0.6em 0.6em 1.4em 1.4em;
-  border-style: solid;
-  border-color: transparent;
-  border-bottom-left-radius: 100%;
-
-  background: #ddd;
 `
 
 const Scaled = ({ isRotated, scale, ...otherProps }) => (
@@ -107,7 +110,12 @@ const InstanceCard = ({ instance, state, position, onClick, mayBeDeleted }) => {
   )
 
   return (
-    <Card onClick={onClick} style={position} mayBeDeleted={mayBeDeleted}>
+    <Card
+      hasPreview={hasPreview}
+      onClick={onClick}
+      style={position}
+      mayBeDeleted={mayBeDeleted}
+    >
       <InstanceName hasPreview={hasPreview}>
         <EntityTypeIcon {...entity} /> {instance.name}
       </InstanceName>

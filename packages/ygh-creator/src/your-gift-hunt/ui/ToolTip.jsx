@@ -4,6 +4,7 @@ const ToolTip = styled.div`
   pointer-events: none;
 
   position: absolute;
+  z-index: 1;
 
   padding: 0.5em;
   border-radius: ${props => props.theme.borderRadius};
@@ -13,7 +14,7 @@ const ToolTip = styled.div`
   line-height: 1.5;
   font-size: 0.8rem;
 
-  background: #000c;
+  background: #222;
   color: #fff;
 
   & strong {
@@ -31,8 +32,8 @@ const ToolTip = styled.div`
 
     position: absolute;
 
-    border: 0.3em solid;
-    border-color: transparent #000c #000c transparent;
+    border: 0.4em solid;
+    border-color: transparent #222 #222 transparent;
     border-bottom-right-radius: 0.25em;
   }
 
@@ -49,7 +50,7 @@ const ToolTip = styled.div`
           transform: translate(0, -50%);
 
           &::after {
-            right: 100%;
+            right: calc(100% - 1px);
             top: 50%;
 
             transform: translate(50%, -50%) rotate(135deg);
@@ -65,9 +66,9 @@ const ToolTip = styled.div`
           transform: translate(-50%, 0);
           &::after {
             left: 50%;
-            top: 100%;
+            top: calc(100% - 1px);
 
-            border-color: transparent #000c #000c transparent;
+            border-color: transparent #222 #222 transparent;
             border-bottom-right-radius: 0.25em;
 
             transform: translate(-50%, -50%) rotate(45deg);

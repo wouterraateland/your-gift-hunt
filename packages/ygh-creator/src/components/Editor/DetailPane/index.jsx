@@ -30,7 +30,13 @@ const DetailPane = forwardRef((_, ref) => {
   )
 
   return (
-    <Container isOpen={isOpen} ref={ref}>
+    <Container
+      isOpen={isOpen}
+      ref={ref}
+      hasPreview={
+        !!node && (node.instance.entity.isObject || node.instance.entity.isItem)
+      }
+    >
       {!!node && (
         <>
           <InstancePreview node={node} isOpen={isOpen} />
