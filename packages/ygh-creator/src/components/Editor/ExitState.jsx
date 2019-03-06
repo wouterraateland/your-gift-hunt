@@ -5,10 +5,10 @@ const ExitState = styled.div`
 
   width: 2em;
   height: 2em;
-  border: .1em solid #0004
   border-radius: 100%;
+  box-shadow: ${props => props.theme.boxShadow.medium};
 
-  background-color: #fff;
+  background-color: ${props => props.theme.color.text};
 
   transform: translate(-50%, -50%);
 `

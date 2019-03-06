@@ -6,11 +6,11 @@ const Container = styled.div`
   left: 1em;
   bottom: 1em;
 
-  border-radius: 0.25em;
+  border-radius: ${props => props.theme.borderRadius};
 
   text-align: center;
 
-  box-shadow: 0 0.5em 1.5em #0004;
+  box-shadow: ${props => props.theme.boxShadow.medium};
 
   background-color: #fff;
 `

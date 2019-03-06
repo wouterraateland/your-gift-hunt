@@ -16,7 +16,7 @@ const Button = styled.button`
         return "0.85em 0.7em"
     }
   }};
-  border-radius: ${props => props.theme.borderRadius}px;
+  border-radius: ${props => props.theme.borderRadius};
 
   line-height: 1;
   vertical-align: middle;

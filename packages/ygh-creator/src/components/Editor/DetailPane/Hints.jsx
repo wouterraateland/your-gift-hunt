@@ -13,6 +13,7 @@ import HintForm from "./HintForm"
 const HintsContainer = styled.div`
   padding: 1em;
   margin-bottom: 1em;
+  border-radius: ${props => props.theme.borderRadius};
 
   background-color: #0001;
 `

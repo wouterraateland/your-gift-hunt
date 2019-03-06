@@ -12,10 +12,13 @@ const theme = {
     warning: "#f7a600",
     success: "#41ac57"
   },
-  borderRadius: 0,
+  borderRadius: "0.25em",
+  boxShadow: {
+    medium: "0 0.5rem 1.5rem -.5rem #0004"
+  },
   columns: {
     count: 12,
-    gap: ".5em"
+    gap: "0.5em"
   },
   font: {
     copy: "Montserrat, sans-serif",

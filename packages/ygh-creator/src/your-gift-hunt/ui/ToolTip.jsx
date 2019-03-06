@@ -6,7 +6,7 @@ const ToolTip = styled.div`
   position: absolute;
 
   padding: 0.5em;
-  border-radius: 0.25em;
+  border-radius: ${props => props.theme.borderRadius};
 
   white-space: nowrap;
   text-align: left;

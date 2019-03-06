@@ -19,7 +19,8 @@ const Card = styled.div`
   width: 12em;
   height: 6em;
   padding: 0.5em;
-  border: 0.1em solid #0004;
+  border-radius: ${props => props.theme.borderRadius};
+  box-shadow: ${props => props.theme.boxShadow.medium};
 
   background: #fff;
 

@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext } from "react"
+import React, { forwardRef, useContext, useEffect } from "react"
 
 import GameContext from "contexts/Game"
 import InspectorContext from "contexts/Inspector"
@@ -19,6 +19,15 @@ const DetailPane = forwardRef((_, ref) => {
   const { getNodeById } = useContext(GameContext)
 
   const node = getNodeById(nodeId)
+
+  useEffect(
+    () => {
+      if (ref.current) {
+        ref.current.scrollTo(0, 0)
+      }
+    },
+    [isOpen, nodeId]
+  )
 
   return (
     <Container isOpen={isOpen} ref={ref}>

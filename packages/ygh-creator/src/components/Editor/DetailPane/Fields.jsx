@@ -24,7 +24,10 @@ const EntityInstanceField = ({ id, value, field }) => {
 
   useEffect(
     () => {
-      updateEntityInstanceField(id, JSON.stringify(debouncedValue))
+      const newValue = JSON.stringify(debouncedValue)
+      if (newValue !== value) {
+        updateEntityInstanceField(id, newValue)
+      }
     },
     [id, debouncedValue]
   )

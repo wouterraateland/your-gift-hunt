@@ -28,7 +28,7 @@ export const Paper = styled.div`
   }
 
   border-radius: ${props => props.theme.borderRadius};
-  box-shadow: 0 0.5em 1.5em -0.5em #0004;
+  box-shadow: ${props => props.theme.boxShadow.medium};
 
   background: #fff;
 `

@@ -16,7 +16,7 @@ const FloatingButton = styled.button`
   padding: 0.25em;
 
   border-radius: 100%;
-  box-shadow: 0 0.5rem 1.5rem #0004;
+  box-shadow: ${props => props.theme.boxShadow.medium};
 
   text-align: center;
   line-height: 1;
