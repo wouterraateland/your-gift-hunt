@@ -2,8 +2,8 @@ import { useState } from "react"
 
 const useInspector = () => {
   const [state, setState] = useState({
-    nodeId: "cjrkgwu8300670860nlhfyku8", // null,
-    isOpen: true // false,
+    nodeId: null,
+    isOpen: false
   })
 
   return {

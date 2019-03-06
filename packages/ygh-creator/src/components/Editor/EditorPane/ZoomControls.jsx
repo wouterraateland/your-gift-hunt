@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 const Container = styled.div`
   position: absolute;
-  right: 1em;
+  left: 1em;
   bottom: 1em;
 
   border-radius: 0.25em;

@@ -6,6 +6,16 @@ import EntitiesContext from "contexts/Entities"
 import { Paper } from "your-gift-hunt/ui"
 import ClickableStateTag from "./ClickableStateTag"
 
+/**
+Rules for removing EntityInstanceState's:
+1. An EntityInstanceState s can always be removed
+2. if EntityInstanceState s is removed, then remove all EntityInstanceState's ss for ss = edges.reduce((ss, { from, to, type }) => [EDGE_TYPES.TRANSFORMATION, EDGE_TYPES.USE].includes(type) && to === s.id
+? [...ss, from]
+: type === EDGE_TYPES.USE && from === s.id
+? [...ss, to]
+: ss, [])
+*/
+
 const StateTagList = ({ nodes, connector }) =>
   nodes.map((node, i) => (
     <Fragment key={i}>

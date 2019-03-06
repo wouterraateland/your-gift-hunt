@@ -1,9 +1,8 @@
-import { useMemo } from "react"
-
 import useGameData from "hooks/useGameData"
 import useGameMutations from "hooks/useGameMutations"
 import useGameGraph from "hooks/useGameGraph"
 import useGraphLayout from "hooks/useGraphLayout"
+import useGameDependencies from "hooks/useGameDependencies"
 import useSaveState from "hooks/useSaveState"
 
 const maybe = (f, g) => v => (v === null || v === undefined ? f() : g(v))
@@ -20,8 +19,9 @@ const useGame = variables => {
   }
 
   const mutations = useGameMutations(variables, saveState.save)
-  const graph = useMemo(() => useGameGraph(game.instances), [game.instances])
-  const graphLayout = useMemo(() => useGraphLayout(graph), [graph])
+  const graph = useGameGraph(game.instances)
+  const graphLayout = useGraphLayout(graph)
+  const dependencies = useGameDependencies(graph)
 
   return {
     gameExists: true,
@@ -33,7 +33,8 @@ const useGame = variables => {
     ...saveState,
     ...mutations,
     ...graph,
-    ...graphLayout
+    ...graphLayout,
+    ...dependencies
   }
 }
 

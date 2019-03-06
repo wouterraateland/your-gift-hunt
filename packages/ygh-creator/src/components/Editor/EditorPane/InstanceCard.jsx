@@ -1,5 +1,6 @@
-import React from "react"
-import styled from "styled-components"
+import React, { useMemo } from "react"
+import styled, { css } from "styled-components"
+
 import GenericItem from "your-gift-hunt/items"
 import GenericObject, { getObjectComponent } from "your-gift-hunt/objects"
 import EntityTypeIcon from "../EntityTypeIcon"
@@ -21,6 +22,24 @@ const Card = styled.div`
   border: 0.1em solid #0004;
 
   background: #fff;
+
+  ${props =>
+    props.mayBeDeleted &&
+    css`
+      &::after {
+        content: "";
+
+        position: absolute;
+        left: -0.1em;
+        top: -0.1em;
+        right: -0.1em;
+        bottom: -0.1em;
+
+        opacity: 0.8;
+
+        background-color: ${props => props.theme.color.error};
+      }
+    `}
 `
 
 const InstanceName = styled.h2`
@@ -69,21 +88,25 @@ const Scaled = ({ isRotated, scale, ...otherProps }) => (
   />
 )
 
-const InstanceCard = ({ instance, state, position, onClick }) => {
+const InstanceCard = ({ instance, state, position, onClick, mayBeDeleted }) => {
   const { entity, fields } = instance
 
   const hasPreview = entity && (entity.isItem || entity.isObject)
-  const scale = entity.isObject
-    ? S.pipe([
-        S.map(({ width, height }) => 2.5 / Math.max(width, height)),
-        S.maybe(1)(x => x)
-      ])(getObjectComponent(entity.name))
-    : entity.isItem
-    ? 1.5
-    : 1
+  const scale = useMemo(
+    () =>
+      entity.isObject
+        ? S.pipe([
+            S.map(({ width, height }) => 2.5 / Math.max(width, height)),
+            S.maybe(1)(x => x)
+          ])(getObjectComponent(entity.name))
+        : entity.isItem
+        ? 1.5
+        : 1,
+    [entity]
+  )
 
   return (
-    <Card onClick={onClick} style={position}>
+    <Card onClick={onClick} style={position} mayBeDeleted={mayBeDeleted}>
       <InstanceName hasPreview={hasPreview}>
         <EntityTypeIcon {...entity} /> {instance.name}
       </InstanceName>

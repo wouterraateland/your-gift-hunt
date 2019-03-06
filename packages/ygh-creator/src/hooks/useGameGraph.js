@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import hash from "object-hash"
 import { NODE_TYPES, EDGE_TYPES } from "data"
 import _ from "utils"
@@ -158,9 +159,16 @@ const getEdgeById = (nodes, edges) =>
   )
 
 const useGameGraph = instances => {
-  const startInstanceIds = getStartInstanceIds(instances)
-  const nodes = getNodes(startInstanceIds, instances)
-  const edges = getEdges(startInstanceIds, nodes)
+  const startInstanceIds = useMemo(() => getStartInstanceIds(instances), [
+    instances
+  ])
+  const nodes = useMemo(() => getNodes(startInstanceIds, instances), [
+    instances
+  ])
+  const edges = useMemo(() => getEdges(startInstanceIds, nodes), [
+    startInstanceIds,
+    nodes
+  ])
 
   return {
     nodes,

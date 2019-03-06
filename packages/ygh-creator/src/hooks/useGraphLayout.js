@@ -1,3 +1,4 @@
+import { useMemo, useCallback } from "react"
 import PriorityQueue from "tinyqueue"
 
 import { NODE_TYPES, EDGE_TYPES } from "data"
@@ -181,11 +182,17 @@ const toGrid = nodePositionMap => {
 }
 
 const useGraphLayout = ({ nodes, edges }) => {
-  const nodePositions = toGrid(findPositions(nodes, edges))
+  const nodePositions = useMemo(() => toGrid(findPositions(nodes, edges)), [
+    nodes,
+    edges
+  ])
+  const getNodePosition = useCallback(
+    nodeId => nodePositions[nodeId] || { left: -1000, top: -1000 },
+    [nodePositions]
+  )
 
   return {
-    getNodePosition: nodeId =>
-      nodePositions[nodeId] || { left: -1000, top: -1000 }
+    getNodePosition
   }
 }
 

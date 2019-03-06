@@ -10,6 +10,7 @@ import Fields from "./Fields"
 import PreviousStates from "./PreviousStates"
 import UnlockConditions from "./UnlockConditions"
 import OutgoingTransitions from "./OutgoingTransitions"
+import Delete from "./Delete"
 
 import CloseButton from "./CloseButton"
 
@@ -23,12 +24,13 @@ const DetailPane = forwardRef((_, ref) => {
     <Container isOpen={isOpen} ref={ref}>
       {!!node && (
         <>
-          <InstancePreview node={node} />
-          <Meta node={node} />
-          <Fields node={node} />
-          <PreviousStates node={node} />
-          <UnlockConditions node={node} />
-          <OutgoingTransitions node={node} />
+          <InstancePreview node={node} isOpen={isOpen} />
+          <Meta node={node} isOpen={isOpen} />
+          <Fields node={node} isOpen={isOpen} />
+          <PreviousStates node={node} isOpen={isOpen} />
+          <UnlockConditions node={node} isOpen={isOpen} />
+          <OutgoingTransitions node={node} isOpen={isOpen} />
+          <Delete node={node} isOpen={isOpen} />
         </>
       )}
       <CloseButton />

@@ -26,6 +26,7 @@ const Button = styled.button`
 
   ${props => {
     let color
+    let secondaryColor = props.theme.color.emphasis
 
     switch (props.color) {
       case "accent":
@@ -33,6 +34,7 @@ const Button = styled.button`
         break
       case "error":
         color = props.theme.color.error
+        secondaryColor = "#fff"
         break
       case "warning":
         color = props.theme.color.warning
@@ -51,7 +53,7 @@ const Button = styled.button`
           border: none;
 
           background-color: ${color};
-          color: ${props.theme.color.emphasis};
+          color: ${secondaryColor};
 
           &:hover {
             background-color: ${opacify(0.3, darken(0.05)(color))};

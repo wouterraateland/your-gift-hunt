@@ -4,6 +4,7 @@ import { navigate } from "@reach/router"
 import { EntitiesProvider } from "contexts/Entities"
 import GameContext, { GameProvider } from "contexts/Game"
 import InspectorContext, { InspectorProvider } from "contexts/Inspector"
+import { EditorProvider } from "contexts/Editor"
 
 import useClickOutside from "hooks/useClickOutside"
 
@@ -55,9 +56,11 @@ const CreatorWithModal = props => {
 const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => (
   <EntitiesProvider>
     <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
-      <InspectorProvider>
-        <CreatorWithModal {...otherProps} />
-      </InspectorProvider>
+      <EditorProvider>
+        <InspectorProvider>
+          <CreatorWithModal {...otherProps} />
+        </InspectorProvider>
+      </EditorProvider>
     </GameProvider>
   </EntitiesProvider>
 )
