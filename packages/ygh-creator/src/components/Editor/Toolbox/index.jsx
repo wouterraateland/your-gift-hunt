@@ -14,14 +14,16 @@ const Toolbox = () => {
     entitiesVisible: false
   })
 
+  const hideEntities = useCallback(() => {
+    setState(state => ({
+      ...state,
+      entitiesVisible: false
+    }))
+  }, [])
+
   useClickOutside({
     ref,
-    onClickOutside: () => {
-      setState(state => ({
-        ...state,
-        entitiesVisible: false
-      }))
-    }
+    onClickOutside: hideEntities
   })
 
   const toggleSelectedType = useCallback(
@@ -41,7 +43,11 @@ const Toolbox = () => {
         onTypeClick={toggleSelectedType}
         selectedType={entitiesVisible ? selectedType : null}
       />
-      <Entities isVisible={entitiesVisible} selectedType={selectedType} />
+      <Entities
+        isVisible={entitiesVisible}
+        selectedType={selectedType}
+        onBackClick={hideEntities}
+      />
     </Container>
   )
 }

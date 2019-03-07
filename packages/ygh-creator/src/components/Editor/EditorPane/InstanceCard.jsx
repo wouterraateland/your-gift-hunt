@@ -1,12 +1,9 @@
-import React, { useMemo } from "react"
+import React from "react"
 import styled, { css } from "styled-components"
 
-import GenericItem from "your-gift-hunt/items"
-import GenericObject, { getObjectComponent } from "your-gift-hunt/objects"
 import EntityTypeIcon from "../EntityTypeIcon"
 import StateTag from "../StateTag"
-
-import S from "sanctuary"
+import EntityInstancePreview from "../EntityInstancePreview"
 
 const Card = styled.div`
   position: absolute;
@@ -68,7 +65,7 @@ const FeaturedFieldValue = styled.p`
   font-size: 0.8em;
 `
 
-const EntityPreview = styled.div`
+const PreviewContainer = styled.div`
   position: absolute;
   top: 0;
   right: 0;
@@ -77,37 +74,10 @@ const EntityPreview = styled.div`
   height: 4em;
 `
 
-const Scaled = ({ isRotated, scale, ...otherProps }) => (
-  <div
-    style={{
-      position: "absolute",
-      left: "50%",
-      top: "50%",
-      transform: `
-      translate(-50%, -50%)
-      rotate(${isRotated ? 45 : 0}deg)
-      scale(${scale})`
-    }}
-    {...otherProps}
-  />
-)
-
 const InstanceCard = ({ instance, state, position, onClick, mayBeDeleted }) => {
   const { entity, fields } = instance
 
   const hasPreview = entity && (entity.isItem || entity.isObject)
-  const scale = useMemo(
-    () =>
-      entity.isObject
-        ? S.pipe([
-            S.map(({ width, height }) => 2.5 / Math.max(width, height)),
-            S.maybe(1)(x => x)
-          ])(getObjectComponent(entity.name))
-        : entity.isItem
-        ? 1.5
-        : 1,
-    [entity]
-  )
 
   return (
     <Card
@@ -128,14 +98,15 @@ const InstanceCard = ({ instance, state, position, onClick, mayBeDeleted }) => {
           )}
         </FeaturedFieldValue>
       )}
-      {hasPreview && (
-        <EntityPreview>
-          <Scaled scale={scale} isRotated={entity.isObject}>
-            {entity.isItem && <GenericItem {...instance} state={state} />}
-            {entity.isObject && <GenericObject {...instance} state={state} />}
-          </Scaled>
-        </EntityPreview>
-      )}
+      <PreviewContainer>
+        <EntityInstancePreview
+          entity={entity}
+          state={state}
+          maxWidth={2.5}
+          maxHeight={2.5}
+          rotateObjects
+        />
+      </PreviewContainer>
     </Card>
   )
 }

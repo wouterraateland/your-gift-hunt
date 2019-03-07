@@ -15,6 +15,8 @@ const Main = styled.main`
   flex-direction: row;
 
   flex-grow: 1;
+
+  overflow: hidden;
 `
 
 const Light = styled.span`

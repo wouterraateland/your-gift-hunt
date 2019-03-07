@@ -7,6 +7,7 @@ const DetailPaneContainer = styled(Paper)`
   top: 0;
   right: 0;
   bottom: 0;
+  overflow-x: hidden;
   overflow-y: auto;
 
   width: 25em;
@@ -20,6 +21,7 @@ const DetailPaneContainer = styled(Paper)`
   ${props =>
     props.hasPreview &&
     css`
+      background-attachment: local;
       background-image: radial-gradient(
         ellipse 50em 15em at 50% 0,
         #39f9,

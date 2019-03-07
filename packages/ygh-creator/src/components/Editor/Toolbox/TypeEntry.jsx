@@ -12,14 +12,15 @@ const TypeEntryContainer = styled.div`
 
   text-align: center;
 
-  &:hover {
-    background-color: #0002;
-  }
   ${props =>
     props.isSelected &&
     css`
-      background-color: #0004;
+      background-color: #0002;
     `}
+
+  &:hover {
+    background-color: #0004;
+  }
 
   &:first-child {
     border-radius: ${props => props.theme.borderRadius}
@@ -29,10 +30,6 @@ const TypeEntryContainer = styled.div`
   &:last-child {
     border-radius: 0 0 ${props => props.theme.borderRadius}
       ${props => props.theme.borderRadius};
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid #0004;
   }
 `
 

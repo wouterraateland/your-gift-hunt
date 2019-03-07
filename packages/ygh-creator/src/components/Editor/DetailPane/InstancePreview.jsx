@@ -1,28 +1,33 @@
 import React from "react"
 import styled from "styled-components"
 
-import GenericItem from "your-gift-hunt/items"
-import GenericObject from "your-gift-hunt/objects"
+import EntityInstancePreview from "../EntityInstancePreview"
 
-const InstancePreviewContainer = styled.div`
+const EntityInstancePreviewContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
 
+  position: relative;
   height: 8em;
-  margin-top: -1em;
+  margin-bottom: 1em;
 `
 
 const InstancePreview = ({ node }) => {
-  const { instance } = node
-  const { entity } = instance
+  const {
+    instance: { entity }
+  } = node
   const state = node.state ? node.state.state.name : null
 
   return entity.isItem || entity.isObject ? (
-    <InstancePreviewContainer>
-      {entity.isItem && <GenericItem {...instance} state={state} />}
-      {entity.isObject && <GenericObject {...instance} state={state} />}
-    </InstancePreviewContainer>
+    <EntityInstancePreviewContainer>
+      <EntityInstancePreview
+        entity={entity}
+        state={state}
+        maxWidth={19}
+        maxHeight={6}
+      />
+    </EntityInstancePreviewContainer>
   ) : null
 }
 

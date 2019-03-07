@@ -33,8 +33,7 @@ const EditableInstanceName = ({ instance }) => {
 
   useClickOutside({
     ref,
-    onClickOutside: () =>
-      setState(state => ({ ...state, isEditable: false, value: instance.name }))
+    onClickOutside: () => setState(state => ({ ...state, isEditable: false }))
   })
 
   useEffect(
@@ -50,8 +49,9 @@ const EditableInstanceName = ({ instance }) => {
   )
 
   const onEditClick = useCallback(
-    () => setState(state => ({ ...state, isEditable: true })),
-    []
+    () =>
+      setState(state => ({ ...state, isEditable: true, value: instance.name })),
+    [instance]
   )
 
   const onSubmit = useCallback(
