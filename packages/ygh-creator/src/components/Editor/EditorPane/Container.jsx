@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 import styled from "styled-components"
-import usePanZoom from "use-pan-and-zoom"
+import usePanZoom from "hooks/usePanZoom" //"use-pan-and-zoom"
 
 import ZoomControls from "./ZoomControls"
 
