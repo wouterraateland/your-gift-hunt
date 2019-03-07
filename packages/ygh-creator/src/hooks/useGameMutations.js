@@ -1,4 +1,6 @@
 import { useMutation } from "react-apollo-hooks"
+import useEntities from "hooks/useEntities"
+import { EPSILON, approximateStationaryDistribution } from "utils/math"
 
 import { GAME_BY_SLUG } from "gql/queries"
 import {
@@ -15,12 +17,41 @@ import {
   CREATE_ENTITY_INSTANCE_STATE_TRANSITION
 } from "gql/mutations"
 
+const getStatesToCreate = states => {
+  if (states.length === 1) {
+    return states
+  }
+
+  const stateIds = states.map(({ id }) => id)
+  const transitionMatrix = states.map(({ id, outgoingTransitions }) => {
+    const actualTransitions = outgoingTransitions.flatMap(({ to }) =>
+      to ? [to.id] : []
+    )
+    return stateIds.map(stateId =>
+      actualTransitions.length
+        ? actualTransitions.includes(stateId)
+          ? 1 / actualTransitions.length
+          : 0
+        : stateId === id
+        ? 1
+        : 0
+    )
+  })
+
+  const stationaryDistribution = approximateStationaryDistribution(
+    transitionMatrix
+  )
+
+  return states.filter((_, i) => stationaryDistribution[i] > EPSILON)
+}
+
 const useMutationWith = save => (mutation, transform) => {
   const actualMutation = useMutation(mutation)
   return save((...args) => actualMutation(transform(...args)))
 }
 
 const useGameMutations = (variables, save) => {
+  const { getEntityById } = useEntities()
   const useMutationWithSave = useMutationWith(save)
   const query = { query: GAME_BY_SLUG, variables }
 
@@ -208,6 +239,13 @@ const useGameMutations = (variables, save) => {
     })
   )
 
+  const createEntityInstance = async entityId => {
+    const entity = getEntityById(entityId)
+
+    const statesToCreate = getStatesToCreate(entity.states)
+    console.log(statesToCreate)
+  }
+
   return {
     updateGameSettings,
     updateEntityInstanceName,
@@ -223,7 +261,10 @@ const useGameMutations = (variables, save) => {
     // Unlock mutations
     addUnlockToEntityInstanceStateTransition,
     removeUnlockFromEntityInstanceStateTransition,
-    createEntityInstanceStateTransition
+    createEntityInstanceStateTransition,
+
+    // Creation and deletion mutations
+    createEntityInstance
   }
 }
 

@@ -6,7 +6,6 @@ import EntityDetails from "./EntityDetails"
 
 const EntityEntryContainer = styled.div`
   position: relative;
-  ${"" /* height: ${props => props.isExpanded4em; */}
   padding: 0.5em 1em;
 
   ${props =>
