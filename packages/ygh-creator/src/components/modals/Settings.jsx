@@ -6,7 +6,7 @@ import React, {
   useCallback
 } from "react"
 import styled from "styled-components"
-import _ from "utils"
+import slugify from "limax"
 
 import GameContext from "contexts/Game"
 
@@ -57,7 +57,7 @@ const SettingsModal = () => {
 
   const checkNameExistence = useCallback(
     async name => {
-      const slug = _.toSlug(name)
+      const slug = slugify(name)
 
       if (slug === game.slug) {
         return false
@@ -90,7 +90,7 @@ const SettingsModal = () => {
 
       setState("loading")
       try {
-        const slug = _.toSlug(formState.values.name)
+        const slug = slugify(formState.values.name)
         await updateGameSettings(game.id, {
           ...formState.values,
           slug
@@ -128,7 +128,7 @@ const SettingsModal = () => {
               Available at{" "}
               <strong>
                 https://play.yourgifthunt.com/{game.creator.slug}/
-                {formState.values.name.toLowerCase().replace(/ /g, "-")}
+                {slugify(formState.values.name)}
               </strong>
             </small>
             <br />

@@ -1,5 +1,5 @@
 import React, { Suspense, useContext, useState } from "react"
-import _ from "utils"
+import slugify from "limax"
 
 import AuthContext from "contexts/Auth"
 
@@ -18,7 +18,7 @@ const Overview = ({ searchQuery }) => {
   const { data, error } = useQuery(USER_GAMES, {
     variables: {
       userId: user.user_metadata.prismaUserId,
-      slugPrefix: _.toSlug(searchQuery)
+      slugPrefix: slugify(searchQuery)
     }
   })
 

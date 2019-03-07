@@ -3,7 +3,7 @@
 // import { navigate } from "@reach/router"
 // import { useMutation } from "react-apollo-hooks"
 // import { CREATE_USER } from "gql/mutations"
-// import _ from "utils"
+// import slugify from "limax"
 
 const useAuth = () => {
   return {
@@ -29,7 +29,7 @@ const useAuth = () => {
 //         variables: {
 //           netlifyUserId: user.id,
 //           name: full_name,
-//           slug: _.toSlug(full_name)
+//           slug: slugify(full_name)
 //         }
 //       })
 //         .then(response =>

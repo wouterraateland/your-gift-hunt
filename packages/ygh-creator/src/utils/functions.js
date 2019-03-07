@@ -10,11 +10,10 @@ export const angle = (p1, p2) => Math.atan2(p2.y - p1.y, p2.x - p1.x)
 export const dist = (p1, p2) =>
   Math.sqrt(Math.pow(p2.y - p1.y, 2) + Math.pow(p2.x - p1.x, 2))
 
-export const toSlug = s => s.toLowerCase().replace(/ /g, "-")
-
 export default {
   identity,
   noop,
+  constant,
   compose,
   mean,
   angle,

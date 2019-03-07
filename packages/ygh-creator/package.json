@@ -9,6 +9,7 @@
     "gotrue-js": "^0.9.24",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
+    "limax": "^1.7.0",
     "moment": "^2.24.0",
     "object-hash": "^1.3.1",
     "polished": "^2.3.1",

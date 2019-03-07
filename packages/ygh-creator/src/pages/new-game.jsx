@@ -2,7 +2,7 @@ import React, { useMemo, useContext, useState, useEffect } from "react"
 import { navigate } from "@reach/router"
 import styled from "styled-components"
 import randomstring from "randomstring"
-import _ from "utils"
+import slugify from "limax"
 
 import { useFormState } from "react-use-form-state"
 import { useQuery, useMutation, useApolloClient } from "react-apollo-hooks"
@@ -106,7 +106,7 @@ const NewGamePage = () => {
       query: GAME_COUNT_BY_SLUG,
       variables: {
         creatorSlug: userSlug,
-        gameSlug: _.toSlug(name)
+        gameSlug: slugify(name)
       }
     })
 
@@ -127,7 +127,7 @@ const NewGamePage = () => {
     setState("loading")
 
     try {
-      const gameSlug = _.toSlug(formState.values.name)
+      const gameSlug = slugify(formState.values.name)
 
       const creatorId = data.user.id
 
