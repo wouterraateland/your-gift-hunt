@@ -1,5 +1,5 @@
 import React, { useRef } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import useClickOutside from "hooks/useClickOutside"
 
@@ -39,6 +39,24 @@ const OptionContainer = styled.div`
 
 const OptionsLocation = styled.div`
   position: relative;
+
+  ${props =>
+    props.isVisible &&
+    css`
+      &::after {
+        content: "";
+
+        position: absolute;
+        left: 2em;
+        bottom: 0;
+
+        border-bottom-right-radius: 0.25em;
+        border: 0.5em solid;
+        border-color: transparent #fff #fff transparent;
+
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+    `}
 `
 
 const Option = ({ data }) => JSON.stringify(data)
@@ -80,7 +98,7 @@ const Options = ({
   useClickOutside({ ref, onClickOutside: onClose })
 
   return (
-    <C.OptionsLocation>
+    <C.OptionsLocation isVisible={isVisible}>
       <C.OptionsContainer ref={ref} isVisible={isVisible}>
         {options.length ? (
           options.map(option => (

@@ -1,3 +1,4 @@
+import { NODE_TYPES } from "data"
 import React, { useContext } from "react"
 
 import GameContext from "contexts/Game"
@@ -14,15 +15,26 @@ const TransitionList = ({ transitions }) =>
   ))
 
 const OutgoingTransitions = ({ node }) => {
-  const { getNodeByInstanceAndState } = useContext(GameContext)
+  const { getNodeById } = useContext(GameContext)
   const { getEntityStateById } = useContext(EntitiesContext)
 
-  const entityState = getEntityStateById(node.state.state.id)
-  const outgoingTransitions = entityState.outgoingTransitions.map(
-    transition => ({
+  const getRequiredActions = (from, to) =>
+    getEntityStateById(from.state.state.id).outgoingTransitions.find(
+      outgoingTransition =>
+        to.state === null
+          ? outgoingTransition.to === null
+          : outgoingTransition.to &&
+            outgoingTransition.to.id === to.state.state.id
+    ).requiredActions
+
+  const outgoingTransitions = node.state.outgoingTransitions
+    .map(({ to }) =>
+      getNodeById(to ? to.id : `${node.instance.id}-${NODE_TYPES.EXIT}`)
+    )
+    .map(to => ({
       from: node,
-      to: getNodeByInstanceAndState(node.instance, transition.to),
-      requiredActions: transition.requiredActions.map(
+      to,
+      requiredActions: getRequiredActions(node, to).map(
         ({ hints, ...actionRequirement }) => ({
           ...actionRequirement,
           defaultHints: hints,
@@ -31,8 +43,7 @@ const OutgoingTransitions = ({ node }) => {
           )
         })
       )
-    })
-  )
+    }))
 
   return outgoingTransitions.length ? (
     <>

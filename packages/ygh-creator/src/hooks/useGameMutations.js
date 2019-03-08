@@ -1,4 +1,4 @@
-import { useMutation } from "react-apollo-hooks"
+import { useMutation, useApolloClient } from "react-apollo-hooks"
 import useEntities from "hooks/useEntities"
 import useGameData from "hooks/useGameData"
 
@@ -15,6 +15,7 @@ import {
   ADD_UNLOCK_TO_ENTITY_INSTANCE_STATE_TRANSITION,
   REMOVE_UNLOCK_FROM_ENTITY_INSTANCE_STATE_TRANSITION,
   CREATE_ENTITY_INSTANCE_STATE_TRANSITION,
+  CREATE_ENTITY_INSTANCE_STATE_TRANSITIONS,
   CREATE_ENTITY_INSTANCES
 } from "gql/mutations"
 
@@ -27,10 +28,7 @@ const useGameMutations = (variables, save, dependencies) => {
   const { entities, getEntityById, getEntityStateById } = useEntities()
   const useMutationWithSave = useMutationWith(save)
   const game = useGameData(variables)
-  const existingEntityIds = game.instances.map(({ entity: { id } }) => id)
-  const existingEntityStateIds = game.instances.flatMap(({ states }) =>
-    states.map(({ state: { id } }) => id)
-  )
+  const client = useApolloClient()
 
   const query = { query: GAME_BY_SLUG, variables }
 
@@ -229,67 +227,151 @@ const useGameMutations = (variables, save, dependencies) => {
     })
   )
 
-  const createNodes = async originEntityStateIds => {
+  const createEntityInstanceStateTransitions = useMutationWithSave(
+    CREATE_ENTITY_INSTANCE_STATE_TRANSITIONS,
+    (gameId, entityInstanceUpdates) => ({
+      variables: {
+        gameId,
+        entityInstanceUpdates
+      }
+    })
+  )
+
+  const ensureEntityInstanceTransitions = async gameId => {
+    const { data } = await client.query(query)
+
+    const instances = data.games[0].instances
+    const instanceStates = instances.flatMap(({ states }) => states)
+
+    const entityInstanceUpdates = instances
+      .map(instance => ({
+        where: { id: instance.id },
+        data: {
+          states: {
+            update: instance.states
+              .map(state => ({
+                where: { id: state.id },
+                data: {
+                  outgoingTransitions: {
+                    create: getEntityStateById(state.state.id)
+                      .outgoingTransitions.filter(
+                        entityStateTransition =>
+                          !state.outgoingTransitions.some(instanceTransition =>
+                            instanceTransition.to
+                              ? entityStateTransition.to === null
+                              : entityStateTransition.to &&
+                                entityStateTransition.to.id ===
+                                  instanceStates.find(
+                                    instanceState =>
+                                      instanceState.id ===
+                                      instanceTransition.to.id
+                                  ).state.id
+                          )
+                      )
+                      .map(entityStateTransition => ({
+                        to: entityStateTransition.to
+                          ? {
+                              connect: {
+                                id: instance.states.find(
+                                  toState =>
+                                    toState.state.id ===
+                                    entityStateTransition.to.id
+                                ).id
+                              }
+                            }
+                          : null
+                      }))
+                  }
+                }
+              }))
+              .filter(
+                update => update.data.outgoingTransitions.create.length > 0
+              )
+          }
+        }
+      }))
+      .filter(update => update.data.states.update.length > 0)
+
+    await createEntityInstanceStateTransitions(gameId, entityInstanceUpdates)
+  }
+
+  const createNodes = async (
+    entityStateIdsToCreate,
+    originEntityInstanceStateId
+  ) => {
+    const originInstance = originEntityInstanceStateId
+      ? game.instances.find(({ states }) =>
+          states.some(({ id }) => originEntityInstanceStateId === id)
+        )
+      : null
+    const originEntityId = originInstance ? originInstance.entity.id : null
+
     const entityStateIds = dependencies.getAdjacentEntityStates(
-      originEntityStateIds
+      entityStateIdsToCreate
     )
-    // const entityStatesThatShouldExist = entityStateIds.map(getEntityStateById)
     const entitiesThatShouldExist = entities.filter(({ states }) =>
       states.some(({ id }) => entityStateIds.includes(id))
     )
 
-    // TODO: handle entities where isObject or isItem
-    // const entityStatesToCreate = entityStatesThatShouldExist.filter(
-    //   ({ id }) => !existingEntityStateIds.includes(id)
-    // )
     const entitiesToCreate = entitiesThatShouldExist.filter(
-      ({ id, isObject, isItem }) =>
-        (!isObject && !isItem) || !existingEntityIds.includes(id)
+      ({ id }) => id !== originEntityId
     )
-
-    // console.log(entityStatesToCreate)
-    // console.log(entitiesToCreate)
     const entityInstancesToCreate = entitiesToCreate.map(
-      ({ id, isObject, isItem, name, states, fields }) => ({
-        name:
-          isObject || isItem
-            ? name
-            : `${name} ${game.instances.filter(({ entity }) => entity.id === id)
-                .length + 1}`,
-        entity: { connect: { id } },
-        fields: {
-          create: fields.map(field => ({
-            field: { connect: { id: field.id } },
-            value: ""
-          }))
-        },
-        states: {
-          create: states
-            .filter(({ id }) => entityStateIds.includes(id))
-            .map(({ id }) => ({ state: { connect: { id } } }))
+      ({ id, name, states, fields }) => {
+        const existingEntityInstances = game.instances.filter(
+          ({ entity }) => entity.id === id
+        ).length
+        return {
+          name: existingEntityInstances.length
+            ? `${name} ${existingEntityInstances.length + 1}`
+            : name,
+          entity: { connect: { id } },
+          fields: {
+            create: fields.map(field => ({
+              field: { connect: { id: field.id } },
+              value: ""
+            }))
+          },
+          states: {
+            create: states
+              .filter(({ id }) => entityStateIds.includes(id))
+              .map(({ id }) => ({ state: { connect: { id } } }))
+          }
         }
-      })
+      }
     )
 
-    const entityInstancesToUpdate = []
-    // [
-    //   {
-    //     name: $name
-    //     entity: { connect: { id: $entityId } }
-    //     states: { create: [{ state: { connect: { id: $entityStateId } } }] }
-    //     fields: {
-    //       create: [
-    //         { field: { connect: { id: $entityFieldId } }, value: "" }
-    //       ]
-    //     }
-    //   }
-    // ]
+    const entityInstancesToUpdate = originInstance
+      ? [
+          {
+            where: { id: originInstance.id },
+            data: {
+              states: {
+                create: getEntityById(originEntityId)
+                  .states.filter(
+                    ({ id }) =>
+                      entityStateIds.includes(id) &&
+                      !originInstance.states.some(
+                        entityInstanceState =>
+                          entityInstanceState.state.id === id
+                      )
+                  )
+                  .map(({ id }) => ({
+                    state: { connect: { id } }
+                  }))
+              }
+            }
+          }
+        ]
+      : []
 
     await createEntityInstances(
       game.id,
       entityInstancesToCreate,
       entityInstancesToUpdate
     )
+
+    await ensureEntityInstanceTransitions(game.id)
   }
 
   const createEntityInstance = async entityId => {
@@ -297,6 +379,10 @@ const useGameMutations = (variables, save, dependencies) => {
     const entityStates = dependencies.getMinimalStateSpan(entity.states)
 
     await createNodes(entityStates.map(({ id }) => id))
+  }
+
+  const addPreviousState = async (entityStateId, entityInstanceStateId) => {
+    await createNodes([entityStateId], entityInstanceStateId)
   }
 
   return {
@@ -317,7 +403,8 @@ const useGameMutations = (variables, save, dependencies) => {
     createEntityInstanceStateTransition,
 
     // Creation and deletion mutations
-    createEntityInstance
+    createEntityInstance,
+    addPreviousState
   }
 }
 

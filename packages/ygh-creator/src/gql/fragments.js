@@ -18,6 +18,12 @@ export const ENTITY_INSTANCE_FRAGMENT = gql`
           }
         }
       }
+      incomingTransitions {
+        id
+        from {
+          id
+        }
+      }
       outgoingTransitions {
         id
         to {

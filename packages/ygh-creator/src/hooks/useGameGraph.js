@@ -40,7 +40,7 @@ const getNodes = (startInstanceIds, instances) => [
     .filter(
       ({ id, states }) =>
         !startInstanceIds.includes(id) &&
-        states.some(({ state: { outgoingTransitions } }) =>
+        states.some(({ outgoingTransitions }) =>
           outgoingTransitions.some(({ to }) => to === null)
         )
     )
@@ -74,8 +74,9 @@ const getStartTransitions = (startInstanceIds, nodes) =>
           ? state.unlockedBy.some(({ from }) =>
               startInstanceIds.includes(from.instance.id)
             )
-          : instance.entity.defaultState &&
-            instance.entity.defaultState.id === state.state.id)
+          : (instance.entity.defaultState &&
+              instance.entity.defaultState.id === state.state.id) ||
+            state.incomingTransitions.length === 0)
     )
     .map(({ id, instance }) => ({
       from: `${instance.id}-${NODE_TYPES.ENTRY}`,
@@ -87,9 +88,9 @@ const getTransformTransitions = nodes =>
   nodes
     .filter(({ state }) => state && state.state.outgoingTransitions.length > 0)
     .flatMap(node =>
-      node.state.state.outgoingTransitions.map(({ to }) => ({
+      node.state.outgoingTransitions.map(({ to }) => ({
         from: node.id,
-        to: getNodeByInstanceAndState(nodes)(node.instance, to).id,
+        to: to ? to.id : `${node.instance.id}-${NODE_TYPES.EXIT}`, //getNodeByInstanceAndState(nodes)(node.instance, to).id,
         type: to ? EDGE_TYPES.TRANSFORM : EDGE_TYPES.EXIT
       }))
     )

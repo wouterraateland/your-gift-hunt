@@ -264,6 +264,24 @@ export const CREATE_ENTITY_INSTANCE_STATE_TRANSITION = gql`
   }
 `
 
+export const CREATE_ENTITY_INSTANCE_STATE_TRANSITIONS = gql`
+  mutation createEntityInstanceStateTransitions(
+    $gameId: ID!
+    $entityInstanceUpdates: [EntityInstanceUpdateWithWhereUniqueWithoutGameInput!]!
+  ) {
+    updateGame(
+      where: { id: $gameId }
+      data: { instances: { update: $entityInstanceUpdates } }
+    ) {
+      id
+      instances {
+        ...EntityInstanceFragment
+      }
+    }
+  }
+  ${ENTITY_INSTANCE_FRAGMENT}
+`
+
 export const CREATE_ENTITY_INSTANCES = gql`
   mutation createEntityInstances(
     $gameId: ID!
