@@ -1,6 +1,9 @@
 import styled, { css } from "styled-components"
 
 const EntitiesContainer = styled.div`
+  overflow-x: hidden;
+  overflow-y: auto;
+
   width: 20em;
   max-width: calc(100vw - 2em);
   max-height: calc(100vh - 6em);

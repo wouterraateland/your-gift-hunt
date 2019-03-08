@@ -15,7 +15,7 @@ const OptionsContainer = styled(Paper)`
   overflow-y: auto;
 
   min-width: 21em;
-  height: 15em;
+  max-height: 15em;
 
   line-height: 1.3;
   text-align: left;
@@ -82,19 +82,23 @@ const Options = ({
   return (
     <C.OptionsLocation>
       <C.OptionsContainer ref={ref} isVisible={isVisible}>
-        {options.map(option => (
-          <C.OptionContainer
-            key={option.id}
-            onClick={() => {
-              onOptionClick(option.id)
-              if (closeOnClick) {
-                onClose()
-              }
-            }}
-          >
-            <C.Option data={option} />
-          </C.OptionContainer>
-        ))}
+        {options.length ? (
+          options.map(option => (
+            <C.OptionContainer
+              key={option.id}
+              onClick={() => {
+                onOptionClick(option.id)
+                if (closeOnClick) {
+                  onClose()
+                }
+              }}
+            >
+              <C.Option data={option} />
+            </C.OptionContainer>
+          ))
+        ) : (
+          <C.OptionContainer>No options available</C.OptionContainer>
+        )}
       </C.OptionsContainer>
     </C.OptionsLocation>
   )

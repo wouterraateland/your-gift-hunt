@@ -1,4 +1,5 @@
 import gql from "graphql-tag"
+import { ENTITY_INSTANCE_FRAGMENT } from "./fragments"
 
 export const ENTITIES = gql`
   query {
@@ -95,109 +96,11 @@ export const GAME_BY_SLUG = gql`
         slug
       }
       instances {
-        id
-        name
-        actionRequirementsWithCustomHints {
-          id
-        }
-        states {
-          id
-          unlockedBy {
-            id
-            from {
-              id
-              instance {
-                id
-              }
-            }
-          }
-          outgoingTransitions {
-            id
-            to {
-              id
-            }
-            unlocks {
-              id
-            }
-          }
-          state {
-            id
-            name
-            description
-            outgoingTransitions {
-              id
-              to {
-                id
-              }
-              requiredActions {
-                id
-                name
-                type
-                payload {
-                  id
-                  requiredEntity {
-                    id
-                    entity {
-                      id
-                    }
-                    state {
-                      id
-                    }
-                  }
-                  requiredValues {
-                    id
-                    key
-                    eqValue
-                    neqValue
-                    eqField {
-                      id
-                    }
-                    neqField {
-                      id
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        fields {
-          id
-          value
-          field {
-            id
-            label
-            info
-            type
-            isMulti
-            isSecret
-          }
-        }
-        hints {
-          id
-          text
-          delay
-          actionRequirement {
-            id
-          }
-        }
-        entity {
-          id
-          name
-          description
-          isItem
-          isObject
-          isTrigger
-          defaultState {
-            id
-          }
-          featuredField {
-            id
-          }
-        }
+        ...EntityInstanceFragment
       }
     }
   }
+  ${ENTITY_INSTANCE_FRAGMENT}
 `
 
 export const USER_GAMES = gql`

@@ -18,10 +18,10 @@ const useGame = variables => {
     }
   }
 
-  const mutations = useGameMutations(variables, saveState.save)
   const graph = useGameGraph(game.instances)
   const graphLayout = useGraphLayout(graph)
   const dependencies = useGameDependencies(graph)
+  const mutations = useGameMutations(variables, saveState.save, dependencies)
 
   return {
     gameExists: true,

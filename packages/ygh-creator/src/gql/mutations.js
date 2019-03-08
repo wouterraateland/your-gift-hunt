@@ -1,4 +1,5 @@
 import gql from "graphql-tag"
+import { ENTITY_INSTANCE_FRAGMENT } from "./fragments"
 
 export const CREATE_USER = gql`
   mutation createUser($netlifyUserId: String!, $name: String!, $slug: String!) {
@@ -261,4 +262,28 @@ export const CREATE_ENTITY_INSTANCE_STATE_TRANSITION = gql`
       }
     }
   }
+`
+
+export const CREATE_ENTITY_INSTANCES = gql`
+  mutation createEntityInstances(
+    $gameId: ID!
+    $entityInstancesToCreate: [EntityInstanceCreateWithoutGameInput!]!
+    $entityInstancesToUpdate: [EntityInstanceUpdateWithWhereUniqueWithoutGameInput!]!
+  ) {
+    updateGame(
+      where: { id: $gameId }
+      data: {
+        instances: {
+          create: $entityInstancesToCreate
+          update: $entityInstancesToUpdate
+        }
+      }
+    ) {
+      id
+      instances {
+        ...EntityInstanceFragment
+      }
+    }
+  }
+  ${ENTITY_INSTANCE_FRAGMENT}
 `

@@ -1,6 +1,6 @@
 import { useMutation } from "react-apollo-hooks"
 import useEntities from "hooks/useEntities"
-import { EPSILON, approximateStationaryDistribution } from "utils/math"
+import useGameData from "hooks/useGameData"
 
 import { GAME_BY_SLUG } from "gql/queries"
 import {
@@ -14,45 +14,24 @@ import {
   DELETE_HINT,
   ADD_UNLOCK_TO_ENTITY_INSTANCE_STATE_TRANSITION,
   REMOVE_UNLOCK_FROM_ENTITY_INSTANCE_STATE_TRANSITION,
-  CREATE_ENTITY_INSTANCE_STATE_TRANSITION
+  CREATE_ENTITY_INSTANCE_STATE_TRANSITION,
+  CREATE_ENTITY_INSTANCES
 } from "gql/mutations"
-
-const getStatesToCreate = states => {
-  if (states.length === 1) {
-    return states
-  }
-
-  const stateIds = states.map(({ id }) => id)
-  const transitionMatrix = states.map(({ id, outgoingTransitions }) => {
-    const actualTransitions = outgoingTransitions.flatMap(({ to }) =>
-      to ? [to.id] : []
-    )
-    return stateIds.map(stateId =>
-      actualTransitions.length
-        ? actualTransitions.includes(stateId)
-          ? 1 / actualTransitions.length
-          : 0
-        : stateId === id
-        ? 1
-        : 0
-    )
-  })
-
-  const stationaryDistribution = approximateStationaryDistribution(
-    transitionMatrix
-  )
-
-  return states.filter((_, i) => stationaryDistribution[i] > EPSILON)
-}
 
 const useMutationWith = save => (mutation, transform) => {
   const actualMutation = useMutation(mutation)
   return save((...args) => actualMutation(transform(...args)))
 }
 
-const useGameMutations = (variables, save) => {
-  const { getEntityById } = useEntities()
+const useGameMutations = (variables, save, dependencies) => {
+  const { entities, getEntityById, getEntityStateById } = useEntities()
   const useMutationWithSave = useMutationWith(save)
+  const game = useGameData(variables)
+  const existingEntityIds = game.instances.map(({ entity: { id } }) => id)
+  const existingEntityStateIds = game.instances.flatMap(({ states }) =>
+    states.map(({ state: { id } }) => id)
+  )
+
   const query = { query: GAME_BY_SLUG, variables }
 
   const updateGameSettings = useMutationWithSave(
@@ -239,11 +218,85 @@ const useGameMutations = (variables, save) => {
     })
   )
 
+  const createEntityInstances = useMutationWithSave(
+    CREATE_ENTITY_INSTANCES,
+    (gameId, entityInstancesToCreate, entityInstancesToUpdate) => ({
+      variables: {
+        gameId,
+        entityInstancesToCreate,
+        entityInstancesToUpdate
+      }
+    })
+  )
+
+  const createNodes = async originEntityStateIds => {
+    const entityStateIds = dependencies.getAdjacentEntityStates(
+      originEntityStateIds
+    )
+    // const entityStatesThatShouldExist = entityStateIds.map(getEntityStateById)
+    const entitiesThatShouldExist = entities.filter(({ states }) =>
+      states.some(({ id }) => entityStateIds.includes(id))
+    )
+
+    // TODO: handle entities where isObject or isItem
+    // const entityStatesToCreate = entityStatesThatShouldExist.filter(
+    //   ({ id }) => !existingEntityStateIds.includes(id)
+    // )
+    const entitiesToCreate = entitiesThatShouldExist.filter(
+      ({ id, isObject, isItem }) =>
+        (!isObject && !isItem) || !existingEntityIds.includes(id)
+    )
+
+    // console.log(entityStatesToCreate)
+    // console.log(entitiesToCreate)
+    const entityInstancesToCreate = entitiesToCreate.map(
+      ({ id, isObject, isItem, name, states, fields }) => ({
+        name:
+          isObject || isItem
+            ? name
+            : `${name} ${game.instances.filter(({ entity }) => entity.id === id)
+                .length + 1}`,
+        entity: { connect: { id } },
+        fields: {
+          create: fields.map(field => ({
+            field: { connect: { id: field.id } },
+            value: ""
+          }))
+        },
+        states: {
+          create: states
+            .filter(({ id }) => entityStateIds.includes(id))
+            .map(({ id }) => ({ state: { connect: { id } } }))
+        }
+      })
+    )
+
+    const entityInstancesToUpdate = []
+    // [
+    //   {
+    //     name: $name
+    //     entity: { connect: { id: $entityId } }
+    //     states: { create: [{ state: { connect: { id: $entityStateId } } }] }
+    //     fields: {
+    //       create: [
+    //         { field: { connect: { id: $entityFieldId } }, value: "" }
+    //       ]
+    //     }
+    //   }
+    // ]
+
+    await createEntityInstances(
+      game.id,
+      entityInstancesToCreate,
+      entityInstancesToUpdate
+    )
+  }
+
   const createEntityInstance = async entityId => {
     const entity = getEntityById(entityId)
+    const entityStates = dependencies.getMinimalStateSpan(entity.states)
 
-    const statesToCreate = getStatesToCreate(entity.states)
-    console.log(statesToCreate)
+    await createNodes(entityStates.map(({ id }) => id))
   }
 
   return {

@@ -79,6 +79,10 @@ const InstanceCard = ({ instance, state, position, onClick, mayBeDeleted }) => {
 
   const hasPreview = entity && (entity.isItem || entity.isObject)
 
+  const featuredFieldValue = entity.featuredField
+    ? fields.find(({ field }) => field.id === entity.featuredField.id).value
+    : null
+
   return (
     <Card
       hasPreview={hasPreview}
@@ -90,12 +94,9 @@ const InstanceCard = ({ instance, state, position, onClick, mayBeDeleted }) => {
         <EntityTypeIcon {...entity} /> {instance.name}
       </InstanceName>
       {state !== "default" && <StateTag>{state}</StateTag>}
-      {entity.featuredField && (
+      {featuredFieldValue && (
         <FeaturedFieldValue>
-          {JSON.parse(
-            fields.find(({ field }) => field.id === entity.featuredField.id)
-              .value
-          )}
+          {JSON.parse(featuredFieldValue)}
         </FeaturedFieldValue>
       )}
       <PreviewContainer>

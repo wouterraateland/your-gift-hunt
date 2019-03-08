@@ -17,7 +17,7 @@ const toInputType = type => {
 }
 
 const EntityInstanceField = ({ id, value, field }) => {
-  const [newValue, setNewValue] = useState(JSON.parse(value))
+  const [newValue, setNewValue] = useState(value ? JSON.parse(value) : null)
   const { updateEntityInstanceField } = useContext(GameContext)
 
   const debouncedValue = useDebounce(newValue, 1000)
