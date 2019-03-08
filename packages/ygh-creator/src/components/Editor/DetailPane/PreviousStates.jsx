@@ -43,6 +43,8 @@ const EditablePrevStates = ({ node, prevNodes, prevStates }) => {
   const onOptionsClose = () => setOptionsVisibility(false)
   const onAddButtonClick = () => setOptionsVisibility(true)
 
+  const hasUnlocks = node.state.unlockedBy.length > 0
+
   return (
     <>
       <Options
@@ -56,7 +58,7 @@ const EditablePrevStates = ({ node, prevNodes, prevStates }) => {
         isVisible={optionsVisible}
       />
       <Button
-        disabled={isLoading}
+        disabled={isLoading || hasUnlocks}
         onClick={onAddButtonClick}
         size="small"
         importance="primary"
