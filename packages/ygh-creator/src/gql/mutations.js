@@ -305,3 +305,27 @@ export const CREATE_ENTITY_INSTANCES = gql`
   }
   ${ENTITY_INSTANCE_FRAGMENT}
 `
+
+export const DELETE_NODES = gql`
+  mutation deleteNodes(
+    $entityInstanceIds: [ID!]!
+    $entityInstanceStateIds: [ID!]!
+  ) {
+    deleteManyEntityInstanceStateTransitions(
+      where: {
+        OR: [
+          { from: { id_in: $entityInstanceStateIds } }
+          { to: { id_in: $entityInstanceStateIds } }
+        ]
+      }
+    ) {
+      count
+    }
+    deleteManyEntityInstanceStates(where: { id_in: $entityInstanceStateIds }) {
+      count
+    }
+    deleteManyEntityInstances(where: { id_in: $entityInstanceIds }) {
+      count
+    }
+  }
+`

@@ -39,7 +39,7 @@ const DeleteButton = ({ node, isOpen }) => {
   const { ACTION_TYPES, upcomingAction, setUpcomingAction } = useContext(
     EditorContext
   )
-  const { getDependentNodes } = useContext(GameContext)
+  const { getDependentNodes, deleteNodes } = useContext(GameContext)
 
   useEffect(
     () => {
@@ -56,9 +56,10 @@ const DeleteButton = ({ node, isOpen }) => {
     upcomingAction.payload.node === node.id
 
   const onClick = useCallback(
-    () => {
+    async () => {
       if (isDeleting) {
         closeInspector()
+        await deleteNodes(upcomingAction.payload.dependentNodes)
       } else {
         setUpcomingAction({
           type: ACTION_TYPES.DELETE_NODE,

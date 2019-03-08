@@ -16,7 +16,8 @@ import {
   REMOVE_UNLOCK_FROM_ENTITY_INSTANCE_STATE_TRANSITION,
   CREATE_ENTITY_INSTANCE_STATE_TRANSITION,
   CREATE_ENTITY_INSTANCE_STATE_TRANSITIONS,
-  CREATE_ENTITY_INSTANCES
+  CREATE_ENTITY_INSTANCES,
+  DELETE_NODES
 } from "gql/mutations"
 
 const useMutationWith = save => (mutation, transform) => {
@@ -385,6 +386,56 @@ const useGameMutations = (variables, save, dependencies) => {
     await createNodes([entityStateId], entityInstanceStateId)
   }
 
+  const deleteManyNodes = useMutationWithSave(
+    DELETE_NODES,
+    (entityInstanceIds, entityInstanceStateIds) => ({
+      variables: {
+        entityInstanceIds,
+        entityInstanceStateIds
+      },
+      update: proxy => {
+        const data = proxy.readQuery(query)
+
+        data.games[0].instances = data.games[0].instances.filter(
+          ({ id }) => !entityInstanceIds.includes(id)
+        )
+
+        data.games[0].instances.forEach(instance => {
+          instance.states = instance.states.filter(
+            ({ id }) => !entityInstanceStateIds.includes(id)
+          )
+
+          instance.states.forEach(state => {
+            state.outgoingTransitions.forEach(outgoingTransition => {
+              outgoingTransition.unlocks = outgoingTransition.unlocks.filter(
+                ({ id }) => !entityInstanceStateIds.includes(id)
+              )
+            })
+          })
+        })
+
+        proxy.writeQuery({ ...query, data })
+      }
+    })
+  )
+
+  const deleteNodes = async nodeIds => {
+    const entityInstanceIds = game.instances
+      .filter(({ states }) => states.every(({ id }) => nodeIds.includes(id)))
+      .map(({ id }) => id)
+
+    // const entityInstanceStateTransitionIds = game.instances
+    //   .flatMap(({ states }) => states)
+    //   .filter(({ id }) => nodeIds.includes(id))
+    //   .flatMap(state => state.outgoingTransitions.map(({ id }) => id))
+
+    await deleteManyNodes(
+      entityInstanceIds,
+      nodeIds
+      // entityInstanceStateTransitionIds
+    )
+  }
+
   return {
     updateGameSettings,
     updateEntityInstanceName,
@@ -404,7 +455,8 @@ const useGameMutations = (variables, save, dependencies) => {
 
     // Creation and deletion mutations
     createEntityInstance,
-    addPreviousState
+    addPreviousState,
+    deleteNodes
   }
 }
 
