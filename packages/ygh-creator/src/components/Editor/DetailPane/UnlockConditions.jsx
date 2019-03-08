@@ -94,13 +94,13 @@ const EditableUnlockConditions = ({ node }) => {
       if (
         !unlockConditions.find(unlockCondition => unlockCondition.id === id)
       ) {
-        if (unlockConditions.length === 0) {
-          // If we add the first unlock condition, remove the unlock condition from the start trigger
-          await removeUnlockFromEntityInstanceStateTransition(
-            startTriggerStateTransition.id,
-            node.state.id
-          )
-        }
+        // if (unlockConditions.length === 0) {
+        //   // If we add the first unlock condition, remove the unlock condition from the start trigger
+        //   await removeUnlockFromEntityInstanceStateTransition(
+        //     startTriggerStateTransition.id,
+        //     node.state.id
+        //   )
+        // }
 
         const edge = getEdgeById(id)
         const {
@@ -128,13 +128,13 @@ const EditableUnlockConditions = ({ node }) => {
   const removeUnlockCondition = useCallback(
     runAsync(async id => {
       if (unlockConditions.find(unlockCondition => unlockCondition.id === id)) {
-        if (unlockConditions.length === 1) {
-          // If we remove the only unlock condition, replace it with an unlock from a start trigger
-          await addUnlockToEntityInstanceStateTransition(
-            startTriggerStateTransition.id,
-            node.state.id
-          )
-        }
+        // if (unlockConditions.length === 1) {
+        //   // If we remove the only unlock condition, replace it with an unlock from a start trigger
+        //   await addUnlockToEntityInstanceStateTransition(
+        //     startTriggerStateTransition.id,
+        //     node.state.id
+        //   )
+        // }
 
         const edge = getEdgeById(id)
         const {
@@ -158,6 +158,10 @@ const EditableUnlockConditions = ({ node }) => {
   const onOptionClick = useCallback(id => addUnlockCondition(id), [
     addUnlockCondition
   ])
+
+  if (error) {
+    console.error(error)
+  }
 
   return (
     <>

@@ -80,15 +80,15 @@ const Unlocks = ({ from, to }) => {
   const addUnlock = useCallback(
     runAsync(async id => {
       if (!unlocks.find(unlock => unlock.id === id)) {
-        const unlockConditions = edges.filter(({ unlocks }) => unlocks === id)
-
-        if (unlockConditions.length === 0) {
-          // If we add the first unlock condition to a node, remove the unlock condition from the start trigger
-          await removeUnlockFromEntityInstanceStateTransition(
-            startTriggerStateTransition.id,
-            id
-          )
-        }
+        // const unlockConditions = edges.filter(({ unlocks }) => unlocks === id)
+        //
+        // if (unlockConditions.length === 0) {
+        //   // If we add the first unlock condition to a node, remove the unlock condition from the start trigger
+        //   await removeUnlockFromEntityInstanceStateTransition(
+        //     startTriggerStateTransition.id,
+        //     id
+        //   )
+        // }
 
         const {
           data: { entityInstanceStateTransitions }
@@ -111,15 +111,15 @@ const Unlocks = ({ from, to }) => {
   const removeUnlock = useCallback(
     runAsync(async id => {
       if (unlocks.find(unlock => unlock.id === id)) {
-        const unlockConditions = edges.filter(({ unlocks }) => unlocks === id)
-
-        if (unlockConditions.length === 1) {
-          // If we remove the only unlock condition, replace it with an unlock from a start trigger
-          await addUnlockToEntityInstanceStateTransition(
-            startTriggerStateTransition.id,
-            id
-          )
-        }
+        // const unlockConditions = edges.filter(({ unlocks }) => unlocks === id)
+        //
+        // if (unlockConditions.length === 1) {
+        //   // If we remove the only unlock condition, replace it with an unlock from a start trigger
+        //   await addUnlockToEntityInstanceStateTransition(
+        //     startTriggerStateTransition.id,
+        //     id
+        //   )
+        // }
 
         const {
           data: { entityInstanceStateTransitions }

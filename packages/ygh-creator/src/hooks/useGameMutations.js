@@ -257,7 +257,7 @@ const useGameMutations = (variables, save, dependencies) => {
                       .outgoingTransitions.filter(
                         entityStateTransition =>
                           !state.outgoingTransitions.some(instanceTransition =>
-                            instanceTransition.to
+                            instanceTransition.to === null
                               ? entityStateTransition.to === null
                               : entityStateTransition.to &&
                                 entityStateTransition.to.id ===
@@ -320,7 +320,7 @@ const useGameMutations = (variables, save, dependencies) => {
       ({ id, name, states, fields }) => {
         const existingEntityInstances = game.instances.filter(
           ({ entity }) => entity.id === id
-        ).length
+        )
         return {
           name: existingEntityInstances.length
             ? `${name} ${existingEntityInstances.length + 1}`

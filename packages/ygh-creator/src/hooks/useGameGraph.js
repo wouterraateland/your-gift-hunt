@@ -129,12 +129,35 @@ const getUseTransitions = nodes =>
       )
     )
 
-const getEdges = (startInstanceIds, nodes) =>
+const chooseRandom = xs => xs[Math.floor(Math.random() * xs.length)]
+
+const getOtherEntryTransitions = instances =>
+  instances
+    .filter(({ entity, states }) =>
+      states.every(
+        state =>
+          state.unlockedBy.length === 0 &&
+          state.incomingTransitions.length > 0 &&
+          (!entity.defaultState || entity.defaultState.id !== state.state.id)
+      )
+    )
+    .map(({ id, states }) => ({
+      from: `${id}-${NODE_TYPES.ENTRY}`,
+      to: chooseRandom(
+        states
+          .filter(state => state.outgoingTransitions.every(({ to }) => to))
+          .map(state => state.id)
+      ),
+      type: EDGE_TYPES.ENTRY
+    }))
+
+const getEdges = (startInstanceIds, nodes, instances) =>
   [
     ...getStartTransitions(startInstanceIds, nodes),
     ...getTransformTransitions(nodes),
     ...getUnlockTransitions(nodes),
-    ...getUseTransitions(nodes)
+    ...getUseTransitions(nodes),
+    ...getOtherEntryTransitions(instances)
   ].map(({ from, to, unlocks, type }) => ({
     id: hash([from, to, unlocks, type]),
     from,
@@ -166,9 +189,10 @@ const useGameGraph = instances => {
   const nodes = useMemo(() => getNodes(startInstanceIds, instances), [
     instances
   ])
-  const edges = useMemo(() => getEdges(startInstanceIds, nodes), [
+  const edges = useMemo(() => getEdges(startInstanceIds, nodes, instances), [
     startInstanceIds,
-    nodes
+    nodes,
+    instances
   ])
 
   return {

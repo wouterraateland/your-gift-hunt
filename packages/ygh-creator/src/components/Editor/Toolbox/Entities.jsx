@@ -52,7 +52,10 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
   const [expandedEntity, setExpandedEntity] = useState(null)
 
   const onEntityClick = useCallback(
-    entityId => createEntityInstance(entityId),
+    async entityId => {
+      await createEntityInstance(entityId)
+      onBackClick()
+    },
     [createEntityInstance]
   )
 

@@ -43,10 +43,6 @@ const EditablePrevStates = ({ node, prevNodes, prevStates }) => {
   const onOptionsClose = () => setOptionsVisibility(false)
   const onAddButtonClick = () => setOptionsVisibility(true)
 
-  if (error) {
-    console.error(error)
-  }
-
   return (
     <>
       <Options
@@ -74,11 +70,11 @@ const EditablePrevStates = ({ node, prevNodes, prevStates }) => {
 }
 
 const PreviousStates = ({ node }) => {
-  const { getNodeByInstanceAndState } = useContext(GameContext)
+  const { getNodeById } = useContext(GameContext)
   const { getEntityStateById } = useContext(EntitiesContext)
 
   const prevNodes = node.state.incomingTransitions.map(({ from }) =>
-    getNodeByInstanceAndState(node.instance, from)
+    getNodeById(from.id)
   )
 
   const entityState = getEntityStateById(node.state.state.id)
