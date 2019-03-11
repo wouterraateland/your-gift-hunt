@@ -167,15 +167,9 @@ const UnlockConditions = ({ node }) => (
 )
 
 const MaybeUnlockConditions = ({ node }) => {
-  const { edges } = useContext(GameContext)
+  const { isUnlockable } = useContext(GameContext)
 
-  return !edges.some(
-    ({ type, to }) => type === EDGE_TYPES.TRANSFORM && to === node.id
-  ) ||
-    (node.instance.entity.defaultState &&
-      node.state.state.id === node.instance.entity.defaultState.id) ? (
-    <UnlockConditions node={node} />
-  ) : null
+  return isUnlockable(node, true) && <UnlockConditions node={node} />
 }
 
 export default MaybeUnlockConditions

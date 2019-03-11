@@ -182,6 +182,18 @@ const getEdgeById = (nodes, edges) =>
     edgeId => edges.find(({ id }) => id === edgeId)
   )
 
+const isUnlockable = edges => (
+  { id, instance, type },
+  ignoreIsObject = false
+) =>
+  type === NODE_TYPES.STATE &&
+  (ignoreIsObject || !instance.entity.isObject) &&
+  edges.some(
+    ({ type, to, unlocks }) =>
+      (type === EDGE_TYPES.ENTRY && to === id) ||
+      (type === EDGE_TYPES.UNLOCK && unlocks === id)
+  )
+
 const useGameGraph = instances => {
   const startInstanceIds = useMemo(() => getStartInstanceIds(instances), [
     instances
@@ -200,7 +212,8 @@ const useGameGraph = instances => {
     edges,
     getNodeById: getNodeById(nodes),
     getNodeByInstanceAndState: getNodeByInstanceAndState(nodes),
-    getEdgeById: getEdgeById(nodes, edges)
+    getEdgeById: getEdgeById(nodes, edges),
+    isUnlockable: isUnlockable(edges)
   }
 }
 

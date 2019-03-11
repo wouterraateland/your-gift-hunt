@@ -1,4 +1,4 @@
-import { NODE_TYPES, EDGE_TYPES } from "data"
+import { EDGE_TYPES } from "data"
 import React, { useCallback, useContext, useState } from "react"
 import styled from "styled-components"
 
@@ -27,6 +27,11 @@ const UnlockContainer = styled.div`
   }
 `
 
+const Em = styled.em`
+  display: block;
+  margin-bottom: 0.5em;
+`
+
 const Unlock = ({ data, isDeletable = true, onDeleteClick }) => (
   <UnlockContainer>
     <ClickableNodeTag {...data} />
@@ -38,38 +43,29 @@ const Unlock = ({ data, isDeletable = true, onDeleteClick }) => (
   </UnlockContainer>
 )
 
-const Em = styled.em`
-  display: block;
-  margin-bottom: 0.5em;
-`
-
 const Unlocks = ({ from, to }) => {
   const {
     edges,
     nodes,
     getNodeById,
+    isUnlockable,
     addUnlockToEntityInstanceStateTransition,
     removeUnlockFromEntityInstanceStateTransition
   } = useContext(GameContext)
 
-  const unlockEdges = edges.filter(
-    edge =>
-      edge.type === EDGE_TYPES.UNLOCK &&
-      edge.from === from.id &&
-      edge.to === to.id
-  )
-
-  const unlocks = unlockEdges.map(({ unlocks }) => getNodeById(unlocks))
+  const unlocks = edges
+    .filter(
+      edge =>
+        edge.type === EDGE_TYPES.UNLOCK &&
+        edge.from === from.id &&
+        edge.to === to.id
+    )
+    .map(({ unlocks }) => getNodeById(unlocks))
 
   const [optionsVisible, setOptionsVisibility] = useState(false)
   const [{ isLoading, error }, runAsync] = useAsync()
 
-  const options = nodes.filter(
-    ({ id, instance, type }) =>
-      type === NODE_TYPES.STATE &&
-      !instance.entity.isObject &&
-      !edges.some(({ type, to }) => type === EDGE_TYPES.TRANSFORM && to === id)
-  )
+  const options = nodes.filter(isUnlockable)
 
   const addUnlock = useCallback(
     runAsync(id =>
