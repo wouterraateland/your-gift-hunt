@@ -1,9 +1,13 @@
-import React from "react"
+import { EDGE_TYPES } from "data"
+import React, { memo, useContext } from "react"
+
+import GameContext from "contexts/Game"
+
 import TransitionArrow from "./TransitionArrow"
 
-import { EDGE_TYPES } from "data"
+const Edge = memo(({ id, type, from, to, unlocks }) => {
+  const { getNodePosition } = useContext(GameContext)
 
-const Edge = ({ id, type, from, to, unlocks, getNodePosition }) => {
   const fromPosition = getNodePosition(from)
   const toPosition = to
     ? getNodePosition(to)
@@ -58,6 +62,6 @@ const Edge = ({ id, type, from, to, unlocks, getNodePosition }) => {
         />
       )
   }
-}
+})
 
 export default Edge

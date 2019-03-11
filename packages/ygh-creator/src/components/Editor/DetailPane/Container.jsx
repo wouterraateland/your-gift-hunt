@@ -30,6 +30,8 @@ const DetailPaneContainer = styled(Paper)`
     `}
 
   transition: transform ease-in-out 0.3s;
+
+  will-change: transition;
 `
 
 export default DetailPaneContainer

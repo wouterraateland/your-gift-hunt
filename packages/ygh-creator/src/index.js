@@ -12,6 +12,11 @@ import { ApolloProvider } from "react-apollo-hooks"
 
 const root = document.getElementById("app-root")
 
+if (process.env.NODE_ENV !== "production") {
+  const whyDidYouRender = require("@welldone-software/why-did-you-render")
+  whyDidYouRender(React)
+}
+
 const client = new ApolloClient({
   uri: "https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev"
 })

@@ -3,6 +3,7 @@ import styled from "styled-components"
 import usePanZoom from "hooks/usePanZoom" //"use-pan-and-zoom"
 
 import ZoomControls from "./ZoomControls"
+import PanControls from "./PanControls"
 
 const StyledEditorPane = styled.div`
   overflow: hidden;
@@ -11,6 +12,8 @@ const StyledEditorPane = styled.div`
 
   background-color: #f5f6fb;
   background-image: radial-gradient(#0001 8%, transparent 10%);
+
+  will-change: background-size, background-position;
 `
 
 const PanContainer = styled.div`
@@ -18,6 +21,8 @@ const PanContainer = styled.div`
   height: 100%;
   padding: 1em;
   transform-origin: left top;
+
+  will-change: transform;
 `
 
 const EditorPane = ({ children }) => {
@@ -25,6 +30,7 @@ const EditorPane = ({ children }) => {
   const {
     transform,
     pan: { x, y },
+    setPan,
     zoom,
     setZoom,
     panZoomHandlers
@@ -49,6 +55,12 @@ const EditorPane = ({ children }) => {
         steps={[0.1, 0.25, 0.5, 1, 1.5, 2]}
         zoom={zoom}
         setZoom={setZoom}
+      />
+      <PanControls
+        container={container}
+        zoom={zoom}
+        pan={{ x, y }}
+        setPan={setPan}
       />
     </StyledEditorPane>
   )

@@ -1,17 +1,20 @@
 import { NODE_TYPES } from "data"
 
-import React, { useContext } from "react"
+import React, { memo, useContext } from "react"
 
 import EditorContext from "contexts/Editor"
 import InspectorContext from "contexts/Inspector"
+import GameContext from "contexts/Game"
 
 import EntryNode from "./EntryNode"
 import ExitNode from "./ExitNode"
 import InstanceCard from "./InstanceCard"
 
-const Node = ({ id, instance, position, state, type }) => {
+const Node = memo(({ id, instance, state, type }) => {
   const { ACTION_TYPES, upcomingAction } = useContext(EditorContext)
   const { inspectNode } = useContext(InspectorContext)
+  const { getNodePosition } = useContext(GameContext)
+  const position = getNodePosition(id)
 
   switch (type) {
     case NODE_TYPES.ENTRY:
@@ -36,6 +39,7 @@ const Node = ({ id, instance, position, state, type }) => {
     default:
       return null
   }
-}
+})
+Node.whyDidYouRender = true
 
 export default Node
