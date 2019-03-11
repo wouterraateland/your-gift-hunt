@@ -310,12 +310,15 @@ const useGameMutations = (variables, save, dependencies) => {
     const entityStateIds = dependencies.getAdjacentEntityStates(
       entityStateIdsToCreate
     )
+    const existingEntityIds = game.instances.map(({ entity: { id } }) => id)
     const entitiesThatShouldExist = entities.filter(({ states }) =>
       states.some(({ id }) => entityStateIds.includes(id))
     )
 
     const entitiesToCreate = entitiesThatShouldExist.filter(
-      ({ id }) => id !== originEntityId
+      ({ id, isObject, isItem }) =>
+        id !== originEntityId &&
+        (!(isObject || isItem) || !existingEntityIds.includes(id))
     )
     const entityInstancesToCreate = entitiesToCreate.map(
       ({ id, name, states, fields }) => {
