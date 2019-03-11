@@ -6,6 +6,8 @@ import StateTag from "../StateTag"
 import EntityInstancePreview from "../EntityInstancePreview"
 
 const Card = styled.div`
+  cursor: pointer;
+  
   position: absolute;
 
   display: flex;
@@ -37,14 +39,33 @@ const Card = styled.div`
         content: "";
 
         position: absolute;
-        left: -0.1em;
-        top: -0.1em;
-        right: -0.1em;
-        bottom: -0.1em;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
 
         opacity: 0.8;
 
+        border-radius: ${props => props.theme.borderRadius};
+
         background-color: ${props => props.theme.color.error};
+      }
+    `}
+
+  ${props =>
+    props.isFocussed &&
+    css`
+      &::before {
+        content: "";
+
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+
+        border: 0.1em solid #39f;
+        border-radius: ${props => props.theme.borderRadius};
       }
     `}
 `
@@ -74,7 +95,14 @@ const PreviewContainer = styled.div`
   height: 4em;
 `
 
-const InstanceCard = ({ instance, state, position, onClick, mayBeDeleted }) => {
+const InstanceCard = ({
+  instance,
+  state,
+  position,
+  onClick,
+  mayBeDeleted,
+  isFocussed
+}) => {
   const { entity, fields } = instance
 
   const hasPreview = entity && (entity.isItem || entity.isObject)
@@ -89,6 +117,7 @@ const InstanceCard = ({ instance, state, position, onClick, mayBeDeleted }) => {
       onClick={onClick}
       style={position}
       mayBeDeleted={mayBeDeleted}
+      isFocussed={isFocussed}
     >
       <InstanceName hasPreview={hasPreview}>
         <EntityTypeIcon {...entity} /> {instance.name}

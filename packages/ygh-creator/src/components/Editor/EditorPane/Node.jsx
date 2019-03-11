@@ -12,7 +12,7 @@ import InstanceCard from "./InstanceCard"
 
 const Node = memo(({ id, instance, state, type }) => {
   const { ACTION_TYPES, upcomingAction } = useContext(EditorContext)
-  const { inspectNode } = useContext(InspectorContext)
+  const { inspectNode, isOpen, nodeId } = useContext(InspectorContext)
   const { getNodePosition } = useContext(GameContext)
   const position = getNodePosition(id)
 
@@ -26,6 +26,7 @@ const Node = memo(({ id, instance, state, type }) => {
           position={position}
           instance={instance}
           state={state.state.name}
+          isFocussed={isOpen && nodeId === id}
           mayBeDeleted={
             upcomingAction &&
             upcomingAction.type === ACTION_TYPES.DELETE_NODE &&

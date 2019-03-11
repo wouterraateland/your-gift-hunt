@@ -3,6 +3,7 @@ import styled from "styled-components"
 
 import GameContext from "contexts/Game"
 import EntitiesContext from "contexts/Entities"
+import InspectorContext from "contexts/Inspector"
 
 import EntitiesContainer from "./EntitiesContainer"
 import EntityEntry from "./EntityEntry"
@@ -46,8 +47,10 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
     game: { instances },
     createEntityInstance
   } = useContext(GameContext)
+  const { inspectNode } = useContext(InspectorContext)
   const { entities } = useContext(EntitiesContext)
   const visibleEntities = entities.filter(getEntitiesFilter(selectedType))
+  const [isEntityInstanceCreated, setEntityInstanceCreated] = useState(false)
 
   const [expandedEntity, setExpandedEntity] = useState(null)
 
@@ -55,6 +58,7 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
     async entityId => {
       await createEntityInstance(entityId)
       onBackClick()
+      setEntityInstanceCreated(true)
     },
     [createEntityInstance]
   )
@@ -72,6 +76,16 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
       setExpandedEntity(null)
     },
     [isVisible, selectedType]
+  )
+
+  useEffect(
+    () => {
+      if (isEntityInstanceCreated) {
+        inspectNode(instances[instances.length - 1].states[0].id)
+        setEntityInstanceCreated(false)
+      }
+    },
+    [isEntityInstanceCreated]
   )
 
   return (
