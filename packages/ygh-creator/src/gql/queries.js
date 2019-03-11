@@ -161,6 +161,9 @@ export const ENTITY_INSTANCE_STATE_TRANSITIONS = gql`
       where: { from: { id: $from }, to: { id: $to } }
     ) {
       id
+      unlocks {
+        id
+      }
     }
   }
 `

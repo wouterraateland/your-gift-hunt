@@ -24,12 +24,15 @@ const OptionsContainer = styled(Paper)`
 `
 
 const OptionContainer = styled.div`
+  cursor: pointer;
+
   padding: 0.5em;
+
+  &:nth-child(2n) {
+    background-color: #00000009;
+  }
   &:hover {
     background-color: #0001;
-  }
-  &:not(:last-child) {
-    border-bottom: 1px solid #0001;
   }
 
   & > * {

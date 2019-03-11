@@ -5,8 +5,6 @@ import useGraphLayout from "hooks/useGraphLayout"
 import useGameDependencies from "hooks/useGameDependencies"
 import useSaveState from "hooks/useSaveState"
 
-const maybe = (f, g) => v => (v === null || v === undefined ? f() : g(v))
-
 const useGame = variables => {
   const saveState = useSaveState()
 
@@ -26,10 +24,6 @@ const useGame = variables => {
   return {
     gameExists: true,
     game,
-    startTriggerStateTransition: maybe(
-      () => null,
-      instance => instance.states[0].outgoingTransitions[0]
-    )(game.instances.find(({ entity }) => entity.name === "Start trigger")),
     ...saveState,
     ...mutations,
     ...graph,

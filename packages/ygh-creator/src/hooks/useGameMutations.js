@@ -2,7 +2,7 @@ import { useMutation, useApolloClient } from "react-apollo-hooks"
 import useEntities from "hooks/useEntities"
 import useGameData from "hooks/useGameData"
 
-import { GAME_BY_SLUG } from "gql/queries"
+import { GAME_BY_SLUG, ENTITY_INSTANCE_STATE_TRANSITIONS } from "gql/queries"
 import {
   UPDATE_GAME_SETTINGS,
   UPDATE_ENTITY_INSTANCE_NAME,
@@ -141,7 +141,7 @@ const useGameMutations = (variables, save, dependencies) => {
     }
   }))
 
-  const addUnlockToEntityInstanceStateTransition = useMutationWithSave(
+  const addUnlockToEntityInstanceStateTransitionMutation = useMutationWithSave(
     ADD_UNLOCK_TO_ENTITY_INSTANCE_STATE_TRANSITION,
     (entityInstanceStateTransitionId, entityInstanceStateId) => ({
       variables: { entityInstanceStateTransitionId, entityInstanceStateId },
@@ -167,7 +167,25 @@ const useGameMutations = (variables, save, dependencies) => {
     })
   )
 
-  const removeUnlockFromEntityInstanceStateTransition = useMutationWithSave(
+  const addUnlockToEntityInstanceStateTransition = async (from, to, unlock) => {
+    const {
+      data: { entityInstanceStateTransitions }
+    } = await client.query({
+      query: ENTITY_INSTANCE_STATE_TRANSITIONS,
+      variables: { from, to }
+    })
+
+    const unlocks = entityInstanceStateTransitions[0].unlocks
+
+    if (!unlocks.some(({ id }) => unlock === id)) {
+      await addUnlockToEntityInstanceStateTransitionMutation(
+        entityInstanceStateTransitions[0].id,
+        unlock
+      )
+    }
+  }
+
+  const removeUnlockFromEntityInstanceStateTransitionMutation = useMutationWithSave(
     REMOVE_UNLOCK_FROM_ENTITY_INSTANCE_STATE_TRANSITION,
     (entityInstanceStateTransitionId, entityInstanceStateId) => ({
       variables: { entityInstanceStateTransitionId, entityInstanceStateId },
@@ -191,6 +209,28 @@ const useGameMutations = (variables, save, dependencies) => {
       }
     })
   )
+
+  const removeUnlockFromEntityInstanceStateTransition = async (
+    from,
+    to,
+    unlock
+  ) => {
+    const {
+      data: { entityInstanceStateTransitions }
+    } = await client.query({
+      query: ENTITY_INSTANCE_STATE_TRANSITIONS,
+      variables: { from, to }
+    })
+
+    const unlocks = entityInstanceStateTransitions[0].unlocks
+
+    if (unlocks.some(({ id }) => unlock === id)) {
+      await removeUnlockFromEntityInstanceStateTransitionMutation(
+        entityInstanceStateTransitions[0].id,
+        unlock
+      )
+    }
+  }
 
   const createEntityInstanceStateTransition = useMutationWithSave(
     CREATE_ENTITY_INSTANCE_STATE_TRANSITION,
@@ -427,16 +467,7 @@ const useGameMutations = (variables, save, dependencies) => {
       .filter(({ states }) => states.every(({ id }) => nodeIds.includes(id)))
       .map(({ id }) => id)
 
-    // const entityInstanceStateTransitionIds = game.instances
-    //   .flatMap(({ states }) => states)
-    //   .filter(({ id }) => nodeIds.includes(id))
-    //   .flatMap(state => state.outgoingTransitions.map(({ id }) => id))
-
-    await deleteManyNodes(
-      entityInstanceIds,
-      nodeIds
-      // entityInstanceStateTransitionIds
-    )
+    await deleteManyNodes(entityInstanceIds, nodeIds)
   }
 
   return {

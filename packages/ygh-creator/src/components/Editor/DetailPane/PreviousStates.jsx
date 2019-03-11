@@ -12,10 +12,11 @@ import ClickableStateTag from "./ClickableStateTag"
 import StateTag from "../StateTag"
 
 const Em = styled.em`
-  display: block;
-  margin-bottom: 0.5em;
-
   opacity: 0.5;
+`
+
+const VSpace = styled.div`
+  margin-bottom: 0.5em;
 `
 
 const StateTagList = ({ nodes, connector }) =>
@@ -47,6 +48,7 @@ const EditablePrevStates = ({ node, prevNodes, prevStates }) => {
 
   return (
     <>
+      <VSpace />
       <Options
         closeOnClick
         components={{

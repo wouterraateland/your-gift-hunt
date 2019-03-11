@@ -4,7 +4,6 @@ import styled from "styled-components"
 
 import GameContext from "contexts/Game"
 
-import { useApolloClient } from "react-apollo-hooks"
 import useAsync from "hooks/useAsync"
 
 import { ActionButton, Button, Message } from "your-gift-hunt/ui"
@@ -12,8 +11,6 @@ import { Bin } from "your-gift-hunt/icons"
 import NodeTag from "../NodeTag"
 import ClickableNodeTag from "./ClickableNodeTag"
 import Options from "./Options"
-
-import { ENTITY_INSTANCE_STATE_TRANSITIONS } from "gql/queries"
 
 const UnlockContainer = styled.div`
   display: block;
@@ -51,10 +48,8 @@ const Unlocks = ({ from, to }) => {
     edges,
     nodes,
     getNodeById,
-    createEntityInstanceStateTransition,
     addUnlockToEntityInstanceStateTransition,
-    removeUnlockFromEntityInstanceStateTransition,
-    startTriggerStateTransition
+    removeUnlockFromEntityInstanceStateTransition
   } = useContext(GameContext)
 
   const unlockEdges = edges.filter(
@@ -66,7 +61,6 @@ const Unlocks = ({ from, to }) => {
 
   const unlocks = unlockEdges.map(({ unlocks }) => getNodeById(unlocks))
 
-  const client = useApolloClient()
   const [optionsVisible, setOptionsVisibility] = useState(false)
   const [{ isLoading, error }, runAsync] = useAsync()
 
@@ -78,63 +72,17 @@ const Unlocks = ({ from, to }) => {
   )
 
   const addUnlock = useCallback(
-    runAsync(async id => {
-      if (!unlocks.find(unlock => unlock.id === id)) {
-        // const unlockConditions = edges.filter(({ unlocks }) => unlocks === id)
-        //
-        // if (unlockConditions.length === 0) {
-        //   // If we add the first unlock condition to a node, remove the unlock condition from the start trigger
-        //   await removeUnlockFromEntityInstanceStateTransition(
-        //     startTriggerStateTransition.id,
-        //     id
-        //   )
-        // }
-
-        const {
-          data: { entityInstanceStateTransitions }
-        } = await client.query({
-          query: ENTITY_INSTANCE_STATE_TRANSITIONS,
-          variables: { from: from.id, to: to.id }
-        })
-
-        await (entityInstanceStateTransitions.length
-          ? addUnlockToEntityInstanceStateTransition(
-              entityInstanceStateTransitions[0].id,
-              id
-            )
-          : createEntityInstanceStateTransition(from.id, to.id, id))
-      }
-    }),
-    [unlocks, from, to]
+    runAsync(id =>
+      addUnlockToEntityInstanceStateTransition(from.id, to.id, id)
+    ),
+    [from, to]
   )
 
   const removeUnlock = useCallback(
-    runAsync(async id => {
-      if (unlocks.find(unlock => unlock.id === id)) {
-        // const unlockConditions = edges.filter(({ unlocks }) => unlocks === id)
-        //
-        // if (unlockConditions.length === 1) {
-        //   // If we remove the only unlock condition, replace it with an unlock from a start trigger
-        //   await addUnlockToEntityInstanceStateTransition(
-        //     startTriggerStateTransition.id,
-        //     id
-        //   )
-        // }
-
-        const {
-          data: { entityInstanceStateTransitions }
-        } = await client.query({
-          query: ENTITY_INSTANCE_STATE_TRANSITIONS,
-          variables: { from: from.id, to: to.id }
-        })
-
-        await removeUnlockFromEntityInstanceStateTransition(
-          entityInstanceStateTransitions[0].id,
-          id
-        )
-      }
-    }),
-    [from, to, edges, startTriggerStateTransition, unlocks]
+    runAsync(id =>
+      removeUnlockFromEntityInstanceStateTransition(from.id, to.id, id)
+    ),
+    [from, to]
   )
 
   const onAddButtonClick = useCallback(() => setOptionsVisibility(true), [])
