@@ -422,6 +422,16 @@ const useGameMutations = (variables, save, dependencies) => {
     const entity = getEntityById(entityId)
     const entityStates = dependencies.getMinimalStateSpan(entity.states)
 
+    if (
+      entityStates.length === 1 &&
+      !entity.isObject &&
+      !entity.isItem &&
+      !entity.isTrigger &&
+      entityStates[0].incomingTransitions.length > 0
+    ) {
+      entityStates.push(entityStates[0].incomingTransitions[0].from)
+    }
+
     await createNodes(entityStates.map(({ id }) => id))
   }
 
