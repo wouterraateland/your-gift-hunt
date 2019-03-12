@@ -8,7 +8,12 @@ const Label = styled.label`
 
   display: ${props => (props.block ? "block" : "inline-block")};
   max-width: 100%;
-  padding: 0.5em ${props => (props.isSelect ? 0 : 0.7)}em;
+  ${props =>
+    !props.isMap &&
+    css`
+      padding: 0.5em ${props.isSelect ? 0 : 0.7}em;
+    `}
+
   ${props =>
     !props.isSelect &&
     css`

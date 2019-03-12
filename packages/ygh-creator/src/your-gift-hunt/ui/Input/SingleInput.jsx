@@ -58,7 +58,7 @@ const setHeight = el => {
   }
 }
 
-export default forwardRef(
+const SingleInput = forwardRef(
   ({ value, onChange = _.noop, ...otherProps }, ref) => {
     const myRef = useRef(null)
 
@@ -91,3 +91,5 @@ export default forwardRef(
     )
   }
 )
+
+export default SingleInput

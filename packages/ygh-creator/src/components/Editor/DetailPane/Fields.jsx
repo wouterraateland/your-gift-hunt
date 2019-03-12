@@ -11,6 +11,10 @@ const toInputType = type => {
       return "textarea"
     case "NUMBER":
       return "number"
+    case "GEOPOINT":
+      return "geopoint"
+    case "TIMESTAMP":
+      return "datetime-local"
     default:
       return type
   }

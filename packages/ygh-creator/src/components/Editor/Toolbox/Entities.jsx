@@ -100,7 +100,7 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
             !instances.some(instance => instance.entity.id === entity.id)
           }
           isPro={entity.name === "Plant pot"}
-          isUpcoming={selectedType === "trigger"}
+          isUpcoming={false} //selectedType === "trigger"}
           isExpanded={expandedEntity === entity.id}
           onClick={() => onEntityClick(entity.id)}
           onInfoClick={event => {

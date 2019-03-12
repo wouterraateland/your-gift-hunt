@@ -6,6 +6,7 @@ import LabelText from "./LabelText"
 import BeforeLabel from "./BeforeLabel"
 import SingleInput from "./SingleInput"
 import MultiInput from "./MultiInput"
+import GeopointInput from "./GeopointInput"
 import ErrorMessage from "./ErrorMessage"
 
 const Input = ({
@@ -21,23 +22,26 @@ const Input = ({
   <Label
     block={otherProps.block}
     isSelect={isSelect}
+    isMap={otherProps.type === "geopoint"}
     disabled={otherProps.disabled}
   >
     {(icon || otherProps.type === "search") && (
       <BeforeLabel type={icon || otherProps.type} />
     )}
-    {isMulti ? (
+    {otherProps.type === "geopoint" ? (
+      <GeopointInput {...otherProps} />
+    ) : isMulti ? (
       <MultiInput {...otherProps} />
     ) : (
       <SingleInput {...otherProps} isSelect={isSelect} />
     )}
     <LabelText
       isSelect={isSelect}
-      up={
-        otherProps.value !== undefined &&
-        otherProps.value !== null &&
-        (isMulti ? otherProps.value.length > 0 : otherProps.value !== "")
-      }
+      up={true}
+      //   otherProps.value !== undefined &&
+      //   otherProps.value !== null &&
+      //   (isMulti ? otherProps.value.length > 0 : otherProps.value !== "")
+      // }
       label={label}
       info={info}
       showType={showType}

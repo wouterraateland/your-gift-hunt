@@ -4,6 +4,8 @@ import styled, { css } from "styled-components"
 import ToolTip from "./ToolTip"
 
 const DefaultType = styled.div`
+  pointer-events: auto;
+
   position: relative;
   display: inline-block;
   width: 1em;
@@ -41,6 +43,18 @@ const NumberType = styled(DefaultType)`
   }
 `
 
+const GeopointType = styled(DefaultType)`
+  &::after {
+    content: "×";
+  }
+`
+
+const DatetimeLocalType = styled(DefaultType)`
+  &::after {
+    content: "◷";
+  }
+`
+
 const getBaseComponent = type => {
   switch (type) {
     case "text":
@@ -48,6 +62,10 @@ const getBaseComponent = type => {
       return TextType
     case "number":
       return NumberType
+    case "geopoint":
+      return GeopointType
+    case "datetime-local":
+      return DatetimeLocalType
     default:
       return DefaultType
   }
