@@ -192,6 +192,7 @@ const useGraphLayout = ({ nodes, edges }) => {
   )
 
   return {
+    nodePositions,
     getNodePosition
   }
 }
