@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Mon Mar 04 2019 16:31:42 GMT+0100 (Midden-Europese standaardtijd)
+# timestamp: Tue Mar 12 2019 15:39:36 GMT+0100 (Midden-Europese standaardtijd)
 
 enum AccessType {
   NONE
@@ -1003,10 +1003,10 @@ input ActionRequirementPayloadEntityWhereUniqueInput {
 type ActionRequirementPayloadInputValue implements Node {
   id: ID!
   key: String!
-  eqField: EntityField
-  neqField: EntityField
-  eqValue: String
-  neqValue: String
+  field: EntityField
+  value: String
+  not: Boolean!
+  comparator: ComparatorType!
   payload: ActionRequirementPayload!
 }
 
@@ -1022,10 +1022,10 @@ type ActionRequirementPayloadInputValueConnection {
 
 input ActionRequirementPayloadInputValueCreateInput {
   key: String!
-  eqValue: String
-  neqValue: String
-  eqField: EntityFieldCreateOneInput
-  neqField: EntityFieldCreateOneInput
+  value: String
+  not: Boolean
+  comparator: ComparatorType
+  field: EntityFieldCreateOneInput
   payload: ActionRequirementPayloadCreateOneWithoutRequiredValuesInput!
 }
 
@@ -1036,10 +1036,10 @@ input ActionRequirementPayloadInputValueCreateManyWithoutPayloadInput {
 
 input ActionRequirementPayloadInputValueCreateWithoutPayloadInput {
   key: String!
-  eqValue: String
-  neqValue: String
-  eqField: EntityFieldCreateOneInput
-  neqField: EntityFieldCreateOneInput
+  value: String
+  not: Boolean
+  comparator: ComparatorType
+  field: EntityFieldCreateOneInput
 }
 
 """An edge in a connection."""
@@ -1056,10 +1056,12 @@ enum ActionRequirementPayloadInputValueOrderByInput {
   id_DESC
   key_ASC
   key_DESC
-  eqValue_ASC
-  eqValue_DESC
-  neqValue_ASC
-  neqValue_DESC
+  value_ASC
+  value_DESC
+  not_ASC
+  not_DESC
+  comparator_ASC
+  comparator_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1069,8 +1071,9 @@ enum ActionRequirementPayloadInputValueOrderByInput {
 type ActionRequirementPayloadInputValuePreviousValues {
   id: ID!
   key: String!
-  eqValue: String
-  neqValue: String
+  value: String
+  not: Boolean!
+  comparator: ComparatorType!
 }
 
 input ActionRequirementPayloadInputValueScalarWhereInput {
@@ -1162,86 +1165,60 @@ input ActionRequirementPayloadInputValueScalarWhereInput {
 
   """All values not ending with the given string."""
   key_not_ends_with: String
-  eqValue: String
+  value: String
 
   """All values that are not equal to given value."""
-  eqValue_not: String
+  value_not: String
 
   """All values that are contained in given list."""
-  eqValue_in: [String!]
+  value_in: [String!]
 
   """All values that are not contained in given list."""
-  eqValue_not_in: [String!]
+  value_not_in: [String!]
 
   """All values less than the given value."""
-  eqValue_lt: String
+  value_lt: String
 
   """All values less than or equal the given value."""
-  eqValue_lte: String
+  value_lte: String
 
   """All values greater than the given value."""
-  eqValue_gt: String
+  value_gt: String
 
   """All values greater than or equal the given value."""
-  eqValue_gte: String
+  value_gte: String
 
   """All values containing the given string."""
-  eqValue_contains: String
+  value_contains: String
 
   """All values not containing the given string."""
-  eqValue_not_contains: String
+  value_not_contains: String
 
   """All values starting with the given string."""
-  eqValue_starts_with: String
+  value_starts_with: String
 
   """All values not starting with the given string."""
-  eqValue_not_starts_with: String
+  value_not_starts_with: String
 
   """All values ending with the given string."""
-  eqValue_ends_with: String
+  value_ends_with: String
 
   """All values not ending with the given string."""
-  eqValue_not_ends_with: String
-  neqValue: String
+  value_not_ends_with: String
+  not: Boolean
 
   """All values that are not equal to given value."""
-  neqValue_not: String
+  not_not: Boolean
+  comparator: ComparatorType
+
+  """All values that are not equal to given value."""
+  comparator_not: ComparatorType
 
   """All values that are contained in given list."""
-  neqValue_in: [String!]
+  comparator_in: [ComparatorType!]
 
   """All values that are not contained in given list."""
-  neqValue_not_in: [String!]
-
-  """All values less than the given value."""
-  neqValue_lt: String
-
-  """All values less than or equal the given value."""
-  neqValue_lte: String
-
-  """All values greater than the given value."""
-  neqValue_gt: String
-
-  """All values greater than or equal the given value."""
-  neqValue_gte: String
-
-  """All values containing the given string."""
-  neqValue_contains: String
-
-  """All values not containing the given string."""
-  neqValue_not_contains: String
-
-  """All values starting with the given string."""
-  neqValue_starts_with: String
-
-  """All values not starting with the given string."""
-  neqValue_not_starts_with: String
-
-  """All values ending with the given string."""
-  neqValue_ends_with: String
-
-  """All values not ending with the given string."""
-  neqValue_not_ends_with: String
+  comparator_not_in: [ComparatorType!]
 }
 
 type ActionRequirementPayloadInputValueSubscriptionPayload {
@@ -1285,23 +1262,25 @@ input ActionRequirementPayloadInputValueSubscriptionWhereInput {
 
 input ActionRequirementPayloadInputValueUpdateInput {
   key: String
-  eqValue: String
-  neqValue: String
-  eqField: EntityFieldUpdateOneInput
-  neqField: EntityFieldUpdateOneInput
+  value: String
+  not: Boolean
+  comparator: ComparatorType
+  field: EntityFieldUpdateOneInput
   payload: ActionRequirementPayloadUpdateOneRequiredWithoutRequiredValuesInput
 }
 
 input ActionRequirementPayloadInputValueUpdateManyDataInput {
   key: String
-  eqValue: String
-  neqValue: String
+  value: String
+  not: Boolean
+  comparator: ComparatorType
 }
 
 input ActionRequirementPayloadInputValueUpdateManyMutationInput {
   key: String
-  eqValue: String
-  neqValue: String
+  value: String
+  not: Boolean
+  comparator: ComparatorType
 }
 
 input ActionRequirementPayloadInputValueUpdateManyWithoutPayloadInput {
@@ -1322,10 +1301,10 @@ input ActionRequirementPayloadInputValueUpdateManyWithWhereNestedInput {
 
 input ActionRequirementPayloadInputValueUpdateWithoutPayloadDataInput {
   key: String
-  eqValue: String
-  neqValue: String
-  eqField: EntityFieldUpdateOneInput
-  neqField: EntityFieldUpdateOneInput
+  value: String
+  not: Boolean
+  comparator: ComparatorType
+  field: EntityFieldUpdateOneInput
 }
 
 input ActionRequirementPayloadInputValueUpdateWithWhereUniqueWithoutPayloadInput {
@@ -1428,88 +1407,61 @@ input ActionRequirementPayloadInputValueWhereInput {
 
   """All values not ending with the given string."""
   key_not_ends_with: String
-  eqValue: String
+  value: String
 
   """All values that are not equal to given value."""
-  eqValue_not: String
+  value_not: String
 
   """All values that are contained in given list."""
-  eqValue_in: [String!]
+  value_in: [String!]
 
   """All values that are not contained in given list."""
-  eqValue_not_in: [String!]
+  value_not_in: [String!]
 
   """All values less than the given value."""
-  eqValue_lt: String
+  value_lt: String
 
   """All values less than or equal the given value."""
-  eqValue_lte: String
+  value_lte: String
 
   """All values greater than the given value."""
-  eqValue_gt: String
+  value_gt: String
 
   """All values greater than or equal the given value."""
-  eqValue_gte: String
+  value_gte: String
 
   """All values containing the given string."""
-  eqValue_contains: String
+  value_contains: String
 
   """All values not containing the given string."""
-  eqValue_not_contains: String
+  value_not_contains: String
 
   """All values starting with the given string."""
-  eqValue_starts_with: String
+  value_starts_with: String
 
   """All values not starting with the given string."""
-  eqValue_not_starts_with: String
+  value_not_starts_with: String
 
   """All values ending with the given string."""
-  eqValue_ends_with: String
+  value_ends_with: String
 
   """All values not ending with the given string."""
-  eqValue_not_ends_with: String
-  neqValue: String
+  value_not_ends_with: String
+  not: Boolean
 
   """All values that are not equal to given value."""
-  neqValue_not: String
+  not_not: Boolean
+  comparator: ComparatorType
+
+  """All values that are not equal to given value."""
+  comparator_not: ComparatorType
 
   """All values that are contained in given list."""
-  neqValue_in: [String!]
+  comparator_in: [ComparatorType!]
 
   """All values that are not contained in given list."""
-  neqValue_not_in: [String!]
-
-  """All values less than the given value."""
-  neqValue_lt: String
-
-  """All values less than or equal the given value."""
-  neqValue_lte: String
-
-  """All values greater than the given value."""
-  neqValue_gt: String
-
-  """All values greater than or equal the given value."""
-  neqValue_gte: String
-
-  """All values containing the given string."""
-  neqValue_contains: String
-
-  """All values not containing the given string."""
-  neqValue_not_contains: String
-
-  """All values starting with the given string."""
-  neqValue_starts_with: String
-
-  """All values not starting with the given string."""
-  neqValue_not_starts_with: String
-
-  """All values ending with the given string."""
-  neqValue_ends_with: String
-
-  """All values not ending with the given string."""
-  neqValue_not_ends_with: String
-  eqField: EntityFieldWhereInput
-  neqField: EntityFieldWhereInput
+  comparator_not_in: [ComparatorType!]
+  field: EntityFieldWhereInput
   payload: ActionRequirementPayloadWhereInput
 }
 
@@ -2431,6 +2383,13 @@ type AggregateUser {
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+enum ComparatorType {
+  EQUAL_TO
+  GREATER_THEN
+  LESS_THEN
+  ELEMENT_OF
 }
 
 scalar DateTime
@@ -7495,11 +7454,11 @@ type Mutation {
   createAction(data: ActionCreateInput!): Action!
   createActionPayload(data: ActionPayloadCreateInput!): ActionPayload!
   createActionRequirement(data: ActionRequirementCreateInput!): ActionRequirement!
+  createEntityField(data: EntityFieldCreateInput!): EntityField!
   createActionPayloadInputValue(data: ActionPayloadInputValueCreateInput!): ActionPayloadInputValue!
   createEntityInstance(data: EntityInstanceCreateInput!): EntityInstance!
   createEntityState(data: EntityStateCreateInput!): EntityState!
   createEntityInstanceField(data: EntityInstanceFieldCreateInput!): EntityInstanceField!
-  createEntityField(data: EntityFieldCreateInput!): EntityField!
   createEntity(data: EntityCreateInput!): Entity!
   updateEntityStateTransition(data: EntityStateTransitionUpdateInput!, where: EntityStateTransitionWhereUniqueInput!): EntityStateTransition
   updateHint(data: HintUpdateInput!, where: HintWhereUniqueInput!): Hint
@@ -7514,11 +7473,11 @@ type Mutation {
   updateAction(data: ActionUpdateInput!, where: ActionWhereUniqueInput!): Action
   updateActionPayload(data: ActionPayloadUpdateInput!, where: ActionPayloadWhereUniqueInput!): ActionPayload
   updateActionRequirement(data: ActionRequirementUpdateInput!, where: ActionRequirementWhereUniqueInput!): ActionRequirement
+  updateEntityField(data: EntityFieldUpdateInput!, where: EntityFieldWhereUniqueInput!): EntityField
   updateActionPayloadInputValue(data: ActionPayloadInputValueUpdateInput!, where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   updateEntityInstance(data: EntityInstanceUpdateInput!, where: EntityInstanceWhereUniqueInput!): EntityInstance
   updateEntityState(data: EntityStateUpdateInput!, where: EntityStateWhereUniqueInput!): EntityState
   updateEntityInstanceField(data: EntityInstanceFieldUpdateInput!, where: EntityInstanceFieldWhereUniqueInput!): EntityInstanceField
-  updateEntityField(data: EntityFieldUpdateInput!, where: EntityFieldWhereUniqueInput!): EntityField
   updateEntity(data: EntityUpdateInput!, where: EntityWhereUniqueInput!): Entity
   deleteEntityStateTransition(where: EntityStateTransitionWhereUniqueInput!): EntityStateTransition
   deleteHint(where: HintWhereUniqueInput!): Hint
@@ -7533,11 +7492,11 @@ type Mutation {
   deleteAction(where: ActionWhereUniqueInput!): Action
   deleteActionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
   deleteActionRequirement(where: ActionRequirementWhereUniqueInput!): ActionRequirement
+  deleteEntityField(where: EntityFieldWhereUniqueInput!): EntityField
   deleteActionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   deleteEntityInstance(where: EntityInstanceWhereUniqueInput!): EntityInstance
   deleteEntityState(where: EntityStateWhereUniqueInput!): EntityState
   deleteEntityInstanceField(where: EntityInstanceFieldWhereUniqueInput!): EntityInstanceField
-  deleteEntityField(where: EntityFieldWhereUniqueInput!): EntityField
   deleteEntity(where: EntityWhereUniqueInput!): Entity
   upsertEntityStateTransition(where: EntityStateTransitionWhereUniqueInput!, create: EntityStateTransitionCreateInput!, update: EntityStateTransitionUpdateInput!): EntityStateTransition!
   upsertHint(where: HintWhereUniqueInput!, create: HintCreateInput!, update: HintUpdateInput!): Hint!
@@ -7552,11 +7511,11 @@ type Mutation {
   upsertAction(where: ActionWhereUniqueInput!, create: ActionCreateInput!, update: ActionUpdateInput!): Action!
   upsertActionPayload(where: ActionPayloadWhereUniqueInput!, create: ActionPayloadCreateInput!, update: ActionPayloadUpdateInput!): ActionPayload!
   upsertActionRequirement(where: ActionRequirementWhereUniqueInput!, create: ActionRequirementCreateInput!, update: ActionRequirementUpdateInput!): ActionRequirement!
+  upsertEntityField(where: EntityFieldWhereUniqueInput!, create: EntityFieldCreateInput!, update: EntityFieldUpdateInput!): EntityField!
   upsertActionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!, create: ActionPayloadInputValueCreateInput!, update: ActionPayloadInputValueUpdateInput!): ActionPayloadInputValue!
   upsertEntityInstance(where: EntityInstanceWhereUniqueInput!, create: EntityInstanceCreateInput!, update: EntityInstanceUpdateInput!): EntityInstance!
   upsertEntityState(where: EntityStateWhereUniqueInput!, create: EntityStateCreateInput!, update: EntityStateUpdateInput!): EntityState!
   upsertEntityInstanceField(where: EntityInstanceFieldWhereUniqueInput!, create: EntityInstanceFieldCreateInput!, update: EntityInstanceFieldUpdateInput!): EntityInstanceField!
-  upsertEntityField(where: EntityFieldWhereUniqueInput!, create: EntityFieldCreateInput!, update: EntityFieldUpdateInput!): EntityField!
   upsertEntity(where: EntityWhereUniqueInput!, create: EntityCreateInput!, update: EntityUpdateInput!): Entity!
   updateManyHints(data: HintUpdateManyMutationInput!, where: HintWhereInput): BatchPayload!
   updateManyActionRequirementPayloadInputValues(data: ActionRequirementPayloadInputValueUpdateManyMutationInput!, where: ActionRequirementPayloadInputValueWhereInput): BatchPayload!
@@ -7564,11 +7523,11 @@ type Mutation {
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyActions(data: ActionUpdateManyMutationInput!, where: ActionWhereInput): BatchPayload!
   updateManyActionRequirements(data: ActionRequirementUpdateManyMutationInput!, where: ActionRequirementWhereInput): BatchPayload!
+  updateManyEntityFields(data: EntityFieldUpdateManyMutationInput!, where: EntityFieldWhereInput): BatchPayload!
   updateManyActionPayloadInputValues(data: ActionPayloadInputValueUpdateManyMutationInput!, where: ActionPayloadInputValueWhereInput): BatchPayload!
   updateManyEntityInstances(data: EntityInstanceUpdateManyMutationInput!, where: EntityInstanceWhereInput): BatchPayload!
   updateManyEntityStates(data: EntityStateUpdateManyMutationInput!, where: EntityStateWhereInput): BatchPayload!
   updateManyEntityInstanceFields(data: EntityInstanceFieldUpdateManyMutationInput!, where: EntityInstanceFieldWhereInput): BatchPayload!
-  updateManyEntityFields(data: EntityFieldUpdateManyMutationInput!, where: EntityFieldWhereInput): BatchPayload!
   updateManyEntities(data: EntityUpdateManyMutationInput!, where: EntityWhereInput): BatchPayload!
   deleteManyEntityStateTransitions(where: EntityStateTransitionWhereInput): BatchPayload!
   deleteManyHints(where: HintWhereInput): BatchPayload!
@@ -7583,11 +7542,11 @@ type Mutation {
   deleteManyActions(where: ActionWhereInput): BatchPayload!
   deleteManyActionPayloads(where: ActionPayloadWhereInput): BatchPayload!
   deleteManyActionRequirements(where: ActionRequirementWhereInput): BatchPayload!
+  deleteManyEntityFields(where: EntityFieldWhereInput): BatchPayload!
   deleteManyActionPayloadInputValues(where: ActionPayloadInputValueWhereInput): BatchPayload!
   deleteManyEntityInstances(where: EntityInstanceWhereInput): BatchPayload!
   deleteManyEntityStates(where: EntityStateWhereInput): BatchPayload!
   deleteManyEntityInstanceFields(where: EntityInstanceFieldWhereInput): BatchPayload!
-  deleteManyEntityFields(where: EntityFieldWhereInput): BatchPayload!
   deleteManyEntities(where: EntityWhereInput): BatchPayload!
 }
 
@@ -7637,11 +7596,11 @@ type Query {
   actions(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Action]!
   actionPayloads(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionPayload]!
   actionRequirements(where: ActionRequirementWhereInput, orderBy: ActionRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirement]!
+  entityFields(where: EntityFieldWhereInput, orderBy: EntityFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityField]!
   actionPayloadInputValues(where: ActionPayloadInputValueWhereInput, orderBy: ActionPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionPayloadInputValue]!
   entityInstances(where: EntityInstanceWhereInput, orderBy: EntityInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstance]!
   entityStates(where: EntityStateWhereInput, orderBy: EntityStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityState]!
   entityInstanceFields(where: EntityInstanceFieldWhereInput, orderBy: EntityInstanceFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceField]!
-  entityFields(where: EntityFieldWhereInput, orderBy: EntityFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityField]!
   entities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity]!
   entityStateTransition(where: EntityStateTransitionWhereUniqueInput!): EntityStateTransition
   hint(where: HintWhereUniqueInput!): Hint
@@ -7656,11 +7615,11 @@ type Query {
   action(where: ActionWhereUniqueInput!): Action
   actionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
   actionRequirement(where: ActionRequirementWhereUniqueInput!): ActionRequirement
+  entityField(where: EntityFieldWhereUniqueInput!): EntityField
   actionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   entityInstance(where: EntityInstanceWhereUniqueInput!): EntityInstance
   entityState(where: EntityStateWhereUniqueInput!): EntityState
   entityInstanceField(where: EntityInstanceFieldWhereUniqueInput!): EntityInstanceField
-  entityField(where: EntityFieldWhereUniqueInput!): EntityField
   entity(where: EntityWhereUniqueInput!): Entity
   entityStateTransitionsConnection(where: EntityStateTransitionWhereInput, orderBy: EntityStateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityStateTransitionConnection!
   hintsConnection(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HintConnection!
@@ -7675,11 +7634,11 @@ type Query {
   actionsConnection(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionConnection!
   actionPayloadsConnection(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionPayloadConnection!
   actionRequirementsConnection(where: ActionRequirementWhereInput, orderBy: ActionRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementConnection!
+  entityFieldsConnection(where: EntityFieldWhereInput, orderBy: EntityFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityFieldConnection!
   actionPayloadInputValuesConnection(where: ActionPayloadInputValueWhereInput, orderBy: ActionPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionPayloadInputValueConnection!
   entityInstancesConnection(where: EntityInstanceWhereInput, orderBy: EntityInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityInstanceConnection!
   entityStatesConnection(where: EntityStateWhereInput, orderBy: EntityStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityStateConnection!
   entityInstanceFieldsConnection(where: EntityInstanceFieldWhereInput, orderBy: EntityInstanceFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityInstanceFieldConnection!
-  entityFieldsConnection(where: EntityFieldWhereInput, orderBy: EntityFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityFieldConnection!
   entitiesConnection(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityConnection!
 
   """Fetches an object given its ID"""
@@ -7703,11 +7662,11 @@ type Subscription {
   action(where: ActionSubscriptionWhereInput): ActionSubscriptionPayload
   actionPayload(where: ActionPayloadSubscriptionWhereInput): ActionPayloadSubscriptionPayload
   actionRequirement(where: ActionRequirementSubscriptionWhereInput): ActionRequirementSubscriptionPayload
+  entityField(where: EntityFieldSubscriptionWhereInput): EntityFieldSubscriptionPayload
   actionPayloadInputValue(where: ActionPayloadInputValueSubscriptionWhereInput): ActionPayloadInputValueSubscriptionPayload
   entityInstance(where: EntityInstanceSubscriptionWhereInput): EntityInstanceSubscriptionPayload
   entityState(where: EntityStateSubscriptionWhereInput): EntityStateSubscriptionPayload
   entityInstanceField(where: EntityInstanceFieldSubscriptionWhereInput): EntityInstanceFieldSubscriptionPayload
-  entityField(where: EntityFieldSubscriptionWhereInput): EntityFieldSubscriptionPayload
   entity(where: EntitySubscriptionWhereInput): EntitySubscriptionPayload
 }
 

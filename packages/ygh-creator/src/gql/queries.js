@@ -52,12 +52,10 @@ export const ENTITIES = gql`
               requiredValues {
                 id
                 key
-                eqValue
-                neqValue
-                eqField {
-                  id
-                }
-                neqField {
+                not
+                comparator
+                value
+                field {
                   id
                 }
               }

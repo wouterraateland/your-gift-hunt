@@ -20,3 +20,18 @@ export const getInputValue = fieldName => instance =>
     S.map(f => f.value),
     S.map(JSON.parse)
   ])(instance)
+
+export const toInputType = type => {
+  switch (type) {
+    case "STRING":
+      return "textarea"
+    case "NUMBER":
+      return "number"
+    case "GEOPOINT":
+      return "geopoint"
+    case "TIMESTAMP":
+      return "datetime-local"
+    default:
+      return type
+  }
+}

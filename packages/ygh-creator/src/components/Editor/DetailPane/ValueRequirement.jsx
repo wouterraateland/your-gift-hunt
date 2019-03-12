@@ -4,17 +4,7 @@ import EntitiesContext from "contexts/Entities"
 
 import { InputType } from "your-gift-hunt/ui"
 import ListItem from "./ListItem"
-
-const toInputType = type => {
-  switch (type) {
-    case "STRING":
-      return "text"
-    case "NUMBER":
-      return "number"
-    default:
-      return type
-  }
-}
+import _ from "utils"
 
 const FieldLabel = ({ fieldId }) => {
   const { getEntityFieldById } = useContext(EntitiesContext)
@@ -25,7 +15,7 @@ const FieldLabel = ({ fieldId }) => {
     <strong>
       {label}
       <InputType
-        type={toInputType(type)}
+        type={_.toInputType(type)}
         isMulti={isMulti}
         isSecret={isSecret}
       />
@@ -33,15 +23,27 @@ const FieldLabel = ({ fieldId }) => {
   )
 }
 
+const getVerb = (comparator, not) => {
+  switch (comparator) {
+    case "EQUAL_TO":
+      return `${not ? "not " : ""}equal to`
+    case "ELEMENT_OF":
+      return `${not ? "not " : ""}an element of`
+    case "GREATER_THEN":
+      return not ? "less then or equal to" : "greater then"
+    case "LESS_THEN":
+      return not ? "greater then or equal to" : "less then"
+    default:
+      return `${not} ${comparator}`
+  }
+}
+
 const ValueRequirement = ({ requiredValues }) =>
   requiredValues.length ? (
-    requiredValues.map(({ key, eqValue, neqValue, eqField, neqField }, i) => (
+    requiredValues.map(({ key, comparator, not, value, field }, i) => (
       <ListItem key={i}>
-        Input "{key}" is {(neqValue || neqField) && <u>not</u>} equal to{" "}
-        {eqValue}
-        {neqValue}
-        {eqField && <FieldLabel fieldId={eqField.id} />}
-        {neqField && <FieldLabel fieldId={neqField.id} />}
+        Input "{key}" {getVerb(comparator, not)} {value}
+        {field && <FieldLabel fieldId={field.id} />}
       </ListItem>
     ))
   ) : (

@@ -5,20 +5,7 @@ import useDebounce from "hooks/useDebounce"
 
 import { Paper, Input, Field } from "your-gift-hunt/ui"
 
-const toInputType = type => {
-  switch (type) {
-    case "STRING":
-      return "textarea"
-    case "NUMBER":
-      return "number"
-    case "GEOPOINT":
-      return "geopoint"
-    case "TIMESTAMP":
-      return "datetime-local"
-    default:
-      return type
-  }
-}
+import _ from "utils"
 
 const EntityInstanceField = ({ id, value, field }) => {
   const [newValue, setNewValue] = useState(value ? JSON.parse(value) : null)
@@ -41,7 +28,7 @@ const EntityInstanceField = ({ id, value, field }) => {
       <Input
         block
         {...field}
-        type={toInputType(field.type)}
+        type={_.toInputType(field.type)}
         showType
         value={newValue}
         onChange={event => setNewValue(event.target.value)}

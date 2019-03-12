@@ -60,12 +60,10 @@ export const ENTITY_INSTANCE_FRAGMENT = gql`
               requiredValues {
                 id
                 key
-                eqValue
-                neqValue
-                eqField {
-                  id
-                }
-                neqField {
+                comparator
+                not
+                value
+                field {
                   id
                 }
               }
