@@ -1,5 +1,6 @@
 import { EDGE_TYPES } from "data"
 import React, { useContext, useState, useCallback } from "react"
+import styled from "styled-components"
 
 import GameContext from "contexts/Game"
 
@@ -11,6 +12,10 @@ import Transition from "components/Editor/Transition"
 
 import DefaultUnlockConditions from "./Default"
 import UnlockCondition from "./UnlockCondition"
+
+const VSpace = styled.div`
+  margin-bottom: 0.5em;
+`
 
 const EditableUnlockConditions = ({ node }) => {
   const {
@@ -97,6 +102,7 @@ const EditableUnlockConditions = ({ node }) => {
       ) : (
         <DefaultUnlockConditions />
       )}
+      <VSpace />
       <Options
         closeOnClick
         components={{

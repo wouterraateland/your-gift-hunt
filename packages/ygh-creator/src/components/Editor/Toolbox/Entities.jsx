@@ -35,6 +35,12 @@ const getEntitiesFilter = type => {
         !isObject && !isItem && !isTrigger
     case "object":
       return ({ isObject }) => isObject
+    case "item":
+      return ({ isItem, states }) =>
+        isItem &&
+        states.every(({ outgoingTransitions }) =>
+          outgoingTransitions.every(({ to }) => to)
+        )
     case "trigger":
       return ({ name, isTrigger }) => isTrigger && name !== "Start trigger"
     default:
@@ -96,7 +102,7 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
           key={entity.id}
           entity={entity}
           isAvailable={
-            selectedType !== "object" ||
+            !["object", "item"].includes(selectedType) ||
             !instances.some(instance => instance.entity.id === entity.id)
           }
           isPro={entity.name === "Plant pot"}

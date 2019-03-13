@@ -42,7 +42,7 @@ const ValueRequirement = ({ requiredValues }) =>
   requiredValues.length ? (
     requiredValues.map(({ key, comparator, not, value, field }, i) => (
       <ListItem key={i}>
-        Input "{key}" {getVerb(comparator, not)} {value}
+        Input "{key}" is {getVerb(comparator, not)} {value}
         {field && <FieldLabel fieldId={field.id} />}
       </ListItem>
     ))

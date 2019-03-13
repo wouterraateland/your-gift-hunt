@@ -33,7 +33,9 @@ const Ol = styled.ol`
     counter-increment: ol;
     display: block;
 
-    margin-bottom: 0.5em;
+    &:not(:last-child) {
+      margin-bottom: 0.5em;
+    }
   }
 
   li::before {
@@ -49,6 +51,14 @@ const Ol = styled.ol`
 
 const Em = styled.em`
   font-size: smaller;
+`
+
+const Placeholder = styled.p`
+  margin-bottom: 0;
+`
+
+const VSpace = styled.div`
+  margin-bottom: 0.5em;
 `
 
 const Hints = ({ id, defaultHints, customHints }) => {
@@ -133,7 +143,12 @@ const Hints = ({ id, defaultHints, customHints }) => {
       <Label>
         Hints{" "}
         {hasCustomHints ? (
-          <Button importance="tertiary" size="small" onClick={restoreDefaults}>
+          <Button
+            style={{ marginTop: "-.25em" }}
+            importance="tertiary"
+            size="small"
+            onClick={restoreDefaults}
+          >
             Restore defaults
           </Button>
         ) : (
@@ -173,19 +188,22 @@ const Hints = ({ id, defaultHints, customHints }) => {
           )}
         </Ol>
       ) : (
-        <p>
+        <Placeholder>
           <Em>None</Em>
-        </p>
+        </Placeholder>
       )}
       {hasCustomHints && (
-        <Button
-          size="small"
-          importance="primary"
-          color="accent"
-          onClick={addHint}
-        >
-          + Add hint
-        </Button>
+        <>
+          <VSpace />
+          <Button
+            size="small"
+            importance="primary"
+            color="accent"
+            onClick={addHint}
+          >
+            + Add hint
+          </Button>
+        </>
       )}
     </HintsContainer>
   )

@@ -8,7 +8,10 @@ import Transition from "components/Editor/Transition"
 
 const UnlockConditionContainer = styled.div`
   display: block;
-  margin-bottom: 0.5em;
+
+  &:not(:first-child) {
+    margin-top: 0.5em;
+  }
 
   &::before {
     content: ${props =>
