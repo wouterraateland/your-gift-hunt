@@ -20,13 +20,16 @@ const Label = styled.label`
       border: 0.1em solid ${transparentize(0.5, props.theme.color.text)};
       border-radius: ${props => props.theme.borderRadius};
 
-      &:hover {
-        border-color: #0004;
-      }
+      ${!props.disabled &&
+        css`
+          &:hover {
+            border-color: #0004;
+          }
 
-      &:focus-within {
-        border-color: #39f;
-      }
+          &:focus-within {
+            border-color: #39f;
+          }
+        `}
     `};
 
   line-height: 1;

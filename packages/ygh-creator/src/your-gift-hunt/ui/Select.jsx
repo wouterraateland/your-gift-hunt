@@ -13,6 +13,20 @@ const Label = styled.label`
   margin-top: 1em;
 `
 
+const SELECT_STYLES = {
+  control: base => ({ ...base, borderWidth: ".1em", boxShadow: "none" }),
+  dropdownIndicator: base => ({ ...base, cursor: "pointer" }),
+  group: base => ({ ...base, backgroundColor: "#f39" }),
+  indicatorsContainer: base => ({ ...base, backgroundColor: "#0001" }),
+  indicatorSeparator: () => ({}),
+  menu: base => ({
+    ...base,
+    border: ".1em solid #39f",
+    boxShadow: "0 .5em 1.5em -.5em #0004"
+  })
+  // option: base => ({ ...base, backgroundColor: "#f93" }),
+}
+
 const StyledSelect = styled(Select)`
   width: ${props => (props.block ? "100%" : "15em")};
 `
@@ -31,6 +45,7 @@ const SelectWithLabel = ({
     <StyledSelect
       {...otherProps}
       options={options}
+      styles={SELECT_STYLES}
       value={
         otherProps.isMulti
           ? options.filter(option => value.includes(option.value))

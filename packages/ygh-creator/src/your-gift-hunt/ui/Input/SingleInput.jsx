@@ -38,11 +38,15 @@ const Input = styled.input`
   }
 
   ${props =>
-    props.block &&
-    css`
-      width: 100%;
-      display: block;
-    `}
+    props.isSelect
+      ? css`
+          width: 1em;
+        `
+      : props.block &&
+        css`
+          width: 100%;
+          display: block;
+        `}
 `
 
 Input.displayName = "Input"

@@ -46,6 +46,7 @@ const OptionsContainer = styled(Paper)`
 
   min-width: 21em;
   max-height: 15em;
+  padding: 0.25em 0;
   border: 0.1em solid #39f;
 
   line-height: 1.3;
