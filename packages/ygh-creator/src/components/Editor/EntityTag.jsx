@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import EntityTypeIcon from "./EntityTypeIcon"
 
-const InstanceTag = styled.span`
+const EntityTag = styled.span`
   display: inline-block;
   padding: 0.1em 0.5em;
 
@@ -12,8 +12,8 @@ const InstanceTag = styled.span`
   background-color: ${props => props.theme.color.accent};
 `
 
-export default ({ name, entity }) => (
-  <InstanceTag>
-    <EntityTypeIcon {...entity} /> {name}
-  </InstanceTag>
+export default ({ entity, name }) => (
+  <EntityTag>
+    <EntityTypeIcon {...entity} /> {name || entity.name}
+  </EntityTag>
 )

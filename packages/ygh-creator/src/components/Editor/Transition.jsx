@@ -2,8 +2,7 @@ import { NODE_TYPES } from "data"
 import React from "react"
 import styled from "styled-components"
 
-import InstanceTag from "../InstanceTag"
-import ClickableStateTag from "./ClickableStateTag"
+import NodeTag from "./NodeTag"
 
 const Arrow = styled.span`
   margin: 0 0.5em;
@@ -12,15 +11,14 @@ const Arrow = styled.span`
   color: #f93;
 `
 
-const Transition = ({ withEntity, from, to }) =>
+const Transition = ({ from, to }) =>
   from.type === NODE_TYPES.ENTRY ? (
     "Game starts"
   ) : (
     <>
-      {withEntity && <InstanceTag {...from.instance} />}
-      <ClickableStateTag {...from} />
+      <NodeTag node={from} showEntity />
       <Arrow>&rarr;</Arrow>
-      <ClickableStateTag {...to} />
+      <NodeTag node={to} />
     </>
   )
 

@@ -32,7 +32,7 @@ const StateTag = styled.span`
   color: #fff;
 `
 
-export default ({ type, ...otherProps }) => {
+export default ({ type, name }) => {
   switch (type) {
     case NODE_TYPES.ENTRY:
       return (
@@ -49,6 +49,6 @@ export default ({ type, ...otherProps }) => {
         </SpecialTag>
       )
     default:
-      return <StateTag {...otherProps} />
+      return <StateTag>{name}</StateTag>
   }
 }

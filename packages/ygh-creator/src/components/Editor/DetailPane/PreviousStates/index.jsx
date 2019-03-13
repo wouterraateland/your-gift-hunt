@@ -6,10 +6,10 @@ import EntitiesContext from "contexts/Entities"
 
 import useAsync from "hooks/useAsync"
 
-import { Paper, Button, Message } from "your-gift-hunt/ui"
-import Options from "./Options"
-import ClickableStateTag from "./ClickableStateTag"
-import StateTag from "../StateTag"
+import { Button, Message, Options } from "your-gift-hunt/ui"
+import NodeTag from "components/Editor/NodeTag"
+import StateTag from "components/Editor/StateTag"
+import Section from "components/Editor/DetailPane/Section"
 
 const Em = styled.em`
   opacity: 0.5;
@@ -24,7 +24,7 @@ const StateTagList = ({ nodes, connector }) =>
     nodes.map((node, i) => (
       <Fragment key={i}>
         {i !== 0 && connector}
-        <ClickableStateTag {...node} />
+        <NodeTag node={node} />
       </Fragment>
     ))
   ) : (
@@ -52,7 +52,7 @@ const EditablePrevStates = ({ node, prevNodes, prevStates }) => {
       <Options
         closeOnClick
         components={{
-          Option: ({ data }) => <StateTag>{data.name}</StateTag>
+          Option: ({ data }) => <StateTag name={data.name} />
         }}
         options={options}
         onClose={onOptionsClose}
@@ -87,21 +87,16 @@ const PreviousStates = ({ node }) => {
   )
 
   return prevStates.length ? (
-    <Paper>
-      <Paper.Section>
-        <Paper.Title size={3}>
-          Previous state{prevNodes.length > 1 && "s"}
-        </Paper.Title>
-        <StateTagList nodes={prevNodes} connector={" or "} />
-        {prevNodes.length < prevStates.length && (
-          <EditablePrevStates
-            node={node}
-            prevNodes={prevNodes}
-            prevStates={prevStates}
-          />
-        )}
-      </Paper.Section>
-    </Paper>
+    <Section title="Previous states">
+      <StateTagList nodes={prevNodes} connector={" or "} />
+      {prevNodes.length < prevStates.length && (
+        <EditablePrevStates
+          node={node}
+          prevNodes={prevNodes}
+          prevStates={prevStates}
+        />
+      )}
+    </Section>
   ) : null
 }
 

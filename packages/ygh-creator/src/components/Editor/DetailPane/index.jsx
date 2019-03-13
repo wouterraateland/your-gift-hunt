@@ -4,12 +4,12 @@ import GameContext from "contexts/Game"
 import InspectorContext from "contexts/Inspector"
 
 import Container from "./Container"
-import InstancePreview from "./InstancePreview"
+import Preview from "./Preview"
 import Meta from "./Meta"
-import Fields from "./Fields"
+import Properties from "./Properties"
 import PreviousStates from "./PreviousStates"
 import UnlockConditions from "./UnlockConditions"
-import OutgoingTransitions from "./OutgoingTransitions"
+import Transitions from "./Transitions"
 import Delete from "./Delete"
 
 import CloseButton from "./CloseButton"
@@ -39,12 +39,12 @@ const DetailPane = forwardRef((_, ref) => {
     >
       {!!node && (
         <>
-          <InstancePreview node={node} isOpen={isOpen} />
+          <Preview node={node} isOpen={isOpen} />
           <Meta node={node} isOpen={isOpen} />
-          <Fields node={node} isOpen={isOpen} />
+          <Properties node={node} isOpen={isOpen} />
           <PreviousStates node={node} isOpen={isOpen} />
           <UnlockConditions node={node} isOpen={isOpen} />
-          <OutgoingTransitions node={node} isOpen={isOpen} />
+          <Transitions node={node} isOpen={isOpen} />
           <Delete node={node} isOpen={isOpen} />
         </>
       )}

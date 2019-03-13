@@ -1,52 +1,16 @@
-import { NODE_TYPES, EDGE_TYPES } from "data"
+import { EDGE_TYPES } from "data"
 import React, { useContext, useState, useCallback } from "react"
-import styled from "styled-components"
 
 import GameContext from "contexts/Game"
 
 import useAsync from "hooks/useAsync"
 
-import { Paper, ActionButton, Button, Message } from "your-gift-hunt/ui"
-import { Bin } from "your-gift-hunt/icons"
+import { Button, Message, Options } from "your-gift-hunt/ui"
 
-import Options from "./Options"
+import Transition from "components/Editor/Transition"
 
-import Transition from "./Transition"
-
-const UnlockConditionContainer = styled.div`
-  display: block;
-  margin-bottom: .5em;
-
-  &::before {
-    content: ${props =>
-      props.type === EDGE_TYPES.ENTRY ? '"\u2022"' : '"\u2192"'};
-
-    margin-right: .5em;
-
-    font-weight: bold;
-
-    color: #39f;
-  }
-}),
-`
-
-const UnlockCondition = ({ data, isDeletable = true, onDeleteClick }) => (
-  <UnlockConditionContainer type={data.from.type}>
-    <Transition withEntity {...data} />
-    {isDeletable && (
-      <ActionButton color="error" onClick={onDeleteClick}>
-        <Bin />
-      </ActionButton>
-    )}
-  </UnlockConditionContainer>
-)
-
-const DefaultUnlock = () => (
-  <UnlockCondition
-    data={{ from: { type: NODE_TYPES.ENTRY } }}
-    isDeletable={false}
-  />
-)
+import DefaultUnlockConditions from "./Default"
+import UnlockCondition from "./UnlockCondition"
 
 const EditableUnlockConditions = ({ node }) => {
   const {
@@ -131,12 +95,12 @@ const EditableUnlockConditions = ({ node }) => {
           />
         ))
       ) : (
-        <DefaultUnlock />
+        <DefaultUnlockConditions />
       )}
       <Options
         closeOnClick
         components={{
-          Option: ({ data }) => <Transition withEntity {...data} />
+          Option: ({ data }) => <Transition {...data} />
         }}
         options={options}
         onClose={onOptionsClose}
@@ -157,23 +121,4 @@ const EditableUnlockConditions = ({ node }) => {
   )
 }
 
-const UnlockConditions = ({ node }) => (
-  <Paper>
-    <Paper.Section>
-      <Paper.Title size={3}>Unlocked when</Paper.Title>
-      {node.instance.entity.isObject ? (
-        <DefaultUnlock />
-      ) : (
-        <EditableUnlockConditions node={node} />
-      )}
-    </Paper.Section>
-  </Paper>
-)
-
-const MaybeUnlockConditions = ({ node }) => {
-  const { isUnlockable } = useContext(GameContext)
-
-  return isUnlockable(node, true) && <UnlockConditions node={node} />
-}
-
-export default MaybeUnlockConditions
+export default EditableUnlockConditions

@@ -6,11 +6,9 @@ import GameContext from "contexts/Game"
 
 import useAsync from "hooks/useAsync"
 
-import { ActionButton, Button, Message } from "your-gift-hunt/ui"
+import { ActionButton, Button, Message, Options } from "your-gift-hunt/ui"
 import { Bin } from "your-gift-hunt/icons"
-import NodeTag from "../NodeTag"
-import ClickableNodeTag from "./ClickableNodeTag"
-import Options from "./Options"
+import NodeTag from "components/Editor/NodeTag"
 
 const UnlockContainer = styled.div`
   display: block;
@@ -34,7 +32,7 @@ const Em = styled.em`
 
 const Unlock = ({ data, isDeletable = true, onDeleteClick }) => (
   <UnlockContainer>
-    <ClickableNodeTag {...data} />
+    <NodeTag node={data} showEntity />
     {isDeletable && (
       <ActionButton color="error" onClick={onDeleteClick}>
         <Bin />
@@ -105,7 +103,9 @@ const Unlocks = ({ from, to }) => {
       <Options
         closeOnClick
         components={{
-          Option: ({ data }) => <NodeTag {...data} />
+          Option: ({ data }) => (
+            <NodeTag node={data} showEntity isClickable={false} />
+          )
         }}
         options={options.filter(
           ({ id, instance }) =>

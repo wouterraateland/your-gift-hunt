@@ -3,7 +3,7 @@ import styled, { css } from "styled-components"
 
 import useClickOutside from "hooks/useClickOutside"
 
-import { Paper } from "your-gift-hunt/ui"
+import Paper from "./Paper"
 
 const OptionsLocation = styled.div`
   position: relative;
@@ -35,7 +35,7 @@ const OptionsLocation = styled.div`
     `}
 `
 
-const OptionsContainer = styled(Paper)`
+const OptionsContainer = styled(Paper.Container)`
   display: ${props => (props.isVisible ? "block" : "none")};
 
   position: absolute;

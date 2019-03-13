@@ -4,15 +4,8 @@ import React, { useContext } from "react"
 import GameContext from "contexts/Game"
 import EntitiesContext from "contexts/Entities"
 
-import { Paper } from "your-gift-hunt/ui"
+import Section from "components/Editor/DetailPane/Section"
 import TransitionWithRequirements from "./TransitionWithRequirements"
-
-const TransitionList = ({ transitions }) =>
-  transitions.map(transition => (
-    <Paper.Section key={[transition.from.id, transition.to.id]}>
-      <TransitionWithRequirements {...transition} />
-    </Paper.Section>
-  ))
 
 const OutgoingTransitions = ({ node }) => {
   const { getNodeById } = useContext(GameContext)
@@ -46,12 +39,14 @@ const OutgoingTransitions = ({ node }) => {
     }))
 
   return outgoingTransitions.length ? (
-    <>
-      <h4>Transitions</h4>
-      <Paper>
-        <TransitionList transitions={outgoingTransitions} />
-      </Paper>
-    </>
+    <Section title="Transitions" wrapChildren>
+      {outgoingTransitions.map(transition => (
+        <TransitionWithRequirements
+          key={[transition.from.id, transition.to.id]}
+          {...transition}
+        />
+      ))}
+    </Section>
   ) : null
 }
 

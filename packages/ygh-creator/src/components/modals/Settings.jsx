@@ -21,7 +21,7 @@ import StatusMessage from "components/StatusMessage"
 import { accessOptions, PRIVACY, ACCESS_TYPES } from "../../data"
 import { GAME_COUNT_BY_SLUG } from "gql/queries"
 
-const StyledPaper = styled(Paper)`
+const StyledPaper = styled(Paper.Container)`
   width: 45em;
   max-width: calc(100% - 2em);
 `

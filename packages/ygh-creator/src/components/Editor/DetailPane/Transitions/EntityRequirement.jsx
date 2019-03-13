@@ -3,8 +3,8 @@ import React, { useContext } from "react"
 
 import GameContext from "contexts/Game"
 
+import NodeTag from "components/Editor/NodeTag"
 import ListItem from "./ListItem"
-import ClickableNodeTag from "./ClickableNodeTag"
 
 const EntityRequirement = ({ type, requiredEntity: { entity, state } }) => {
   const { nodes } = useContext(GameContext)
@@ -18,7 +18,8 @@ const EntityRequirement = ({ type, requiredEntity: { entity, state } }) => {
 
   return (
     <ListItem type={EDGE_TYPES.USE}>
-      {type === ACTION_TYPES.USE && "Used on"} <ClickableNodeTag {...node} />{" "}
+      {type === ACTION_TYPES.USE && "Used on"}{" "}
+      <NodeTag node={node} showEntity />{" "}
       {type === ACTION_TYPES.TARGET_OF_USE && "is used on this"}
     </ListItem>
   )

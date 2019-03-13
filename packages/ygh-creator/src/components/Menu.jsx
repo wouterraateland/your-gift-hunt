@@ -10,7 +10,7 @@ export const MenuItem = styled.div`
   cursor: pointer;
 
   display: block;
-  padding: 1em;
+  padding: 0.5em;
 
   text-decoration: none;
 
@@ -62,8 +62,10 @@ export const Menu = styled.div`
   top: calc(100% + 1em);
   z-index: 3;
 
-  width: 16em;
+  width: 12em;
+  padding: .25em 0;
 
+  border-radius: ${props => props.theme.borderRadius}
   box-shadow: 0 0 60em 60em #0000;
 
   background: #fff;

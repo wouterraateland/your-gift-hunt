@@ -7,7 +7,7 @@ import EntityInstancePreview from "../EntityInstancePreview"
 
 const Card = styled.div`
   cursor: pointer;
-  
+
   position: absolute;
 
   display: flex;
@@ -122,7 +122,7 @@ const InstanceCard = ({
       <InstanceName hasPreview={hasPreview}>
         <EntityTypeIcon {...entity} /> {instance.name}
       </InstanceName>
-      {state !== "default" && <StateTag>{state}</StateTag>}
+      {state !== "default" && <StateTag name={state} />}
       {featuredFieldValue && (
         <FeaturedFieldValue>
           {JSON.parse(featuredFieldValue)}

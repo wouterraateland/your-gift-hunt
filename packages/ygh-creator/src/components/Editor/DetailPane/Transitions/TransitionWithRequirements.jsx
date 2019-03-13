@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import Transition from "./Transition"
+import Transition from "components/Editor/Transition"
 import Unlocks from "./Unlocks"
 import ActionRequirement from "./ActionRequirement"
 

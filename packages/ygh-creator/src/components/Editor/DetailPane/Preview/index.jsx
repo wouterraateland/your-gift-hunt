@@ -1,17 +1,8 @@
 import React from "react"
-import styled from "styled-components"
 
-import EntityInstancePreview from "../EntityInstancePreview"
+import EntityInstancePreview from "components/Editor/EntityInstancePreview"
 
-const EntityInstancePreviewContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  position: relative;
-  height: 8em;
-  margin-bottom: 1em;
-`
+import PreviewContainer from "./Container"
 
 const InstancePreview = ({ node }) => {
   const {
@@ -20,14 +11,14 @@ const InstancePreview = ({ node }) => {
   const state = node.state ? node.state.state.name : null
 
   return entity.isItem || entity.isObject ? (
-    <EntityInstancePreviewContainer>
+    <PreviewContainer>
       <EntityInstancePreview
         entity={entity}
         state={state}
         maxWidth={19}
         maxHeight={6}
       />
-    </EntityInstancePreviewContainer>
+    </PreviewContainer>
   ) : null
 }
 

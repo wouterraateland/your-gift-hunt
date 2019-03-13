@@ -2,7 +2,7 @@ import styled, { css } from "styled-components"
 
 import { Paper } from "your-gift-hunt/ui"
 
-const DetailPaneContainer = styled(Paper)`
+const DetailPaneContainer = styled(Paper.Container)`
   position: absolute;
   top: 0;
   right: 0;
