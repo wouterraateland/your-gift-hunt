@@ -50,7 +50,8 @@ const Unlocks = ({ from, to }) => {
     getNodeById,
     isUnlockable,
     addUnlockToEntityInstanceStateTransition,
-    removeUnlockFromEntityInstanceStateTransition
+    removeUnlockFromEntityInstanceStateTransition,
+    getPreviousNodes
   } = useContext(GameContext)
 
   const unlocks = edges
@@ -65,7 +66,10 @@ const Unlocks = ({ from, to }) => {
   const [optionsVisible, setOptionsVisibility] = useState(false)
   const [{ isLoading, error }, runAsync] = useAsync()
 
-  const options = nodes.filter(isUnlockable)
+  const previousNodes = getPreviousNodes(from.id)
+  const options = nodes.filter(
+    node => isUnlockable(node) && !previousNodes.includes(node.id)
+  )
 
   const addUnlock = useCallback(
     runAsync(id =>

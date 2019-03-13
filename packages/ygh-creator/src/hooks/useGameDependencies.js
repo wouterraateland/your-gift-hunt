@@ -28,35 +28,122 @@ const useGameDependencies = ({ getNodeById, edges }) => {
     const dependentNodes = new Set([originNodeId])
     const todo = new PriorityQueue([originNodeId])
 
+    const add = id => {
+      if (!dependentNodes.has(id)) {
+        dependentNodes.add(id)
+        todo.push(id)
+      }
+    }
+
     while (todo.length > 0) {
       const nodeId = todo.pop()
 
-      // Normal dependencies
-      edges
-        .filter(
-          ({ from, to, type }) =>
-            [EDGE_TYPES.TRANSFORM, EDGE_TYPES.USE].includes(type) &&
-            to === nodeId &&
-            !dependentNodes.has(from)
-        )
-        .forEach(({ from }) => {
-          dependentNodes.add(from)
-          todo.push(from)
-        })
+      edges.forEach(({ from, to, type }) => {
+        switch (type) {
+          case EDGE_TYPES.TRANSFORM:
+            if (to === nodeId) {
+              add(from)
+            }
+            break
+          case EDGE_TYPES.USE:
+            if (to === nodeId) {
+              add(from)
+            }
+            if (from === nodeId && targetOfUseRequiredForTransition(from, to)) {
+              add(to)
+            }
+            break
+          default:
+            break
+        }
+      })
+    }
 
-      // Inverse use dependencies
-      edges
-        .filter(
-          ({ from, to, type }) =>
-            type === EDGE_TYPES.USE &&
-            from === nodeId &&
-            !dependentNodes.has(to) &&
-            targetOfUseRequiredForTransition(from, to)
-        )
-        .forEach(({ to }) => {
-          dependentNodes.add(to)
-          todo.push(to)
-        })
+    return Array.from(dependentNodes)
+  }
+
+  const getPreviousNodes = originNodeId => {
+    const dependentNodes = new Set([originNodeId])
+    const todo = new PriorityQueue([originNodeId])
+
+    const add = id => {
+      if (!dependentNodes.has(id)) {
+        dependentNodes.add(id)
+        todo.push(id)
+      }
+    }
+
+    while (todo.length > 0) {
+      const nodeId = todo.pop()
+
+      edges.forEach(({ from, to, unlocks, type }) => {
+        switch (type) {
+          case EDGE_TYPES.TRANSFORM:
+            if (to === nodeId) {
+              add(from)
+            }
+            if (from === nodeId) {
+              add(to)
+            }
+            break
+          case EDGE_TYPES.UNLOCK:
+            if (unlocks === nodeId) {
+              add(from)
+              add(to)
+            }
+            break
+          case EDGE_TYPES.USE:
+            if (to === nodeId) {
+              add(from)
+            }
+            break
+          default:
+            break
+        }
+      })
+    }
+
+    return Array.from(dependentNodes)
+  }
+
+  const getNextNodes = originNodeId => {
+    const dependentNodes = new Set([originNodeId])
+    const todo = new PriorityQueue([originNodeId])
+
+    const add = id => {
+      if (!dependentNodes.has(id)) {
+        dependentNodes.add(id)
+        todo.push(id)
+      }
+    }
+
+    while (todo.length > 0) {
+      const nodeId = todo.pop()
+
+      edges.forEach(({ from, to, unlocks, type }) => {
+        switch (type) {
+          case EDGE_TYPES.TRANSFORM:
+            if (from === nodeId) {
+              add(to)
+            }
+            break
+          case EDGE_TYPES.UNLOCK:
+            if (from === nodeId || to === nodeId) {
+              add(unlocks)
+            }
+            break
+          case EDGE_TYPES.USE:
+            if (from === nodeId) {
+              add(to)
+            }
+            if (to === nodeId) {
+              add(from)
+            }
+            break
+          default:
+            break
+        }
+      })
     }
 
     return Array.from(dependentNodes)
@@ -121,6 +208,8 @@ const useGameDependencies = ({ getNodeById, edges }) => {
 
   return {
     getDependentNodes,
+    getPreviousNodes,
+    getNextNodes,
     getAdjacentEntityStates,
     getMinimalStateSpan
   }

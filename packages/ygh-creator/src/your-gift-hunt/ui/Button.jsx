@@ -95,6 +95,11 @@ const Button = styled.button`
     pointer-events: none;
     filter: grayscale(50%);
   }
+
+  &:focus {
+    outline: none;
+    border: 0.1em solid #39f;
+  }
 `
 
 export default Button

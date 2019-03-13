@@ -5,17 +5,48 @@ import useClickOutside from "hooks/useClickOutside"
 
 import { Paper } from "your-gift-hunt/ui"
 
+const OptionsLocation = styled.div`
+  position: relative;
+
+  ${props =>
+    props.isVisible &&
+    css`
+      &::after {
+        content: "";
+
+        position: absolute;
+        left: 2em;
+        bottom: -0.65em;
+        z-index: 1;
+
+        width: 1em;
+        height: 1em;
+
+        border-bottom-right-radius: 0.25em;
+        border: 0.1em solid #39f;
+        border-top-color: transparent;
+        border-left-color: transparent;
+
+        transform: translate(-50%, -50%) rotate(45deg);
+
+        background: linear-gradient(-45deg, #fff 50%, transparent 50%) no-repeat
+          center / 1em 1em;
+      }
+    `}
+`
+
 const OptionsContainer = styled(Paper)`
   display: ${props => (props.isVisible ? "block" : "none")};
 
   position: absolute;
   left: 0;
-  bottom: calc(100% + 1em);
+  bottom: calc(100% + 0.25em);
 
   overflow-y: auto;
 
   min-width: 21em;
   max-height: 15em;
+  border: 0.1em solid #39f;
 
   line-height: 1.3;
   text-align: left;
@@ -38,28 +69,6 @@ const OptionContainer = styled.div`
   & > * {
     pointer-events: none;
   }
-`
-
-const OptionsLocation = styled.div`
-  position: relative;
-
-  ${props =>
-    props.isVisible &&
-    css`
-      &::after {
-        content: "";
-
-        position: absolute;
-        left: 2em;
-        bottom: 0;
-
-        border-bottom-right-radius: 0.25em;
-        border: 0.5em solid;
-        border-color: transparent #fff #fff transparent;
-
-        transform: translate(-50%, -50%) rotate(45deg);
-      }
-    `}
 `
 
 const Option = ({ data }) => JSON.stringify(data)

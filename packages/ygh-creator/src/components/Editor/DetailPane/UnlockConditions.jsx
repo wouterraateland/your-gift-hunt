@@ -54,16 +54,20 @@ const EditableUnlockConditions = ({ node }) => {
     getEdgeById,
     getNodeById,
     addUnlockToEntityInstanceStateTransition,
-    removeUnlockFromEntityInstanceStateTransition
+    removeUnlockFromEntityInstanceStateTransition,
+    getNextNodes
   } = useContext(GameContext)
 
   const unlockConditions = edges
     .filter(({ unlocks }) => unlocks === node.id)
     .map(({ id }) => getEdgeById(id))
 
+  const nextNodes = getNextNodes(node.id)
   const options = edges
-    .filter(({ type }) =>
-      [EDGE_TYPES.TRANSFORM, EDGE_TYPES.EXIT].includes(type)
+    .filter(
+      ({ from, type }) =>
+        [EDGE_TYPES.TRANSFORM, EDGE_TYPES.EXIT].includes(type) &&
+        !nextNodes.includes(from)
     )
     .map(({ from, to, ...edge }) => ({
       ...edge,
