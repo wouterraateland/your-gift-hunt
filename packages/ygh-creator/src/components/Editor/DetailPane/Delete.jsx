@@ -1,9 +1,11 @@
-import React, { useContext, useCallback, useEffect } from "react"
+import React, { useCallback, useContext, useEffect, useRef } from "react"
 import styled from "styled-components"
 
 import InspectorContext from "contexts/Inspector"
 import EditorContext from "contexts/Editor"
 import GameContext from "contexts/Game"
+
+import useClickOutside from "hooks/useClickOutside"
 
 import { Button } from "your-gift-hunt/ui"
 import { Bin } from "your-gift-hunt/icons"
@@ -35,11 +37,14 @@ const Info = styled.small`
 `
 
 const DeleteButton = ({ node, isOpen }) => {
+  const ref = useRef(null)
   const { closeInspector } = useContext(InspectorContext)
   const { ACTION_TYPES, upcomingAction, setUpcomingAction } = useContext(
     EditorContext
   )
   const { getDependentNodes, deleteNodes } = useContext(GameContext)
+
+  useClickOutside({ ref, onClickOutside: () => setUpcomingAction(null) })
 
   useEffect(
     () => {
@@ -75,7 +80,13 @@ const DeleteButton = ({ node, isOpen }) => {
 
   return (
     <Container>
-      <Button block onClick={onClick} color="error" importance="primary">
+      <Button
+        ref={ref}
+        block
+        onClick={onClick}
+        color="error"
+        importance="primary"
+      >
         <Bin />{" "}
         {isDeleting
           ? `Confirm deletion of ${
