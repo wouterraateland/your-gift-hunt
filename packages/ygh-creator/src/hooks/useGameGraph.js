@@ -3,22 +3,10 @@ import hash from "object-hash"
 import { NODE_TYPES, EDGE_TYPES } from "data"
 import _ from "utils"
 
-const getStartInstanceIds = instances =>
-  instances
-    .filter(({ entity }) => entity.name === "Start trigger")
-    .map(({ id }) => id)
-
-const getNodes = (startInstanceIds, instances) => [
+const getNodes = instances => [
   ...instances
-    .filter(
-      ({ id, states }) =>
-        !startInstanceIds.includes(id) &&
-        (states.some(({ unlockedBy }) =>
-          unlockedBy.some(({ from }) =>
-            startInstanceIds.includes(from.instance.id)
-          )
-        ) ||
-          states.every(({ unlockedBy }) => unlockedBy.length === 0))
+    .filter(({ states }) =>
+      states.every(({ unlockedBy }) => unlockedBy.length === 0)
     )
     .map(instance => ({
       id: `${instance.id}-${NODE_TYPES.ENTRY}`,
@@ -26,23 +14,19 @@ const getNodes = (startInstanceIds, instances) => [
       state: null,
       type: NODE_TYPES.ENTRY
     })),
+  ...instances.flatMap(({ states, ...instance }) =>
+    states.map(state => ({
+      id: state.id,
+      instance,
+      state,
+      type: NODE_TYPES.STATE
+    }))
+  ),
   ...instances
-    .filter(({ id }) => !startInstanceIds.includes(id))
-    .flatMap(({ states, ...instance }) =>
-      states.map(state => ({
-        id: state.id,
-        instance,
-        state,
-        type: NODE_TYPES.STATE
-      }))
-    ),
-  ...instances
-    .filter(
-      ({ id, states }) =>
-        !startInstanceIds.includes(id) &&
-        states.some(({ outgoingTransitions }) =>
-          outgoingTransitions.some(({ to }) => to === null)
-        )
+    .filter(({ states }) =>
+      states.some(({ outgoingTransitions }) =>
+        outgoingTransitions.some(({ to }) => to === null)
+      )
     )
     .map(instance => ({
       id: `${instance.id}-${NODE_TYPES.EXIT}`,
@@ -65,18 +49,15 @@ const getNodeByInstanceAndState = nodes => (
         : node.type === type)
   )
 
-const getStartTransitions = (startInstanceIds, nodes) =>
+const getStartTransitions = nodes =>
   nodes
     .filter(
       ({ state, instance }) =>
         state &&
-        (state.unlockedBy.length
-          ? state.unlockedBy.some(({ from }) =>
-              startInstanceIds.includes(from.instance.id)
-            )
-          : (instance.entity.defaultState &&
-              instance.entity.defaultState.id === state.state.id) ||
-            state.incomingTransitions.length === 0)
+        !state.unlockedBy.length &&
+        ((instance.entity.defaultState &&
+          instance.entity.defaultState.id === state.state.id) ||
+          state.incomingTransitions.length === 0)
     )
     .map(({ id, instance }) => ({
       from: `${instance.id}-${NODE_TYPES.ENTRY}`,
@@ -90,7 +71,7 @@ const getTransformTransitions = nodes =>
     .flatMap(node =>
       node.state.outgoingTransitions.map(({ to }) => ({
         from: node.id,
-        to: to ? to.id : `${node.instance.id}-${NODE_TYPES.EXIT}`, //getNodeByInstanceAndState(nodes)(node.instance, to).id,
+        to: to ? to.id : `${node.instance.id}-${NODE_TYPES.EXIT}`,
         type: to ? EDGE_TYPES.TRANSFORM : EDGE_TYPES.EXIT
       }))
     )
@@ -151,9 +132,9 @@ const getOtherEntryTransitions = instances =>
       type: EDGE_TYPES.ENTRY
     }))
 
-const getEdges = (startInstanceIds, nodes, instances) =>
+const getEdges = (nodes, instances) =>
   [
-    ...getStartTransitions(startInstanceIds, nodes),
+    ...getStartTransitions(nodes),
     ...getTransformTransitions(nodes),
     ...getUnlockTransitions(nodes),
     ...getUseTransitions(nodes),
@@ -195,17 +176,8 @@ const isUnlockable = edges => (
   )
 
 const useGameGraph = instances => {
-  const startInstanceIds = useMemo(() => getStartInstanceIds(instances), [
-    instances
-  ])
-  const nodes = useMemo(() => getNodes(startInstanceIds, instances), [
-    instances
-  ])
-  const edges = useMemo(() => getEdges(startInstanceIds, nodes, instances), [
-    startInstanceIds,
-    nodes,
-    instances
-  ])
+  const nodes = useMemo(() => getNodes(instances), [instances])
+  const edges = useMemo(() => getEdges(nodes, instances), [nodes, instances])
 
   return {
     nodes,
