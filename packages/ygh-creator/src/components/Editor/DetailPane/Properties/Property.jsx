@@ -9,7 +9,7 @@ import _ from "utils"
 
 const Property = ({ id, value, field }) => {
   const [newValue, setNewValue] = useState(value ? JSON.parse(value) : null)
-  const { updateEntityInstanceField } = useContext(GameContext)
+  const { updateFieldValue } = useContext(GameContext)
 
   const debouncedValue = useDebounce(newValue, 1000)
 
@@ -17,7 +17,7 @@ const Property = ({ id, value, field }) => {
     () => {
       const newValue = JSON.stringify(debouncedValue)
       if (newValue !== value) {
-        updateEntityInstanceField(id, newValue)
+        updateFieldValue(id, newValue)
       }
     },
     [id, debouncedValue]
@@ -28,7 +28,8 @@ const Property = ({ id, value, field }) => {
       <Input
         block
         {...field}
-        type={_.toInputType(field.type)}
+        isMulti={field.type.isMulti}
+        type={_.toInputType(field.type.type)}
         showType
         value={newValue}
         onChange={event => setNewValue(event.target.value)}

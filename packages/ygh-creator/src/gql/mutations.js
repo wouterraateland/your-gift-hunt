@@ -86,14 +86,8 @@ export const UPDATE_ENTITY_INSTANCE_NAME = gql`
 `
 
 export const UPDATE_ENTITY_INSTANCE_FIELD = gql`
-  mutation updateEntityInstanceField(
-    $entityInstanceFieldId: ID!
-    $value: String!
-  ) {
-    updateEntityInstanceField(
-      where: { id: $entityInstanceFieldId }
-      data: { value: $value }
-    ) {
+  mutation updateFieldValue($FieldValueId: ID!, $value: String!) {
+    updateFieldValue(where: { id: $FieldValueId }, data: { value: $value }) {
       id
       value
     }

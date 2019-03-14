@@ -103,12 +103,13 @@ const InstanceCard = ({
   mayBeDeleted,
   isFocussed
 }) => {
-  const { entity, fields } = instance
+  const { entity, fieldValues } = instance
 
   const hasPreview = entity && (entity.isItem || entity.isObject)
 
   const featuredFieldValue = entity.featuredField
-    ? fields.find(({ field }) => field.id === entity.featuredField.id).value
+    ? fieldValues.find(({ field }) => field.id === entity.featuredField.id)
+        .value
     : null
 
   return (

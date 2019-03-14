@@ -53,11 +53,11 @@ const useGameMutations = (variables, save, dependencies) => {
     })
   )
 
-  const updateEntityInstanceField = useMutationWithSave(
+  const updateFieldValue = useMutationWithSave(
     UPDATE_ENTITY_INSTANCE_FIELD,
-    (entityInstanceFieldId, value) => ({
+    (FieldValueId, value) => ({
       variables: {
-        entityInstanceFieldId,
+        FieldValueId,
         value
       }
     })
@@ -483,7 +483,7 @@ const useGameMutations = (variables, save, dependencies) => {
   return {
     updateGameSettings,
     updateEntityInstanceName,
-    updateEntityInstanceField,
+    updateFieldValue,
 
     // Hint mutations
     connectActionRequirementToEntityInstance,

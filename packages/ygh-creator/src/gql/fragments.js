@@ -72,15 +72,17 @@ export const ENTITY_INSTANCE_FRAGMENT = gql`
         }
       }
     }
-    fields {
+    fieldValues {
       id
       value
       field {
         id
         label
         info
-        type
-        isMulti
+        type {
+          type
+          isMulti
+        }
         isSecret
       }
     }

@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Wed Mar 13 2019 21:47:28 GMT+0100 (Midden-Europese standaardtijd)
+# timestamp: Thu Mar 14 2019 15:57:26 GMT+0100 (Midden-Europese standaardtijd)
 
 enum AccessType {
   NONE
@@ -1003,7 +1003,7 @@ input ActionRequirementPayloadEntityWhereUniqueInput {
 type ActionRequirementPayloadInputValue implements Node {
   id: ID!
   key: String!
-  field: EntityField
+  field: Field
   value: String
   not: Boolean!
   comparator: ComparatorType!
@@ -1025,7 +1025,7 @@ input ActionRequirementPayloadInputValueCreateInput {
   value: String
   not: Boolean
   comparator: ComparatorType
-  field: EntityFieldCreateOneInput
+  field: FieldCreateOneInput
   payload: ActionRequirementPayloadCreateOneWithoutRequiredValuesInput!
 }
 
@@ -1044,7 +1044,7 @@ input ActionRequirementPayloadInputValueCreateWithoutPayloadInput {
   value: String
   not: Boolean
   comparator: ComparatorType
-  field: EntityFieldCreateOneInput
+  field: FieldCreateOneInput
 }
 
 """An edge in a connection."""
@@ -1270,7 +1270,7 @@ input ActionRequirementPayloadInputValueUpdateDataInput {
   value: String
   not: Boolean
   comparator: ComparatorType
-  field: EntityFieldUpdateOneInput
+  field: FieldUpdateOneInput
   payload: ActionRequirementPayloadUpdateOneRequiredWithoutRequiredValuesInput
 }
 
@@ -1279,7 +1279,7 @@ input ActionRequirementPayloadInputValueUpdateInput {
   value: String
   not: Boolean
   comparator: ComparatorType
-  field: EntityFieldUpdateOneInput
+  field: FieldUpdateOneInput
   payload: ActionRequirementPayloadUpdateOneRequiredWithoutRequiredValuesInput
 }
 
@@ -1327,7 +1327,7 @@ input ActionRequirementPayloadInputValueUpdateWithoutPayloadDataInput {
   value: String
   not: Boolean
   comparator: ComparatorType
-  field: EntityFieldUpdateOneInput
+  field: FieldUpdateOneInput
 }
 
 input ActionRequirementPayloadInputValueUpdateWithWhereUniqueWithoutPayloadInput {
@@ -1489,7 +1489,7 @@ input ActionRequirementPayloadInputValueWhereInput {
 
   """All values that are not contained in given list."""
   comparator_not_in: [ComparatorType!]
-  field: EntityFieldWhereInput
+  field: FieldWhereInput
   payload: ActionRequirementPayloadWhereInput
 }
 
@@ -2364,19 +2364,7 @@ type AggregateEntity {
   count: Int!
 }
 
-type AggregateEntityField {
-  count: Int!
-}
-
 type AggregateEntityInstance {
-  count: Int!
-}
-
-type AggregateEntityInstanceField {
-  count: Int!
-}
-
-type AggregateEntityInstanceInformation {
   count: Int!
 }
 
@@ -2396,6 +2384,18 @@ type AggregateEntityStateTransition {
   count: Int!
 }
 
+type AggregateField {
+  count: Int!
+}
+
+type AggregateFieldType {
+  count: Int!
+}
+
+type AggregateFieldValue {
+  count: Int!
+}
+
 type AggregateGame {
   count: Int!
 }
@@ -2409,6 +2409,10 @@ type AggregateHint {
 }
 
 type AggregateInformation {
+  count: Int!
+}
+
+type AggregateInformationSlot {
   count: Int!
 }
 
@@ -2437,10 +2441,10 @@ type Entity implements Node {
   isTrigger: Boolean!
   isItem: Boolean!
   isObject: Boolean!
-  fields(where: EntityFieldWhereInput, orderBy: EntityFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityField!]
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
   states(where: EntityStateWhereInput, orderBy: EntityStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityState!]
-  information(where: InformationWhereInput, orderBy: InformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Information!]
-  featuredField: EntityField
+  informationSlots(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlot!]
+  featuredField: Field
   defaultState: EntityState
   instances(where: EntityInstanceWhereInput, orderBy: EntityInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstance!]
 }
@@ -2461,10 +2465,10 @@ input EntityCreateInput {
   isTrigger: Boolean
   isItem: Boolean
   isObject: Boolean
-  fields: EntityFieldCreateManyWithoutEntityInput
+  fields: FieldCreateManyWithoutEntityInput
   states: EntityStateCreateManyWithoutEntityInput
-  information: InformationCreateManyWithoutEntityInput
-  featuredField: EntityFieldCreateOneInput
+  informationSlots: InformationSlotCreateManyWithoutEntityInput
+  featuredField: FieldCreateOneInput
   defaultState: EntityStateCreateOneInput
   instances: EntityInstanceCreateManyWithoutEntityInput
 }
@@ -2479,8 +2483,8 @@ input EntityCreateOneWithoutFieldsInput {
   connect: EntityWhereUniqueInput
 }
 
-input EntityCreateOneWithoutInformationInput {
-  create: EntityCreateWithoutInformationInput
+input EntityCreateOneWithoutInformationSlotsInput {
+  create: EntityCreateWithoutInformationSlotsInput
   connect: EntityWhereUniqueInput
 }
 
@@ -2501,21 +2505,21 @@ input EntityCreateWithoutFieldsInput {
   isItem: Boolean
   isObject: Boolean
   states: EntityStateCreateManyWithoutEntityInput
-  information: InformationCreateManyWithoutEntityInput
-  featuredField: EntityFieldCreateOneInput
+  informationSlots: InformationSlotCreateManyWithoutEntityInput
+  featuredField: FieldCreateOneInput
   defaultState: EntityStateCreateOneInput
   instances: EntityInstanceCreateManyWithoutEntityInput
 }
 
-input EntityCreateWithoutInformationInput {
+input EntityCreateWithoutInformationSlotsInput {
   name: String!
   description: String
   isTrigger: Boolean
   isItem: Boolean
   isObject: Boolean
-  fields: EntityFieldCreateManyWithoutEntityInput
+  fields: FieldCreateManyWithoutEntityInput
   states: EntityStateCreateManyWithoutEntityInput
-  featuredField: EntityFieldCreateOneInput
+  featuredField: FieldCreateOneInput
   defaultState: EntityStateCreateOneInput
   instances: EntityInstanceCreateManyWithoutEntityInput
 }
@@ -2526,10 +2530,10 @@ input EntityCreateWithoutInstancesInput {
   isTrigger: Boolean
   isItem: Boolean
   isObject: Boolean
-  fields: EntityFieldCreateManyWithoutEntityInput
+  fields: FieldCreateManyWithoutEntityInput
   states: EntityStateCreateManyWithoutEntityInput
-  information: InformationCreateManyWithoutEntityInput
-  featuredField: EntityFieldCreateOneInput
+  informationSlots: InformationSlotCreateManyWithoutEntityInput
+  featuredField: FieldCreateOneInput
   defaultState: EntityStateCreateOneInput
 }
 
@@ -2539,9 +2543,9 @@ input EntityCreateWithoutStatesInput {
   isTrigger: Boolean
   isItem: Boolean
   isObject: Boolean
-  fields: EntityFieldCreateManyWithoutEntityInput
-  information: InformationCreateManyWithoutEntityInput
-  featuredField: EntityFieldCreateOneInput
+  fields: FieldCreateManyWithoutEntityInput
+  informationSlots: InformationSlotCreateManyWithoutEntityInput
+  featuredField: FieldCreateOneInput
   defaultState: EntityStateCreateOneInput
   instances: EntityInstanceCreateManyWithoutEntityInput
 }
@@ -2555,531 +2559,15 @@ type EntityEdge {
   cursor: String!
 }
 
-type EntityField implements Node {
-  id: ID!
-  info: String
-  label: String!
-  type: FieldType!
-  isMulti: Boolean!
-  isSecret: Boolean!
-  entity: Entity!
-}
-
-"""A connection to a list of items."""
-type EntityFieldConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [EntityFieldEdge]!
-  aggregate: AggregateEntityField!
-}
-
-input EntityFieldCreateInput {
-  info: String
-  label: String!
-  type: FieldType
-  isMulti: Boolean
-  isSecret: Boolean
-  entity: EntityCreateOneWithoutFieldsInput!
-}
-
-input EntityFieldCreateManyWithoutEntityInput {
-  create: [EntityFieldCreateWithoutEntityInput!]
-  connect: [EntityFieldWhereUniqueInput!]
-}
-
-input EntityFieldCreateOneInput {
-  create: EntityFieldCreateInput
-  connect: EntityFieldWhereUniqueInput
-}
-
-input EntityFieldCreateWithoutEntityInput {
-  info: String
-  label: String!
-  type: FieldType
-  isMulti: Boolean
-  isSecret: Boolean
-}
-
-"""An edge in a connection."""
-type EntityFieldEdge {
-  """The item at the end of the edge."""
-  node: EntityField!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum EntityFieldOrderByInput {
-  id_ASC
-  id_DESC
-  info_ASC
-  info_DESC
-  label_ASC
-  label_DESC
-  type_ASC
-  type_DESC
-  isMulti_ASC
-  isMulti_DESC
-  isSecret_ASC
-  isSecret_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type EntityFieldPreviousValues {
-  id: ID!
-  info: String
-  label: String!
-  type: FieldType!
-  isMulti: Boolean!
-  isSecret: Boolean!
-}
-
-input EntityFieldScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [EntityFieldScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [EntityFieldScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [EntityFieldScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  info: String
-
-  """All values that are not equal to given value."""
-  info_not: String
-
-  """All values that are contained in given list."""
-  info_in: [String!]
-
-  """All values that are not contained in given list."""
-  info_not_in: [String!]
-
-  """All values less than the given value."""
-  info_lt: String
-
-  """All values less than or equal the given value."""
-  info_lte: String
-
-  """All values greater than the given value."""
-  info_gt: String
-
-  """All values greater than or equal the given value."""
-  info_gte: String
-
-  """All values containing the given string."""
-  info_contains: String
-
-  """All values not containing the given string."""
-  info_not_contains: String
-
-  """All values starting with the given string."""
-  info_starts_with: String
-
-  """All values not starting with the given string."""
-  info_not_starts_with: String
-
-  """All values ending with the given string."""
-  info_ends_with: String
-
-  """All values not ending with the given string."""
-  info_not_ends_with: String
-  label: String
-
-  """All values that are not equal to given value."""
-  label_not: String
-
-  """All values that are contained in given list."""
-  label_in: [String!]
-
-  """All values that are not contained in given list."""
-  label_not_in: [String!]
-
-  """All values less than the given value."""
-  label_lt: String
-
-  """All values less than or equal the given value."""
-  label_lte: String
-
-  """All values greater than the given value."""
-  label_gt: String
-
-  """All values greater than or equal the given value."""
-  label_gte: String
-
-  """All values containing the given string."""
-  label_contains: String
-
-  """All values not containing the given string."""
-  label_not_contains: String
-
-  """All values starting with the given string."""
-  label_starts_with: String
-
-  """All values not starting with the given string."""
-  label_not_starts_with: String
-
-  """All values ending with the given string."""
-  label_ends_with: String
-
-  """All values not ending with the given string."""
-  label_not_ends_with: String
-  type: FieldType
-
-  """All values that are not equal to given value."""
-  type_not: FieldType
-
-  """All values that are contained in given list."""
-  type_in: [FieldType!]
-
-  """All values that are not contained in given list."""
-  type_not_in: [FieldType!]
-  isMulti: Boolean
-
-  """All values that are not equal to given value."""
-  isMulti_not: Boolean
-  isSecret: Boolean
-
-  """All values that are not equal to given value."""
-  isSecret_not: Boolean
-}
-
-type EntityFieldSubscriptionPayload {
-  mutation: MutationType!
-  node: EntityField
-  updatedFields: [String!]
-  previousValues: EntityFieldPreviousValues
-}
-
-input EntityFieldSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [EntityFieldSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [EntityFieldSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [EntityFieldSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: EntityFieldWhereInput
-}
-
-input EntityFieldUpdateDataInput {
-  info: String
-  label: String
-  type: FieldType
-  isMulti: Boolean
-  isSecret: Boolean
-  entity: EntityUpdateOneRequiredWithoutFieldsInput
-}
-
-input EntityFieldUpdateInput {
-  info: String
-  label: String
-  type: FieldType
-  isMulti: Boolean
-  isSecret: Boolean
-  entity: EntityUpdateOneRequiredWithoutFieldsInput
-}
-
-input EntityFieldUpdateManyDataInput {
-  info: String
-  label: String
-  type: FieldType
-  isMulti: Boolean
-  isSecret: Boolean
-}
-
-input EntityFieldUpdateManyMutationInput {
-  info: String
-  label: String
-  type: FieldType
-  isMulti: Boolean
-  isSecret: Boolean
-}
-
-input EntityFieldUpdateManyWithoutEntityInput {
-  create: [EntityFieldCreateWithoutEntityInput!]
-  connect: [EntityFieldWhereUniqueInput!]
-  disconnect: [EntityFieldWhereUniqueInput!]
-  delete: [EntityFieldWhereUniqueInput!]
-  update: [EntityFieldUpdateWithWhereUniqueWithoutEntityInput!]
-  updateMany: [EntityFieldUpdateManyWithWhereNestedInput!]
-  deleteMany: [EntityFieldScalarWhereInput!]
-  upsert: [EntityFieldUpsertWithWhereUniqueWithoutEntityInput!]
-}
-
-input EntityFieldUpdateManyWithWhereNestedInput {
-  where: EntityFieldScalarWhereInput!
-  data: EntityFieldUpdateManyDataInput!
-}
-
-input EntityFieldUpdateOneInput {
-  create: EntityFieldCreateInput
-  connect: EntityFieldWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: EntityFieldUpdateDataInput
-  upsert: EntityFieldUpsertNestedInput
-}
-
-input EntityFieldUpdateOneRequiredInput {
-  create: EntityFieldCreateInput
-  connect: EntityFieldWhereUniqueInput
-  update: EntityFieldUpdateDataInput
-  upsert: EntityFieldUpsertNestedInput
-}
-
-input EntityFieldUpdateWithoutEntityDataInput {
-  info: String
-  label: String
-  type: FieldType
-  isMulti: Boolean
-  isSecret: Boolean
-}
-
-input EntityFieldUpdateWithWhereUniqueWithoutEntityInput {
-  where: EntityFieldWhereUniqueInput!
-  data: EntityFieldUpdateWithoutEntityDataInput!
-}
-
-input EntityFieldUpsertNestedInput {
-  update: EntityFieldUpdateDataInput!
-  create: EntityFieldCreateInput!
-}
-
-input EntityFieldUpsertWithWhereUniqueWithoutEntityInput {
-  where: EntityFieldWhereUniqueInput!
-  update: EntityFieldUpdateWithoutEntityDataInput!
-  create: EntityFieldCreateWithoutEntityInput!
-}
-
-input EntityFieldWhereInput {
-  """Logical AND on all given filters."""
-  AND: [EntityFieldWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [EntityFieldWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [EntityFieldWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  info: String
-
-  """All values that are not equal to given value."""
-  info_not: String
-
-  """All values that are contained in given list."""
-  info_in: [String!]
-
-  """All values that are not contained in given list."""
-  info_not_in: [String!]
-
-  """All values less than the given value."""
-  info_lt: String
-
-  """All values less than or equal the given value."""
-  info_lte: String
-
-  """All values greater than the given value."""
-  info_gt: String
-
-  """All values greater than or equal the given value."""
-  info_gte: String
-
-  """All values containing the given string."""
-  info_contains: String
-
-  """All values not containing the given string."""
-  info_not_contains: String
-
-  """All values starting with the given string."""
-  info_starts_with: String
-
-  """All values not starting with the given string."""
-  info_not_starts_with: String
-
-  """All values ending with the given string."""
-  info_ends_with: String
-
-  """All values not ending with the given string."""
-  info_not_ends_with: String
-  label: String
-
-  """All values that are not equal to given value."""
-  label_not: String
-
-  """All values that are contained in given list."""
-  label_in: [String!]
-
-  """All values that are not contained in given list."""
-  label_not_in: [String!]
-
-  """All values less than the given value."""
-  label_lt: String
-
-  """All values less than or equal the given value."""
-  label_lte: String
-
-  """All values greater than the given value."""
-  label_gt: String
-
-  """All values greater than or equal the given value."""
-  label_gte: String
-
-  """All values containing the given string."""
-  label_contains: String
-
-  """All values not containing the given string."""
-  label_not_contains: String
-
-  """All values starting with the given string."""
-  label_starts_with: String
-
-  """All values not starting with the given string."""
-  label_not_starts_with: String
-
-  """All values ending with the given string."""
-  label_ends_with: String
-
-  """All values not ending with the given string."""
-  label_not_ends_with: String
-  type: FieldType
-
-  """All values that are not equal to given value."""
-  type_not: FieldType
-
-  """All values that are contained in given list."""
-  type_in: [FieldType!]
-
-  """All values that are not contained in given list."""
-  type_not_in: [FieldType!]
-  isMulti: Boolean
-
-  """All values that are not equal to given value."""
-  isMulti_not: Boolean
-  isSecret: Boolean
-
-  """All values that are not equal to given value."""
-  isSecret_not: Boolean
-  entity: EntityWhereInput
-}
-
-input EntityFieldWhereUniqueInput {
-  id: ID
-}
-
 type EntityInstance implements Node {
   id: ID!
   name: String
   description: String
   game: Game!
   entity: Entity!
-  fields(where: EntityInstanceFieldWhereInput, orderBy: EntityInstanceFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceField!]
+  fieldValues(where: FieldValueWhereInput, orderBy: FieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldValue!]
   states(where: EntityInstanceStateWhereInput, orderBy: EntityInstanceStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceState!]
-  information(where: EntityInstanceInformationWhereInput, orderBy: EntityInstanceInformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceInformation!]
+  information(where: InformationWhereInput, orderBy: InformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Information!]
   actionRequirementsWithCustomHints(where: ActionRequirementWhereInput, orderBy: ActionRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirement!]
   hints(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hint!]
 }
@@ -3099,9 +2587,9 @@ input EntityInstanceCreateInput {
   description: String
   game: GameCreateOneWithoutInstancesInput!
   entity: EntityCreateOneWithoutInstancesInput!
-  fields: EntityInstanceFieldCreateManyInput
+  fieldValues: FieldValueCreateManyInput
   states: EntityInstanceStateCreateManyWithoutInstanceInput
-  information: EntityInstanceInformationCreateManyInput
+  information: InformationCreateManyInput
   actionRequirementsWithCustomHints: ActionRequirementCreateManyWithoutEntityInstancesWhereCustomHintsInput
   hints: HintCreateManyWithoutEntityInstanceInput
 }
@@ -3141,9 +2629,9 @@ input EntityInstanceCreateWithoutActionRequirementsWithCustomHintsInput {
   description: String
   game: GameCreateOneWithoutInstancesInput!
   entity: EntityCreateOneWithoutInstancesInput!
-  fields: EntityInstanceFieldCreateManyInput
+  fieldValues: FieldValueCreateManyInput
   states: EntityInstanceStateCreateManyWithoutInstanceInput
-  information: EntityInstanceInformationCreateManyInput
+  information: InformationCreateManyInput
   hints: HintCreateManyWithoutEntityInstanceInput
 }
 
@@ -3151,9 +2639,9 @@ input EntityInstanceCreateWithoutEntityInput {
   name: String
   description: String
   game: GameCreateOneWithoutInstancesInput!
-  fields: EntityInstanceFieldCreateManyInput
+  fieldValues: FieldValueCreateManyInput
   states: EntityInstanceStateCreateManyWithoutInstanceInput
-  information: EntityInstanceInformationCreateManyInput
+  information: InformationCreateManyInput
   actionRequirementsWithCustomHints: ActionRequirementCreateManyWithoutEntityInstancesWhereCustomHintsInput
   hints: HintCreateManyWithoutEntityInstanceInput
 }
@@ -3162,9 +2650,9 @@ input EntityInstanceCreateWithoutGameInput {
   name: String
   description: String
   entity: EntityCreateOneWithoutInstancesInput!
-  fields: EntityInstanceFieldCreateManyInput
+  fieldValues: FieldValueCreateManyInput
   states: EntityInstanceStateCreateManyWithoutInstanceInput
-  information: EntityInstanceInformationCreateManyInput
+  information: InformationCreateManyInput
   actionRequirementsWithCustomHints: ActionRequirementCreateManyWithoutEntityInstancesWhereCustomHintsInput
   hints: HintCreateManyWithoutEntityInstanceInput
 }
@@ -3174,9 +2662,9 @@ input EntityInstanceCreateWithoutHintsInput {
   description: String
   game: GameCreateOneWithoutInstancesInput!
   entity: EntityCreateOneWithoutInstancesInput!
-  fields: EntityInstanceFieldCreateManyInput
+  fieldValues: FieldValueCreateManyInput
   states: EntityInstanceStateCreateManyWithoutInstanceInput
-  information: EntityInstanceInformationCreateManyInput
+  information: InformationCreateManyInput
   actionRequirementsWithCustomHints: ActionRequirementCreateManyWithoutEntityInstancesWhereCustomHintsInput
 }
 
@@ -3185,8 +2673,8 @@ input EntityInstanceCreateWithoutStatesInput {
   description: String
   game: GameCreateOneWithoutInstancesInput!
   entity: EntityCreateOneWithoutInstancesInput!
-  fields: EntityInstanceFieldCreateManyInput
-  information: EntityInstanceInformationCreateManyInput
+  fieldValues: FieldValueCreateManyInput
+  information: InformationCreateManyInput
   actionRequirementsWithCustomHints: ActionRequirementCreateManyWithoutEntityInstancesWhereCustomHintsInput
   hints: HintCreateManyWithoutEntityInstanceInput
 }
@@ -3198,595 +2686,6 @@ type EntityInstanceEdge {
 
   """A cursor for use in pagination."""
   cursor: String!
-}
-
-type EntityInstanceField implements Node {
-  id: ID!
-  field: EntityField!
-  value: String
-}
-
-"""A connection to a list of items."""
-type EntityInstanceFieldConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [EntityInstanceFieldEdge]!
-  aggregate: AggregateEntityInstanceField!
-}
-
-input EntityInstanceFieldCreateInput {
-  value: String
-  field: EntityFieldCreateOneInput!
-}
-
-input EntityInstanceFieldCreateManyInput {
-  create: [EntityInstanceFieldCreateInput!]
-  connect: [EntityInstanceFieldWhereUniqueInput!]
-}
-
-"""An edge in a connection."""
-type EntityInstanceFieldEdge {
-  """The item at the end of the edge."""
-  node: EntityInstanceField!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum EntityInstanceFieldOrderByInput {
-  id_ASC
-  id_DESC
-  value_ASC
-  value_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type EntityInstanceFieldPreviousValues {
-  id: ID!
-  value: String
-}
-
-input EntityInstanceFieldScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [EntityInstanceFieldScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [EntityInstanceFieldScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [EntityInstanceFieldScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  value: String
-
-  """All values that are not equal to given value."""
-  value_not: String
-
-  """All values that are contained in given list."""
-  value_in: [String!]
-
-  """All values that are not contained in given list."""
-  value_not_in: [String!]
-
-  """All values less than the given value."""
-  value_lt: String
-
-  """All values less than or equal the given value."""
-  value_lte: String
-
-  """All values greater than the given value."""
-  value_gt: String
-
-  """All values greater than or equal the given value."""
-  value_gte: String
-
-  """All values containing the given string."""
-  value_contains: String
-
-  """All values not containing the given string."""
-  value_not_contains: String
-
-  """All values starting with the given string."""
-  value_starts_with: String
-
-  """All values not starting with the given string."""
-  value_not_starts_with: String
-
-  """All values ending with the given string."""
-  value_ends_with: String
-
-  """All values not ending with the given string."""
-  value_not_ends_with: String
-}
-
-type EntityInstanceFieldSubscriptionPayload {
-  mutation: MutationType!
-  node: EntityInstanceField
-  updatedFields: [String!]
-  previousValues: EntityInstanceFieldPreviousValues
-}
-
-input EntityInstanceFieldSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [EntityInstanceFieldSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [EntityInstanceFieldSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [EntityInstanceFieldSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: EntityInstanceFieldWhereInput
-}
-
-input EntityInstanceFieldUpdateDataInput {
-  value: String
-  field: EntityFieldUpdateOneRequiredInput
-}
-
-input EntityInstanceFieldUpdateInput {
-  value: String
-  field: EntityFieldUpdateOneRequiredInput
-}
-
-input EntityInstanceFieldUpdateManyDataInput {
-  value: String
-}
-
-input EntityInstanceFieldUpdateManyInput {
-  create: [EntityInstanceFieldCreateInput!]
-  connect: [EntityInstanceFieldWhereUniqueInput!]
-  disconnect: [EntityInstanceFieldWhereUniqueInput!]
-  delete: [EntityInstanceFieldWhereUniqueInput!]
-  update: [EntityInstanceFieldUpdateWithWhereUniqueNestedInput!]
-  updateMany: [EntityInstanceFieldUpdateManyWithWhereNestedInput!]
-  deleteMany: [EntityInstanceFieldScalarWhereInput!]
-  upsert: [EntityInstanceFieldUpsertWithWhereUniqueNestedInput!]
-}
-
-input EntityInstanceFieldUpdateManyMutationInput {
-  value: String
-}
-
-input EntityInstanceFieldUpdateManyWithWhereNestedInput {
-  where: EntityInstanceFieldScalarWhereInput!
-  data: EntityInstanceFieldUpdateManyDataInput!
-}
-
-input EntityInstanceFieldUpdateWithWhereUniqueNestedInput {
-  where: EntityInstanceFieldWhereUniqueInput!
-  data: EntityInstanceFieldUpdateDataInput!
-}
-
-input EntityInstanceFieldUpsertWithWhereUniqueNestedInput {
-  where: EntityInstanceFieldWhereUniqueInput!
-  update: EntityInstanceFieldUpdateDataInput!
-  create: EntityInstanceFieldCreateInput!
-}
-
-input EntityInstanceFieldWhereInput {
-  """Logical AND on all given filters."""
-  AND: [EntityInstanceFieldWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [EntityInstanceFieldWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [EntityInstanceFieldWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  value: String
-
-  """All values that are not equal to given value."""
-  value_not: String
-
-  """All values that are contained in given list."""
-  value_in: [String!]
-
-  """All values that are not contained in given list."""
-  value_not_in: [String!]
-
-  """All values less than the given value."""
-  value_lt: String
-
-  """All values less than or equal the given value."""
-  value_lte: String
-
-  """All values greater than the given value."""
-  value_gt: String
-
-  """All values greater than or equal the given value."""
-  value_gte: String
-
-  """All values containing the given string."""
-  value_contains: String
-
-  """All values not containing the given string."""
-  value_not_contains: String
-
-  """All values starting with the given string."""
-  value_starts_with: String
-
-  """All values not starting with the given string."""
-  value_not_starts_with: String
-
-  """All values ending with the given string."""
-  value_ends_with: String
-
-  """All values not ending with the given string."""
-  value_not_ends_with: String
-  field: EntityFieldWhereInput
-}
-
-input EntityInstanceFieldWhereUniqueInput {
-  id: ID
-}
-
-type EntityInstanceInformation implements Node {
-  id: ID!
-  information: Information!
-  EntityInstanceStateTransition: EntityInstanceStateTransition
-  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValue
-}
-
-"""A connection to a list of items."""
-type EntityInstanceInformationConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [EntityInstanceInformationEdge]!
-  aggregate: AggregateEntityInstanceInformation!
-}
-
-input EntityInstanceInformationCreateInput {
-  information: InformationCreateOneInput!
-  EntityInstanceStateTransition: EntityInstanceStateTransitionCreateOneWithoutInformationInput
-  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueCreateOneInput
-}
-
-input EntityInstanceInformationCreateManyInput {
-  create: [EntityInstanceInformationCreateInput!]
-  connect: [EntityInstanceInformationWhereUniqueInput!]
-}
-
-input EntityInstanceInformationCreateManyWithoutEntityInstanceStateTransitionInput {
-  create: [EntityInstanceInformationCreateWithoutEntityInstanceStateTransitionInput!]
-  connect: [EntityInstanceInformationWhereUniqueInput!]
-}
-
-input EntityInstanceInformationCreateWithoutEntityInstanceStateTransitionInput {
-  information: InformationCreateOneInput!
-  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueCreateOneInput
-}
-
-"""An edge in a connection."""
-type EntityInstanceInformationEdge {
-  """The item at the end of the edge."""
-  node: EntityInstanceInformation!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum EntityInstanceInformationOrderByInput {
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type EntityInstanceInformationPreviousValues {
-  id: ID!
-}
-
-input EntityInstanceInformationScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [EntityInstanceInformationScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [EntityInstanceInformationScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [EntityInstanceInformationScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-}
-
-type EntityInstanceInformationSubscriptionPayload {
-  mutation: MutationType!
-  node: EntityInstanceInformation
-  updatedFields: [String!]
-  previousValues: EntityInstanceInformationPreviousValues
-}
-
-input EntityInstanceInformationSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [EntityInstanceInformationSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [EntityInstanceInformationSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [EntityInstanceInformationSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: EntityInstanceInformationWhereInput
-}
-
-input EntityInstanceInformationUpdateDataInput {
-  information: InformationUpdateOneRequiredInput
-  EntityInstanceStateTransition: EntityInstanceStateTransitionUpdateOneWithoutInformationInput
-  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueUpdateOneInput
-}
-
-input EntityInstanceInformationUpdateInput {
-  information: InformationUpdateOneRequiredInput
-  EntityInstanceStateTransition: EntityInstanceStateTransitionUpdateOneWithoutInformationInput
-  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueUpdateOneInput
-}
-
-input EntityInstanceInformationUpdateManyInput {
-  create: [EntityInstanceInformationCreateInput!]
-  connect: [EntityInstanceInformationWhereUniqueInput!]
-  disconnect: [EntityInstanceInformationWhereUniqueInput!]
-  delete: [EntityInstanceInformationWhereUniqueInput!]
-  update: [EntityInstanceInformationUpdateWithWhereUniqueNestedInput!]
-  deleteMany: [EntityInstanceInformationScalarWhereInput!]
-  upsert: [EntityInstanceInformationUpsertWithWhereUniqueNestedInput!]
-}
-
-input EntityInstanceInformationUpdateManyWithoutEntityInstanceStateTransitionInput {
-  create: [EntityInstanceInformationCreateWithoutEntityInstanceStateTransitionInput!]
-  connect: [EntityInstanceInformationWhereUniqueInput!]
-  disconnect: [EntityInstanceInformationWhereUniqueInput!]
-  delete: [EntityInstanceInformationWhereUniqueInput!]
-  update: [EntityInstanceInformationUpdateWithWhereUniqueWithoutEntityInstanceStateTransitionInput!]
-  deleteMany: [EntityInstanceInformationScalarWhereInput!]
-  upsert: [EntityInstanceInformationUpsertWithWhereUniqueWithoutEntityInstanceStateTransitionInput!]
-}
-
-input EntityInstanceInformationUpdateWithoutEntityInstanceStateTransitionDataInput {
-  information: InformationUpdateOneRequiredInput
-  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueUpdateOneInput
-}
-
-input EntityInstanceInformationUpdateWithWhereUniqueNestedInput {
-  where: EntityInstanceInformationWhereUniqueInput!
-  data: EntityInstanceInformationUpdateDataInput!
-}
-
-input EntityInstanceInformationUpdateWithWhereUniqueWithoutEntityInstanceStateTransitionInput {
-  where: EntityInstanceInformationWhereUniqueInput!
-  data: EntityInstanceInformationUpdateWithoutEntityInstanceStateTransitionDataInput!
-}
-
-input EntityInstanceInformationUpsertWithWhereUniqueNestedInput {
-  where: EntityInstanceInformationWhereUniqueInput!
-  update: EntityInstanceInformationUpdateDataInput!
-  create: EntityInstanceInformationCreateInput!
-}
-
-input EntityInstanceInformationUpsertWithWhereUniqueWithoutEntityInstanceStateTransitionInput {
-  where: EntityInstanceInformationWhereUniqueInput!
-  update: EntityInstanceInformationUpdateWithoutEntityInstanceStateTransitionDataInput!
-  create: EntityInstanceInformationCreateWithoutEntityInstanceStateTransitionInput!
-}
-
-input EntityInstanceInformationWhereInput {
-  """Logical AND on all given filters."""
-  AND: [EntityInstanceInformationWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [EntityInstanceInformationWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [EntityInstanceInformationWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  information: InformationWhereInput
-  EntityInstanceStateTransition: EntityInstanceStateTransitionWhereInput
-  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueWhereInput
-}
-
-input EntityInstanceInformationWhereUniqueInput {
-  id: ID
 }
 
 enum EntityInstanceOrderByInput {
@@ -4130,7 +3029,7 @@ type EntityInstanceStateTransition implements Node {
   id: ID!
   from: EntityInstanceState!
   to: EntityInstanceState
-  information(where: EntityInstanceInformationWhereInput, orderBy: EntityInstanceInformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceInformation!]
+  information(where: InformationWhereInput, orderBy: InformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Information!]
   unlocks(where: EntityInstanceStateWhereInput, orderBy: EntityInstanceStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceState!]
 }
 
@@ -4147,7 +3046,7 @@ type EntityInstanceStateTransitionConnection {
 input EntityInstanceStateTransitionCreateInput {
   from: EntityInstanceStateCreateOneWithoutOutgoingTransitionsInput!
   to: EntityInstanceStateCreateOneWithoutIncomingTransitionsInput
-  information: EntityInstanceInformationCreateManyWithoutEntityInstanceStateTransitionInput
+  information: InformationCreateManyWithoutEntityInstanceStateTransitionInput
   unlocks: EntityInstanceStateCreateManyWithoutUnlockedByInput
 }
 
@@ -4173,7 +3072,7 @@ input EntityInstanceStateTransitionCreateOneWithoutInformationInput {
 
 input EntityInstanceStateTransitionCreateWithoutFromInput {
   to: EntityInstanceStateCreateOneWithoutIncomingTransitionsInput
-  information: EntityInstanceInformationCreateManyWithoutEntityInstanceStateTransitionInput
+  information: InformationCreateManyWithoutEntityInstanceStateTransitionInput
   unlocks: EntityInstanceStateCreateManyWithoutUnlockedByInput
 }
 
@@ -4185,14 +3084,14 @@ input EntityInstanceStateTransitionCreateWithoutInformationInput {
 
 input EntityInstanceStateTransitionCreateWithoutToInput {
   from: EntityInstanceStateCreateOneWithoutOutgoingTransitionsInput!
-  information: EntityInstanceInformationCreateManyWithoutEntityInstanceStateTransitionInput
+  information: InformationCreateManyWithoutEntityInstanceStateTransitionInput
   unlocks: EntityInstanceStateCreateManyWithoutUnlockedByInput
 }
 
 input EntityInstanceStateTransitionCreateWithoutUnlocksInput {
   from: EntityInstanceStateCreateOneWithoutOutgoingTransitionsInput!
   to: EntityInstanceStateCreateOneWithoutIncomingTransitionsInput
-  information: EntityInstanceInformationCreateManyWithoutEntityInstanceStateTransitionInput
+  information: InformationCreateManyWithoutEntityInstanceStateTransitionInput
 }
 
 """An edge in a connection."""
@@ -4310,7 +3209,7 @@ input EntityInstanceStateTransitionSubscriptionWhereInput {
 input EntityInstanceStateTransitionUpdateInput {
   from: EntityInstanceStateUpdateOneRequiredWithoutOutgoingTransitionsInput
   to: EntityInstanceStateUpdateOneWithoutIncomingTransitionsInput
-  information: EntityInstanceInformationUpdateManyWithoutEntityInstanceStateTransitionInput
+  information: InformationUpdateManyWithoutEntityInstanceStateTransitionInput
   unlocks: EntityInstanceStateUpdateManyWithoutUnlockedByInput
 }
 
@@ -4355,7 +3254,7 @@ input EntityInstanceStateTransitionUpdateOneWithoutInformationInput {
 
 input EntityInstanceStateTransitionUpdateWithoutFromDataInput {
   to: EntityInstanceStateUpdateOneWithoutIncomingTransitionsInput
-  information: EntityInstanceInformationUpdateManyWithoutEntityInstanceStateTransitionInput
+  information: InformationUpdateManyWithoutEntityInstanceStateTransitionInput
   unlocks: EntityInstanceStateUpdateManyWithoutUnlockedByInput
 }
 
@@ -4367,14 +3266,14 @@ input EntityInstanceStateTransitionUpdateWithoutInformationDataInput {
 
 input EntityInstanceStateTransitionUpdateWithoutToDataInput {
   from: EntityInstanceStateUpdateOneRequiredWithoutOutgoingTransitionsInput
-  information: EntityInstanceInformationUpdateManyWithoutEntityInstanceStateTransitionInput
+  information: InformationUpdateManyWithoutEntityInstanceStateTransitionInput
   unlocks: EntityInstanceStateUpdateManyWithoutUnlockedByInput
 }
 
 input EntityInstanceStateTransitionUpdateWithoutUnlocksDataInput {
   from: EntityInstanceStateUpdateOneRequiredWithoutOutgoingTransitionsInput
   to: EntityInstanceStateUpdateOneWithoutIncomingTransitionsInput
-  information: EntityInstanceInformationUpdateManyWithoutEntityInstanceStateTransitionInput
+  information: InformationUpdateManyWithoutEntityInstanceStateTransitionInput
 }
 
 input EntityInstanceStateTransitionUpdateWithWhereUniqueWithoutFromInput {
@@ -4466,9 +3365,9 @@ input EntityInstanceStateTransitionWhereInput {
   id_not_ends_with: ID
   from: EntityInstanceStateWhereInput
   to: EntityInstanceStateWhereInput
-  information_every: EntityInstanceInformationWhereInput
-  information_some: EntityInstanceInformationWhereInput
-  information_none: EntityInstanceInformationWhereInput
+  information_every: InformationWhereInput
+  information_some: InformationWhereInput
+  information_none: InformationWhereInput
   unlocks_every: EntityInstanceStateWhereInput
   unlocks_some: EntityInstanceStateWhereInput
   unlocks_none: EntityInstanceStateWhereInput
@@ -4692,9 +3591,9 @@ input EntityInstanceUpdateDataInput {
   description: String
   game: GameUpdateOneRequiredWithoutInstancesInput
   entity: EntityUpdateOneRequiredWithoutInstancesInput
-  fields: EntityInstanceFieldUpdateManyInput
+  fieldValues: FieldValueUpdateManyInput
   states: EntityInstanceStateUpdateManyWithoutInstanceInput
-  information: EntityInstanceInformationUpdateManyInput
+  information: InformationUpdateManyInput
   actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
   hints: HintUpdateManyWithoutEntityInstanceInput
 }
@@ -4704,9 +3603,9 @@ input EntityInstanceUpdateInput {
   description: String
   game: GameUpdateOneRequiredWithoutInstancesInput
   entity: EntityUpdateOneRequiredWithoutInstancesInput
-  fields: EntityInstanceFieldUpdateManyInput
+  fieldValues: FieldValueUpdateManyInput
   states: EntityInstanceStateUpdateManyWithoutInstanceInput
-  information: EntityInstanceInformationUpdateManyInput
+  information: InformationUpdateManyInput
   actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
   hints: HintUpdateManyWithoutEntityInstanceInput
 }
@@ -4789,9 +3688,9 @@ input EntityInstanceUpdateWithoutActionRequirementsWithCustomHintsDataInput {
   description: String
   game: GameUpdateOneRequiredWithoutInstancesInput
   entity: EntityUpdateOneRequiredWithoutInstancesInput
-  fields: EntityInstanceFieldUpdateManyInput
+  fieldValues: FieldValueUpdateManyInput
   states: EntityInstanceStateUpdateManyWithoutInstanceInput
-  information: EntityInstanceInformationUpdateManyInput
+  information: InformationUpdateManyInput
   hints: HintUpdateManyWithoutEntityInstanceInput
 }
 
@@ -4799,9 +3698,9 @@ input EntityInstanceUpdateWithoutEntityDataInput {
   name: String
   description: String
   game: GameUpdateOneRequiredWithoutInstancesInput
-  fields: EntityInstanceFieldUpdateManyInput
+  fieldValues: FieldValueUpdateManyInput
   states: EntityInstanceStateUpdateManyWithoutInstanceInput
-  information: EntityInstanceInformationUpdateManyInput
+  information: InformationUpdateManyInput
   actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
   hints: HintUpdateManyWithoutEntityInstanceInput
 }
@@ -4810,9 +3709,9 @@ input EntityInstanceUpdateWithoutGameDataInput {
   name: String
   description: String
   entity: EntityUpdateOneRequiredWithoutInstancesInput
-  fields: EntityInstanceFieldUpdateManyInput
+  fieldValues: FieldValueUpdateManyInput
   states: EntityInstanceStateUpdateManyWithoutInstanceInput
-  information: EntityInstanceInformationUpdateManyInput
+  information: InformationUpdateManyInput
   actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
   hints: HintUpdateManyWithoutEntityInstanceInput
 }
@@ -4822,9 +3721,9 @@ input EntityInstanceUpdateWithoutHintsDataInput {
   description: String
   game: GameUpdateOneRequiredWithoutInstancesInput
   entity: EntityUpdateOneRequiredWithoutInstancesInput
-  fields: EntityInstanceFieldUpdateManyInput
+  fieldValues: FieldValueUpdateManyInput
   states: EntityInstanceStateUpdateManyWithoutInstanceInput
-  information: EntityInstanceInformationUpdateManyInput
+  information: InformationUpdateManyInput
   actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
 }
 
@@ -4833,8 +3732,8 @@ input EntityInstanceUpdateWithoutStatesDataInput {
   description: String
   game: GameUpdateOneRequiredWithoutInstancesInput
   entity: EntityUpdateOneRequiredWithoutInstancesInput
-  fields: EntityInstanceFieldUpdateManyInput
-  information: EntityInstanceInformationUpdateManyInput
+  fieldValues: FieldValueUpdateManyInput
+  information: InformationUpdateManyInput
   actionRequirementsWithCustomHints: ActionRequirementUpdateManyWithoutEntityInstancesWhereCustomHintsInput
   hints: HintUpdateManyWithoutEntityInstanceInput
 }
@@ -5018,15 +3917,15 @@ input EntityInstanceWhereInput {
   description_not_ends_with: String
   game: GameWhereInput
   entity: EntityWhereInput
-  fields_every: EntityInstanceFieldWhereInput
-  fields_some: EntityInstanceFieldWhereInput
-  fields_none: EntityInstanceFieldWhereInput
+  fieldValues_every: FieldValueWhereInput
+  fieldValues_some: FieldValueWhereInput
+  fieldValues_none: FieldValueWhereInput
   states_every: EntityInstanceStateWhereInput
   states_some: EntityInstanceStateWhereInput
   states_none: EntityInstanceStateWhereInput
-  information_every: EntityInstanceInformationWhereInput
-  information_some: EntityInstanceInformationWhereInput
-  information_none: EntityInstanceInformationWhereInput
+  information_every: InformationWhereInput
+  information_some: InformationWhereInput
+  information_none: InformationWhereInput
   actionRequirementsWithCustomHints_every: ActionRequirementWhereInput
   actionRequirementsWithCustomHints_some: ActionRequirementWhereInput
   actionRequirementsWithCustomHints_none: ActionRequirementWhereInput
@@ -5071,7 +3970,7 @@ type EntityState implements Node {
   id: ID!
   name: String!
   description: String
-  availableInformation(where: InformationWhereInput, orderBy: InformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Information!]
+  availableInformationSlots(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlot!]
   outgoingTransitions(where: EntityStateTransitionWhereInput, orderBy: EntityStateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityStateTransition!]
   incomingTransitions(where: EntityStateTransitionWhereInput, orderBy: EntityStateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityStateTransition!]
   entity: Entity!
@@ -5090,14 +3989,14 @@ type EntityStateConnection {
 input EntityStateCreateInput {
   name: String
   description: String
-  availableInformation: InformationCreateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotCreateManyWithoutEntityStatesInput
   outgoingTransitions: EntityStateTransitionCreateManyWithoutFromInput
   incomingTransitions: EntityStateTransitionCreateManyWithoutToInput
   entity: EntityCreateOneWithoutStatesInput!
 }
 
-input EntityStateCreateManyWithoutAvailableInformationInput {
-  create: [EntityStateCreateWithoutAvailableInformationInput!]
+input EntityStateCreateManyWithoutAvailableInformationSlotsInput {
+  create: [EntityStateCreateWithoutAvailableInformationSlotsInput!]
   connect: [EntityStateWhereUniqueInput!]
 }
 
@@ -5121,7 +4020,7 @@ input EntityStateCreateOneWithoutOutgoingTransitionsInput {
   connect: EntityStateWhereUniqueInput
 }
 
-input EntityStateCreateWithoutAvailableInformationInput {
+input EntityStateCreateWithoutAvailableInformationSlotsInput {
   name: String
   description: String
   outgoingTransitions: EntityStateTransitionCreateManyWithoutFromInput
@@ -5132,7 +4031,7 @@ input EntityStateCreateWithoutAvailableInformationInput {
 input EntityStateCreateWithoutEntityInput {
   name: String
   description: String
-  availableInformation: InformationCreateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotCreateManyWithoutEntityStatesInput
   outgoingTransitions: EntityStateTransitionCreateManyWithoutFromInput
   incomingTransitions: EntityStateTransitionCreateManyWithoutToInput
 }
@@ -5140,7 +4039,7 @@ input EntityStateCreateWithoutEntityInput {
 input EntityStateCreateWithoutIncomingTransitionsInput {
   name: String
   description: String
-  availableInformation: InformationCreateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotCreateManyWithoutEntityStatesInput
   outgoingTransitions: EntityStateTransitionCreateManyWithoutFromInput
   entity: EntityCreateOneWithoutStatesInput!
 }
@@ -5148,7 +4047,7 @@ input EntityStateCreateWithoutIncomingTransitionsInput {
 input EntityStateCreateWithoutOutgoingTransitionsInput {
   name: String
   description: String
-  availableInformation: InformationCreateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotCreateManyWithoutEntityStatesInput
   incomingTransitions: EntityStateTransitionCreateManyWithoutToInput
   entity: EntityCreateOneWithoutStatesInput!
 }
@@ -5627,7 +4526,7 @@ input EntityStateTransitionWhereUniqueInput {
 input EntityStateUpdateDataInput {
   name: String
   description: String
-  availableInformation: InformationUpdateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotUpdateManyWithoutEntityStatesInput
   outgoingTransitions: EntityStateTransitionUpdateManyWithoutFromInput
   incomingTransitions: EntityStateTransitionUpdateManyWithoutToInput
   entity: EntityUpdateOneRequiredWithoutStatesInput
@@ -5636,7 +4535,7 @@ input EntityStateUpdateDataInput {
 input EntityStateUpdateInput {
   name: String
   description: String
-  availableInformation: InformationUpdateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotUpdateManyWithoutEntityStatesInput
   outgoingTransitions: EntityStateTransitionUpdateManyWithoutFromInput
   incomingTransitions: EntityStateTransitionUpdateManyWithoutToInput
   entity: EntityUpdateOneRequiredWithoutStatesInput
@@ -5652,15 +4551,15 @@ input EntityStateUpdateManyMutationInput {
   description: String
 }
 
-input EntityStateUpdateManyWithoutAvailableInformationInput {
-  create: [EntityStateCreateWithoutAvailableInformationInput!]
+input EntityStateUpdateManyWithoutAvailableInformationSlotsInput {
+  create: [EntityStateCreateWithoutAvailableInformationSlotsInput!]
   connect: [EntityStateWhereUniqueInput!]
   disconnect: [EntityStateWhereUniqueInput!]
   delete: [EntityStateWhereUniqueInput!]
-  update: [EntityStateUpdateWithWhereUniqueWithoutAvailableInformationInput!]
+  update: [EntityStateUpdateWithWhereUniqueWithoutAvailableInformationSlotsInput!]
   updateMany: [EntityStateUpdateManyWithWhereNestedInput!]
   deleteMany: [EntityStateScalarWhereInput!]
-  upsert: [EntityStateUpsertWithWhereUniqueWithoutAvailableInformationInput!]
+  upsert: [EntityStateUpsertWithWhereUniqueWithoutAvailableInformationSlotsInput!]
 }
 
 input EntityStateUpdateManyWithoutEntityInput {
@@ -5711,7 +4610,7 @@ input EntityStateUpdateOneWithoutIncomingTransitionsInput {
   upsert: EntityStateUpsertWithoutIncomingTransitionsInput
 }
 
-input EntityStateUpdateWithoutAvailableInformationDataInput {
+input EntityStateUpdateWithoutAvailableInformationSlotsDataInput {
   name: String
   description: String
   outgoingTransitions: EntityStateTransitionUpdateManyWithoutFromInput
@@ -5722,7 +4621,7 @@ input EntityStateUpdateWithoutAvailableInformationDataInput {
 input EntityStateUpdateWithoutEntityDataInput {
   name: String
   description: String
-  availableInformation: InformationUpdateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotUpdateManyWithoutEntityStatesInput
   outgoingTransitions: EntityStateTransitionUpdateManyWithoutFromInput
   incomingTransitions: EntityStateTransitionUpdateManyWithoutToInput
 }
@@ -5730,7 +4629,7 @@ input EntityStateUpdateWithoutEntityDataInput {
 input EntityStateUpdateWithoutIncomingTransitionsDataInput {
   name: String
   description: String
-  availableInformation: InformationUpdateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotUpdateManyWithoutEntityStatesInput
   outgoingTransitions: EntityStateTransitionUpdateManyWithoutFromInput
   entity: EntityUpdateOneRequiredWithoutStatesInput
 }
@@ -5738,14 +4637,14 @@ input EntityStateUpdateWithoutIncomingTransitionsDataInput {
 input EntityStateUpdateWithoutOutgoingTransitionsDataInput {
   name: String
   description: String
-  availableInformation: InformationUpdateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotUpdateManyWithoutEntityStatesInput
   incomingTransitions: EntityStateTransitionUpdateManyWithoutToInput
   entity: EntityUpdateOneRequiredWithoutStatesInput
 }
 
-input EntityStateUpdateWithWhereUniqueWithoutAvailableInformationInput {
+input EntityStateUpdateWithWhereUniqueWithoutAvailableInformationSlotsInput {
   where: EntityStateWhereUniqueInput!
-  data: EntityStateUpdateWithoutAvailableInformationDataInput!
+  data: EntityStateUpdateWithoutAvailableInformationSlotsDataInput!
 }
 
 input EntityStateUpdateWithWhereUniqueWithoutEntityInput {
@@ -5768,10 +4667,10 @@ input EntityStateUpsertWithoutOutgoingTransitionsInput {
   create: EntityStateCreateWithoutOutgoingTransitionsInput!
 }
 
-input EntityStateUpsertWithWhereUniqueWithoutAvailableInformationInput {
+input EntityStateUpsertWithWhereUniqueWithoutAvailableInformationSlotsInput {
   where: EntityStateWhereUniqueInput!
-  update: EntityStateUpdateWithoutAvailableInformationDataInput!
-  create: EntityStateCreateWithoutAvailableInformationInput!
+  update: EntityStateUpdateWithoutAvailableInformationSlotsDataInput!
+  create: EntityStateCreateWithoutAvailableInformationSlotsInput!
 }
 
 input EntityStateUpsertWithWhereUniqueWithoutEntityInput {
@@ -5909,9 +4808,9 @@ input EntityStateWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
-  availableInformation_every: InformationWhereInput
-  availableInformation_some: InformationWhereInput
-  availableInformation_none: InformationWhereInput
+  availableInformationSlots_every: InformationSlotWhereInput
+  availableInformationSlots_some: InformationSlotWhereInput
+  availableInformationSlots_none: InformationSlotWhereInput
   outgoingTransitions_every: EntityStateTransitionWhereInput
   outgoingTransitions_some: EntityStateTransitionWhereInput
   outgoingTransitions_none: EntityStateTransitionWhereInput
@@ -5970,10 +4869,10 @@ input EntityUpdateDataInput {
   isTrigger: Boolean
   isItem: Boolean
   isObject: Boolean
-  fields: EntityFieldUpdateManyWithoutEntityInput
+  fields: FieldUpdateManyWithoutEntityInput
   states: EntityStateUpdateManyWithoutEntityInput
-  information: InformationUpdateManyWithoutEntityInput
-  featuredField: EntityFieldUpdateOneInput
+  informationSlots: InformationSlotUpdateManyWithoutEntityInput
+  featuredField: FieldUpdateOneInput
   defaultState: EntityStateUpdateOneInput
   instances: EntityInstanceUpdateManyWithoutEntityInput
 }
@@ -5984,10 +4883,10 @@ input EntityUpdateInput {
   isTrigger: Boolean
   isItem: Boolean
   isObject: Boolean
-  fields: EntityFieldUpdateManyWithoutEntityInput
+  fields: FieldUpdateManyWithoutEntityInput
   states: EntityStateUpdateManyWithoutEntityInput
-  information: InformationUpdateManyWithoutEntityInput
-  featuredField: EntityFieldUpdateOneInput
+  informationSlots: InformationSlotUpdateManyWithoutEntityInput
+  featuredField: FieldUpdateOneInput
   defaultState: EntityStateUpdateOneInput
   instances: EntityInstanceUpdateManyWithoutEntityInput
 }
@@ -6014,11 +4913,11 @@ input EntityUpdateOneRequiredWithoutFieldsInput {
   upsert: EntityUpsertWithoutFieldsInput
 }
 
-input EntityUpdateOneRequiredWithoutInformationInput {
-  create: EntityCreateWithoutInformationInput
+input EntityUpdateOneRequiredWithoutInformationSlotsInput {
+  create: EntityCreateWithoutInformationSlotsInput
   connect: EntityWhereUniqueInput
-  update: EntityUpdateWithoutInformationDataInput
-  upsert: EntityUpsertWithoutInformationInput
+  update: EntityUpdateWithoutInformationSlotsDataInput
+  upsert: EntityUpsertWithoutInformationSlotsInput
 }
 
 input EntityUpdateOneRequiredWithoutInstancesInput {
@@ -6042,21 +4941,21 @@ input EntityUpdateWithoutFieldsDataInput {
   isItem: Boolean
   isObject: Boolean
   states: EntityStateUpdateManyWithoutEntityInput
-  information: InformationUpdateManyWithoutEntityInput
-  featuredField: EntityFieldUpdateOneInput
+  informationSlots: InformationSlotUpdateManyWithoutEntityInput
+  featuredField: FieldUpdateOneInput
   defaultState: EntityStateUpdateOneInput
   instances: EntityInstanceUpdateManyWithoutEntityInput
 }
 
-input EntityUpdateWithoutInformationDataInput {
+input EntityUpdateWithoutInformationSlotsDataInput {
   name: String
   description: String
   isTrigger: Boolean
   isItem: Boolean
   isObject: Boolean
-  fields: EntityFieldUpdateManyWithoutEntityInput
+  fields: FieldUpdateManyWithoutEntityInput
   states: EntityStateUpdateManyWithoutEntityInput
-  featuredField: EntityFieldUpdateOneInput
+  featuredField: FieldUpdateOneInput
   defaultState: EntityStateUpdateOneInput
   instances: EntityInstanceUpdateManyWithoutEntityInput
 }
@@ -6067,10 +4966,10 @@ input EntityUpdateWithoutInstancesDataInput {
   isTrigger: Boolean
   isItem: Boolean
   isObject: Boolean
-  fields: EntityFieldUpdateManyWithoutEntityInput
+  fields: FieldUpdateManyWithoutEntityInput
   states: EntityStateUpdateManyWithoutEntityInput
-  information: InformationUpdateManyWithoutEntityInput
-  featuredField: EntityFieldUpdateOneInput
+  informationSlots: InformationSlotUpdateManyWithoutEntityInput
+  featuredField: FieldUpdateOneInput
   defaultState: EntityStateUpdateOneInput
 }
 
@@ -6080,9 +4979,9 @@ input EntityUpdateWithoutStatesDataInput {
   isTrigger: Boolean
   isItem: Boolean
   isObject: Boolean
-  fields: EntityFieldUpdateManyWithoutEntityInput
-  information: InformationUpdateManyWithoutEntityInput
-  featuredField: EntityFieldUpdateOneInput
+  fields: FieldUpdateManyWithoutEntityInput
+  informationSlots: InformationSlotUpdateManyWithoutEntityInput
+  featuredField: FieldUpdateOneInput
   defaultState: EntityStateUpdateOneInput
   instances: EntityInstanceUpdateManyWithoutEntityInput
 }
@@ -6097,9 +4996,9 @@ input EntityUpsertWithoutFieldsInput {
   create: EntityCreateWithoutFieldsInput!
 }
 
-input EntityUpsertWithoutInformationInput {
-  update: EntityUpdateWithoutInformationDataInput!
-  create: EntityCreateWithoutInformationInput!
+input EntityUpsertWithoutInformationSlotsInput {
+  update: EntityUpdateWithoutInformationSlotsDataInput!
+  create: EntityCreateWithoutInformationSlotsInput!
 }
 
 input EntityUpsertWithoutInstancesInput {
@@ -6253,16 +5152,16 @@ input EntityWhereInput {
 
   """All values that are not equal to given value."""
   isObject_not: Boolean
-  fields_every: EntityFieldWhereInput
-  fields_some: EntityFieldWhereInput
-  fields_none: EntityFieldWhereInput
+  fields_every: FieldWhereInput
+  fields_some: FieldWhereInput
+  fields_none: FieldWhereInput
   states_every: EntityStateWhereInput
   states_some: EntityStateWhereInput
   states_none: EntityStateWhereInput
-  information_every: InformationWhereInput
-  information_some: InformationWhereInput
-  information_none: InformationWhereInput
-  featuredField: EntityFieldWhereInput
+  informationSlots_every: InformationSlotWhereInput
+  informationSlots_some: InformationSlotWhereInput
+  informationSlots_none: InformationSlotWhereInput
+  featuredField: FieldWhereInput
   defaultState: EntityStateWhereInput
   instances_every: EntityInstanceWhereInput
   instances_some: EntityInstanceWhereInput
@@ -6273,12 +5172,1090 @@ input EntityWhereUniqueInput {
   id: ID
 }
 
-enum FieldType {
-  STRING
-  NUMBER
-  BOOLEAN
-  TIMESTAMP
-  GEOPOINT
+type Field implements Node {
+  id: ID!
+  label: String!
+  info: String
+  type: FieldType!
+  isSecret: Boolean!
+  entity: Entity!
+}
+
+"""A connection to a list of items."""
+type FieldConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FieldEdge]!
+  aggregate: AggregateField!
+}
+
+input FieldCreateInput {
+  label: String!
+  info: String
+  isSecret: Boolean
+  type: FieldTypeCreateOneInput!
+  entity: EntityCreateOneWithoutFieldsInput!
+}
+
+input FieldCreateManyWithoutEntityInput {
+  create: [FieldCreateWithoutEntityInput!]
+  connect: [FieldWhereUniqueInput!]
+}
+
+input FieldCreateOneInput {
+  create: FieldCreateInput
+  connect: FieldWhereUniqueInput
+}
+
+input FieldCreateWithoutEntityInput {
+  label: String!
+  info: String
+  isSecret: Boolean
+  type: FieldTypeCreateOneInput!
+}
+
+"""An edge in a connection."""
+type FieldEdge {
+  """The item at the end of the edge."""
+  node: Field!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FieldOrderByInput {
+  id_ASC
+  id_DESC
+  label_ASC
+  label_DESC
+  info_ASC
+  info_DESC
+  isSecret_ASC
+  isSecret_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FieldPreviousValues {
+  id: ID!
+  label: String!
+  info: String
+  isSecret: Boolean!
+}
+
+input FieldScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  label: String
+
+  """All values that are not equal to given value."""
+  label_not: String
+
+  """All values that are contained in given list."""
+  label_in: [String!]
+
+  """All values that are not contained in given list."""
+  label_not_in: [String!]
+
+  """All values less than the given value."""
+  label_lt: String
+
+  """All values less than or equal the given value."""
+  label_lte: String
+
+  """All values greater than the given value."""
+  label_gt: String
+
+  """All values greater than or equal the given value."""
+  label_gte: String
+
+  """All values containing the given string."""
+  label_contains: String
+
+  """All values not containing the given string."""
+  label_not_contains: String
+
+  """All values starting with the given string."""
+  label_starts_with: String
+
+  """All values not starting with the given string."""
+  label_not_starts_with: String
+
+  """All values ending with the given string."""
+  label_ends_with: String
+
+  """All values not ending with the given string."""
+  label_not_ends_with: String
+  info: String
+
+  """All values that are not equal to given value."""
+  info_not: String
+
+  """All values that are contained in given list."""
+  info_in: [String!]
+
+  """All values that are not contained in given list."""
+  info_not_in: [String!]
+
+  """All values less than the given value."""
+  info_lt: String
+
+  """All values less than or equal the given value."""
+  info_lte: String
+
+  """All values greater than the given value."""
+  info_gt: String
+
+  """All values greater than or equal the given value."""
+  info_gte: String
+
+  """All values containing the given string."""
+  info_contains: String
+
+  """All values not containing the given string."""
+  info_not_contains: String
+
+  """All values starting with the given string."""
+  info_starts_with: String
+
+  """All values not starting with the given string."""
+  info_not_starts_with: String
+
+  """All values ending with the given string."""
+  info_ends_with: String
+
+  """All values not ending with the given string."""
+  info_not_ends_with: String
+  isSecret: Boolean
+
+  """All values that are not equal to given value."""
+  isSecret_not: Boolean
+}
+
+type FieldSubscriptionPayload {
+  mutation: MutationType!
+  node: Field
+  updatedFields: [String!]
+  previousValues: FieldPreviousValues
+}
+
+input FieldSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FieldWhereInput
+}
+
+type FieldType implements Node {
+  id: ID!
+  type: ValueType!
+  isMulti: Boolean!
+}
+
+"""A connection to a list of items."""
+type FieldTypeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FieldTypeEdge]!
+  aggregate: AggregateFieldType!
+}
+
+input FieldTypeCreateInput {
+  type: ValueType
+  isMulti: Boolean
+}
+
+input FieldTypeCreateManyInput {
+  create: [FieldTypeCreateInput!]
+  connect: [FieldTypeWhereUniqueInput!]
+}
+
+input FieldTypeCreateOneInput {
+  create: FieldTypeCreateInput
+  connect: FieldTypeWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type FieldTypeEdge {
+  """The item at the end of the edge."""
+  node: FieldType!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FieldTypeOrderByInput {
+  id_ASC
+  id_DESC
+  type_ASC
+  type_DESC
+  isMulti_ASC
+  isMulti_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FieldTypePreviousValues {
+  id: ID!
+  type: ValueType!
+  isMulti: Boolean!
+}
+
+input FieldTypeScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldTypeScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldTypeScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldTypeScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  type: ValueType
+
+  """All values that are not equal to given value."""
+  type_not: ValueType
+
+  """All values that are contained in given list."""
+  type_in: [ValueType!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [ValueType!]
+  isMulti: Boolean
+
+  """All values that are not equal to given value."""
+  isMulti_not: Boolean
+}
+
+type FieldTypeSubscriptionPayload {
+  mutation: MutationType!
+  node: FieldType
+  updatedFields: [String!]
+  previousValues: FieldTypePreviousValues
+}
+
+input FieldTypeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldTypeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldTypeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldTypeSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FieldTypeWhereInput
+}
+
+input FieldTypeUpdateDataInput {
+  type: ValueType
+  isMulti: Boolean
+}
+
+input FieldTypeUpdateInput {
+  type: ValueType
+  isMulti: Boolean
+}
+
+input FieldTypeUpdateManyDataInput {
+  type: ValueType
+  isMulti: Boolean
+}
+
+input FieldTypeUpdateManyInput {
+  create: [FieldTypeCreateInput!]
+  connect: [FieldTypeWhereUniqueInput!]
+  disconnect: [FieldTypeWhereUniqueInput!]
+  delete: [FieldTypeWhereUniqueInput!]
+  update: [FieldTypeUpdateWithWhereUniqueNestedInput!]
+  updateMany: [FieldTypeUpdateManyWithWhereNestedInput!]
+  deleteMany: [FieldTypeScalarWhereInput!]
+  upsert: [FieldTypeUpsertWithWhereUniqueNestedInput!]
+}
+
+input FieldTypeUpdateManyMutationInput {
+  type: ValueType
+  isMulti: Boolean
+}
+
+input FieldTypeUpdateManyWithWhereNestedInput {
+  where: FieldTypeScalarWhereInput!
+  data: FieldTypeUpdateManyDataInput!
+}
+
+input FieldTypeUpdateOneRequiredInput {
+  create: FieldTypeCreateInput
+  connect: FieldTypeWhereUniqueInput
+  update: FieldTypeUpdateDataInput
+  upsert: FieldTypeUpsertNestedInput
+}
+
+input FieldTypeUpdateWithWhereUniqueNestedInput {
+  where: FieldTypeWhereUniqueInput!
+  data: FieldTypeUpdateDataInput!
+}
+
+input FieldTypeUpsertNestedInput {
+  update: FieldTypeUpdateDataInput!
+  create: FieldTypeCreateInput!
+}
+
+input FieldTypeUpsertWithWhereUniqueNestedInput {
+  where: FieldTypeWhereUniqueInput!
+  update: FieldTypeUpdateDataInput!
+  create: FieldTypeCreateInput!
+}
+
+input FieldTypeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldTypeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldTypeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldTypeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  type: ValueType
+
+  """All values that are not equal to given value."""
+  type_not: ValueType
+
+  """All values that are contained in given list."""
+  type_in: [ValueType!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [ValueType!]
+  isMulti: Boolean
+
+  """All values that are not equal to given value."""
+  isMulti_not: Boolean
+}
+
+input FieldTypeWhereUniqueInput {
+  id: ID
+}
+
+input FieldUpdateDataInput {
+  label: String
+  info: String
+  isSecret: Boolean
+  type: FieldTypeUpdateOneRequiredInput
+  entity: EntityUpdateOneRequiredWithoutFieldsInput
+}
+
+input FieldUpdateInput {
+  label: String
+  info: String
+  isSecret: Boolean
+  type: FieldTypeUpdateOneRequiredInput
+  entity: EntityUpdateOneRequiredWithoutFieldsInput
+}
+
+input FieldUpdateManyDataInput {
+  label: String
+  info: String
+  isSecret: Boolean
+}
+
+input FieldUpdateManyMutationInput {
+  label: String
+  info: String
+  isSecret: Boolean
+}
+
+input FieldUpdateManyWithoutEntityInput {
+  create: [FieldCreateWithoutEntityInput!]
+  connect: [FieldWhereUniqueInput!]
+  disconnect: [FieldWhereUniqueInput!]
+  delete: [FieldWhereUniqueInput!]
+  update: [FieldUpdateWithWhereUniqueWithoutEntityInput!]
+  updateMany: [FieldUpdateManyWithWhereNestedInput!]
+  deleteMany: [FieldScalarWhereInput!]
+  upsert: [FieldUpsertWithWhereUniqueWithoutEntityInput!]
+}
+
+input FieldUpdateManyWithWhereNestedInput {
+  where: FieldScalarWhereInput!
+  data: FieldUpdateManyDataInput!
+}
+
+input FieldUpdateOneInput {
+  create: FieldCreateInput
+  connect: FieldWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: FieldUpdateDataInput
+  upsert: FieldUpsertNestedInput
+}
+
+input FieldUpdateOneRequiredInput {
+  create: FieldCreateInput
+  connect: FieldWhereUniqueInput
+  update: FieldUpdateDataInput
+  upsert: FieldUpsertNestedInput
+}
+
+input FieldUpdateWithoutEntityDataInput {
+  label: String
+  info: String
+  isSecret: Boolean
+  type: FieldTypeUpdateOneRequiredInput
+}
+
+input FieldUpdateWithWhereUniqueWithoutEntityInput {
+  where: FieldWhereUniqueInput!
+  data: FieldUpdateWithoutEntityDataInput!
+}
+
+input FieldUpsertNestedInput {
+  update: FieldUpdateDataInput!
+  create: FieldCreateInput!
+}
+
+input FieldUpsertWithWhereUniqueWithoutEntityInput {
+  where: FieldWhereUniqueInput!
+  update: FieldUpdateWithoutEntityDataInput!
+  create: FieldCreateWithoutEntityInput!
+}
+
+type FieldValue implements Node {
+  id: ID!
+  field: Field!
+  value: String
+}
+
+"""A connection to a list of items."""
+type FieldValueConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FieldValueEdge]!
+  aggregate: AggregateFieldValue!
+}
+
+input FieldValueCreateInput {
+  value: String
+  field: FieldCreateOneInput!
+}
+
+input FieldValueCreateManyInput {
+  create: [FieldValueCreateInput!]
+  connect: [FieldValueWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type FieldValueEdge {
+  """The item at the end of the edge."""
+  node: FieldValue!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FieldValueOrderByInput {
+  id_ASC
+  id_DESC
+  value_ASC
+  value_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FieldValuePreviousValues {
+  id: ID!
+  value: String
+}
+
+input FieldValueScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldValueScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldValueScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldValueScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+}
+
+type FieldValueSubscriptionPayload {
+  mutation: MutationType!
+  node: FieldValue
+  updatedFields: [String!]
+  previousValues: FieldValuePreviousValues
+}
+
+input FieldValueSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldValueSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldValueSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldValueSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FieldValueWhereInput
+}
+
+input FieldValueUpdateDataInput {
+  value: String
+  field: FieldUpdateOneRequiredInput
+}
+
+input FieldValueUpdateInput {
+  value: String
+  field: FieldUpdateOneRequiredInput
+}
+
+input FieldValueUpdateManyDataInput {
+  value: String
+}
+
+input FieldValueUpdateManyInput {
+  create: [FieldValueCreateInput!]
+  connect: [FieldValueWhereUniqueInput!]
+  disconnect: [FieldValueWhereUniqueInput!]
+  delete: [FieldValueWhereUniqueInput!]
+  update: [FieldValueUpdateWithWhereUniqueNestedInput!]
+  updateMany: [FieldValueUpdateManyWithWhereNestedInput!]
+  deleteMany: [FieldValueScalarWhereInput!]
+  upsert: [FieldValueUpsertWithWhereUniqueNestedInput!]
+}
+
+input FieldValueUpdateManyMutationInput {
+  value: String
+}
+
+input FieldValueUpdateManyWithWhereNestedInput {
+  where: FieldValueScalarWhereInput!
+  data: FieldValueUpdateManyDataInput!
+}
+
+input FieldValueUpdateWithWhereUniqueNestedInput {
+  where: FieldValueWhereUniqueInput!
+  data: FieldValueUpdateDataInput!
+}
+
+input FieldValueUpsertWithWhereUniqueNestedInput {
+  where: FieldValueWhereUniqueInput!
+  update: FieldValueUpdateDataInput!
+  create: FieldValueCreateInput!
+}
+
+input FieldValueWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldValueWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldValueWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldValueWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+  field: FieldWhereInput
+}
+
+input FieldValueWhereUniqueInput {
+  id: ID
+}
+
+input FieldWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FieldWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FieldWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FieldWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  label: String
+
+  """All values that are not equal to given value."""
+  label_not: String
+
+  """All values that are contained in given list."""
+  label_in: [String!]
+
+  """All values that are not contained in given list."""
+  label_not_in: [String!]
+
+  """All values less than the given value."""
+  label_lt: String
+
+  """All values less than or equal the given value."""
+  label_lte: String
+
+  """All values greater than the given value."""
+  label_gt: String
+
+  """All values greater than or equal the given value."""
+  label_gte: String
+
+  """All values containing the given string."""
+  label_contains: String
+
+  """All values not containing the given string."""
+  label_not_contains: String
+
+  """All values starting with the given string."""
+  label_starts_with: String
+
+  """All values not starting with the given string."""
+  label_not_starts_with: String
+
+  """All values ending with the given string."""
+  label_ends_with: String
+
+  """All values not ending with the given string."""
+  label_not_ends_with: String
+  info: String
+
+  """All values that are not equal to given value."""
+  info_not: String
+
+  """All values that are contained in given list."""
+  info_in: [String!]
+
+  """All values that are not contained in given list."""
+  info_not_in: [String!]
+
+  """All values less than the given value."""
+  info_lt: String
+
+  """All values less than or equal the given value."""
+  info_lte: String
+
+  """All values greater than the given value."""
+  info_gt: String
+
+  """All values greater than or equal the given value."""
+  info_gte: String
+
+  """All values containing the given string."""
+  info_contains: String
+
+  """All values not containing the given string."""
+  info_not_contains: String
+
+  """All values starting with the given string."""
+  info_starts_with: String
+
+  """All values not starting with the given string."""
+  info_not_starts_with: String
+
+  """All values ending with the given string."""
+  info_ends_with: String
+
+  """All values not ending with the given string."""
+  info_not_ends_with: String
+  isSecret: Boolean
+
+  """All values that are not equal to given value."""
+  isSecret_not: Boolean
+  type: FieldTypeWhereInput
+  entity: EntityWhereInput
+}
+
+input FieldWhereUniqueInput {
+  id: ID
 }
 
 type Game implements Node {
@@ -7911,12 +7888,9 @@ input HintWhereUniqueInput {
 
 type Information implements Node {
   id: ID!
-  name: String!
-  description: String
-  type: FieldType!
-  isMulti: Boolean!
-  entity: Entity!
-  entityStates(where: EntityStateWhereInput, orderBy: EntityStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityState!]
+  slot: InformationSlot!
+  entityInstanceStateTransition: EntityInstanceStateTransition
+  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValue
 }
 
 """A connection to a list of items."""
@@ -7930,43 +7904,24 @@ type InformationConnection {
 }
 
 input InformationCreateInput {
-  name: String!
-  description: String
-  type: FieldType
-  isMulti: Boolean
-  entity: EntityCreateOneWithoutInformationInput!
-  entityStates: EntityStateCreateManyWithoutAvailableInformationInput
+  slot: InformationSlotCreateOneInput!
+  entityInstanceStateTransition: EntityInstanceStateTransitionCreateOneWithoutInformationInput
+  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueCreateOneInput
 }
 
-input InformationCreateManyWithoutEntityInput {
-  create: [InformationCreateWithoutEntityInput!]
+input InformationCreateManyInput {
+  create: [InformationCreateInput!]
   connect: [InformationWhereUniqueInput!]
 }
 
-input InformationCreateManyWithoutEntityStatesInput {
-  create: [InformationCreateWithoutEntityStatesInput!]
+input InformationCreateManyWithoutEntityInstanceStateTransitionInput {
+  create: [InformationCreateWithoutEntityInstanceStateTransitionInput!]
   connect: [InformationWhereUniqueInput!]
 }
 
-input InformationCreateOneInput {
-  create: InformationCreateInput
-  connect: InformationWhereUniqueInput
-}
-
-input InformationCreateWithoutEntityInput {
-  name: String!
-  description: String
-  type: FieldType
-  isMulti: Boolean
-  entityStates: EntityStateCreateManyWithoutAvailableInformationInput
-}
-
-input InformationCreateWithoutEntityStatesInput {
-  name: String!
-  description: String
-  type: FieldType
-  isMulti: Boolean
-  entity: EntityCreateOneWithoutInformationInput!
+input InformationCreateWithoutEntityInstanceStateTransitionInput {
+  slot: InformationSlotCreateOneInput!
+  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueCreateOneInput
 }
 
 """An edge in a connection."""
@@ -7981,14 +7936,6 @@ type InformationEdge {
 enum InformationOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
-  description_ASC
-  description_DESC
-  type_ASC
-  type_DESC
-  isMulti_ASC
-  isMulti_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -7997,10 +7944,6 @@ enum InformationOrderByInput {
 
 type InformationPreviousValues {
   id: ID!
-  name: String!
-  description: String
-  type: FieldType!
-  isMulti: Boolean!
 }
 
 input InformationScalarWhereInput {
@@ -8052,259 +7995,101 @@ input InformationScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  name: String
+}
 
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
+type InformationSlot implements Node {
+  id: ID!
+  name: String!
   description: String
-
-  """All values that are not equal to given value."""
-  description_not: String
-
-  """All values that are contained in given list."""
-  description_in: [String!]
-
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
-
-  """All values less than the given value."""
-  description_lt: String
-
-  """All values less than or equal the given value."""
-  description_lte: String
-
-  """All values greater than the given value."""
-  description_gt: String
-
-  """All values greater than or equal the given value."""
-  description_gte: String
-
-  """All values containing the given string."""
-  description_contains: String
-
-  """All values not containing the given string."""
-  description_not_contains: String
-
-  """All values starting with the given string."""
-  description_starts_with: String
-
-  """All values not starting with the given string."""
-  description_not_starts_with: String
-
-  """All values ending with the given string."""
-  description_ends_with: String
-
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  type: FieldType
-
-  """All values that are not equal to given value."""
-  type_not: FieldType
-
-  """All values that are contained in given list."""
-  type_in: [FieldType!]
-
-  """All values that are not contained in given list."""
-  type_not_in: [FieldType!]
-  isMulti: Boolean
-
-  """All values that are not equal to given value."""
-  isMulti_not: Boolean
+  allowedTypes(where: FieldTypeWhereInput, orderBy: FieldTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldType!]
+  entity: Entity!
+  entityStates(where: EntityStateWhereInput, orderBy: EntityStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityState!]
 }
 
-type InformationSubscriptionPayload {
-  mutation: MutationType!
-  node: Information
-  updatedFields: [String!]
-  previousValues: InformationPreviousValues
+"""A connection to a list of items."""
+type InformationSlotConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [InformationSlotEdge]!
+  aggregate: AggregateInformationSlot!
 }
 
-input InformationSubscriptionWhereInput {
+input InformationSlotCreateInput {
+  name: String!
+  description: String
+  allowedTypes: FieldTypeCreateManyInput
+  entity: EntityCreateOneWithoutInformationSlotsInput!
+  entityStates: EntityStateCreateManyWithoutAvailableInformationSlotsInput
+}
+
+input InformationSlotCreateManyWithoutEntityInput {
+  create: [InformationSlotCreateWithoutEntityInput!]
+  connect: [InformationSlotWhereUniqueInput!]
+}
+
+input InformationSlotCreateManyWithoutEntityStatesInput {
+  create: [InformationSlotCreateWithoutEntityStatesInput!]
+  connect: [InformationSlotWhereUniqueInput!]
+}
+
+input InformationSlotCreateOneInput {
+  create: InformationSlotCreateInput
+  connect: InformationSlotWhereUniqueInput
+}
+
+input InformationSlotCreateWithoutEntityInput {
+  name: String!
+  description: String
+  allowedTypes: FieldTypeCreateManyInput
+  entityStates: EntityStateCreateManyWithoutAvailableInformationSlotsInput
+}
+
+input InformationSlotCreateWithoutEntityStatesInput {
+  name: String!
+  description: String
+  allowedTypes: FieldTypeCreateManyInput
+  entity: EntityCreateOneWithoutInformationSlotsInput!
+}
+
+"""An edge in a connection."""
+type InformationSlotEdge {
+  """The item at the end of the edge."""
+  node: InformationSlot!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum InformationSlotOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type InformationSlotPreviousValues {
+  id: ID!
+  name: String!
+  description: String
+}
+
+input InformationSlotScalarWhereInput {
   """Logical AND on all given filters."""
-  AND: [InformationSubscriptionWhereInput!]
+  AND: [InformationSlotScalarWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [InformationSubscriptionWhereInput!]
+  OR: [InformationSlotScalarWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [InformationSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: InformationWhereInput
-}
-
-input InformationUpdateDataInput {
-  name: String
-  description: String
-  type: FieldType
-  isMulti: Boolean
-  entity: EntityUpdateOneRequiredWithoutInformationInput
-  entityStates: EntityStateUpdateManyWithoutAvailableInformationInput
-}
-
-input InformationUpdateInput {
-  name: String
-  description: String
-  type: FieldType
-  isMulti: Boolean
-  entity: EntityUpdateOneRequiredWithoutInformationInput
-  entityStates: EntityStateUpdateManyWithoutAvailableInformationInput
-}
-
-input InformationUpdateManyDataInput {
-  name: String
-  description: String
-  type: FieldType
-  isMulti: Boolean
-}
-
-input InformationUpdateManyMutationInput {
-  name: String
-  description: String
-  type: FieldType
-  isMulti: Boolean
-}
-
-input InformationUpdateManyWithoutEntityInput {
-  create: [InformationCreateWithoutEntityInput!]
-  connect: [InformationWhereUniqueInput!]
-  disconnect: [InformationWhereUniqueInput!]
-  delete: [InformationWhereUniqueInput!]
-  update: [InformationUpdateWithWhereUniqueWithoutEntityInput!]
-  updateMany: [InformationUpdateManyWithWhereNestedInput!]
-  deleteMany: [InformationScalarWhereInput!]
-  upsert: [InformationUpsertWithWhereUniqueWithoutEntityInput!]
-}
-
-input InformationUpdateManyWithoutEntityStatesInput {
-  create: [InformationCreateWithoutEntityStatesInput!]
-  connect: [InformationWhereUniqueInput!]
-  disconnect: [InformationWhereUniqueInput!]
-  delete: [InformationWhereUniqueInput!]
-  update: [InformationUpdateWithWhereUniqueWithoutEntityStatesInput!]
-  updateMany: [InformationUpdateManyWithWhereNestedInput!]
-  deleteMany: [InformationScalarWhereInput!]
-  upsert: [InformationUpsertWithWhereUniqueWithoutEntityStatesInput!]
-}
-
-input InformationUpdateManyWithWhereNestedInput {
-  where: InformationScalarWhereInput!
-  data: InformationUpdateManyDataInput!
-}
-
-input InformationUpdateOneRequiredInput {
-  create: InformationCreateInput
-  connect: InformationWhereUniqueInput
-  update: InformationUpdateDataInput
-  upsert: InformationUpsertNestedInput
-}
-
-input InformationUpdateWithoutEntityDataInput {
-  name: String
-  description: String
-  type: FieldType
-  isMulti: Boolean
-  entityStates: EntityStateUpdateManyWithoutAvailableInformationInput
-}
-
-input InformationUpdateWithoutEntityStatesDataInput {
-  name: String
-  description: String
-  type: FieldType
-  isMulti: Boolean
-  entity: EntityUpdateOneRequiredWithoutInformationInput
-}
-
-input InformationUpdateWithWhereUniqueWithoutEntityInput {
-  where: InformationWhereUniqueInput!
-  data: InformationUpdateWithoutEntityDataInput!
-}
-
-input InformationUpdateWithWhereUniqueWithoutEntityStatesInput {
-  where: InformationWhereUniqueInput!
-  data: InformationUpdateWithoutEntityStatesDataInput!
-}
-
-input InformationUpsertNestedInput {
-  update: InformationUpdateDataInput!
-  create: InformationCreateInput!
-}
-
-input InformationUpsertWithWhereUniqueWithoutEntityInput {
-  where: InformationWhereUniqueInput!
-  update: InformationUpdateWithoutEntityDataInput!
-  create: InformationCreateWithoutEntityInput!
-}
-
-input InformationUpsertWithWhereUniqueWithoutEntityStatesInput {
-  where: InformationWhereUniqueInput!
-  update: InformationUpdateWithoutEntityStatesDataInput!
-  create: InformationCreateWithoutEntityStatesInput!
-}
-
-input InformationWhereInput {
-  """Logical AND on all given filters."""
-  AND: [InformationWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [InformationWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [InformationWhereInput!]
+  NOT: [InformationSlotScalarWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -8425,24 +8210,440 @@ input InformationWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
-  type: FieldType
+}
+
+type InformationSlotSubscriptionPayload {
+  mutation: MutationType!
+  node: InformationSlot
+  updatedFields: [String!]
+  previousValues: InformationSlotPreviousValues
+}
+
+input InformationSlotSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [InformationSlotSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [InformationSlotSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [InformationSlotSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: InformationSlotWhereInput
+}
+
+input InformationSlotUpdateDataInput {
+  name: String
+  description: String
+  allowedTypes: FieldTypeUpdateManyInput
+  entity: EntityUpdateOneRequiredWithoutInformationSlotsInput
+  entityStates: EntityStateUpdateManyWithoutAvailableInformationSlotsInput
+}
+
+input InformationSlotUpdateInput {
+  name: String
+  description: String
+  allowedTypes: FieldTypeUpdateManyInput
+  entity: EntityUpdateOneRequiredWithoutInformationSlotsInput
+  entityStates: EntityStateUpdateManyWithoutAvailableInformationSlotsInput
+}
+
+input InformationSlotUpdateManyDataInput {
+  name: String
+  description: String
+}
+
+input InformationSlotUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input InformationSlotUpdateManyWithoutEntityInput {
+  create: [InformationSlotCreateWithoutEntityInput!]
+  connect: [InformationSlotWhereUniqueInput!]
+  disconnect: [InformationSlotWhereUniqueInput!]
+  delete: [InformationSlotWhereUniqueInput!]
+  update: [InformationSlotUpdateWithWhereUniqueWithoutEntityInput!]
+  updateMany: [InformationSlotUpdateManyWithWhereNestedInput!]
+  deleteMany: [InformationSlotScalarWhereInput!]
+  upsert: [InformationSlotUpsertWithWhereUniqueWithoutEntityInput!]
+}
+
+input InformationSlotUpdateManyWithoutEntityStatesInput {
+  create: [InformationSlotCreateWithoutEntityStatesInput!]
+  connect: [InformationSlotWhereUniqueInput!]
+  disconnect: [InformationSlotWhereUniqueInput!]
+  delete: [InformationSlotWhereUniqueInput!]
+  update: [InformationSlotUpdateWithWhereUniqueWithoutEntityStatesInput!]
+  updateMany: [InformationSlotUpdateManyWithWhereNestedInput!]
+  deleteMany: [InformationSlotScalarWhereInput!]
+  upsert: [InformationSlotUpsertWithWhereUniqueWithoutEntityStatesInput!]
+}
+
+input InformationSlotUpdateManyWithWhereNestedInput {
+  where: InformationSlotScalarWhereInput!
+  data: InformationSlotUpdateManyDataInput!
+}
+
+input InformationSlotUpdateOneRequiredInput {
+  create: InformationSlotCreateInput
+  connect: InformationSlotWhereUniqueInput
+  update: InformationSlotUpdateDataInput
+  upsert: InformationSlotUpsertNestedInput
+}
+
+input InformationSlotUpdateWithoutEntityDataInput {
+  name: String
+  description: String
+  allowedTypes: FieldTypeUpdateManyInput
+  entityStates: EntityStateUpdateManyWithoutAvailableInformationSlotsInput
+}
+
+input InformationSlotUpdateWithoutEntityStatesDataInput {
+  name: String
+  description: String
+  allowedTypes: FieldTypeUpdateManyInput
+  entity: EntityUpdateOneRequiredWithoutInformationSlotsInput
+}
+
+input InformationSlotUpdateWithWhereUniqueWithoutEntityInput {
+  where: InformationSlotWhereUniqueInput!
+  data: InformationSlotUpdateWithoutEntityDataInput!
+}
+
+input InformationSlotUpdateWithWhereUniqueWithoutEntityStatesInput {
+  where: InformationSlotWhereUniqueInput!
+  data: InformationSlotUpdateWithoutEntityStatesDataInput!
+}
+
+input InformationSlotUpsertNestedInput {
+  update: InformationSlotUpdateDataInput!
+  create: InformationSlotCreateInput!
+}
+
+input InformationSlotUpsertWithWhereUniqueWithoutEntityInput {
+  where: InformationSlotWhereUniqueInput!
+  update: InformationSlotUpdateWithoutEntityDataInput!
+  create: InformationSlotCreateWithoutEntityInput!
+}
+
+input InformationSlotUpsertWithWhereUniqueWithoutEntityStatesInput {
+  where: InformationSlotWhereUniqueInput!
+  update: InformationSlotUpdateWithoutEntityStatesDataInput!
+  create: InformationSlotCreateWithoutEntityStatesInput!
+}
+
+input InformationSlotWhereInput {
+  """Logical AND on all given filters."""
+  AND: [InformationSlotWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [InformationSlotWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [InformationSlotWhereInput!]
+  id: ID
 
   """All values that are not equal to given value."""
-  type_not: FieldType
+  id_not: ID
 
   """All values that are contained in given list."""
-  type_in: [FieldType!]
+  id_in: [ID!]
 
   """All values that are not contained in given list."""
-  type_not_in: [FieldType!]
-  isMulti: Boolean
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
 
   """All values that are not equal to given value."""
-  isMulti_not: Boolean
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  allowedTypes_every: FieldTypeWhereInput
+  allowedTypes_some: FieldTypeWhereInput
+  allowedTypes_none: FieldTypeWhereInput
   entity: EntityWhereInput
   entityStates_every: EntityStateWhereInput
   entityStates_some: EntityStateWhereInput
   entityStates_none: EntityStateWhereInput
+}
+
+input InformationSlotWhereUniqueInput {
+  id: ID
+}
+
+type InformationSubscriptionPayload {
+  mutation: MutationType!
+  node: Information
+  updatedFields: [String!]
+  previousValues: InformationPreviousValues
+}
+
+input InformationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [InformationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [InformationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [InformationSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: InformationWhereInput
+}
+
+input InformationUpdateDataInput {
+  slot: InformationSlotUpdateOneRequiredInput
+  entityInstanceStateTransition: EntityInstanceStateTransitionUpdateOneWithoutInformationInput
+  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueUpdateOneInput
+}
+
+input InformationUpdateInput {
+  slot: InformationSlotUpdateOneRequiredInput
+  entityInstanceStateTransition: EntityInstanceStateTransitionUpdateOneWithoutInformationInput
+  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueUpdateOneInput
+}
+
+input InformationUpdateManyInput {
+  create: [InformationCreateInput!]
+  connect: [InformationWhereUniqueInput!]
+  disconnect: [InformationWhereUniqueInput!]
+  delete: [InformationWhereUniqueInput!]
+  update: [InformationUpdateWithWhereUniqueNestedInput!]
+  deleteMany: [InformationScalarWhereInput!]
+  upsert: [InformationUpsertWithWhereUniqueNestedInput!]
+}
+
+input InformationUpdateManyWithoutEntityInstanceStateTransitionInput {
+  create: [InformationCreateWithoutEntityInstanceStateTransitionInput!]
+  connect: [InformationWhereUniqueInput!]
+  disconnect: [InformationWhereUniqueInput!]
+  delete: [InformationWhereUniqueInput!]
+  update: [InformationUpdateWithWhereUniqueWithoutEntityInstanceStateTransitionInput!]
+  deleteMany: [InformationScalarWhereInput!]
+  upsert: [InformationUpsertWithWhereUniqueWithoutEntityInstanceStateTransitionInput!]
+}
+
+input InformationUpdateWithoutEntityInstanceStateTransitionDataInput {
+  slot: InformationSlotUpdateOneRequiredInput
+  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueUpdateOneInput
+}
+
+input InformationUpdateWithWhereUniqueNestedInput {
+  where: InformationWhereUniqueInput!
+  data: InformationUpdateDataInput!
+}
+
+input InformationUpdateWithWhereUniqueWithoutEntityInstanceStateTransitionInput {
+  where: InformationWhereUniqueInput!
+  data: InformationUpdateWithoutEntityInstanceStateTransitionDataInput!
+}
+
+input InformationUpsertWithWhereUniqueNestedInput {
+  where: InformationWhereUniqueInput!
+  update: InformationUpdateDataInput!
+  create: InformationCreateInput!
+}
+
+input InformationUpsertWithWhereUniqueWithoutEntityInstanceStateTransitionInput {
+  where: InformationWhereUniqueInput!
+  update: InformationUpdateWithoutEntityInstanceStateTransitionDataInput!
+  create: InformationCreateWithoutEntityInstanceStateTransitionInput!
+}
+
+input InformationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [InformationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [InformationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [InformationWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  slot: InformationSlotWhereInput
+  entityInstanceStateTransition: EntityInstanceStateTransitionWhereInput
+  actionRequirementPayloadInputValue: ActionRequirementPayloadInputValueWhereInput
 }
 
 input InformationWhereUniqueInput {
@@ -8467,16 +8668,17 @@ type Mutation {
   createUser(data: UserCreateInput!): User!
   createAction(data: ActionCreateInput!): Action!
   createActionPayload(data: ActionPayloadCreateInput!): ActionPayload!
-  createInformation(data: InformationCreateInput!): Information!
   createActionRequirement(data: ActionRequirementCreateInput!): ActionRequirement!
-  createEntityField(data: EntityFieldCreateInput!): EntityField!
+  createField(data: FieldCreateInput!): Field!
   createActionPayloadInputValue(data: ActionPayloadInputValueCreateInput!): ActionPayloadInputValue!
   createEntityInstance(data: EntityInstanceCreateInput!): EntityInstance!
-  createEntityInstanceInformation(data: EntityInstanceInformationCreateInput!): EntityInstanceInformation!
-  createEntityState(data: EntityStateCreateInput!): EntityState!
-  createEntityInstanceField(data: EntityInstanceFieldCreateInput!): EntityInstanceField!
+  createInformation(data: InformationCreateInput!): Information!
   createActionRequirementPayloadInputValue(data: ActionRequirementPayloadInputValueCreateInput!): ActionRequirementPayloadInputValue!
+  createInformationSlot(data: InformationSlotCreateInput!): InformationSlot!
+  createEntityState(data: EntityStateCreateInput!): EntityState!
+  createFieldType(data: FieldTypeCreateInput!): FieldType!
   createEntity(data: EntityCreateInput!): Entity!
+  createFieldValue(data: FieldValueCreateInput!): FieldValue!
   updateEntityStateTransition(data: EntityStateTransitionUpdateInput!, where: EntityStateTransitionWhereUniqueInput!): EntityStateTransition
   updateHint(data: HintUpdateInput!, where: HintWhereUniqueInput!): Hint
   updateActionRequirementPayload(data: ActionRequirementPayloadUpdateInput!, where: ActionRequirementPayloadWhereUniqueInput!): ActionRequirementPayload
@@ -8488,16 +8690,17 @@ type Mutation {
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateAction(data: ActionUpdateInput!, where: ActionWhereUniqueInput!): Action
   updateActionPayload(data: ActionPayloadUpdateInput!, where: ActionPayloadWhereUniqueInput!): ActionPayload
-  updateInformation(data: InformationUpdateInput!, where: InformationWhereUniqueInput!): Information
   updateActionRequirement(data: ActionRequirementUpdateInput!, where: ActionRequirementWhereUniqueInput!): ActionRequirement
-  updateEntityField(data: EntityFieldUpdateInput!, where: EntityFieldWhereUniqueInput!): EntityField
+  updateField(data: FieldUpdateInput!, where: FieldWhereUniqueInput!): Field
   updateActionPayloadInputValue(data: ActionPayloadInputValueUpdateInput!, where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   updateEntityInstance(data: EntityInstanceUpdateInput!, where: EntityInstanceWhereUniqueInput!): EntityInstance
-  updateEntityInstanceInformation(data: EntityInstanceInformationUpdateInput!, where: EntityInstanceInformationWhereUniqueInput!): EntityInstanceInformation
-  updateEntityState(data: EntityStateUpdateInput!, where: EntityStateWhereUniqueInput!): EntityState
-  updateEntityInstanceField(data: EntityInstanceFieldUpdateInput!, where: EntityInstanceFieldWhereUniqueInput!): EntityInstanceField
+  updateInformation(data: InformationUpdateInput!, where: InformationWhereUniqueInput!): Information
   updateActionRequirementPayloadInputValue(data: ActionRequirementPayloadInputValueUpdateInput!, where: ActionRequirementPayloadInputValueWhereUniqueInput!): ActionRequirementPayloadInputValue
+  updateInformationSlot(data: InformationSlotUpdateInput!, where: InformationSlotWhereUniqueInput!): InformationSlot
+  updateEntityState(data: EntityStateUpdateInput!, where: EntityStateWhereUniqueInput!): EntityState
+  updateFieldType(data: FieldTypeUpdateInput!, where: FieldTypeWhereUniqueInput!): FieldType
   updateEntity(data: EntityUpdateInput!, where: EntityWhereUniqueInput!): Entity
+  updateFieldValue(data: FieldValueUpdateInput!, where: FieldValueWhereUniqueInput!): FieldValue
   deleteEntityStateTransition(where: EntityStateTransitionWhereUniqueInput!): EntityStateTransition
   deleteHint(where: HintWhereUniqueInput!): Hint
   deleteActionRequirementPayload(where: ActionRequirementPayloadWhereUniqueInput!): ActionRequirementPayload
@@ -8509,16 +8712,17 @@ type Mutation {
   deleteUser(where: UserWhereUniqueInput!): User
   deleteAction(where: ActionWhereUniqueInput!): Action
   deleteActionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
-  deleteInformation(where: InformationWhereUniqueInput!): Information
   deleteActionRequirement(where: ActionRequirementWhereUniqueInput!): ActionRequirement
-  deleteEntityField(where: EntityFieldWhereUniqueInput!): EntityField
+  deleteField(where: FieldWhereUniqueInput!): Field
   deleteActionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   deleteEntityInstance(where: EntityInstanceWhereUniqueInput!): EntityInstance
-  deleteEntityInstanceInformation(where: EntityInstanceInformationWhereUniqueInput!): EntityInstanceInformation
-  deleteEntityState(where: EntityStateWhereUniqueInput!): EntityState
-  deleteEntityInstanceField(where: EntityInstanceFieldWhereUniqueInput!): EntityInstanceField
+  deleteInformation(where: InformationWhereUniqueInput!): Information
   deleteActionRequirementPayloadInputValue(where: ActionRequirementPayloadInputValueWhereUniqueInput!): ActionRequirementPayloadInputValue
+  deleteInformationSlot(where: InformationSlotWhereUniqueInput!): InformationSlot
+  deleteEntityState(where: EntityStateWhereUniqueInput!): EntityState
+  deleteFieldType(where: FieldTypeWhereUniqueInput!): FieldType
   deleteEntity(where: EntityWhereUniqueInput!): Entity
+  deleteFieldValue(where: FieldValueWhereUniqueInput!): FieldValue
   upsertEntityStateTransition(where: EntityStateTransitionWhereUniqueInput!, create: EntityStateTransitionCreateInput!, update: EntityStateTransitionUpdateInput!): EntityStateTransition!
   upsertHint(where: HintWhereUniqueInput!, create: HintCreateInput!, update: HintUpdateInput!): Hint!
   upsertActionRequirementPayload(where: ActionRequirementPayloadWhereUniqueInput!, create: ActionRequirementPayloadCreateInput!, update: ActionRequirementPayloadUpdateInput!): ActionRequirementPayload!
@@ -8530,29 +8734,31 @@ type Mutation {
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertAction(where: ActionWhereUniqueInput!, create: ActionCreateInput!, update: ActionUpdateInput!): Action!
   upsertActionPayload(where: ActionPayloadWhereUniqueInput!, create: ActionPayloadCreateInput!, update: ActionPayloadUpdateInput!): ActionPayload!
-  upsertInformation(where: InformationWhereUniqueInput!, create: InformationCreateInput!, update: InformationUpdateInput!): Information!
   upsertActionRequirement(where: ActionRequirementWhereUniqueInput!, create: ActionRequirementCreateInput!, update: ActionRequirementUpdateInput!): ActionRequirement!
-  upsertEntityField(where: EntityFieldWhereUniqueInput!, create: EntityFieldCreateInput!, update: EntityFieldUpdateInput!): EntityField!
+  upsertField(where: FieldWhereUniqueInput!, create: FieldCreateInput!, update: FieldUpdateInput!): Field!
   upsertActionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!, create: ActionPayloadInputValueCreateInput!, update: ActionPayloadInputValueUpdateInput!): ActionPayloadInputValue!
   upsertEntityInstance(where: EntityInstanceWhereUniqueInput!, create: EntityInstanceCreateInput!, update: EntityInstanceUpdateInput!): EntityInstance!
-  upsertEntityInstanceInformation(where: EntityInstanceInformationWhereUniqueInput!, create: EntityInstanceInformationCreateInput!, update: EntityInstanceInformationUpdateInput!): EntityInstanceInformation!
-  upsertEntityState(where: EntityStateWhereUniqueInput!, create: EntityStateCreateInput!, update: EntityStateUpdateInput!): EntityState!
-  upsertEntityInstanceField(where: EntityInstanceFieldWhereUniqueInput!, create: EntityInstanceFieldCreateInput!, update: EntityInstanceFieldUpdateInput!): EntityInstanceField!
+  upsertInformation(where: InformationWhereUniqueInput!, create: InformationCreateInput!, update: InformationUpdateInput!): Information!
   upsertActionRequirementPayloadInputValue(where: ActionRequirementPayloadInputValueWhereUniqueInput!, create: ActionRequirementPayloadInputValueCreateInput!, update: ActionRequirementPayloadInputValueUpdateInput!): ActionRequirementPayloadInputValue!
+  upsertInformationSlot(where: InformationSlotWhereUniqueInput!, create: InformationSlotCreateInput!, update: InformationSlotUpdateInput!): InformationSlot!
+  upsertEntityState(where: EntityStateWhereUniqueInput!, create: EntityStateCreateInput!, update: EntityStateUpdateInput!): EntityState!
+  upsertFieldType(where: FieldTypeWhereUniqueInput!, create: FieldTypeCreateInput!, update: FieldTypeUpdateInput!): FieldType!
   upsertEntity(where: EntityWhereUniqueInput!, create: EntityCreateInput!, update: EntityUpdateInput!): Entity!
+  upsertFieldValue(where: FieldValueWhereUniqueInput!, create: FieldValueCreateInput!, update: FieldValueUpdateInput!): FieldValue!
   updateManyHints(data: HintUpdateManyMutationInput!, where: HintWhereInput): BatchPayload!
   updateManyGames(data: GameUpdateManyMutationInput!, where: GameWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyActions(data: ActionUpdateManyMutationInput!, where: ActionWhereInput): BatchPayload!
-  updateManyInformations(data: InformationUpdateManyMutationInput!, where: InformationWhereInput): BatchPayload!
   updateManyActionRequirements(data: ActionRequirementUpdateManyMutationInput!, where: ActionRequirementWhereInput): BatchPayload!
-  updateManyEntityFields(data: EntityFieldUpdateManyMutationInput!, where: EntityFieldWhereInput): BatchPayload!
+  updateManyFields(data: FieldUpdateManyMutationInput!, where: FieldWhereInput): BatchPayload!
   updateManyActionPayloadInputValues(data: ActionPayloadInputValueUpdateManyMutationInput!, where: ActionPayloadInputValueWhereInput): BatchPayload!
   updateManyEntityInstances(data: EntityInstanceUpdateManyMutationInput!, where: EntityInstanceWhereInput): BatchPayload!
-  updateManyEntityStates(data: EntityStateUpdateManyMutationInput!, where: EntityStateWhereInput): BatchPayload!
-  updateManyEntityInstanceFields(data: EntityInstanceFieldUpdateManyMutationInput!, where: EntityInstanceFieldWhereInput): BatchPayload!
   updateManyActionRequirementPayloadInputValues(data: ActionRequirementPayloadInputValueUpdateManyMutationInput!, where: ActionRequirementPayloadInputValueWhereInput): BatchPayload!
+  updateManyInformationSlots(data: InformationSlotUpdateManyMutationInput!, where: InformationSlotWhereInput): BatchPayload!
+  updateManyEntityStates(data: EntityStateUpdateManyMutationInput!, where: EntityStateWhereInput): BatchPayload!
+  updateManyFieldTypes(data: FieldTypeUpdateManyMutationInput!, where: FieldTypeWhereInput): BatchPayload!
   updateManyEntities(data: EntityUpdateManyMutationInput!, where: EntityWhereInput): BatchPayload!
+  updateManyFieldValues(data: FieldValueUpdateManyMutationInput!, where: FieldValueWhereInput): BatchPayload!
   deleteManyEntityStateTransitions(where: EntityStateTransitionWhereInput): BatchPayload!
   deleteManyHints(where: HintWhereInput): BatchPayload!
   deleteManyActionRequirementPayloads(where: ActionRequirementPayloadWhereInput): BatchPayload!
@@ -8564,16 +8770,17 @@ type Mutation {
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyActions(where: ActionWhereInput): BatchPayload!
   deleteManyActionPayloads(where: ActionPayloadWhereInput): BatchPayload!
-  deleteManyInformations(where: InformationWhereInput): BatchPayload!
   deleteManyActionRequirements(where: ActionRequirementWhereInput): BatchPayload!
-  deleteManyEntityFields(where: EntityFieldWhereInput): BatchPayload!
+  deleteManyFields(where: FieldWhereInput): BatchPayload!
   deleteManyActionPayloadInputValues(where: ActionPayloadInputValueWhereInput): BatchPayload!
   deleteManyEntityInstances(where: EntityInstanceWhereInput): BatchPayload!
-  deleteManyEntityInstanceInformations(where: EntityInstanceInformationWhereInput): BatchPayload!
-  deleteManyEntityStates(where: EntityStateWhereInput): BatchPayload!
-  deleteManyEntityInstanceFields(where: EntityInstanceFieldWhereInput): BatchPayload!
+  deleteManyInformations(where: InformationWhereInput): BatchPayload!
   deleteManyActionRequirementPayloadInputValues(where: ActionRequirementPayloadInputValueWhereInput): BatchPayload!
+  deleteManyInformationSlots(where: InformationSlotWhereInput): BatchPayload!
+  deleteManyEntityStates(where: EntityStateWhereInput): BatchPayload!
+  deleteManyFieldTypes(where: FieldTypeWhereInput): BatchPayload!
   deleteManyEntities(where: EntityWhereInput): BatchPayload!
+  deleteManyFieldValues(where: FieldValueWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -8620,16 +8827,17 @@ type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   actions(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Action]!
   actionPayloads(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionPayload]!
-  informations(where: InformationWhereInput, orderBy: InformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Information]!
   actionRequirements(where: ActionRequirementWhereInput, orderBy: ActionRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirement]!
-  entityFields(where: EntityFieldWhereInput, orderBy: EntityFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityField]!
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
   actionPayloadInputValues(where: ActionPayloadInputValueWhereInput, orderBy: ActionPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionPayloadInputValue]!
   entityInstances(where: EntityInstanceWhereInput, orderBy: EntityInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstance]!
-  entityInstanceInformations(where: EntityInstanceInformationWhereInput, orderBy: EntityInstanceInformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceInformation]!
-  entityStates(where: EntityStateWhereInput, orderBy: EntityStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityState]!
-  entityInstanceFields(where: EntityInstanceFieldWhereInput, orderBy: EntityInstanceFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityInstanceField]!
+  informations(where: InformationWhereInput, orderBy: InformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Information]!
   actionRequirementPayloadInputValues(where: ActionRequirementPayloadInputValueWhereInput, orderBy: ActionRequirementPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirementPayloadInputValue]!
+  informationSlots(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlot]!
+  entityStates(where: EntityStateWhereInput, orderBy: EntityStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityState]!
+  fieldTypes(where: FieldTypeWhereInput, orderBy: FieldTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldType]!
   entities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity]!
+  fieldValues(where: FieldValueWhereInput, orderBy: FieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldValue]!
   entityStateTransition(where: EntityStateTransitionWhereUniqueInput!): EntityStateTransition
   hint(where: HintWhereUniqueInput!): Hint
   actionRequirementPayload(where: ActionRequirementPayloadWhereUniqueInput!): ActionRequirementPayload
@@ -8641,16 +8849,17 @@ type Query {
   user(where: UserWhereUniqueInput!): User
   action(where: ActionWhereUniqueInput!): Action
   actionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
-  information(where: InformationWhereUniqueInput!): Information
   actionRequirement(where: ActionRequirementWhereUniqueInput!): ActionRequirement
-  entityField(where: EntityFieldWhereUniqueInput!): EntityField
+  field(where: FieldWhereUniqueInput!): Field
   actionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   entityInstance(where: EntityInstanceWhereUniqueInput!): EntityInstance
-  entityInstanceInformation(where: EntityInstanceInformationWhereUniqueInput!): EntityInstanceInformation
-  entityState(where: EntityStateWhereUniqueInput!): EntityState
-  entityInstanceField(where: EntityInstanceFieldWhereUniqueInput!): EntityInstanceField
+  information(where: InformationWhereUniqueInput!): Information
   actionRequirementPayloadInputValue(where: ActionRequirementPayloadInputValueWhereUniqueInput!): ActionRequirementPayloadInputValue
+  informationSlot(where: InformationSlotWhereUniqueInput!): InformationSlot
+  entityState(where: EntityStateWhereUniqueInput!): EntityState
+  fieldType(where: FieldTypeWhereUniqueInput!): FieldType
   entity(where: EntityWhereUniqueInput!): Entity
+  fieldValue(where: FieldValueWhereUniqueInput!): FieldValue
   entityStateTransitionsConnection(where: EntityStateTransitionWhereInput, orderBy: EntityStateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityStateTransitionConnection!
   hintsConnection(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HintConnection!
   actionRequirementPayloadsConnection(where: ActionRequirementPayloadWhereInput, orderBy: ActionRequirementPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementPayloadConnection!
@@ -8662,16 +8871,17 @@ type Query {
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   actionsConnection(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionConnection!
   actionPayloadsConnection(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionPayloadConnection!
-  informationsConnection(where: InformationWhereInput, orderBy: InformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InformationConnection!
   actionRequirementsConnection(where: ActionRequirementWhereInput, orderBy: ActionRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementConnection!
-  entityFieldsConnection(where: EntityFieldWhereInput, orderBy: EntityFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityFieldConnection!
+  fieldsConnection(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldConnection!
   actionPayloadInputValuesConnection(where: ActionPayloadInputValueWhereInput, orderBy: ActionPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionPayloadInputValueConnection!
   entityInstancesConnection(where: EntityInstanceWhereInput, orderBy: EntityInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityInstanceConnection!
-  entityInstanceInformationsConnection(where: EntityInstanceInformationWhereInput, orderBy: EntityInstanceInformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityInstanceInformationConnection!
-  entityStatesConnection(where: EntityStateWhereInput, orderBy: EntityStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityStateConnection!
-  entityInstanceFieldsConnection(where: EntityInstanceFieldWhereInput, orderBy: EntityInstanceFieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityInstanceFieldConnection!
+  informationsConnection(where: InformationWhereInput, orderBy: InformationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InformationConnection!
   actionRequirementPayloadInputValuesConnection(where: ActionRequirementPayloadInputValueWhereInput, orderBy: ActionRequirementPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementPayloadInputValueConnection!
+  informationSlotsConnection(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InformationSlotConnection!
+  entityStatesConnection(where: EntityStateWhereInput, orderBy: EntityStateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityStateConnection!
+  fieldTypesConnection(where: FieldTypeWhereInput, orderBy: FieldTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldTypeConnection!
   entitiesConnection(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityConnection!
+  fieldValuesConnection(where: FieldValueWhereInput, orderBy: FieldValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldValueConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -8692,16 +8902,17 @@ type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   action(where: ActionSubscriptionWhereInput): ActionSubscriptionPayload
   actionPayload(where: ActionPayloadSubscriptionWhereInput): ActionPayloadSubscriptionPayload
-  information(where: InformationSubscriptionWhereInput): InformationSubscriptionPayload
   actionRequirement(where: ActionRequirementSubscriptionWhereInput): ActionRequirementSubscriptionPayload
-  entityField(where: EntityFieldSubscriptionWhereInput): EntityFieldSubscriptionPayload
+  field(where: FieldSubscriptionWhereInput): FieldSubscriptionPayload
   actionPayloadInputValue(where: ActionPayloadInputValueSubscriptionWhereInput): ActionPayloadInputValueSubscriptionPayload
   entityInstance(where: EntityInstanceSubscriptionWhereInput): EntityInstanceSubscriptionPayload
-  entityInstanceInformation(where: EntityInstanceInformationSubscriptionWhereInput): EntityInstanceInformationSubscriptionPayload
-  entityState(where: EntityStateSubscriptionWhereInput): EntityStateSubscriptionPayload
-  entityInstanceField(where: EntityInstanceFieldSubscriptionWhereInput): EntityInstanceFieldSubscriptionPayload
+  information(where: InformationSubscriptionWhereInput): InformationSubscriptionPayload
   actionRequirementPayloadInputValue(where: ActionRequirementPayloadInputValueSubscriptionWhereInput): ActionRequirementPayloadInputValueSubscriptionPayload
+  informationSlot(where: InformationSlotSubscriptionWhereInput): InformationSlotSubscriptionPayload
+  entityState(where: EntityStateSubscriptionWhereInput): EntityStateSubscriptionPayload
+  fieldType(where: FieldTypeSubscriptionWhereInput): FieldTypeSubscriptionPayload
   entity(where: EntitySubscriptionWhereInput): EntitySubscriptionPayload
+  fieldValue(where: FieldValueSubscriptionWhereInput): FieldValueSubscriptionPayload
 }
 
 type User implements Node {
@@ -9388,4 +9599,12 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   slug: String
+}
+
+enum ValueType {
+  STRING
+  NUMBER
+  BOOLEAN
+  TIMESTAMP
+  GEOPOINT
 }

@@ -70,8 +70,10 @@ export const ENTITIES = gql`
         id
         label
         info
-        type
-        isMulti
+        type {
+          type
+          isMulti
+        }
         isSecret
       }
     }

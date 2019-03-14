@@ -10,22 +10,21 @@ const useEntities = () => {
 
   const { entities } = data
   const entityStates = entities.flatMap(({ states }) => states)
-  const entityFields = entities.flatMap(({ fields }) => fields)
+  const fields = entities.flatMap(({ fields }) => fields)
 
   const getEntityById = entityId => entities.find(({ id }) => id === entityId)
 
   const getEntityStateById = entityStateId =>
     entityStates.find(({ id }) => id === entityStateId)
-  const getEntityFieldById = entityFieldId =>
-    entityFields.find(({ id }) => id === entityFieldId)
+  const getFieldById = fieldId => fields.find(({ id }) => id === fieldId)
 
   return {
     entities,
     entityStates,
-    entityFields,
+    fields,
     getEntityById,
     getEntityStateById,
-    getEntityFieldById
+    getFieldById
   }
 }
 

@@ -5,13 +5,13 @@ import Property from "./Property"
 
 const Properties = ({
   node: {
-    instance: { fields }
+    instance: { fieldValues }
   }
 }) =>
-  fields.length ? (
+  fieldValues.length ? (
     <Section title="Properties">
-      {fields.map(field => (
-        <Property key={field.id} {...field} />
+      {fieldValues.map(fieldValue => (
+        <Property key={fieldValue.id} {...fieldValue} />
       ))}
     </Section>
   ) : null

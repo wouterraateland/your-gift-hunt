@@ -7,16 +7,16 @@ import ListItem from "./ListItem"
 import _ from "utils"
 
 const FieldLabel = ({ fieldId }) => {
-  const { getEntityFieldById } = useContext(EntitiesContext)
+  const { getFieldById } = useContext(EntitiesContext)
 
-  const { label, type, isMulti, isSecret } = getEntityFieldById(fieldId)
+  const { label, type, isSecret } = getFieldById(fieldId)
 
   return (
     <strong>
       {label}
       <InputType
-        type={_.toInputType(type)}
-        isMulti={isMulti}
+        type={_.toInputType(type.type)}
+        isMulti={type.isMulti}
         isSecret={isSecret}
       />
     </strong>
