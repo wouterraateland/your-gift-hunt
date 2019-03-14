@@ -226,6 +226,7 @@ const NewGamePage = () => {
               </Field>
               {formState.values.privacy === PRIVACY.PRIVATE && (
                 <>
+                  <br />
                   <Field block>
                     <Select
                       {...select("accessType")}

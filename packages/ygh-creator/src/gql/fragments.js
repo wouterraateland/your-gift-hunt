@@ -7,6 +7,30 @@ export const ENTITY_INSTANCE_FRAGMENT = gql`
     actionRequirementsWithCustomHints {
       id
     }
+    informationWhereSource {
+      id
+      slot {
+        id
+      }
+      agent {
+        id
+      }
+      actionRequirementPayloadInputValue {
+        id
+      }
+    }
+    informationWhereAgent {
+      id
+      slot {
+        id
+      }
+      source {
+        id
+      }
+      actionRequirementPayloadInputValue {
+        id
+      }
+    }
     states {
       id
       unlockedBy {
@@ -80,6 +104,7 @@ export const ENTITY_INSTANCE_FRAGMENT = gql`
         label
         info
         type {
+          id
           type
           isMulti
         }
@@ -106,6 +131,24 @@ export const ENTITY_INSTANCE_FRAGMENT = gql`
       }
       featuredField {
         id
+      }
+      informationSlots {
+        id
+        name
+        description
+        allowedTypes {
+          id
+          type
+          isMulti
+        }
+        entityStates {
+          id
+        }
+        allowedTypes {
+          id
+          type
+          isMulti
+        }
       }
     }
   }

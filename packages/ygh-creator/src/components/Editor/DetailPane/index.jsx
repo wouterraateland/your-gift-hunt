@@ -7,6 +7,7 @@ import Container from "./Container"
 import Preview from "./Preview"
 import Meta from "./Meta"
 import Properties from "./Properties"
+import Information from "./Information"
 import PreviousStates from "./PreviousStates"
 import UnlockConditions from "./UnlockConditions"
 import Transitions from "./Transitions"
@@ -42,6 +43,7 @@ const DetailPane = forwardRef((_, ref) => {
           <Preview node={node} isOpen={isOpen} />
           <Meta node={node} isOpen={isOpen} />
           <Properties node={node} isOpen={isOpen} />
+          <Information node={node} isOpen={isOpen} />
           <PreviousStates node={node} isOpen={isOpen} />
           <UnlockConditions node={node} isOpen={isOpen} />
           <Transitions node={node} isOpen={isOpen} />

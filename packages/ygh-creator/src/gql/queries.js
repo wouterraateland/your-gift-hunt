@@ -10,6 +10,22 @@ export const ENTITIES = gql`
       isItem
       isObject
       isTrigger
+      informationSlots {
+        id
+
+        name
+        description
+
+        allowedTypes {
+          id
+          type
+          isMulti
+        }
+
+        entityStates {
+          id
+        }
+      }
       defaultState {
         id
       }
@@ -71,6 +87,7 @@ export const ENTITIES = gql`
         label
         info
         type {
+          id
           type
           isMulti
         }

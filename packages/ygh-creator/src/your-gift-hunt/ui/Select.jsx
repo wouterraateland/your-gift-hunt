@@ -10,7 +10,6 @@ const Label = styled.label`
 
   display: ${props => (props.block ? "block" : "inline-block")};
   max-width: 100%;
-  margin-top: 1em;
 `
 
 const SELECT_STYLES = {
