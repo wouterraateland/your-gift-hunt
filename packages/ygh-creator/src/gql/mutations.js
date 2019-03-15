@@ -1,5 +1,5 @@
 import gql from "graphql-tag"
-import { ENTITY_INSTANCE_FRAGMENT } from "./fragments"
+import { ENTITY_INSTANCE_FRAGMENT, INFORMATION_FRAGMENT } from "./fragments"
 
 export const CREATE_USER = gql`
   mutation createUser($netlifyUserId: String!, $name: String!, $slug: String!) {
@@ -318,8 +318,48 @@ export const DELETE_NODES = gql`
     deleteManyEntityInstanceStates(where: { id_in: $entityInstanceStateIds }) {
       count
     }
+
+    deleteManyInformations(
+      where: { entityInstance: { id_in: $entityInstanceIds } }
+    ) {
+      count
+    }
+
+    deleteManyFieldValues(
+      where: { entityInstance: { id_in: $entityInstanceIds } }
+    ) {
+      count
+    }
+
     deleteManyEntityInstances(where: { id_in: $entityInstanceIds }) {
       count
     }
   }
+`
+
+export const CONNECT_INFORMATION_WITH_FIELD_VALUE = gql`
+  mutation connectInformationWithFieldValue(
+    $informationId: ID!
+    $fieldValueId: ID!
+  ) {
+    updateInformation(
+      where: { id: $informationId }
+      data: { fieldValue: { connect: { id: $fieldValueId } } }
+    ) {
+      ...InformationFragment
+    }
+  }
+  ${INFORMATION_FRAGMENT}
+`
+
+export const DISCONNECT_INFORMATION_FROM_FIELD_VALUE = gql`
+  mutation disconnectInformationFromFieldValue($informationId: ID!) {
+    updateInformation(
+      where: { id: $informationId }
+      data: { fieldValue: { disconnect: true } }
+    ) {
+      ...InformationFragment
+    }
+  }
+  ${INFORMATION_FRAGMENT}
 `

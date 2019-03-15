@@ -1,37 +1,89 @@
 import React, { useCallback, useContext } from "react"
 
 import GameContext from "contexts/Game"
-import EntitiesContext from "contexts/Entities"
 
-import { Field, Select } from "your-gift-hunt/ui"
+import useAsync from "hooks/useAsync"
 
-const Slot = ({ id, name, description, allowedTypes, information }) => {
-  const { nodes } = useContext(GameContext)
-  const { getFieldById } = useContext(EntitiesContext)
+import { components } from "react-select"
 
-  const options = nodes.flatMap(({ state }) =>
+import { Field, Select, Message } from "your-gift-hunt/ui"
+import EntityTag from "components/Editor/EntityTag"
+import FieldTag from "components/Editor/FieldTag"
+
+const Option = ({ data, ...otherProps }) => (
+  <components.Option {...otherProps}>
+    <EntityTag entity={data.instance.entity} /> (
+    <FieldTag field={data.field} showInfo={false} />)
+  </components.Option>
+)
+
+const SingleValue = ({ data, ...otherProps }) => (
+  <components.SingleValue {...otherProps}>
+    <EntityTag entity={data.instance.entity} /> (
+    <FieldTag field={data.field} showInfo={false} />)
+  </components.SingleValue>
+)
+
+const Slot = ({ name, description, allowedTypes, information }) => {
+  const {
+    nodes,
+    connectInformationWithFieldValue,
+    disconnectInformationFromFieldValue
+  } = useContext(GameContext)
+
+  const [{ error, isLoading }, runAsync] = useAsync()
+
+  const options = nodes.flatMap(({ instance, state }) =>
     state
       ? state.state.outgoingTransitions
           .flatMap(({ requiredActions }) =>
             requiredActions.flatMap(({ payload }) => payload.requiredValues)
           )
           .filter(({ field }) => field !== null)
-          .map(({ field }) => getFieldById(field.id))
-          .filter(field =>
+          .map(({ field }) =>
+            instance.fieldValues.find(({ field: { id } }) => id === field.id)
+          )
+          .filter(fieldValue =>
             allowedTypes.some(
               ({ type, isMulti }) =>
-                field.type.type === type && field.type.isMulti === isMulti
+                fieldValue.field.type.type === type &&
+                fieldValue.field.type.isMulti === isMulti
             )
           )
-          .map(field => ({ label: field.label, value: field.id }))
+          .map(({ id, field }) => ({
+            instance,
+            field,
+            value: id
+          }))
       : []
   )
 
-  const onChange = useCallback(event => console.log(event.target.value), [])
+  const onChange = useCallback(
+    runAsync(({ target: { value } }) =>
+      value
+        ? connectInformationWithFieldValue(information.id, value)
+        : disconnectInformationFromFieldValue(information.id)
+    ),
+    [information]
+  )
 
   return (
     <Field block>
-      <Select block label={name} options={options} onChange={onChange} />
+      <Select
+        block
+        components={{
+          Option,
+          SingleValue
+        }}
+        isClearable
+        label={name}
+        info={description}
+        options={options}
+        value={information.fieldValue ? information.fieldValue.id : null}
+        onChange={onChange}
+        disabled={isLoading}
+      />
+      {error && <Message.Error>{error.message}</Message.Error>}
     </Field>
   )
 }

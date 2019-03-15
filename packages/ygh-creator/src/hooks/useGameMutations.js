@@ -17,7 +17,9 @@ import {
   CREATE_ENTITY_INSTANCE_STATE_TRANSITION,
   CREATE_ENTITY_INSTANCE_STATE_TRANSITIONS,
   CREATE_ENTITY_INSTANCES,
-  DELETE_NODES
+  DELETE_NODES,
+  CONNECT_INFORMATION_WITH_FIELD_VALUE,
+  DISCONNECT_INFORMATION_FROM_FIELD_VALUE
 } from "gql/mutations"
 
 const useMutationWith = save => (mutation, transform) => {
@@ -361,7 +363,7 @@ const useGameMutations = (variables, save, dependencies) => {
         (!(isObject || isItem) || !existingEntityIds.includes(id))
     )
     const entityInstancesToCreate = entitiesToCreate.map(
-      ({ id, name, states, fields }) => {
+      ({ id, name, states, fields, informationSlots }) => {
         const existingEntityInstances = game.instances.filter(
           ({ entity }) => entity.id === id
         )
@@ -370,7 +372,7 @@ const useGameMutations = (variables, save, dependencies) => {
             ? `${name} ${existingEntityInstances.length + 1}`
             : name,
           entity: { connect: { id } },
-          fields: {
+          fieldValues: {
             create: fields.map(field => ({
               field: { connect: { id: field.id } },
               value: ""
@@ -380,6 +382,11 @@ const useGameMutations = (variables, save, dependencies) => {
             create: states
               .filter(({ id }) => entityStateIds.includes(id))
               .map(({ id }) => ({ state: { connect: { id } } }))
+          },
+          information: {
+            create: informationSlots.map(({ id }) => ({
+              slot: { connect: { id } }
+            }))
           }
         }
       }
@@ -480,6 +487,25 @@ const useGameMutations = (variables, save, dependencies) => {
     await deleteManyNodes(entityInstanceIds, nodeIds)
   }
 
+  const connectInformationWithFieldValue = useMutationWithSave(
+    CONNECT_INFORMATION_WITH_FIELD_VALUE,
+    (informationId, fieldValueId) => ({
+      variables: {
+        informationId,
+        fieldValueId
+      }
+    })
+  )
+
+  const disconnectInformationFromFieldValue = useMutationWithSave(
+    DISCONNECT_INFORMATION_FROM_FIELD_VALUE,
+    informationId => ({
+      variables: {
+        informationId
+      }
+    })
+  )
+
   return {
     updateGameSettings,
     updateEntityInstanceName,
@@ -500,7 +526,10 @@ const useGameMutations = (variables, save, dependencies) => {
     // Creation and deletion mutations
     createEntityInstance,
     addPreviousState,
-    deleteNodes
+    deleteNodes,
+
+    connectInformationWithFieldValue,
+    disconnectInformationFromFieldValue
   }
 }
 

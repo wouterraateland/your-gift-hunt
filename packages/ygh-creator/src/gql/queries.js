@@ -12,16 +12,13 @@ export const ENTITIES = gql`
       isTrigger
       informationSlots {
         id
-
         name
         description
-
         allowedTypes {
           id
           type
           isMulti
         }
-
         entityStates {
           id
         }

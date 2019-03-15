@@ -23,7 +23,6 @@ const SELECT_STYLES = {
     border: ".1em solid #39f",
     boxShadow: "0 .5em 1.5em -.5em #0004"
   })
-  // option: base => ({ ...base, backgroundColor: "#f93" }),
 }
 
 const StyledSelect = styled(Select)`
@@ -54,7 +53,7 @@ const SelectWithLabel = ({
         otherProps.isMulti
           ? values =>
               onChange({ target: { value: values.map(({ value }) => value) } })
-          : ({ value }) => onChange({ target: { value } })
+          : next => onChange({ target: { value: next ? next.value : null } })
       }
     />
     <LabelText

@@ -1,5 +1,17 @@
 import gql from "graphql-tag"
 
+export const INFORMATION_FRAGMENT = gql`
+  fragment InformationFragment on Information {
+    id
+    slot {
+      id
+    }
+    fieldValue {
+      id
+    }
+  }
+`
+
 export const ENTITY_INSTANCE_FRAGMENT = gql`
   fragment EntityInstanceFragment on EntityInstance {
     id
@@ -7,29 +19,8 @@ export const ENTITY_INSTANCE_FRAGMENT = gql`
     actionRequirementsWithCustomHints {
       id
     }
-    informationWhereSource {
-      id
-      slot {
-        id
-      }
-      agent {
-        id
-      }
-      actionRequirementPayloadInputValue {
-        id
-      }
-    }
-    informationWhereAgent {
-      id
-      slot {
-        id
-      }
-      source {
-        id
-      }
-      actionRequirementPayloadInputValue {
-        id
-      }
+    information {
+      ...InformationFragment
     }
     states {
       id
@@ -152,4 +143,5 @@ export const ENTITY_INSTANCE_FRAGMENT = gql`
       }
     }
   }
+  ${INFORMATION_FRAGMENT}
 `

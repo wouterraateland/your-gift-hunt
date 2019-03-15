@@ -7,7 +7,7 @@ const Properties = ({
   node: {
     state: { state },
     instance: {
-      informationWhereAgent,
+      information,
       entity: { informationSlots }
     }
   }
@@ -18,7 +18,7 @@ const Properties = ({
     )
     .map(slot => ({
       ...slot,
-      information: informationWhereAgent.find(
+      information: information.find(
         information => information.slot.id === slot.id
       )
     }))

@@ -71,29 +71,31 @@ const getBaseComponent = type => {
   }
 }
 
-const InputType = ({ type, isMulti, isSecret }) => {
+const InputType = ({ type, isMulti, isSecret, showInfo = true }) => {
   const Component = getBaseComponent(type)
   return (
     <Component isMulti={isMulti}>
-      <ToolTip>
-        <strong>
-          {type.toUpperCase()[0]}
-          {type.substr(1)} input
-        </strong>
-        <br />
-        {isMulti && (
-          <>
-            Accepts multiple values
-            <br />
-          </>
-        )}
-        {isSecret && (
-          <>
-            Not visible for players
-            <br />
-          </>
-        )}
-      </ToolTip>
+      {showInfo && (
+        <ToolTip>
+          <strong>
+            {type.toUpperCase()[0]}
+            {type.substr(1)} input
+          </strong>
+          <br />
+          {isMulti && (
+            <>
+              Accepts multiple values
+              <br />
+            </>
+          )}
+          {isSecret && (
+            <>
+              Not visible for players
+              <br />
+            </>
+          )}
+        </ToolTip>
+      )}
     </Component>
   )
 }

@@ -2,26 +2,8 @@ import React, { useContext } from "react"
 
 import EntitiesContext from "contexts/Entities"
 
-import { InputType } from "your-gift-hunt/ui"
+import FieldTag from "components/Editor/FieldTag"
 import ListItem from "./ListItem"
-import _ from "utils"
-
-const FieldLabel = ({ fieldId }) => {
-  const { getFieldById } = useContext(EntitiesContext)
-
-  const { label, type, isSecret } = getFieldById(fieldId)
-
-  return (
-    <strong>
-      {label}
-      <InputType
-        type={_.toInputType(type.type)}
-        isMulti={type.isMulti}
-        isSecret={isSecret}
-      />
-    </strong>
-  )
-}
 
 const getVerb = (comparator, not) => {
   switch (comparator) {
@@ -38,16 +20,19 @@ const getVerb = (comparator, not) => {
   }
 }
 
-const ValueRequirement = ({ requiredValues }) =>
-  requiredValues.length ? (
+const ValueRequirement = ({ requiredValues }) => {
+  const { getFieldById } = useContext(EntitiesContext)
+
+  return requiredValues.length ? (
     requiredValues.map(({ key, comparator, not, value, field }, i) => (
       <ListItem key={i}>
         Input "{key}" is {getVerb(comparator, not)} {value}
-        {field && <FieldLabel fieldId={field.id} />}
+        {field && <FieldTag field={getFieldById(field.id)} />}
       </ListItem>
     ))
   ) : (
     <ListItem>Touched</ListItem>
   )
+}
 
 export default ValueRequirement
