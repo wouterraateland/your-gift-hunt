@@ -19,6 +19,7 @@ import Package from "./Package"
 import Path from "./Path"
 import PlantPot from "./PlantPot"
 import SafeWithKeyhole from "./SafeWithKeyhole"
+import SafeWithCode from "./SafeWithCode"
 import Sink from "./Sink"
 import Wall from "./Wall"
 
@@ -56,6 +57,8 @@ export const getObjectComponent = name => {
       return S.Just(PlantPot)
     case "Safe with keyhole":
       return S.Just(SafeWithKeyhole)
+    case "Safe with code":
+      return S.Just(SafeWithCode)
     case "Sink":
       return S.Just(Sink)
     case "Wall":
@@ -93,6 +96,7 @@ export {
   Path,
   PlantPot,
   SafeWithKeyhole,
+  SafeWithCode,
   Sink,
   Wall
 }

@@ -4,6 +4,8 @@ import S from "sanctuary"
 
 import Battery from "./Battery"
 import Flashlight from "./Flashlight"
+import Map from "./Map"
+import MapPiece from "./MapPiece"
 import SafeKey from "./SafeKey"
 import Seeds from "./Seeds"
 import WateringCan from "./WateringCan"
@@ -23,6 +25,10 @@ const getItemComponent = name => {
       return S.Just(Battery)
     case "Flashlight":
       return S.Just(Flashlight)
+    case "Map":
+      return S.Just(Map)
+    case "Map piece":
+      return S.Just(MapPiece)
     case "Safe key":
       return S.Just(SafeKey)
     case "Seeds":
@@ -45,4 +51,4 @@ const GenericItem = props =>
 
 export default GenericItem
 
-export { Battery, Flashlight, SafeKey, Seeds, WateringCan }
+export { Battery, Flashlight, Map, MapPiece, SafeKey, Seeds, WateringCan }
