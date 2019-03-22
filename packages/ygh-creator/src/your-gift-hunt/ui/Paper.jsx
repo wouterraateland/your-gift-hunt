@@ -31,6 +31,16 @@ export const PaperContainer = styled.div`
   box-shadow: ${props => props.theme.boxShadow.medium};
 
   background: #fff;
+
+  ${props =>
+    props.fullWidthOnMobile &&
+    css`
+      @media (max-width: 25em) {
+        margin-left: -2em;
+        margin-right: -2em;
+        border-radius: 0;
+      }
+    `}
 `
 
 export const ExpandingPaperContainer = styled(PaperContainer)`

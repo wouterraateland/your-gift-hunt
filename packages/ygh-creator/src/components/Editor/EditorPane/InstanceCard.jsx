@@ -80,7 +80,7 @@ const FeaturedFieldValue = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  margin: 0.5em 3rem 0 0;
+  margin: 0.5em 0 0;
   max-height: 3em;
 
   font-size: 0.8em;

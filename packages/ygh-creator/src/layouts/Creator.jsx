@@ -70,6 +70,7 @@ const CreatorLayout = ({ children }) => {
     <PageContainer>
       <Nav
         compact
+        goBack
         title={
           <>
             {game.name}

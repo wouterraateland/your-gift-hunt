@@ -5,7 +5,8 @@ import _ from "utils"
 
 import { LabelText } from "./LabelText"
 
-const Input = styled.input`
+export const Input = styled.input`
+  display: inlinline-block;
   width: 15em;
   max-width: 100%;
   height: 1.5em;
@@ -42,11 +43,7 @@ const Input = styled.input`
       ? css`
           width: 1em;
         `
-      : props.block &&
-        css`
-          width: 100%;
-          display: block;
-        `}
+      : _.blockStyles(props)}
 `
 
 Input.displayName = "Input"

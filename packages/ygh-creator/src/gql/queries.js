@@ -121,10 +121,14 @@ export const USER_GAMES = gql`
   query createdGames($userId: ID!, $slugPrefix: String) {
     user(where: { id: $userId }) {
       id
-      games(where: { slug_starts_with: $slugPrefix }) {
+      games(where: { slug_starts_with: $slugPrefix }, orderBy: updatedAt_DESC) {
         id
         name
         slug
+        plays {
+          id
+        }
+        privacy
         createdAt
         updatedAt
         creator {

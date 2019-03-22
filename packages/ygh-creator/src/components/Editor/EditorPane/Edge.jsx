@@ -26,6 +26,7 @@ const Edge = memo(({ id, type, from, to, unlocks }) => {
           type={type}
         />
       )
+    case EDGE_TYPES.INFO:
     case EDGE_TYPES.USE:
       const e = fromPosition.left === toPosition.left
       const d = e ? 0 : fromPosition.left < toPosition.left ? 1 : -1

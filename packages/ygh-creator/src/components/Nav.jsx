@@ -5,6 +5,7 @@ import { Link } from "@reach/router"
 import { Wrapper, Float } from "your-gift-hunt/ui"
 import { Logo } from "your-gift-hunt/icons"
 
+import Menu from "components/Menu"
 import Profile from "components/Profile"
 
 const NavBackground = styled.nav`
@@ -18,6 +19,20 @@ const NavBackground = styled.nav`
   background-color: ${props => props.theme.color.accent};
 `
 
+const BackArrow = styled.strong`
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+
+  line-height: 0.9em;
+  font-size: 2em;
+  text-align: center;
+
+  &:hover {
+    background-color: #0001;
+  }
+`
+
 const StyledLogo = styled(Logo)`
   color: #000;
   .background {
@@ -28,7 +43,7 @@ const StyledLogo = styled(Logo)`
 const Title = styled.h1`
   display: inline-block;
   margin: 0 0 0 1ch;
-  line-height: ${props => (props.compact ? 2 : 3)}rem;
+  line-height: ${props => (props.compact ? 1 : "3rem")};
 
   font-weight: bold;
 `
@@ -44,6 +59,15 @@ const Center = styled.div`
   }
 `
 
+const Small = styled.div`
+  display: none;
+
+  @media (max-width: 35em) {
+    float: right;
+    display: block;
+  }
+`
+
 const NavItem = styled(Link)`
   cursor: pointer;
 
@@ -56,7 +80,7 @@ const NavItem = styled(Link)`
 `
 
 const FloatRight = styled(Float.Right)`
-  @media (max-width: 20em) {
+  @media (max-width: 35em) {
     display: none;
   }
 `
@@ -70,12 +94,16 @@ const NavContainer = ({ compact, children }) =>
     </NavBackground>
   )
 
-const Nav = ({ title, children, items = [], compact }) => {
+const Nav = ({ goBack, title, children, items = [], compact }) => {
   return (
     <NavContainer compact={compact}>
       <Float.Left>
         <Link to="/">
-          <StyledLogo size={compact ? 2 : 3} />
+          {goBack ? (
+            <BackArrow>&larr;</BackArrow>
+          ) : (
+            <StyledLogo size={compact ? 2 : 3} />
+          )}
         </Link>
         <Title compact={compact}>{title}</Title>
       </Float.Left>
@@ -88,6 +116,20 @@ const Nav = ({ title, children, items = [], compact }) => {
         ))}
         {!compact && <Profile />}
       </FloatRight>
+      {items.length && (
+        <Small>
+          <Menu.Container>
+            <Menu.Toggle />
+            <Menu>
+              {items.map(({ label, ...item }, i) => (
+                <Menu.Item key={i} {...item}>
+                  {label}
+                </Menu.Item>
+              ))}
+            </Menu>
+          </Menu.Container>
+        </Small>
+      )}
     </NavContainer>
   )
 }

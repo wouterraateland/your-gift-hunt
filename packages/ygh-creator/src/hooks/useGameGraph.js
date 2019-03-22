@@ -110,6 +110,43 @@ const getUseTransitions = nodes =>
       )
     )
 
+const getInfoEdges = nodes =>
+  nodes
+    .filter(({ state }) => state)
+    .flatMap(({ id, instance, state }) =>
+      instance.information
+        .filter(
+          information =>
+            information.fieldValue &&
+            state.state.availableInformationSlots.some(
+              slot => slot.id === information.slot.id
+            )
+        )
+        .flatMap(information =>
+          nodes
+            .filter(
+              ({ instance, state }) =>
+                state &&
+                instance.fieldValues.some(
+                  ({ id }) => id === information.fieldValue.id
+                ) &&
+                state.state.outgoingTransitions.some(({ requiredActions }) =>
+                  requiredActions.some(({ payload: { requiredValues } }) =>
+                    requiredValues.some(
+                      ({ field }) =>
+                        field && field.id === information.fieldValue.field.id
+                    )
+                  )
+                )
+            )
+            .map(to => ({
+              from: id,
+              to: to.id,
+              type: EDGE_TYPES.INFO
+            }))
+        )
+    )
+
 const chooseRandom = xs => xs[Math.floor(Math.random() * xs.length)]
 
 const getOtherEntryTransitions = instances =>
@@ -138,7 +175,8 @@ const getEdges = (nodes, instances) =>
     ...getTransformTransitions(nodes),
     ...getUnlockTransitions(nodes),
     ...getUseTransitions(nodes),
-    ...getOtherEntryTransitions(instances)
+    ...getOtherEntryTransitions(instances),
+    ...getInfoEdges(nodes)
   ].map(({ from, to, unlocks, type }) => ({
     id: hash([from, to, unlocks, type]),
     from,

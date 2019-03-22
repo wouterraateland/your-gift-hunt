@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components"
 import { opacify } from "polished"
-import { darken } from "utils/colors"
+import _ from "utils"
 
 const Button = styled.button`
   cursor: pointer;
@@ -19,6 +19,7 @@ const Button = styled.button`
   border-radius: ${props => props.theme.borderRadius};
 
   line-height: 1;
+  text-align: center;
   vertical-align: middle;
   font-weight: bold;
 
@@ -30,7 +31,7 @@ const Button = styled.button`
 
     switch (props.color) {
       case "accent":
-        color = darken(0.05)(props.theme.color.accent)
+        color = _.darken(0.05)(props.theme.color.accent)
         break
       case "error":
         color = props.theme.color.error
@@ -56,7 +57,7 @@ const Button = styled.button`
           color: ${secondaryColor};
 
           &:hover {
-            background-color: ${opacify(0.3, darken(0.05)(color))};
+            background-color: ${opacify(0.3, _.darken(0.05)(color))};
           }
         `
       case "tertiary":
@@ -67,7 +68,7 @@ const Button = styled.button`
           color: ${color};
 
           &:hover {
-            background-color: ${darken(0.05)("#fff")};
+            background-color: ${_.darken(0.05)("#fff")};
           }
         `
       default:
@@ -78,18 +79,13 @@ const Button = styled.button`
           color: ${color};
 
           &:hover {
-            background-color: ${darken(0.05)("#fff")};
+            background-color: ${_.darken(0.05)("#fff")};
           }
         `
     }
   }}
 
-  ${props =>
-    props.block &&
-    css`
-      display: block;
-      width: 100%;
-    `}
+  ${_.blockStyles}
 
   &:disabled {
     pointer-events: none;

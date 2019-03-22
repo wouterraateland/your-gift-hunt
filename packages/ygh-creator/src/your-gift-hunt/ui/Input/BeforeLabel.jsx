@@ -1,12 +1,16 @@
 import styled, { css } from "styled-components"
 
+import { Input } from "./SingleInput"
+
 const BeforeLabel = styled.div`
   position: relative;
 
-  display: inline-block;
+  display: block;
   width: 1.5em;
   height: 1.5em;
   margin-right: 0.7em;
+
+  float: left;
 
   ${props =>
     props.type === "search" &&
@@ -39,6 +43,10 @@ const BeforeLabel = styled.div`
         transform: translate(-50%, -50%) rotate(45deg);
       }
     `}
+
+  & + ${Input} {
+    max-width: calc(100% - 2.5em);
+  }
 `
 
 BeforeLabel.displayName = "BeforeLabel"

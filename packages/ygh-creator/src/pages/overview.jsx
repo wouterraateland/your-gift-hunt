@@ -7,7 +7,7 @@ import { useQuery } from "react-apollo-hooks"
 import useDebounce from "hooks/useDebounce"
 
 import { Link } from "@reach/router"
-import { Wrapper, Paper, Float, Input, Button, Loader } from "your-gift-hunt/ui"
+import { Wrapper, Paper, Input, Button, Loader } from "your-gift-hunt/ui"
 import Layout from "layouts/Overview"
 import HuntList from "components/HuntList"
 
@@ -32,21 +32,26 @@ const OverviewPage = () => {
   return (
     <Layout title="Creator">
       <Wrapper>
-        <Paper>
+        <Paper fullWidthOnMobile>
           <Paper.Section>
-            <Float.Left>
-              <Input
-                type="search"
-                value={query}
-                onChange={event => setQuery(event.target.value)}
-                placeholder="Search hunts"
-              />
-            </Float.Left>
-            <Float.Right>
-              <Button importance="primary" color="accent" as={Link} to="/new">
-                New hunt
-              </Button>
-            </Float.Right>
+            <Input
+              style={{ float: "left" }}
+              type="search"
+              value={query}
+              onChange={event => setQuery(event.target.value)}
+              placeholder="Search hunts"
+              block="small"
+            />
+            <Button
+              style={{ float: "right" }}
+              importance="primary"
+              color="accent"
+              as={Link}
+              to="/new"
+              block="small"
+            >
+              New hunt
+            </Button>
           </Paper.Section>
           <Suspense fallback={<Loader />}>
             <Overview searchQuery={debouncedQuery} />

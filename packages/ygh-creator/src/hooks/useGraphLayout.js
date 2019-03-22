@@ -14,6 +14,7 @@ const edgePriority = {
   [EDGE_TYPES.EXIT]: 0,
   [EDGE_TYPES.TRANSFORM]: 1,
   [EDGE_TYPES.USE]: 4,
+  [EDGE_TYPES.INFO]: 5,
   [EDGE_TYPES.UNLOCK]: 3
 }
 

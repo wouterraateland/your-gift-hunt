@@ -10,6 +10,7 @@ import ZoomControls from "./ZoomControls"
 import PanControls from "./PanControls"
 
 const StyledEditorPane = styled.div`
+  touch-action: none;
   overflow: hidden;
 
   flex-grow: 1;

@@ -1,72 +1,142 @@
 import React, { useContext } from "react"
 import styled from "styled-components"
 import moment from "moment"
-import { Link } from "@reach/router"
+import { navigate } from "@reach/router"
 
 import AuthContext from "contexts/Auth"
 
 import { Edit } from "your-gift-hunt/icons"
+import { Present } from "your-gift-hunt/components"
+
 import MoreActions from "./MoreActions"
 
-const StyledHuntThumb = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 1em;
+const StyledThumb = styled.div`
+  cursor: pointer;
 
-  &:nth-child(2n) {
-    background-color: #0001;
+  padding: 0.5em 1em;
+
+  &:nth-child(2n + 1) {
+    background-color: #00000009;
+  }
+
+  &:hover {
+    background: #0001;
   }
 `
 
-const HuntTitle = styled.h2`
-  width: 50%;
-  margin: 0;
+const StyledPresent = styled(Present)`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+
+  max-width: 80%;
+  max-height: 80%;
+
+  transform: translate(-50%, -50%);
 `
 
-const HuntMeta = styled.p`
-  margin: 0;
-`
-
-const EditProject = styled(Link)`
+const Preview = styled.div`
   position: relative;
+
+  display: inline-block;
+  width: calc(16em / 3);
+  height: calc(9em / 3);
+  margin-right: 1em;
+  border-radius: ${props => props.theme.borderRadius};
+
+  background: #0002 url(${props => props.src}) no-repeat center / cover;
+`
+
+const Info = styled.div`
+  display: inline-block;
+  width: calc(100% - 25.5em);
+  vertical-align: middle;
+
+  @media (max-width: 45em) {
+    width: calc(100% - 10.5em);
+  }
+`
+
+const Meta = styled.div`
+  display: inline-block;
+  width: 15em;
+
+  @media (max-width: 45em) {
+    display: none;
+  }
+`
+
+const Title = styled.h2`
+  margin: 0;
+`
+
+const Creator = styled.strong`
+  display: block;
+  margin: 0.7em 0 0.1em;
+`
+
+const ActionsContainer = styled.div`
+  display: inline-block;
+  vertical-align: middle;
+`
+
+const EditProject = styled.span`
+  position: relative;
+
+  display: inline-block;
   width: 2em;
   height: 2em;
   padding: 0.25em 0.675em;
 `
 
-const StyledHuntThumbActions = styled.div`
-  display: flex;
-`
-
-const HuntThumbActions = ({ game }) => (
-  <StyledHuntThumbActions>
+const Actions = ({ game }) => (
+  <ActionsContainer>
     <MoreActions game={game} />
-    <EditProject to={`/${game.creator.slug}/${game.slug}`}>
+    <EditProject>
       <Edit size={1.5} />
     </EditProject>
-  </StyledHuntThumbActions>
+  </ActionsContainer>
 )
 
-const HuntThumb = ({ game }) => {
+const Thumb = ({ game }) => {
   const { user } = useContext(AuthContext)
-  const { name, updatedAt, creator } = game
+  const editDate = moment(game.updatedAt)
+  const now = moment()
+  const sameYear = editDate.year() === now.year()
+  const playCount = game.plays.length
 
   return (
-    <StyledHuntThumb>
-      <HuntTitle>{name}</HuntTitle>
-      <HuntMeta>
-        <strong>
+    <StyledThumb onClick={() => navigate(`/${game.creator.slug}/${game.slug}`)}>
+      {game.image ? (
+        <Preview src={game.image} />
+      ) : (
+        <Preview>
+          <StyledPresent />
+        </Preview>
+      )}
+      <Info>
+        <Title>{game.name}</Title>
+        <small>
+          {game.privacy === "PRIVATE" ? "Private" : "Public"} hunt
+          {" • "}
+          Played {playCount} time{playCount === 1 ? "" : `s`}
+        </small>
+      </Info>
+      <Meta>
+        <Creator>
           Created by{" "}
-          {creator.id === user.user_metadata.prismaUserId
+          {game.creator.id === user.user_metadata.prismaUserId
             ? "you"
-            : creator.name}
-        </strong>
-        <br />
-        Last edited {moment(updatedAt).fromNow()}
-      </HuntMeta>
-      <HuntThumbActions game={game} />
-    </StyledHuntThumb>
+            : game.creator.name}
+        </Creator>
+        <small>
+          Last edited on {editDate.format(sameYear ? "MMM DD" : "MMM DD, YYYY")}{" "}
+          ({editDate.fromNow()})
+        </small>
+      </Meta>
+      <Actions game={game} />
+    </StyledThumb>
   )
 }
 
-export default HuntThumb
+export default Thumb

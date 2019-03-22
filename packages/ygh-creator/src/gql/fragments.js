@@ -8,6 +8,9 @@ export const INFORMATION_FRAGMENT = gql`
     }
     fieldValue {
       id
+      field {
+        id
+      }
     }
   }
 `
@@ -52,6 +55,9 @@ export const ENTITY_INSTANCE_FRAGMENT = gql`
         id
         name
         description
+        availableInformationSlots {
+          id
+        }
         outgoingTransitions {
           id
           to {

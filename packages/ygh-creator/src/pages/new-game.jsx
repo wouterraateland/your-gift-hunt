@@ -168,7 +168,7 @@ const NewGamePage = () => {
   return (
     <Layout title="New hunt">
       <Wrapper size="large">
-        <Paper>
+        <Paper fullWidthOnMobile>
           <Paper.Section>
             <Float.Left>
               <BackButton />

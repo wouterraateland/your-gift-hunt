@@ -2,11 +2,12 @@ import styled, { css } from "styled-components"
 import { mix, opacify, invert, transparentize } from "polished"
 
 import { LabelText } from "./LabelText"
+import _ from "utils"
 
 const Label = styled.label`
   position: relative;
 
-  display: ${props => (props.block ? "block" : "inline-block")};
+  display: inline-block;
   max-width: 100%;
   ${props =>
     !props.isMap &&
@@ -44,12 +45,7 @@ const Label = styled.label`
         )
       : opacify(1, invert(props.theme.color.text))};
 
-  ${props =>
-    props.block &&
-    css`
-      width: 100%;
-      display: block;
-    `}
+  ${_.blockStyles}
 
   ${props =>
     !props.isSelect &&

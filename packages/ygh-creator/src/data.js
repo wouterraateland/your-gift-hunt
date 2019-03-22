@@ -47,5 +47,6 @@ export const EDGE_TYPES = {
   EXIT: "exit",
   TRANSFORM: "transform",
   UNLOCK: "unlock",
-  USE: "use"
+  USE: "use",
+  INFO: "info"
 }

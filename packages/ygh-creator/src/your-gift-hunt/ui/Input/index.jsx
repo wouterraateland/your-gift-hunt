@@ -17,9 +17,11 @@ const Input = ({
   isSecret,
   isSelect,
   showType,
+  style,
   ...otherProps
 }) => (
   <Label
+    style={style}
     block={otherProps.block}
     isSelect={isSelect}
     isMap={otherProps.type === "geopoint"}

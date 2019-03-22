@@ -52,8 +52,8 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   form {
-    margin-left: -.79em;
-    margin-right: -.79em;
+    margin-left: -1em;
+    margin-right: -1em;
   }
 
   input, textarea, select, button {
@@ -69,6 +69,7 @@ export const GlobalStyles = createGlobalStyle`
 
   strong {
     color: ${theme.color.emphasis};
+    font-weight: 600;
   }
 
   hr {

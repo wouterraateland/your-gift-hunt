@@ -19,6 +19,8 @@ const Arrow = styled.svg`
         return "#39f"
       case EDGE_TYPES.USE:
         return "#3f9"
+      case EDGE_TYPES.INFO:
+        return "#f39"
       default:
         return "#ccc"
     }
@@ -28,6 +30,7 @@ const Arrow = styled.svg`
 const getD = (x1, y1, x2, y2, type) => {
   switch (type) {
     case EDGE_TYPES.USE:
+    case EDGE_TYPES.INFO:
       return x1 < x2
         ? `M ${x1} ${y1} C ${x1 + 64} ${y1}, ${x2 - 64} ${y2}, ${x2} ${y2}`
         : x1 === x2
@@ -94,7 +97,7 @@ const TransitionArrow = ({ x1, y1, x2, y2, type }) => {
         stroke="currentColor"
         strokeWidth={2}
         fill="none"
-        markerStart={type === EDGE_TYPES.UNLOCK ? `url(#circle-${type})` : null}
+        markerStart={`url(#circle-${type})`}
         markerEnd={`url(#arrow-${type})`}
       />
     </Arrow>
