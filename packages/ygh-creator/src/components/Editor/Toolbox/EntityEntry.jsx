@@ -1,7 +1,7 @@
 import React from "react"
 import styled, { css } from "styled-components"
 
-import EntityInstancePreview from "../EntityInstancePreview"
+import EntityPreview from "../EntityPreview"
 import EntityDetails from "./EntityDetails"
 
 const EntityEntryContainer = styled.div`
@@ -118,7 +118,7 @@ const EntityEntry = ({
         : "Max instances reached"}
     </StatusLabel>
     <PreviewContainer isDisabled={!isAvailable || isUpcoming}>
-      <EntityInstancePreview
+      <EntityPreview
         rotateObjects
         entity={entity}
         state={

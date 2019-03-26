@@ -1,5 +1,9 @@
 import gql from "graphql-tag"
-import { ENTITY_FRAGMENT, INFORMATION_SLOT_FRAGMENT } from "./fragments"
+import {
+  STATE_TRANSITION_FRAGMENT,
+  ENTITY_FRAGMENT,
+  INFORMATION_SLOT_FRAGMENT
+} from "./fragments"
 
 export const CREATE_USER = gql`
   mutation createUser($netlifyUserId: String!, $name: String!, $slug: String!) {
@@ -76,87 +80,36 @@ export const DELETE_GAME = gql`
   }
 `
 
-export const UPDATE_ENTITY_INSTANCE_NAME = gql`
-  mutation updateEntityInstanceName($instanceId: ID!, $name: String!) {
-    updateEntityInstance(where: { id: $instanceId }, data: { name: $name }) {
+export const UPDATE_ENTITY_NAME = gql`
+  mutation updateEntityName($entityId: ID!, $name: String!) {
+    updateEntity(where: { id: $entityId }, data: { name: $name }) {
       id
       name
     }
   }
 `
 
-export const UPDATE_ENTITY_INSTANCE_FIELD = gql`
-  mutation updateFieldValue($FieldValueId: ID!, $value: String!) {
-    updateFieldValue(where: { id: $FieldValueId }, data: { value: $value }) {
+export const UPDATE_FIELD_VALUE = gql`
+  mutation updateFieldValue($fieldId: ID!, $value: String!) {
+    updateField(where: { id: $fieldId }, data: { value: $value }) {
       id
       value
     }
   }
 `
 
-export const CONNECT_ACTION_REQUIREMENT_TO_ENTITY_INSTANCE = gql`
-  mutation connectActionRequirementToEntityInstance(
-    $entityInstanceId: ID!
-    $actionRequirementId: ID!
-  ) {
-    updateEntityInstance(
-      where: { id: $entityInstanceId }
-      data: {
-        actionRequirementsWithCustomHints: {
-          connect: [{ id: $actionRequirementId }]
-        }
-      }
-    ) {
-      id
-      actionRequirementsWithCustomHints {
-        id
-      }
-    }
-  }
-`
-
-export const DISCONNECT_ACTION_REQUIREMENT_FROM_ENTITY_INSTANCE = gql`
-  mutation disconnectActionRequirementFromEntityInstance(
-    $entityInstanceId: ID!
-    $actionRequirementId: ID!
-  ) {
-    updateEntityInstance(
-      where: { id: $entityInstanceId }
-      data: {
-        actionRequirementsWithCustomHints: {
-          disconnect: [{ id: $actionRequirementId }]
-        }
-      }
-    ) {
-      id
-      actionRequirementsWithCustomHints {
-        id
-      }
-    }
-  }
-`
-
 export const CREATE_HINT = gql`
-  mutation createHint(
-    $entityInstanceId: ID!
-    $actionRequirementId: ID!
-    $text: String!
-    $delay: Int
-  ) {
+  mutation createHint($actionRequirementId: ID!, $text: String!, $delay: Int) {
     createHint(
       data: {
         text: $text
         delay: $delay
-        entityInstance: { connect: { id: $entityInstanceId } }
         actionRequirement: { connect: { id: $actionRequirementId } }
       }
     ) {
       id
       text
       delay
-      entityInstance {
-        id
-      }
       actionRequirement {
         id
       }
@@ -182,93 +135,44 @@ export const DELETE_HINT = gql`
   }
 `
 
-export const ADD_UNLOCK_TO_ENTITY_INSTANCE_STATE_TRANSITION = gql`
-  mutation addUnlockToEntityInstanceStateTransition(
-    $entityInstanceStateTransitionId: ID!
-    $entityInstanceStateId: ID!
-  ) {
-    updateEntityInstanceStateTransition(
-      where: { id: $entityInstanceStateTransitionId }
-      data: { unlocks: { connect: [{ id: $entityInstanceStateId }] } }
+export const ADD_UNLOCK_TO_STATE_TRANSITION = gql`
+  mutation addUnlockToStateTransition($stateTransitionId: ID!, $stateId: ID!) {
+    updateStateTransition(
+      where: { id: $stateTransitionId }
+      data: { unlocks: { connect: [{ id: $stateId }] } }
     ) {
-      id
-      from {
-        id
-        instance {
-          id
-        }
-      }
-      unlocks {
-        id
-      }
+      ...StateTransitionFragment
     }
   }
+  ${STATE_TRANSITION_FRAGMENT}
 `
 
-export const REMOVE_UNLOCK_FROM_ENTITY_INSTANCE_STATE_TRANSITION = gql`
-  mutation removeUnlockFromEntityInstanceStateTransition(
-    $entityInstanceStateTransitionId: ID!
-    $entityInstanceStateId: ID!
+export const REMOVE_UNLOCK_FROM_STATE_TRANSITION = gql`
+  mutation removeUnlockFromStateTransition(
+    $stateTransitionId: ID!
+    $stateId: ID!
   ) {
-    updateEntityInstanceStateTransition(
-      where: { id: $entityInstanceStateTransitionId }
-      data: { unlocks: { disconnect: [{ id: $entityInstanceStateId }] } }
+    updateStateTransition(
+      where: { id: $stateTransitionId }
+      data: { unlocks: { disconnect: [{ id: $stateId }] } }
     ) {
-      id
-      from {
-        id
-        instance {
-          id
-        }
-      }
-      unlocks {
-        id
-      }
+      ...StateTransitionFragment
     }
   }
+  ${STATE_TRANSITION_FRAGMENT}
 `
 
-export const CREATE_ENTITY_INSTANCE_STATE_TRANSITION = gql`
-  mutation createEntityInstanceStateTransition(
-    $from: ID!
-    $to: ID!
-    $unlocks: ID!
-  ) {
-    createEntityInstanceStateTransition(
-      data: {
-        from: { connect: { id: $from } }
-        to: { connect: { id: $to } }
-        unlocks: { connect: [{ id: $unlocks }] }
-      }
-    ) {
-      id
-      from {
-        id
-        instance {
-          id
-        }
-      }
-      to {
-        id
-      }
-      unlocks {
-        id
-      }
-    }
-  }
-`
-
-export const CREATE_ENTITY_INSTANCE_STATE_TRANSITIONS = gql`
-  mutation createEntityInstanceStateTransitions(
+export const CREATE_STATE_TRANSITIONS = gql`
+  mutation createStateTransitions(
     $gameId: ID!
-    $entityInstanceUpdates: [EntityInstanceUpdateWithWhereUniqueWithoutGameInput!]!
+    $entityUpdates: [EntityUpdateWithWhereUniqueWithoutGameInput!]!
   ) {
     updateGame(
       where: { id: $gameId }
-      data: { instances: { update: $entityInstanceUpdates } }
+      data: { entities: { update: $entityUpdates } }
     ) {
       id
-      instances {
+      entities {
         ...EntityFragment
       }
     }
@@ -276,23 +180,20 @@ export const CREATE_ENTITY_INSTANCE_STATE_TRANSITIONS = gql`
   ${ENTITY_FRAGMENT}
 `
 
-export const CREATE_ENTITY_INSTANCES = gql`
-  mutation createEntityInstances(
+export const CREATE_ENTITIES = gql`
+  mutation createEntities(
     $gameId: ID!
-    $entityInstancesToCreate: [EntityInstanceCreateWithoutGameInput!]!
-    $entityInstancesToUpdate: [EntityInstanceUpdateWithWhereUniqueWithoutGameInput!]!
+    $entitiesToCreate: [EntityCreateWithoutGameInput!]!
+    $entitiesToUpdate: [EntityUpdateWithWhereUniqueWithoutGameInput!]!
   ) {
     updateGame(
       where: { id: $gameId }
       data: {
-        instances: {
-          create: $entityInstancesToCreate
-          update: $entityInstancesToUpdate
-        }
+        entities: { create: $entitiesToCreate, update: $entitiesToUpdate }
       }
     ) {
       id
-      instances {
+      entities {
         ...EntityFragment
       }
     }
@@ -301,64 +202,51 @@ export const CREATE_ENTITY_INSTANCES = gql`
 `
 
 export const DELETE_NODES = gql`
-  mutation deleteNodes(
-    $entityInstanceIds: [ID!]!
-    $entityInstanceStateIds: [ID!]!
-  ) {
-    deleteManyEntityInstanceStateTransitions(
+  mutation deleteNodes($entityIds: [ID!]!, $stateIds: [ID!]!) {
+    deleteManyStateTransitions(
       where: {
-        OR: [
-          { from: { id_in: $entityInstanceStateIds } }
-          { to: { id_in: $entityInstanceStateIds } }
-        ]
+        OR: [{ from: { id_in: $stateIds } }, { to: { id_in: $stateIds } }]
       }
     ) {
       count
     }
-    deleteManyEntityInstanceStates(where: { id_in: $entityInstanceStateIds }) {
+    deleteManyStates(where: { id_in: $stateIds }) {
       count
     }
 
-    deleteManyInformations(
-      where: { entityInstance: { id_in: $entityInstanceIds } }
-    ) {
+    deleteManyInformationSlots(where: { entity: { id_in: $entityIds } }) {
       count
     }
 
-    deleteManyFieldValues(
-      where: { entityInstance: { id_in: $entityInstanceIds } }
-    ) {
+    deleteManyFields(where: { entity: { id_in: $entityIds } }) {
       count
     }
 
-    deleteManyEntityInstances(where: { id_in: $entityInstanceIds }) {
+    deleteManyEntity(where: { id_in: $entityIds }) {
       count
     }
   }
 `
 
-export const CONNECT_INFORMATION_WITH_FIELD_VALUE = gql`
-  mutation connectInformationWithFieldValue(
-    $informationId: ID!
-    $fieldValueId: ID!
-  ) {
-    updateInformation(
-      where: { id: $informationId }
-      data: { fieldValue: { connect: { id: $fieldValueId } } }
+export const CONNECT_INFORMATION_SLOT_WITH_FIELD = gql`
+  mutation connectInformationWithField($informationSlotId: ID!, $fieldId: ID!) {
+    updateInformationSlot(
+      where: { id: $informationSlotId }
+      data: { field: { connect: { id: $fieldValueId } } }
     ) {
-      ...InformationFragment
+      ...InformationSlotFragment
     }
   }
   ${INFORMATION_SLOT_FRAGMENT}
 `
 
-export const DISCONNECT_INFORMATION_FROM_FIELD_VALUE = gql`
-  mutation disconnectInformationFromFieldValue($informationId: ID!) {
-    updateInformation(
-      where: { id: $informationId }
-      data: { fieldValue: { disconnect: true } }
+export const DISCONNECT_INFORMATION_SLOT_FROM_FIELD = gql`
+  mutation disconnectInformationFromFieldValue($informationSlotId: ID!) {
+    updateInformationSlot(
+      where: { id: $informationSlotId }
+      data: { field: { disconnect: true } }
     ) {
-      ...InformationFragment
+      ...InformationSlotFragment
     }
   }
   ${INFORMATION_SLOT_FRAGMENT}

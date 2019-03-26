@@ -8,9 +8,9 @@ import GameContext from "contexts/Game"
 
 import EntryNode from "./EntryNode"
 import ExitNode from "./ExitNode"
-import InstanceCard from "./InstanceCard"
+import EntityCard from "./EntityCard"
 
-const Node = memo(({ id, instance, state, type }) => {
+const Node = memo(({ id, entity, state, type }) => {
   const { ACTION_TYPES, upcomingAction } = useContext(EditorContext)
   const { inspectNode, isOpen, nodeId } = useContext(InspectorContext)
   const { getNodePosition } = useContext(GameContext)
@@ -21,11 +21,11 @@ const Node = memo(({ id, instance, state, type }) => {
       return <EntryNode position={position} />
     case NODE_TYPES.STATE:
       return (
-        <InstanceCard
+        <EntityCard
           key={id}
           position={position}
-          instance={instance}
-          state={state.state.name}
+          entity={entity}
+          state={state.name}
           isFocussed={isOpen && nodeId === id}
           mayBeDeleted={
             upcomingAction &&

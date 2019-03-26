@@ -7,7 +7,7 @@ import { Input, Field } from "your-gift-hunt/ui"
 
 import _ from "utils"
 
-const Property = ({ id, value, field }) => {
+const Property = ({ id, value, type, ...field }) => {
   const [newValue, setNewValue] = useState(value ? JSON.parse(value) : null)
   const { updateFieldValue } = useContext(GameContext)
 
@@ -28,8 +28,8 @@ const Property = ({ id, value, field }) => {
       <Input
         block
         {...field}
-        isMulti={field.type.isMulti}
-        type={_.toInputType(field.type.type)}
+        isMulti={type.isMulti}
+        type={_.toInputType(type.type)}
         showType
         value={newValue}
         onChange={event => setNewValue(event.target.value)}

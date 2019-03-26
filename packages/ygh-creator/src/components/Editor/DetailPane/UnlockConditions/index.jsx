@@ -12,7 +12,7 @@ const UnlockConditions = ({ node }) => {
 
   return isUnlockable(node, true) ? (
     <Section title="Unlock conditions">
-      {node.instance.entity.isObject ? (
+      {node.entity.isObject ? (
         <DefaultUnlockConditions node={node} />
       ) : (
         <EditableUnlockConditions node={node} />

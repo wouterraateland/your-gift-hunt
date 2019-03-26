@@ -1,18 +1,16 @@
 import React from "react"
 
-import EntityInstancePreview from "components/Editor/EntityInstancePreview"
+import EntityPreview from "components/Editor/EntityPreview"
 
 import PreviewContainer from "./Container"
 
-const InstancePreview = ({ node }) => {
-  const {
-    instance: { entity }
-  } = node
-  const state = node.state ? node.state.state.name : null
+const Preview = ({ node }) => {
+  const { entity } = node
+  const state = node.state ? node.state.name : null
 
   return entity.isItem || entity.isObject ? (
     <PreviewContainer>
-      <EntityInstancePreview
+      <EntityPreview
         entity={entity}
         state={state}
         maxWidth={19}
@@ -22,4 +20,4 @@ const InstancePreview = ({ node }) => {
   ) : null
 }
 
-export default InstancePreview
+export default Preview

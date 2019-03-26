@@ -66,7 +66,7 @@ const getStartTransitions = nodes =>
 
 const getTransformTransitions = nodes =>
   nodes
-    .filter(({ state }) => state && state.state.outgoingTransitions.length > 0)
+    .filter(({ state }) => state && state.outgoingTransitions.length > 0)
     .flatMap(node =>
       node.state.outgoingTransitions.map(({ to }) => ({
         from: node.id,
@@ -110,12 +110,13 @@ const getInfoEdges = nodes =>
   nodes
     .filter(({ state }) => state)
     .flatMap(({ id, entity, state }) =>
-      entity.information
+      entity.informationSlots
         .filter(
-          information =>
-            information.fieldValue &&
-            state.state.availableInformationSlots.some(
-              slot => slot.id === information.slot.id
+          informationSlot =>
+            informationSlot.field &&
+            state.availableInformationSlots.some(
+              otherInformationSlot =>
+                otherInformationSlot.id === informationSlot.id
             )
         )
         .flatMap(information =>

@@ -19,7 +19,7 @@ const Scaled = ({ isRotated, scale, ...otherProps }) => (
   />
 )
 
-const EntityInstancePreview = ({
+const EntityPreview = ({
   entity,
   state,
   maxWidth = 1,
@@ -51,4 +51,4 @@ const EntityInstancePreview = ({
   )
 }
 
-export default EntityInstancePreview
+export default EntityPreview

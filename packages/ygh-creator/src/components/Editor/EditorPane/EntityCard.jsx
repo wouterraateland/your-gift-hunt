@@ -3,7 +3,7 @@ import styled, { css } from "styled-components"
 
 import EntityTypeIcon from "../EntityTypeIcon"
 import StateTag from "../StateTag"
-import EntityInstancePreview from "../EntityInstancePreview"
+import EntityPreview from "../EntityPreview"
 
 const Card = styled.div`
   cursor: pointer;
@@ -70,13 +70,13 @@ const Card = styled.div`
     `}
 `
 
-const InstanceName = styled.h2`
+const Name = styled.h2`
   margin: 0 ${props => (props.hasPreview ? 3.5 : 0)}rem 0.25rem 0;
   font-size: 1.25em;
   line-height: 1;
 `
 
-const FeaturedFieldValue = styled.p`
+const FeaturedField = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
 
@@ -95,20 +95,18 @@ const PreviewContainer = styled.div`
   height: 4em;
 `
 
-const InstanceCard = ({
-  instance,
+const EntityCard = ({
+  entity,
   state,
   position,
   onClick,
   mayBeDeleted,
   isFocussed
 }) => {
-  const { entity, fieldValues } = instance
-
   const hasPreview = entity && (entity.isItem || entity.isObject)
 
   const featuredFieldValue = entity.featuredField
-    ? fieldValues.find(({ field }) => field.id === entity.featuredField.id)
+    ? entity.fields.find(({ field }) => field.id === entity.featuredField.id)
         .value
     : null
 
@@ -120,17 +118,15 @@ const InstanceCard = ({
       mayBeDeleted={mayBeDeleted}
       isFocussed={isFocussed}
     >
-      <InstanceName hasPreview={hasPreview}>
-        <EntityTypeIcon {...entity} /> {instance.name}
-      </InstanceName>
+      <Name hasPreview={hasPreview}>
+        <EntityTypeIcon {...entity} /> {entity.name}
+      </Name>
       {state !== "default" && <StateTag name={state} />}
       {featuredFieldValue && (
-        <FeaturedFieldValue>
-          {JSON.parse(featuredFieldValue)}
-        </FeaturedFieldValue>
+        <FeaturedField>{JSON.parse(featuredFieldValue)}</FeaturedField>
       )}
       <PreviewContainer>
-        <EntityInstancePreview
+        <EntityPreview
           entity={entity}
           state={state}
           maxWidth={2.5}
@@ -142,4 +138,4 @@ const InstanceCard = ({
   )
 }
 
-export default InstanceCard
+export default EntityCard

@@ -51,24 +51,24 @@ const getEntitiesFilter = type => {
 const Entities = ({ isVisible, selectedType, onBackClick }) => {
   const {
     game: { entities },
-    createEntityInstance
+    createEntity
   } = useContext(GameContext)
   const { inspectNode } = useContext(InspectorContext)
   const { entityTemplates } = useContext(TemplatesContext)
   const visibleEntityTemplates = entityTemplates.filter(
     getEntitiesFilter(selectedType)
   )
-  const [isEntityInstanceCreated, setEntityInstanceCreated] = useState(false)
+  const [isEntityCreated, setEntityCreated] = useState(false)
 
   const [expandedEntityTemplate, setExpandedEntity] = useState(null)
 
   const onEntityTemplateClick = useCallback(
     async entityTemplateId => {
-      await createEntityInstance(entityTemplateId)
+      await createEntity(entityTemplateId)
       onBackClick()
-      setEntityInstanceCreated(true)
+      setEntityCreated(true)
     },
-    [createEntityInstance]
+    [createEntity]
   )
 
   const onEntityTemplateInfoClick = useCallback(
@@ -88,12 +88,12 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
 
   useEffect(
     () => {
-      if (isEntityInstanceCreated) {
+      if (isEntityCreated) {
         inspectNode(entities[entities.length - 1].states[0].id)
-        setEntityInstanceCreated(false)
+        setEntityCreated(false)
       }
     },
-    [isEntityInstanceCreated]
+    [isEntityCreated]
   )
 
   return (

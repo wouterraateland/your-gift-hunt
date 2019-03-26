@@ -20,15 +20,15 @@ const Form = styled.form`
   font-family: ${props => props.theme.font.copy};
 `
 
-const EditableInstanceName = ({ instance }) => {
+const EditableEntityName = ({ entity }) => {
   const ref = useRef(null)
-  const { updateEntityInstanceName } = useContext(GameContext)
+  const { updateEntityName } = useContext(GameContext)
 
   const [{ isEditable, isLoading, error, value }, setState] = useState({
     isEditable: false,
     isLoading: false,
     error: null,
-    value: instance.name
+    value: entity.name
   })
 
   useClickOutside({
@@ -42,23 +42,23 @@ const EditableInstanceName = ({ instance }) => {
         isEditable: false,
         isLoading: false,
         error: null,
-        value: instance.name
+        value: entity.name
       })
     },
-    [instance]
+    [entity]
   )
 
   const onEditClick = useCallback(
     () =>
-      setState(state => ({ ...state, isEditable: true, value: instance.name })),
-    [instance]
+      setState(state => ({ ...state, isEditable: true, value: entity.name })),
+    [entity]
   )
 
   const onSubmit = useCallback(
     event => {
       event.preventDefault()
       setState(state => ({ ...state, isLoading: true }))
-      updateEntityInstanceName(instance.id, value)
+      updateEntityName(entity.id, value)
         .then(
           setState(state => ({
             ...state,
@@ -107,4 +107,4 @@ const EditableInstanceName = ({ instance }) => {
   )
 }
 
-export default EditableInstanceName
+export default EditableEntityName

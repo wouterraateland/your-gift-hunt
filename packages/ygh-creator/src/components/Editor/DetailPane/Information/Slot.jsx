@@ -12,14 +12,14 @@ import FieldTag from "components/Editor/FieldTag"
 
 const Option = ({ data, ...otherProps }) => (
   <components.Option {...otherProps}>
-    <EntityTag entity={data.instance.entity} /> (
+    <EntityTag entity={data.entity} /> (
     <FieldTag field={data.field} showInfo={false} />)
   </components.Option>
 )
 
 const SingleValue = ({ data, ...otherProps }) => (
   <components.SingleValue {...otherProps}>
-    <EntityTag entity={data.instance.entity} /> (
+    <EntityTag entity={data.entity} /> (
     <FieldTag field={data.field} showInfo={false} />)
   </components.SingleValue>
 )
@@ -33,25 +33,24 @@ const Slot = ({ name, description, allowedTypes, information }) => {
 
   const [{ error, isLoading }, runAsync] = useAsync()
 
-  const options = nodes.flatMap(({ instance, state }) =>
+  const options = nodes.flatMap(({ entity, state }) =>
     state
-      ? state.state.outgoingTransitions
+      ? state.outgoingTransitions
           .flatMap(({ requiredActions }) =>
             requiredActions.flatMap(({ payload }) => payload.requiredValues)
           )
           .filter(({ field }) => field !== null)
           .map(({ field }) =>
-            instance.fieldValues.find(({ field: { id } }) => id === field.id)
+            entity.fields.find(({ template: { id } }) => id === field.id)
           )
-          .filter(fieldValue =>
+          .filter(field =>
             allowedTypes.some(
               ({ type, isMulti }) =>
-                fieldValue.field.type.type === type &&
-                fieldValue.field.type.isMulti === isMulti
+                field.type.type === type && field.type.isMulti === isMulti
             )
           )
           .map(({ id, field }) => ({
-            instance,
+            entity,
             field,
             value: id
           }))

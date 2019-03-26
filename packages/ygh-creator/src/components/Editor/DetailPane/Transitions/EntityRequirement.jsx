@@ -6,14 +6,11 @@ import GameContext from "contexts/Game"
 import NodeTag from "components/Editor/NodeTag"
 import ListItem from "./ListItem"
 
-const EntityRequirement = ({ type, requiredEntity: { entity, state } }) => {
+const EntityRequirement = ({ type, requiredEntity: { entityState } }) => {
   const { nodes } = useContext(GameContext)
 
   const node = nodes.find(
-    node =>
-      node.instance.entity.id === entity.id &&
-      node.state &&
-      node.state.state.id === state.id
+    node => node.state && node.state.id === entityState.id
   )
 
   return (

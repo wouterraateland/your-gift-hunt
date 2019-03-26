@@ -20,6 +20,24 @@ export const INFORMATION_SLOT_FRAGMENT = gql`
   }
 `
 
+export const STATE_TRANSITION_FRAGMENT = gql`
+  fragment StateTransitionFragment on StateTransition {
+    id
+    from {
+      id
+    }
+    to {
+      id
+    }
+    unlocks {
+      id
+    }
+    requiredActions {
+      id
+    }
+  }
+`
+
 export const ENTITY_FRAGMENT = gql`
   fragment EntityFragment on Entity {
     id
@@ -39,14 +57,19 @@ export const ENTITY_FRAGMENT = gql`
     featuredField {
       id
     }
-
     informationSlots {
       ...InformationSlotFragment
     }
     states {
       id
+      template {
+        id
+      }
       name
       description
+      availableInformationSlots {
+        id
+      }
       unlockedBy {
         id
         from {
