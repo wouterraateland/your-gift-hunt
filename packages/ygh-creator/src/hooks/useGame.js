@@ -16,7 +16,7 @@ const useGame = variables => {
     }
   }
 
-  const graph = useGameGraph(game.instances)
+  const graph = useGameGraph(game.entities)
   const graphLayout = useGraphLayout(graph)
   const dependencies = useGameDependencies(graph)
   const mutations = useGameMutations(variables, saveState.save, dependencies)

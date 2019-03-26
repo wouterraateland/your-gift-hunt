@@ -2,14 +2,14 @@ import { NODE_TYPES } from "data"
 import React, { useContext } from "react"
 
 import GameContext from "contexts/Game"
-import EntitiesContext from "contexts/Entities"
+import TemplatesContext from "contexts/Templates"
 
 import Section from "components/Editor/DetailPane/Section"
 import TransitionWithRequirements from "./TransitionWithRequirements"
 
 const OutgoingTransitions = ({ node }) => {
   const { getNodeById } = useContext(GameContext)
-  const { getEntityStateById } = useContext(EntitiesContext)
+  const { getEntityStateById } = useContext(TemplatesContext)
 
   const getRequiredActions = (from, to) =>
     getEntityStateById(from.state.state.id).outgoingTransitions.find(

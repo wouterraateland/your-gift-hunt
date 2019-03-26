@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 
 import GameContext from "contexts/Game"
-import EntitiesContext from "contexts/Entities"
+import TemplatesContext from "contexts/Templates"
 import InspectorContext from "contexts/Inspector"
 
 import EntitiesContainer from "./EntitiesContainer"
@@ -50,29 +50,31 @@ const getEntitiesFilter = type => {
 
 const Entities = ({ isVisible, selectedType, onBackClick }) => {
   const {
-    game: { instances },
+    game: { entities },
     createEntityInstance
   } = useContext(GameContext)
   const { inspectNode } = useContext(InspectorContext)
-  const { entities } = useContext(EntitiesContext)
-  const visibleEntities = entities.filter(getEntitiesFilter(selectedType))
+  const { entityTemplates } = useContext(TemplatesContext)
+  const visibleEntityTemplates = entityTemplates.filter(
+    getEntitiesFilter(selectedType)
+  )
   const [isEntityInstanceCreated, setEntityInstanceCreated] = useState(false)
 
-  const [expandedEntity, setExpandedEntity] = useState(null)
+  const [expandedEntityTemplate, setExpandedEntity] = useState(null)
 
-  const onEntityClick = useCallback(
-    async entityId => {
-      await createEntityInstance(entityId)
+  const onEntityTemplateClick = useCallback(
+    async entityTemplateId => {
+      await createEntityInstance(entityTemplateId)
       onBackClick()
       setEntityInstanceCreated(true)
     },
     [createEntityInstance]
   )
 
-  const onEntityInfoClick = useCallback(
-    entityId =>
-      setExpandedEntity(expandedEntity =>
-        expandedEntity === entityId ? null : entityId
+  const onEntityTemplateInfoClick = useCallback(
+    entityTemplateId =>
+      setExpandedEntity(expandedEntityTemplate =>
+        expandedEntityTemplate === entityTemplateId ? null : entityTemplateId
       ),
     []
   )
@@ -87,7 +89,7 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
   useEffect(
     () => {
       if (isEntityInstanceCreated) {
-        inspectNode(instances[instances.length - 1].states[0].id)
+        inspectNode(entities[entities.length - 1].states[0].id)
         setEntityInstanceCreated(false)
       }
     },
@@ -97,21 +99,21 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
   return (
     <EntitiesContainer isVisible={isVisible}>
       <BackButton onClick={onBackClick}>&larr; Back</BackButton>
-      {visibleEntities.map(entity => (
+      {visibleEntityTemplates.map(entityTemplate => (
         <EntityEntry
-          key={entity.id}
-          entity={entity}
+          key={entityTemplate.id}
+          entity={entityTemplate}
           isAvailable={
             !["object", "item"].includes(selectedType) ||
-            !instances.some(instance => instance.entity.id === entity.id)
+            !entities.some(entity => entity.template.id === entityTemplate.id)
           }
-          isPro={entity.name === "Plant pot"}
+          isPro={entityTemplate.name === "Plant pot"}
           isUpcoming={false} //selectedType === "trigger"}
-          isExpanded={expandedEntity === entity.id}
-          onClick={() => onEntityClick(entity.id)}
+          isExpanded={expandedEntityTemplate === entityTemplate.id}
+          onClick={() => onEntityTemplateClick(entityTemplate.id)}
           onInfoClick={event => {
             event.stopPropagation()
-            onEntityInfoClick(entity.id)
+            onEntityTemplateInfoClick(entityTemplate.id)
           }}
         />
       ))}

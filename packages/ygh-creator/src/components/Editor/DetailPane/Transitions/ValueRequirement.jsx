@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import EntitiesContext from "contexts/Entities"
+import TemplatesContext from "contexts/Templates"
 
 import FieldTag from "components/Editor/FieldTag"
 import ListItem from "./ListItem"
@@ -21,7 +21,7 @@ const getVerb = (comparator, not) => {
 }
 
 const ValueRequirement = ({ requiredValues }) => {
-  const { getFieldById } = useContext(EntitiesContext)
+  const { getFieldById } = useContext(TemplatesContext)
 
   return requiredValues.length ? (
     requiredValues.map(({ key, comparator, not, value, field }, i) => (

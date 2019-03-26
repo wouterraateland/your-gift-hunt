@@ -1,5 +1,5 @@
 import { useMutation, useApolloClient } from "react-apollo-hooks"
-import useEntities from "hooks/useEntities"
+import useTemplates from "hooks/useTemplates"
 import useGameData from "hooks/useGameData"
 
 import { GAME_BY_SLUG, ENTITY_INSTANCE_STATE_TRANSITIONS } from "gql/queries"
@@ -28,7 +28,7 @@ const useMutationWith = save => (mutation, transform) => {
 }
 
 const useGameMutations = (variables, save, dependencies) => {
-  const { entities, getEntityById, getEntityStateById } = useEntities()
+  const { entities, getEntityById, getEntityStateById } = useTemplates()
   const useMutationWithSave = useMutationWith(save)
   const game = useGameData(variables)
   const client = useApolloClient()

@@ -1,20 +1,20 @@
 import { ACTION_TYPES, EDGE_TYPES } from "data"
 import { EPSILON, approximateStationaryDistribution } from "utils/math"
 
-import useEntities from "./useEntities"
+import useTemplates from "./useTemplates"
 import PriorityQueue from "tinyqueue"
 
 const useGameDependencies = ({ getNodeById, edges }) => {
-  const { getEntityStateById } = useEntities()
+  const { getStateTemplateById } = useTemplates()
 
   const targetOfUseRequiredForTransition = (fromId, toId) => {
     const from = getNodeById(fromId)
     const to = getNodeById(toId)
 
-    const entityState = getEntityStateById(to.state.state.id)
+    const stateTemplate = getStateTemplateById(to.state.template.id)
 
-    // TODO: what if an entityState has multiple outgoing transitions?
-    return entityState.outgoingTransitions.some(({ requiredActions }) =>
+    // TODO: what if an stateTemplate has multiple outgoing transitions?
+    return stateTemplate.outgoingTransitions.some(({ requiredActions }) =>
       requiredActions.some(
         ({ type, payload }) =>
           type === ACTION_TYPES.TARGET_OF_USE &&
@@ -154,8 +154,8 @@ const useGameDependencies = ({ getNodeById, edges }) => {
     const adjacentEntityStateIds = originEntityStateIds.slice()
 
     while (todo.length > 0) {
-      const entityState = getEntityStateById(todo.pop())
-      entityState.outgoingTransitions.forEach(({ to, requiredActions }) => {
+      const stateTemplate = getStateTemplateById(todo.pop())
+      stateTemplate.outgoingTransitions.forEach(({ to, requiredActions }) => {
         // Transition siblings
         if (to && !adjacentEntityStateIds.includes(to.id)) {
           adjacentEntityStateIds.push(to.id)

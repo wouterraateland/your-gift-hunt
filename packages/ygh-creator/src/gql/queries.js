@@ -1,9 +1,9 @@
 import gql from "graphql-tag"
-import { ENTITY_INSTANCE_FRAGMENT } from "./fragments"
+import { ENTITY_FRAGMENT } from "./fragments"
 
-export const ENTITIES = gql`
+export const ENTITY_TEMPLATES = gql`
   query {
-    entities {
+    entityTemplates {
       id
       name
       description
@@ -44,7 +44,7 @@ export const ENTITIES = gql`
           requiredActions {
             id
             name
-            hints(where: { entityInstance: null }) {
+            hints {
               id
               text
               delay
@@ -55,14 +55,11 @@ export const ENTITIES = gql`
               id
               requiredEntity {
                 id
-                entity {
-                  id
-                }
-                state {
+                entityState {
                   id
                 }
               }
-              requiredValues {
+              requiredInputs {
                 id
                 key
                 not
@@ -81,8 +78,9 @@ export const ENTITIES = gql`
       }
       fields {
         id
-        label
-        info
+        name
+        description
+
         type {
           id
           type
@@ -99,22 +97,24 @@ export const GAME_BY_SLUG = gql`
     games(where: { creator: { slug: $creatorSlug }, slug: $gameSlug }) {
       id
       name
-      slug
       description
+      slug
+
       privacy
       accessType
       accessCode
+
       creator {
         id
         name
         slug
       }
-      instances {
-        ...EntityInstanceFragment
+      entities {
+        ...EntityFragment
       }
     }
   }
-  ${ENTITY_INSTANCE_FRAGMENT}
+  ${ENTITY_FRAGMENT}
 `
 
 export const USER_GAMES = gql`
@@ -123,14 +123,17 @@ export const USER_GAMES = gql`
       id
       games(where: { slug_starts_with: $slugPrefix }, orderBy: updatedAt_DESC) {
         id
+        createdAt
+        updatedAt
+
         name
         slug
+
+        privacy
+
         plays {
           id
         }
-        privacy
-        createdAt
-        updatedAt
         creator {
           id
           name

@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useState } from "react"
 import styled from "styled-components"
 
 import GameContext from "contexts/Game"
-import EntitiesContext from "contexts/Entities"
+import TemplatesContext from "contexts/Templates"
 
 import useAsync from "hooks/useAsync"
 
@@ -75,7 +75,7 @@ const EditablePrevStates = ({ node, prevNodes, prevStates }) => {
 
 const PreviousStates = ({ node }) => {
   const { getNodeById } = useContext(GameContext)
-  const { getEntityStateById } = useContext(EntitiesContext)
+  const { getEntityStateById } = useContext(TemplatesContext)
 
   const prevNodes = node.state.incomingTransitions.map(({ from }) =>
     getNodeById(from.id)

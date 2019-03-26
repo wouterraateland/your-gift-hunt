@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react"
 import { navigate } from "@reach/router"
 
-import { EntitiesProvider } from "contexts/Entities"
+import { EntitiesProvider } from "contexts/Templates"
 import GameContext, { GameProvider } from "contexts/Game"
 import InspectorContext, { InspectorProvider } from "contexts/Inspector"
 import { EditorProvider } from "contexts/Editor"

@@ -3,47 +3,47 @@ import hash from "object-hash"
 import { NODE_TYPES, EDGE_TYPES } from "data"
 import _ from "utils"
 
-const getNodes = instances => [
-  ...instances
+const getNodes = entities => [
+  ...entities
     .filter(({ states }) =>
       states.every(({ unlockedBy }) => unlockedBy.length === 0)
     )
-    .map(instance => ({
-      id: `${instance.id}-${NODE_TYPES.ENTRY}`,
-      instance,
+    .map(entity => ({
+      id: `${entity.id}-${NODE_TYPES.ENTRY}`,
+      entity,
       state: null,
       type: NODE_TYPES.ENTRY
     })),
-  ...instances.flatMap(({ states, ...instance }) =>
+  ...entities.flatMap(({ states, ...entity }) =>
     states.map(state => ({
       id: state.id,
-      instance,
+      entity,
       state,
       type: NODE_TYPES.STATE
     }))
   ),
-  ...instances
+  ...entities
     .filter(({ states }) =>
       states.some(({ outgoingTransitions }) =>
         outgoingTransitions.some(({ to }) => to === null)
       )
     )
-    .map(instance => ({
-      id: `${instance.id}-${NODE_TYPES.EXIT}`,
-      instance,
+    .map(entity => ({
+      id: `${entity.id}-${NODE_TYPES.EXIT}`,
+      entity,
       state: null,
       type: NODE_TYPES.EXIT
     }))
 ]
 
 const getNodeByInstanceAndState = nodes => (
-  instance,
+  entity,
   state,
   type = NODE_TYPES.EXIT
 ) =>
   nodes.find(
     node =>
-      node.instance.id === instance.id &&
+      node.entity.id === entity.id &&
       (state
         ? node.state && node.state.state.id === state.id
         : node.type === type)
@@ -52,15 +52,14 @@ const getNodeByInstanceAndState = nodes => (
 const getStartTransitions = nodes =>
   nodes
     .filter(
-      ({ state, instance }) =>
+      ({ state, entity }) =>
         state &&
         !state.unlockedBy.length &&
-        ((instance.entity.defaultState &&
-          instance.entity.defaultState.id === state.state.id) ||
+        ((entity.defaultState && entity.defaultState.id === state.id) ||
           state.incomingTransitions.length === 0)
     )
-    .map(({ id, instance }) => ({
-      from: `${instance.id}-${NODE_TYPES.ENTRY}`,
+    .map(({ id, entity }) => ({
+      from: `${entity.id}-${NODE_TYPES.ENTRY}`,
       to: id,
       type: EDGE_TYPES.ENTRY
     }))
@@ -71,7 +70,7 @@ const getTransformTransitions = nodes =>
     .flatMap(node =>
       node.state.outgoingTransitions.map(({ to }) => ({
         from: node.id,
-        to: to ? to.id : `${node.instance.id}-${NODE_TYPES.EXIT}`,
+        to: to ? to.id : `${node.entity.id}-${NODE_TYPES.EXIT}`,
         type: to ? EDGE_TYPES.TRANSFORM : EDGE_TYPES.EXIT
       }))
     )
@@ -83,7 +82,7 @@ const getUnlockTransitions = nodes =>
       node.state.outgoingTransitions.flatMap(({ to, unlocks }) =>
         unlocks.map(unlock => ({
           from: node.id,
-          to: to ? to.id : `${node.instance.id}-${NODE_TYPES.EXIT}`,
+          to: to ? to.id : `${node.entity.id}-${NODE_TYPES.EXIT}`,
           unlocks: unlock.id,
           type: EDGE_TYPES.UNLOCK
         }))
@@ -92,18 +91,15 @@ const getUnlockTransitions = nodes =>
 
 const getUseTransitions = nodes =>
   nodes
-    .filter(({ state }) => state && state.state.outgoingTransitions.length > 0)
+    .filter(({ state }) => state && state.outgoingTransitions.length > 0)
     .flatMap(node =>
-      node.state.state.outgoingTransitions.flatMap(({ requiredActions }) =>
+      node.state.outgoingTransitions.flatMap(({ requiredActions }) =>
         requiredActions
           .filter(({ type }) => type === "USE")
-          .map(({ payload: { requiredEntity: { entity, state } } }) => ({
+          .map(({ payload: { requiredEntity: { entityState } } }) => ({
             from: node.id,
             to: nodes.find(
-              node =>
-                node.instance.entity.id === entity.id &&
-                node.state &&
-                node.state.state.id === state.id
+              node => node.state && node.state.id === entityState.id
             ).id,
             type: EDGE_TYPES.USE
           }))
@@ -113,8 +109,8 @@ const getUseTransitions = nodes =>
 const getInfoEdges = nodes =>
   nodes
     .filter(({ state }) => state)
-    .flatMap(({ id, instance, state }) =>
-      instance.information
+    .flatMap(({ id, entity, state }) =>
+      entity.information
         .filter(
           information =>
             information.fieldValue &&
@@ -125,9 +121,9 @@ const getInfoEdges = nodes =>
         .flatMap(information =>
           nodes
             .filter(
-              ({ instance, state }) =>
+              ({ entity, state }) =>
                 state &&
-                instance.fieldValues.some(
+                entity.fieldValues.some(
                   ({ id }) => id === information.fieldValue.id
                 ) &&
                 state.state.outgoingTransitions.some(({ requiredActions }) =>
@@ -149,14 +145,14 @@ const getInfoEdges = nodes =>
 
 const chooseRandom = xs => xs[Math.floor(Math.random() * xs.length)]
 
-const getOtherEntryTransitions = instances =>
-  instances
-    .filter(({ entity, states }) =>
+const getOtherEntryTransitions = entities =>
+  entities
+    .filter(({ defaultState, states }) =>
       states.every(
         state =>
           state.unlockedBy.length === 0 &&
           state.incomingTransitions.length > 0 &&
-          (!entity.defaultState || entity.defaultState.id !== state.state.id)
+          (!defaultState || defaultState.id !== state.id)
       )
     )
     .map(({ id, states }) => ({
@@ -169,13 +165,13 @@ const getOtherEntryTransitions = instances =>
       type: EDGE_TYPES.ENTRY
     }))
 
-const getEdges = (nodes, instances) =>
+const getEdges = (nodes, entities) =>
   [
     ...getStartTransitions(nodes),
     ...getTransformTransitions(nodes),
     ...getUnlockTransitions(nodes),
     ...getUseTransitions(nodes),
-    ...getOtherEntryTransitions(instances),
+    ...getOtherEntryTransitions(entities),
     ...getInfoEdges(nodes)
   ].map(({ from, to, unlocks, type }) => ({
     id: hash([from, to, unlocks, type]),
@@ -201,21 +197,18 @@ const getEdgeById = (nodes, edges) =>
     edgeId => edges.find(({ id }) => id === edgeId)
   )
 
-const isUnlockable = edges => (
-  { id, instance, type },
-  ignoreIsObject = false
-) =>
+const isUnlockable = edges => ({ id, entity, type }, ignoreIsObject = false) =>
   type === NODE_TYPES.STATE &&
-  (ignoreIsObject || !instance.entity.isObject) &&
+  (ignoreIsObject || !entity.isObject) &&
   edges.some(
     ({ type, to, unlocks }) =>
       (type === EDGE_TYPES.ENTRY && to === id) ||
       (type === EDGE_TYPES.UNLOCK && unlocks === id)
   )
 
-const useGameGraph = instances => {
-  const nodes = useMemo(() => getNodes(instances), [instances])
-  const edges = useMemo(() => getEdges(nodes, instances), [nodes, instances])
+const useGameGraph = entities => {
+  const nodes = useMemo(() => getNodes(entities), [entities])
+  const edges = useMemo(() => getEdges(nodes, entities), [nodes, entities])
 
   return {
     nodes,

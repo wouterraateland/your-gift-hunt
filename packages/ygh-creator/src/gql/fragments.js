@@ -1,39 +1,56 @@
 import gql from "graphql-tag"
 
-export const INFORMATION_FRAGMENT = gql`
-  fragment InformationFragment on Information {
+export const INFORMATION_SLOT_FRAGMENT = gql`
+  fragment InformationSlotFragment on InformationSlot {
     id
-    slot {
+    name
+    description
+
+    allowedTypes {
+      id
+      type
+      isMulti
+    }
+    states {
       id
     }
-    fieldValue {
+    field {
       id
-      field {
-        id
-      }
     }
   }
 `
 
-export const ENTITY_INSTANCE_FRAGMENT = gql`
-  fragment EntityInstanceFragment on EntityInstance {
+export const ENTITY_FRAGMENT = gql`
+  fragment EntityFragment on Entity {
     id
-    name
-    actionRequirementsWithCustomHints {
+    template {
       id
     }
-    information {
-      ...InformationFragment
+    name
+    description
+
+    isItem
+    isObject
+    isTrigger
+
+    defaultState {
+      id
+    }
+    featuredField {
+      id
+    }
+
+    informationSlots {
+      ...InformationSlotFragment
     }
     states {
       id
+      name
+      description
       unlockedBy {
         id
         from {
           id
-          instance {
-            id
-          }
         }
       }
       incomingTransitions {
@@ -50,104 +67,50 @@ export const ENTITY_INSTANCE_FRAGMENT = gql`
         unlocks {
           id
         }
-      }
-      state {
-        id
-        name
-        description
-        availableInformationSlots {
+        requiredActions {
           id
-        }
-        outgoingTransitions {
-          id
-          to {
+          name
+          type
+          payload {
             id
-          }
-          requiredActions {
-            id
-            name
-            type
-            payload {
+            requiredEntity {
               id
-              requiredEntity {
+              entityState {
                 id
-                entity {
-                  id
-                }
-                state {
-                  id
-                }
               }
-              requiredValues {
+            }
+            requiredInputs {
+              id
+              key
+              comparator
+              not
+              value
+              field {
                 id
-                key
-                comparator
-                not
-                value
-                field {
-                  id
-                }
               }
             }
           }
         }
       }
     }
-    fieldValues {
-      id
-      value
-      field {
-        id
-        label
-        info
-        type {
-          id
-          type
-          isMulti
-        }
-        isSecret
-      }
-    }
-    hints {
-      id
-      text
-      delay
-      actionRequirement {
-        id
-      }
-    }
-    entity {
+    fields {
       id
       name
       description
-      isItem
-      isObject
-      isTrigger
-      defaultState {
+
+      type {
         id
+        type
+        isMulti
       }
-      featuredField {
+      isSecret
+
+      value
+
+      information {
         id
-      }
-      informationSlots {
-        id
-        name
-        description
-        allowedTypes {
-          id
-          type
-          isMulti
-        }
-        entityStates {
-          id
-        }
-        allowedTypes {
-          id
-          type
-          isMulti
-        }
       }
     }
   }
-  ${INFORMATION_FRAGMENT}
+  ${INFORMATION_SLOT_FRAGMENT}
 `

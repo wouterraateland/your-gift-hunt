@@ -1,5 +1,5 @@
 import gql from "graphql-tag"
-import { ENTITY_INSTANCE_FRAGMENT, INFORMATION_FRAGMENT } from "./fragments"
+import { ENTITY_FRAGMENT, INFORMATION_SLOT_FRAGMENT } from "./fragments"
 
 export const CREATE_USER = gql`
   mutation createUser($netlifyUserId: String!, $name: String!, $slug: String!) {
@@ -269,11 +269,11 @@ export const CREATE_ENTITY_INSTANCE_STATE_TRANSITIONS = gql`
     ) {
       id
       instances {
-        ...EntityInstanceFragment
+        ...EntityFragment
       }
     }
   }
-  ${ENTITY_INSTANCE_FRAGMENT}
+  ${ENTITY_FRAGMENT}
 `
 
 export const CREATE_ENTITY_INSTANCES = gql`
@@ -293,11 +293,11 @@ export const CREATE_ENTITY_INSTANCES = gql`
     ) {
       id
       instances {
-        ...EntityInstanceFragment
+        ...EntityFragment
       }
     }
   }
-  ${ENTITY_INSTANCE_FRAGMENT}
+  ${ENTITY_FRAGMENT}
 `
 
 export const DELETE_NODES = gql`
@@ -349,7 +349,7 @@ export const CONNECT_INFORMATION_WITH_FIELD_VALUE = gql`
       ...InformationFragment
     }
   }
-  ${INFORMATION_FRAGMENT}
+  ${INFORMATION_SLOT_FRAGMENT}
 `
 
 export const DISCONNECT_INFORMATION_FROM_FIELD_VALUE = gql`
@@ -361,5 +361,5 @@ export const DISCONNECT_INFORMATION_FROM_FIELD_VALUE = gql`
       ...InformationFragment
     }
   }
-  ${INFORMATION_FRAGMENT}
+  ${INFORMATION_SLOT_FRAGMENT}
 `
