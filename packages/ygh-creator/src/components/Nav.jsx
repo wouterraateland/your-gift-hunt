@@ -116,7 +116,7 @@ const Nav = ({ goBack, title, children, items = [], compact }) => {
         ))}
         {!compact && <Profile />}
       </FloatRight>
-      {items.length && (
+      {items.length > 0 && (
         <Small>
           <Menu.Container>
             <Menu.Toggle />
