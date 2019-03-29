@@ -203,13 +203,52 @@ export const CREATE_ENTITIES = gql`
 
 export const DELETE_NODES = gql`
   mutation deleteNodes($entityIds: [ID!]!, $stateIds: [ID!]!) {
-    deleteManyStateTransitions(
+    deleteManyEntityRequirements(
       where: {
-        OR: [{ from: { id_in: $stateIds } }, { to: { id_in: $stateIds } }]
+        payload: {
+          actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
+        }
       }
     ) {
       count
     }
+
+    deleteManyInputRequirements(
+      where: {
+        payload: {
+          actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
+        }
+      }
+    ) {
+      count
+    }
+
+    deleteManyPayloadRequirements(
+      where: {
+        actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
+      }
+    ) {
+      count
+    }
+
+    deleteManyHints(
+      where: {
+        actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
+      }
+    ) {
+      count
+    }
+
+    deleteManyActionRequirements(
+      where: { stateTransition: { from: { id_in: $stateIds } } }
+    ) {
+      count
+    }
+
+    deleteManyStateTransitions(where: { from: { id_in: $stateIds } }) {
+      count
+    }
+
     deleteManyStates(where: { id_in: $stateIds }) {
       count
     }
@@ -222,7 +261,7 @@ export const DELETE_NODES = gql`
       count
     }
 
-    deleteManyEntity(where: { id_in: $entityIds }) {
+    deleteManyEntities(where: { id_in: $entityIds }) {
       count
     }
   }

@@ -15,21 +15,19 @@ const Delay = styled.em`
   font-size: smaller;
 `
 
-const Hint = ({ hint: { id, text, delay }, isCustom, onEditClick }) => {
+const Hint = ({ hint: { id, text, delay }, onEditClick }) => {
   const { deleteHint } = useContext(GameContext)
 
   return (
     <>
-      {isCustom && (
-        <Float.Right>
-          <ActionButton color="error" onClick={() => deleteHint(id)}>
-            <Bin />
-          </ActionButton>
-          <ActionButton onClick={onEditClick}>
-            <Pen />
-          </ActionButton>
-        </Float.Right>
-      )}
+      <Float.Right>
+        <ActionButton color="error" onClick={() => deleteHint(id)}>
+          <Bin />
+        </ActionButton>
+        <ActionButton onClick={onEditClick}>
+          <Pen />
+        </ActionButton>
+      </Float.Right>
       <Text>{text}</Text>
       <br />
       <Delay>After {delay}s</Delay>{" "}

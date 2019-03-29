@@ -3,6 +3,10 @@ import gql from "graphql-tag"
 export const INFORMATION_SLOT_FRAGMENT = gql`
   fragment InformationSlotFragment on InformationSlot {
     id
+    template {
+      id
+    }
+
     name
     description
 
@@ -23,6 +27,9 @@ export const INFORMATION_SLOT_FRAGMENT = gql`
 export const STATE_TRANSITION_FRAGMENT = gql`
   fragment StateTransitionFragment on StateTransition {
     id
+    template {
+      id
+    }
     from {
       id
     }
@@ -65,6 +72,7 @@ export const ENTITY_FRAGMENT = gql`
       template {
         id
       }
+
       name
       description
       availableInformationSlots {
@@ -98,10 +106,23 @@ export const ENTITY_FRAGMENT = gql`
         }
         requiredActions {
           id
+          template {
+            id
+          }
+
           name
           type
+          hints {
+            id
+            text
+            delay
+          }
           payload {
             id
+            template {
+              id
+            }
+
             requiredEntity {
               id
               entityState {
@@ -116,6 +137,11 @@ export const ENTITY_FRAGMENT = gql`
               value
               field {
                 id
+                type {
+                  id
+                  type
+                  isMulti
+                }
               }
             }
           }

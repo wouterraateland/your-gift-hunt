@@ -1,6 +1,4 @@
-import React, { useContext } from "react"
-
-import TemplatesContext from "contexts/Templates"
+import React from "react"
 
 import FieldTag from "components/Editor/FieldTag"
 import ListItem from "./ListItem"
@@ -20,14 +18,12 @@ const getVerb = (comparator, not) => {
   }
 }
 
-const ValueRequirement = ({ requiredValues }) => {
-  const { getFieldById } = useContext(TemplatesContext)
-
-  return requiredValues.length ? (
-    requiredValues.map(({ key, comparator, not, value, field }, i) => (
+const InputRequirement = ({ requiredInputs }) => {
+  return requiredInputs.length ? (
+    requiredInputs.map(({ key, comparator, not, value, field }, i) => (
       <ListItem key={i}>
         Input "{key}" is {getVerb(comparator, not)} {value}
-        {field && <FieldTag field={getFieldById(field.id)} />}
+        {field && <FieldTag field={field} />}
       </ListItem>
     ))
   ) : (
@@ -35,4 +31,4 @@ const ValueRequirement = ({ requiredValues }) => {
   )
 }
 
-export default ValueRequirement
+export default InputRequirement

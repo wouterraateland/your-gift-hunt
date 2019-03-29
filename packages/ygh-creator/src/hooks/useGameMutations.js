@@ -28,7 +28,7 @@ const useGameMutations = (variables, save, dependencies) => {
   const {
     entityTemplates,
     getEntityTemplateById,
-    getEntityStateTemplateById
+    getStateTemplateById
   } = useTemplates()
   const useMutationWithSave = useMutationWith(save)
   const game = useGameData(variables)
@@ -68,20 +68,26 @@ const useGameMutations = (variables, save, dependencies) => {
 
   const createHint = useMutationWithSave(
     CREATE_HINT,
-    (entityId, actionRequirementId, { text, delay }) => ({
+    (actionRequirementId, { text, delay }) => ({
       variables: {
-        entityId,
         actionRequirementId,
         text,
         delay
       },
       update: (proxy, { data: { createHint } }) => {
         const data = proxy.readQuery(query)
-        const instance = data.games[0].entities.find(
-          instance => instance.id === createHint.entityInstance.id
-        )
 
-        instance.hints.push(createHint)
+        data.games[0].entities.forEach(entity =>
+          entity.states.forEach(state =>
+            state.outgoingTransitions.forEach(transition =>
+              transition.requiredActions.forEach(actionRequirement => {
+                if (actionRequirement.id === actionRequirementId) {
+                  actionRequirement.hints.push(createHint)
+                }
+              })
+            )
+          )
+        )
 
         proxy.writeQuery({ ...query, data })
       }
@@ -113,12 +119,20 @@ const useGameMutations = (variables, save, dependencies) => {
     ) => {
       const data = proxy.readQuery(query)
 
-      data.games[0].entities.forEach(instance => {
-        const i = instance.hints.findIndex(hint => hint.id === id)
-        if (i !== -1) {
-          instance.hints.splice(i, 1)
-        }
-      })
+      data.games[0].entities.forEach(entity =>
+        entity.states.forEach(state =>
+          state.outgoingTransitions.forEach(transition =>
+            transition.requiredActions.forEach(actionRequirement => {
+              const i = actionRequirement.hints.findIndex(
+                hint => hint.id === id
+              )
+              if (i !== -1) {
+                actionRequirement.hints.splice(i, 1)
+              }
+            })
+          )
+        )
+      )
 
       proxy.writeQuery({ ...query, data })
     }
@@ -155,10 +169,12 @@ const useGameMutations = (variables, save, dependencies) => {
       data: { stateTransitions }
     } = await client.query({
       query: STATE_TRANSITIONS,
-      variables: { from, to }
+      variables: { from }
     })
 
-    const unlocks = stateTransitions[0].unlocks
+    const { unlocks } = stateTransitions.find(t =>
+      to ? t.to.id === to : t.to === null
+    )
 
     if (!unlocks.some(({ id }) => unlock === id)) {
       await addUnlockToStateTransitionMutation(stateTransitions[0].id, unlock)
@@ -195,10 +211,12 @@ const useGameMutations = (variables, save, dependencies) => {
       data: { stateTransitions }
     } = await client.query({
       query: STATE_TRANSITIONS,
-      variables: { from, to }
+      variables: { from }
     })
 
-    const unlocks = stateTransitions[0].unlocks
+    const { unlocks } = stateTransitions.find(t =>
+      to ? t.to.id === to : t.to === null
+    )
 
     if (unlocks.some(({ id }) => unlock === id)) {
       await removeUnlockFromStateTransitionMutation(
@@ -229,64 +247,167 @@ const useGameMutations = (variables, save, dependencies) => {
     })
   )
 
-  const ensureStateTransitions = async gameId => {
+  const completeEntitiesWithTemplates = async gameId => {
     const { data } = await client.query(query)
 
-    const entities = data.games[0].entities
-    const entityStates = entities.flatMap(({ states }) => states)
+    const allEntities = data.games[0].entities
+    const entities = allEntities.filter(({ template }) => !!template)
+    const states = allEntities.flatMap(({ states }) => states)
 
-    const entityUpdates = entities
-      .map(instance => ({
-        where: { id: instance.id },
-        data: {
-          states: {
-            update: instance.states
-              .map(state => ({
-                where: { id: state.id },
-                data: {
-                  outgoingTransitions: {
-                    create: getEntityStateTemplateById(state.template.id)
-                      .outgoingTransitions.filter(
-                        stateTransitionTemplate =>
-                          !state.outgoingTransitions.some(stateTransition =>
-                            stateTransition.to === null
-                              ? stateTransitionTemplate.to === null
-                              : stateTransitionTemplate.to &&
-                                stateTransitionTemplate.to.id ===
-                                  entityStates.find(
-                                    entityState =>
-                                      entityState.id === stateTransition.to.id
-                                  ).template.id
-                          )
-                      )
-                      .map(stateTransitionTemplate => ({
-                        to: stateTransitionTemplate.to
-                          ? {
-                              connect: {
-                                id: instance.states.find(
-                                  to =>
-                                    to.template.id ===
-                                    stateTransitionTemplate.to.id
-                                ).id
-                              }
-                            }
-                          : null
-                      }))
-                  }
+    const createEntityUpdate = entity => {
+      const entityTemplate = getEntityTemplateById(entity.template.id)
+
+      const createStateUpdate = state => {
+        const stateTemplate = getStateTemplateById(state.template.id)
+
+        const createHintFromTemplate = hintTemplate => ({
+          template: { connect: { id: hintTemplate.id } },
+          text: hintTemplate.text,
+          delay: hintTemplate.delay
+        })
+
+        const createEntityRequirementFromTemplate = entityRequirementTemplate => ({
+          template: { connect: { id: entityRequirementTemplate.id } },
+          entityState: {
+            connect: {
+              id: states.find(
+                state =>
+                  state.template.id === entityRequirementTemplate.entityState.id
+              ).id
+            }
+          }
+        })
+
+        const createInputRequirementFromTemplate = inputRequirementTemplate => ({
+          template: { connect: { id: inputRequirementTemplate.id } },
+          key: inputRequirementTemplate.key,
+          comparator: inputRequirementTemplate.comparator,
+          not: inputRequirementTemplate.not,
+
+          value: inputRequirementTemplate.value,
+          field: inputRequirementTemplate.field
+            ? {
+                connect: {
+                  id: entity.fields.find(
+                    field =>
+                      field.template.id === inputRequirementTemplate.field.id
+                  ).id
                 }
-              }))
-              .filter(
-                update => update.data.outgoingTransitions.create.length > 0
-              )
+              }
+            : null
+        })
+
+        const createPayloadRequirementFromTemplate = payloadRequirementTemplate => ({
+          template: { connect: { id: payloadRequirementTemplate.id } },
+          requiredEntity: payloadRequirementTemplate.requiredEntity
+            ? {
+                create: createEntityRequirementFromTemplate(
+                  payloadRequirementTemplate.requiredEntity
+                )
+              }
+            : null,
+          requiredInputs: {
+            create: payloadRequirementTemplate.requiredInputs.map(
+              createInputRequirementFromTemplate
+            )
+          }
+        })
+
+        const createActionRequirementFromTemplate = actionRequirementTemplate => ({
+          template: { connect: { id: actionRequirementTemplate.id } },
+          name: actionRequirementTemplate.name,
+          description: actionRequirementTemplate.description,
+          type: actionRequirementTemplate.type,
+          hints: {
+            create: actionRequirementTemplate.hints.map(createHintFromTemplate)
+          },
+          payload: {
+            create: createPayloadRequirementFromTemplate(
+              actionRequirementTemplate.payload
+            )
+          }
+        })
+
+        const createStateTransitionFromTemplate = stateTransitionTemplate => ({
+          template: { connect: { id: stateTransitionTemplate.id } },
+          to: stateTransitionTemplate.to
+            ? {
+                connect: {
+                  id: states.find(
+                    state => state.template.id === stateTransitionTemplate.to.id
+                  ).id
+                }
+              }
+            : null,
+          requiredActions: {
+            create: stateTransitionTemplate.requiredActions.map(
+              createActionRequirementFromTemplate
+            )
+          }
+        })
+
+        return {
+          where: { id: state.id },
+          data: {
+            availableInformationSlots: {
+              connect: entity.informationSlots
+                .filter(({ template }) =>
+                  stateTemplate.availableInformationSlots.some(
+                    ({ id }) => template.id === id
+                  )
+                )
+                .map(({ id }) => ({ id }))
+            },
+            outgoingTransitions: {
+              create: stateTemplate.outgoingTransitions
+                .filter(
+                  ({ id }) =>
+                    !state.outgoingTransitions.some(
+                      ({ template }) => template.id === id
+                    )
+                )
+                .map(createStateTransitionFromTemplate)
+            }
           }
         }
-      }))
-      .filter(update => update.data.states.update.length > 0)
+      }
+
+      return {
+        where: { id: entity.id },
+        data: {
+          defaultState: entityTemplate.defaultState
+            ? {
+                connect: {
+                  id: entity.states.find(
+                    state =>
+                      state.template.id === entityTemplate.defaultState.id
+                  ).id
+                }
+              }
+            : null,
+          featuredField: entityTemplate.featuredField
+            ? {
+                connect: {
+                  id: entity.fields.find(
+                    field =>
+                      field.template.id === entityTemplate.featuredField.id
+                  ).id
+                }
+              }
+            : null,
+          states: {
+            update: entity.states.map(createStateUpdate)
+          }
+        }
+      }
+    }
+
+    const entityUpdates = entities.map(createEntityUpdate)
 
     await createStateTransitions(gameId, entityUpdates)
   }
 
-  const createNodes = async (stateIdsToCreate, originStateId) => {
+  const createNodes = async (sourceStateTemplateIds, originStateId) => {
     const originEntity = originStateId
       ? game.entities.find(({ states }) =>
           states.some(({ id }) => originStateId === id)
@@ -296,14 +417,14 @@ const useGameMutations = (variables, save, dependencies) => {
       ? originEntity.template.id
       : null
 
-    const entityStateIds = dependencies.getAdjacentEntityStates(
-      stateIdsToCreate
+    const stateTemplateIds = dependencies.getAdjacentStates(
+      sourceStateTemplateIds
     )
     const existingEntityTemplateIds = game.entities.map(
       ({ template: { id } }) => id
     )
     const entityTemplatesThatShouldExist = entityTemplates.filter(
-      ({ states }) => states.some(({ id }) => entityStateIds.includes(id))
+      ({ states }) => states.some(({ id }) => stateTemplateIds.includes(id))
     )
 
     const entityTemplatesToCreate = entityTemplatesThatShouldExist.filter(
@@ -312,14 +433,18 @@ const useGameMutations = (variables, save, dependencies) => {
         (!(isObject || isItem) || !existingEntityTemplateIds.includes(id))
     )
     const entitiesToCreate = entityTemplatesToCreate.map(entityTemplate => {
-      const existingEntitiesWithName = game.entities.filter(
-        ({ name }) => name === entityTemplate.name
+      const existingEntitiesWithTemplate = game.entities.filter(
+        ({ template }) => template.id === entityTemplate.id
       )
       return {
-        name: existingEntitiesWithName.length
-          ? `${entityTemplate.name} ${existingEntitiesWithName.length + 1}`
-          : entityTemplate.name,
         template: { connect: { id: entityTemplate.id } },
+        name: existingEntitiesWithTemplate.length
+          ? `${entityTemplate.name} ${existingEntitiesWithTemplate.length + 1}`
+          : entityTemplate.name,
+        description: entityTemplate.description,
+        isItem: entityTemplate.isItem,
+        isObject: entityTemplate.isObject,
+        isTrigger: entityTemplate.isTrigger,
         fields: {
           create: entityTemplate.fields.map(fieldTemplate => ({
             template: { connect: { id: fieldTemplate.id } },
@@ -331,13 +456,26 @@ const useGameMutations = (variables, save, dependencies) => {
         },
         states: {
           create: entityTemplate.states
-            .filter(({ id }) => entityStateIds.includes(id))
-            .map(({ id }) => ({ template: { connect: { id } } }))
+            .filter(({ id }) => stateTemplateIds.includes(id))
+            .map(stateTemplate => ({
+              template: { connect: { id: stateTemplate.id } },
+              name: stateTemplate.name,
+              description: stateTemplate.description
+            }))
         },
         informationSlots: {
-          create: entityTemplate.informationSlots.map(({ id }) => ({
-            template: { connect: { id } }
-          }))
+          create: entityTemplate.informationSlots.map(
+            informationSlotTemplate => ({
+              template: { connect: { id: informationSlotTemplate.id } },
+              name: informationSlotTemplate.name,
+              description: informationSlotTemplate.description,
+              allowedTypes: {
+                connect: informationSlotTemplate.allowedTypes.map(({ id }) => ({
+                  id
+                }))
+              }
+            })
+          )
         }
       }
     })
@@ -351,14 +489,15 @@ const useGameMutations = (variables, save, dependencies) => {
                 create: getEntityTemplateById(originEntityTemplateId)
                   .states.filter(
                     ({ id }) =>
-                      entityStateIds.includes(id) &&
+                      stateTemplateIds.includes(id) &&
                       !originEntity.states.some(
-                        entityInstanceState =>
-                          entityInstanceState.state.id === id
+                        ({ template }) => template.id === id
                       )
                   )
-                  .map(({ id }) => ({
-                    template: { connect: { id } }
+                  .map(stateTemplate => ({
+                    template: { connect: { id: stateTemplate.id } },
+                    name: stateTemplate.name,
+                    description: stateTemplate.description
                   }))
               }
             }
@@ -368,7 +507,7 @@ const useGameMutations = (variables, save, dependencies) => {
 
     await createEntities(game.id, entitiesToCreate, entitiesToUpdate)
 
-    await ensureStateTransitions(game.id)
+    await completeEntitiesWithTemplates(game.id)
   }
 
   const createEntity = async entityTemplateId => {
@@ -392,8 +531,8 @@ const useGameMutations = (variables, save, dependencies) => {
     await createNodes(entityStateTemplates.map(({ id }) => id))
   }
 
-  const addPreviousState = async (entityStateId, stateId) => {
-    await createNodes([entityStateId], stateId)
+  const addPreviousState = async (stateTemplateId, stateId) => {
+    await createNodes([stateTemplateId], stateId)
   }
 
   const deleteManyNodes = useMutationWithSave(
@@ -430,11 +569,11 @@ const useGameMutations = (variables, save, dependencies) => {
   )
 
   const deleteNodes = async nodeIds => {
-    const stateIds = game.entities
+    const entityIds = game.entities
       .filter(({ states }) => states.every(({ id }) => nodeIds.includes(id)))
       .map(({ id }) => id)
 
-    await deleteManyNodes(stateIds, nodeIds)
+    await deleteManyNodes(entityIds, nodeIds)
   }
 
   const connectInformationSlotWithField = useMutationWithSave(

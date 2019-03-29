@@ -4,7 +4,7 @@ import React from "react"
 
 import ListItem from "./ListItem"
 import EntityRequirement from "./EntityRequirement"
-import ValueRequirement from "./ValueRequirement"
+import InputRequirement from "./InputRequirement"
 import Hints from "./Hints"
 
 const ActionRequirement = ({ type, payload }) => {
@@ -18,7 +18,7 @@ const ActionRequirement = ({ type, payload }) => {
         />
       )
     case ACTION_TYPES.INPUT:
-      return <ValueRequirement requiredValues={payload.requiredValues} />
+      return <InputRequirement requiredInputs={payload.requiredInputs} />
     default:
       return (
         <ListItem>

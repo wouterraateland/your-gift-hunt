@@ -20,7 +20,7 @@ const Form = styled.form`
   }
 `
 
-const HintForm = ({ instanceId, actionRequirementId, onClose, hint }) => {
+const HintForm = ({ actionRequirementId, onClose, hint }) => {
   const isNewHint = !hint
   const { createHint, updateHint } = useContext(GameContext)
 
@@ -50,7 +50,7 @@ const HintForm = ({ instanceId, actionRequirementId, onClose, hint }) => {
     setState(state => ({ ...state, isLoading: true }))
     try {
       await (isNewHint
-        ? createHint(instanceId, actionRequirementId, formState.values)
+        ? createHint(actionRequirementId, formState.values)
         : updateHint(hint.id, formState.values))
 
       setState(state => ({

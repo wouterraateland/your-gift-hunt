@@ -20,7 +20,13 @@ const EditablePrevStates = ({ node, prevNodes, prevStateTemplates }) => {
   const options = prevStateTemplates.filter(({ id }) =>
     prevNodes.every(node => node.state.template.id !== id)
   )
-  const onOptionClick = runAsync(stateId => addPreviousState(stateId, node.id))
+  const onOptionClick = runAsync(stateTemplateId =>
+    addPreviousState(stateTemplateId, node.id)
+  )
+
+  if (error) {
+    console.error(error)
+  }
 
   const onOptionsClose = () => setOptionsVisibility(false)
   const onAddButtonClick = () => setOptionsVisibility(true)

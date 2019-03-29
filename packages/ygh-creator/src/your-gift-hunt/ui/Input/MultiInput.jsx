@@ -13,12 +13,14 @@ const MultiInputContainer = styled.span`
 
 const InputValue = styled.span`
   display: inline-block;
-  padding: 0.25em;
+  padding: 0.25em 0.5em;
   margin: 0 0.25em 0.25em 0;
+  border-radius: ${props => props.theme.borderRadius};
 
   word-break: break-word;
 
-  background: ${props => props.theme.color.accent};
+  background-color: ${props => props.theme.color.text};
+  color: #fff;
 `
 
 const Close = styled.strong`

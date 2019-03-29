@@ -11,7 +11,7 @@ const Properties = ({
   fields.length ? (
     <Section title="Properties">
       {fields.map(field => (
-        <Property key={field.id} {...field} />
+        <Property key={field.id} field={field} />
       ))}
     </Section>
   ) : null

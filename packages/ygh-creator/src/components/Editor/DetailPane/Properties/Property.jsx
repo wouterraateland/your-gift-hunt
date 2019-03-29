@@ -7,8 +7,10 @@ import { Input, Field } from "your-gift-hunt/ui"
 
 import _ from "utils"
 
-const Property = ({ id, value, type, ...field }) => {
-  const [newValue, setNewValue] = useState(value ? JSON.parse(value) : null)
+const Property = ({ field }) => {
+  const [newValue, setNewValue] = useState(
+    field.value ? JSON.parse(field.value) : null
+  )
   const { updateFieldValue } = useContext(GameContext)
 
   const debouncedValue = useDebounce(newValue, 1000)
@@ -16,20 +18,22 @@ const Property = ({ id, value, type, ...field }) => {
   useEffect(
     () => {
       const newValue = JSON.stringify(debouncedValue)
-      if (newValue !== value) {
-        updateFieldValue(id, newValue)
+      if (newValue !== field.value) {
+        updateFieldValue(field.id, newValue)
       }
     },
-    [id, debouncedValue]
+    [field.id, field.value, debouncedValue]
   )
 
   return (
     <Field block>
       <Input
         block
-        {...field}
-        isMulti={type.isMulti}
-        type={_.toInputType(type.type)}
+        label={field.name}
+        info={field.description}
+        isSecret={field.isSecret}
+        isMulti={field.type.isMulti}
+        type={_.toInputType(field.type.type)}
         showType
         value={newValue}
         onChange={event => setNewValue(event.target.value)}

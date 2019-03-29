@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Tue Mar 26 2019 16:11:59 GMT+0100 (Midden-Europese standaardtijd)
+# timestamp: Fri Mar 29 2019 18:34:26 GMT+0100 (Midden-Europese standaardtijd)
 
 enum AccessType {
   NONE
@@ -317,9 +317,7 @@ input ActionPayloadInputValueSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [ActionPayloadInputValueSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -551,9 +549,7 @@ input ActionPayloadSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [ActionPayloadSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -672,7 +668,7 @@ type ActionRequirement implements Node {
   description: String
   type: ActionType!
   hints(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hint!]
-  payload: PayloadRequirement!
+  payload: PayloadRequirement
   stateTransition: StateTransition!
 }
 
@@ -692,7 +688,7 @@ input ActionRequirementCreateInput {
   type: ActionType
   template: ActionRequirementTemplateCreateOneInput
   hints: HintCreateManyWithoutActionRequirementInput
-  payload: PayloadRequirementCreateOneWithoutActionRequirementInput!
+  payload: PayloadRequirementCreateOneWithoutActionRequirementInput
   stateTransition: StateTransitionCreateOneWithoutRequiredActionsInput!
 }
 
@@ -716,7 +712,7 @@ input ActionRequirementCreateWithoutHintsInput {
   description: String
   type: ActionType
   template: ActionRequirementTemplateCreateOneInput
-  payload: PayloadRequirementCreateOneWithoutActionRequirementInput!
+  payload: PayloadRequirementCreateOneWithoutActionRequirementInput
   stateTransition: StateTransitionCreateOneWithoutRequiredActionsInput!
 }
 
@@ -735,7 +731,7 @@ input ActionRequirementCreateWithoutStateTransitionInput {
   type: ActionType
   template: ActionRequirementTemplateCreateOneInput
   hints: HintCreateManyWithoutActionRequirementInput
-  payload: PayloadRequirementCreateOneWithoutActionRequirementInput!
+  payload: PayloadRequirementCreateOneWithoutActionRequirementInput
 }
 
 """An edge in a connection."""
@@ -927,9 +923,7 @@ input ActionRequirementSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [ActionRequirementSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -955,7 +949,7 @@ type ActionRequirementTemplate implements Node {
   description: String
   type: ActionType!
   hints(where: HintTemplateWhereInput, orderBy: HintTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [HintTemplate!]
-  payload: PayloadRequirementTemplate!
+  payload: PayloadRequirementTemplate
   stateTransition: StateTransitionTemplate!
 }
 
@@ -974,7 +968,7 @@ input ActionRequirementTemplateCreateInput {
   description: String
   type: ActionType
   hints: HintTemplateCreateManyWithoutActionRequirementInput
-  payload: PayloadRequirementTemplateCreateOneWithoutActionRequirementInput!
+  payload: PayloadRequirementTemplateCreateOneWithoutActionRequirementInput
   stateTransition: StateTransitionTemplateCreateOneWithoutRequiredActionsInput!
 }
 
@@ -1002,7 +996,7 @@ input ActionRequirementTemplateCreateWithoutHintsInput {
   name: String
   description: String
   type: ActionType
-  payload: PayloadRequirementTemplateCreateOneWithoutActionRequirementInput!
+  payload: PayloadRequirementTemplateCreateOneWithoutActionRequirementInput
   stateTransition: StateTransitionTemplateCreateOneWithoutRequiredActionsInput!
 }
 
@@ -1019,7 +1013,7 @@ input ActionRequirementTemplateCreateWithoutStateTransitionInput {
   description: String
   type: ActionType
   hints: HintTemplateCreateManyWithoutActionRequirementInput
-  payload: PayloadRequirementTemplateCreateOneWithoutActionRequirementInput!
+  payload: PayloadRequirementTemplateCreateOneWithoutActionRequirementInput
 }
 
 """An edge in a connection."""
@@ -1211,9 +1205,7 @@ input ActionRequirementTemplateSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [ActionRequirementTemplateSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -1238,7 +1230,7 @@ input ActionRequirementTemplateUpdateDataInput {
   description: String
   type: ActionType
   hints: HintTemplateUpdateManyWithoutActionRequirementInput
-  payload: PayloadRequirementTemplateUpdateOneRequiredWithoutActionRequirementInput
+  payload: PayloadRequirementTemplateUpdateOneWithoutActionRequirementInput
   stateTransition: StateTransitionTemplateUpdateOneRequiredWithoutRequiredActionsInput
 }
 
@@ -1247,7 +1239,7 @@ input ActionRequirementTemplateUpdateInput {
   description: String
   type: ActionType
   hints: HintTemplateUpdateManyWithoutActionRequirementInput
-  payload: PayloadRequirementTemplateUpdateOneRequiredWithoutActionRequirementInput
+  payload: PayloadRequirementTemplateUpdateOneWithoutActionRequirementInput
   stateTransition: StateTransitionTemplateUpdateOneRequiredWithoutRequiredActionsInput
 }
 
@@ -1308,7 +1300,7 @@ input ActionRequirementTemplateUpdateWithoutHintsDataInput {
   name: String
   description: String
   type: ActionType
-  payload: PayloadRequirementTemplateUpdateOneRequiredWithoutActionRequirementInput
+  payload: PayloadRequirementTemplateUpdateOneWithoutActionRequirementInput
   stateTransition: StateTransitionTemplateUpdateOneRequiredWithoutRequiredActionsInput
 }
 
@@ -1325,7 +1317,7 @@ input ActionRequirementTemplateUpdateWithoutStateTransitionDataInput {
   description: String
   type: ActionType
   hints: HintTemplateUpdateManyWithoutActionRequirementInput
-  payload: PayloadRequirementTemplateUpdateOneRequiredWithoutActionRequirementInput
+  payload: PayloadRequirementTemplateUpdateOneWithoutActionRequirementInput
 }
 
 input ActionRequirementTemplateUpdateWithWhereUniqueWithoutStateTransitionInput {
@@ -1510,7 +1502,7 @@ input ActionRequirementUpdateInput {
   type: ActionType
   template: ActionRequirementTemplateUpdateOneInput
   hints: HintUpdateManyWithoutActionRequirementInput
-  payload: PayloadRequirementUpdateOneRequiredWithoutActionRequirementInput
+  payload: PayloadRequirementUpdateOneWithoutActionRequirementInput
   stateTransition: StateTransitionUpdateOneRequiredWithoutRequiredActionsInput
 }
 
@@ -1563,7 +1555,7 @@ input ActionRequirementUpdateWithoutHintsDataInput {
   description: String
   type: ActionType
   template: ActionRequirementTemplateUpdateOneInput
-  payload: PayloadRequirementUpdateOneRequiredWithoutActionRequirementInput
+  payload: PayloadRequirementUpdateOneWithoutActionRequirementInput
   stateTransition: StateTransitionUpdateOneRequiredWithoutRequiredActionsInput
 }
 
@@ -1582,7 +1574,7 @@ input ActionRequirementUpdateWithoutStateTransitionDataInput {
   type: ActionType
   template: ActionRequirementTemplateUpdateOneInput
   hints: HintUpdateManyWithoutActionRequirementInput
-  payload: PayloadRequirementUpdateOneRequiredWithoutActionRequirementInput
+  payload: PayloadRequirementUpdateOneWithoutActionRequirementInput
 }
 
 input ActionRequirementUpdateWithWhereUniqueWithoutStateTransitionInput {
@@ -1857,9 +1849,7 @@ input ActionSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [ActionSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -2377,9 +2367,7 @@ input EntityRequirementSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [EntityRequirementSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -2473,9 +2461,7 @@ input EntityRequirementTemplateSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [EntityRequirementTemplateSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -2837,9 +2823,7 @@ input EntitySubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [EntitySubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -3006,9 +2990,7 @@ input EntityTemplateSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [EntityTemplateSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -3911,9 +3893,7 @@ input FieldSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [FieldSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -4160,9 +4140,7 @@ input FieldTemplateSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [FieldTemplateSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -4540,9 +4518,7 @@ input FieldTypeSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [FieldTypeSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -5266,9 +5242,7 @@ input GamePlaySubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [GamePlaySubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -5727,9 +5701,7 @@ input GameSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [GameSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -6386,9 +6358,7 @@ input HintSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [HintSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -6604,9 +6574,7 @@ input HintTemplateSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [HintTemplateSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -7207,9 +7175,7 @@ input InformationSlotSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [InformationSlotSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -7461,9 +7427,7 @@ input InformationSlotTemplateSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [InformationSlotTemplateSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -8201,9 +8165,7 @@ input InputRequirementSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [InputRequirementSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -8466,9 +8428,7 @@ input InputRequirementTemplateSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [InputRequirementTemplateSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -9219,9 +9179,7 @@ input PayloadRequirementSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [PayloadRequirementSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -9338,9 +9296,7 @@ input PayloadRequirementTemplateSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [PayloadRequirementTemplateSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -9381,13 +9337,6 @@ input PayloadRequirementTemplateUpdateOneInput {
   upsert: PayloadRequirementTemplateUpsertNestedInput
 }
 
-input PayloadRequirementTemplateUpdateOneRequiredWithoutActionRequirementInput {
-  create: PayloadRequirementTemplateCreateWithoutActionRequirementInput
-  connect: PayloadRequirementTemplateWhereUniqueInput
-  update: PayloadRequirementTemplateUpdateWithoutActionRequirementDataInput
-  upsert: PayloadRequirementTemplateUpsertWithoutActionRequirementInput
-}
-
 input PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredEntityInput {
   create: PayloadRequirementTemplateCreateWithoutRequiredEntityInput
   connect: PayloadRequirementTemplateWhereUniqueInput
@@ -9400,6 +9349,15 @@ input PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredInputsInput {
   connect: PayloadRequirementTemplateWhereUniqueInput
   update: PayloadRequirementTemplateUpdateWithoutRequiredInputsDataInput
   upsert: PayloadRequirementTemplateUpsertWithoutRequiredInputsInput
+}
+
+input PayloadRequirementTemplateUpdateOneWithoutActionRequirementInput {
+  create: PayloadRequirementTemplateCreateWithoutActionRequirementInput
+  connect: PayloadRequirementTemplateWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: PayloadRequirementTemplateUpdateWithoutActionRequirementDataInput
+  upsert: PayloadRequirementTemplateUpsertWithoutActionRequirementInput
 }
 
 input PayloadRequirementTemplateUpdateWithoutActionRequirementDataInput {
@@ -9504,13 +9462,6 @@ input PayloadRequirementUpdateInput {
   actionRequirement: ActionRequirementUpdateOneRequiredWithoutPayloadInput
 }
 
-input PayloadRequirementUpdateOneRequiredWithoutActionRequirementInput {
-  create: PayloadRequirementCreateWithoutActionRequirementInput
-  connect: PayloadRequirementWhereUniqueInput
-  update: PayloadRequirementUpdateWithoutActionRequirementDataInput
-  upsert: PayloadRequirementUpsertWithoutActionRequirementInput
-}
-
 input PayloadRequirementUpdateOneRequiredWithoutRequiredEntityInput {
   create: PayloadRequirementCreateWithoutRequiredEntityInput
   connect: PayloadRequirementWhereUniqueInput
@@ -9523,6 +9474,15 @@ input PayloadRequirementUpdateOneRequiredWithoutRequiredInputsInput {
   connect: PayloadRequirementWhereUniqueInput
   update: PayloadRequirementUpdateWithoutRequiredInputsDataInput
   upsert: PayloadRequirementUpsertWithoutRequiredInputsInput
+}
+
+input PayloadRequirementUpdateOneWithoutActionRequirementInput {
+  create: PayloadRequirementCreateWithoutActionRequirementInput
+  connect: PayloadRequirementWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: PayloadRequirementUpdateWithoutActionRequirementDataInput
+  upsert: PayloadRequirementUpsertWithoutActionRequirementInput
 }
 
 input PayloadRequirementUpdateWithoutActionRequirementDataInput {
@@ -9993,9 +9953,7 @@ input StateSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [StateSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -10277,9 +10235,7 @@ input StateTemplateSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [StateTemplateSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -10765,9 +10721,7 @@ input StateTransitionSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [StateTransitionSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -10935,9 +10889,7 @@ input StateTransitionTemplateSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [StateTransitionTemplateSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -11991,9 +11943,7 @@ input UserSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [UserSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """

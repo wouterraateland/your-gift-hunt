@@ -177,8 +177,8 @@ export const GAME_COUNT_BY_SLUG = gql`
 `
 
 export const STATE_TRANSITIONS = gql`
-  query stateTransitions($from: ID!, $to: ID!) {
-    stateTransitions(where: { from: { id: $from }, to: { id: $to } }) {
+  query stateTransitions($from: ID!) {
+    stateTransitions(where: { from: { id: $from } }) {
       ...StateTransitionFragment
     }
   }

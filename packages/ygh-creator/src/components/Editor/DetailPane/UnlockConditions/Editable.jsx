@@ -22,8 +22,8 @@ const EditableUnlockConditions = ({ node }) => {
     edges,
     getEdgeById,
     getNodeById,
-    addUnlockToEntityInstanceStateTransition,
-    removeUnlockFromEntityInstanceStateTransition,
+    addUnlockToStateTransition,
+    removeUnlockFromStateTransition,
     getNextNodes
   } = useContext(GameContext)
 
@@ -57,11 +57,7 @@ const EditableUnlockConditions = ({ node }) => {
   const addUnlockCondition = useCallback(
     runAsync(id => {
       const edge = getEdgeById(id)
-      return addUnlockToEntityInstanceStateTransition(
-        edge.from.id,
-        edge.to.id,
-        node.state.id
-      )
+      return addUnlockToStateTransition(edge.from.id, edge.to.id, node.state.id)
     }),
     [node, edges]
   )
@@ -69,7 +65,7 @@ const EditableUnlockConditions = ({ node }) => {
   const removeUnlockCondition = useCallback(
     runAsync(id => {
       const edge = getEdgeById(id)
-      return removeUnlockFromEntityInstanceStateTransition(
+      return removeUnlockFromStateTransition(
         edge.from.id,
         edge.to.id,
         node.state.id

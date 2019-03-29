@@ -11,22 +11,21 @@ const useGameDependencies = ({ getNodeById, edges }) => {
     const from = getNodeById(fromId)
     const to = getNodeById(toId)
 
-    const stateTemplate = getStateTemplateById(to.state.template.id)
+    // const stateTemplate = getStateTemplateById(to.state.template.id)
 
     // TODO: what if an stateTemplate has multiple outgoing transitions?
-    return stateTemplate.outgoingTransitions.some(({ requiredActions }) =>
+    return to.state.outgoingTransitions.some(({ requiredActions }) =>
       requiredActions.some(
         ({ type, payload }) =>
           type === ACTION_TYPES.TARGET_OF_USE &&
-          payload.requiredEntity.entity.id === from.instance.entity.id &&
-          payload.requiredEntity.state.id === from.state.state.id
+          payload.requiredEntity.entityState.id === from.state.id
       )
     )
   }
 
-  const getDependentNodes = originNodeId => {
-    const dependentNodes = new Set([originNodeId])
-    const todo = new PriorityQueue([originNodeId])
+  const getDependentNodes = sourceNodeId => {
+    const dependentNodes = new Set([sourceNodeId])
+    const todo = new PriorityQueue([sourceNodeId])
 
     const add = id => {
       if (!dependentNodes.has(id)) {
@@ -62,9 +61,9 @@ const useGameDependencies = ({ getNodeById, edges }) => {
     return Array.from(dependentNodes)
   }
 
-  const getPreviousNodes = originNodeId => {
-    const dependentNodes = new Set([originNodeId])
-    const todo = new PriorityQueue([originNodeId])
+  const getPreviousNodes = sourceNodeId => {
+    const dependentNodes = new Set([sourceNodeId])
+    const todo = new PriorityQueue([sourceNodeId])
 
     const add = id => {
       if (!dependentNodes.has(id)) {
@@ -106,9 +105,9 @@ const useGameDependencies = ({ getNodeById, edges }) => {
     return Array.from(dependentNodes)
   }
 
-  const getNextNodes = originNodeId => {
-    const dependentNodes = new Set([originNodeId])
-    const todo = new PriorityQueue([originNodeId])
+  const getNextNodes = sourceNodeId => {
+    const dependentNodes = new Set([sourceNodeId])
+    const todo = new PriorityQueue([sourceNodeId])
 
     const add = id => {
       if (!dependentNodes.has(id)) {
@@ -149,16 +148,16 @@ const useGameDependencies = ({ getNodeById, edges }) => {
     return Array.from(dependentNodes)
   }
 
-  const getAdjacentEntityStates = originEntityStateIds => {
-    const todo = new PriorityQueue(originEntityStateIds)
-    const adjacentEntityStateIds = originEntityStateIds.slice()
+  const getAdjacentStates = sourceStateIds => {
+    const todo = new PriorityQueue(sourceStateIds)
+    const adjacentStateIds = sourceStateIds.slice()
 
     while (todo.length > 0) {
       const stateTemplate = getStateTemplateById(todo.pop())
       stateTemplate.outgoingTransitions.forEach(({ to, requiredActions }) => {
         // Transition siblings
-        if (to && !adjacentEntityStateIds.includes(to.id)) {
-          adjacentEntityStateIds.push(to.id)
+        if (to && !adjacentStateIds.includes(to.id)) {
+          adjacentStateIds.push(to.id)
           todo.push(to.id)
         }
 
@@ -166,16 +165,16 @@ const useGameDependencies = ({ getNodeById, edges }) => {
         requiredActions.forEach(({ type, payload }) => {
           if (
             [ACTION_TYPES.USE, ACTION_TYPES.TARGET_OF_USE].includes(type) &&
-            !adjacentEntityStateIds.includes(payload.requiredEntity.state.id)
+            !adjacentStateIds.includes(payload.requiredEntity.entityState.id)
           ) {
-            adjacentEntityStateIds.push(payload.requiredEntity.state.id)
-            todo.push(payload.requiredEntity.state.id)
+            adjacentStateIds.push(payload.requiredEntity.entityState.id)
+            todo.push(payload.requiredEntity.entityState.id)
           }
         })
       })
     }
 
-    return adjacentEntityStateIds
+    return adjacentStateIds
   }
 
   const getMinimalStateSpan = states => {
@@ -210,7 +209,7 @@ const useGameDependencies = ({ getNodeById, edges }) => {
     getDependentNodes,
     getPreviousNodes,
     getNextNodes,
-    getAdjacentEntityStates,
+    getAdjacentStates,
     getMinimalStateSpan
   }
 }
