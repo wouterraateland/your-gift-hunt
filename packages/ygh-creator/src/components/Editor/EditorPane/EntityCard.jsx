@@ -106,8 +106,7 @@ const EntityCard = ({
   const hasPreview = entity && (entity.isItem || entity.isObject)
 
   const featuredFieldValue = entity.featuredField
-    ? entity.fields.find(({ field }) => field.id === entity.featuredField.id)
-        .value
+    ? entity.fields.find(field => field.id === entity.featuredField.id).value
     : null
 
   return (

@@ -45,10 +45,9 @@ const EditableUnlockConditions = ({ node }) => {
     }))
     .filter(
       ({ from }) =>
-        from.instance.id !== node.instance.id &&
+        from.entity.id !== node.entity.id &&
         !unlockConditions.some(
-          unlockCondition =>
-            unlockCondition.from.instance.id === from.instance.id
+          unlockCondition => unlockCondition.from.entity.id === from.entity.id
         )
     )
 

@@ -358,7 +358,7 @@ const useGameMutations = (variables, save, dependencies) => {
                       )
                   )
                   .map(({ id }) => ({
-                    state: { connect: { id } }
+                    template: { connect: { id } }
                   }))
               }
             }

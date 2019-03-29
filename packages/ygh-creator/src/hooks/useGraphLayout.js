@@ -109,11 +109,11 @@ const findPositions = (nodes, edges) => {
           ({ from, to }) => from === edge.to && to === edge.from
         ) &&
         nodes.find(
-          ({ id, state, instance }) =>
+          ({ id, state, entity }) =>
             id === edge.to &&
             state &&
-            instance.entity.defaultState &&
-            state.state.id === instance.entity.defaultState.id
+            entity.defaultState &&
+            state.id === entity.defaultState.id
         )
       ) {
         continue

@@ -84,6 +84,12 @@ export const ENTITY_FRAGMENT = gql`
       }
       outgoingTransitions {
         id
+        template {
+          id
+        }
+        from {
+          id
+        }
         to {
           id
         }
@@ -118,6 +124,10 @@ export const ENTITY_FRAGMENT = gql`
     }
     fields {
       id
+      template {
+        id
+      }
+
       name
       description
 

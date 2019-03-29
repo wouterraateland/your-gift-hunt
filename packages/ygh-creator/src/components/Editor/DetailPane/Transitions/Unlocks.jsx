@@ -108,8 +108,8 @@ const Unlocks = ({ from, to }) => {
           )
         }}
         options={options.filter(
-          ({ id, instance }) =>
-            instance.id !== from.instance.id &&
+          ({ id, entity }) =>
+            entity.id !== from.entity.id &&
             !unlocks.find(unlock => unlock.id === id)
         )}
         onClose={onOptionsClose}

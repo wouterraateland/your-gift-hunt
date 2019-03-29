@@ -28,12 +28,9 @@ const NodeTag = ({ node, isClickable = true, showEntity = false }) => {
   return (
     <span {...containerProps}>
       {showEntity && (
-        <StyledEntityTag
-          entity={node.instance.entity}
-          name={node.instance.name}
-        />
+        <StyledEntityTag entity={node.entity} name={node.entity.name} />
       )}
-      <StateTag type={node.type} name={node.state && node.state.state.name} />
+      <StateTag type={node.type} name={node.state && node.state.name} />
     </span>
   )
 }
