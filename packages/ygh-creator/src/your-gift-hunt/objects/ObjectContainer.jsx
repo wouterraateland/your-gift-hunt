@@ -52,7 +52,7 @@ ObjectContainer.defaultProps = {
   width: 1,
   height: 1,
   angle: 0,
-  isInteractive: true,
+  isInteractive: false,
   state: null
 }
 

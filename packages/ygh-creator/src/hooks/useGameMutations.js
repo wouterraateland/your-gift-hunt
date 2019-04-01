@@ -578,10 +578,10 @@ const useGameMutations = (variables, save, dependencies) => {
 
   const connectInformationSlotWithField = useMutationWithSave(
     CONNECT_INFORMATION_SLOT_WITH_FIELD,
-    (informationSlotId, fieldValueId) => ({
+    (informationSlotId, fieldId) => ({
       variables: {
         informationSlotId,
-        fieldValueId
+        fieldId
       }
     })
   )

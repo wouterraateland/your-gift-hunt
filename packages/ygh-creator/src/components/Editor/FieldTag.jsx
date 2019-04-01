@@ -4,11 +4,11 @@ import { InputType } from "your-gift-hunt/ui"
 import _ from "utils"
 
 const FieldTag = ({ field, showInfo = true }) => {
-  const { label, type, isSecret } = field
+  const { name, type, isSecret } = field
 
   return (
     <strong>
-      {label}
+      {name}
       <InputType
         type={_.toInputType(type.type)}
         isMulti={type.isMulti}

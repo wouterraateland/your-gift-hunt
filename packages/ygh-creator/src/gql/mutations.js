@@ -271,7 +271,7 @@ export const CONNECT_INFORMATION_SLOT_WITH_FIELD = gql`
   mutation connectInformationWithField($informationSlotId: ID!, $fieldId: ID!) {
     updateInformationSlot(
       where: { id: $informationSlotId }
-      data: { field: { connect: { id: $fieldValueId } } }
+      data: { field: { connect: { id: $fieldId } } }
     ) {
       ...InformationSlotFragment
     }

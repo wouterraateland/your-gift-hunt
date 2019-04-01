@@ -74,7 +74,7 @@ const PreviewContainer = styled.div`
 `
 
 const Info = styled.em`
-  pointer-events: auto;
+  ${"" /* pointer-events: auto; */}
   cursor: pointer;
 
   display: inline-block;

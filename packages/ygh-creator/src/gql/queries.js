@@ -1,95 +1,17 @@
 import gql from "graphql-tag"
-import { ENTITY_FRAGMENT, STATE_TRANSITION_FRAGMENT } from "./fragments"
+import {
+  ENTITY_TEMPLATE_FRAGMENT,
+  ENTITY_FRAGMENT,
+  STATE_TRANSITION_FRAGMENT
+} from "./fragments"
 
 export const ENTITY_TEMPLATES = gql`
   query {
     entityTemplates {
-      id
-      name
-      description
-      isItem
-      isObject
-      isTrigger
-      informationSlots {
-        id
-        name
-        description
-        allowedTypes {
-          id
-          type
-          isMulti
-        }
-        entityStates {
-          id
-        }
-      }
-      defaultState {
-        id
-      }
-      states {
-        id
-        name
-        description
-        incomingTransitions {
-          id
-          from {
-            id
-          }
-        }
-        outgoingTransitions {
-          id
-          to {
-            id
-          }
-          requiredActions {
-            id
-            name
-            hints {
-              id
-              text
-              delay
-            }
-
-            type
-            payload {
-              id
-              requiredEntity {
-                id
-                entityState {
-                  id
-                }
-              }
-              requiredInputs {
-                id
-                key
-                not
-                comparator
-                value
-                field {
-                  id
-                }
-              }
-            }
-          }
-        }
-      }
-      featuredField {
-        id
-      }
-      fields {
-        id
-        name
-        description
-
-        type {
-          id
-          type
-          isMulti
-        }
-        isSecret
-      }
+      ...EntityTemplateFragment
     }
   }
+  ${ENTITY_TEMPLATE_FRAGMENT}
 `
 
 export const GAME_BY_SLUG = gql`

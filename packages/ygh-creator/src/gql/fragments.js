@@ -18,7 +18,26 @@ export const INFORMATION_SLOT_FRAGMENT = gql`
     states {
       id
     }
+
     field {
+      id
+    }
+  }
+`
+
+export const INFORMATION_SLOT_TEMPLATE_FRAGMENT = gql`
+  fragment InformationSlotTemplateFragment on InformationSlotTemplate {
+    id
+
+    name
+    description
+
+    allowedTypes {
+      id
+      type
+      isMulti
+    }
+    states {
       id
     }
   }
@@ -58,15 +77,35 @@ export const ENTITY_FRAGMENT = gql`
     isObject
     isTrigger
 
-    defaultState {
+    fields {
       id
+      template {
+        id
+      }
+
+      name
+      description
+
+      type {
+        id
+        type
+        isMulti
+      }
+      isSecret
+
+      value
+      information {
+        id
+      }
     }
     featuredField {
       id
     }
+
     informationSlots {
       ...InformationSlotFragment
     }
+
     states {
       id
       template {
@@ -75,6 +114,7 @@ export const ENTITY_FRAGMENT = gql`
 
       name
       description
+
       availableInformationSlots {
         id
       }
@@ -95,6 +135,7 @@ export const ENTITY_FRAGMENT = gql`
         template {
           id
         }
+
         from {
           id
         }
@@ -104,6 +145,7 @@ export const ENTITY_FRAGMENT = gql`
         unlocks {
           id
         }
+
         requiredActions {
           id
           template {
@@ -111,12 +153,15 @@ export const ENTITY_FRAGMENT = gql`
           }
 
           name
+          description
+
           type
           hints {
             id
             text
             delay
           }
+
           payload {
             id
             template {
@@ -148,12 +193,25 @@ export const ENTITY_FRAGMENT = gql`
         }
       }
     }
+    defaultState {
+      id
+    }
+  }
+  ${INFORMATION_SLOT_FRAGMENT}
+`
+
+export const ENTITY_TEMPLATE_FRAGMENT = gql`
+  fragment EntityTemplateFragment on EntityTemplate {
+    id
+    name
+    description
+
+    isItem
+    isObject
+    isTrigger
+
     fields {
       id
-      template {
-        id
-      }
-
       name
       description
 
@@ -163,13 +221,83 @@ export const ENTITY_FRAGMENT = gql`
         isMulti
       }
       isSecret
+    }
+    featuredField {
+      id
+    }
 
-      value
+    informationSlots {
+      ...InformationSlotTemplateFragment
+    }
 
-      information {
+    states {
+      id
+
+      name
+      description
+
+      availableInformationSlots {
         id
       }
+      incomingTransitions {
+        id
+        from {
+          id
+        }
+      }
+      outgoingTransitions {
+        id
+
+        from {
+          id
+        }
+        to {
+          id
+        }
+
+        requiredActions {
+          id
+
+          name
+          description
+
+          type
+          hints {
+            id
+            text
+            delay
+          }
+
+          payload {
+            id
+            requiredEntity {
+              id
+              entityState {
+                id
+              }
+            }
+            requiredInputs {
+              id
+              key
+              comparator
+              not
+              value
+              field {
+                id
+                type {
+                  id
+                  type
+                  isMulti
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    defaultState {
+      id
     }
   }
-  ${INFORMATION_SLOT_FRAGMENT}
+  ${INFORMATION_SLOT_TEMPLATE_FRAGMENT}
 `

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react"
+import React, { useCallback, useContext, useMemo } from "react"
 
 import GameContext from "contexts/Game"
 
@@ -24,46 +24,50 @@ const SingleValue = ({ data, ...otherProps }) => (
   </components.SingleValue>
 )
 
-const Slot = ({ name, description, allowedTypes, information }) => {
+const Slot = ({ slot }) => {
   const {
     nodes,
-    connectInformationWithFieldValue,
-    disconnectInformationFromFieldValue
+    connectInformationSlotWithField,
+    disconnectInformationSlotFromField
   } = useContext(GameContext)
 
   const [{ error, isLoading }, runAsync] = useAsync()
 
-  const options = nodes.flatMap(({ entity, state }) =>
-    state
-      ? state.outgoingTransitions
-          .flatMap(({ requiredActions }) =>
-            requiredActions.flatMap(({ payload }) => payload.requiredValues)
-          )
-          .filter(({ field }) => field !== null)
-          .map(({ field }) =>
-            entity.fields.find(({ template: { id } }) => id === field.id)
-          )
-          .filter(field =>
-            allowedTypes.some(
-              ({ type, isMulti }) =>
-                field.type.type === type && field.type.isMulti === isMulti
-            )
-          )
-          .map(({ id, field }) => ({
-            entity,
-            field,
-            value: id
-          }))
-      : []
+  const options = useMemo(
+    () =>
+      nodes.flatMap(({ entity, state }) =>
+        state
+          ? state.outgoingTransitions
+              .flatMap(({ requiredActions }) =>
+                requiredActions.flatMap(({ payload }) => payload.requiredInputs)
+              )
+              .filter(({ field }) => field !== null)
+              .map(({ field }) =>
+                entity.fields.find(({ id }) => id === field.id)
+              )
+              .filter(field =>
+                slot.allowedTypes.some(
+                  ({ type, isMulti }) =>
+                    field.type.type === type && field.type.isMulti === isMulti
+                )
+              )
+              .map(field => ({
+                entity,
+                field,
+                value: field.id
+              }))
+          : []
+      ),
+    [slot.allowedTypes, nodes]
   )
 
   const onChange = useCallback(
     runAsync(({ target: { value } }) =>
       value
-        ? connectInformationWithFieldValue(information.id, value)
-        : disconnectInformationFromFieldValue(information.id)
+        ? connectInformationSlotWithField(slot.id, value)
+        : disconnectInformationSlotFromField(slot.id)
     ),
-    [information]
+    [slot.id]
   )
 
   return (
@@ -75,10 +79,10 @@ const Slot = ({ name, description, allowedTypes, information }) => {
           SingleValue
         }}
         isClearable
-        label={name}
-        info={description}
+        label={slot.name}
+        info={slot.description}
         options={options}
-        value={information.fieldValue ? information.fieldValue.id : null}
+        value={slot.field ? slot.field.id : null}
         onChange={onChange}
         disabled={isLoading}
       />

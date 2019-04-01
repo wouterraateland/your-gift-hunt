@@ -12,7 +12,7 @@ const InformationSlots = ({
   availableInformationSlots.length ? (
     <Section title="Information slots">
       {availableInformationSlots.map(({ id }) => (
-        <Slot key={id} {...informationSlots.find(slot => slot.id === id)} />
+        <Slot key={id} slot={informationSlots.find(slot => slot.id === id)} />
       ))}
     </Section>
   ) : null
