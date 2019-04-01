@@ -36,6 +36,6 @@ export default ({ children, ...otherProps }) => (
   <InputTagContainer {...otherProps}>
     <InputIcon>>_</InputIcon>
     {children}
-    <ToolTip>Input value</ToolTip>
+    <ToolTip>User input</ToolTip>
   </InputTagContainer>
 )

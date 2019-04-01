@@ -1,13 +1,15 @@
 import React, { useEffect, useContext } from "react"
-import styled from "styled-components"
+import styled, { css, keyframes } from "styled-components"
 
 import GameContext from "contexts/Game"
 
 import useForceUpdate from "hooks/useForceUpdate"
 
+import { Cog, Logo } from "your-gift-hunt/icons"
+import { ToolTip } from "your-gift-hunt/ui"
+
 import PageContainer from "components/PageContainer"
-import Nav from "components/Nav"
-import SettingsButton from "components/SettingsButton"
+import Nav from "components/CreatorNav"
 
 const Main = styled.main`
   position: relative;
@@ -19,20 +21,60 @@ const Main = styled.main`
   overflow: hidden;
 `
 
-const Light = styled.span`
-  opacity: 0.5;
+const StyledLogo = styled(Logo)`
+  color: #000;
+  .background {
+    fill: #fff;
+  }
 `
 
-const SaveStateText = styled.span`
-  cursor: pointer;
+const rotate = keyframes`
+  to { transform: rotate(1turn); }
+`
+
+const SaveContainer = styled.span`
+  position: relative;
 
   display: inline-block;
+  width: 1em;
+  height: 1em;
 
-  font-size: smaller;
-  text-align: center;
+  margin-top: 0.5em;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    margin: auto;
+    border-radius: 100%;
+
+    ${props =>
+      props.isSaving
+        ? css`
+            width: 1em;
+            height: 1em;
+
+            border: 0.1em solid #0009;
+            border-bottom-color: transparent;
+
+            animation: ${rotate} 1s linear infinite;
+          `
+        : css`
+            width: 0.5em;
+            height: 0.5em;
+
+            background-color: ${props.isDirty
+              ? props.theme.color.error
+              : props.theme.color.success};
+          `}
+  }
 `
 
-const SaveState = ({ onClick, isSaving, isDirty, lastSaved }) => {
+const SaveState = ({ isSaving, isDirty, lastSaved }) => {
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
@@ -43,59 +85,55 @@ const SaveState = ({ onClick, isSaving, isDirty, lastSaved }) => {
   })
 
   return (
-    <SaveStateText title="Save now" onClick={onClick}>
-      {isSaving ? (
-        "Saving..."
-      ) : (
-        <>
-          {isDirty ? "Some unsaved changes" : "No unsaved changes"}
-          {lastSaved && (
-            <Light>
-              <br />
-              Last saved {lastSaved.fromNow()}.
-            </Light>
-          )}
-        </>
-      )}
-    </SaveStateText>
+    <SaveContainer isSaving={isSaving} isDirty={isDirty}>
+      <ToolTip right>
+        {isSaving
+          ? `Saving...`
+          : isDirty
+          ? `Unsaved changes. Last saved at ${lastSaved.fromNow()}`
+          : `No unsaved changes`}
+      </ToolTip>
+    </SaveContainer>
   )
 }
 
 const CreatorLayout = ({ children }) => {
-  const { game, save, isSaving, isDirty, lastSaved, publish } = useContext(
+  const { game, isSaving, isDirty, lastSaved, publish } = useContext(
     GameContext
   )
 
   return (
     <PageContainer>
-      <Nav
-        compact
-        goBack
-        title={
-          <>
-            {game.name}
-            <SettingsButton />
-          </>
-        }
-        items={[
-          {
-            as: "a",
-            href: `https://play.yourgifthunt.com/${game.creator.slug}/${
+      <Nav.Container>
+        <Nav.BackControl />
+        <Nav.Center>
+          <StyledLogo size={2} />
+          <Nav.Title>{game.name}</Nav.Title>
+          <SaveState
+            isSaving={isSaving}
+            isDirty={isDirty}
+            lastSaved={lastSaved}
+          />
+        </Nav.Center>
+        <Nav.Items>
+          <Nav.Item to="settings">
+            <Cog size={0.8} /> Settings
+          </Nav.Item>
+          <Nav.Item
+            as="a"
+            href={`https://play.yourgifthunt.com/${game.creator.slug}/${
               game.slug
-            }`,
-            target: "_blank",
-            label: "Test"
-          },
-          { as: "u", label: "Publish", onClick: publish }
-        ]}
-      >
-        <SaveState
-          onClick={save}
-          isSaving={isSaving}
-          isDirty={isDirty}
-          lastSaved={lastSaved}
-        />
-      </Nav>
+            }`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Test
+          </Nav.Item>
+          <Nav.Item as="u" onClick={publish}>
+            Publish
+          </Nav.Item>
+        </Nav.Items>
+      </Nav.Container>
       <Main>{children}</Main>
     </PageContainer>
   )
