@@ -33,6 +33,69 @@ const Card = styled.div`
     `}
 
   ${props =>
+    props.hasWarning &&
+    !props.hasError &&
+    !props.mayBeDeleted &&
+    css`
+      &::after {
+        content: "!";
+
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        width: 1.5em;
+        height: 1.5em;
+        padding: 0.25em;
+
+        text-align: center;
+        line-height: 1.1em;
+
+        clip-path: polygon(
+          45% 2%,
+          50% 0%,
+          55% 2%,
+          100% 84%,
+          100% 90%,
+          96% 94%,
+          4% 94%,
+          0% 90%,
+          0% 84%
+        );
+        background-color: ${props => props.theme.color.warning};
+        color: #fff;
+
+        transform: translate(50%, -50%);
+      }
+    `}
+
+  ${props =>
+    props.hasError &&
+    !props.mayBeDeleted &&
+    css`
+      &::after {
+        content: "!";
+
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        width: 1.5em;
+        height: 1.5em;
+        padding: 0.25em;
+        border-radius: 100%;
+
+        text-align: center;
+        line-height: 1em;
+
+        background-color: ${props => props.theme.color.error};
+        color: #fff;
+
+        transform: translate(50%, -50%);
+      }
+    `}
+
+  ${props =>
     props.mayBeDeleted &&
     css`
       &::after {
@@ -109,25 +172,40 @@ const EntityCard = ({
     ? entity.fields.find(field => field.id === entity.featuredField.id).value
     : null
 
+  // const unmatchedFields = entity.fields.filter(
+  //   ({ id, isSecret, informationSlots }) =>
+  //     isSecret &&
+  //     informationSlots.length === 0 &&
+  //     state.outgoingTransitions.some(({ requiredActions }) =>
+  //       requiredActions.some(({ payload: { requiredInputs } }) =>
+  //         requiredInputs.some(({ field }) => field && field.id === id)
+  //       )
+  //     )
+  // )
+
+  const emptyFields = entity.fields.filter(({ value }) => value === "null") // JSON.parse(value) === null
+
   return (
     <Card
       hasPreview={hasPreview}
       onClick={onClick}
       style={position}
       mayBeDeleted={mayBeDeleted}
+      hasWarning={emptyFields.length > 0}
+      hasError={false} // unmatchedFields.length > 0
       isFocussed={isFocussed}
     >
       <Name hasPreview={hasPreview}>
         <EntityTypeIcon {...entity} /> {entity.name}
       </Name>
-      {state !== "default" && <StateTag name={state} />}
+      {state.name !== null && <StateTag name={state.name} />}
       {featuredFieldValue && (
         <FeaturedField>{JSON.parse(featuredFieldValue)}</FeaturedField>
       )}
       <PreviewContainer>
         <EntityPreview
           entity={entity}
-          state={state}
+          state={state.name}
           maxWidth={2.5}
           maxHeight={2.5}
           rotateObjects

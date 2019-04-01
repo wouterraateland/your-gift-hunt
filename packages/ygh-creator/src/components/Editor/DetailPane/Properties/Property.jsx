@@ -1,11 +1,18 @@
 import React, { useContext, useState, useEffect } from "react"
+import styled from "styled-components"
 
 import GameContext from "contexts/Game"
 import useDebounce from "hooks/useDebounce"
 
-import { Input, Field } from "your-gift-hunt/ui"
+import { Eye, Field, Input, Paper, ToolTip } from "your-gift-hunt/ui"
+
+import Display from "./Display"
 
 import _ from "utils"
+
+const Blockquote = styled.blockquote`
+  margin: -0.5em 0 1.5em;
+`
 
 const Property = ({ field }) => {
   const [newValue, setNewValue] = useState(
@@ -26,19 +33,27 @@ const Property = ({ field }) => {
   )
 
   return (
-    <Field block>
-      <Input
-        block
-        label={field.name}
-        info={field.description}
-        isSecret={field.isSecret}
-        isMulti={field.type.isMulti}
-        type={_.toInputType(field.type.type)}
-        showType
-        value={newValue}
-        onChange={event => setNewValue(event.target.value)}
-      />
-    </Field>
+    <>
+      <Paper.Title as="h3">
+        <Eye isOpen={!field.isSecret}>
+          <ToolTip>{field.isSecret ? "Hidden" : "Visible"} for player</ToolTip>
+        </Eye>
+        {field.name}
+      </Paper.Title>
+      {field.description && <Blockquote>{field.description}</Blockquote>}
+      <Field block>
+        <Input
+          block
+          label={field.type.isMulti ? "Values" : "Value"}
+          isMulti={field.type.isMulti}
+          type={_.toInputType(field.type.type)}
+          showType
+          value={newValue}
+          onChange={event => setNewValue(event.target.value)}
+        />
+      </Field>
+      {field.isSecret && <Display field={field} />}
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react"
+import React, { memo, useContext, useEffect, useRef } from "react"
 import { navigate } from "@reach/router"
 
 import { EntitiesProvider } from "contexts/Templates"
@@ -15,7 +15,7 @@ import DetailPane from "components/Editor/DetailPane"
 import Toolbox from "components/Editor/Toolbox"
 import SettingsModal from "components/modals/Settings"
 
-const Creator = () => {
+const ClosableDetailPane = () => {
   const detailPane = useRef(null)
   const { closeInspector } = useContext(InspectorContext)
 
@@ -24,14 +24,16 @@ const Creator = () => {
     onClickOutside: closeInspector
   })
 
-  return (
-    <Layout>
-      <EditorPane />
-      <Toolbox />
-      <DetailPane ref={detailPane} />
-    </Layout>
-  )
+  return <DetailPane ref={detailPane} />
 }
+
+const Creator = memo(() => (
+  <Layout>
+    <EditorPane />
+    <Toolbox />
+    <ClosableDetailPane />
+  </Layout>
+))
 
 const CreatorWithModal = props => {
   const { gameExists } = useContext(GameContext)

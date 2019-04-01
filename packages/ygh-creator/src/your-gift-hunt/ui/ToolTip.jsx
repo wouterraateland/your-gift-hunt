@@ -13,6 +13,7 @@ const ToolTip = styled.div`
   text-align: left;
   line-height: 1.5;
   font-size: 0.8rem;
+  font-family: ${props => props.theme.font.copy};
 
   background: #222;
   color: #fff;

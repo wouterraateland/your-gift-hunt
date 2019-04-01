@@ -30,8 +30,6 @@ const Icon = styled.svg.attrs(({ size }) => ({
   fill: currentColor;
   stroke: currentColor;
   stroke-width: 0;
-
-  vertical-align: -0.1em;
 `
 
 Icon.defaultProps = {

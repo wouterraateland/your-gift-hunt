@@ -94,7 +94,7 @@ export const ENTITY_FRAGMENT = gql`
       isSecret
 
       value
-      information {
+      informationSlots {
         id
       }
     }
@@ -182,6 +182,7 @@ export const ENTITY_FRAGMENT = gql`
               value
               field {
                 id
+                name
                 type {
                   id
                   type
@@ -284,6 +285,7 @@ export const ENTITY_TEMPLATE_FRAGMENT = gql`
               value
               field {
                 id
+                name
                 type {
                   id
                   type

@@ -95,7 +95,7 @@ export const GlobalStyles = createGlobalStyle`
 
   blockquote {
     padding-left: .5em;
-    margin: 1em 0;
+    margin: 1em 0 0;
 
     border-left: .5em solid #0002;
   }

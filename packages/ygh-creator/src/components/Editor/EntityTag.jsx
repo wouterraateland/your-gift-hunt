@@ -5,16 +5,20 @@ import EntityTypeIcon from "./EntityTypeIcon"
 
 const EntityTag = styled.span`
   display: inline-block;
-  padding: 0.1em 0.5em;
+  padding: 0.25em 0.5em;
   border-radius: ${props => props.theme.borderRadius};
 
   font-size: smaller;
+  line-height: 1;
 
-  background-color: ${props => props.theme.color.accent};
+  box-shadow: inset 0 0 0 0.1em #999;
+
+  background-color: #eee;
+  color: ${props => props.theme.color.text};
 `
 
-export default ({ entity, name, className }) => (
+export default ({ entity, name, className, showIcon = true }) => (
   <EntityTag className={className}>
-    <EntityTypeIcon {...entity} /> {name || entity.name}
+    {showIcon && <EntityTypeIcon {...entity} />} {name || entity.name}
   </EntityTag>
 )

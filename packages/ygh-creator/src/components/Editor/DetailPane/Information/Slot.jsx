@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useMemo } from "react"
+import styled from "styled-components"
 
 import GameContext from "contexts/Game"
 
@@ -6,21 +7,32 @@ import useAsync from "hooks/useAsync"
 
 import { components } from "react-select"
 
-import { Field, Select, Message } from "your-gift-hunt/ui"
-import EntityTag from "components/Editor/EntityTag"
+import { Field, Message, Paper, Select } from "your-gift-hunt/ui"
 import FieldTag from "components/Editor/FieldTag"
+
+const Blockquote = styled.blockquote`
+  margin: -0.5em 0 1.5em;
+`
 
 const Option = ({ data, ...otherProps }) => (
   <components.Option {...otherProps}>
-    <EntityTag entity={data.entity} /> (
-    <FieldTag field={data.field} showInfo={false} />)
+    <FieldTag
+      entity={data.entity}
+      field={data.field}
+      showInfo={false}
+      showEntity
+    />
   </components.Option>
 )
 
 const SingleValue = ({ data, ...otherProps }) => (
   <components.SingleValue {...otherProps}>
-    <EntityTag entity={data.entity} /> (
-    <FieldTag field={data.field} showInfo={false} />)
+    <FieldTag
+      entity={data.entity}
+      field={data.field}
+      showInfo={false}
+      showEntity
+    />
   </components.SingleValue>
 )
 
@@ -71,23 +83,27 @@ const Slot = ({ slot }) => {
   )
 
   return (
-    <Field block>
-      <Select
-        block
-        components={{
-          Option,
-          SingleValue
-        }}
-        isClearable
-        label={slot.name}
-        info={slot.description}
-        options={options}
-        value={slot.field ? slot.field.id : null}
-        onChange={onChange}
-        disabled={isLoading}
-      />
-      {error && <Message.Error>{error.message}</Message.Error>}
-    </Field>
+    <>
+      <Paper.Title as="h3">{slot.name}</Paper.Title>
+      {slot.description && <Blockquote>{slot.description}</Blockquote>}
+      <Field block>
+        <Select
+          block
+          components={{
+            Option,
+            SingleValue
+          }}
+          isClearable
+          label="Connected property"
+          placeholder="None"
+          options={options}
+          value={slot.field ? slot.field.id : null}
+          onChange={onChange}
+          disabled={isLoading}
+        />
+        {error && <Message.Error>{error.message}</Message.Error>}
+      </Field>
+    </>
   )
 }
 

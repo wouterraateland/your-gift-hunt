@@ -9,7 +9,7 @@ const Properties = ({
   }
 }) =>
   fields.length ? (
-    <Section title="Properties">
+    <Section title="Properties" wrapChildren>
       {fields.map(field => (
         <Property key={field.id} field={field} />
       ))}

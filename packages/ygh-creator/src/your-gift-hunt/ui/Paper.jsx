@@ -3,6 +3,7 @@ import styled, { css } from "styled-components"
 
 export const PaperTitle = styled.h2`
   margin: 0 0 1em;
+  line-height: 1;
 `
 
 export const PaperSection = styled.div`

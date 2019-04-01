@@ -582,6 +582,24 @@ const useGameMutations = (variables, save, dependencies) => {
       variables: {
         informationSlotId,
         fieldId
+      },
+      update: (proxy, { data: { updateInformationSlot } }) => {
+        const data = proxy.readQuery(query)
+
+        data.games[0].entities.forEach(entity => {
+          entity.fields.forEach(field => {
+            if (field.id === fieldId) {
+              const index = field.informationSlots.findIndex(
+                ({ id }) => informationSlotId === id
+              )
+              if (index === -1) {
+                field.informationSlots.push(updateInformationSlot)
+              }
+            }
+          })
+        })
+
+        proxy.writeQuery({ ...query, data })
       }
     })
   )
@@ -591,6 +609,22 @@ const useGameMutations = (variables, save, dependencies) => {
     informationSlotId => ({
       variables: {
         informationSlotId
+      },
+      update: proxy => {
+        const data = proxy.readQuery(query)
+
+        data.games[0].entities.forEach(entity => {
+          entity.fields.forEach(field => {
+            const index = field.informationSlots.findIndex(
+              ({ id }) => informationSlotId === id
+            )
+            if (index !== -1) {
+              field.informationSlots.splice(index, 1)
+            }
+          })
+        })
+
+        proxy.writeQuery({ ...query, data })
       }
     })
   )

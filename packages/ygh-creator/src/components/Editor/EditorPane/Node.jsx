@@ -25,7 +25,7 @@ const Node = memo(({ id, entity, state, type }) => {
           key={id}
           position={position}
           entity={entity}
-          state={state.name}
+          state={state}
           isFocussed={isOpen && nodeId === id}
           mayBeDeleted={
             upcomingAction &&

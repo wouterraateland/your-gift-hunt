@@ -5,7 +5,6 @@ import SingleInput from "./SingleInput"
 
 const MultiInputContainer = styled.span`
   display: inline-block;
-  width: 15em;
   max-width: 100%;
   margin-bottom: -0.25em;
   margin-right: -0.25em;

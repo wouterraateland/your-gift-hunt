@@ -28,12 +28,14 @@ export const LabelText = styled.span`
       : css`
           & small {
             margin-left: 0.5em;
-            line-height: 1.2;
+            vertical-align: baseline;
             &::before {
               content: "(";
+              vertical-align: baseline;
             }
             &::after {
               content: ")";
+              vertical-align: baseline;
             }
           }
           ${props.up

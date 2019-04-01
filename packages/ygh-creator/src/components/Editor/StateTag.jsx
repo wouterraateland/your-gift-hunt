@@ -22,12 +22,13 @@ const SpecialTag = styled.span`
 const StateTag = styled.span`
   display: inline-block;
   margin: 0;
-  padding: 0.1em 0.5em;
+  padding: 0.25em 0.5em;
   border-radius: ${props => props.theme.borderRadius};
 
   font-size: smaller;
   text-transform: uppercase;
   font-weight: bold;
+  line-height: 1;
 
   background-color: #999;
   color: #fff;

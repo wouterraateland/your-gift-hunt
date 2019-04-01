@@ -45,12 +45,10 @@ const Ol = styled.ol`
   }
 `
 
-const Em = styled.em`
-  font-size: smaller;
-`
+const Em = styled.em``
 
 const Placeholder = styled.p`
-  margin-bottom: 0;
+  margin: 0;
 `
 
 const VSpace = styled.div`

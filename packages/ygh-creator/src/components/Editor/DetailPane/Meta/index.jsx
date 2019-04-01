@@ -9,6 +9,7 @@ import EditableEntityName from "./EditableEntityName"
 
 const Name = styled.h2`
   margin: 0 0 0.25em;
+  line-height: 1;
 `
 
 const Description = styled.blockquote``

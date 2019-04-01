@@ -10,7 +10,7 @@ const InformationSlots = ({
   }
 }) =>
   availableInformationSlots.length ? (
-    <Section title="Information slots">
+    <Section title="Information slots" wrapChildren>
       {availableInformationSlots.map(({ id }) => (
         <Slot key={id} slot={informationSlots.find(slot => slot.id === id)} />
       ))}

@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Fri Mar 29 2019 18:34:26 GMT+0100 (Midden-Europese standaardtijd)
+# timestamp: Mon Apr 01 2019 12:05:47 GMT+0200 (Midden-Europese zomertijd)
 
 enum AccessType {
   NONE
@@ -2190,7 +2190,7 @@ input EntityCreateInput {
   template: EntityTemplateCreateOneInput
   fields: FieldCreateManyWithoutEntityInput
   states: StateCreateManyWithoutEntityInput
-  informationSlots: InformationSlotCreateManyInput
+  informationSlots: InformationSlotCreateManyWithoutEntityInput
   featuredField: FieldCreateOneInput
   defaultState: StateCreateOneInput
   game: GameCreateOneWithoutEntitiesInput
@@ -2201,13 +2201,13 @@ input EntityCreateManyWithoutGameInput {
   connect: [EntityWhereUniqueInput!]
 }
 
-input EntityCreateOneInput {
-  create: EntityCreateInput
+input EntityCreateOneWithoutFieldsInput {
+  create: EntityCreateWithoutFieldsInput
   connect: EntityWhereUniqueInput
 }
 
-input EntityCreateOneWithoutFieldsInput {
-  create: EntityCreateWithoutFieldsInput
+input EntityCreateOneWithoutInformationSlotsInput {
+  create: EntityCreateWithoutInformationSlotsInput
   connect: EntityWhereUniqueInput
 }
 
@@ -2224,7 +2224,7 @@ input EntityCreateWithoutFieldsInput {
   isObject: Boolean
   template: EntityTemplateCreateOneInput
   states: StateCreateManyWithoutEntityInput
-  informationSlots: InformationSlotCreateManyInput
+  informationSlots: InformationSlotCreateManyWithoutEntityInput
   featuredField: FieldCreateOneInput
   defaultState: StateCreateOneInput
   game: GameCreateOneWithoutEntitiesInput
@@ -2239,9 +2239,23 @@ input EntityCreateWithoutGameInput {
   template: EntityTemplateCreateOneInput
   fields: FieldCreateManyWithoutEntityInput
   states: StateCreateManyWithoutEntityInput
-  informationSlots: InformationSlotCreateManyInput
+  informationSlots: InformationSlotCreateManyWithoutEntityInput
   featuredField: FieldCreateOneInput
   defaultState: StateCreateOneInput
+}
+
+input EntityCreateWithoutInformationSlotsInput {
+  name: String
+  description: String
+  isTrigger: Boolean
+  isItem: Boolean
+  isObject: Boolean
+  template: EntityTemplateCreateOneInput
+  fields: FieldCreateManyWithoutEntityInput
+  states: StateCreateManyWithoutEntityInput
+  featuredField: FieldCreateOneInput
+  defaultState: StateCreateOneInput
+  game: GameCreateOneWithoutEntitiesInput
 }
 
 input EntityCreateWithoutStatesInput {
@@ -2252,7 +2266,7 @@ input EntityCreateWithoutStatesInput {
   isObject: Boolean
   template: EntityTemplateCreateOneInput
   fields: FieldCreateManyWithoutEntityInput
-  informationSlots: InformationSlotCreateManyInput
+  informationSlots: InformationSlotCreateManyWithoutEntityInput
   featuredField: FieldCreateOneInput
   defaultState: StateCreateOneInput
   game: GameCreateOneWithoutEntitiesInput
@@ -3288,21 +3302,6 @@ input EntityTemplateWhereUniqueInput {
   id: ID
 }
 
-input EntityUpdateDataInput {
-  name: String
-  description: String
-  isTrigger: Boolean
-  isItem: Boolean
-  isObject: Boolean
-  template: EntityTemplateUpdateOneInput
-  fields: FieldUpdateManyWithoutEntityInput
-  states: StateUpdateManyWithoutEntityInput
-  informationSlots: InformationSlotUpdateManyInput
-  featuredField: FieldUpdateOneInput
-  defaultState: StateUpdateOneInput
-  game: GameUpdateOneWithoutEntitiesInput
-}
-
 input EntityUpdateInput {
   name: String
   description: String
@@ -3312,7 +3311,7 @@ input EntityUpdateInput {
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
   states: StateUpdateManyWithoutEntityInput
-  informationSlots: InformationSlotUpdateManyInput
+  informationSlots: InformationSlotUpdateManyWithoutEntityInput
   featuredField: FieldUpdateOneInput
   defaultState: StateUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
@@ -3350,18 +3349,18 @@ input EntityUpdateManyWithWhereNestedInput {
   data: EntityUpdateManyDataInput!
 }
 
-input EntityUpdateOneRequiredInput {
-  create: EntityCreateInput
-  connect: EntityWhereUniqueInput
-  update: EntityUpdateDataInput
-  upsert: EntityUpsertNestedInput
-}
-
 input EntityUpdateOneRequiredWithoutFieldsInput {
   create: EntityCreateWithoutFieldsInput
   connect: EntityWhereUniqueInput
   update: EntityUpdateWithoutFieldsDataInput
   upsert: EntityUpsertWithoutFieldsInput
+}
+
+input EntityUpdateOneRequiredWithoutInformationSlotsInput {
+  create: EntityCreateWithoutInformationSlotsInput
+  connect: EntityWhereUniqueInput
+  update: EntityUpdateWithoutInformationSlotsDataInput
+  upsert: EntityUpsertWithoutInformationSlotsInput
 }
 
 input EntityUpdateOneRequiredWithoutStatesInput {
@@ -3379,7 +3378,7 @@ input EntityUpdateWithoutFieldsDataInput {
   isObject: Boolean
   template: EntityTemplateUpdateOneInput
   states: StateUpdateManyWithoutEntityInput
-  informationSlots: InformationSlotUpdateManyInput
+  informationSlots: InformationSlotUpdateManyWithoutEntityInput
   featuredField: FieldUpdateOneInput
   defaultState: StateUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
@@ -3394,9 +3393,23 @@ input EntityUpdateWithoutGameDataInput {
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
   states: StateUpdateManyWithoutEntityInput
-  informationSlots: InformationSlotUpdateManyInput
+  informationSlots: InformationSlotUpdateManyWithoutEntityInput
   featuredField: FieldUpdateOneInput
   defaultState: StateUpdateOneInput
+}
+
+input EntityUpdateWithoutInformationSlotsDataInput {
+  name: String
+  description: String
+  isTrigger: Boolean
+  isItem: Boolean
+  isObject: Boolean
+  template: EntityTemplateUpdateOneInput
+  fields: FieldUpdateManyWithoutEntityInput
+  states: StateUpdateManyWithoutEntityInput
+  featuredField: FieldUpdateOneInput
+  defaultState: StateUpdateOneInput
+  game: GameUpdateOneWithoutEntitiesInput
 }
 
 input EntityUpdateWithoutStatesDataInput {
@@ -3407,7 +3420,7 @@ input EntityUpdateWithoutStatesDataInput {
   isObject: Boolean
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
-  informationSlots: InformationSlotUpdateManyInput
+  informationSlots: InformationSlotUpdateManyWithoutEntityInput
   featuredField: FieldUpdateOneInput
   defaultState: StateUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
@@ -3418,14 +3431,14 @@ input EntityUpdateWithWhereUniqueWithoutGameInput {
   data: EntityUpdateWithoutGameDataInput!
 }
 
-input EntityUpsertNestedInput {
-  update: EntityUpdateDataInput!
-  create: EntityCreateInput!
-}
-
 input EntityUpsertWithoutFieldsInput {
   update: EntityUpdateWithoutFieldsDataInput!
   create: EntityCreateWithoutFieldsInput!
+}
+
+input EntityUpsertWithoutInformationSlotsInput {
+  update: EntityUpdateWithoutInformationSlotsDataInput!
+  create: EntityCreateWithoutInformationSlotsInput!
 }
 
 input EntityUpsertWithoutStatesInput {
@@ -3608,7 +3621,7 @@ type Field implements Node {
   isSecret: Boolean!
   value: String
   entity: Entity!
-  information(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlot!]
+  informationSlots(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlot!]
 }
 
 """A connection to a list of items."""
@@ -3629,7 +3642,7 @@ input FieldCreateInput {
   template: FieldTemplateCreateOneInput
   type: FieldTypeCreateOneInput!
   entity: EntityCreateOneWithoutFieldsInput!
-  information: InformationSlotCreateManyWithoutFieldInput
+  informationSlots: InformationSlotCreateManyWithoutFieldInput
 }
 
 input FieldCreateManyWithoutEntityInput {
@@ -3642,8 +3655,8 @@ input FieldCreateOneInput {
   connect: FieldWhereUniqueInput
 }
 
-input FieldCreateOneWithoutInformationInput {
-  create: FieldCreateWithoutInformationInput
+input FieldCreateOneWithoutInformationSlotsInput {
+  create: FieldCreateWithoutInformationSlotsInput
   connect: FieldWhereUniqueInput
 }
 
@@ -3654,10 +3667,10 @@ input FieldCreateWithoutEntityInput {
   value: String
   template: FieldTemplateCreateOneInput
   type: FieldTypeCreateOneInput!
-  information: InformationSlotCreateManyWithoutFieldInput
+  informationSlots: InformationSlotCreateManyWithoutFieldInput
 }
 
-input FieldCreateWithoutInformationInput {
+input FieldCreateWithoutInformationSlotsInput {
   name: String
   description: String
   isSecret: Boolean
@@ -4674,7 +4687,7 @@ input FieldUpdateDataInput {
   template: FieldTemplateUpdateOneInput
   type: FieldTypeUpdateOneRequiredInput
   entity: EntityUpdateOneRequiredWithoutFieldsInput
-  information: InformationSlotUpdateManyWithoutFieldInput
+  informationSlots: InformationSlotUpdateManyWithoutFieldInput
 }
 
 input FieldUpdateInput {
@@ -4685,7 +4698,7 @@ input FieldUpdateInput {
   template: FieldTemplateUpdateOneInput
   type: FieldTypeUpdateOneRequiredInput
   entity: EntityUpdateOneRequiredWithoutFieldsInput
-  information: InformationSlotUpdateManyWithoutFieldInput
+  informationSlots: InformationSlotUpdateManyWithoutFieldInput
 }
 
 input FieldUpdateManyDataInput {
@@ -4727,13 +4740,13 @@ input FieldUpdateOneInput {
   upsert: FieldUpsertNestedInput
 }
 
-input FieldUpdateOneWithoutInformationInput {
-  create: FieldCreateWithoutInformationInput
+input FieldUpdateOneWithoutInformationSlotsInput {
+  create: FieldCreateWithoutInformationSlotsInput
   connect: FieldWhereUniqueInput
   disconnect: Boolean
   delete: Boolean
-  update: FieldUpdateWithoutInformationDataInput
-  upsert: FieldUpsertWithoutInformationInput
+  update: FieldUpdateWithoutInformationSlotsDataInput
+  upsert: FieldUpsertWithoutInformationSlotsInput
 }
 
 input FieldUpdateWithoutEntityDataInput {
@@ -4743,10 +4756,10 @@ input FieldUpdateWithoutEntityDataInput {
   value: String
   template: FieldTemplateUpdateOneInput
   type: FieldTypeUpdateOneRequiredInput
-  information: InformationSlotUpdateManyWithoutFieldInput
+  informationSlots: InformationSlotUpdateManyWithoutFieldInput
 }
 
-input FieldUpdateWithoutInformationDataInput {
+input FieldUpdateWithoutInformationSlotsDataInput {
   name: String
   description: String
   isSecret: Boolean
@@ -4766,9 +4779,9 @@ input FieldUpsertNestedInput {
   create: FieldCreateInput!
 }
 
-input FieldUpsertWithoutInformationInput {
-  update: FieldUpdateWithoutInformationDataInput!
-  create: FieldCreateWithoutInformationInput!
+input FieldUpsertWithoutInformationSlotsInput {
+  update: FieldUpdateWithoutInformationSlotsDataInput!
+  create: FieldCreateWithoutInformationSlotsInput!
 }
 
 input FieldUpsertWithWhereUniqueWithoutEntityInput {
@@ -4953,9 +4966,9 @@ input FieldWhereInput {
   template: FieldTemplateWhereInput
   type: FieldTypeWhereInput
   entity: EntityWhereInput
-  information_every: InformationSlotWhereInput
-  information_some: InformationSlotWhereInput
-  information_none: InformationSlotWhereInput
+  informationSlots_every: InformationSlotWhereInput
+  informationSlots_some: InformationSlotWhereInput
+  informationSlots_none: InformationSlotWhereInput
 }
 
 input FieldWhereUniqueInput {
@@ -6975,8 +6988,8 @@ input InformationSlotCreateInput {
   description: String
   template: InformationSlotTemplateCreateOneInput
   allowedTypes: FieldTypeCreateManyInput
-  field: FieldCreateOneWithoutInformationInput
-  entity: EntityCreateOneInput!
+  field: FieldCreateOneWithoutInformationSlotsInput
+  entity: EntityCreateOneWithoutInformationSlotsInput!
   states: StateCreateManyInput
 }
 
@@ -6985,9 +6998,23 @@ input InformationSlotCreateManyInput {
   connect: [InformationSlotWhereUniqueInput!]
 }
 
+input InformationSlotCreateManyWithoutEntityInput {
+  create: [InformationSlotCreateWithoutEntityInput!]
+  connect: [InformationSlotWhereUniqueInput!]
+}
+
 input InformationSlotCreateManyWithoutFieldInput {
   create: [InformationSlotCreateWithoutFieldInput!]
   connect: [InformationSlotWhereUniqueInput!]
+}
+
+input InformationSlotCreateWithoutEntityInput {
+  name: String
+  description: String
+  template: InformationSlotTemplateCreateOneInput
+  allowedTypes: FieldTypeCreateManyInput
+  field: FieldCreateOneWithoutInformationSlotsInput
+  states: StateCreateManyInput
 }
 
 input InformationSlotCreateWithoutFieldInput {
@@ -6995,7 +7022,7 @@ input InformationSlotCreateWithoutFieldInput {
   description: String
   template: InformationSlotTemplateCreateOneInput
   allowedTypes: FieldTypeCreateManyInput
-  entity: EntityCreateOneInput!
+  entity: EntityCreateOneWithoutInformationSlotsInput!
   states: StateCreateManyInput
 }
 
@@ -7201,7 +7228,7 @@ type InformationSlotTemplate implements Node {
   description: String
   allowedTypes(where: FieldTypeWhereInput, orderBy: FieldTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldType!]
   entity: EntityTemplate!
-  entityStates(where: StateTemplateWhereInput, orderBy: StateTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTemplate!]
+  states(where: StateTemplateWhereInput, orderBy: StateTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTemplate!]
 }
 
 """A connection to a list of items."""
@@ -7219,7 +7246,7 @@ input InformationSlotTemplateCreateInput {
   description: String
   allowedTypes: FieldTypeCreateManyInput
   entity: EntityTemplateCreateOneWithoutInformationSlotsInput!
-  entityStates: StateTemplateCreateManyWithoutAvailableInformationSlotsInput
+  states: StateTemplateCreateManyWithoutAvailableInformationSlotsInput
 }
 
 input InformationSlotTemplateCreateManyWithoutEntityInput {
@@ -7227,8 +7254,8 @@ input InformationSlotTemplateCreateManyWithoutEntityInput {
   connect: [InformationSlotTemplateWhereUniqueInput!]
 }
 
-input InformationSlotTemplateCreateManyWithoutEntityStatesInput {
-  create: [InformationSlotTemplateCreateWithoutEntityStatesInput!]
+input InformationSlotTemplateCreateManyWithoutStatesInput {
+  create: [InformationSlotTemplateCreateWithoutStatesInput!]
   connect: [InformationSlotTemplateWhereUniqueInput!]
 }
 
@@ -7241,10 +7268,10 @@ input InformationSlotTemplateCreateWithoutEntityInput {
   name: String
   description: String
   allowedTypes: FieldTypeCreateManyInput
-  entityStates: StateTemplateCreateManyWithoutAvailableInformationSlotsInput
+  states: StateTemplateCreateManyWithoutAvailableInformationSlotsInput
 }
 
-input InformationSlotTemplateCreateWithoutEntityStatesInput {
+input InformationSlotTemplateCreateWithoutStatesInput {
   name: String
   description: String
   allowedTypes: FieldTypeCreateManyInput
@@ -7452,7 +7479,7 @@ input InformationSlotTemplateUpdateDataInput {
   description: String
   allowedTypes: FieldTypeUpdateManyInput
   entity: EntityTemplateUpdateOneRequiredWithoutInformationSlotsInput
-  entityStates: StateTemplateUpdateManyWithoutAvailableInformationSlotsInput
+  states: StateTemplateUpdateManyWithoutAvailableInformationSlotsInput
 }
 
 input InformationSlotTemplateUpdateInput {
@@ -7460,7 +7487,7 @@ input InformationSlotTemplateUpdateInput {
   description: String
   allowedTypes: FieldTypeUpdateManyInput
   entity: EntityTemplateUpdateOneRequiredWithoutInformationSlotsInput
-  entityStates: StateTemplateUpdateManyWithoutAvailableInformationSlotsInput
+  states: StateTemplateUpdateManyWithoutAvailableInformationSlotsInput
 }
 
 input InformationSlotTemplateUpdateManyDataInput {
@@ -7484,15 +7511,15 @@ input InformationSlotTemplateUpdateManyWithoutEntityInput {
   upsert: [InformationSlotTemplateUpsertWithWhereUniqueWithoutEntityInput!]
 }
 
-input InformationSlotTemplateUpdateManyWithoutEntityStatesInput {
-  create: [InformationSlotTemplateCreateWithoutEntityStatesInput!]
+input InformationSlotTemplateUpdateManyWithoutStatesInput {
+  create: [InformationSlotTemplateCreateWithoutStatesInput!]
   connect: [InformationSlotTemplateWhereUniqueInput!]
   disconnect: [InformationSlotTemplateWhereUniqueInput!]
   delete: [InformationSlotTemplateWhereUniqueInput!]
-  update: [InformationSlotTemplateUpdateWithWhereUniqueWithoutEntityStatesInput!]
+  update: [InformationSlotTemplateUpdateWithWhereUniqueWithoutStatesInput!]
   updateMany: [InformationSlotTemplateUpdateManyWithWhereNestedInput!]
   deleteMany: [InformationSlotTemplateScalarWhereInput!]
-  upsert: [InformationSlotTemplateUpsertWithWhereUniqueWithoutEntityStatesInput!]
+  upsert: [InformationSlotTemplateUpsertWithWhereUniqueWithoutStatesInput!]
 }
 
 input InformationSlotTemplateUpdateManyWithWhereNestedInput {
@@ -7513,10 +7540,10 @@ input InformationSlotTemplateUpdateWithoutEntityDataInput {
   name: String
   description: String
   allowedTypes: FieldTypeUpdateManyInput
-  entityStates: StateTemplateUpdateManyWithoutAvailableInformationSlotsInput
+  states: StateTemplateUpdateManyWithoutAvailableInformationSlotsInput
 }
 
-input InformationSlotTemplateUpdateWithoutEntityStatesDataInput {
+input InformationSlotTemplateUpdateWithoutStatesDataInput {
   name: String
   description: String
   allowedTypes: FieldTypeUpdateManyInput
@@ -7528,9 +7555,9 @@ input InformationSlotTemplateUpdateWithWhereUniqueWithoutEntityInput {
   data: InformationSlotTemplateUpdateWithoutEntityDataInput!
 }
 
-input InformationSlotTemplateUpdateWithWhereUniqueWithoutEntityStatesInput {
+input InformationSlotTemplateUpdateWithWhereUniqueWithoutStatesInput {
   where: InformationSlotTemplateWhereUniqueInput!
-  data: InformationSlotTemplateUpdateWithoutEntityStatesDataInput!
+  data: InformationSlotTemplateUpdateWithoutStatesDataInput!
 }
 
 input InformationSlotTemplateUpsertNestedInput {
@@ -7544,10 +7571,10 @@ input InformationSlotTemplateUpsertWithWhereUniqueWithoutEntityInput {
   create: InformationSlotTemplateCreateWithoutEntityInput!
 }
 
-input InformationSlotTemplateUpsertWithWhereUniqueWithoutEntityStatesInput {
+input InformationSlotTemplateUpsertWithWhereUniqueWithoutStatesInput {
   where: InformationSlotTemplateWhereUniqueInput!
-  update: InformationSlotTemplateUpdateWithoutEntityStatesDataInput!
-  create: InformationSlotTemplateCreateWithoutEntityStatesInput!
+  update: InformationSlotTemplateUpdateWithoutStatesDataInput!
+  create: InformationSlotTemplateCreateWithoutStatesInput!
 }
 
 input InformationSlotTemplateWhereInput {
@@ -7683,9 +7710,9 @@ input InformationSlotTemplateWhereInput {
   allowedTypes_some: FieldTypeWhereInput
   allowedTypes_none: FieldTypeWhereInput
   entity: EntityTemplateWhereInput
-  entityStates_every: StateTemplateWhereInput
-  entityStates_some: StateTemplateWhereInput
-  entityStates_none: StateTemplateWhereInput
+  states_every: StateTemplateWhereInput
+  states_some: StateTemplateWhereInput
+  states_none: StateTemplateWhereInput
 }
 
 input InformationSlotTemplateWhereUniqueInput {
@@ -7697,8 +7724,8 @@ input InformationSlotUpdateDataInput {
   description: String
   template: InformationSlotTemplateUpdateOneInput
   allowedTypes: FieldTypeUpdateManyInput
-  field: FieldUpdateOneWithoutInformationInput
-  entity: EntityUpdateOneRequiredInput
+  field: FieldUpdateOneWithoutInformationSlotsInput
+  entity: EntityUpdateOneRequiredWithoutInformationSlotsInput
   states: StateUpdateManyInput
 }
 
@@ -7707,8 +7734,8 @@ input InformationSlotUpdateInput {
   description: String
   template: InformationSlotTemplateUpdateOneInput
   allowedTypes: FieldTypeUpdateManyInput
-  field: FieldUpdateOneWithoutInformationInput
-  entity: EntityUpdateOneRequiredInput
+  field: FieldUpdateOneWithoutInformationSlotsInput
+  entity: EntityUpdateOneRequiredWithoutInformationSlotsInput
   states: StateUpdateManyInput
 }
 
@@ -7733,6 +7760,17 @@ input InformationSlotUpdateManyMutationInput {
   description: String
 }
 
+input InformationSlotUpdateManyWithoutEntityInput {
+  create: [InformationSlotCreateWithoutEntityInput!]
+  connect: [InformationSlotWhereUniqueInput!]
+  disconnect: [InformationSlotWhereUniqueInput!]
+  delete: [InformationSlotWhereUniqueInput!]
+  update: [InformationSlotUpdateWithWhereUniqueWithoutEntityInput!]
+  updateMany: [InformationSlotUpdateManyWithWhereNestedInput!]
+  deleteMany: [InformationSlotScalarWhereInput!]
+  upsert: [InformationSlotUpsertWithWhereUniqueWithoutEntityInput!]
+}
+
 input InformationSlotUpdateManyWithoutFieldInput {
   create: [InformationSlotCreateWithoutFieldInput!]
   connect: [InformationSlotWhereUniqueInput!]
@@ -7749,18 +7787,32 @@ input InformationSlotUpdateManyWithWhereNestedInput {
   data: InformationSlotUpdateManyDataInput!
 }
 
+input InformationSlotUpdateWithoutEntityDataInput {
+  name: String
+  description: String
+  template: InformationSlotTemplateUpdateOneInput
+  allowedTypes: FieldTypeUpdateManyInput
+  field: FieldUpdateOneWithoutInformationSlotsInput
+  states: StateUpdateManyInput
+}
+
 input InformationSlotUpdateWithoutFieldDataInput {
   name: String
   description: String
   template: InformationSlotTemplateUpdateOneInput
   allowedTypes: FieldTypeUpdateManyInput
-  entity: EntityUpdateOneRequiredInput
+  entity: EntityUpdateOneRequiredWithoutInformationSlotsInput
   states: StateUpdateManyInput
 }
 
 input InformationSlotUpdateWithWhereUniqueNestedInput {
   where: InformationSlotWhereUniqueInput!
   data: InformationSlotUpdateDataInput!
+}
+
+input InformationSlotUpdateWithWhereUniqueWithoutEntityInput {
+  where: InformationSlotWhereUniqueInput!
+  data: InformationSlotUpdateWithoutEntityDataInput!
 }
 
 input InformationSlotUpdateWithWhereUniqueWithoutFieldInput {
@@ -7772,6 +7824,12 @@ input InformationSlotUpsertWithWhereUniqueNestedInput {
   where: InformationSlotWhereUniqueInput!
   update: InformationSlotUpdateDataInput!
   create: InformationSlotCreateInput!
+}
+
+input InformationSlotUpsertWithWhereUniqueWithoutEntityInput {
+  where: InformationSlotWhereUniqueInput!
+  update: InformationSlotUpdateWithoutEntityDataInput!
+  create: InformationSlotCreateWithoutEntityInput!
 }
 
 input InformationSlotUpsertWithWhereUniqueWithoutFieldInput {
@@ -8899,6 +8957,7 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createEntity(data: EntityCreateInput!): Entity!
   createStateTransition(data: StateTransitionCreateInput!): StateTransition!
   createActionRequirement(data: ActionRequirementCreateInput!): ActionRequirement!
   createHint(data: HintCreateInput!): Hint!
@@ -8912,13 +8971,12 @@ type Mutation {
   createActionPayload(data: ActionPayloadCreateInput!): ActionPayload!
   createActionRequirementTemplate(data: ActionRequirementTemplateCreateInput!): ActionRequirementTemplate!
   createPayloadRequirementTemplate(data: PayloadRequirementTemplateCreateInput!): PayloadRequirementTemplate!
+  createInformationSlot(data: InformationSlotCreateInput!): InformationSlot!
   createEntityRequirementTemplate(data: EntityRequirementTemplateCreateInput!): EntityRequirementTemplate!
   createInputRequirementTemplate(data: InputRequirementTemplateCreateInput!): InputRequirementTemplate!
   createHintTemplate(data: HintTemplateCreateInput!): HintTemplate!
-  createEntity(data: EntityCreateInput!): Entity!
   createActionPayloadInputValue(data: ActionPayloadInputValueCreateInput!): ActionPayloadInputValue!
   createStateTemplate(data: StateTemplateCreateInput!): StateTemplate!
-  createInformationSlot(data: InformationSlotCreateInput!): InformationSlot!
   createFieldTemplate(data: FieldTemplateCreateInput!): FieldTemplate!
   createStateTransitionTemplate(data: StateTransitionTemplateCreateInput!): StateTransitionTemplate!
   createEntityTemplate(data: EntityTemplateCreateInput!): EntityTemplate!
@@ -8926,6 +8984,7 @@ type Mutation {
   createFieldType(data: FieldTypeCreateInput!): FieldType!
   createState(data: StateCreateInput!): State!
   createField(data: FieldCreateInput!): Field!
+  updateEntity(data: EntityUpdateInput!, where: EntityWhereUniqueInput!): Entity
   updateStateTransition(data: StateTransitionUpdateInput!, where: StateTransitionWhereUniqueInput!): StateTransition
   updateActionRequirement(data: ActionRequirementUpdateInput!, where: ActionRequirementWhereUniqueInput!): ActionRequirement
   updateHint(data: HintUpdateInput!, where: HintWhereUniqueInput!): Hint
@@ -8939,13 +8998,12 @@ type Mutation {
   updateActionPayload(data: ActionPayloadUpdateInput!, where: ActionPayloadWhereUniqueInput!): ActionPayload
   updateActionRequirementTemplate(data: ActionRequirementTemplateUpdateInput!, where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   updatePayloadRequirementTemplate(data: PayloadRequirementTemplateUpdateInput!, where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
+  updateInformationSlot(data: InformationSlotUpdateInput!, where: InformationSlotWhereUniqueInput!): InformationSlot
   updateEntityRequirementTemplate(data: EntityRequirementTemplateUpdateInput!, where: EntityRequirementTemplateWhereUniqueInput!): EntityRequirementTemplate
   updateInputRequirementTemplate(data: InputRequirementTemplateUpdateInput!, where: InputRequirementTemplateWhereUniqueInput!): InputRequirementTemplate
   updateHintTemplate(data: HintTemplateUpdateInput!, where: HintTemplateWhereUniqueInput!): HintTemplate
-  updateEntity(data: EntityUpdateInput!, where: EntityWhereUniqueInput!): Entity
   updateActionPayloadInputValue(data: ActionPayloadInputValueUpdateInput!, where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   updateStateTemplate(data: StateTemplateUpdateInput!, where: StateTemplateWhereUniqueInput!): StateTemplate
-  updateInformationSlot(data: InformationSlotUpdateInput!, where: InformationSlotWhereUniqueInput!): InformationSlot
   updateFieldTemplate(data: FieldTemplateUpdateInput!, where: FieldTemplateWhereUniqueInput!): FieldTemplate
   updateStateTransitionTemplate(data: StateTransitionTemplateUpdateInput!, where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
   updateEntityTemplate(data: EntityTemplateUpdateInput!, where: EntityTemplateWhereUniqueInput!): EntityTemplate
@@ -8953,6 +9011,7 @@ type Mutation {
   updateFieldType(data: FieldTypeUpdateInput!, where: FieldTypeWhereUniqueInput!): FieldType
   updateState(data: StateUpdateInput!, where: StateWhereUniqueInput!): State
   updateField(data: FieldUpdateInput!, where: FieldWhereUniqueInput!): Field
+  deleteEntity(where: EntityWhereUniqueInput!): Entity
   deleteStateTransition(where: StateTransitionWhereUniqueInput!): StateTransition
   deleteActionRequirement(where: ActionRequirementWhereUniqueInput!): ActionRequirement
   deleteHint(where: HintWhereUniqueInput!): Hint
@@ -8966,13 +9025,12 @@ type Mutation {
   deleteActionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
   deleteActionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   deletePayloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
+  deleteInformationSlot(where: InformationSlotWhereUniqueInput!): InformationSlot
   deleteEntityRequirementTemplate(where: EntityRequirementTemplateWhereUniqueInput!): EntityRequirementTemplate
   deleteInputRequirementTemplate(where: InputRequirementTemplateWhereUniqueInput!): InputRequirementTemplate
   deleteHintTemplate(where: HintTemplateWhereUniqueInput!): HintTemplate
-  deleteEntity(where: EntityWhereUniqueInput!): Entity
   deleteActionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   deleteStateTemplate(where: StateTemplateWhereUniqueInput!): StateTemplate
-  deleteInformationSlot(where: InformationSlotWhereUniqueInput!): InformationSlot
   deleteFieldTemplate(where: FieldTemplateWhereUniqueInput!): FieldTemplate
   deleteStateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
   deleteEntityTemplate(where: EntityTemplateWhereUniqueInput!): EntityTemplate
@@ -8980,6 +9038,7 @@ type Mutation {
   deleteFieldType(where: FieldTypeWhereUniqueInput!): FieldType
   deleteState(where: StateWhereUniqueInput!): State
   deleteField(where: FieldWhereUniqueInput!): Field
+  upsertEntity(where: EntityWhereUniqueInput!, create: EntityCreateInput!, update: EntityUpdateInput!): Entity!
   upsertStateTransition(where: StateTransitionWhereUniqueInput!, create: StateTransitionCreateInput!, update: StateTransitionUpdateInput!): StateTransition!
   upsertActionRequirement(where: ActionRequirementWhereUniqueInput!, create: ActionRequirementCreateInput!, update: ActionRequirementUpdateInput!): ActionRequirement!
   upsertHint(where: HintWhereUniqueInput!, create: HintCreateInput!, update: HintUpdateInput!): Hint!
@@ -8993,13 +9052,12 @@ type Mutation {
   upsertActionPayload(where: ActionPayloadWhereUniqueInput!, create: ActionPayloadCreateInput!, update: ActionPayloadUpdateInput!): ActionPayload!
   upsertActionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!, create: ActionRequirementTemplateCreateInput!, update: ActionRequirementTemplateUpdateInput!): ActionRequirementTemplate!
   upsertPayloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!, create: PayloadRequirementTemplateCreateInput!, update: PayloadRequirementTemplateUpdateInput!): PayloadRequirementTemplate!
+  upsertInformationSlot(where: InformationSlotWhereUniqueInput!, create: InformationSlotCreateInput!, update: InformationSlotUpdateInput!): InformationSlot!
   upsertEntityRequirementTemplate(where: EntityRequirementTemplateWhereUniqueInput!, create: EntityRequirementTemplateCreateInput!, update: EntityRequirementTemplateUpdateInput!): EntityRequirementTemplate!
   upsertInputRequirementTemplate(where: InputRequirementTemplateWhereUniqueInput!, create: InputRequirementTemplateCreateInput!, update: InputRequirementTemplateUpdateInput!): InputRequirementTemplate!
   upsertHintTemplate(where: HintTemplateWhereUniqueInput!, create: HintTemplateCreateInput!, update: HintTemplateUpdateInput!): HintTemplate!
-  upsertEntity(where: EntityWhereUniqueInput!, create: EntityCreateInput!, update: EntityUpdateInput!): Entity!
   upsertActionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!, create: ActionPayloadInputValueCreateInput!, update: ActionPayloadInputValueUpdateInput!): ActionPayloadInputValue!
   upsertStateTemplate(where: StateTemplateWhereUniqueInput!, create: StateTemplateCreateInput!, update: StateTemplateUpdateInput!): StateTemplate!
-  upsertInformationSlot(where: InformationSlotWhereUniqueInput!, create: InformationSlotCreateInput!, update: InformationSlotUpdateInput!): InformationSlot!
   upsertFieldTemplate(where: FieldTemplateWhereUniqueInput!, create: FieldTemplateCreateInput!, update: FieldTemplateUpdateInput!): FieldTemplate!
   upsertStateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!, create: StateTransitionTemplateCreateInput!, update: StateTransitionTemplateUpdateInput!): StateTransitionTemplate!
   upsertEntityTemplate(where: EntityTemplateWhereUniqueInput!, create: EntityTemplateCreateInput!, update: EntityTemplateUpdateInput!): EntityTemplate!
@@ -9007,6 +9065,7 @@ type Mutation {
   upsertFieldType(where: FieldTypeWhereUniqueInput!, create: FieldTypeCreateInput!, update: FieldTypeUpdateInput!): FieldType!
   upsertState(where: StateWhereUniqueInput!, create: StateCreateInput!, update: StateUpdateInput!): State!
   upsertField(where: FieldWhereUniqueInput!, create: FieldCreateInput!, update: FieldUpdateInput!): Field!
+  updateManyEntities(data: EntityUpdateManyMutationInput!, where: EntityWhereInput): BatchPayload!
   updateManyActionRequirements(data: ActionRequirementUpdateManyMutationInput!, where: ActionRequirementWhereInput): BatchPayload!
   updateManyHints(data: HintUpdateManyMutationInput!, where: HintWhereInput): BatchPayload!
   updateManyInputRequirements(data: InputRequirementUpdateManyMutationInput!, where: InputRequirementWhereInput): BatchPayload!
@@ -9014,18 +9073,18 @@ type Mutation {
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyActions(data: ActionUpdateManyMutationInput!, where: ActionWhereInput): BatchPayload!
   updateManyActionRequirementTemplates(data: ActionRequirementTemplateUpdateManyMutationInput!, where: ActionRequirementTemplateWhereInput): BatchPayload!
+  updateManyInformationSlots(data: InformationSlotUpdateManyMutationInput!, where: InformationSlotWhereInput): BatchPayload!
   updateManyInputRequirementTemplates(data: InputRequirementTemplateUpdateManyMutationInput!, where: InputRequirementTemplateWhereInput): BatchPayload!
   updateManyHintTemplates(data: HintTemplateUpdateManyMutationInput!, where: HintTemplateWhereInput): BatchPayload!
-  updateManyEntities(data: EntityUpdateManyMutationInput!, where: EntityWhereInput): BatchPayload!
   updateManyActionPayloadInputValues(data: ActionPayloadInputValueUpdateManyMutationInput!, where: ActionPayloadInputValueWhereInput): BatchPayload!
   updateManyStateTemplates(data: StateTemplateUpdateManyMutationInput!, where: StateTemplateWhereInput): BatchPayload!
-  updateManyInformationSlots(data: InformationSlotUpdateManyMutationInput!, where: InformationSlotWhereInput): BatchPayload!
   updateManyFieldTemplates(data: FieldTemplateUpdateManyMutationInput!, where: FieldTemplateWhereInput): BatchPayload!
   updateManyEntityTemplates(data: EntityTemplateUpdateManyMutationInput!, where: EntityTemplateWhereInput): BatchPayload!
   updateManyInformationSlotTemplates(data: InformationSlotTemplateUpdateManyMutationInput!, where: InformationSlotTemplateWhereInput): BatchPayload!
   updateManyFieldTypes(data: FieldTypeUpdateManyMutationInput!, where: FieldTypeWhereInput): BatchPayload!
   updateManyStates(data: StateUpdateManyMutationInput!, where: StateWhereInput): BatchPayload!
   updateManyFields(data: FieldUpdateManyMutationInput!, where: FieldWhereInput): BatchPayload!
+  deleteManyEntities(where: EntityWhereInput): BatchPayload!
   deleteManyStateTransitions(where: StateTransitionWhereInput): BatchPayload!
   deleteManyActionRequirements(where: ActionRequirementWhereInput): BatchPayload!
   deleteManyHints(where: HintWhereInput): BatchPayload!
@@ -9039,13 +9098,12 @@ type Mutation {
   deleteManyActionPayloads(where: ActionPayloadWhereInput): BatchPayload!
   deleteManyActionRequirementTemplates(where: ActionRequirementTemplateWhereInput): BatchPayload!
   deleteManyPayloadRequirementTemplates(where: PayloadRequirementTemplateWhereInput): BatchPayload!
+  deleteManyInformationSlots(where: InformationSlotWhereInput): BatchPayload!
   deleteManyEntityRequirementTemplates(where: EntityRequirementTemplateWhereInput): BatchPayload!
   deleteManyInputRequirementTemplates(where: InputRequirementTemplateWhereInput): BatchPayload!
   deleteManyHintTemplates(where: HintTemplateWhereInput): BatchPayload!
-  deleteManyEntities(where: EntityWhereInput): BatchPayload!
   deleteManyActionPayloadInputValues(where: ActionPayloadInputValueWhereInput): BatchPayload!
   deleteManyStateTemplates(where: StateTemplateWhereInput): BatchPayload!
-  deleteManyInformationSlots(where: InformationSlotWhereInput): BatchPayload!
   deleteManyFieldTemplates(where: FieldTemplateWhereInput): BatchPayload!
   deleteManyStateTransitionTemplates(where: StateTransitionTemplateWhereInput): BatchPayload!
   deleteManyEntityTemplates(where: EntityTemplateWhereInput): BatchPayload!
@@ -9585,6 +9643,7 @@ enum PrivacyType {
 }
 
 type Query {
+  entities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity]!
   stateTransitions(where: StateTransitionWhereInput, orderBy: StateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTransition]!
   actionRequirements(where: ActionRequirementWhereInput, orderBy: ActionRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirement]!
   hints(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hint]!
@@ -9598,13 +9657,12 @@ type Query {
   actionPayloads(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionPayload]!
   actionRequirementTemplates(where: ActionRequirementTemplateWhereInput, orderBy: ActionRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirementTemplate]!
   payloadRequirementTemplates(where: PayloadRequirementTemplateWhereInput, orderBy: PayloadRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayloadRequirementTemplate]!
+  informationSlots(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlot]!
   entityRequirementTemplates(where: EntityRequirementTemplateWhereInput, orderBy: EntityRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityRequirementTemplate]!
   inputRequirementTemplates(where: InputRequirementTemplateWhereInput, orderBy: InputRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InputRequirementTemplate]!
   hintTemplates(where: HintTemplateWhereInput, orderBy: HintTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [HintTemplate]!
-  entities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity]!
   actionPayloadInputValues(where: ActionPayloadInputValueWhereInput, orderBy: ActionPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionPayloadInputValue]!
   stateTemplates(where: StateTemplateWhereInput, orderBy: StateTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTemplate]!
-  informationSlots(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlot]!
   fieldTemplates(where: FieldTemplateWhereInput, orderBy: FieldTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldTemplate]!
   stateTransitionTemplates(where: StateTransitionTemplateWhereInput, orderBy: StateTransitionTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTransitionTemplate]!
   entityTemplates(where: EntityTemplateWhereInput, orderBy: EntityTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityTemplate]!
@@ -9612,6 +9670,7 @@ type Query {
   fieldTypes(where: FieldTypeWhereInput, orderBy: FieldTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldType]!
   states(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [State]!
   fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
+  entity(where: EntityWhereUniqueInput!): Entity
   stateTransition(where: StateTransitionWhereUniqueInput!): StateTransition
   actionRequirement(where: ActionRequirementWhereUniqueInput!): ActionRequirement
   hint(where: HintWhereUniqueInput!): Hint
@@ -9625,13 +9684,12 @@ type Query {
   actionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
   actionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   payloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
+  informationSlot(where: InformationSlotWhereUniqueInput!): InformationSlot
   entityRequirementTemplate(where: EntityRequirementTemplateWhereUniqueInput!): EntityRequirementTemplate
   inputRequirementTemplate(where: InputRequirementTemplateWhereUniqueInput!): InputRequirementTemplate
   hintTemplate(where: HintTemplateWhereUniqueInput!): HintTemplate
-  entity(where: EntityWhereUniqueInput!): Entity
   actionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   stateTemplate(where: StateTemplateWhereUniqueInput!): StateTemplate
-  informationSlot(where: InformationSlotWhereUniqueInput!): InformationSlot
   fieldTemplate(where: FieldTemplateWhereUniqueInput!): FieldTemplate
   stateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
   entityTemplate(where: EntityTemplateWhereUniqueInput!): EntityTemplate
@@ -9639,6 +9697,7 @@ type Query {
   fieldType(where: FieldTypeWhereUniqueInput!): FieldType
   state(where: StateWhereUniqueInput!): State
   field(where: FieldWhereUniqueInput!): Field
+  entitiesConnection(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityConnection!
   stateTransitionsConnection(where: StateTransitionWhereInput, orderBy: StateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StateTransitionConnection!
   actionRequirementsConnection(where: ActionRequirementWhereInput, orderBy: ActionRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementConnection!
   hintsConnection(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HintConnection!
@@ -9652,13 +9711,12 @@ type Query {
   actionPayloadsConnection(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionPayloadConnection!
   actionRequirementTemplatesConnection(where: ActionRequirementTemplateWhereInput, orderBy: ActionRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementTemplateConnection!
   payloadRequirementTemplatesConnection(where: PayloadRequirementTemplateWhereInput, orderBy: PayloadRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PayloadRequirementTemplateConnection!
+  informationSlotsConnection(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InformationSlotConnection!
   entityRequirementTemplatesConnection(where: EntityRequirementTemplateWhereInput, orderBy: EntityRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityRequirementTemplateConnection!
   inputRequirementTemplatesConnection(where: InputRequirementTemplateWhereInput, orderBy: InputRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InputRequirementTemplateConnection!
   hintTemplatesConnection(where: HintTemplateWhereInput, orderBy: HintTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HintTemplateConnection!
-  entitiesConnection(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityConnection!
   actionPayloadInputValuesConnection(where: ActionPayloadInputValueWhereInput, orderBy: ActionPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionPayloadInputValueConnection!
   stateTemplatesConnection(where: StateTemplateWhereInput, orderBy: StateTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StateTemplateConnection!
-  informationSlotsConnection(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InformationSlotConnection!
   fieldTemplatesConnection(where: FieldTemplateWhereInput, orderBy: FieldTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldTemplateConnection!
   stateTransitionTemplatesConnection(where: StateTransitionTemplateWhereInput, orderBy: StateTransitionTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StateTransitionTemplateConnection!
   entityTemplatesConnection(where: EntityTemplateWhereInput, orderBy: EntityTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityTemplateConnection!
@@ -9996,7 +10054,7 @@ type StateTemplateConnection {
 input StateTemplateCreateInput {
   name: String
   description: String
-  availableInformationSlots: InformationSlotTemplateCreateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotTemplateCreateManyWithoutStatesInput
   outgoingTransitions: StateTransitionTemplateCreateManyWithoutFromInput
   incomingTransitions: StateTransitionTemplateCreateManyWithoutToInput
   entity: EntityTemplateCreateOneWithoutStatesInput!
@@ -10038,7 +10096,7 @@ input StateTemplateCreateWithoutAvailableInformationSlotsInput {
 input StateTemplateCreateWithoutEntityInput {
   name: String
   description: String
-  availableInformationSlots: InformationSlotTemplateCreateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotTemplateCreateManyWithoutStatesInput
   outgoingTransitions: StateTransitionTemplateCreateManyWithoutFromInput
   incomingTransitions: StateTransitionTemplateCreateManyWithoutToInput
 }
@@ -10046,7 +10104,7 @@ input StateTemplateCreateWithoutEntityInput {
 input StateTemplateCreateWithoutIncomingTransitionsInput {
   name: String
   description: String
-  availableInformationSlots: InformationSlotTemplateCreateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotTemplateCreateManyWithoutStatesInput
   outgoingTransitions: StateTransitionTemplateCreateManyWithoutFromInput
   entity: EntityTemplateCreateOneWithoutStatesInput!
 }
@@ -10054,7 +10112,7 @@ input StateTemplateCreateWithoutIncomingTransitionsInput {
 input StateTemplateCreateWithoutOutgoingTransitionsInput {
   name: String
   description: String
-  availableInformationSlots: InformationSlotTemplateCreateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotTemplateCreateManyWithoutStatesInput
   incomingTransitions: StateTransitionTemplateCreateManyWithoutToInput
   entity: EntityTemplateCreateOneWithoutStatesInput!
 }
@@ -10258,7 +10316,7 @@ input StateTemplateSubscriptionWhereInput {
 input StateTemplateUpdateDataInput {
   name: String
   description: String
-  availableInformationSlots: InformationSlotTemplateUpdateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotTemplateUpdateManyWithoutStatesInput
   outgoingTransitions: StateTransitionTemplateUpdateManyWithoutFromInput
   incomingTransitions: StateTransitionTemplateUpdateManyWithoutToInput
   entity: EntityTemplateUpdateOneRequiredWithoutStatesInput
@@ -10267,7 +10325,7 @@ input StateTemplateUpdateDataInput {
 input StateTemplateUpdateInput {
   name: String
   description: String
-  availableInformationSlots: InformationSlotTemplateUpdateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotTemplateUpdateManyWithoutStatesInput
   outgoingTransitions: StateTransitionTemplateUpdateManyWithoutFromInput
   incomingTransitions: StateTransitionTemplateUpdateManyWithoutToInput
   entity: EntityTemplateUpdateOneRequiredWithoutStatesInput
@@ -10353,7 +10411,7 @@ input StateTemplateUpdateWithoutAvailableInformationSlotsDataInput {
 input StateTemplateUpdateWithoutEntityDataInput {
   name: String
   description: String
-  availableInformationSlots: InformationSlotTemplateUpdateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotTemplateUpdateManyWithoutStatesInput
   outgoingTransitions: StateTransitionTemplateUpdateManyWithoutFromInput
   incomingTransitions: StateTransitionTemplateUpdateManyWithoutToInput
 }
@@ -10361,7 +10419,7 @@ input StateTemplateUpdateWithoutEntityDataInput {
 input StateTemplateUpdateWithoutIncomingTransitionsDataInput {
   name: String
   description: String
-  availableInformationSlots: InformationSlotTemplateUpdateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotTemplateUpdateManyWithoutStatesInput
   outgoingTransitions: StateTransitionTemplateUpdateManyWithoutFromInput
   entity: EntityTemplateUpdateOneRequiredWithoutStatesInput
 }
@@ -10369,7 +10427,7 @@ input StateTemplateUpdateWithoutIncomingTransitionsDataInput {
 input StateTemplateUpdateWithoutOutgoingTransitionsDataInput {
   name: String
   description: String
-  availableInformationSlots: InformationSlotTemplateUpdateManyWithoutEntityStatesInput
+  availableInformationSlots: InformationSlotTemplateUpdateManyWithoutStatesInput
   incomingTransitions: StateTransitionTemplateUpdateManyWithoutToInput
   entity: EntityTemplateUpdateOneRequiredWithoutStatesInput
 }
@@ -11579,6 +11637,7 @@ input StateWhereUniqueInput {
 }
 
 type Subscription {
+  entity(where: EntitySubscriptionWhereInput): EntitySubscriptionPayload
   stateTransition(where: StateTransitionSubscriptionWhereInput): StateTransitionSubscriptionPayload
   actionRequirement(where: ActionRequirementSubscriptionWhereInput): ActionRequirementSubscriptionPayload
   hint(where: HintSubscriptionWhereInput): HintSubscriptionPayload
@@ -11592,13 +11651,12 @@ type Subscription {
   actionPayload(where: ActionPayloadSubscriptionWhereInput): ActionPayloadSubscriptionPayload
   actionRequirementTemplate(where: ActionRequirementTemplateSubscriptionWhereInput): ActionRequirementTemplateSubscriptionPayload
   payloadRequirementTemplate(where: PayloadRequirementTemplateSubscriptionWhereInput): PayloadRequirementTemplateSubscriptionPayload
+  informationSlot(where: InformationSlotSubscriptionWhereInput): InformationSlotSubscriptionPayload
   entityRequirementTemplate(where: EntityRequirementTemplateSubscriptionWhereInput): EntityRequirementTemplateSubscriptionPayload
   inputRequirementTemplate(where: InputRequirementTemplateSubscriptionWhereInput): InputRequirementTemplateSubscriptionPayload
   hintTemplate(where: HintTemplateSubscriptionWhereInput): HintTemplateSubscriptionPayload
-  entity(where: EntitySubscriptionWhereInput): EntitySubscriptionPayload
   actionPayloadInputValue(where: ActionPayloadInputValueSubscriptionWhereInput): ActionPayloadInputValueSubscriptionPayload
   stateTemplate(where: StateTemplateSubscriptionWhereInput): StateTemplateSubscriptionPayload
-  informationSlot(where: InformationSlotSubscriptionWhereInput): InformationSlotSubscriptionPayload
   fieldTemplate(where: FieldTemplateSubscriptionWhereInput): FieldTemplateSubscriptionPayload
   stateTransitionTemplate(where: StateTransitionTemplateSubscriptionWhereInput): StateTransitionTemplateSubscriptionPayload
   entityTemplate(where: EntityTemplateSubscriptionWhereInput): EntityTemplateSubscriptionPayload
