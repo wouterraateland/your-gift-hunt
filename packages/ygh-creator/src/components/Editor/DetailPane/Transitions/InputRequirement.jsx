@@ -1,5 +1,6 @@
 import React from "react"
 
+import InputTag from "components/Editor/InputTag"
 import FieldTag from "components/Editor/FieldTag"
 import ListItem from "./ListItem"
 
@@ -22,7 +23,7 @@ const InputRequirement = ({ requiredInputs }) => {
   return requiredInputs.length ? (
     requiredInputs.map(({ key, comparator, not, value, field }, i) => (
       <ListItem key={i}>
-        Input "{key}" is {getVerb(comparator, not)} {value}
+        <InputTag>{key}</InputTag> is {getVerb(comparator, not)} {value}
         {field && <FieldTag field={field} />}
       </ListItem>
     ))
