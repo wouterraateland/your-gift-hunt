@@ -15,9 +15,10 @@ const LoginPage = () => {
 
     const email = event.target.email.value
     const password = event.target.password.value
+    const shouldRemind = event.target.remind.checked
 
     try {
-      await loginUser(email, password)
+      await loginUser(email, password, shouldRemind)
     } catch ({ json: { error, error_description } }) {
       switch (error) {
         case "invalid_grant":
@@ -53,6 +54,15 @@ const LoginPage = () => {
             required
           />
         </Field>
+        <Input
+          block
+          label="Remember me"
+          info="This will keep you logged in."
+          name="remind"
+          type="checkbox"
+          error={errors["remind"]}
+        />
+        <br />
         <small>
           <Link to="/auth/amnesia">Forgot your password?</Link>
         </small>

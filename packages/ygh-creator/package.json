@@ -24,7 +24,7 @@
     "react-apollo-hooks": "^0.3.1",
     "react-dom": "^16.8.2",
     "react-error-boundary": "^1.2.3",
-    "react-netlify-identity": "^0.0.6",
+    "react-netlify-identity": "https://github.com/wouterraateland/react-netlify-identity#wouterraateland-patch-1",
     "react-router": "^4.3.1",
     "react-scripts": "2.1.2",
     "react-select": "^2.4.1",

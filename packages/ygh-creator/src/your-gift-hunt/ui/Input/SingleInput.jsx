@@ -47,9 +47,6 @@ export const Input = styled.input`
 `
 
 Input.displayName = "Input"
-Input.defaultProps = {
-  value: ""
-}
 
 const setHeight = el => {
   if (el.nodeName === "TEXTAREA") {
@@ -59,38 +56,38 @@ const setHeight = el => {
   }
 }
 
-const SingleInput = forwardRef(
-  ({ value, onChange = _.noop, ...otherProps }, ref) => {
-    const myRef = useRef(null)
+const SingleInput = forwardRef(({ value, onChange, ...otherProps }, ref) => {
+  const myRef = useRef(null)
 
-    useEffect(
-      () => {
-        myRef && myRef.current && setHeight(myRef.current)
-      },
-      [value]
-    )
+  useEffect(
+    () => {
+      myRef && myRef.current && setHeight(myRef.current)
+    },
+    [value]
+  )
 
-    return (
-      <Input
-        as={otherProps.type === "textarea" ? "textarea" : "input"}
-        ref={otherProps.type === "textarea" ? myRef : ref}
-        value={value === null ? "" : value}
-        onChange={
-          otherProps.type === "number"
-            ? event =>
-                onChange({
-                  ...event,
-                  target: {
-                    ...event.target,
-                    value: parseInt(event.target.value, 10)
-                  }
-                })
-            : onChange
-        }
-        {...otherProps}
-      />
-    )
-  }
-)
+  return (
+    <Input
+      as={otherProps.type === "textarea" ? "textarea" : "input"}
+      ref={otherProps.type === "textarea" ? myRef : ref}
+      value={value === undefined ? undefined : value === null ? "" : value}
+      onChange={
+        onChange === undefined
+          ? undefined
+          : otherProps.type === "number"
+          ? event =>
+              onChange({
+                ...event,
+                target: {
+                  ...event.target,
+                  value: parseInt(event.target.value, 10)
+                }
+              })
+          : onChange
+      }
+      {...otherProps}
+    />
+  )
+})
 
 export default SingleInput

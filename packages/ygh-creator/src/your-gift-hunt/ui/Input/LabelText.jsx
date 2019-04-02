@@ -16,7 +16,7 @@ export const LabelText = styled.span`
     props.isSelect
       ? css`
           left: 2em;
-          top: 0.7em;
+          top: 0.3em;
           font-weight: bold;
           color: ${props.theme.color.emphasis};
           & small {
