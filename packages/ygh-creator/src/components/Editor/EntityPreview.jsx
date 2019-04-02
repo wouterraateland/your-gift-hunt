@@ -38,17 +38,15 @@ const EntityPreview = ({
               Math.min(maxWidth / width, maxHeight / height)
             ),
             S.maybe(1)(x => x)
-          ])(getObjectComponent(entity.template.name))
+          ])(getObjectComponent(entity.name))
         : Math.min(maxWidth / 2, maxHeight / 2),
     [entity, maxWidth, maxHeight]
   )
 
   return (
     <Scaled scale={scale} isRotated={rotateObjects && entity.isObject}>
-      {entity.isItem && <GenericItem entity={entity.template} state={state} />}
-      {entity.isObject && (
-        <GenericObject entity={entity.template} state={state} />
-      )}
+      {entity.isItem && <GenericItem entity={entity} state={state} />}
+      {entity.isObject && <GenericObject entity={entity} state={state} />}
     </Scaled>
   )
 }

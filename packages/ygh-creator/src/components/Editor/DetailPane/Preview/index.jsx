@@ -11,7 +11,7 @@ const Preview = ({ node }) => {
   return entity.isItem || entity.isObject ? (
     <PreviewContainer>
       <EntityPreview
-        entity={entity}
+        entity={entity.template}
         state={state}
         maxWidth={19}
         maxHeight={6}

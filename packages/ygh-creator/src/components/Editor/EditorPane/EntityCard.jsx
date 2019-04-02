@@ -204,7 +204,7 @@ const EntityCard = ({
       )}
       <PreviewContainer>
         <EntityPreview
-          entity={entity}
+          entity={entity.template}
           state={state.name}
           maxWidth={2.5}
           maxHeight={2.5}
