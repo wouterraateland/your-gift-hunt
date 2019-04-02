@@ -57,7 +57,11 @@ const EditableUnlockConditions = ({ node }) => {
   const addUnlockCondition = useCallback(
     runAsync(id => {
       const edge = getEdgeById(id)
-      return addUnlockToStateTransition(edge.from.id, edge.to.id, node.state.id)
+      return addUnlockToStateTransition(
+        edge.from.id,
+        edge.to.state ? edge.to.id : null,
+        node.state.id
+      )
     }),
     [node, edges]
   )
@@ -67,7 +71,7 @@ const EditableUnlockConditions = ({ node }) => {
       const edge = getEdgeById(id)
       return removeUnlockFromStateTransition(
         edge.from.id,
-        edge.to.id,
+        edge.to.state ? edge.to.id : null,
         node.state.id
       )
     }),

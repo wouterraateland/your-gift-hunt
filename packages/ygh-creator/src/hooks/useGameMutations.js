@@ -173,7 +173,7 @@ const useGameMutations = (variables, save, dependencies) => {
     })
 
     const { unlocks } = stateTransitions.find(t =>
-      to ? t.to.id === to : t.to === null
+      to ? t.to && t.to.id === to : t.to === null
     )
 
     if (!unlocks.some(({ id }) => unlock === id)) {
