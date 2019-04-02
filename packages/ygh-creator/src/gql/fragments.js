@@ -69,6 +69,10 @@ export const ENTITY_FRAGMENT = gql`
     id
     template {
       id
+      name
+      isItem
+      isObject
+      isTrigger
     }
     name
     description
