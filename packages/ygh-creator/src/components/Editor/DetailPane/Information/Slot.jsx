@@ -51,7 +51,7 @@ const Slot = ({ slot }) => {
         state
           ? state.outgoingTransitions
               .flatMap(({ requiredActions }) =>
-                requiredActions.flatMap(({ payload }) => payload.requiredInputs)
+                requiredActions.map(({ payload }) => payload.requiredInput)
               )
               .filter(({ field }) => field !== null)
               .map(({ field }) =>

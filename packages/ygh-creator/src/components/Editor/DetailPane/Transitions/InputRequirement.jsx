@@ -19,17 +19,23 @@ const getVerb = (comparator, not) => {
   }
 }
 
-const InputRequirement = ({ requiredInputs }) => {
-  return requiredInputs.length ? (
-    requiredInputs.map(({ key, comparator, not, value, field }, i) => (
-      <ListItem key={i}>
-        <InputTag>{key}</InputTag> is {getVerb(comparator, not)} {value}
-        {field && <FieldTag field={field} />}
-      </ListItem>
-    ))
-  ) : (
-    <ListItem>Touched</ListItem>
-  )
-}
+const JustInputRequirement = ({
+  requiredInput: { key, comparator, not, value, field }
+}) => (
+  <>
+    <InputTag>{key}</InputTag> is {getVerb(comparator, not)} {value}
+    {field && <FieldTag field={field} />}
+  </>
+)
 
-export default InputRequirement
+const MaybeInputRequirement = ({ requiredInput }) => (
+  <ListItem>
+    {requiredInput ? (
+      <JustInputRequirement requiredInput={requiredInput} />
+    ) : (
+      "Touched"
+    )}
+  </ListItem>
+)
+
+export default MaybeInputRequirement

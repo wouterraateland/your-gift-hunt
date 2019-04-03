@@ -177,8 +177,11 @@ const EntityCard = ({
   //     isSecret &&
   //     informationSlots.length === 0 &&
   //     state.outgoingTransitions.some(({ requiredActions }) =>
-  //       requiredActions.some(({ payload: { requiredInputs } }) =>
-  //         requiredInputs.some(({ field }) => field && field.id === id)
+  //       requiredActions.some(
+  //         ({ payload: { requiredInput } }) =>
+  //           requiredInput &&
+  //           requiredInput.field &&
+  //           requiredInput.field.id === id
   //       )
   //     )
   // )

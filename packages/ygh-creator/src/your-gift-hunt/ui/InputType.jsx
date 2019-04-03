@@ -82,7 +82,7 @@ const InputType = ({ type, isMulti, isSecret, showInfo = true }) => {
           <ToolTip>
             <strong>
               {type.toUpperCase()[0]}
-              {type.substr(1)} input
+              {type.substr(1)} field
             </strong>
             <br />
             {isMulti && `Accepts multiple values`}

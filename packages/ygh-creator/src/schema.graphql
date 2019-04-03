@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Mon Apr 01 2019 12:05:47 GMT+0200 (Midden-Europese zomertijd)
+# timestamp: Wed Apr 03 2019 10:49:06 GMT+0200 (Midden-Europese zomertijd)
 
 enum AccessType {
   NONE
@@ -8010,21 +8010,12 @@ input InputRequirementCreateInput {
   comparator: ComparatorType
   template: InputRequirementTemplateCreateOneInput
   field: FieldCreateOneInput
-  payload: PayloadRequirementCreateOneWithoutRequiredInputsInput!
+  payload: PayloadRequirementCreateOneInput!
 }
 
-input InputRequirementCreateManyWithoutPayloadInput {
-  create: [InputRequirementCreateWithoutPayloadInput!]
-  connect: [InputRequirementWhereUniqueInput!]
-}
-
-input InputRequirementCreateWithoutPayloadInput {
-  key: String!
-  value: String
-  not: Boolean
-  comparator: ComparatorType
-  template: InputRequirementTemplateCreateOneInput
-  field: FieldCreateOneInput
+input InputRequirementCreateOneInput {
+  create: InputRequirementCreateInput
+  connect: InputRequirementWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -8059,151 +8050,6 @@ type InputRequirementPreviousValues {
   value: String
   not: Boolean!
   comparator: ComparatorType!
-}
-
-input InputRequirementScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [InputRequirementScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [InputRequirementScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [InputRequirementScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  key: String
-
-  """All values that are not equal to given value."""
-  key_not: String
-
-  """All values that are contained in given list."""
-  key_in: [String!]
-
-  """All values that are not contained in given list."""
-  key_not_in: [String!]
-
-  """All values less than the given value."""
-  key_lt: String
-
-  """All values less than or equal the given value."""
-  key_lte: String
-
-  """All values greater than the given value."""
-  key_gt: String
-
-  """All values greater than or equal the given value."""
-  key_gte: String
-
-  """All values containing the given string."""
-  key_contains: String
-
-  """All values not containing the given string."""
-  key_not_contains: String
-
-  """All values starting with the given string."""
-  key_starts_with: String
-
-  """All values not starting with the given string."""
-  key_not_starts_with: String
-
-  """All values ending with the given string."""
-  key_ends_with: String
-
-  """All values not ending with the given string."""
-  key_not_ends_with: String
-  value: String
-
-  """All values that are not equal to given value."""
-  value_not: String
-
-  """All values that are contained in given list."""
-  value_in: [String!]
-
-  """All values that are not contained in given list."""
-  value_not_in: [String!]
-
-  """All values less than the given value."""
-  value_lt: String
-
-  """All values less than or equal the given value."""
-  value_lte: String
-
-  """All values greater than the given value."""
-  value_gt: String
-
-  """All values greater than or equal the given value."""
-  value_gte: String
-
-  """All values containing the given string."""
-  value_contains: String
-
-  """All values not containing the given string."""
-  value_not_contains: String
-
-  """All values starting with the given string."""
-  value_starts_with: String
-
-  """All values not starting with the given string."""
-  value_not_starts_with: String
-
-  """All values ending with the given string."""
-  value_ends_with: String
-
-  """All values not ending with the given string."""
-  value_not_ends_with: String
-  not: Boolean
-
-  """All values that are not equal to given value."""
-  not_not: Boolean
-  comparator: ComparatorType
-
-  """All values that are not equal to given value."""
-  comparator_not: ComparatorType
-
-  """All values that are contained in given list."""
-  comparator_in: [ComparatorType!]
-
-  """All values that are not contained in given list."""
-  comparator_not_in: [ComparatorType!]
 }
 
 type InputRequirementSubscriptionPayload {
@@ -8269,25 +8115,12 @@ input InputRequirementTemplateCreateInput {
   not: Boolean
   comparator: ComparatorType
   field: FieldTemplateCreateOneInput
-  payload: PayloadRequirementTemplateCreateOneWithoutRequiredInputsInput!
-}
-
-input InputRequirementTemplateCreateManyWithoutPayloadInput {
-  create: [InputRequirementTemplateCreateWithoutPayloadInput!]
-  connect: [InputRequirementTemplateWhereUniqueInput!]
+  payload: PayloadRequirementTemplateCreateOneInput!
 }
 
 input InputRequirementTemplateCreateOneInput {
   create: InputRequirementTemplateCreateInput
   connect: InputRequirementTemplateWhereUniqueInput
-}
-
-input InputRequirementTemplateCreateWithoutPayloadInput {
-  key: String!
-  value: String
-  not: Boolean
-  comparator: ComparatorType
-  field: FieldTemplateCreateOneInput
 }
 
 """An edge in a connection."""
@@ -8322,151 +8155,6 @@ type InputRequirementTemplatePreviousValues {
   value: String
   not: Boolean!
   comparator: ComparatorType!
-}
-
-input InputRequirementTemplateScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [InputRequirementTemplateScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [InputRequirementTemplateScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [InputRequirementTemplateScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  key: String
-
-  """All values that are not equal to given value."""
-  key_not: String
-
-  """All values that are contained in given list."""
-  key_in: [String!]
-
-  """All values that are not contained in given list."""
-  key_not_in: [String!]
-
-  """All values less than the given value."""
-  key_lt: String
-
-  """All values less than or equal the given value."""
-  key_lte: String
-
-  """All values greater than the given value."""
-  key_gt: String
-
-  """All values greater than or equal the given value."""
-  key_gte: String
-
-  """All values containing the given string."""
-  key_contains: String
-
-  """All values not containing the given string."""
-  key_not_contains: String
-
-  """All values starting with the given string."""
-  key_starts_with: String
-
-  """All values not starting with the given string."""
-  key_not_starts_with: String
-
-  """All values ending with the given string."""
-  key_ends_with: String
-
-  """All values not ending with the given string."""
-  key_not_ends_with: String
-  value: String
-
-  """All values that are not equal to given value."""
-  value_not: String
-
-  """All values that are contained in given list."""
-  value_in: [String!]
-
-  """All values that are not contained in given list."""
-  value_not_in: [String!]
-
-  """All values less than the given value."""
-  value_lt: String
-
-  """All values less than or equal the given value."""
-  value_lte: String
-
-  """All values greater than the given value."""
-  value_gt: String
-
-  """All values greater than or equal the given value."""
-  value_gte: String
-
-  """All values containing the given string."""
-  value_contains: String
-
-  """All values not containing the given string."""
-  value_not_contains: String
-
-  """All values starting with the given string."""
-  value_starts_with: String
-
-  """All values not starting with the given string."""
-  value_not_starts_with: String
-
-  """All values ending with the given string."""
-  value_ends_with: String
-
-  """All values not ending with the given string."""
-  value_not_ends_with: String
-  not: Boolean
-
-  """All values that are not equal to given value."""
-  not_not: Boolean
-  comparator: ComparatorType
-
-  """All values that are not equal to given value."""
-  comparator_not: ComparatorType
-
-  """All values that are contained in given list."""
-  comparator_in: [ComparatorType!]
-
-  """All values that are not contained in given list."""
-  comparator_not_in: [ComparatorType!]
 }
 
 type InputRequirementTemplateSubscriptionPayload {
@@ -8512,7 +8200,7 @@ input InputRequirementTemplateUpdateDataInput {
   not: Boolean
   comparator: ComparatorType
   field: FieldTemplateUpdateOneInput
-  payload: PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredInputsInput
+  payload: PayloadRequirementTemplateUpdateOneRequiredInput
 }
 
 input InputRequirementTemplateUpdateInput {
@@ -8521,14 +8209,7 @@ input InputRequirementTemplateUpdateInput {
   not: Boolean
   comparator: ComparatorType
   field: FieldTemplateUpdateOneInput
-  payload: PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredInputsInput
-}
-
-input InputRequirementTemplateUpdateManyDataInput {
-  key: String
-  value: String
-  not: Boolean
-  comparator: ComparatorType
+  payload: PayloadRequirementTemplateUpdateOneRequiredInput
 }
 
 input InputRequirementTemplateUpdateManyMutationInput {
@@ -8536,22 +8217,6 @@ input InputRequirementTemplateUpdateManyMutationInput {
   value: String
   not: Boolean
   comparator: ComparatorType
-}
-
-input InputRequirementTemplateUpdateManyWithoutPayloadInput {
-  create: [InputRequirementTemplateCreateWithoutPayloadInput!]
-  connect: [InputRequirementTemplateWhereUniqueInput!]
-  disconnect: [InputRequirementTemplateWhereUniqueInput!]
-  delete: [InputRequirementTemplateWhereUniqueInput!]
-  update: [InputRequirementTemplateUpdateWithWhereUniqueWithoutPayloadInput!]
-  updateMany: [InputRequirementTemplateUpdateManyWithWhereNestedInput!]
-  deleteMany: [InputRequirementTemplateScalarWhereInput!]
-  upsert: [InputRequirementTemplateUpsertWithWhereUniqueWithoutPayloadInput!]
-}
-
-input InputRequirementTemplateUpdateManyWithWhereNestedInput {
-  where: InputRequirementTemplateScalarWhereInput!
-  data: InputRequirementTemplateUpdateManyDataInput!
 }
 
 input InputRequirementTemplateUpdateOneInput {
@@ -8563,28 +8228,9 @@ input InputRequirementTemplateUpdateOneInput {
   upsert: InputRequirementTemplateUpsertNestedInput
 }
 
-input InputRequirementTemplateUpdateWithoutPayloadDataInput {
-  key: String
-  value: String
-  not: Boolean
-  comparator: ComparatorType
-  field: FieldTemplateUpdateOneInput
-}
-
-input InputRequirementTemplateUpdateWithWhereUniqueWithoutPayloadInput {
-  where: InputRequirementTemplateWhereUniqueInput!
-  data: InputRequirementTemplateUpdateWithoutPayloadDataInput!
-}
-
 input InputRequirementTemplateUpsertNestedInput {
   update: InputRequirementTemplateUpdateDataInput!
   create: InputRequirementTemplateCreateInput!
-}
-
-input InputRequirementTemplateUpsertWithWhereUniqueWithoutPayloadInput {
-  where: InputRequirementTemplateWhereUniqueInput!
-  update: InputRequirementTemplateUpdateWithoutPayloadDataInput!
-  create: InputRequirementTemplateCreateWithoutPayloadInput!
 }
 
 input InputRequirementTemplateWhereInput {
@@ -8738,6 +8384,16 @@ input InputRequirementTemplateWhereUniqueInput {
   id: ID
 }
 
+input InputRequirementUpdateDataInput {
+  key: String
+  value: String
+  not: Boolean
+  comparator: ComparatorType
+  template: InputRequirementTemplateUpdateOneInput
+  field: FieldUpdateOneInput
+  payload: PayloadRequirementUpdateOneRequiredInput
+}
+
 input InputRequirementUpdateInput {
   key: String
   value: String
@@ -8745,14 +8401,7 @@ input InputRequirementUpdateInput {
   comparator: ComparatorType
   template: InputRequirementTemplateUpdateOneInput
   field: FieldUpdateOneInput
-  payload: PayloadRequirementUpdateOneRequiredWithoutRequiredInputsInput
-}
-
-input InputRequirementUpdateManyDataInput {
-  key: String
-  value: String
-  not: Boolean
-  comparator: ComparatorType
+  payload: PayloadRequirementUpdateOneRequiredInput
 }
 
 input InputRequirementUpdateManyMutationInput {
@@ -8762,40 +8411,18 @@ input InputRequirementUpdateManyMutationInput {
   comparator: ComparatorType
 }
 
-input InputRequirementUpdateManyWithoutPayloadInput {
-  create: [InputRequirementCreateWithoutPayloadInput!]
-  connect: [InputRequirementWhereUniqueInput!]
-  disconnect: [InputRequirementWhereUniqueInput!]
-  delete: [InputRequirementWhereUniqueInput!]
-  update: [InputRequirementUpdateWithWhereUniqueWithoutPayloadInput!]
-  updateMany: [InputRequirementUpdateManyWithWhereNestedInput!]
-  deleteMany: [InputRequirementScalarWhereInput!]
-  upsert: [InputRequirementUpsertWithWhereUniqueWithoutPayloadInput!]
+input InputRequirementUpdateOneInput {
+  create: InputRequirementCreateInput
+  connect: InputRequirementWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: InputRequirementUpdateDataInput
+  upsert: InputRequirementUpsertNestedInput
 }
 
-input InputRequirementUpdateManyWithWhereNestedInput {
-  where: InputRequirementScalarWhereInput!
-  data: InputRequirementUpdateManyDataInput!
-}
-
-input InputRequirementUpdateWithoutPayloadDataInput {
-  key: String
-  value: String
-  not: Boolean
-  comparator: ComparatorType
-  template: InputRequirementTemplateUpdateOneInput
-  field: FieldUpdateOneInput
-}
-
-input InputRequirementUpdateWithWhereUniqueWithoutPayloadInput {
-  where: InputRequirementWhereUniqueInput!
-  data: InputRequirementUpdateWithoutPayloadDataInput!
-}
-
-input InputRequirementUpsertWithWhereUniqueWithoutPayloadInput {
-  where: InputRequirementWhereUniqueInput!
-  update: InputRequirementUpdateWithoutPayloadDataInput!
-  create: InputRequirementCreateWithoutPayloadInput!
+input InputRequirementUpsertNestedInput {
+  update: InputRequirementUpdateDataInput!
+  create: InputRequirementCreateInput!
 }
 
 input InputRequirementWhereInput {
@@ -8961,16 +8588,14 @@ type Mutation {
   createStateTransition(data: StateTransitionCreateInput!): StateTransition!
   createActionRequirement(data: ActionRequirementCreateInput!): ActionRequirement!
   createHint(data: HintCreateInput!): Hint!
-  createPayloadRequirement(data: PayloadRequirementCreateInput!): PayloadRequirement!
   createEntityRequirement(data: EntityRequirementCreateInput!): EntityRequirement!
-  createInputRequirement(data: InputRequirementCreateInput!): InputRequirement!
   createGame(data: GameCreateInput!): Game!
   createGamePlay(data: GamePlayCreateInput!): GamePlay!
   createUser(data: UserCreateInput!): User!
   createAction(data: ActionCreateInput!): Action!
   createActionPayload(data: ActionPayloadCreateInput!): ActionPayload!
   createActionRequirementTemplate(data: ActionRequirementTemplateCreateInput!): ActionRequirementTemplate!
-  createPayloadRequirementTemplate(data: PayloadRequirementTemplateCreateInput!): PayloadRequirementTemplate!
+  createPayloadRequirement(data: PayloadRequirementCreateInput!): PayloadRequirement!
   createInformationSlot(data: InformationSlotCreateInput!): InformationSlot!
   createEntityRequirementTemplate(data: EntityRequirementTemplateCreateInput!): EntityRequirementTemplate!
   createInputRequirementTemplate(data: InputRequirementTemplateCreateInput!): InputRequirementTemplate!
@@ -8979,6 +8604,8 @@ type Mutation {
   createStateTemplate(data: StateTemplateCreateInput!): StateTemplate!
   createFieldTemplate(data: FieldTemplateCreateInput!): FieldTemplate!
   createStateTransitionTemplate(data: StateTransitionTemplateCreateInput!): StateTransitionTemplate!
+  createInputRequirement(data: InputRequirementCreateInput!): InputRequirement!
+  createPayloadRequirementTemplate(data: PayloadRequirementTemplateCreateInput!): PayloadRequirementTemplate!
   createEntityTemplate(data: EntityTemplateCreateInput!): EntityTemplate!
   createInformationSlotTemplate(data: InformationSlotTemplateCreateInput!): InformationSlotTemplate!
   createFieldType(data: FieldTypeCreateInput!): FieldType!
@@ -8988,16 +8615,14 @@ type Mutation {
   updateStateTransition(data: StateTransitionUpdateInput!, where: StateTransitionWhereUniqueInput!): StateTransition
   updateActionRequirement(data: ActionRequirementUpdateInput!, where: ActionRequirementWhereUniqueInput!): ActionRequirement
   updateHint(data: HintUpdateInput!, where: HintWhereUniqueInput!): Hint
-  updatePayloadRequirement(data: PayloadRequirementUpdateInput!, where: PayloadRequirementWhereUniqueInput!): PayloadRequirement
   updateEntityRequirement(data: EntityRequirementUpdateInput!, where: EntityRequirementWhereUniqueInput!): EntityRequirement
-  updateInputRequirement(data: InputRequirementUpdateInput!, where: InputRequirementWhereUniqueInput!): InputRequirement
   updateGame(data: GameUpdateInput!, where: GameWhereUniqueInput!): Game
   updateGamePlay(data: GamePlayUpdateInput!, where: GamePlayWhereUniqueInput!): GamePlay
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateAction(data: ActionUpdateInput!, where: ActionWhereUniqueInput!): Action
   updateActionPayload(data: ActionPayloadUpdateInput!, where: ActionPayloadWhereUniqueInput!): ActionPayload
   updateActionRequirementTemplate(data: ActionRequirementTemplateUpdateInput!, where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
-  updatePayloadRequirementTemplate(data: PayloadRequirementTemplateUpdateInput!, where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
+  updatePayloadRequirement(data: PayloadRequirementUpdateInput!, where: PayloadRequirementWhereUniqueInput!): PayloadRequirement
   updateInformationSlot(data: InformationSlotUpdateInput!, where: InformationSlotWhereUniqueInput!): InformationSlot
   updateEntityRequirementTemplate(data: EntityRequirementTemplateUpdateInput!, where: EntityRequirementTemplateWhereUniqueInput!): EntityRequirementTemplate
   updateInputRequirementTemplate(data: InputRequirementTemplateUpdateInput!, where: InputRequirementTemplateWhereUniqueInput!): InputRequirementTemplate
@@ -9006,6 +8631,8 @@ type Mutation {
   updateStateTemplate(data: StateTemplateUpdateInput!, where: StateTemplateWhereUniqueInput!): StateTemplate
   updateFieldTemplate(data: FieldTemplateUpdateInput!, where: FieldTemplateWhereUniqueInput!): FieldTemplate
   updateStateTransitionTemplate(data: StateTransitionTemplateUpdateInput!, where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
+  updateInputRequirement(data: InputRequirementUpdateInput!, where: InputRequirementWhereUniqueInput!): InputRequirement
+  updatePayloadRequirementTemplate(data: PayloadRequirementTemplateUpdateInput!, where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
   updateEntityTemplate(data: EntityTemplateUpdateInput!, where: EntityTemplateWhereUniqueInput!): EntityTemplate
   updateInformationSlotTemplate(data: InformationSlotTemplateUpdateInput!, where: InformationSlotTemplateWhereUniqueInput!): InformationSlotTemplate
   updateFieldType(data: FieldTypeUpdateInput!, where: FieldTypeWhereUniqueInput!): FieldType
@@ -9015,16 +8642,14 @@ type Mutation {
   deleteStateTransition(where: StateTransitionWhereUniqueInput!): StateTransition
   deleteActionRequirement(where: ActionRequirementWhereUniqueInput!): ActionRequirement
   deleteHint(where: HintWhereUniqueInput!): Hint
-  deletePayloadRequirement(where: PayloadRequirementWhereUniqueInput!): PayloadRequirement
   deleteEntityRequirement(where: EntityRequirementWhereUniqueInput!): EntityRequirement
-  deleteInputRequirement(where: InputRequirementWhereUniqueInput!): InputRequirement
   deleteGame(where: GameWhereUniqueInput!): Game
   deleteGamePlay(where: GamePlayWhereUniqueInput!): GamePlay
   deleteUser(where: UserWhereUniqueInput!): User
   deleteAction(where: ActionWhereUniqueInput!): Action
   deleteActionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
   deleteActionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
-  deletePayloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
+  deletePayloadRequirement(where: PayloadRequirementWhereUniqueInput!): PayloadRequirement
   deleteInformationSlot(where: InformationSlotWhereUniqueInput!): InformationSlot
   deleteEntityRequirementTemplate(where: EntityRequirementTemplateWhereUniqueInput!): EntityRequirementTemplate
   deleteInputRequirementTemplate(where: InputRequirementTemplateWhereUniqueInput!): InputRequirementTemplate
@@ -9033,6 +8658,8 @@ type Mutation {
   deleteStateTemplate(where: StateTemplateWhereUniqueInput!): StateTemplate
   deleteFieldTemplate(where: FieldTemplateWhereUniqueInput!): FieldTemplate
   deleteStateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
+  deleteInputRequirement(where: InputRequirementWhereUniqueInput!): InputRequirement
+  deletePayloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
   deleteEntityTemplate(where: EntityTemplateWhereUniqueInput!): EntityTemplate
   deleteInformationSlotTemplate(where: InformationSlotTemplateWhereUniqueInput!): InformationSlotTemplate
   deleteFieldType(where: FieldTypeWhereUniqueInput!): FieldType
@@ -9042,16 +8669,14 @@ type Mutation {
   upsertStateTransition(where: StateTransitionWhereUniqueInput!, create: StateTransitionCreateInput!, update: StateTransitionUpdateInput!): StateTransition!
   upsertActionRequirement(where: ActionRequirementWhereUniqueInput!, create: ActionRequirementCreateInput!, update: ActionRequirementUpdateInput!): ActionRequirement!
   upsertHint(where: HintWhereUniqueInput!, create: HintCreateInput!, update: HintUpdateInput!): Hint!
-  upsertPayloadRequirement(where: PayloadRequirementWhereUniqueInput!, create: PayloadRequirementCreateInput!, update: PayloadRequirementUpdateInput!): PayloadRequirement!
   upsertEntityRequirement(where: EntityRequirementWhereUniqueInput!, create: EntityRequirementCreateInput!, update: EntityRequirementUpdateInput!): EntityRequirement!
-  upsertInputRequirement(where: InputRequirementWhereUniqueInput!, create: InputRequirementCreateInput!, update: InputRequirementUpdateInput!): InputRequirement!
   upsertGame(where: GameWhereUniqueInput!, create: GameCreateInput!, update: GameUpdateInput!): Game!
   upsertGamePlay(where: GamePlayWhereUniqueInput!, create: GamePlayCreateInput!, update: GamePlayUpdateInput!): GamePlay!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertAction(where: ActionWhereUniqueInput!, create: ActionCreateInput!, update: ActionUpdateInput!): Action!
   upsertActionPayload(where: ActionPayloadWhereUniqueInput!, create: ActionPayloadCreateInput!, update: ActionPayloadUpdateInput!): ActionPayload!
   upsertActionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!, create: ActionRequirementTemplateCreateInput!, update: ActionRequirementTemplateUpdateInput!): ActionRequirementTemplate!
-  upsertPayloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!, create: PayloadRequirementTemplateCreateInput!, update: PayloadRequirementTemplateUpdateInput!): PayloadRequirementTemplate!
+  upsertPayloadRequirement(where: PayloadRequirementWhereUniqueInput!, create: PayloadRequirementCreateInput!, update: PayloadRequirementUpdateInput!): PayloadRequirement!
   upsertInformationSlot(where: InformationSlotWhereUniqueInput!, create: InformationSlotCreateInput!, update: InformationSlotUpdateInput!): InformationSlot!
   upsertEntityRequirementTemplate(where: EntityRequirementTemplateWhereUniqueInput!, create: EntityRequirementTemplateCreateInput!, update: EntityRequirementTemplateUpdateInput!): EntityRequirementTemplate!
   upsertInputRequirementTemplate(where: InputRequirementTemplateWhereUniqueInput!, create: InputRequirementTemplateCreateInput!, update: InputRequirementTemplateUpdateInput!): InputRequirementTemplate!
@@ -9060,6 +8685,8 @@ type Mutation {
   upsertStateTemplate(where: StateTemplateWhereUniqueInput!, create: StateTemplateCreateInput!, update: StateTemplateUpdateInput!): StateTemplate!
   upsertFieldTemplate(where: FieldTemplateWhereUniqueInput!, create: FieldTemplateCreateInput!, update: FieldTemplateUpdateInput!): FieldTemplate!
   upsertStateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!, create: StateTransitionTemplateCreateInput!, update: StateTransitionTemplateUpdateInput!): StateTransitionTemplate!
+  upsertInputRequirement(where: InputRequirementWhereUniqueInput!, create: InputRequirementCreateInput!, update: InputRequirementUpdateInput!): InputRequirement!
+  upsertPayloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!, create: PayloadRequirementTemplateCreateInput!, update: PayloadRequirementTemplateUpdateInput!): PayloadRequirementTemplate!
   upsertEntityTemplate(where: EntityTemplateWhereUniqueInput!, create: EntityTemplateCreateInput!, update: EntityTemplateUpdateInput!): EntityTemplate!
   upsertInformationSlotTemplate(where: InformationSlotTemplateWhereUniqueInput!, create: InformationSlotTemplateCreateInput!, update: InformationSlotTemplateUpdateInput!): InformationSlotTemplate!
   upsertFieldType(where: FieldTypeWhereUniqueInput!, create: FieldTypeCreateInput!, update: FieldTypeUpdateInput!): FieldType!
@@ -9068,7 +8695,6 @@ type Mutation {
   updateManyEntities(data: EntityUpdateManyMutationInput!, where: EntityWhereInput): BatchPayload!
   updateManyActionRequirements(data: ActionRequirementUpdateManyMutationInput!, where: ActionRequirementWhereInput): BatchPayload!
   updateManyHints(data: HintUpdateManyMutationInput!, where: HintWhereInput): BatchPayload!
-  updateManyInputRequirements(data: InputRequirementUpdateManyMutationInput!, where: InputRequirementWhereInput): BatchPayload!
   updateManyGames(data: GameUpdateManyMutationInput!, where: GameWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyActions(data: ActionUpdateManyMutationInput!, where: ActionWhereInput): BatchPayload!
@@ -9079,6 +8705,7 @@ type Mutation {
   updateManyActionPayloadInputValues(data: ActionPayloadInputValueUpdateManyMutationInput!, where: ActionPayloadInputValueWhereInput): BatchPayload!
   updateManyStateTemplates(data: StateTemplateUpdateManyMutationInput!, where: StateTemplateWhereInput): BatchPayload!
   updateManyFieldTemplates(data: FieldTemplateUpdateManyMutationInput!, where: FieldTemplateWhereInput): BatchPayload!
+  updateManyInputRequirements(data: InputRequirementUpdateManyMutationInput!, where: InputRequirementWhereInput): BatchPayload!
   updateManyEntityTemplates(data: EntityTemplateUpdateManyMutationInput!, where: EntityTemplateWhereInput): BatchPayload!
   updateManyInformationSlotTemplates(data: InformationSlotTemplateUpdateManyMutationInput!, where: InformationSlotTemplateWhereInput): BatchPayload!
   updateManyFieldTypes(data: FieldTypeUpdateManyMutationInput!, where: FieldTypeWhereInput): BatchPayload!
@@ -9088,16 +8715,14 @@ type Mutation {
   deleteManyStateTransitions(where: StateTransitionWhereInput): BatchPayload!
   deleteManyActionRequirements(where: ActionRequirementWhereInput): BatchPayload!
   deleteManyHints(where: HintWhereInput): BatchPayload!
-  deleteManyPayloadRequirements(where: PayloadRequirementWhereInput): BatchPayload!
   deleteManyEntityRequirements(where: EntityRequirementWhereInput): BatchPayload!
-  deleteManyInputRequirements(where: InputRequirementWhereInput): BatchPayload!
   deleteManyGames(where: GameWhereInput): BatchPayload!
   deleteManyGamePlays(where: GamePlayWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyActions(where: ActionWhereInput): BatchPayload!
   deleteManyActionPayloads(where: ActionPayloadWhereInput): BatchPayload!
   deleteManyActionRequirementTemplates(where: ActionRequirementTemplateWhereInput): BatchPayload!
-  deleteManyPayloadRequirementTemplates(where: PayloadRequirementTemplateWhereInput): BatchPayload!
+  deleteManyPayloadRequirements(where: PayloadRequirementWhereInput): BatchPayload!
   deleteManyInformationSlots(where: InformationSlotWhereInput): BatchPayload!
   deleteManyEntityRequirementTemplates(where: EntityRequirementTemplateWhereInput): BatchPayload!
   deleteManyInputRequirementTemplates(where: InputRequirementTemplateWhereInput): BatchPayload!
@@ -9106,6 +8731,8 @@ type Mutation {
   deleteManyStateTemplates(where: StateTemplateWhereInput): BatchPayload!
   deleteManyFieldTemplates(where: FieldTemplateWhereInput): BatchPayload!
   deleteManyStateTransitionTemplates(where: StateTransitionTemplateWhereInput): BatchPayload!
+  deleteManyInputRequirements(where: InputRequirementWhereInput): BatchPayload!
+  deleteManyPayloadRequirementTemplates(where: PayloadRequirementTemplateWhereInput): BatchPayload!
   deleteManyEntityTemplates(where: EntityTemplateWhereInput): BatchPayload!
   deleteManyInformationSlotTemplates(where: InformationSlotTemplateWhereInput): BatchPayload!
   deleteManyFieldTypes(where: FieldTypeWhereInput): BatchPayload!
@@ -9144,7 +8771,7 @@ type PayloadRequirement implements Node {
   id: ID!
   template: PayloadRequirementTemplate
   requiredEntity: EntityRequirement
-  requiredInputs(where: InputRequirementWhereInput, orderBy: InputRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InputRequirement!]
+  requiredInput: InputRequirement
   actionRequirement: ActionRequirement!
 }
 
@@ -9161,8 +8788,13 @@ type PayloadRequirementConnection {
 input PayloadRequirementCreateInput {
   template: PayloadRequirementTemplateCreateOneInput
   requiredEntity: EntityRequirementCreateOneWithoutPayloadInput
-  requiredInputs: InputRequirementCreateManyWithoutPayloadInput
+  requiredInput: InputRequirementCreateOneInput
   actionRequirement: ActionRequirementCreateOneWithoutPayloadInput!
+}
+
+input PayloadRequirementCreateOneInput {
+  create: PayloadRequirementCreateInput
+  connect: PayloadRequirementWhereUniqueInput
 }
 
 input PayloadRequirementCreateOneWithoutActionRequirementInput {
@@ -9175,26 +8807,15 @@ input PayloadRequirementCreateOneWithoutRequiredEntityInput {
   connect: PayloadRequirementWhereUniqueInput
 }
 
-input PayloadRequirementCreateOneWithoutRequiredInputsInput {
-  create: PayloadRequirementCreateWithoutRequiredInputsInput
-  connect: PayloadRequirementWhereUniqueInput
-}
-
 input PayloadRequirementCreateWithoutActionRequirementInput {
   template: PayloadRequirementTemplateCreateOneInput
   requiredEntity: EntityRequirementCreateOneWithoutPayloadInput
-  requiredInputs: InputRequirementCreateManyWithoutPayloadInput
+  requiredInput: InputRequirementCreateOneInput
 }
 
 input PayloadRequirementCreateWithoutRequiredEntityInput {
   template: PayloadRequirementTemplateCreateOneInput
-  requiredInputs: InputRequirementCreateManyWithoutPayloadInput
-  actionRequirement: ActionRequirementCreateOneWithoutPayloadInput!
-}
-
-input PayloadRequirementCreateWithoutRequiredInputsInput {
-  template: PayloadRequirementTemplateCreateOneInput
-  requiredEntity: EntityRequirementCreateOneWithoutPayloadInput
+  requiredInput: InputRequirementCreateOneInput
   actionRequirement: ActionRequirementCreateOneWithoutPayloadInput!
 }
 
@@ -9260,7 +8881,7 @@ input PayloadRequirementSubscriptionWhereInput {
 type PayloadRequirementTemplate implements Node {
   id: ID!
   requiredEntity: EntityRequirementTemplate
-  requiredInputs(where: InputRequirementTemplateWhereInput, orderBy: InputRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InputRequirementTemplate!]
+  requiredInput: InputRequirementTemplate
   actionRequirement: ActionRequirementTemplate!
 }
 
@@ -9276,7 +8897,7 @@ type PayloadRequirementTemplateConnection {
 
 input PayloadRequirementTemplateCreateInput {
   requiredEntity: EntityRequirementTemplateCreateOneWithoutPayloadInput
-  requiredInputs: InputRequirementTemplateCreateManyWithoutPayloadInput
+  requiredInput: InputRequirementTemplateCreateOneInput
   actionRequirement: ActionRequirementTemplateCreateOneWithoutPayloadInput!
 }
 
@@ -9295,23 +8916,13 @@ input PayloadRequirementTemplateCreateOneWithoutRequiredEntityInput {
   connect: PayloadRequirementTemplateWhereUniqueInput
 }
 
-input PayloadRequirementTemplateCreateOneWithoutRequiredInputsInput {
-  create: PayloadRequirementTemplateCreateWithoutRequiredInputsInput
-  connect: PayloadRequirementTemplateWhereUniqueInput
-}
-
 input PayloadRequirementTemplateCreateWithoutActionRequirementInput {
   requiredEntity: EntityRequirementTemplateCreateOneWithoutPayloadInput
-  requiredInputs: InputRequirementTemplateCreateManyWithoutPayloadInput
+  requiredInput: InputRequirementTemplateCreateOneInput
 }
 
 input PayloadRequirementTemplateCreateWithoutRequiredEntityInput {
-  requiredInputs: InputRequirementTemplateCreateManyWithoutPayloadInput
-  actionRequirement: ActionRequirementTemplateCreateOneWithoutPayloadInput!
-}
-
-input PayloadRequirementTemplateCreateWithoutRequiredInputsInput {
-  requiredEntity: EntityRequirementTemplateCreateOneWithoutPayloadInput
+  requiredInput: InputRequirementTemplateCreateOneInput
   actionRequirement: ActionRequirementTemplateCreateOneWithoutPayloadInput!
 }
 
@@ -9376,13 +8987,13 @@ input PayloadRequirementTemplateSubscriptionWhereInput {
 
 input PayloadRequirementTemplateUpdateDataInput {
   requiredEntity: EntityRequirementTemplateUpdateOneWithoutPayloadInput
-  requiredInputs: InputRequirementTemplateUpdateManyWithoutPayloadInput
+  requiredInput: InputRequirementTemplateUpdateOneInput
   actionRequirement: ActionRequirementTemplateUpdateOneRequiredWithoutPayloadInput
 }
 
 input PayloadRequirementTemplateUpdateInput {
   requiredEntity: EntityRequirementTemplateUpdateOneWithoutPayloadInput
-  requiredInputs: InputRequirementTemplateUpdateManyWithoutPayloadInput
+  requiredInput: InputRequirementTemplateUpdateOneInput
   actionRequirement: ActionRequirementTemplateUpdateOneRequiredWithoutPayloadInput
 }
 
@@ -9395,18 +9006,18 @@ input PayloadRequirementTemplateUpdateOneInput {
   upsert: PayloadRequirementTemplateUpsertNestedInput
 }
 
+input PayloadRequirementTemplateUpdateOneRequiredInput {
+  create: PayloadRequirementTemplateCreateInput
+  connect: PayloadRequirementTemplateWhereUniqueInput
+  update: PayloadRequirementTemplateUpdateDataInput
+  upsert: PayloadRequirementTemplateUpsertNestedInput
+}
+
 input PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredEntityInput {
   create: PayloadRequirementTemplateCreateWithoutRequiredEntityInput
   connect: PayloadRequirementTemplateWhereUniqueInput
   update: PayloadRequirementTemplateUpdateWithoutRequiredEntityDataInput
   upsert: PayloadRequirementTemplateUpsertWithoutRequiredEntityInput
-}
-
-input PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredInputsInput {
-  create: PayloadRequirementTemplateCreateWithoutRequiredInputsInput
-  connect: PayloadRequirementTemplateWhereUniqueInput
-  update: PayloadRequirementTemplateUpdateWithoutRequiredInputsDataInput
-  upsert: PayloadRequirementTemplateUpsertWithoutRequiredInputsInput
 }
 
 input PayloadRequirementTemplateUpdateOneWithoutActionRequirementInput {
@@ -9420,16 +9031,11 @@ input PayloadRequirementTemplateUpdateOneWithoutActionRequirementInput {
 
 input PayloadRequirementTemplateUpdateWithoutActionRequirementDataInput {
   requiredEntity: EntityRequirementTemplateUpdateOneWithoutPayloadInput
-  requiredInputs: InputRequirementTemplateUpdateManyWithoutPayloadInput
+  requiredInput: InputRequirementTemplateUpdateOneInput
 }
 
 input PayloadRequirementTemplateUpdateWithoutRequiredEntityDataInput {
-  requiredInputs: InputRequirementTemplateUpdateManyWithoutPayloadInput
-  actionRequirement: ActionRequirementTemplateUpdateOneRequiredWithoutPayloadInput
-}
-
-input PayloadRequirementTemplateUpdateWithoutRequiredInputsDataInput {
-  requiredEntity: EntityRequirementTemplateUpdateOneWithoutPayloadInput
+  requiredInput: InputRequirementTemplateUpdateOneInput
   actionRequirement: ActionRequirementTemplateUpdateOneRequiredWithoutPayloadInput
 }
 
@@ -9446,11 +9052,6 @@ input PayloadRequirementTemplateUpsertWithoutActionRequirementInput {
 input PayloadRequirementTemplateUpsertWithoutRequiredEntityInput {
   update: PayloadRequirementTemplateUpdateWithoutRequiredEntityDataInput!
   create: PayloadRequirementTemplateCreateWithoutRequiredEntityInput!
-}
-
-input PayloadRequirementTemplateUpsertWithoutRequiredInputsInput {
-  update: PayloadRequirementTemplateUpdateWithoutRequiredInputsDataInput!
-  create: PayloadRequirementTemplateCreateWithoutRequiredInputsInput!
 }
 
 input PayloadRequirementTemplateWhereInput {
@@ -9503,9 +9104,7 @@ input PayloadRequirementTemplateWhereInput {
   """All values not ending with the given string."""
   id_not_ends_with: ID
   requiredEntity: EntityRequirementTemplateWhereInput
-  requiredInputs_every: InputRequirementTemplateWhereInput
-  requiredInputs_some: InputRequirementTemplateWhereInput
-  requiredInputs_none: InputRequirementTemplateWhereInput
+  requiredInput: InputRequirementTemplateWhereInput
   actionRequirement: ActionRequirementTemplateWhereInput
 }
 
@@ -9513,11 +9112,25 @@ input PayloadRequirementTemplateWhereUniqueInput {
   id: ID
 }
 
+input PayloadRequirementUpdateDataInput {
+  template: PayloadRequirementTemplateUpdateOneInput
+  requiredEntity: EntityRequirementUpdateOneWithoutPayloadInput
+  requiredInput: InputRequirementUpdateOneInput
+  actionRequirement: ActionRequirementUpdateOneRequiredWithoutPayloadInput
+}
+
 input PayloadRequirementUpdateInput {
   template: PayloadRequirementTemplateUpdateOneInput
   requiredEntity: EntityRequirementUpdateOneWithoutPayloadInput
-  requiredInputs: InputRequirementUpdateManyWithoutPayloadInput
+  requiredInput: InputRequirementUpdateOneInput
   actionRequirement: ActionRequirementUpdateOneRequiredWithoutPayloadInput
+}
+
+input PayloadRequirementUpdateOneRequiredInput {
+  create: PayloadRequirementCreateInput
+  connect: PayloadRequirementWhereUniqueInput
+  update: PayloadRequirementUpdateDataInput
+  upsert: PayloadRequirementUpsertNestedInput
 }
 
 input PayloadRequirementUpdateOneRequiredWithoutRequiredEntityInput {
@@ -9525,13 +9138,6 @@ input PayloadRequirementUpdateOneRequiredWithoutRequiredEntityInput {
   connect: PayloadRequirementWhereUniqueInput
   update: PayloadRequirementUpdateWithoutRequiredEntityDataInput
   upsert: PayloadRequirementUpsertWithoutRequiredEntityInput
-}
-
-input PayloadRequirementUpdateOneRequiredWithoutRequiredInputsInput {
-  create: PayloadRequirementCreateWithoutRequiredInputsInput
-  connect: PayloadRequirementWhereUniqueInput
-  update: PayloadRequirementUpdateWithoutRequiredInputsDataInput
-  upsert: PayloadRequirementUpsertWithoutRequiredInputsInput
 }
 
 input PayloadRequirementUpdateOneWithoutActionRequirementInput {
@@ -9546,19 +9152,18 @@ input PayloadRequirementUpdateOneWithoutActionRequirementInput {
 input PayloadRequirementUpdateWithoutActionRequirementDataInput {
   template: PayloadRequirementTemplateUpdateOneInput
   requiredEntity: EntityRequirementUpdateOneWithoutPayloadInput
-  requiredInputs: InputRequirementUpdateManyWithoutPayloadInput
+  requiredInput: InputRequirementUpdateOneInput
 }
 
 input PayloadRequirementUpdateWithoutRequiredEntityDataInput {
   template: PayloadRequirementTemplateUpdateOneInput
-  requiredInputs: InputRequirementUpdateManyWithoutPayloadInput
+  requiredInput: InputRequirementUpdateOneInput
   actionRequirement: ActionRequirementUpdateOneRequiredWithoutPayloadInput
 }
 
-input PayloadRequirementUpdateWithoutRequiredInputsDataInput {
-  template: PayloadRequirementTemplateUpdateOneInput
-  requiredEntity: EntityRequirementUpdateOneWithoutPayloadInput
-  actionRequirement: ActionRequirementUpdateOneRequiredWithoutPayloadInput
+input PayloadRequirementUpsertNestedInput {
+  update: PayloadRequirementUpdateDataInput!
+  create: PayloadRequirementCreateInput!
 }
 
 input PayloadRequirementUpsertWithoutActionRequirementInput {
@@ -9569,11 +9174,6 @@ input PayloadRequirementUpsertWithoutActionRequirementInput {
 input PayloadRequirementUpsertWithoutRequiredEntityInput {
   update: PayloadRequirementUpdateWithoutRequiredEntityDataInput!
   create: PayloadRequirementCreateWithoutRequiredEntityInput!
-}
-
-input PayloadRequirementUpsertWithoutRequiredInputsInput {
-  update: PayloadRequirementUpdateWithoutRequiredInputsDataInput!
-  create: PayloadRequirementCreateWithoutRequiredInputsInput!
 }
 
 input PayloadRequirementWhereInput {
@@ -9627,9 +9227,7 @@ input PayloadRequirementWhereInput {
   id_not_ends_with: ID
   template: PayloadRequirementTemplateWhereInput
   requiredEntity: EntityRequirementWhereInput
-  requiredInputs_every: InputRequirementWhereInput
-  requiredInputs_some: InputRequirementWhereInput
-  requiredInputs_none: InputRequirementWhereInput
+  requiredInput: InputRequirementWhereInput
   actionRequirement: ActionRequirementWhereInput
 }
 
@@ -9647,16 +9245,14 @@ type Query {
   stateTransitions(where: StateTransitionWhereInput, orderBy: StateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTransition]!
   actionRequirements(where: ActionRequirementWhereInput, orderBy: ActionRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirement]!
   hints(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hint]!
-  payloadRequirements(where: PayloadRequirementWhereInput, orderBy: PayloadRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayloadRequirement]!
   entityRequirements(where: EntityRequirementWhereInput, orderBy: EntityRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityRequirement]!
-  inputRequirements(where: InputRequirementWhereInput, orderBy: InputRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InputRequirement]!
   games(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game]!
   gamePlays(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GamePlay]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   actions(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Action]!
   actionPayloads(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionPayload]!
   actionRequirementTemplates(where: ActionRequirementTemplateWhereInput, orderBy: ActionRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirementTemplate]!
-  payloadRequirementTemplates(where: PayloadRequirementTemplateWhereInput, orderBy: PayloadRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayloadRequirementTemplate]!
+  payloadRequirements(where: PayloadRequirementWhereInput, orderBy: PayloadRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayloadRequirement]!
   informationSlots(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlot]!
   entityRequirementTemplates(where: EntityRequirementTemplateWhereInput, orderBy: EntityRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityRequirementTemplate]!
   inputRequirementTemplates(where: InputRequirementTemplateWhereInput, orderBy: InputRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InputRequirementTemplate]!
@@ -9665,6 +9261,8 @@ type Query {
   stateTemplates(where: StateTemplateWhereInput, orderBy: StateTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTemplate]!
   fieldTemplates(where: FieldTemplateWhereInput, orderBy: FieldTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldTemplate]!
   stateTransitionTemplates(where: StateTransitionTemplateWhereInput, orderBy: StateTransitionTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTransitionTemplate]!
+  inputRequirements(where: InputRequirementWhereInput, orderBy: InputRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InputRequirement]!
+  payloadRequirementTemplates(where: PayloadRequirementTemplateWhereInput, orderBy: PayloadRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayloadRequirementTemplate]!
   entityTemplates(where: EntityTemplateWhereInput, orderBy: EntityTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityTemplate]!
   informationSlotTemplates(where: InformationSlotTemplateWhereInput, orderBy: InformationSlotTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlotTemplate]!
   fieldTypes(where: FieldTypeWhereInput, orderBy: FieldTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldType]!
@@ -9674,16 +9272,14 @@ type Query {
   stateTransition(where: StateTransitionWhereUniqueInput!): StateTransition
   actionRequirement(where: ActionRequirementWhereUniqueInput!): ActionRequirement
   hint(where: HintWhereUniqueInput!): Hint
-  payloadRequirement(where: PayloadRequirementWhereUniqueInput!): PayloadRequirement
   entityRequirement(where: EntityRequirementWhereUniqueInput!): EntityRequirement
-  inputRequirement(where: InputRequirementWhereUniqueInput!): InputRequirement
   game(where: GameWhereUniqueInput!): Game
   gamePlay(where: GamePlayWhereUniqueInput!): GamePlay
   user(where: UserWhereUniqueInput!): User
   action(where: ActionWhereUniqueInput!): Action
   actionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
   actionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
-  payloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
+  payloadRequirement(where: PayloadRequirementWhereUniqueInput!): PayloadRequirement
   informationSlot(where: InformationSlotWhereUniqueInput!): InformationSlot
   entityRequirementTemplate(where: EntityRequirementTemplateWhereUniqueInput!): EntityRequirementTemplate
   inputRequirementTemplate(where: InputRequirementTemplateWhereUniqueInput!): InputRequirementTemplate
@@ -9692,6 +9288,8 @@ type Query {
   stateTemplate(where: StateTemplateWhereUniqueInput!): StateTemplate
   fieldTemplate(where: FieldTemplateWhereUniqueInput!): FieldTemplate
   stateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
+  inputRequirement(where: InputRequirementWhereUniqueInput!): InputRequirement
+  payloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
   entityTemplate(where: EntityTemplateWhereUniqueInput!): EntityTemplate
   informationSlotTemplate(where: InformationSlotTemplateWhereUniqueInput!): InformationSlotTemplate
   fieldType(where: FieldTypeWhereUniqueInput!): FieldType
@@ -9701,16 +9299,14 @@ type Query {
   stateTransitionsConnection(where: StateTransitionWhereInput, orderBy: StateTransitionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StateTransitionConnection!
   actionRequirementsConnection(where: ActionRequirementWhereInput, orderBy: ActionRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementConnection!
   hintsConnection(where: HintWhereInput, orderBy: HintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HintConnection!
-  payloadRequirementsConnection(where: PayloadRequirementWhereInput, orderBy: PayloadRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PayloadRequirementConnection!
   entityRequirementsConnection(where: EntityRequirementWhereInput, orderBy: EntityRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityRequirementConnection!
-  inputRequirementsConnection(where: InputRequirementWhereInput, orderBy: InputRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InputRequirementConnection!
   gamesConnection(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GameConnection!
   gamePlaysConnection(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GamePlayConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   actionsConnection(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionConnection!
   actionPayloadsConnection(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionPayloadConnection!
   actionRequirementTemplatesConnection(where: ActionRequirementTemplateWhereInput, orderBy: ActionRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementTemplateConnection!
-  payloadRequirementTemplatesConnection(where: PayloadRequirementTemplateWhereInput, orderBy: PayloadRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PayloadRequirementTemplateConnection!
+  payloadRequirementsConnection(where: PayloadRequirementWhereInput, orderBy: PayloadRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PayloadRequirementConnection!
   informationSlotsConnection(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InformationSlotConnection!
   entityRequirementTemplatesConnection(where: EntityRequirementTemplateWhereInput, orderBy: EntityRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityRequirementTemplateConnection!
   inputRequirementTemplatesConnection(where: InputRequirementTemplateWhereInput, orderBy: InputRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InputRequirementTemplateConnection!
@@ -9719,6 +9315,8 @@ type Query {
   stateTemplatesConnection(where: StateTemplateWhereInput, orderBy: StateTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StateTemplateConnection!
   fieldTemplatesConnection(where: FieldTemplateWhereInput, orderBy: FieldTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldTemplateConnection!
   stateTransitionTemplatesConnection(where: StateTransitionTemplateWhereInput, orderBy: StateTransitionTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StateTransitionTemplateConnection!
+  inputRequirementsConnection(where: InputRequirementWhereInput, orderBy: InputRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InputRequirementConnection!
+  payloadRequirementTemplatesConnection(where: PayloadRequirementTemplateWhereInput, orderBy: PayloadRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PayloadRequirementTemplateConnection!
   entityTemplatesConnection(where: EntityTemplateWhereInput, orderBy: EntityTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityTemplateConnection!
   informationSlotTemplatesConnection(where: InformationSlotTemplateWhereInput, orderBy: InformationSlotTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InformationSlotTemplateConnection!
   fieldTypesConnection(where: FieldTypeWhereInput, orderBy: FieldTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldTypeConnection!
@@ -11641,16 +11239,14 @@ type Subscription {
   stateTransition(where: StateTransitionSubscriptionWhereInput): StateTransitionSubscriptionPayload
   actionRequirement(where: ActionRequirementSubscriptionWhereInput): ActionRequirementSubscriptionPayload
   hint(where: HintSubscriptionWhereInput): HintSubscriptionPayload
-  payloadRequirement(where: PayloadRequirementSubscriptionWhereInput): PayloadRequirementSubscriptionPayload
   entityRequirement(where: EntityRequirementSubscriptionWhereInput): EntityRequirementSubscriptionPayload
-  inputRequirement(where: InputRequirementSubscriptionWhereInput): InputRequirementSubscriptionPayload
   game(where: GameSubscriptionWhereInput): GameSubscriptionPayload
   gamePlay(where: GamePlaySubscriptionWhereInput): GamePlaySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   action(where: ActionSubscriptionWhereInput): ActionSubscriptionPayload
   actionPayload(where: ActionPayloadSubscriptionWhereInput): ActionPayloadSubscriptionPayload
   actionRequirementTemplate(where: ActionRequirementTemplateSubscriptionWhereInput): ActionRequirementTemplateSubscriptionPayload
-  payloadRequirementTemplate(where: PayloadRequirementTemplateSubscriptionWhereInput): PayloadRequirementTemplateSubscriptionPayload
+  payloadRequirement(where: PayloadRequirementSubscriptionWhereInput): PayloadRequirementSubscriptionPayload
   informationSlot(where: InformationSlotSubscriptionWhereInput): InformationSlotSubscriptionPayload
   entityRequirementTemplate(where: EntityRequirementTemplateSubscriptionWhereInput): EntityRequirementTemplateSubscriptionPayload
   inputRequirementTemplate(where: InputRequirementTemplateSubscriptionWhereInput): InputRequirementTemplateSubscriptionPayload
@@ -11659,6 +11255,8 @@ type Subscription {
   stateTemplate(where: StateTemplateSubscriptionWhereInput): StateTemplateSubscriptionPayload
   fieldTemplate(where: FieldTemplateSubscriptionWhereInput): FieldTemplateSubscriptionPayload
   stateTransitionTemplate(where: StateTransitionTemplateSubscriptionWhereInput): StateTransitionTemplateSubscriptionPayload
+  inputRequirement(where: InputRequirementSubscriptionWhereInput): InputRequirementSubscriptionPayload
+  payloadRequirementTemplate(where: PayloadRequirementTemplateSubscriptionWhereInput): PayloadRequirementTemplateSubscriptionPayload
   entityTemplate(where: EntityTemplateSubscriptionWhereInput): EntityTemplateSubscriptionPayload
   informationSlotTemplate(where: InformationSlotTemplateSubscriptionWhereInput): InformationSlotTemplateSubscriptionPayload
   fieldType(where: FieldTypeSubscriptionWhereInput): FieldTypeSubscriptionPayload

@@ -18,7 +18,7 @@ const ActionRequirement = ({ type, payload }) => {
         />
       )
     case ACTION_TYPES.INPUT:
-      return <InputRequirement requiredInputs={payload.requiredInputs} />
+      return <InputRequirement requiredInput={payload.requiredInput} />
     default:
       return (
         <ListItem>

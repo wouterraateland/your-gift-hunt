@@ -306,11 +306,13 @@ const useGameMutations = (variables, save, dependencies) => {
                 )
               }
             : null,
-          requiredInputs: {
-            create: payloadRequirementTemplate.requiredInputs.map(
-              createInputRequirementFromTemplate
-            )
-          }
+          requiredInput: payloadRequirementTemplate.requiredInput
+            ? {
+                create: createInputRequirementFromTemplate(
+                  payloadRequirementTemplate.requiredInput
+                )
+              }
+            : null
         })
 
         const createActionRequirementFromTemplate = actionRequirementTemplate => ({

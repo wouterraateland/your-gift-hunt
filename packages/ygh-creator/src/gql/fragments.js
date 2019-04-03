@@ -178,7 +178,7 @@ export const ENTITY_FRAGMENT = gql`
                 id
               }
             }
-            requiredInputs {
+            requiredInput {
               id
               key
               comparator
@@ -281,7 +281,7 @@ export const ENTITY_TEMPLATE_FRAGMENT = gql`
                 id
               }
             }
-            requiredInputs {
+            requiredInput {
               id
               key
               comparator

@@ -108,11 +108,11 @@ const getInfoEdges = nodes =>
                   ({ id }) => id === informationSlot.field.id
                 ) &&
                 state.outgoingTransitions.some(({ requiredActions }) =>
-                  requiredActions.some(({ payload: { requiredInputs } }) =>
-                    requiredInputs.some(
-                      ({ field }) =>
-                        field && field.id === informationSlot.field.id
-                    )
+                  requiredActions.some(
+                    ({ payload: { requiredInput } }) =>
+                      requiredInput &&
+                      requiredInput.field &&
+                      requiredInput.field.id === informationSlot.field.id
                   )
                 )
             )
