@@ -44,15 +44,13 @@ const useGameState = (creatorSlug, gameSlug) => {
       })
       setInstances(instances)
 
-      const triggerInstances = instances.filter(
-        instance => instance.entity.isTrigger
-      )
-
-      for (let instance of triggerInstances) {
-        if (instance.state !== null) {
-          await dispatchAction(createInputAction(instance.id))
-        }
-      }
+      // const triggerInstances = instances.filter(instance => instance.isTrigger)
+      //
+      // for (let instance of triggerInstances) {
+      //   if (instance.state !== null) {
+      //     await dispatchAction(createInputAction(instance.id))
+      //   }
+      // }
       setIsLoading(false)
     } catch (e) {
       console.error(e)
@@ -109,29 +107,29 @@ const useGameState = (creatorSlug, gameSlug) => {
     pickupItem,
     instances: {
       all: activeInstances,
-      items: activeInstances.filter(instance => instance.entity.isItem),
+      items: activeInstances.filter(instance => instance.isItem),
       inventoryItems: activeInstances.filter(
         instance =>
-          instance.entity.isItem &&
-          read("inventoryItems", []).includes(instance.id)
+          instance.isItem && read("inventoryItems", []).includes(instance.id)
       ),
       nonInventoryItems: activeInstances.filter(
         instance =>
-          instance.entity.isItem &&
-          !read("inventoryItems", []).includes(instance.id)
+          instance.isItem && !read("inventoryItems", []).includes(instance.id)
       ),
-      objects: activeInstances.filter(instance => instance.entity.isObject),
-      triggers: activeInstances.filter(instance => instance.entity.isTrigger),
+      objects: activeInstances.filter(instance => instance.isObject),
+      triggers: activeInstances.filter(instance => instance.isTrigger),
       questions: activeInstances.filter(
-        instance => instance.entity.name === "Question"
+        instance => instance.template.name === "Question"
       ),
       codes: activeInstances.filter(
-        instance => instance.entity.name === "Code"
+        instance => instance.template.name === "Code"
       ),
       inputs: activeInstances.filter(
-        instance => instance.entity.name === "Input"
+        instance => instance.template.name === "Input"
       ),
-      notes: activeInstances.filter(instance => instance.entity.name === "Note")
+      notes: activeInstances.filter(
+        instance => instance.template.name === "Note"
+      )
     }
   }
 }

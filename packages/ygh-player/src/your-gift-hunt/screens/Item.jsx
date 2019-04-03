@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-import Screen from './Screen'
+import Screen from "./Screen"
 
 const ItemContainer = styled.div`
   position: relative;
@@ -16,16 +16,11 @@ const ItemContainer = styled.div`
   }
 `
 
-const ItemScreen = ({
-  isVisible,
-  instance,
-  component: Component,
-  close,
-}) => {
+const ItemScreen = ({ isVisible, instance, component: Component, close }) => {
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>
       <ItemContainer>
-        <h2>{instance.entity.name}</h2>
+        <h2>{instance.name}</h2>
         <Component />
       </ItemContainer>
     </Screen>

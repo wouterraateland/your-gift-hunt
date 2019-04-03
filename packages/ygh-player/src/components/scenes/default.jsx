@@ -5,7 +5,7 @@ import * as Object from "components/objects"
 
 const DefaultScene = ({ objects, items }) => {
   function withName(name) {
-    return objects.find(o => o.entity.name === name)
+    return objects.find(o => o.template.name === name)
   }
 
   return (
