@@ -51,9 +51,9 @@ const Slot = ({ slot }) => {
         state
           ? state.outgoingTransitions
               .flatMap(({ requiredActions }) =>
-                requiredActions.map(({ payload }) => payload.requiredInput)
+                requiredActions.flatMap(({ payload }) => payload.requiredInput)
               )
-              .filter(({ field }) => field !== null)
+              .filter(requiredInput => requiredInput && requiredInput.field)
               .map(({ field }) =>
                 entity.fields.find(({ id }) => id === field.id)
               )
