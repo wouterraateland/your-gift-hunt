@@ -43,7 +43,7 @@ const acceptDrop = ({
 
       const handleDrop = async () =>
         onDropActionPerformed(
-          await dispatchAction(createUseAction(instance.id, data.id))
+          await dispatchAction(createUseAction(instance.state, data.state))
         )
 
       element.current.setAttribute("can-drop", true)

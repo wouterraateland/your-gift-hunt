@@ -1,9 +1,9 @@
 import { INPUT, USE } from "./types"
 
-export const createInputAction = (instanceId, inputValueMap = {}) => ({
+export const createInputAction = (source, inputValueMap = {}) => ({
   type: INPUT,
   payload: {
-    instanceId,
+    source,
     inputValues: Object.entries(inputValueMap).map(([key, value]) => ({
       key,
       value: JSON.stringify(value)
@@ -11,7 +11,7 @@ export const createInputAction = (instanceId, inputValueMap = {}) => ({
   }
 })
 
-export const createUseAction = (instanceId, itemId) => ({
+export const createUseAction = (destination, source) => ({
   type: USE,
-  payload: { instanceId, itemId }
+  payload: { source, destination }
 })
