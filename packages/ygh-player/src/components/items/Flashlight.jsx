@@ -34,7 +34,7 @@ export default props => {
     instance: props,
     items: [
       {
-        item: { entityName: "Battery", stateName: "default" },
+        item: { entityName: "Battery", stateName: null },
         target: { entityName: "Flashlight", stateName: "empty" }
       }
     ]

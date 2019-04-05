@@ -1,135 +1,54 @@
-import { useState, useRef, useEffect } from "react"
-import { createInputAction } from "actions/creators"
+import { useCallback } from "react"
+import useYghPlayer from "ygh-player/hook"
 import useStore, { localStorageStoreCreator } from "./useStore"
 
-import fetchLambda from "utils/api"
-
-const useGameState = (creatorSlug, gameSlug) => {
+const useGameState = gameIdentifier => {
+  const yghPlayer = useYghPlayer(gameIdentifier)
   const { read, write } = useStore(
-    localStorageStoreCreator({ name: `${creatorSlug}/${gameSlug}` })
+    localStorageStoreCreator({
+      name: `${gameIdentifier.creatorSlug}/${gameIdentifier.gameSlug}`
+    })
   )
 
-  const gameId = useRef(null)
-  const playerToken = useRef(read("playerToken"))
-  const [isLoading, setIsLoading] = useState(true)
-  const [instances, setInstances] = useState([])
-
-  async function load() {
-    gameId.current = await fetchLambda("getGameIdBySlug", {
-      method: "POST",
-      body: { creatorSlug, gameSlug }
-    })
-
-    const isPlayerTokenValid = await fetchLambda("isPlayerTokenValid", {
-      method: "POST",
-      body: { playerToken: playerToken.current }
-    })
-
-    if (!isPlayerTokenValid) {
-      try {
-        playerToken.current = await fetchLambda("createPlayerToken", {
-          method: "POST",
-          body: { gameId: gameId.current }
-        })
-        write("playerToken", playerToken.current)
-      } catch (e) {
-        console.error(e)
-      }
-    }
-
-    try {
-      const instances = await fetchLambda("getGameState", {
-        method: "POST",
-        body: { playerToken: playerToken.current }
-      })
-      setInstances(instances)
-
-      // const triggerInstances = instances.filter(instance => instance.isTrigger)
-      //
-      // for (let instance of triggerInstances) {
-      //   if (instance.state !== null) {
-      //     await dispatchAction(createInputAction(instance.id))
-      //   }
-      // }
-      setIsLoading(false)
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
-  async function dispatchAction(action) {
-    try {
-      const nextState = await fetchLambda("dispatchAction", {
-        method: "POST",
-        body: {
-          playerToken: playerToken.current,
-          action
-        }
-      })
-      return updateState(nextState)
-    } catch (err) {
-      console.error(err)
-    }
-
-    return null
-  }
-
-  function pickupItem(instanceId) {
+  const pickupItem = useCallback(entityId =>
     write("inventoryItems", inventoryItems => [
       ...(inventoryItems || []),
-      instanceId
+      entityId
     ])
+  )
+
+  if (yghPlayer.isLoading || !yghPlayer.isAuthenticated) {
+    return yghPlayer
   }
 
-  function updateState(updatedInstances) {
-    setInstances(instances =>
-      instances
-        .filter(
-          instance =>
-            !updatedInstances.some(
-              newInstance => newInstance.id === instance.id
-            )
-        )
-        .concat(updatedInstances)
-    )
-    return updatedInstances
-  }
-
-  useEffect(() => {
-    load()
-  }, [])
-
-  const activeInstances = instances.filter(({ state }) => state !== null)
+  const presentEntities = yghPlayer.gameState.entities.filter(
+    ({ state }) => state !== null
+  )
 
   return {
-    isLoading,
-    dispatchAction,
+    ...yghPlayer,
     pickupItem,
-    instances: {
-      all: activeInstances,
-      items: activeInstances.filter(instance => instance.isItem),
-      inventoryItems: activeInstances.filter(
-        instance =>
-          instance.isItem && read("inventoryItems", []).includes(instance.id)
+    entities: {
+      all: presentEntities,
+      items: presentEntities.filter(entity => entity.isItem),
+      inventoryItems: presentEntities.filter(
+        entity =>
+          entity.isItem && read("inventoryItems", []).includes(entity.id)
       ),
-      nonInventoryItems: activeInstances.filter(
-        instance =>
-          instance.isItem && !read("inventoryItems", []).includes(instance.id)
+      nonInventoryItems: presentEntities.filter(
+        entity =>
+          entity.isItem && !read("inventoryItems", []).includes(entity.id)
       ),
-      objects: activeInstances.filter(instance => instance.isObject),
-      triggers: activeInstances.filter(instance => instance.isTrigger),
-      questions: activeInstances.filter(
-        instance => instance.template.name === "Question"
+      objects: presentEntities.filter(entity => entity.isObject),
+      triggers: presentEntities.filter(entity => entity.isTrigger),
+      questions: presentEntities.filter(
+        entity => entity.template.name === "Question"
       ),
-      codes: activeInstances.filter(
-        instance => instance.template.name === "Code"
+      codes: presentEntities.filter(entity => entity.template.name === "Code"),
+      inputs: presentEntities.filter(
+        entity => entity.template.name === "Input"
       ),
-      inputs: activeInstances.filter(
-        instance => instance.template.name === "Input"
-      ),
-      notes: activeInstances.filter(
-        instance => instance.template.name === "Note"
-      )
+      notes: presentEntities.filter(entity => entity.template.name === "Note")
     }
   }
 }

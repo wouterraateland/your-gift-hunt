@@ -1,57 +1,101 @@
-import styled, { css } from 'styled-components'
-import { darken, opacify } from 'polished'
+import styled, { css } from "styled-components"
+import { opacify } from "polished"
+import _ from "utils"
 
 const Button = styled.button`
   cursor: pointer;
 
+  position: relative;
+
   display: inline-block;
-  padding: .85em .7em;
-  border-radius: ${props => props.theme.borderRadius}px;
+  padding: ${props => {
+    switch (props.size) {
+      case "small":
+        return "0.5em 0.4em"
+      default:
+        return "0.85em 0.7em"
+    }
+  }};
+  border-radius: ${props => props.theme.borderRadius};
 
   line-height: 1;
+  text-align: center;
   vertical-align: middle;
   font-weight: bold;
 
-  transition: background-color .2s ease-out;
+  transition: background-color 0.2s ease-out;
 
   ${props => {
-    let color;
+    let color
+    let secondaryColor = props.theme.color.emphasis
 
     switch (props.color) {
-      case 'accent': color = darken(.1, props.theme.color.accent); break;
-      case 'error': color = props.theme.color.error; break;
-      case 'warning': color = props.theme.color.warning; break;
-      case 'success': color = props.theme.color.success; break;
-      default: color = props.theme.color.emphasis; break;
+      case "accent":
+        color = _.darken(0.05)(props.theme.color.accent)
+        break
+      case "error":
+        color = props.theme.color.error
+        secondaryColor = "#fff"
+        break
+      case "warning":
+        color = props.theme.color.warning
+        break
+      case "success":
+        color = props.theme.color.success
+        break
+      default:
+        color = props.theme.color.emphasis
+        break
     }
 
-    return props.importance === 'primary'
-      ? css`
+    switch (props.importance) {
+      case "primary":
+        return css`
           border: none;
 
           background-color: ${color};
-          color: ${props.theme.color.emphasis};
+          color: ${secondaryColor};
 
           &:hover {
-            background-color: ${opacify(.3, darken(.1, color))};
+            background-color: ${opacify(0.3, _.darken(0.05)(color))};
           }
         `
-      : css`
-          border: .1em solid;
+      case "tertiary":
+        return css`
+          border: none;
 
           background-color: #fff;
           color: ${color};
 
           &:hover {
-            background-color: ${darken(.1, '#fff')};
+            background-color: ${_.darken(0.05)("#fff")};
           }
         `
+      default:
+        return css`
+          border: 0.1em solid;
+
+          background-color: #fff;
+          color: ${color};
+
+          &:hover {
+            background-color: ${_.darken(0.05)("#fff")};
+          }
+        `
+    }
   }}
 
-  ${props => props.block && css`
-    display: block;
-    width: 100%;
-  `}
+  ${_.blockStyles}
+
+  &:disabled {
+    pointer-events: none;
+    filter: grayscale(50%);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 0.1em #39f;
+  }
 `
 
 export default Button

@@ -12,7 +12,7 @@ const EnhancedPlantPot = props => {
     instance: props,
     items: [
       {
-        item: { entityName: "Seeds", stateName: "default" },
+        item: { entityName: "Seeds", stateName: null },
         target: { entityName: "Plant pot", stateName: "empty" }
       },
       {

@@ -1,24 +1,104 @@
-import styled from 'styled-components'
+import React, { useEffect, useRef } from "react"
+import styled, { css } from "styled-components"
+
+export const PaperTitle = styled.h2`
+  margin: 0 0 1em;
+  line-height: 1;
+`
 
 export const PaperSection = styled.div`
   padding: 1em;
 
+  & + & {
+    border-top: 1px solid #0002;
+  }
+
   &::after {
-    content: '';
+    content: "";
     display: block;
     clear: both;
   }
 `
 
-export const Paper = styled.div`
+export const PaperContainer = styled.div`
   position: relative;
+  margin: 0;
+
+  & + & {
+    margin-top: 1em;
+  }
 
   border-radius: ${props => props.theme.borderRadius};
-  box-shadow: 0 .5em 1.5em -.5em #0004;
+  box-shadow: ${props => props.theme.boxShadow.medium};
 
   background: #fff;
+
+  ${props =>
+    props.fullWidthOnMobile &&
+    css`
+      @media (max-width: 25em) {
+        margin-left: -2em;
+        margin-right: -2em;
+        border-radius: 0;
+      }
+    `}
 `
 
+export const ExpandingPaperContainer = styled(PaperContainer)`
+  ${PaperSection} {
+    transition: opacity 0.2s ease-out;
+  }
+
+  ${props =>
+    !props.isExpanded &&
+    css`
+      overflow: hidden;
+
+      ${PaperSection} {
+        opacity: 0;
+      }
+    `}
+
+  transition: max-height 0.2s ease-out;
+`
+
+const ExpandingPaper = ({ isExpanded, ...otherProps }) => {
+  const ref = useRef(null)
+
+  useEffect(
+    () => {
+      const el = ref.current
+      if (el) {
+        el.style.maxHeight = "0"
+        if (isExpanded) {
+          const offset = el.offsetHeight
+          el.style.maxHeight = `${Math.max(offset, el.scrollHeight)}px`
+        }
+      }
+    },
+    [isExpanded, otherProps.children]
+  )
+
+  return (
+    <ExpandingPaperContainer
+      ref={ref}
+      isExpanded={isExpanded}
+      {...otherProps}
+    />
+  )
+}
+
+const Paper = ({ expanding, ...otherProps }) =>
+  expanding ? (
+    <ExpandingPaper {...otherProps} />
+  ) : (
+    <PaperContainer {...otherProps} />
+  )
+
+Paper.Container = PaperContainer
 Paper.Section = PaperSection
+Paper.Title = ({ size, ...otherProps }) => (
+  <PaperTitle as={`h${size}`} {...otherProps} />
+)
 
 export default Paper

@@ -20,7 +20,7 @@ const EnhancedSafeWithKeyhole = ({ instanceId, ...props }) => {
     instance,
     items: [
       {
-        item: { entityName: "Safe key", stateName: "default" },
+        item: { entityName: "Safe key", stateName: null },
         target: { entityName: "Safe with keyhole", stateName: "locked" }
       }
     ],

@@ -1,24 +1,31 @@
-import 'typeface-playfair-display'
-import 'typeface-montserrat'
+import "typeface-playfair-display"
+import "typeface-montserrat"
 
-import React from 'react'
-import { createGlobalStyle, ThemeProvider } from 'styled-components'
-import { opacify, transparentize } from 'polished'
+import React from "react"
+import { createGlobalStyle, ThemeProvider } from "styled-components"
+import { opacify, transparentize } from "polished"
 
 const theme = {
   color: {
-    text:       '#0009',
-    emphasis:   '#000d',
-    primary:    '#3f51b5',
-    accent:     '#ffd65a',
-    error:      '#d34d4e',
-    warning:    '#f7a600',
-    success:    '#41ac57',
+    text: "#0009",
+    emphasis: "#000d",
+    primary: "#3f51b5",
+    accent: "#ffd65a",
+    error: "#d34d4e",
+    warning: "#f7a600",
+    success: "#41ac57"
   },
-  borderRadius: 0,
+  borderRadius: "0.25em",
+  boxShadow: {
+    medium: "0 0.5rem 1.5rem -.5rem #0004"
+  },
   columns: {
     count: 12,
-    gap: '2rem',
+    gap: "0.5em"
+  },
+  font: {
+    copy: "Montserrat, sans-serif",
+    heading: '"Playfair Display", serif'
   }
 }
 
@@ -69,20 +76,23 @@ export const GlobalStyles = createGlobalStyle`
   hr {
     clear: both;
     height: .1em;
-    background: linear-gradient(90deg, transparent, ${transparentize(.5, theme.color.text)}, transparent);
+    background: linear-gradient(90deg, transparent, ${transparentize(
+      0.5,
+      theme.color.text
+    )}, transparent);
   }
 
   a {
     display: inline-block;
 
-    text-decoration-color: ${transparentize(.5, theme.color.text)};
+    text-decoration-color: ${transparentize(0.5, theme.color.text)};
 
     color: ${theme.color.text};
 
     transition: color .2s ease-out;
 
     &:hover {
-      color: ${opacify(.3, theme.color.text)};
+      color: ${opacify(0.3, theme.color.text)};
     }
   }
 
@@ -91,10 +101,11 @@ export const GlobalStyles = createGlobalStyle`
   }
 `
 
-export default ({ children }) =>
+export default ({ children }) => (
   <ThemeProvider theme={theme}>
     <>
       <GlobalStyles />
       {children}
     </>
   </ThemeProvider>
+)

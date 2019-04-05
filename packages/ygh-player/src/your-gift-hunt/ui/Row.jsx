@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
 const Row = styled.div`
   margin-left: -${props => props.theme.columns.gap};
@@ -6,8 +6,8 @@ const Row = styled.div`
 
   display: flex;
   flex-wrap: wrap;
-  flex-direction: ${props => props.rtl ? 'row-reverse' : 'row'};
-  align-items:  ${props => props.vAlign === 'top' ? 'stretch' : 'center'};
+  flex-direction: ${props => (props.rtl ? "row-reverse" : "row")};
+  align-items: ${props => (props.vAlign === "top" ? "stretch" : "center")};
 `
 
 export default Row
