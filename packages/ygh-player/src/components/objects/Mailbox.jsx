@@ -10,7 +10,7 @@ import MailboxScreen from "components/screens/Mailbox"
 const EnhancedMailbox = props => {
   const { popup } = useContext(ScreenContext)
   const {
-    instances: { notes }
+    entities: { notes }
   } = useContext(GameContext)
 
   return (

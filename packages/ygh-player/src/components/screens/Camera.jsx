@@ -7,7 +7,7 @@ import { Camera } from "your-gift-hunt/screens"
 export default props => {
   const {
     dispatchAction,
-    instances: { codes }
+    entities: { codes }
   } = useContext(GameContext)
 
   return (

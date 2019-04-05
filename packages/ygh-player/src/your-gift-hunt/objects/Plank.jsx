@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import { darken } from 'utils/colors'
+import styled from "styled-components"
+import { darken } from "utils/colors"
 
 export const Plank = styled.div`
   &::before {
@@ -39,18 +39,18 @@ export const Plank = styled.div`
   }
 
   &:nth-child(5n + 2)::before {
-    background-color: ${props => darken(-.02, props.baseColor)};
+    background-color: ${props => darken(-0.02)(props.baseColor)};
   }
   &:nth-child(7n + 1)::before,
   &:nth-child(7n + 5)::before {
-    background-color: ${props => darken(.02, props.baseColor)};
+    background-color: ${props => darken(0.02)(props.baseColor)};
   }
 }
 `
-Plank.displayName = 'Plank'
+Plank.displayName = "Plank"
 
 Plank.defaultProps = {
-  baseColor: '#b38d5c'
+  baseColor: "#b38d5c"
 }
 
 export default Plank

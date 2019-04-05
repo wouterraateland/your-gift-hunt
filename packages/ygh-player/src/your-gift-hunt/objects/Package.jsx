@@ -14,8 +14,8 @@ const Bottom = styled(PhysicalObject.Part)`
   border-radius: 0.1em;
 
   background: radial-gradient(
-    ${_.darken(0.1, "#b38d5c")},
-    ${_.darken(0.15, "#b38d5c")}
+    ${_.darken(0.1)("#b38d5c")},
+    ${_.darken(0.15)("#b38d5c")}
   );
 `
 
@@ -57,7 +57,7 @@ const Flap = styled(PhysicalObject.Part)`
   ${({ isOpen }) => css`
     ${isOpen
       ? css`
-          background-color: ${_.darken(0.05, "#b38d5c")};
+          background-color: ${_.darken(0.05)("#b38d5c")};
 
           &:nth-child(3),
           &:nth-child(4) {
@@ -76,7 +76,7 @@ const Flap = styled(PhysicalObject.Part)`
 
           &:nth-child(5),
           &:nth-child(6) {
-            background-color: ${_.darken(-0.05, "#b38d5c")};
+            background-color: ${_.darken(-0.05)("#b38d5c")};
             transition-delay: 0.6s;
           }
         `}

@@ -8,7 +8,7 @@ import { Note } from "your-gift-hunt/screens"
 export default ({ instanceId, ...props }) => {
   const {
     dispatchAction,
-    instances: { all }
+    entities: { all }
   } = useContext(GameContext)
   const instance = all.find(instance => instance.id === instanceId)
 

@@ -8,7 +8,7 @@ import { Computer } from "your-gift-hunt/screens"
 export default props => {
   const {
     dispatchAction,
-    instances: { questions, inputs }
+    entities: { questions, inputs }
   } = useContext(GameContext)
 
   return (

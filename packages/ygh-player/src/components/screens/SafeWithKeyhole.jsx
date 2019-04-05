@@ -9,7 +9,7 @@ import { SafeWithKeyhole } from "your-gift-hunt/screens"
 const EnhancedSafeWithKeyhole = ({ instanceId, ...props }) => {
   const keyhole = useRef(null)
   const {
-    instances: { objects },
+    entities: { objects },
     pickupItem
   } = useContext(GameContext)
 

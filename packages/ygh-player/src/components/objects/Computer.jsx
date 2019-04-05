@@ -10,7 +10,7 @@ import ComputerScreen from "components/screens/Computer"
 const EnhancedComputer = props => {
   const { popup } = useContext(ScreenContext)
   const {
-    instances: { questions, inputs }
+    entities: { questions, inputs }
   } = useContext(GameContext)
 
   return (
