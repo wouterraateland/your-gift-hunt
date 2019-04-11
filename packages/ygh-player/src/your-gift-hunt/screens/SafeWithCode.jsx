@@ -75,7 +75,7 @@ const SafeWithCodeScreen = forwardRef(
     const handleOnSubmit = useCallback(
       event => {
         event.preventDefault()
-        dispatchInputAction("code", code)
+        dispatchInputAction("code", parseInt(code, 10))
       },
       [code, dispatchInputAction]
     )

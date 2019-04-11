@@ -95,6 +95,7 @@ const Button = styled.div`
   position: absolute;
   left: 45%;
   top: 50%;
+  z-index: 1;
 
   width: 0.3em;
   height: 0.2em;
