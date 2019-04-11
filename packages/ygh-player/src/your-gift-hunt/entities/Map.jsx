@@ -54,13 +54,13 @@ const StyledMap = styled(Entity)`
 StyledMap.displayName = "Map"
 
 const StatefulMap = forwardRef(
-  ({ state, dispatchInputAction, informationSlots, ...props }, ref) => {
+  ({ state, dispatchInputAction, ...props }, ref) => {
     const [isTurned, setTurned] = useState(false)
     const isClean = state === "Clean"
     const isComplete = state === "Dusty" || isClean
 
     const cleanliness = _.getInputValue("part_cleaned")(props) || 0
-    const code = informationSlots.find(({ name }) => name === "Code").value
+    const code = _.getInformationSlotValue("Code")(props) || ""
 
     const onClick = useCallback(() => {
       switch (state) {
