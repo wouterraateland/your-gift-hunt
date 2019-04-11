@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import styled, { css } from "styled-components"
 import _ from "utils"
 
@@ -41,14 +41,14 @@ export const Note = styled.div`
   }
 `
 
-const NoteScreen = ({ isVisible, instance, onReadNote, close }) => {
-  const isNew = _.hasState("unread")(instance)
-  const text = _.getFieldValue("Text")(instance)
+const NoteScreen = ({ isVisible, entity, onReadNote, close }) => {
+  const isNew = _.hasState("unread")(entity)
+  const text = _.getFieldValue("Text")(entity)
 
-  const exit = () => {
+  const exit = useCallback(() => {
     close && close()
-    onReadNote && onReadNote(instance.id)
-  }
+    onReadNote && onReadNote(entity.id)
+  }, [entity.id, close, onReadNote])
 
   return (
     <Screen isVisible={isVisible} onClick={exit}>

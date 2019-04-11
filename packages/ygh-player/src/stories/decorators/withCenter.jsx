@@ -1,37 +1,32 @@
-import React from 'react'
-import styled, { css, createGlobalStyle } from 'styled-components'
+import React from "react"
+import styled, { css, createGlobalStyle } from "styled-components"
 
 const Center = styled.div`
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transform: translate(-50%, -50%);
 
-  ${props => props.isItem && css`
-    &::before {
-      content: '';
+  ${props =>
+    props.isItem &&
+    css`
+      &::before {
+        content: "";
 
-      position: absolute;
-      left: 0; top: 0;
-      right: 0; bottom: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
 
-      margin: auto;
+        width: 2em;
+        height: 2em;
 
-      width: 2em;
-      height: 2em;
-
-      background-color: #0001;
-    }
-  `}
+        background-color: #0001;
+        transform: translate(-50%, -50%);
+      }
+    `}
 `
 
-const withCenter = isItem => story => (
-  <Center isItem={isItem}>
-    {story()}
-  </Center>
-)
+const withCenter = isItem => story => <Center isItem={isItem}>{story()}</Center>
 
 export default withCenter

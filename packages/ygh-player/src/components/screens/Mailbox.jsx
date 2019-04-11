@@ -1,23 +1,20 @@
 import React, { useContext } from "react"
-import { createInputAction } from "actions/creators"
+import { createInputAction } from "ygh-player"
 
 import GameContext from "contexts/Game"
 
 import { Mailbox } from "your-gift-hunt/screens"
 
 export default props => {
-  const {
-    dispatchAction,
-    entities: { notes }
-  } = useContext(GameContext)
+  const { dispatchAction, getEntitiesByTemplateName } = useContext(GameContext)
 
   return (
     <Mailbox
       {...props}
-      onReadNote={instanceId => {
-        dispatchAction(createInputAction(instanceId))
+      onReadNote={entityId => {
+        dispatchAction(createInputAction(entityId))
       }}
-      instances={[...notes]}
+      entities={[...getEntitiesByTemplateName("Note")]}
     />
   )
 }

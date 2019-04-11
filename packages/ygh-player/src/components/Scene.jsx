@@ -1,26 +1,32 @@
-import styled, { css } from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-const Scene = styled.div`
-  position: absolute;
-  left: calc(50% - ${props => props.left}em);
-  top: calc(50% - 3.5em - ${props => props.top}em);
+import useWindowSize from "hooks/useWindowSize"
 
+const SceneOuter = styled.div`
+  position: relative;
+  overflow: hidden;
+
+  font-size: ${props => props.size}px;
   width: ${props => props.width}em;
   height: ${props => props.height}em;
-
-  transform: translate(-50%, -50%);
-
-  ${props => props.debug && css`
-    &::after {
-      content: '';
-      position: absolute;
-      left: ${props => props.left}em;
-      top: ${props => props.top}em;
-      width: 100%;
-      height: 100%;
-      background: #f129;
-    }
-  `}
+  border-radius: ${props => props.theme.borderRadius};
 `
 
-export default Scene
+const SceneInner = styled.div`
+  position: absolute;
+  left: ${props => -props.left}em;
+  top: ${props => -props.top}em;
+`
+
+export default ({ children, ...props }) => {
+  const { width, height } = useWindowSize()
+
+  const size = Math.max(12, width / props.width, height / props.height)
+
+  return (
+    <SceneOuter {...props} size={size}>
+      <SceneInner {...props}>{children}</SceneInner>
+    </SceneOuter>
+  )
+}

@@ -1,18 +1,21 @@
+import { Maybe } from "./functionals"
+
+export const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x)
+export const constant = x => () => x
 export const identity = x => x
 export const noop = () => {}
-export const constant = x => () => x
-
-export const mean = xs => xs.reduce((acc, x) => acc + x, 0) / xs.length
-
-export const angle = (p1, p2) => Math.atan2(p2.y - p1.y, p2.x - p1.x)
-
-export const dist = (p1, p2) =>
-  Math.sqrt(Math.pow(p2.y - p1.y, 2) + Math.pow(p2.x - p1.x, 2))
+export const iff = p => (f, g) => v => (p(v) ? f(v) : g(v))
+export const maybe = iff(Maybe.isNothing)
+export const or = (...fns) => x => fns.reduce((v, f) => v || f(x), false)
+export const and = (...fns) => x => fns.reduce((v, f) => v && f(x), true)
 
 export default {
+  compose,
+  constant,
   identity,
   noop,
-  mean,
-  angle,
-  dist
+  iff,
+  maybe,
+  or,
+  and
 }

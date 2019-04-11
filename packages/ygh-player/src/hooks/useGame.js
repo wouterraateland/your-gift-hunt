@@ -1,55 +1,53 @@
 import { useCallback } from "react"
-import useYghPlayer from "ygh-player/hook"
+import useYGHPlayer from "ygh-player/react-hook"
 import useStore, { localStorageStoreCreator } from "./useStore"
 
 const useGameState = gameIdentifier => {
-  const yghPlayer = useYghPlayer(gameIdentifier)
+  const yghPlayer = useYGHPlayer("super secret key", gameIdentifier)
   const { read, write } = useStore(
     localStorageStoreCreator({
       name: `${gameIdentifier.creatorSlug}/${gameIdentifier.gameSlug}`
     })
   )
 
-  const pickupItem = useCallback(entityId =>
+  const pickupEntity = useCallback(entityId =>
     write("inventoryItems", inventoryItems => [
       ...(inventoryItems || []),
       entityId
     ])
   )
 
+  const presentEntities = yghPlayer.gameState.entities
+    ? yghPlayer.gameState.entities.filter(({ state }) => state !== null)
+    : []
+
+  const getEntitiesByTemplateName = useCallback(
+    templateName =>
+      presentEntities.filter(({ template: { name } }) => name === templateName),
+    [presentEntities]
+  )
+  const getEntityById = useCallback(
+    id => presentEntities.find(entity => entity.id === id),
+    [presentEntities]
+  )
+
+  const isInInventory = useCallback(
+    entity =>
+      read("inventoryItems", []).includes(entity.id) &&
+      presentEntities.some(({ id }) => id === entity.id)
+  )
+
   if (yghPlayer.isLoading || !yghPlayer.isAuthenticated) {
     return yghPlayer
   }
 
-  const presentEntities = yghPlayer.gameState.entities.filter(
-    ({ state }) => state !== null
-  )
-
   return {
     ...yghPlayer,
-    pickupItem,
-    entities: {
-      all: presentEntities,
-      items: presentEntities.filter(entity => entity.isItem),
-      inventoryItems: presentEntities.filter(
-        entity =>
-          entity.isItem && read("inventoryItems", []).includes(entity.id)
-      ),
-      nonInventoryItems: presentEntities.filter(
-        entity =>
-          entity.isItem && !read("inventoryItems", []).includes(entity.id)
-      ),
-      objects: presentEntities.filter(entity => entity.isObject),
-      triggers: presentEntities.filter(entity => entity.isTrigger),
-      questions: presentEntities.filter(
-        entity => entity.template.name === "Question"
-      ),
-      codes: presentEntities.filter(entity => entity.template.name === "Code"),
-      inputs: presentEntities.filter(
-        entity => entity.template.name === "Input"
-      ),
-      notes: presentEntities.filter(entity => entity.template.name === "Note")
-    }
+    pickupEntity,
+    entities: presentEntities,
+    getEntitiesByTemplateName,
+    getEntityById,
+    isInInventory
   }
 }
 

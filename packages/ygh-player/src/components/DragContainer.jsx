@@ -1,26 +1,31 @@
-import React, { useContext } from 'react'
-import styled from 'styled-components'
+import React, { useCallback, useContext } from "react"
+import styled from "styled-components"
 
-import DragContext from 'contexts/Drag'
+import DragContext from "contexts/Drag"
 
 const StyledDragContainer = styled.div`
   transform: translate(0, 0);
+
+  & > * > * {
+    pointer-events: none;
+  }
 `
 
-const DragContainer = ({ data, ...props }) => {
+const DragContainer = ({ data, children }) => {
   const { setDragElement, setData } = useContext(DragContext)
 
-  function handleDragStart() {
-    setDragElement(props.children)
+  const handleDragStart = useCallback(() => {
+    setDragElement(children)
     setData(data)
-  }
+  }, [data, children])
 
   return (
     <StyledDragContainer
       onMouseDown={handleDragStart}
       onTouchStart={handleDragStart}
-      {...props}
-    />
+    >
+      {children}
+    </StyledDragContainer>
   )
 }
 

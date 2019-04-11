@@ -37,10 +37,13 @@
     "typeface-playfair-display": "^0.0.54"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^4.1.6",
-    "@storybook/addon-knobs": "^4.1.6",
-    "@storybook/addon-links": "^4.1.6",
-    "@storybook/react": "^4.2.0-alpha.11",
+    "@babel/core": "^7.4.3",
+    "@storybook/addon-actions": "^5.0.6",
+    "@storybook/addon-knobs": "^5.0.6",
+    "@storybook/addon-links": "^5.0.6",
+    "@storybook/react": "^5.0.6",
+    "babel-loader": "^8.0.5",
+    "emotion-theming": "^10.0.10",
     "why-did-you-update": "^0.2.0"
   }
 }

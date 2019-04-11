@@ -1,18 +1,17 @@
-import React, { useContext } from 'react'
+import React, { useContext } from "react"
+import GameContext from "contexts/Game"
 
-import GameContext from 'contexts/Game'
+import { GenericEntity } from "components/entities"
+import { Item as ItemScreen } from "your-gift-hunt/screens"
 
-import Item from 'components/items'
-import { Item as ItemScreen } from 'your-gift-hunt/screens'
-
-export default ({ instanceId, ...props }) => {
-  const { entities: { all } } = useContext(GameContext)
-  const instance = all.find(instance => instance.id === instanceId)
+export default ({ entityId, ...props }) => {
+  const { getEntityById } = useContext(GameContext)
+  const entity = getEntityById(entityId)
 
   return (
     <ItemScreen
-      instance={instance}
-      component={() => (<Item {...instance} />)}
+      entity={entity}
+      component={() => <GenericEntity {...entity} />}
       {...props}
     />
   )

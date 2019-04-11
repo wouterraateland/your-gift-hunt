@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import styled, { keyframes } from "styled-components"
 
 import _ from "utils"
@@ -128,32 +128,35 @@ const Prompt = ({ text, children }) => {
   )
 }
 
-const ComputerScreen = ({ isVisible, close, instances, onSubmitAnswer }) => {
+const ComputerScreen = ({ isVisible, close, entities, onSubmitAnswer }) => {
   const input = useRef(null)
-  const [instanceIndex, setInstanceIndex] = useState(-1)
+  const [entityIndex, setEntityIndex] = useState(-1)
   const [answer, setAnswer] = useState("")
+
+  const entity = entityIndex === -1 ? null : entities[entityIndex]
 
   useEffect(() => {
     input.current && input.current.focus()
   }, [])
 
-  function handleOnSubmit(event) {
-    event.preventDefault()
+  const handleOnSubmit = useCallback(
+    event => {
+      event.preventDefault()
 
-    onSubmitAnswer && onSubmitAnswer(instance.id, answer)
-  }
+      onSubmitAnswer && onSubmitAnswer(entity.id, answer)
+    },
+    [entity, answer]
+  )
 
-  function goToInstance(index) {
+  const goToEntity = useCallback(index => {
     setAnswer("")
-    setInstanceIndex(index)
-  }
+    setEntityIndex(index)
+  }, [])
 
-  const instance = instanceIndex === -1 ? null : instances[instanceIndex]
-
-  const isAnswered =
-    _.hasState("answered")(instance) || _.hasState("filled")(instance)
-  const isUnanswered =
-    _.hasState("unanswered")(instance) || _.hasState("empty")(instance)
+  const isAnswered = _.or(_.hasState("answered"), _.hasState("filled"))(entity)
+  const isUnanswered = _.or(_.hasState("unanswered"), _.hasState("empty"))(
+    entity
+  )
 
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>
@@ -172,32 +175,30 @@ const ComputerScreen = ({ isVisible, close, instances, onSubmitAnswer }) => {
             )}
             <Prompt
               text={
-                instance === null
-                  ? instances.some(
-                      instance =>
-                        _.hasState("unanswered")(instance) ||
-                        _.hasState("empty")(instance)
+                entity === null
+                  ? entities.some(
+                      entity =>
+                        _.hasState("unanswered")(entity) ||
+                        _.hasState("empty")(entity)
                     )
                     ? "New questions available."
                     : "No new questions available."
-                  : _.getFieldValue("Question")(instance) ||
-                    _.getFieldValue("Prompt")(instance)
+                  : _.getFieldValue("Question")(entity) ||
+                    _.getFieldValue("Prompt")(entity)
               }
             >
               <br />
               <br />
-              {instance === null ? (
-                instances.length > 0 ? (
+              {entity === null ? (
+                entities.length > 0 ? (
                   <span
                     onClick={() => {
-                      const firstUnreadIndex = instances.findIndex(
-                        instance =>
-                          _.hasState("unanswered")(instance) ||
-                          _.hasState("empty")(instance)
+                      const firstUnreadIndex = entities.findIndex(
+                        _.or(_.hasState("unanswered"), _.hasState("empty"))
                       )
 
-                      goToInstance(
-                        firstUnreadIndex === -1 && instances.length
+                      goToEntity(
+                        firstUnreadIndex === -1 && entities.length
                           ? 0
                           : firstUnreadIndex
                       )
@@ -209,23 +210,21 @@ const ComputerScreen = ({ isVisible, close, instances, onSubmitAnswer }) => {
               ) : (
                 <>
                   <AnswerMarker>&gt;</AnswerMarker>{" "}
-                  {isAnswered ? _.getInputValue("answer")(instance) : answer}
+                  {isAnswered ? _.getInputValue("answer")(entity) : answer}
                   {isUnanswered && <Cursor />}{" "}
                   {isAnswered && <SuccessMarker>✔</SuccessMarker>}
                   {isUnanswered &&
-                    _.getInputValue("answer")(instance) === answer && (
+                    _.getInputValue("answer")(entity) === answer && (
                       <ErrorMarker>✘</ErrorMarker>
                     )}
                   <br />
                   <br />
                   <br />
                   <br />
-                  <span onClick={() => goToInstance(instanceIndex - 1)}>◀</span>
+                  <span onClick={() => goToEntity(entityIndex - 1)}>◀</span>
                   {"  "}
-                  {instanceIndex < instances.length - 1 && (
-                    <span onClick={() => goToInstance(instanceIndex + 1)}>
-                      ▶
-                    </span>
+                  {entityIndex < entities.length - 1 && (
+                    <span onClick={() => goToEntity(entityIndex + 1)}>▶</span>
                   )}
                 </>
               )}

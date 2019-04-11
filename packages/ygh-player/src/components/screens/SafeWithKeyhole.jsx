@@ -1,37 +1,21 @@
-import React, { useRef, useContext } from "react"
-
-import acceptDrop from "hooks/acceptDrop"
+import React, { useContext } from "react"
+import useEntityBehaviour from "hooks/useEntityBehaviour"
+import { SafeWithKeyhole } from "your-gift-hunt/screens"
 
 import GameContext from "contexts/Game"
 
-import { SafeWithKeyhole } from "your-gift-hunt/screens"
+const EnhancedSafeWithKeyhole = ({ entityId, ...props }) => {
+  const { getEntityById, pickupEntity } = useContext(GameContext)
+  const entity = getEntityById(entityId)
 
-const EnhancedSafeWithKeyhole = ({ instanceId, ...props }) => {
-  const keyhole = useRef(null)
-  const {
-    entities: { objects },
-    pickupItem
-  } = useContext(GameContext)
-
-  const instance = objects.find(instance => instance.id === instanceId)
-
-  acceptDrop({
-    element: keyhole,
-    instance,
-    items: [
-      {
-        item: { entityName: "Safe key", stateName: null },
-        target: { entityName: "Safe with keyhole", stateName: "locked" }
-      }
-    ],
-    onDropActionPerformed: updatedInstances => {
-      updatedInstances
-        .filter(({ entity: { isItem }, state }) => isItem && state)
-        .map(({ id }) => pickupItem(id))
-    }
+  const entityBehaviour = useEntityBehaviour(entity, {
+    onDrop: gameState =>
+      gameState.entities
+        .filter(({ isItem, state }) => isItem && state)
+        .map(({ id }) => pickupEntity(id))
   })
 
-  return <SafeWithKeyhole {...props} instance={instance} ref={{ keyhole }} />
+  return <SafeWithKeyhole {...props} entity={entity} {...entityBehaviour} />
 }
 
 export default EnhancedSafeWithKeyhole

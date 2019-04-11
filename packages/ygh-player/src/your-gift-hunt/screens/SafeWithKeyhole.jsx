@@ -81,10 +81,10 @@ const Keyhole = styled.div`
     background-color: #face32;
 
     transform: translate(-50%, -50%)
-      rotate(${props => (props.unlocked ? 0 : 90)}deg);
+      rotate(${props => (props.isUnlocked ? 0 : 90)}deg);
 
-    animation: ${props => (props.unlocked ? keyTurn1 : keyTurn2)} 0.5s
-      ${props => (props.unlocked ? 0 : 1)}s ease-in-out forwards;
+    animation: ${props => (props.isUnlocked ? keyTurn1 : keyTurn2)} 0.5s
+      ${props => (props.isUnlocked ? 0 : 1)}s ease-in-out forwards;
   }
 `
 
@@ -162,23 +162,22 @@ const Bars = styled.div`
     linear-gradient(135deg, #0000 47%, #444 47%, #999 49%, #666 53%, #0000 53%),
     linear-gradient(255deg, #0000 47%, #555 47%, #999 50%, #555 53%, #0000 53%);
 
-  transform: rotate(${props => (props.unlocked ? 720 : 0)}deg);
+  transform: rotate(${props => (props.isUnlocked ? 720 : 0)}deg);
 
-  transition: transform 1s ${props => (props.unlocked ? 0.5 : 0)}s
+  transition: transform 1s ${props => (props.isUnlocked ? 0.5 : 0)}s
     cubic-bezier(0.3, 0, 0.3, 1);
 `
 
 const SafeWithKeyholeScreen = forwardRef(
-  ({ isVisible, instance, onWheelTurn, close }, refs) => {
-    const keyhole = refs ? refs.keyhole : null
-    const unlocked = _.hasState("unlocked")(instance)
+  ({ isVisible, entity, onWheelTurn, close }, ref) => {
+    const isUnlocked = _.hasState("unlocked")(entity)
 
     return (
       <Screen isVisible={isVisible} onClick={close} centerContent>
         <Safe isVisible={isVisible}>
-          <Keyhole unlocked={unlocked} ref={keyhole} />
+          <Keyhole isUnlocked={isUnlocked} ref={ref} />
           <Wheel onClick={onWheelTurn}>
-            <Bars unlocked={unlocked} />
+            <Bars isUnlocked={isUnlocked} />
           </Wheel>
         </Safe>
       </Screen>

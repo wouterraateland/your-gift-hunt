@@ -1,23 +1,20 @@
 import React, { useContext } from "react"
-import { createInputAction } from "actions/creators"
+import { createInputAction } from "ygh-player"
 
 import GameContext from "contexts/Game"
 
 import { Note } from "your-gift-hunt/screens"
 
-export default ({ instanceId, ...props }) => {
-  const {
-    dispatchAction,
-    entities: { all }
-  } = useContext(GameContext)
-  const instance = all.find(instance => instance.id === instanceId)
+export default ({ entityId, ...props }) => {
+  const { dispatchAction, getEntityById } = useContext(GameContext)
+  const entity = getEntityById(entityId)
 
   return (
     <Note
       {...props}
-      instance={instance}
-      onReadNote={instanceId => {
-        dispatchAction(createInputAction(instanceId))
+      entity={entity}
+      onReadNote={entityId => {
+        dispatchAction(createInputAction(entityId))
       }}
     />
   )

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useCallback, useState } from "react"
 import styled, { keyframes } from "styled-components"
 import _ from "utils"
 
@@ -216,62 +216,61 @@ const MailNavigation = styled.div`
   }
 `
 
-const MailboxScreen = ({ isVisible, onReadNote, instances, close }) => {
-  const [instanceIndex, setInstanceIndex] = useState(-1)
+const MailboxScreen = ({ isVisible, onReadNote, entities, close }) => {
+  const [entityIndex, setEntityIndex] = useState(-1)
 
-  function readNote() {
-    if (instanceIndex !== -1) {
-      onReadNote(instances[instanceIndex].id)
+  const readNote = useCallback(() => {
+    if (entityIndex !== -1) {
+      onReadNote(entities[entityIndex].id)
     }
-  }
+  }, [entities, entityIndex, onReadNote])
 
-  function goToNote(i) {
-    readNote()
-    setInstanceIndex(i)
-  }
+  const goToNote = useCallback(
+    i => {
+      readNote()
+      setEntityIndex(i)
+    },
+    [entities, entityIndex, onReadNote]
+  )
 
-  function exit() {
+  const exit = useCallback(() => {
     readNote()
     close()
-  }
+  }, [entities, entityIndex, onReadNote])
 
-  const instance = instanceIndex === -1 ? null : instances[instanceIndex]
+  const entity = entityIndex === -1 ? null : entities[entityIndex]
 
   return (
     <Screen isVisible={isVisible} onClick={exit} centerContent>
       <Mailbox
         isVisible={isVisible}
         onClick={() => {
-          const firstUnreadIndex = instances.findIndex(_.hasState("unread"))
-          setInstanceIndex(
-            firstUnreadIndex === -1 && instances.length ? 0 : firstUnreadIndex
+          const firstUnreadIndex = entities.findIndex(_.hasState("unread"))
+          setEntityIndex(
+            firstUnreadIndex === -1 && entities.length ? 0 : firstUnreadIndex
           )
         }}
       >
-        {instances.slice(0, 5).map((_, i) => (
+        {entities.slice(0, 5).map((_, i) => (
           <Letter key={i} />
         ))}
         <Pole />
         <Flag />
       </Mailbox>
-      {instance !== null && (
+      {entity !== null && (
         <MailView>
           <MailNavigation>
             <Float.Left>
-              <span onClick={() => goToNote(instanceIndex - 1)}>Previous</span>
+              <span onClick={() => goToNote(entityIndex - 1)}>Previous</span>
             </Float.Left>
-            {instanceIndex < instances.length - 1 && (
+            {entityIndex < entities.length - 1 && (
               <Float.Right>
-                <span onClick={() => goToNote(instanceIndex + 1)}>Next</span>
+                <span onClick={() => goToNote(entityIndex + 1)}>Next</span>
               </Float.Right>
             )}
           </MailNavigation>
-          <Note
-            isVisible
-            instance={instance}
-            isNew={_.hasState("unread")(instance)}
-          >
-            <p>{_.getFieldValue("Text")(instance)}</p>
+          <Note isVisible entity={entity} isNew={_.hasState("unread")(entity)}>
+            <p>{_.getFieldValue("Text")(entity)}</p>
           </Note>
         </MailView>
       )}

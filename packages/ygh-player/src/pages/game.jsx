@@ -6,7 +6,7 @@ import { ScreenProvider } from "contexts/Screen"
 
 import Theme from "containers/Theme"
 
-import { Loader } from "your-gift-hunt/ui"
+import { Loader, FullHeight } from "your-gift-hunt/ui"
 import Game from "components/Game"
 import UnauthenticatedPage from "./unauthenticated"
 
@@ -19,14 +19,16 @@ const PlayableGame = () => (
 )
 
 const GamePageInner = () => {
-  const { isLoading, isAuthenticated } = useContext(GameContext)
+  const { isLoading, isAuthenticated, game } = useContext(GameContext)
 
-  return isLoading ? (
-    <Loader />
-  ) : isAuthenticated ? (
+  return isAuthenticated && !isLoading ? (
     <PlayableGame />
-  ) : (
+  ) : game && game.privacy === "PRIVACY" && !isAuthenticated ? (
     <UnauthenticatedPage />
+  ) : (
+    <FullHeight>
+      <Loader />
+    </FullHeight>
   )
 }
 

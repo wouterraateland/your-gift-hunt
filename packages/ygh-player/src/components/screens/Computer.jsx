@@ -1,23 +1,23 @@
 import React, { useContext } from "react"
-import { createInputAction } from "actions/creators"
+import { createInputAction } from "ygh-player"
 
 import GameContext from "contexts/Game"
 
 import { Computer } from "your-gift-hunt/screens"
 
 export default props => {
-  const {
-    dispatchAction,
-    entities: { questions, inputs }
-  } = useContext(GameContext)
+  const { dispatchAction, getEntitiesByTemplateName } = useContext(GameContext)
 
   return (
     <Computer
       {...props}
-      onSubmitAnswer={(instanceId, answer) => {
-        dispatchAction(createInputAction(instanceId, { answer }))
+      onSubmitAnswer={(entityId, answer) => {
+        dispatchAction(createInputAction(entityId, { answer }))
       }}
-      instances={[...questions, ...inputs]}
+      entities={[
+        ...getEntitiesByTemplateName("Question"),
+        ...getEntitiesByTemplateName("Input")
+      ]}
     />
   )
 }

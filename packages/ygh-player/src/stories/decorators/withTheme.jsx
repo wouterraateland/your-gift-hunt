@@ -1,10 +1,6 @@
-import React from 'react'
-import Theme from 'containers/Theme'
+import React from "react"
+import Theme from "containers/Theme"
 
-const withTheme = story => (
-  <Theme>
-    {story()}
-  </Theme>
-)
+const withTheme = story => <Theme>{story()}</Theme>
 
 export default withTheme

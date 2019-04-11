@@ -1,99 +1,131 @@
-import React from "react"
+import React, { useCallback, useContext, useMemo } from "react"
+
+import GameContext from "contexts/Game"
 
 import Scene from "components/Scene"
-import * as Object from "components/objects"
+import Entities from "components/entities"
 
-const DefaultScene = ({ objects, items }) => {
-  function withName(name) {
-    return objects.find(o => o.template.name === name)
-  }
+const DefaultScene = () => {
+  const { entities, isInInventory } = useContext(GameContext)
+  const withTemplate = useCallback(
+    name => entities.find(e => e.template.name === name),
+    [entities]
+  )
+  const packagedItems = useMemo(
+    () => entities.filter(entity => entity.isItem && !isInInventory(entity)),
+    [entities, isInInventory]
+  )
+
+  const safeWithCodeExists = entities.some(
+    ({ template }) => template && template.name === "Safe with code"
+  )
 
   return (
-    <Scene left={-2} top={-1.8} width={33} height={46}>
-      <Object.Grass left={-40} top={-20} instance={withName("Grass")} />
+    <Scene left={-20} top={-40} width={40} height={80}>
+      <Entities.Grass
+        {...withTemplate("Grass")}
+        left={0}
+        top={0}
+        width={100}
+        height={80}
+      />
 
-      <Object.Floor angle={-5} instance={withName("Floor")}>
-        <Object.Path left={8.5} top={36} instance={withName("Path")} />
-        {items.map((item, i) => (
-          <Object.Package
+      <Entities.Floor {...withTemplate("Floor")} left={0} top={0} rotation={-5}>
+        <Entities.Path {...withTemplate("Path")} left={12} top={44} />
+        {packagedItems.map((item, i) => (
+          <Entities.Package
             key={item.id}
-            left={10.5 + 0.5 * i}
-            top={38.5 + 5 * i}
-            angle={-10 + 15 * i}
-            instance={item}
+            left={12 + 0.5 * i}
+            top={40 + 5 * i}
+            rotation={-10 + 15 * i}
+            {...item}
           />
         ))}
-        <Object.Mailbox left={6.5} top={38.5} instance={withName("Mailbox")} />
+        <Entities.Mailbox {...withTemplate("Mailbox")} left={6.5} top={38.5} />
 
-        <Object.Carpet
-          left={16.5}
-          top={17.5}
-          angle={-5}
-          instance={withName("Carpet")}
+        <Entities.Carpet
+          {...withTemplate("Carpet")}
+          left={21.5}
+          top={22.5}
+          rotation={-5}
         />
 
-        <Object.Armchair
-          left={20.5}
-          top={27.5}
-          angle={-45}
-          instance={withName("Armchair")}
+        <Entities.Armchair
+          {...withTemplate("Armchair")}
+          left={23.5}
+          top={29.5}
+          rotation={-45}
         />
-        <Object.Camera
+        <Entities.Camera
+          {...withTemplate("Camera")}
           left={17.5}
           top={23.5}
-          angle={40}
-          instance={withName("Camera")}
+          rotation={40}
         />
-        <Object.Lamp
-          left={25.5}
-          top={24.5}
-          angle={160}
-          instance={withName("Lamp")}
+        <Entities.Lamp
+          {...withTemplate("Lamp")}
+          left={26.5}
+          top={25.5}
+          rotation={160}
         />
 
-        <Object.PlantPot
-          left={1.5}
+        <Entities.PlantPot
+          {...withTemplate("Plant pot")}
+          left={3.5}
           top={12.5}
-          instance={withName("Plant pot")}
         />
-        <Object.Sink
-          left={-4.25}
-          top={23}
-          angle={90}
-          instance={withName("Sink")}
-        />
-
-        <Object.SafeWithKeyhole
-          left={21.5}
-          top={2.5}
-          angle={30}
-          instance={withName("Safe with keyhole")}
+        <Entities.Sink
+          {...withTemplate("Sink")}
+          left={3.25}
+          top={24}
+          rotation={90}
         />
 
-        <Object.DeskChair
+        {safeWithCodeExists ? (
+          <Entities.SafeWithCode
+            {...withTemplate("Safe with code")}
+            left={23.5}
+            top={4.5}
+            rotation={30}
+          />
+        ) : (
+          <Entities.SafeWithKeyhole
+            {...withTemplate("Safe with keyhole")}
+            left={23.5}
+            top={4.5}
+            rotation={30}
+          />
+        )}
+
+        <Entities.DeskChair
+          {...withTemplate("Desk chair")}
           left={7}
           top={6.5}
-          angle={10}
-          instance={withName("Desk chair")}
+          rotation={10}
         />
-        <Object.Desk left={5.5} top={-2} angle={90} instance={withName("Desk")}>
-          <Object.Computer
-            left={1}
-            top={1}
-            angle={-80}
-            instance={withName("Computer")}
+        <Entities.Desk
+          {...withTemplate("Desk")}
+          left={7.5}
+          top={4}
+          rotation={90}
+        >
+          <Entities.Computer
+            {...withTemplate("Computer")}
+            left={3}
+            top={3}
+            rotation={-80}
           />
-          <Object.InstructionNote
-            left={2}
-            top={7}
-            angle={-70}
-            instance={withName("InstructionNote")}
+          <Entities.InstructionNote
+            {...withTemplate("Instruction note")}
+            left={3}
+            top={9}
+            rotation={-70}
           />
-        </Object.Desk>
+        </Entities.Desk>
 
-        <Object.Door left={9.5} top={34.5} instance={withName("Door")} />
-        <Object.Wall left={-0.5} top={-0.5} instance={withName("Wall")} />
-      </Object.Floor>
+        <Entities.DefaultEntity {...withTemplate("Door")} left={12} top={35} />
+        <Entities.Wall {...withTemplate("Wall")} />
+      </Entities.Floor>
     </Scene>
   )
 }

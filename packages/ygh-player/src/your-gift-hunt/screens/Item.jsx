@@ -9,6 +9,7 @@ const ItemContainer = styled.div`
 
   & > h2 {
     color: #fff;
+    margin-bottom: 12em;
   }
 
   & > div {
@@ -16,11 +17,11 @@ const ItemContainer = styled.div`
   }
 `
 
-const ItemScreen = ({ isVisible, instance, component: Component, close }) => {
+const ItemScreen = ({ isVisible, entity, component: Component, close }) => {
   return (
     <Screen isVisible={isVisible} onClick={close} centerContent>
       <ItemContainer>
-        <h2>{instance.name}</h2>
+        <h2>{entity.name}</h2>
         <Component />
       </ItemContainer>
     </Screen>

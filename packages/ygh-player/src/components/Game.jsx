@@ -1,6 +1,4 @@
-import React, { useContext } from "react"
-
-import GameContext from "contexts/Game"
+import React from "react"
 
 import Viewport from "components/Viewport"
 import Inventory from "components/Inventory"
@@ -9,20 +7,15 @@ import DragImage from "components/DragImage"
 
 import DefaultScene from "components/scenes/default"
 
-const App = () => {
-  const { entities } = useContext(GameContext)
-  const { inventoryItems, nonInventoryItems, objects } = entities
+const Game = () => (
+  <>
+    <Viewport>
+      <DefaultScene />
+    </Viewport>
+    <Inventory />
+    <ScreenContainer />
+    <DragImage />
+  </>
+)
 
-  return (
-    <>
-      <Viewport>
-        <DefaultScene objects={objects} items={nonInventoryItems} />
-      </Viewport>
-      <Inventory items={inventoryItems} />
-      <ScreenContainer />
-      <DragImage />
-    </>
-  )
-}
-
-export default App
+export default Game
