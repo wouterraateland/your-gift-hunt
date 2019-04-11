@@ -84,10 +84,10 @@ Door.defaultProps = {
   height: 2
 }
 
-const Mailbox = forwardRef((props, ref) => (
-  <Entity noVisual {...props} ref={ref}>
+const Mailbox = forwardRef(({ state, inspect, ...props }, ref) => (
+  <Entity noVisual {...props} onClick={inspect} ref={ref}>
     <Box />
-    <Door isOpen={props.state === "open"} left={2.875} />
+    <Door isOpen={state === "open"} left={2.875} />
   </Entity>
 ))
 Mailbox.name = "Mailbox"

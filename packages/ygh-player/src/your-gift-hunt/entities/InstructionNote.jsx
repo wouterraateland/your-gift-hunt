@@ -66,8 +66,8 @@ const Text = styled.span`
   transform: translate(-0.5em, 1em) rotate(90deg);
 `
 
-const InstructionNote = forwardRef((props, ref) => (
-  <Note {...props} ref={ref}>
+const InstructionNote = forwardRef(({ inspect, ...props }, ref) => (
+  <Note {...props} onClick={inspect} ref={ref}>
     <Paper />
     <PaperClip />
     <PaperClip2 />
