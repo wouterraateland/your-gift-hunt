@@ -1,5 +1,6 @@
-import React, { forwardRef } from "react"
+import React, { forwardRef, useCallback, useState } from "react"
 import styled, { css } from "styled-components"
+import _ from "utils"
 
 import Entity from "./Entity"
 import MapTexture from "./MapTexture"
@@ -13,48 +14,83 @@ const completeClipPath =
 const StyledMap = styled(Entity)`
   background-color: #d0c6b0;
 
-  &,
-  &::before {
-    clip-path: polygon(
-      ${props => (props.isComplete ? completeClipPath : incompleteClipPath)}
-    );
+  clip-path: polygon(
+    ${props => (props.isComplete ? completeClipPath : incompleteClipPath)}
+  );
+
+  &::before,
+  &::after {
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 
   &::before {
-    width: 100%;
-    height: 100%;
     box-shadow: inset 0 0 0.5em #0009;
   }
 
-  ${props =>
-    !props.isClean &&
-    css`
-      &::after {
-        width: 100%;
-        height: 100%;
-        background-image: radial-gradient(
-            ellipse 40% 40% at 45% 55%,
-            #0006,
-            transparent
-          ),
-          radial-gradient(ellipse 60% 30% at 20% 60%, #0009, transparent),
-          radial-gradient(ellipse 15% 90% at 65% 30%, #0009, transparent);
-        transform: rotate(-20deg);
-      }
+  &::after {
+    ${props =>
+      props.isClean
+        ? css`
+          content: "${props.code}";
+          opacity: ${props.isTurned ? 1 : 0};
+
+          background-color: #fff;
+          `
+        : css`
+          opacity: ${1 - props.cleanliness * 2}
+          background-image: radial-gradient(
+              ellipse 40% 40% at 45% 55%,
+              #0006,
+              transparent
+            ),
+            radial-gradient(ellipse 60% 30% at 20% 60%, #0009, transparent),
+            radial-gradient(ellipse 15% 90% at 65% 30%, #0009, transparent);
+          transform: rotate(-20deg);
     `}
+  }
 `
 StyledMap.displayName = "Map"
 
-const StatefulMap = forwardRef((props, ref) => {
-  const isClean = props.state === "Clean"
-  const isComplete = props.state === "Dusty" || isClean
+const StatefulMap = forwardRef(
+  ({ state, dispatchInputAction, informationSlots, ...props }, ref) => {
+    const [isTurned, setTurned] = useState(false)
+    const isClean = state === "Clean"
+    const isComplete = state === "Dusty" || isClean
 
-  return (
-    <StyledMap {...props} ref={ref} isComplete={isComplete} isClean={isClean}>
-      <MapTexture />
-    </StyledMap>
-  )
-})
+    const cleanliness = _.getInputValue("part_cleaned")(props) || 0
+    const code = informationSlots.find(({ name }) => name === "Code").value
+
+    const onClick = useCallback(() => {
+      switch (state) {
+        case "Dusty":
+          dispatchInputAction("part_cleaned", cleanliness + 0.1)
+          break
+        case "Clean":
+          setTurned(isTurned => !isTurned)
+          break
+        default:
+          break
+      }
+    }, [state, cleanliness])
+
+    return (
+      <StyledMap
+        {...props}
+        onClick={onClick}
+        ref={ref}
+        isComplete={isComplete}
+        isClean={isClean}
+        isTurned={isTurned}
+        cleanliness={cleanliness}
+        code={code}
+      >
+        <MapTexture />
+      </StyledMap>
+    )
+  }
+)
 StatefulMap.name = "Map"
 StatefulMap.templateName = "Map"
 StatefulMap.defaultProps = {

@@ -123,7 +123,7 @@ const DefaultScene = () => {
           />
         </Entities.Desk>
 
-        <Entities.DefaultEntity {...withTemplate("Door")} left={12} top={35} />
+        <Entities.Door {...withTemplate("Door")} left={12} top={35} />
         <Entities.Wall {...withTemplate("Wall")} />
       </Entities.Floor>
     </Scene>
