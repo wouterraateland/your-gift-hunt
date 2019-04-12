@@ -3,11 +3,9 @@ import styled from "styled-components"
 
 const Viewport = styled.div`
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  flex-grow: 1;
 
   overflow: auto;
-  background: #000;
 `
 
 const scrollToCenter = el => {

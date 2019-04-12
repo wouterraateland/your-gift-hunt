@@ -10,30 +10,51 @@ import ItemScreen from "components/screens/Item"
 import DragContainer from "components/DragContainer"
 
 const InventoryContainer = styled.div`
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 4;
+  position: relative;
+  overflow: auto;
+  z-index: 1;
 
-  height: 7em;
+  display: flex;
+  flex-shrink: 0;
   padding: 0.5em;
 
-  white-space: nowrap;
+  @media (orientation: portrait) {
+    height: 7.5em;
+    padding-top: 2em;
+    margin-top: -2em;
+    background-image: radial-gradient(
+      ellipse 150% 100% at 50% 100%,
+      #332f2e 85%,
+      #0004 86%,
+      transparent
+    );
+  }
 
-  background: #0009;
+  @media (orientation: landscape) {
+    flex-direction: column;
+    width: 7.5em;
+    padding-right: 2em;
+    margin-right: -2em;
+    background-image: radial-gradient(
+      ellipse 100% 150% at 0% 50%,
+      #332f2e 85%,
+      #0004 86%,
+      transparent
+    );
+  }
 `
 
 const ItemSlot = styled.div`
-  display: inline-block;
-  width: 3em;
-  height: 3em;
-  padding: 1.5em;
-  margin: 0 0.25em;
-  border-radius: 1em;
-  font-size: 1.5em;
+  flex-shrink: 0;
+  padding: 2em;
+  margin: 0.5em;
+  border-radius: 100%;
 
-  background: #0009;
+  background: #fff4;
+
+  & > * {
+    font-size: 1.5em;
+  }
 `
 
 const Inventory = () => {
