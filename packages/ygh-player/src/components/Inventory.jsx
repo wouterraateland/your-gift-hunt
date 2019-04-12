@@ -10,37 +10,17 @@ import ItemScreen from "components/screens/Item"
 import DragContainer from "components/DragContainer"
 
 const InventoryContainer = styled.div`
-  position: relative;
   overflow: auto;
-  z-index: 1;
 
   display: flex;
-  flex-shrink: 0;
-  padding: 0.5em;
 
   @media (orientation: portrait) {
-    height: 7.5em;
-    padding-top: 2em;
-    margin-top: -2em;
-    background-image: radial-gradient(
-      ellipse 150% 100% at 50% 100%,
-      #332f2e 85%,
-      #0004 86%,
-      transparent
-    );
+    mask: linear-gradient(90deg, transparent, #fff 10%, #fff 90%, transparent);
   }
 
   @media (orientation: landscape) {
     flex-direction: column;
-    width: 7.5em;
-    padding-right: 2em;
-    margin-right: -2em;
-    background-image: radial-gradient(
-      ellipse 100% 150% at 0% 50%,
-      #332f2e 85%,
-      #0004 86%,
-      transparent
-    );
+    mask: linear-gradient(transparent, #fff 10%, #fff 90%, transparent);
   }
 `
 

@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import Viewport from "components/Viewport"
-import Inventory from "components/Inventory"
+import Sidebar from "components/Sidebar"
 import ScreenContainer from "components/ScreenContainer"
 import DragImage from "components/DragImage"
 
@@ -23,7 +23,7 @@ const Game = () => (
     <Viewport>
       <DefaultScene />
     </Viewport>
-    <Inventory />
+    <Sidebar />
     <ScreenContainer />
     <DragImage />
   </GamePage>
