@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import useEntityBehaviour from "hooks/useEntityBehaviour"
-import { SafeWithKeyhole } from "your-gift-hunt/screens"
+import { SafeWithKeyhole } from "your-gift-hunt/entityDetails"
 
 import GameContext from "contexts/Game"
 

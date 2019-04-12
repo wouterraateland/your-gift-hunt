@@ -1,10 +1,10 @@
 import React, { useContext } from "react"
 import Entities from "your-gift-hunt/entities"
+import EntityDetails from "components/entityDetails"
 import useEntityBehaviour from "hooks/useEntityBehaviour"
 
 import _ from "utils"
 import GameContext from "contexts/Game"
-import ComputerScreen from "components/screens/Computer"
 
 export default props => {
   const { getEntitiesByTemplateName } = useContext(GameContext)
@@ -13,7 +13,7 @@ export default props => {
     ...getEntitiesByTemplateName("Input")
   ]
   const entityBehaviour = useEntityBehaviour(props, {
-    detailScreen: ComputerScreen
+    detailScreen: EntityDetails.Computer
   })
   return (
     <Entities.Computer

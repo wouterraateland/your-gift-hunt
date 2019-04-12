@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { SafeWithCode } from "your-gift-hunt/screens"
+import { SafeWithCode } from "your-gift-hunt/entityDetails"
 
 import GameContext from "contexts/Game"
 import useEntityBehaviour from "hooks/useEntityBehaviour"

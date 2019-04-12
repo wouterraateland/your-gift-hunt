@@ -1,12 +1,11 @@
 import React from "react"
 import Entities from "your-gift-hunt/entities"
+import EntityDetails from "components/entityDetails"
 import useEntityBehaviour from "hooks/useEntityBehaviour"
-
-import SafeWithCodeScreen from "components/screens/SafeWithCode"
 
 export default props => {
   const entityBehaviour = useEntityBehaviour(props, {
-    detailScreen: SafeWithCodeScreen
+    detailScreen: EntityDetails.SafeWithCode
   })
   return <Entities.SafeWithCode {...props} {...entityBehaviour} />
 }

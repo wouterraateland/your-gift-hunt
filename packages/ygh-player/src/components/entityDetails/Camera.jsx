@@ -3,7 +3,7 @@ import React, { useContext } from "react"
 import GameContext from "contexts/Game"
 import { ACTION_TYPES } from "ygh-player"
 
-import { Camera } from "your-gift-hunt/screens"
+import { Camera } from "your-gift-hunt/entityDetails"
 
 export default props => {
   const { dispatchAction, getEntitiesByTemplateName } = useContext(GameContext)

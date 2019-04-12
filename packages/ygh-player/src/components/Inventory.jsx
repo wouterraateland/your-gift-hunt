@@ -5,7 +5,7 @@ import ScreenContext from "contexts/Screen"
 import GameContext from "contexts/Game"
 
 import { GenericEntity } from "components/entities"
-import ItemScreen from "components/screens/Item"
+import ItemScreen from "components/entityDetails/Item"
 
 import DragContainer from "components/DragContainer"
 

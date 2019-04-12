@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { InstructionNote } from 'your-gift-hunt/screens'
+import { InstructionNote } from 'your-gift-hunt/entityDetails'
 
 export default (props) => {
   return (

@@ -3,18 +3,19 @@ import { createInputAction } from "ygh-player"
 
 import GameContext from "contexts/Game"
 
-import { Mailbox } from "your-gift-hunt/screens"
+import { Note } from "your-gift-hunt/entityDetails"
 
-export default props => {
-  const { dispatchAction, getEntitiesByTemplateName } = useContext(GameContext)
+export default ({ entityId, ...props }) => {
+  const { dispatchAction, getEntityById } = useContext(GameContext)
+  const entity = getEntityById(entityId)
 
   return (
-    <Mailbox
+    <Note
       {...props}
+      entity={entity}
       onReadNote={entityId => {
         dispatchAction(createInputAction(entityId))
       }}
-      entities={[...getEntitiesByTemplateName("Note")]}
     />
   )
 }

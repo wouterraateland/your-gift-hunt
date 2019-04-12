@@ -3,7 +3,7 @@ import { createInputAction } from "ygh-player"
 
 import GameContext from "contexts/Game"
 
-import { Computer } from "your-gift-hunt/screens"
+import { Computer } from "your-gift-hunt/entityDetails"
 
 export default props => {
   const { dispatchAction, getEntitiesByTemplateName } = useContext(GameContext)

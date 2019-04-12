@@ -1,12 +1,11 @@
 import React from "react"
 import Entities from "your-gift-hunt/entities"
+import EntityDetails from "components/entityDetails"
 import useEntityBehaviour from "hooks/useEntityBehaviour"
-
-import CameraScreen from "components/screens/Camera"
 
 export default props => {
   const entityBehaviour = useEntityBehaviour(props, {
-    detailScreen: CameraScreen
+    detailScreen: EntityDetails.Camera
   })
   return <Entities.Camera {...props} {...entityBehaviour} />
 }
