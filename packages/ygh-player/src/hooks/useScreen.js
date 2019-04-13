@@ -5,11 +5,7 @@ export const useScreenProvider = () => {
   const [screen, setScreen] = useState(null)
 
   const popup = useCallback(
-    (component, props = {}) =>
-      setScreen({
-        component,
-        props
-      }),
+    (component, props = {}) => setScreen({ component, props }),
     []
   )
   const close = useCallback(() => setScreen(null), [])

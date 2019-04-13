@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import Entities from "your-gift-hunt/entities"
 import EntityDetails from "components/entityDetails"
 import useEntityBehaviour from "hooks/useEntityBehaviour"
@@ -6,7 +6,7 @@ import useEntityBehaviour from "hooks/useEntityBehaviour"
 import _ from "utils"
 import useGame from "hooks/useGame"
 
-export default props => {
+export default memo(props => {
   const { getEntitiesByTemplateName } = useGame()
   const entities = [
     ...getEntitiesByTemplateName("Question"),
@@ -26,4 +26,4 @@ export default props => {
       }
     />
   )
-}
+})

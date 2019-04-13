@@ -1,14 +1,14 @@
 import { useCallback, useRef } from "react"
 
 import useGame from "hooks/useGame"
-import useScreen from "hooks/useScreen"
+import usePopup from "hooks/usePopup"
 import useDrop from "hooks/useDrop"
 import { createInputAction } from "ygh-player"
 
 const useEntityBehaviour = (props, options = {}) => {
   const ref = useRef(null)
   const { dispatchAction } = useGame()
-  const { popup } = useScreen()
+  const popup = usePopup()
 
   useDrop({
     ref,
