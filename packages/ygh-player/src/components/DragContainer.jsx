@@ -1,7 +1,7 @@
-import React, { useCallback, useContext } from "react"
+import React, { useCallback } from "react"
 import styled from "styled-components"
 
-import DragContext from "contexts/Drag"
+import useDrag from "hooks/useDrag"
 
 const StyledDragContainer = styled.div`
   transform: translate(0, 0);
@@ -12,7 +12,7 @@ const StyledDragContainer = styled.div`
 `
 
 const DragContainer = ({ data, children }) => {
-  const { setDragElement, setData } = useContext(DragContext)
+  const { setDragElement, setData } = useDrag()
 
   const handleDragStart = useCallback(() => {
     setDragElement(children)

@@ -1,11 +1,11 @@
-import React, { useContext } from "react"
-import GameContext from "contexts/Game"
+import React from "react"
+import useGame from "hooks/useGame"
 
 import { GenericEntity } from "components/entities"
 import { Item as ItemScreen } from "your-gift-hunt/entityDetails"
 
 export default ({ entityId, ...props }) => {
-  const { getEntityById } = useContext(GameContext)
+  const { getEntityById } = useGame()
   const entity = getEntityById(entityId)
 
   return (

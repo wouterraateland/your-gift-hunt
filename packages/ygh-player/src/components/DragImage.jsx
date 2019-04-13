@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext, cloneElement } from "react"
+import React, { cloneElement, useCallback, useEffect, useState } from "react"
 import styled from "styled-components"
 
-import DragContext from "contexts/Drag"
+import useDrag from "hooks/useDrag"
 
 const Container = styled.div.attrs(props => ({
   style: {
@@ -21,11 +21,11 @@ const Container = styled.div.attrs(props => ({
 `
 
 const DragImage = () => {
-  const { dragElement, drop, canDrop, disableDrop } = useContext(DragContext)
+  const { dragElement, drop, canDrop, disableDrop } = useDrag()
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [element, setElement] = useState(null)
 
-  function updatePosition(event) {
+  const updatePosition = useCallback(event => {
     const cursor = event.touches ? event.touches[0] : event
     if (
       !event.path.find(
@@ -35,7 +35,7 @@ const DragImage = () => {
       disableDrop()
     }
     setPosition({ x: cursor.clientX, y: cursor.clientY })
-  }
+  }, [])
 
   useEffect(() => {
     window.addEventListener("mousemove", updatePosition)

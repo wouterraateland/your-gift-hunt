@@ -1,8 +1,9 @@
-import { useCallback } from "react"
+import { useCallback, useContext } from "react"
+import GameContext from "contexts/Game"
 import useYGHPlayer from "ygh-player/react-hook"
-import useStore, { localStorageStoreCreator } from "./useStore"
+import useStore, { localStorageStoreCreator } from "hooks/useStore"
 
-const useGameState = gameIdentifier => {
+export const useGameProvider = gameIdentifier => {
   const yghPlayer = useYGHPlayer("super secret key", gameIdentifier)
   const { read, write } = useStore(
     localStorageStoreCreator({
@@ -51,4 +52,5 @@ const useGameState = gameIdentifier => {
   }
 }
 
-export default useGameState
+const useGame = () => useContext(GameContext)
+export default useGame

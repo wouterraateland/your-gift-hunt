@@ -1,9 +1,9 @@
-import { useEffect, useContext } from "react"
+import { useEffect } from "react"
 import { createUseAction } from "ygh-player"
 import _ from "utils"
 
-import DragContext from "contexts/Drag"
-import GameContext from "contexts/Game"
+import useDrag from "hooks/useDrag"
+import useGame from "hooks/useGame"
 
 const isChildOrSame = (element, parent) =>
   !!element &&
@@ -17,8 +17,8 @@ const targets = (event, target) => {
 }
 
 const useDrop = ({ ref, destination, sources = [], onDrop = _.noop }) => {
-  const { data, enableDrop } = useContext(DragContext)
-  const { dispatchAction } = useContext(GameContext)
+  const { data, enableDrop } = useDrag()
+  const { dispatchAction } = useGame()
 
   const handleMouseMove = enableDrop
 

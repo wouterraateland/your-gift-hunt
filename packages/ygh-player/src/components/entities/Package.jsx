@@ -1,14 +1,14 @@
-import React, { useCallback, useContext, useState } from "react"
+import React, { useCallback, useState } from "react"
 import Entities from "your-gift-hunt/entities"
 import useEntityBehaviour from "hooks/useEntityBehaviour"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 export default props => {
   const [state, setState] = useState("closed")
   const entityBehaviour = useEntityBehaviour(props)
 
-  const { pickupEntity } = useContext(GameContext)
+  const { pickupEntity } = useGame()
 
   const dispatchInputAction = useCallback(
     (key, value) => {

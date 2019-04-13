@@ -1,11 +1,11 @@
-import React, { useContext } from "react"
+import React from "react"
 import useEntityBehaviour from "hooks/useEntityBehaviour"
 import { SafeWithKeyhole } from "your-gift-hunt/entityDetails"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 const EnhancedSafeWithKeyhole = ({ entityId, ...props }) => {
-  const { getEntityById, pickupEntity } = useContext(GameContext)
+  const { getEntityById, pickupEntity } = useGame()
   const entity = getEntityById(entityId)
 
   const entityBehaviour = useEntityBehaviour(entity, {

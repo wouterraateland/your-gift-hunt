@@ -1,13 +1,13 @@
-import React, { useContext } from "react"
+import React from "react"
 import Entities from "your-gift-hunt/entities"
 import EntityDetails from "components/entityDetails"
 import useEntityBehaviour from "hooks/useEntityBehaviour"
 
 import _ from "utils"
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 export default props => {
-  const { getEntitiesByTemplateName } = useContext(GameContext)
+  const { getEntitiesByTemplateName } = useGame()
   const entities = [
     ...getEntitiesByTemplateName("Question"),
     ...getEntitiesByTemplateName("Input")

@@ -1,8 +1,8 @@
-import React, { useContext } from "react"
+import React from "react"
 import styled from "styled-components"
 
-import ScreenContext from "contexts/Screen"
-import GameContext from "contexts/Game"
+import useScreen from "hooks/useScreen"
+import useGame from "hooks/useGame"
 
 import { GenericEntity } from "components/entities"
 import ItemScreen from "components/entityDetails/Item"
@@ -38,8 +38,8 @@ const ItemSlot = styled.div`
 `
 
 const Inventory = () => {
-  const { entities, isInInventory } = useContext(GameContext)
-  const { popup } = useContext(ScreenContext)
+  const { entities, isInInventory } = useGame()
+  const { popup } = useScreen()
 
   const inventoryItems = entities.filter(isInInventory)
 

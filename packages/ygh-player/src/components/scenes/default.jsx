@@ -1,12 +1,12 @@
-import React, { useCallback, useContext, useMemo } from "react"
+import React, { useCallback, useMemo } from "react"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import Scene from "components/Scene"
 import Entities from "components/entities"
 
 const DefaultScene = () => {
-  const { entities, isInInventory } = useContext(GameContext)
+  const { entities, isInInventory } = useGame()
   const withTemplate = useCallback(
     name => entities.find(e => e.template.name === name),
     [entities]
