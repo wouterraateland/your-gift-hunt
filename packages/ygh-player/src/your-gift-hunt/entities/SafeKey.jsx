@@ -4,6 +4,9 @@ import Entity from "./Entity"
 
 const SafeKey = styled(Entity)`
   border-radius: 100%;
+  width: 0.5em;
+  height: 0.5em;
+  margin: 0.75em;
 
   box-shadow: 0 0 0 0.1em #7e6d63, 0.35em -0.35em 0 0.9em,
     0.35em -0.35em 0 1em #7e6d63 !important;
@@ -50,8 +53,8 @@ SafeKey.displayName = "SafeKey"
 SafeKey.templateName = "Safe key"
 SafeKey.defaultProps = {
   ...Entity.defaultProps,
-  width: 0.5,
-  height: 0.5
+  width: 2,
+  height: 2
 }
 
 export default SafeKey
