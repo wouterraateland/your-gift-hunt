@@ -11,8 +11,10 @@ export default props => {
   return (
     <Computer
       {...props}
-      onSubmitAnswer={(entityId, answer) => {
-        dispatchAction(createInputAction(entityId, { answer }))
+      onSubmitAnswer={(state, answer) => {
+        dispatchAction(
+          createInputAction(state, [{ key: "answer", value: answer }])
+        )
       }}
       entities={[
         ...getEntitiesByTemplateName("Question"),

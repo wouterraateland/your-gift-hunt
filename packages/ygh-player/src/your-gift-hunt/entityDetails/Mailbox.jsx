@@ -221,7 +221,7 @@ const MailboxScreen = ({ isVisible, onReadNote, entities, close }) => {
 
   const readNote = useCallback(() => {
     if (entityIndex !== -1) {
-      onReadNote(entities[entityIndex].id)
+      onReadNote(entities[entityIndex].state)
     }
   }, [entities, entityIndex, onReadNote])
 

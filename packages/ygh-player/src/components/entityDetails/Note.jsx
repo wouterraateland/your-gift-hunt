@@ -13,8 +13,8 @@ export default ({ entityId, ...props }) => {
     <Note
       {...props}
       entity={entity}
-      onReadNote={entityId => {
-        dispatchAction(createInputAction(entityId))
+      onReadNote={state => {
+        dispatchAction(createInputAction(state))
       }}
     />
   )

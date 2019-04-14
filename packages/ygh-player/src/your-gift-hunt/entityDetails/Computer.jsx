@@ -143,7 +143,7 @@ const ComputerScreen = ({ isVisible, close, entities, onSubmitAnswer }) => {
     event => {
       event.preventDefault()
 
-      onSubmitAnswer && onSubmitAnswer(entity.id, answer)
+      onSubmitAnswer && onSubmitAnswer(entity.state, answer)
     },
     [entity, answer]
   )

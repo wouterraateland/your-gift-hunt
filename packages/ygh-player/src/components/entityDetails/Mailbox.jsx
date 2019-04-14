@@ -11,8 +11,8 @@ export default props => {
   return (
     <Mailbox
       {...props}
-      onReadNote={entityId => {
-        dispatchAction(createInputAction(entityId))
+      onReadNote={state => {
+        dispatchAction(createInputAction(state))
       }}
       entities={[...getEntitiesByTemplateName("Note")]}
     />

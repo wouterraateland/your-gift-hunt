@@ -47,8 +47,8 @@ const NoteScreen = ({ isVisible, entity, onReadNote, close }) => {
 
   const exit = useCallback(() => {
     close && close()
-    onReadNote && onReadNote(entity.id)
-  }, [entity.id, close, onReadNote])
+    onReadNote && onReadNote(entity.state)
+  }, [entity.state, close, onReadNote])
 
   return (
     <Screen isVisible={isVisible} onClick={exit}>
