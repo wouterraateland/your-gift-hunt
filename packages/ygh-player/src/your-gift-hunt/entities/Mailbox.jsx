@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react"
 import styled, { css, keyframes } from "styled-components"
+import _ from "utils"
 
 import Entity from "./Entity"
 
@@ -84,10 +85,13 @@ Door.defaultProps = {
   height: 2
 }
 
-const Mailbox = forwardRef(({ state, inspect, ...props }, ref) => (
+const Mailbox = forwardRef(({ containedEntities, inspect, ...props }, ref) => (
   <Entity noVisual {...props} onClick={inspect} ref={ref}>
     <Box />
-    <Door isOpen={state === "open"} left={2.875} />
+    <Door
+      isOpen={containedEntities.some(entity => _.hasState("unread")(entity))}
+      left={2.875}
+    />
   </Entity>
 ))
 Mailbox.name = "Mailbox"

@@ -11,15 +11,15 @@ export default memo(props => {
   const { pickupEntity } = useGame()
 
   const dispatchInputAction = useCallback(
-    (key, value) => {
+    (_, key, value) => {
       if (key === "state") {
         setState(value)
         if (value === "empty") {
-          pickupEntity(props.id)
+          pickupEntity(props.containedEntity.id)
         }
       }
     },
-    [props.id]
+    [props.containedEntity.id]
   )
 
   return (
@@ -27,7 +27,7 @@ export default memo(props => {
       {...props}
       {...entityBehaviour}
       dispatchInputAction={dispatchInputAction}
-      state={state}
+      state={{ name: state }}
     />
   )
 })

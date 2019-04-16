@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react"
 import styled, { keyframes } from "styled-components"
 
 import _ from "utils"
+import { Entity } from "../entities"
 
-import Screen from "./Screen"
-
-const Computer = styled.div`
-  position: relative;
-
-  width: 24em;
-  height: 13.5em;
+const ComputerScreen = styled(Entity)`
   padding: 1em;
   border: 0.5em solid #eee;
   border-width: 1em 0.5em 2em 0.5em;
@@ -128,39 +129,40 @@ const Prompt = ({ text, children }) => {
   )
 }
 
-const ComputerScreen = ({ isVisible, close, entities, onSubmitAnswer }) => {
-  const input = useRef(null)
-  const [entityIndex, setEntityIndex] = useState(-1)
-  const [answer, setAnswer] = useState("")
+const Computer = forwardRef(
+  ({ containedEntities, dispatchInputAction, ...props }, ref) => {
+    const input = useRef(null)
+    const [entityIndex, setEntityIndex] = useState(-1)
+    const [answer, setAnswer] = useState("")
 
-  const entity = entityIndex === -1 ? null : entities[entityIndex]
+    const entity = entityIndex === -1 ? null : containedEntities[entityIndex]
 
-  useEffect(() => {
-    input.current && input.current.focus()
-  }, [])
+    useEffect(() => {
+      input.current && input.current.focus()
+    }, [])
 
-  const handleOnSubmit = useCallback(
-    event => {
-      event.preventDefault()
+    const handleOnSubmit = useCallback(
+      event => {
+        event.preventDefault()
+        dispatchInputAction(entity.state, "answer", answer)
+      },
+      [dispatchInputAction, entity, answer]
+    )
 
-      onSubmitAnswer && onSubmitAnswer(entity.state, answer)
-    },
-    [entity, answer]
-  )
+    const goToEntity = useCallback(index => {
+      setAnswer("")
+      setEntityIndex(index)
+    }, [])
 
-  const goToEntity = useCallback(index => {
-    setAnswer("")
-    setEntityIndex(index)
-  }, [])
+    const isAnswered = _.or(_.hasState("answered"), _.hasState("filled"))(
+      entity
+    )
+    const isUnanswered = _.or(_.hasState("unanswered"), _.hasState("empty"))(
+      entity
+    )
 
-  const isAnswered = _.or(_.hasState("answered"), _.hasState("filled"))(entity)
-  const isUnanswered = _.or(_.hasState("unanswered"), _.hasState("empty"))(
-    entity
-  )
-
-  return (
-    <Screen isVisible={isVisible} onClick={close} centerContent>
-      <Computer isVisible={isVisible}>
+    return (
+      <ComputerScreen ref={ref} {...props}>
         <form onSubmit={handleOnSubmit}>
           <label>
             {isUnanswered && (
@@ -176,7 +178,7 @@ const ComputerScreen = ({ isVisible, close, entities, onSubmitAnswer }) => {
             <Prompt
               text={
                 entity === null
-                  ? entities.some(
+                  ? containedEntities.some(
                       entity =>
                         _.hasState("unanswered")(entity) ||
                         _.hasState("empty")(entity)
@@ -190,15 +192,15 @@ const ComputerScreen = ({ isVisible, close, entities, onSubmitAnswer }) => {
               <br />
               <br />
               {entity === null ? (
-                entities.length > 0 ? (
+                containedEntities.length > 0 ? (
                   <span
                     onClick={() => {
-                      const firstUnreadIndex = entities.findIndex(
+                      const firstUnreadIndex = containedEntities.findIndex(
                         _.or(_.hasState("unanswered"), _.hasState("empty"))
                       )
 
                       goToEntity(
-                        firstUnreadIndex === -1 && entities.length
+                        firstUnreadIndex === -1 && containedEntities.length
                           ? 0
                           : firstUnreadIndex
                       )
@@ -223,7 +225,7 @@ const ComputerScreen = ({ isVisible, close, entities, onSubmitAnswer }) => {
                   <br />
                   <span onClick={() => goToEntity(entityIndex - 1)}>◀</span>
                   {"  "}
-                  {entityIndex < entities.length - 1 && (
+                  {entityIndex < containedEntities.length - 1 && (
                     <span onClick={() => goToEntity(entityIndex + 1)}>▶</span>
                   )}
                 </>
@@ -231,9 +233,16 @@ const ComputerScreen = ({ isVisible, close, entities, onSubmitAnswer }) => {
             </Prompt>
           </label>
         </form>
-      </Computer>
-    </Screen>
-  )
+      </ComputerScreen>
+    )
+  }
+)
+Computer.name = "Computer"
+Computer.templateName = "Computer"
+Computer.defaultProps = {
+  ...Entity.defaultProps,
+  width: 24,
+  height: 13.5
 }
 
-export default ComputerScreen
+export default Computer

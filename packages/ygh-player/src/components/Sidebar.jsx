@@ -6,7 +6,7 @@ import Inventory from "./Inventory"
 
 const SidebarContainer = styled.div`
   position: relative;
-  z-index: 1;
+  z-index: 2;
 
   display: flex;
   flex-shrink: 0;

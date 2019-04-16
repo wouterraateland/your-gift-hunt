@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components"
 import Entity from "./Entity"
+import _ from "utils"
 
 const WateringCan = styled(Entity)`
   border-radius: 20% 15% 10% 10% / 80% 40% 10% 10%;
@@ -11,7 +12,7 @@ const WateringCan = styled(Entity)`
   background-color: currentColor;
 
   ${props =>
-    props.state === "filled" &&
+    _.hasState("filled")(props) &&
     css`
       background-image: linear-gradient(transparent 30%, #0e314e88 30%);
     `}
@@ -48,7 +49,7 @@ const WateringCan = styled(Entity)`
 
     background-color: currentColor;
     background-image: ${props =>
-        props.state === "filled"
+        _.hasState("filled")(props)
           ? `linear-gradient(45deg, #0e314e88 58%, transparent 58%),`
           : ``}
       radial-gradient(ellipse 70% 80% at 40% 100%, #0009 60%, transparent);

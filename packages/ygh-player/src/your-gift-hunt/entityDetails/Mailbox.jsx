@@ -1,16 +1,9 @@
-import React, { useCallback, useState } from "react"
+import React, { forwardRef } from "react"
 import styled, { keyframes } from "styled-components"
-import _ from "utils"
 
-import { Float } from "your-gift-hunt/ui"
-import Screen from "./Screen"
-import { Note } from "./Note"
+import { Entity } from "../entities"
 
-const Mailbox = styled.div`
-  position: relative;
-  width: 20em;
-  height: 18em;
-
+const MailboxContainer = styled(Entity)`
   border-radius: 12em 12em 0.5em 0.5em;
   box-shadow: inset 0.2em 0.2em 0.4em -0.1em #fff8,
     inset -0.2em -0.2em 0.4em -0.1em #0004, inset 0em 0em 0em 0.5em #fa300c;
@@ -192,90 +185,21 @@ const Letter = styled.div`
   }
 `
 
-const MailView = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-
-  pointer-events: none;
-
-  & > * {
-    pointer-events: auto;
-  }
-`
-
-const MailNavigation = styled.div`
-  padding: 2em;
-
-  color: #fff;
-
-  & span {
-    cursor: pointer;
-  }
-`
-
-const MailboxScreen = ({ isVisible, onReadNote, entities, close }) => {
-  const [entityIndex, setEntityIndex] = useState(-1)
-
-  const readNote = useCallback(() => {
-    if (entityIndex !== -1) {
-      onReadNote(entities[entityIndex].state)
-    }
-  }, [entities, entityIndex, onReadNote])
-
-  const goToNote = useCallback(
-    i => {
-      readNote()
-      setEntityIndex(i)
-    },
-    [entities, entityIndex, onReadNote]
-  )
-
-  const exit = useCallback(() => {
-    readNote()
-    close()
-  }, [entities, entityIndex, onReadNote])
-
-  const entity = entityIndex === -1 ? null : entities[entityIndex]
-
-  return (
-    <Screen isVisible={isVisible} onClick={exit} centerContent>
-      <Mailbox
-        isVisible={isVisible}
-        onClick={() => {
-          const firstUnreadIndex = entities.findIndex(_.hasState("unread"))
-          setEntityIndex(
-            firstUnreadIndex === -1 && entities.length ? 0 : firstUnreadIndex
-          )
-        }}
-      >
-        {entities.slice(0, 5).map((_, i) => (
-          <Letter key={i} />
-        ))}
-        <Pole />
-        <Flag />
-      </Mailbox>
-      {entity !== null && (
-        <MailView>
-          <MailNavigation>
-            <Float.Left>
-              <span onClick={() => goToNote(entityIndex - 1)}>Previous</span>
-            </Float.Left>
-            {entityIndex < entities.length - 1 && (
-              <Float.Right>
-                <span onClick={() => goToNote(entityIndex + 1)}>Next</span>
-              </Float.Right>
-            )}
-          </MailNavigation>
-          <Note isVisible entity={entity} isNew={_.hasState("unread")(entity)}>
-            <p>{_.getFieldValue("Text")(entity)}</p>
-          </Note>
-        </MailView>
-      )}
-    </Screen>
-  )
+const Mailbox = forwardRef(({ containedEntities, inspect, ...props }, ref) => (
+  <MailboxContainer ref={ref} onClick={inspect} {...props}>
+    {containedEntities.slice(0, 5).map((_, i) => (
+      <Letter key={i} />
+    ))}
+    <Pole />
+    <Flag />
+  </MailboxContainer>
+))
+Mailbox.name = "Mailbox"
+Mailbox.templateName = "Mailbox"
+Mailbox.defaultProps = {
+  ...Entity.defaultProps,
+  width: 20,
+  height: 18
 }
 
-export default MailboxScreen
+export default Mailbox

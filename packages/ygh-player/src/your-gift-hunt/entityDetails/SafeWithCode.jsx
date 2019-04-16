@@ -2,7 +2,6 @@ import React, { forwardRef, useCallback, useState } from "react"
 import styled from "styled-components"
 import _ from "utils"
 
-import Screen from "./Screen"
 import Safe from "./Safe"
 
 const CodeLabel = styled.label`
@@ -60,50 +59,46 @@ const Code = styled.span`
   text-shadow: 0 0 0.4em;
 `
 
-const SafeWithCodeScreen = forwardRef(
-  ({ isVisible, entity, dispatchInputAction, close }, ref) => {
-    const [code, setCode] = useState("")
+const SafeWithCode = forwardRef(({ dispatchInputAction, ...props }, ref) => {
+  const [code, setCode] = useState("")
 
-    const handleOnChange = useCallback(event => {
-      const regex = /^[0-9\b]+$/
+  const handleOnChange = useCallback(event => {
+    const regex = /^[0-9\b]+$/
 
-      if (event.target.value === "" || regex.test(event.target.value)) {
-        setCode(event.target.value.slice(0, 4))
-      }
-    }, [])
+    if (event.target.value === "" || regex.test(event.target.value)) {
+      setCode(event.target.value.slice(0, 4))
+    }
+  }, [])
 
-    const handleOnSubmit = useCallback(
-      event => {
-        event.preventDefault()
-        dispatchInputAction("code", parseInt(code, 10))
-      },
-      [code, dispatchInputAction]
-    )
+  const handleOnSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      dispatchInputAction(props.state, "code", parseInt(code, 10))
+    },
+    [props.state, code, dispatchInputAction]
+  )
 
-    const isUnlocked = _.hasState("unlocked")(entity)
-    const codeInput = _.getInputValue("code")(entity)
-    const displayedCode = isUnlocked ? codeInput : code
+  const isUnlocked = _.hasState("unlocked")(props)
+  const codeInput = _.getInputValue("code")(props)
+  const displayedCode = isUnlocked ? codeInput : code
 
-    return (
-      <Screen isVisible={isVisible} onClick={close} centerContent>
-        <Safe isVisible={isVisible} ref={ref}>
-          <form onSubmit={handleOnSubmit}>
-            <CodeLabel>
-              <CodeInput value={code} onChange={handleOnChange} />
-              <Code
-                correct={isUnlocked}
-                wrong={!isUnlocked && code === codeInput}
-              >
-                {displayedCode}
-              </Code>
-              <Gray>{"0".repeat(4 - displayedCode.length)}</Gray>
-            </CodeLabel>
-            <SafeButton type="submit" />
-          </form>
-        </Safe>
-      </Screen>
-    )
-  }
-)
+  return (
+    <Safe ref={ref} {...props}>
+      <form onSubmit={handleOnSubmit}>
+        <CodeLabel>
+          <CodeInput value={code} onChange={handleOnChange} />
+          <Code correct={isUnlocked} wrong={!isUnlocked && code === codeInput}>
+            {displayedCode}
+          </Code>
+          <Gray>{"0".repeat(4 - displayedCode.length)}</Gray>
+        </CodeLabel>
+        <SafeButton type="submit" />
+      </form>
+    </Safe>
+  )
+})
+SafeWithCode.name = "SafeWithCode"
+SafeWithCode.templateName = "Safe with code"
+SafeWithCode.defaultProps = Safe.defaultProps
 
-export default SafeWithCodeScreen
+export default SafeWithCode

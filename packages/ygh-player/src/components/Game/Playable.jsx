@@ -1,9 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 
-import { DragProvider } from "contexts/Drag"
-import { ScreenProvider } from "contexts/Screen"
-
 import Viewport from "components/Viewport"
 import Sidebar from "components/Sidebar"
 import ScreenContainer from "components/ScreenContainer"
@@ -23,18 +20,14 @@ const GamePage = styled.div`
 `
 
 const PlayableGame = () => (
-  <DragProvider>
-    <ScreenProvider>
-      <GamePage>
-        <Viewport>
-          <DefaultScene />
-        </Viewport>
-        <Sidebar />
-        <ScreenContainer />
-        <DragImage />
-      </GamePage>
-    </ScreenProvider>
-  </DragProvider>
+  <GamePage>
+    <Viewport>
+      <DefaultScene />
+    </Viewport>
+    <ScreenContainer />
+    <Sidebar />
+    <DragImage />
+  </GamePage>
 )
 
 export default PlayableGame

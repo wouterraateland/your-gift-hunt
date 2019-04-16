@@ -1,19 +1,15 @@
-import React, { useCallback } from "react"
+import React, { forwardRef, useEffect, useMemo } from "react"
 import styled, { css } from "styled-components"
 import _ from "utils"
+import { Entity } from "../entities"
 
-import Screen from "./Screen"
-
-export const Note = styled.div`
+export const NoteContainer = styled(Entity)`
   position: relative;
-  width: 30em;
-  max-width: calc(100% - 4em);
   padding: 2em;
-  margin: 2em auto;
 
   background-color: #f5f0d7;
 
-  transform: translate(0, ${props => (props.isVisible ? 0 : 100)}vh);
+  ${"" /* transform: translate(0, ${props => (props.isVisible ? 0 : 100)}vh); */}
 
   transition: transform 0.2s 0.2s ease-out;
 
@@ -41,22 +37,28 @@ export const Note = styled.div`
   }
 `
 
-const NoteScreen = ({ isVisible, entity, onReadNote, close }) => {
-  const isNew = _.hasState("unread")(entity)
-  const text = _.getFieldValue("Text")(entity)
+const Note = forwardRef(({ dispatchInputAction, ...props }, ref) => {
+  const isNew = useMemo(() => _.hasState("unread")(props), [])
+  const text = _.getFieldValue("Text")(props)
 
-  const exit = useCallback(() => {
-    close && close()
-    onReadNote && onReadNote(entity.state)
-  }, [entity.state, close, onReadNote])
+  useEffect(() => {
+    if (isNew) {
+      dispatchInputAction(props.state)
+    }
+  }, [props.state])
 
   return (
-    <Screen isVisible={isVisible} onClick={exit}>
-      <Note isVisible={isVisible} onClick={exit} isNew={isNew}>
-        <p>{text}</p>
-      </Note>
-    </Screen>
+    <NoteContainer ref={ref} isNew={isNew} {...props}>
+      <p>{text}</p>
+    </NoteContainer>
   )
+})
+Note.name = "Note"
+Note.templateName = "Note"
+Note.defaultProps = {
+  ...Entity.defaultProps,
+  width: 30,
+  height: 40
 }
 
-export default NoteScreen
+export default Note

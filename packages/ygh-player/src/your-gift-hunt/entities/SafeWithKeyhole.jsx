@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react"
 import styled from "styled-components"
+import _ from "utils"
 
 import Entity from "./Entity"
 
@@ -98,8 +99,8 @@ Wheel.defaultProps = {
   height: 0.25
 }
 
-const SafeWithKeyhole = forwardRef(({ state, inspect, ...props }, ref) => {
-  const isUnlocked = state === "unlocked"
+const SafeWithKeyhole = forwardRef(({ inspect, ...props }, ref) => {
+  const isUnlocked = _.hasState("unlocked")(props)
   return (
     <Entity
       noVisual

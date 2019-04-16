@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react"
 import styled from "styled-components"
+import _ from "utils"
 
 import Entity from "./Entity"
 
@@ -75,8 +76,8 @@ Door.defaultProps = {
   origin: { left: 0, top: 0 }
 }
 
-const SafeWithCode = forwardRef(({ state, inspect, ...props }, ref) => {
-  const isUnlocked = state === "unlocked"
+const SafeWithCode = forwardRef(({ inspect, ...props }, ref) => {
+  const isUnlocked = _.hasState("unlocked")(props)
   return (
     <Entity
       noVisual

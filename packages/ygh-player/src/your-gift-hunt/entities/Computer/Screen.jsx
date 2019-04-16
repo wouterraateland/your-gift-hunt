@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import Entity from "../Entity"
+import _ from "utils"
 
 const Screen = styled(Entity)`
   border-radius: 50% 50% 0 0 / 80% 80% 0 0;
@@ -25,7 +26,7 @@ const Screen = styled(Entity)`
 
     background: radial-gradient(
       ellipse 50% 100% at 50% 0,
-      ${props => (props.state === "on" ? "#8ddaeecc" : "transparent")},
+      ${props => (_.hasState("on")(props) ? "#8ddaeecc" : "transparent")},
       transparent
     );
   }

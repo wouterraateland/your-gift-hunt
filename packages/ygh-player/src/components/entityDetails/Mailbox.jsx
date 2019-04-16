@@ -1,20 +1,11 @@
 import React from "react"
-import { createInputAction } from "ygh-player"
-
-import useGame from "hooks/useGame"
-
-import { Mailbox } from "your-gift-hunt/entityDetails"
+import EntityDetails from "your-gift-hunt/entityDetails"
+import useEntityBehaviour from "hooks/useEntityBehaviour"
+import Screens from "components/screens"
 
 export default props => {
-  const { dispatchAction, getEntitiesByTemplateName } = useGame()
-
-  return (
-    <Mailbox
-      {...props}
-      onReadNote={state => {
-        dispatchAction(createInputAction(state))
-      }}
-      entities={[...getEntitiesByTemplateName("Note")]}
-    />
-  )
+  const entityBehaviour = useEntityBehaviour(props, {
+    detailScreen: Screens.MultiDetail
+  })
+  return <EntityDetails.Mailbox {...props} {...entityBehaviour} />
 }

@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react"
 import styled from "styled-components"
+import _ from "utils"
 
 import Entity from "./Entity"
 
@@ -138,8 +139,8 @@ const Plant = plantProps =>
     ))
 
 const PlantPot = forwardRef((props, ref) => {
-  const isGrown = props.state === "grown"
-  const isPlanted = props.state === "planted" || isGrown
+  const isGrown = _.hasState("grown")(props)
+  const isPlanted = _.hasState("planted")(props) || isGrown
 
   return (
     <Pot {...props} ref={ref}>

@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react"
 import styled, { css } from "styled-components"
+import _ from "utils"
 
 import Entity from "./Entity"
 
@@ -177,11 +178,11 @@ Neck.defaultProps = {
   z: 0.5
 }
 
-const Sink = forwardRef(({ state, ...otherProps }, ref) => {
-  const isConnected = state === "connected"
+const Sink = forwardRef((props, ref) => {
+  const isConnected = _.hasState("connected")(props)
 
   return (
-    <SinkContainer ref={ref} isConnected={isConnected} {...otherProps}>
+    <SinkContainer ref={ref} isConnected={isConnected} {...props}>
       <Well left="50%" top="50%" />
       <Faucet left="50%" top={4}>
         <Cold rotation={-60} top="30%" left="10%" />

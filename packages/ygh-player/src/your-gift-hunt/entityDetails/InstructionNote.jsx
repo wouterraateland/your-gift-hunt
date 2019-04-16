@@ -1,22 +1,21 @@
-import React from 'react'
+import React, { forwardRef } from "react"
+import Note from "./Note"
 
-import Screen from './Screen'
-import { Note } from './Note'
+const InstructionNote = forwardRef((props, ref) => (
+  <Note
+    ref={ref}
+    {...props}
+    fields={[
+      {
+        name: "Text",
+        value:
+          "Instructions:\nBelow, you see an mailbox. There might be a message for you there..."
+      }
+    ]}
+  />
+))
+InstructionNote.name = "InstructionNote"
+InstructionNote.templateName = "Instruction note"
+InstructionNote.defaultProps = Note.defaultProps
 
-const InstructionNoteScreen = ({
-  isVisible,
-  close
-}) => {
-  return (
-    <Screen isVisible={isVisible} onClick={close}>
-      <Note
-        isVisible={isVisible}
-        onClick={close}
-      >
-        <p>Instructions:<br />Below, you see an mailbox. There might be a message for you there...</p>
-      </Note>
-    </Screen>
-  )
-}
-
-export default InstructionNoteScreen
+export default InstructionNote

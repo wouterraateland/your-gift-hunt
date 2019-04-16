@@ -1,30 +1,55 @@
-import Camera from "./Camera"
+import React from "react"
+import _ from "utils"
+import { GenericEntity } from "../entities"
+import EntityDetails from "your-gift-hunt/entityDetails"
+
 import Computer from "./Computer"
-import Item from "./Item"
+import InstructionNote from "./InstructionNote"
 import Mailbox from "./Mailbox"
 import Note from "./Note"
-import InstructionNote from "./InstructionNote"
 import SafeWithCode from "./SafeWithCode"
 import SafeWithKeyhole from "./SafeWithKeyhole"
 
+export const getEntityDetailComponent = templateName => {
+  switch (templateName) {
+    case EntityDetails.Computer.templateName:
+      return Computer
+    case EntityDetails.InstructionNote.templateName:
+      return InstructionNote
+    case EntityDetails.Mailbox.templateName:
+      return Mailbox
+    case EntityDetails.Note.templateName:
+      return Note
+    case EntityDetails.SafeWithCode.templateName:
+      return SafeWithCode
+    case EntityDetails.SafeWithKeyhole.templateName:
+      return SafeWithKeyhole
+    default:
+      return null
+  }
+}
+
+export const GenericEntityDetail = props =>
+  _.compose(
+    Component => <Component {...props} />,
+    _.maybe(() => GenericEntity, _.identity),
+    getEntityDetailComponent
+  )(props.template.name)
+
 export {
-  Camera,
   Computer,
-  Item,
+  InstructionNote,
   Mailbox,
   Note,
-  InstructionNote,
   SafeWithCode,
   SafeWithKeyhole
 }
 
 export default {
-  Camera,
   Computer,
-  Item,
+  InstructionNote,
   Mailbox,
   Note,
-  InstructionNote,
   SafeWithCode,
   SafeWithKeyhole
 }

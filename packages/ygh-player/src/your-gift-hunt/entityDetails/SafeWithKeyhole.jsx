@@ -2,7 +2,6 @@ import React, { forwardRef } from "react"
 import styled, { keyframes } from "styled-components"
 import _ from "utils"
 
-import Screen from "./Screen"
 import Safe from "./Safe"
 
 const keyTurn1 = keyframes`
@@ -168,21 +167,20 @@ const Bars = styled.div`
     cubic-bezier(0.3, 0, 0.3, 1);
 `
 
-const SafeWithKeyholeScreen = forwardRef(
-  ({ isVisible, entity, onWheelTurn, close }, ref) => {
-    const isUnlocked = _.hasState("unlocked")(entity)
+const SafeWithKeyhole = forwardRef((props, ref) => {
+  const isUnlocked = _.hasState("unlocked")(props)
 
-    return (
-      <Screen isVisible={isVisible} onClick={close} centerContent>
-        <Safe isVisible={isVisible}>
-          <Keyhole isUnlocked={isUnlocked} ref={ref} />
-          <Wheel onClick={onWheelTurn}>
-            <Bars isUnlocked={isUnlocked} />
-          </Wheel>
-        </Safe>
-      </Screen>
-    )
-  }
-)
+  return (
+    <Safe {...props}>
+      <Keyhole isUnlocked={isUnlocked} ref={ref} />
+      <Wheel>
+        <Bars isUnlocked={isUnlocked} />
+      </Wheel>
+    </Safe>
+  )
+})
+SafeWithKeyhole.name = "SafeWithKeyhole"
+SafeWithKeyhole.templateName = "Safe with keyhole"
+SafeWithKeyhole.defaultProps = Safe.defaultProps
 
-export default SafeWithKeyholeScreen
+export default SafeWithKeyhole

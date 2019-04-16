@@ -63,7 +63,7 @@ const ItemContainer = styled.div`
 `
 
 const getInputValue = state => {
-  switch (state) {
+  switch (state.name) {
     case "closed":
       return "open"
     case "open":
@@ -73,61 +73,65 @@ const getInputValue = state => {
   }
 }
 
-const Package = forwardRef(({ dispatchInputAction, state, ...props }, ref) => {
-  const isOpen = state === "open"
-  const isEmpty = state === "empty"
+const Package = forwardRef(
+  ({ containedEntity, dispatchInputAction, ...props }, ref) => {
+    const isOpen = _.hasState("open")(props)
+    const isEmpty = _.hasState("empty")(props)
 
-  const Component = getEntityComponent(props.template.name)
+    const Component = getEntityComponent(containedEntity.template.name)
 
-  return (
-    <Bottom
-      {...props}
-      onClick={() => dispatchInputAction("state", getInputValue(state))}
-      ref={ref}
-    >
-      {!isEmpty && Component && (
-        <ItemContainer
-          scale={
-            2 /
-            Math.max(
-              Component.defaultProps.width,
-              Component.defaultProps.height
-            )
-          }
-        >
-          <Component rotation={-45} />
-        </ItemContainer>
-      )}
-      <Flap
-        isOpen={isOpen}
-        width={props.width / 2}
-        height={props.height}
-        left="0"
-      />
-      <Flap
-        isOpen={isOpen}
-        width={props.width / 2}
-        height={props.height}
-        rotation={180}
-        left="100%"
-      />
-      <Flap
-        isOpen={isOpen}
-        width={props.height / 2}
-        height={props.width}
-        rotation={90}
-        top="0"
-      />
-      <Flap
-        isOpen={isOpen}
-        width={props.height / 2}
-        height={props.width}
-        rotation={270}
-        top="100%"
-      />
-    </Bottom>
-  )
-})
+    return (
+      <Bottom
+        {...props}
+        onClick={() =>
+          dispatchInputAction(props.state, "state", getInputValue(props.state))
+        }
+        ref={ref}
+      >
+        {!isEmpty && Component && (
+          <ItemContainer
+            scale={
+              2 /
+              Math.max(
+                Component.defaultProps.width,
+                Component.defaultProps.height
+              )
+            }
+          >
+            <Component rotation={-45} />
+          </ItemContainer>
+        )}
+        <Flap
+          isOpen={isOpen}
+          width={props.width / 2}
+          height={props.height}
+          left="0"
+        />
+        <Flap
+          isOpen={isOpen}
+          width={props.width / 2}
+          height={props.height}
+          rotation={180}
+          left="100%"
+        />
+        <Flap
+          isOpen={isOpen}
+          width={props.height / 2}
+          height={props.width}
+          rotation={90}
+          top="0"
+        />
+        <Flap
+          isOpen={isOpen}
+          width={props.height / 2}
+          height={props.width}
+          rotation={270}
+          top="100%"
+        />
+      </Bottom>
+    )
+  }
+)
 Package.name = "Package"
 Package.templateName = "Package"
 Package.defaultProps = {

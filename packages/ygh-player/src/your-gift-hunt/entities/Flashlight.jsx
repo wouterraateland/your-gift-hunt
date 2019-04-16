@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react"
 import styled from "styled-components"
+import _ from "utils"
 
 import Entity from "./Entity"
 
@@ -106,24 +107,23 @@ const Button = styled.div`
   transform: translate(-50%, -50%);
 `
 
-const Flashlight = forwardRef(
-  ({ dispatchInputAction, state, ...otherProps }, ref) => {
-    const isOn = state === "on"
-    const isEmpty = state === "empty"
+const Flashlight = forwardRef(({ dispatchInputAction, ...props }, ref) => {
+  const isOn = _.hasState("on")(props)
+  const isEmpty = _.hasState("empty")(props)
 
-    return (
-      <Body {...otherProps} ref={ref}>
-        <Holder isEmpty={isEmpty} left={0.8} top={-0.0} />
-        <Button
-          onClick={() =>
-            !isEmpty && dispatchInputAction("power", isOn ? "off" : "on")
-          }
-        />
-        <Head isOn={isOn} left={1.75} />
-      </Body>
-    )
-  }
-)
+  return (
+    <Body {...props} ref={ref}>
+      <Holder isEmpty={isEmpty} left={0.8} top={-0.0} />
+      <Button
+        onClick={() =>
+          !isEmpty &&
+          dispatchInputAction(props.state, "power", isOn ? "off" : "on")
+        }
+      />
+      <Head isOn={isOn} left={1.75} />
+    </Body>
+  )
+})
 Flashlight.name = "Flashlight"
 Flashlight.templateName = "Flashlight"
 Flashlight.defaultProps = {

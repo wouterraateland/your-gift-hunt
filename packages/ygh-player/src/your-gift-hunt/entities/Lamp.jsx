@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react"
 import styled from "styled-components"
+import _ from "utils"
 
 import Entity from "./Entity"
 
@@ -81,19 +82,24 @@ Light.defaultProps = {
   height: 7.5
 }
 
-const Lamp = forwardRef(({ state, dispatchInputAction, ...props }, ref) => (
-  <Entity
-    noVisual
-    {...props}
-    onClick={() => dispatchInputAction("power", state === "on" ? "off" : "on")}
-    ref={ref}
-  >
-    <Light isOn={state === "on"} left={6.25} />
-    <Foot />
-    <Head left={6} />
-    <Neck />
-  </Entity>
-))
+const Lamp = forwardRef(({ dispatchInputAction, ...props }, ref) => {
+  const isOn = _.hasState("on")(props)
+  return (
+    <Entity
+      noVisual
+      {...props}
+      onClick={() =>
+        dispatchInputAction(props.state, "power", isOn ? "off" : "on")
+      }
+      ref={ref}
+    >
+      <Light isOn={isOn} left={6.25} />
+      <Foot />
+      <Head left={6} />
+      <Neck />
+    </Entity>
+  )
+})
 Lamp.name = "Lamp"
 Lamp.templateName = "Lamp"
 Lamp.defaultProps = {

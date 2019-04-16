@@ -2,8 +2,37 @@ import { useCallback, useContext } from "react"
 import GameContext from "contexts/Game"
 import useYGHPlayer from "ygh-player/react-hook"
 import useStore, { localStorageStoreCreator } from "hooks/useStore"
+import useScreen from "hooks/useScreen"
+
+import Screens from "components/screens"
+
+const containerRelations = [
+  { container: "Computer", contained: ["Question", "Input"] },
+  { container: "Mailbox", contained: ["Note"] },
+  { container: "Camera", contained: ["Code"] },
+  { container: "Instruction note", contained: [] }
+]
+
+const containerize = entities =>
+  containerRelations.reduce((entities, { container, contained }) => {
+    const containerEntity = entities.find(
+      ({ template }) => template.name === container
+    ) || { id: container, template: { name: container } }
+    const containedEntities = entities.filter(({ template }) =>
+      contained.includes(template.name)
+    )
+    const ids = (containerEntity.id
+      ? [containerEntity, ...containedEntities]
+      : containedEntities
+    ).map(({ id }) => id)
+    return [
+      ...entities.filter(({ id }) => !ids.includes(id)),
+      { ...containerEntity, containedEntities }
+    ]
+  }, entities)
 
 export const useGameProvider = gameIdentifier => {
+  const { popup } = useScreen()
   const yghPlayer = useYGHPlayer("super secret key", gameIdentifier)
   const { read, write } = useStore(
     localStorageStoreCreator({
@@ -11,15 +40,18 @@ export const useGameProvider = gameIdentifier => {
     })
   )
 
-  const pickupEntity = useCallback(entityId =>
+  const pickupEntity = useCallback(entityId => {
     write("inventoryItems", inventoryItems => [
       ...(inventoryItems || []),
       entityId
     ])
-  )
+    popup(Screens.ItemPickup, entityId)
+  })
 
   const presentEntities = yghPlayer.gameState.entities
-    ? yghPlayer.gameState.entities.filter(({ state }) => state !== null)
+    ? containerize(
+        yghPlayer.gameState.entities.filter(({ state }) => state !== null)
+      )
     : []
 
   const getEntitiesByTemplateName = useCallback(

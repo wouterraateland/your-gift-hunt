@@ -2,6 +2,7 @@ import React from "react"
 import _ from "utils"
 
 import DefaultEntity from "./Default"
+import Entity from "./Entity"
 
 import Armchair from "./Armchair"
 import Battery from "./Battery"
@@ -31,12 +32,13 @@ import WateringCan from "./WateringCan"
 import WorktopWithSink from "./WorktopWithSink"
 
 export {
+  DefaultEntity,
+  Entity,
   Armchair,
   Battery,
   Camera,
   Carpet,
   Computer,
-  DefaultEntity,
   Desk,
   DeskChair,
   Door,

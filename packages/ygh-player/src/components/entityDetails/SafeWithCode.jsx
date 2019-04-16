@@ -1,18 +1,19 @@
 import React from "react"
-import { SafeWithCode } from "your-gift-hunt/entityDetails"
-
-import useGame from "hooks/useGame"
+import EntityDetails from "your-gift-hunt/entityDetails"
 import useEntityBehaviour from "hooks/useEntityBehaviour"
+import useGame from "hooks/useGame"
 
-export default ({ entityId, ...props }) => {
-  const { getEntityById, pickupEntity } = useGame()
-  const entity = getEntityById(entityId)
+const EnhancedSafeWithKeyhole = props => {
+  const { pickupEntity } = useGame()
 
-  const entityBehaviour = useEntityBehaviour(entity, {
-    onInput: gameState =>
+  const entityBehaviour = useEntityBehaviour(props, {
+    onDrop: gameState =>
       gameState.entities
         .filter(({ isItem, state }) => isItem && state)
         .map(({ id }) => pickupEntity(id))
   })
-  return <SafeWithCode {...props} entity={entity} {...entityBehaviour} />
+
+  return <EntityDetails.SafeWithKeyhole {...props} {...entityBehaviour} />
 }
+
+export default EnhancedSafeWithKeyhole

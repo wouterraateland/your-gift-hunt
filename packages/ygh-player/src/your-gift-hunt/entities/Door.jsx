@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react"
 import styled from "styled-components"
+import _ from "utils"
 
 import Entity from "./Entity"
 
@@ -31,12 +32,6 @@ const Frame = styled(Entity)`
     background: #000;
   }
 `
-Frame.defaultProps = {
-  ...Entity.defaultProps,
-  z: 0.25,
-  width: 5,
-  height: 1
-}
 
 const DoorPart = styled(Entity)`
   border-radius: 60% 40% 0.2em 80% / 0.2em 0.2em 0.3em 0.1em;
@@ -66,18 +61,27 @@ DoorPart.defaultProps = {
   origin: { left: "0%", top: "100%" }
 }
 
-const Door = forwardRef(({ state, dispatchInputAction, ...props }, ref) => (
-  <Frame
-    {...props}
-    onClick={() =>
-      dispatchInputAction("state", state === "open" ? "closed" : "open")
-    }
-    ref={ref}
-  >
-    <DoorPart left={0} top={0.75} rotation={state === "open" ? 60 : 0} />
-  </Frame>
-))
+const Door = forwardRef(({ dispatchInputAction, ...props }, ref) => {
+  const isOpen = _.hasState("open")(props)
+  return (
+    <Frame
+      {...props}
+      onClick={() =>
+        dispatchInputAction(props.state, "state", isOpen ? "closed" : "open")
+      }
+      ref={ref}
+    >
+      <DoorPart left={0} top={0.75} rotation={isOpen ? 60 : 0} />
+    </Frame>
+  )
+})
 Door.name = "Door"
 Door.templateName = "Door"
+Door.defaultProps = {
+  ...Entity.defaultProps,
+  z: 0.25,
+  width: 5,
+  height: 1
+}
 
 export default Door

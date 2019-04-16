@@ -5,7 +5,7 @@ import useScreen from "hooks/useScreen"
 import useGame from "hooks/useGame"
 
 import { GenericEntity } from "components/entities"
-import ItemScreen from "components/entityDetails/Item"
+import Screens from "components/screens"
 
 import DragContainer from "components/DragContainer"
 
@@ -28,9 +28,13 @@ const ItemSlot = styled.div`
   flex-shrink: 0;
   padding: 2em;
   margin: 0.5em;
-  border-radius: 100%;
+  border-radius: ${props => props.theme.borderRadius};
 
-  background: #fff4;
+  box-shadow: inset 0.25em 0.25em 0.5em -0.25em #0004,
+    inset -0.25em -0.25em 0.5em -0.25em #fff2, 0 0 0.25em #fff2,
+    inset -0.1em -0.1em 0.1em -0.1em #fff9;
+
+  background-color: #0004;
 
   & > * {
     font-size: 1.5em;
@@ -48,7 +52,7 @@ const Inventory = () => {
       {inventoryItems.map(entity => (
         <ItemSlot
           key={entity.id}
-          onClick={() => popup(ItemScreen, { entityId: entity.id })}
+          onClick={() => popup(Screens.InventoryItem, entity.id)}
         >
           <DragContainer data={entity}>
             <GenericEntity {...entity} />

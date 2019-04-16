@@ -38,7 +38,7 @@ const DefaultScene = () => {
             left={12 + 0.5 * i}
             top={40 + 5 * i}
             rotation={-10 + 15 * i}
-            {...item}
+            containedEntity={item}
           />
         ))}
         <Entities.Mailbox {...withTemplate("Mailbox")} left={6.5} top={38.5} />

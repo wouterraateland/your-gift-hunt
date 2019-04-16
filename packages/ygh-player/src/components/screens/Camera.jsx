@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import styled, { css } from "styled-components"
 import _ from "utils"
 
+import useGame from "hooks/useGame"
+import { createInputAction } from "ygh-player"
+
 import QrReader from "react-qr-reader"
 
-import Screen from "./Screen"
-
-const StyledScreen = styled(Screen)`
+const StyledScreen = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   bottom: 0;
+  right: 0;
   z-index: 5;
 `
 
@@ -23,7 +28,7 @@ const CameraBackground = styled.div`
 
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-  transform: translate(0, ${props => (props.isVisible ? 0 : 100)}%);
+  ${"" /* transform: translate(0, ${props => (props.isVisible ? 0 : 100)}%); */}
 `
 
 const CloseButton = styled.div`
@@ -97,47 +102,55 @@ const Message = styled.p`
   text-align: center;
 `
 
-const CameraScreen = ({ isVisible, close, onScanCode, entities, error }) => {
-  const initialState = {
-    data: null,
-    duplicate: false
-  }
+const initialState = {
+  data: null,
+  duplicate: false
+}
 
+const CameraScreen = ({ close, entity }) => {
+  const { dispatchAction } = useGame()
+  const entities = entity.containedEntities
   const [state, setState] = useState(initialState)
 
   useEffect(() => {
     setState(initialState)
-  }, [isVisible])
+  }, [])
 
-  function handleOnError(error) {
+  const handleOnError = useCallback(error => {
     console.error(error)
     setState({ error })
-  }
+  }, [])
 
-  function handleOnScan(data) {
-    if (data !== null && data !== state.data) {
-      if (!entities.some(entity => _.getInputValue("code")(entity) === data)) {
-        setState({ data })
-        onScanCode && onScanCode(data)
-      } else {
-        setState({ data, duplicate: true })
+  const handleOnScan = useCallback(
+    data => {
+      if (data !== null && data !== state.data) {
+        if (
+          !entities.some(entity => _.getInputValue("code")(entity) === data)
+        ) {
+          setState({ data })
+          entities
+            .filter(_.hasState("unscanned"))
+            .forEach(entity =>
+              dispatchAction(createInputAction(entity.state, "code", data))
+            )
+        } else {
+          setState({ data, duplicate: true })
+        }
       }
-    }
-  }
+    },
+    [entities, state.data, dispatchAction]
+  )
 
   return (
-    <StyledScreen isVisible={isVisible}>
-      <CameraBackground isVisible={isVisible}>
+    <StyledScreen>
+      <CameraBackground>
         <CloseButton onClick={close} />
-        {isVisible && (
-          <StyledQrReader
-            delay={500}
-            onError={handleOnError}
-            onScan={handleOnScan}
-            {...state}
-          />
-        )}
-        {error && <Message>{error}</Message>}
+        <StyledQrReader
+          delay={500}
+          onError={handleOnError}
+          onScan={handleOnScan}
+          {...state}
+        />
         {state.duplicate && (
           <Message>You have already scanned this code.</Message>
         )}

@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react"
+import EntityDetails from "your-gift-hunt/entityDetails"
+import useEntityBehaviour from "hooks/useEntityBehaviour"
 
-import { InstructionNote } from 'your-gift-hunt/entityDetails'
-
-export default (props) => {
-  return (
-    <InstructionNote {...props} />
-  )
+export default props => {
+  const entityBehaviour = useEntityBehaviour(props)
+  return <EntityDetails.InstructionNote {...props} {...entityBehaviour} />
 }

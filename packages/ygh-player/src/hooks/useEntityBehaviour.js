@@ -1,14 +1,16 @@
 import { useCallback, useRef } from "react"
 
 import useGame from "hooks/useGame"
-import usePopup from "hooks/usePopup"
+import useScreen from "hooks/useScreen"
 import useDrop from "hooks/useDrop"
 import { createInputAction } from "ygh-player"
+
+import Screens from "components/screens"
 
 const useEntityBehaviour = (props, options = {}) => {
   const ref = useRef(null)
   const { dispatchAction } = useGame()
-  const popup = usePopup()
+  const { popup } = useScreen()
 
   useDrop({
     ref,
@@ -18,29 +20,26 @@ const useEntityBehaviour = (props, options = {}) => {
   })
 
   const dispatchInputAction = useCallback(
-    async (key, value) => {
-      if (props.state) {
+    async (state, key, value) => {
+      if (state) {
         const gameState = await dispatchAction(
-          createInputAction(props.state, [{ key, value }])
+          createInputAction(state, key ? [{ key, value }] : [])
         )
         options.onInput && options.onInput(gameState)
       }
     },
-    [dispatchAction, props.state, options.onInput]
+    [dispatchAction, options.onInput]
   )
 
   const inspect = useCallback(
-    () =>
-      options.detailScreen &&
-      popup(options.detailScreen, { entityId: props.id }),
+    () => popup(options.detailScreen || Screens.SingleDetail, props.id),
     [(options.detailScreen, props.id)]
   )
 
   return {
     ref,
     dispatchInputAction,
-    inspect,
-    state: props.state ? props.state.name : null
+    inspect
   }
 }
 
