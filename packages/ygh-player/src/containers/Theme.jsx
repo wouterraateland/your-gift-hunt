@@ -1,9 +1,10 @@
 import "typeface-playfair-display"
 import "typeface-montserrat"
 
-import React from "react"
+import React, { useMemo } from "react"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 import { opacify, transparentize } from "polished"
+import useWindowSize from "hooks/useWindowSize"
 
 const theme = {
   color: {
@@ -29,11 +30,14 @@ const theme = {
   }
 }
 
-export const GlobalStyles = createGlobalStyle`
+export const StaticGlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     vertical-align: top;
 
     box-sizing: border-box;
+
+    -webkit-touch-callout: none;
+    user-select: none;
   }
 
   html {
@@ -101,10 +105,26 @@ export const GlobalStyles = createGlobalStyle`
   }
 `
 
+const VariableGlobalStyle = () => {
+  const { height } = useWindowSize()
+
+  const GlobalStyle = useMemo(
+    () => createGlobalStyle`
+    :root {
+      --vh: ${props => props.vh}px
+    }
+  `,
+    [height]
+  )
+
+  return <GlobalStyle vh={height * 0.01} />
+}
+
 export default ({ children }) => (
   <ThemeProvider theme={theme}>
     <>
-      <GlobalStyles />
+      <VariableGlobalStyle />
+      <StaticGlobalStyle />
       {children}
     </>
   </ThemeProvider>

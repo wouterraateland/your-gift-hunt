@@ -8,7 +8,6 @@ const Note = styled(Entity)`
 
   perspective: 100px;
   transform-style: preserve-3d;
-  user-select: none;
 `
 
 const Paper = styled.div`

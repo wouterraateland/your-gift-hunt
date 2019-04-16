@@ -15,6 +15,7 @@ const GamePage = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: calc(100 * var(--vh));
 
   @media (orientation: landscape) {
     flex-direction: row-reverse;

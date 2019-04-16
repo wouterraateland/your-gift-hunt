@@ -5,6 +5,7 @@ import useDrag from "hooks/useDrag"
 
 const StyledDragContainer = styled.div`
   transform: translate(0, 0);
+  touch-action: none;
 
   & > * > * {
     pointer-events: none;
