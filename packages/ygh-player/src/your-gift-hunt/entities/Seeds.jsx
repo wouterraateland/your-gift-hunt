@@ -3,9 +3,20 @@ import styled from "styled-components"
 import Entity from "./Entity"
 
 const Seeds = styled(Entity)`
-  border-radius: 100% 100% 20% 100%;
+  &,
+  &::after {
+    border-radius: 100% 100% 20% 100%;
+  }
 
-  box-shadow: inset 0 0 0.5em #000;
+  &::after {
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    box-shadow: inset 0 0 0.5em #000c;
+  }
 
   background-image: radial-gradient(
       ellipse 40% 40% at 50% 50%,

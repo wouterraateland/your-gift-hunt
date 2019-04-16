@@ -74,7 +74,7 @@ const DefaultScene = () => {
           left={3.5}
           top={12.5}
         />
-        <Entities.Sink
+        <Entities.WorktopWithSink
           {...withTemplate("Sink")}
           left={3.25}
           top={24}

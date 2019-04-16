@@ -1,6 +1,6 @@
 import React from "react"
 import _ from "utils"
-import { GenericEntity } from "../entities"
+import { getEntityComponent, DefaultEntity } from "../entities"
 import EntityDetails from "your-gift-hunt/entityDetails"
 
 import Computer from "./Computer"
@@ -25,14 +25,14 @@ export const getEntityDetailComponent = templateName => {
     case EntityDetails.SafeWithKeyhole.templateName:
       return SafeWithKeyhole
     default:
-      return null
+      return getEntityComponent(templateName)
   }
 }
 
 export const GenericEntityDetail = props =>
   _.compose(
     Component => <Component {...props} />,
-    _.maybe(() => GenericEntity, _.identity),
+    _.maybe(() => DefaultEntity, _.identity),
     getEntityDetailComponent
   )(props.template.name)
 

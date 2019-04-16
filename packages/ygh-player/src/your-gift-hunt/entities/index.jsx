@@ -92,7 +92,7 @@ const entities = [
 ]
 
 export const getEntityComponent = templateName =>
-  Object.values(entities).find(object => templateName === object.templateName)
+  entities.find(entity => templateName === entity.templateName)
 
 export const GenericEntity = props =>
   _.compose(

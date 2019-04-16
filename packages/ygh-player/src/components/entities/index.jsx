@@ -1,93 +1,46 @@
 import React from "react"
 import _ from "utils"
-import DefaultEntity from "./Default"
 
-import Armchair from "./Armchair"
-import Battery from "./Battery"
-import Camera from "./Camera"
-import Carpet from "./Carpet"
-import Computer from "./Computer"
-import Desk from "./Desk"
-import DeskChair from "./DeskChair"
-import Door from "./Door"
-import Flashlight from "./Flashlight"
-import Floor from "./Floor"
-import Grass from "./Grass"
-import InstructionNote from "./InstructionNote"
-import Lamp from "./Lamp"
-import Mailbox from "./Mailbox"
-import Map from "./Map"
-import MapPiece from "./MapPiece"
-import Package from "./Package"
-import Path from "./Path"
-import PlantPot from "./PlantPot"
-import SafeKey from "./SafeKey"
-import SafeWithCode from "./SafeWithCode"
-import SafeWithKeyhole from "./SafeWithKeyhole"
-import Seeds from "./Seeds"
-import Sink from "./Sink"
-import Wall from "./Wall"
-import WateringCan from "./WateringCan"
 import Entities from "your-gift-hunt/entities"
 
-export const getEntityComponent = templateName => {
-  switch (templateName) {
-    case Entities.Armchair.templateName:
-      return Armchair
-    case Entities.Battery.templateName:
-      return Battery
-    case Entities.Camera.templateName:
-      return Camera
-    case Entities.Carpet.templateName:
-      return Carpet
-    case Entities.Computer.templateName:
-      return Computer
-    case Entities.Desk.templateName:
-      return Desk
-    case Entities.DeskChair.templateName:
-      return DeskChair
-    case Entities.Door.templateName:
-      return Door
-    case Entities.Flashlight.templateName:
-      return Flashlight
-    case Entities.Floor.templateName:
-      return Floor
-    case Entities.Grass.templateName:
-      return Grass
-    case Entities.InstructionNote.templateName:
-      return InstructionNote
-    case Entities.Lamp.templateName:
-      return Lamp
-    case Entities.Mailbox.templateName:
-      return Mailbox
-    case Entities.Map.templateName:
-      return Map
-    case Entities.MapPiece.templateName:
-      return MapPiece
-    case Entities.Package.templateName:
-      return Package
-    case Entities.Path.templateName:
-      return Path
-    case Entities.PlantPot.templateName:
-      return PlantPot
-    case Entities.SafeKey.templateName:
-      return SafeKey
-    case Entities.SafeWithCode.templateName:
-      return SafeWithCode
-    case Entities.SafeWithKeyhole.templateName:
-      return SafeWithKeyhole
-    case Entities.Seeds.templateName:
-      return Seeds
-    case Entities.WorktopWithSink.templateName:
-      return Sink
-    case Entities.Wall.templateName:
-      return Wall
-    case Entities.WateringCan.templateName:
-      return WateringCan
-    default:
-      return null
-  }
-}
+import withCameraBehaviour from "./withCameraBehaviour"
+import withEntityBehaviour from "./withEntityBehaviour"
+import withPackageBehaviour from "./withPackageBehaviour"
+
+export const DefaultEntity = withEntityBehaviour(Entities.DefaultEntity)
+
+const entityComponents = [
+  withEntityBehaviour(Entities.Armchair),
+  withEntityBehaviour(Entities.Battery),
+  withCameraBehaviour(Entities.Camera),
+  withEntityBehaviour(Entities.Carpet),
+  withEntityBehaviour(Entities.Computer),
+  withEntityBehaviour(Entities.DefaultEntity),
+  withEntityBehaviour(Entities.Desk),
+  withEntityBehaviour(Entities.DeskChair),
+  withEntityBehaviour(Entities.Door),
+  withEntityBehaviour(Entities.Flashlight),
+  withEntityBehaviour(Entities.Floor),
+  withEntityBehaviour(Entities.Grass),
+  withEntityBehaviour(Entities.InstructionNote),
+  withEntityBehaviour(Entities.Lamp),
+  withEntityBehaviour(Entities.Mailbox),
+  withEntityBehaviour(Entities.Map),
+  withEntityBehaviour(Entities.MapPiece),
+  withPackageBehaviour(Entities.Package),
+  withEntityBehaviour(Entities.Path),
+  withEntityBehaviour(Entities.PlantPot),
+  withEntityBehaviour(Entities.SafeKey),
+  withEntityBehaviour(Entities.SafeWithCode),
+  withEntityBehaviour(Entities.SafeWithKeyhole),
+  withEntityBehaviour(Entities.Seeds),
+  withEntityBehaviour(Entities.Wall),
+  withEntityBehaviour(Entities.WateringCan),
+  withEntityBehaviour(Entities.WorktopWithSink)
+]
+
+export const getEntityComponent = templateName =>
+  entityComponents.find(component => component.templateName === templateName)
 
 export const GenericEntity = props =>
   _.compose(
@@ -96,62 +49,7 @@ export const GenericEntity = props =>
     getEntityComponent
   )(props.template.name)
 
-export {
-  Armchair,
-  Battery,
-  Camera,
-  Carpet,
-  Computer,
-  DefaultEntity,
-  Desk,
-  DeskChair,
-  Door,
-  Flashlight,
-  Floor,
-  Grass,
-  InstructionNote,
-  Lamp,
-  Mailbox,
-  Map,
-  MapPiece,
-  Package,
-  Path,
-  PlantPot,
-  SafeKey,
-  SafeWithCode,
-  SafeWithKeyhole,
-  Seeds,
-  Sink,
-  Wall,
-  WateringCan
-}
-
-export default {
-  Armchair,
-  Battery,
-  Camera,
-  Carpet,
-  Computer,
-  DefaultEntity,
-  Desk,
-  DeskChair,
-  Door,
-  Flashlight,
-  Floor,
-  Grass,
-  InstructionNote,
-  Lamp,
-  Mailbox,
-  Map,
-  MapPiece,
-  Package,
-  Path,
-  PlantPot,
-  SafeKey,
-  SafeWithCode,
-  SafeWithKeyhole,
-  Seeds,
-  Sink,
-  Wall,
-  WateringCan
-}
+export default entityComponents.reduce(
+  (acc, x) => ({ ...acc, [x.name]: x }),
+  {}
+)

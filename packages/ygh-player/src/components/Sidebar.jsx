@@ -19,7 +19,9 @@ const SidebarContainer = styled.div`
     margin-top: -2em;
     background-image: radial-gradient(
       ellipse 150% 100% at 50% 100%,
-      #332f2e 85%,
+      #332f2e 83%,
+      #ffd666 84%,
+      #ffd666 85%,
       #0004 86%,
       transparent
     );
@@ -32,7 +34,9 @@ const SidebarContainer = styled.div`
     margin-right: -2em;
     background-image: radial-gradient(
       ellipse 100% 150% at 0% 50%,
-      #332f2e 85%,
+      #332f2e 83%,
+      #ffd666 84%,
+      #ffd666 85%,
       #0004 86%,
       transparent
     );
