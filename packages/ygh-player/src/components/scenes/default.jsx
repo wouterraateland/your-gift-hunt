@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from "react"
 import useGame from "hooks/useGame"
 
 import Scene from "components/Scene"
-import Entities from "components/entities"
+import Entities from "components/Entities"
 
 const DefaultScene = () => {
   const { entities, isInInventory } = useGame()

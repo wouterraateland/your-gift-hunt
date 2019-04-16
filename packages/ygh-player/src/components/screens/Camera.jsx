@@ -1,11 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react"
-import styled, { css } from "styled-components"
+import styled, { css, keyframes } from "styled-components"
 import _ from "utils"
 
 import useGame from "hooks/useGame"
 import { createInputAction } from "ygh-player"
 
 import QrReader from "react-qr-reader"
+
+const fromBelow = keyframes`
+  to { transform: translate(0, 0); }
+`
 
 const StyledScreen = styled.div`
   position: fixed;
@@ -14,21 +18,12 @@ const StyledScreen = styled.div`
   bottom: 0;
   right: 0;
   z-index: 5;
-`
-
-const CameraBackground = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
 
   background-color: #000;
   color: #fff;
 
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-  ${"" /* transform: translate(0, ${props => (props.isVisible ? 0 : 100)}%); */}
+  animation: ${fromBelow} 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+  transform: translate(0, 100%);
 `
 
 const CloseButton = styled.div`
@@ -143,19 +138,17 @@ const CameraScreen = ({ close, entity }) => {
 
   return (
     <StyledScreen>
-      <CameraBackground>
-        <CloseButton onClick={close} />
-        <StyledQrReader
-          delay={500}
-          onError={handleOnError}
-          onScan={handleOnScan}
-          {...state}
-        />
-        {state.duplicate && (
-          <Message>You have already scanned this code.</Message>
-        )}
-        {state.error && <Message>{JSON.stringify(state.error)}</Message>}
-      </CameraBackground>
+      <CloseButton onClick={close} />
+      <StyledQrReader
+        delay={500}
+        onError={handleOnError}
+        onScan={handleOnScan}
+        {...state}
+      />
+      {state.duplicate && (
+        <Message>You have already scanned this code.</Message>
+      )}
+      {state.error && <Message>{JSON.stringify(state.error)}</Message>}
     </StyledScreen>
   )
 }

@@ -1,11 +1,11 @@
 import React from "react"
 import _ from "utils"
 
-import Entities from "your-gift-hunt/entities"
+import Entities from "your-gift-hunt/Entities"
 
-import withCameraBehaviour from "./withCameraBehaviour"
-import withEntityBehaviour from "./withEntityBehaviour"
-import withPackageBehaviour from "./withPackageBehaviour"
+import withCameraBehaviour from "containers/withCameraBehaviour"
+import withEntityBehaviour from "containers/withEntityBehaviour"
+import withPackageBehaviour from "containers/withPackageBehaviour"
 
 export const DefaultEntity = withEntityBehaviour(Entities.DefaultEntity)
 

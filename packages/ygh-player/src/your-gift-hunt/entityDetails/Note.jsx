@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useMemo } from "react"
 import styled, { css } from "styled-components"
 import _ from "utils"
-import { Entity } from "../entities"
+import { Entity } from "../Entities"
 
 export const NoteContainer = styled(Entity)`
   position: relative;

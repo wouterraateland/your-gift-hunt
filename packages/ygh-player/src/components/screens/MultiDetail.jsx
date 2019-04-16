@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 
 import { Float } from "your-gift-hunt/ui"
-import { GenericEntityDetail } from "components/entityDetails"
+import { GenericEntityDetail } from "components/EntityDetails"
 import BaseScreen from "./Base"
 
 const MultiDetailScreen = styled(BaseScreen)``

@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import BaseScreen from "./Base"
-import { GenericEntityDetail } from "components/entityDetails"
+import { GenericEntityDetail } from "components/EntityDetails"
 
 const SingleDetailScreen = styled(BaseScreen)``
 

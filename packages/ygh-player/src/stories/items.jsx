@@ -14,7 +14,7 @@ import {
   SafeKey,
   Seeds,
   WateringCan
-} from "your-gift-hunt/entities"
+} from "your-gift-hunt/Entities"
 
 storiesOf("Items", module)
   .addDecorator(withCenter(true))

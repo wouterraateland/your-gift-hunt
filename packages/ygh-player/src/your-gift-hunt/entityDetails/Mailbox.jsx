@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react"
 import styled, { keyframes } from "styled-components"
 
-import { Entity } from "../entities"
+import { Entity } from "../Entities"
 
 const MailboxContainer = styled(Entity)`
   border-radius: 12em 12em 0.5em 0.5em;

@@ -6,7 +6,7 @@ import withTheme from "./decorators/withTheme"
 
 import Viewport from "components/Viewport"
 import Scene from "components/Scene"
-import Entities from "your-gift-hunt/entities"
+import Entities from "your-gift-hunt/Entities"
 
 storiesOf("Overview", module)
   .addDecorator(withTheme)

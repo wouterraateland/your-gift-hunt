@@ -26,7 +26,7 @@ import {
   SafeWithKeyhole,
   WorktopWithSink,
   Wall
-} from "your-gift-hunt/entities"
+} from "your-gift-hunt/Entities"
 
 storiesOf("Objects", module)
   .addDecorator(withCenter(false))

@@ -1,5 +1,5 @@
 import React from "react"
-import Entities, { GenericEntity } from "../entities"
+import Entities, { GenericEntity } from "../Entities"
 import _ from "utils"
 
 import Computer from "./Computer"

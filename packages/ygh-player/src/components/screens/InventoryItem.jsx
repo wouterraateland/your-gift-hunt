@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import Base from "./Base"
-import { getEntityDetailComponent } from "../entityDetails"
+import { getEntityDetailComponent } from "../EntityDetails"
 import EntityContainer from "components/EntityContainer"
 
 const InventoryItemScreen = styled(Base)`

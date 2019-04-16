@@ -4,7 +4,7 @@ import styled from "styled-components"
 import useScreen from "hooks/useScreen"
 import useGame from "hooks/useGame"
 
-import { GenericEntity } from "components/entities"
+import { GenericEntity } from "components/Entities"
 import Screens from "components/screens"
 
 import DragContainer from "components/DragContainer"

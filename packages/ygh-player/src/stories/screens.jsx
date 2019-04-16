@@ -18,7 +18,7 @@
 //   Note,
 //   SafeWithCode,
 //   SafeWithKeyhole
-// } from "your-gift-hunt/entityDetails"
+// } from "your-gift-hunt/EntityDetails"
 //
 // const noop = () => {}
 //

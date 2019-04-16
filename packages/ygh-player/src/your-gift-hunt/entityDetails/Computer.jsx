@@ -8,7 +8,11 @@ import React, {
 import styled, { keyframes } from "styled-components"
 
 import _ from "utils"
-import { Entity } from "../entities"
+import { Entity } from "../Entities"
+
+const turnOn = keyframes`
+  to { background-color: #030739; }
+`
 
 const ComputerScreen = styled(Entity)`
   padding: 1em;
@@ -19,11 +23,10 @@ const ComputerScreen = styled(Entity)`
   box-shadow: 0.4em 0.4em 2.4em -0.2em #0004;
 
   font-family: monospace;
-
-  background: ${props => (props.isVisible ? "#030739" : "#111")};
   color: #fff;
+  background-color: #111;
 
-  transition: background 0.5s 0.4s ease-out;
+  animation: ${turnOn} 0.5s ease-out 0.4s forwards;
 
   &::before,
   &::after {

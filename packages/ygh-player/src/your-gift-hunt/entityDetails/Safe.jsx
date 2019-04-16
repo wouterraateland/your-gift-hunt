@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Entity } from "../entities"
+import { Entity } from "../Entities"
 
 const Safe = styled(Entity)`
   position: relative;
