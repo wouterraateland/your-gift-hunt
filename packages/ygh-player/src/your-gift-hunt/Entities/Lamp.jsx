@@ -63,6 +63,7 @@ Head.defaultProps = {
 }
 
 const Light = styled(Entity)`
+  cursor: initial;
   pointer-events: none;
   z-index: -1;
 

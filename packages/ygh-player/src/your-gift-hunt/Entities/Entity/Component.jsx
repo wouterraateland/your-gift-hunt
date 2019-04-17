@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 const or = fallback => x => {
   switch (typeof x) {
@@ -47,6 +47,12 @@ const EntityComponent = styled.div.attrs(props =>
 
     position: absolute;
   }
+
+  ${props =>
+    props.onClick &&
+    css`
+      cursor: pointer;
+    `}
 `
 
 export default EntityComponent
