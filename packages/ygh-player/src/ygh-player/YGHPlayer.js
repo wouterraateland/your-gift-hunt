@@ -109,6 +109,14 @@ class YGHPlayer {
     this.gameState = getNextState(this.gameState, parseServerState(stateUpdate))
     return this.gameState
   }
+
+  async requestHints() {
+    this.ensurePlayToken()
+
+    const hints = await this.api.requestHints({ playToken: this.playToken })
+    this.gameState = { ...this.gameState, hints }
+    return this.gameState.hints
+  }
 }
 
 export default YGHPlayer

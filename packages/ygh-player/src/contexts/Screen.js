@@ -5,7 +5,6 @@ const ScreenContext = createContext({})
 
 export const ScreenProvider = ({ children }) => {
   const value = useScreenProvider()
-
   return (
     <ScreenContext.Provider value={value}>{children}</ScreenContext.Provider>
   )

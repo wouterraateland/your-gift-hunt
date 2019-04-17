@@ -5,6 +5,7 @@ import Viewport from "components/Viewport"
 import Sidebar from "components/Sidebar"
 import ScreenContainer from "components/ScreenContainer"
 import DragImage from "components/DragImage"
+import Hints from "components/Hints"
 
 import DefaultScene from "components/scenes/default"
 
@@ -27,6 +28,7 @@ const PlayableGame = () => (
     <ScreenContainer />
     <Sidebar />
     <DragImage />
+    <Hints />
   </GamePage>
 )
 

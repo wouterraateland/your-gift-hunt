@@ -3,6 +3,8 @@ import React from "react"
 import { GameProvider } from "contexts/Game"
 import { DragProvider } from "contexts/Drag"
 import { ScreenProvider } from "contexts/Screen"
+import { HintsProvider } from "contexts/Hints"
+
 import Theme from "containers/Theme"
 
 import Game from "components/Game"
@@ -12,7 +14,9 @@ const GamePage = ({ creatorSlug, gameSlug }) => (
     <DragProvider>
       <ScreenProvider>
         <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
-          <Game />
+          <HintsProvider>
+            <Game />
+          </HintsProvider>
         </GameProvider>
       </ScreenProvider>
     </DragProvider>

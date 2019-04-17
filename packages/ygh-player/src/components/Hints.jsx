@@ -1,59 +1,100 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 
-import { ProgressRing } from "your-gift-hunt/ui"
+import useHints from "hooks/useHints"
+import useClickOutside from "hooks/useClickOutside"
 
-const HintsContainer = styled.div`
-  position: relative;
-  width: 32px;
-  height: 32px;
-  margin: 1em;
+import HintIndicator from "components/HintIndicator"
 
-  text-align: center;
-  line-height: 32px;
-
-  color: ${props => (props.progress === 1 ? "gold" : "#fff4")};
-`
-
-const StyledProgressRing = styled(ProgressRing)`
-  position: absolute;
+const Container = styled.div`
+  position: fixed;
+  z-index: 4;
   top: 0;
   left: 0;
+  right: 0;
 
-  color: gold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1em;
+
+  @media (orientation: landscape) {
+    left: 5.5em;
+  }
+
+  opacity: ${props => (props.isVisible ? 1 : 0)};
+  pointer-events: ${props => (props.isVisible ? "auto" : "none")};
+
+  &::after {
+    content: "";
+
+    position: absolute;
+    top: 4em;
+    left: 5em;
+    right: 5em;
+    z-index: -1;
+
+    box-shadow: 0 0 6em 6em #000;
+  }
+`
+
+const Message = styled.p`
+  color: #fff;
+`
+
+const Navigation = styled.div`
+  display: flex;
+
+  & > * {
+    margin: 1em;
+  }
+`
+
+const StyledHintIndicator = styled(HintIndicator)`
+  transform: scale(${props => (props.isSelected ? 1.2 : 1)});
 `
 
 const Hints = () => {
-  const [progress, setProgress] = useState(0)
+  const ref = useRef(null)
+  const { hints, hideHints, isVisible } = useHints()
+  const [hintIndex, setHintIndex] = useState(0)
 
-  const onClick = useCallback(() => {
-    if (progress === 1) {
-      setProgress(0)
-    }
-  }, [progress === 1])
-
-  const updateProgress = useCallback(() => {
-    setProgress(progress => Math.min(progress + 0.01, 1))
-  }, [])
+  useClickOutside({ ref, onClickOutside: () => isVisible && hideHints() })
 
   useEffect(() => {
-    const i = setInterval(updateProgress, 100)
-
-    return () => {
-      clearInterval(i)
-    }
-  }, [])
+    const nonAvailableIndex = hints.findIndex(({ text }) => !text)
+    setHintIndex(
+      nonAvailableIndex === -1 ? hints.length - 1 : nonAvailableIndex - 1
+    )
+  }, [hints])
 
   return (
-    <HintsContainer progress={progress} onClick={onClick}>
-      <StyledProgressRing
-        radius={16}
-        stroke={2}
-        progress={progress}
-        bgColor="#fff4"
-      />
-      ?
-    </HintsContainer>
+    <Container ref={ref} isVisible={isVisible}>
+      <Message>
+        {hints && hints[hintIndex] ? hints[hintIndex].text : null}
+      </Message>
+      <Navigation>
+        {hints.map((hint, i) => (
+          <StyledHintIndicator
+            key={i}
+            onClick={() => {
+              if (
+                !!hint.text ||
+                (!!hint.releasedAt && hint.releasedAt < Date.now())
+              ) {
+                setHintIndex(i)
+              }
+            }}
+            hint={hint}
+            isSelected={hintIndex === i}
+          >
+            {i + 1}
+          </StyledHintIndicator>
+        ))}
+      </Navigation>
+    </Container>
   )
 }
 

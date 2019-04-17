@@ -32,6 +32,12 @@ const useYGHPlayer = (apiKey, gameIdentifier) => {
     return gameState
   }, [])
 
+  const requestHints = useCallback(async () => {
+    const hints = await yghPlayer.current.requestHints()
+    setGameState(yghPlayer.current.gameState)
+    return hints
+  }, [])
+
   const updateAuthentication = useCallback(() => {
     if (yghPlayer.current.playToken) {
       setGameState(yghPlayer.current.gameState)
@@ -72,6 +78,7 @@ const useYGHPlayer = (apiKey, gameIdentifier) => {
     authenticate,
     isLoading,
     dispatchAction,
+    requestHints,
     gameState,
     game: yghPlayer.current.game
   }

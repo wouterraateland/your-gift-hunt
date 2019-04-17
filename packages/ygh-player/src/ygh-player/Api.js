@@ -29,37 +29,24 @@ class Api {
   post = (url, params) => this.request(url, { ...params, method: "POST" })
 
   getGameBySlug = ({ creatorSlug, gameSlug }) =>
-    this.post("getGameBySlug", {
-      body: { creatorSlug, gameSlug }
-    })
+    this.post("getGameBySlug", { body: { creatorSlug, gameSlug } })
 
-  getGameById = ({ gameId }) =>
-    this.post("getGameById", {
-      body: { gameId }
-    })
+  getGameById = ({ gameId }) => this.post("getGameById", { body: { gameId } })
 
   createPlayToken = ({ gameId, accessCode }) =>
-    this.post("createPlayToken", {
-      body: { gameId, accessCode }
-    })
+    this.post("createPlayToken", { body: { gameId, accessCode } })
 
   isPlayTokenValid = ({ gameId, playToken }) =>
-    this.post("isPlayTokenValid", {
-      body: { gameId, playToken }
-    })
+    this.post("isPlayTokenValid", { body: { gameId, playToken } })
 
   getGameState = ({ playToken }) =>
-    this.post("getGameState", {
-      body: { playToken }
-    })
+    this.post("getGameState", { body: { playToken } })
+
+  requestHints = ({ playToken }) =>
+    this.post("requestHints", { body: { playToken } })
 
   dispatchAction = ({ playToken, action }) =>
-    this.post("dispatchAction", {
-      body: {
-        playToken,
-        action
-      }
-    })
+    this.post("dispatchAction", { body: { playToken, action } })
 }
 
 export default Api

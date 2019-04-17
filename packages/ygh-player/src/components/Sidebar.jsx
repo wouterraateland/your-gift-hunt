@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import Hints from "./Hints"
+import HintsIndicator from "./HintsIndicator"
 import Inventory from "./Inventory"
 
 const SidebarContainer = styled.div`
@@ -20,8 +20,8 @@ const SidebarContainer = styled.div`
     background-image: radial-gradient(
       ellipse 150% 100% at 50% 100%,
       #332f2e 83%,
-      #ffd666 84%,
-      #ffd666 85%,
+      #999 84%,
+      #fff 85%,
       #0004 86%,
       transparent
     );
@@ -35,8 +35,8 @@ const SidebarContainer = styled.div`
     background-image: radial-gradient(
       ellipse 100% 150% at 0% 50%,
       #332f2e 83%,
-      #ffd666 84%,
-      #ffd666 85%,
+      #fff 84%,
+      #999 85%,
       #0004 86%,
       transparent
     );
@@ -45,7 +45,7 @@ const SidebarContainer = styled.div`
 
 const Sidebar = () => (
   <SidebarContainer>
-    <Hints />
+    <HintsIndicator />
     <Inventory />
   </SidebarContainer>
 )

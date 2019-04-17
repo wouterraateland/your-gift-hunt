@@ -1,6 +1,8 @@
 export const EPSILON = 1e-4
 export const MARKOV_MAX_STEPS = 5000
 
+export const clamp = (min, max) => x => Math.max(min, Math.min(x, max))
+
 export const mean = xs => xs.reduce((acc, x) => acc + x, 0) / xs.length
 
 export const angle = (p1, p2) => Math.atan2(p2.y - p1.y, p2.x - p1.x)
@@ -29,6 +31,7 @@ export const approximateStationaryDistribution = (T, n = MARKOV_MAX_STEPS) => {
 export default {
   EPSILON,
   MARKOV_MAX_STEPS,
+  clamp,
   mean,
   angle,
   dist,
