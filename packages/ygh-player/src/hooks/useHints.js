@@ -10,8 +10,10 @@ export const useHintsProvider = () => {
   const [isVisible, setVisibility] = useState(false)
 
   const showHints = useCallback(async () => {
-    await requestHints()
-    setVisibility(true)
+    const currentHints = await requestHints()
+    if (currentHints.some(hint => hint.text)) {
+      setVisibility(true)
+    }
   }, [])
 
   const hideHints = useCallback(() => {
@@ -22,7 +24,8 @@ export const useHintsProvider = () => {
     hints,
     isVisible,
     showHints,
-    hideHints
+    hideHints,
+    requestHints
   }
 }
 

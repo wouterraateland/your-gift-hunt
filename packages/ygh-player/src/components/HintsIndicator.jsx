@@ -1,5 +1,5 @@
-import React, { useCallback } from "react"
-import styled from "styled-components"
+import React from "react"
+import styled, { css } from "styled-components"
 
 import useHints from "hooks/useHints"
 
@@ -9,21 +9,28 @@ const Container = styled.div`
   margin: 1em;
 `
 
+const Marker = styled.span`
+  ${props =>
+    props.isActive &&
+    css`
+      color: #ffd666;
+    `}
+`
+
 const HintsIndicator = () => {
   const { hints, showHints } = useHints()
   const upcomingHint =
     hints.find(({ releasedAt }) => !!releasedAt) ||
     hints.find(({ text }) => !!text) ||
     {}
-  const isAvailable =
-    !!upcomingHint.text ||
-    (!!upcomingHint.releasedAt && upcomingHint.releasedAt < Date.now())
-  const onClick = useCallback(() => isAvailable && showHints(), [isAvailable])
+  const isActive =
+    hints.some(({ text }) => !!text) ||
+    (upcomingHint.releasedAt && upcomingHint.releasedAt < Date.now())
 
   return (
     <Container>
-      <HintIndicator hint={upcomingHint} onClick={onClick}>
-        ?
+      <HintIndicator hint={upcomingHint} onClick={showHints}>
+        <Marker isActive={isActive}>?</Marker>
       </HintIndicator>
     </Container>
   )

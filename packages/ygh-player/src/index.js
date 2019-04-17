@@ -4,10 +4,10 @@ import * as serviceWorker from "./serviceWorker"
 
 import App from "components/App"
 
-if (process.env.NODE_ENV !== "production") {
-  const whyDidYouRender = require("@welldone-software/why-did-you-render")
-  whyDidYouRender(React)
-}
+// if (process.env.NODE_ENV !== "production") {
+//   const whyDidYouRender = require("@welldone-software/why-did-you-render")
+//   whyDidYouRender(React)
+// }
 
 const root = document.getElementById("app-root")
 

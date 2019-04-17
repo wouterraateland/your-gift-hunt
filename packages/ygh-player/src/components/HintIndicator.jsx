@@ -26,7 +26,7 @@ const StyledProgressRing = styled(ProgressRing)`
 
 const HintIndicator = ({ hint, children, ...props }) => {
   const [progress, setProgress] = useState(0)
-  const isAvailable = !!hint.text || progress === 1
+  const isAvailable = !!hint.text || hint.releasedAt < Date.now()
 
   const updateProgress = useCallback(() => {
     setProgress(

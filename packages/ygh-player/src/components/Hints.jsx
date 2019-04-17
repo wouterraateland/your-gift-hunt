@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 
 import useHints from "hooks/useHints"
@@ -58,17 +58,30 @@ const StyledHintIndicator = styled(HintIndicator)`
 
 const Hints = () => {
   const ref = useRef(null)
-  const { hints, hideHints, isVisible } = useHints()
+  const { hints, hideHints, requestHints, isVisible } = useHints()
   const [hintIndex, setHintIndex] = useState(0)
 
-  useClickOutside({ ref, onClickOutside: () => isVisible && hideHints() })
+  useClickOutside({
+    ref,
+    onClickOutside: () => isVisible && hideHints(),
+    inputs: [isVisible]
+  })
 
   useEffect(() => {
     const nonAvailableIndex = hints.findIndex(({ text }) => !text)
     setHintIndex(
       nonAvailableIndex === -1 ? hints.length - 1 : nonAvailableIndex - 1
     )
-  }, [hints])
+  }, [isVisible])
+
+  const onHintClick = useCallback(async (hint, i) => {
+    if (hint.text) {
+      setHintIndex(i)
+    } else if (hint.releasedAt && hint.releasedAt < Date.now()) {
+      await requestHints()
+      setHintIndex(i)
+    }
+  })
 
   return (
     <Container ref={ref} isVisible={isVisible}>
@@ -79,14 +92,7 @@ const Hints = () => {
         {hints.map((hint, i) => (
           <StyledHintIndicator
             key={i}
-            onClick={() => {
-              if (
-                !!hint.text ||
-                (!!hint.releasedAt && hint.releasedAt < Date.now())
-              ) {
-                setHintIndex(i)
-              }
-            }}
+            onClick={() => onHintClick(hint, i)}
             hint={hint}
             isSelected={hintIndex === i}
           >

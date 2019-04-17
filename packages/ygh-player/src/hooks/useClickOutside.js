@@ -1,9 +1,13 @@
 import { useCallback, useEffect } from "react"
 
-const useClickOutside = ({ ref, onClickOutside }) => {
+const useClickOutside = ({ ref, onClickOutside, inputs = [] }) => {
   const onClick = useCallback(
-    event => event.path.includes(ref.current) || onClickOutside(),
-    [ref, onClickOutside]
+    event => {
+      if (!event.path.includes(ref.current)) {
+        onClickOutside(event)
+      }
+    },
+    [ref, ...inputs]
   )
 
   useEffect(() => {
@@ -11,7 +15,7 @@ const useClickOutside = ({ ref, onClickOutside }) => {
     return () => {
       window.removeEventListener("mouseup", onClick)
     }
-  }, [])
+  }, [ref, ...inputs])
 }
 
 export default useClickOutside
