@@ -3,6 +3,7 @@ import hexagon from "images/hexagon.svg"
 
 const Body = styled.div`
   position: relative;
+  flex-grow: 1;
 
   ${props =>
     props.index &&

@@ -1,6 +1,7 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
+import { FullHeight } from "your-gift-hunt/ui"
 import Theme from "containers/Theme"
 import SEO from "components/SEO"
 import Nav from "components/Nav"
@@ -28,14 +29,14 @@ const Layout = ({ children, ...rest }) => (
       }
     `}
     render={data => (
-      <>
+      <FullHeight>
         <SEO config={data.site.siteMetadata} />
         <Theme>
           <Nav {...rest} />
           <Body index={rest.index}>{children}</Body>
           <Footer />
         </Theme>
-      </>
+      </FullHeight>
     )}
   />
 )

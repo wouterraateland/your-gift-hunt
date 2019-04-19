@@ -12,10 +12,10 @@ const Present = ({ boxColor = "#fff", ribbonColor = "#e60202", ...props }) => (
         id={`${ribbonColor}-a`}
       >
         <stop stopColor={ribbonColor} offset="0%" />
-        <stop stopColor={darken(0.15, ribbonColor)} offset="100%" />
+        <stop stopColor={darken(0.15)(ribbonColor)} offset="100%" />
       </linearGradient>
       <linearGradient x1="6.562%" y1="7.51%" y2="100%" id={`${ribbonColor}-b`}>
-        <stop stopColor={darken(0.3, ribbonColor)} offset="0%" />
+        <stop stopColor={darken(0.3)(ribbonColor)} offset="0%" />
         <stop stopColor={ribbonColor} offset="100%" />
       </linearGradient>
       <linearGradient
@@ -26,7 +26,7 @@ const Present = ({ boxColor = "#fff", ribbonColor = "#e60202", ...props }) => (
         id={`${ribbonColor}-c`}
       >
         <stop stopColor={ribbonColor} offset="0%" />
-        <stop stopColor={darken(0.1, ribbonColor)} offset="100%" />
+        <stop stopColor={darken(0.1)(ribbonColor)} offset="100%" />
       </linearGradient>
       <linearGradient
         x1="8.667%"
@@ -35,7 +35,7 @@ const Present = ({ boxColor = "#fff", ribbonColor = "#e60202", ...props }) => (
         y2="100%"
         id={`${ribbonColor}-d`}
       >
-        <stop stopColor={darken(0.25, ribbonColor)} offset="0%" />
+        <stop stopColor={darken(0.25)(ribbonColor)} offset="0%" />
         <stop stopColor={ribbonColor} offset="100%" />
       </linearGradient>
       <linearGradient
@@ -46,7 +46,7 @@ const Present = ({ boxColor = "#fff", ribbonColor = "#e60202", ...props }) => (
         id={`${ribbonColor}-e`}
       >
         <stop stopColor={ribbonColor} offset="0%" />
-        <stop stopColor={darken(0.15, ribbonColor)} offset="100%" />
+        <stop stopColor={darken(0.15)(ribbonColor)} offset="100%" />
       </linearGradient>
       <linearGradient
         x1="50%"
@@ -55,8 +55,8 @@ const Present = ({ boxColor = "#fff", ribbonColor = "#e60202", ...props }) => (
         y2="100%"
         id={`${ribbonColor}-f`}
       >
-        <stop stopColor={darken(0.2, ribbonColor)} offset="0%" />
-        <stop stopColor={darken(0.1, ribbonColor)} offset="100%" />
+        <stop stopColor={darken(0.2)(ribbonColor)} offset="0%" />
+        <stop stopColor={darken(0.1)(ribbonColor)} offset="100%" />
       </linearGradient>
       <linearGradient
         x1="43.954%"
@@ -65,7 +65,7 @@ const Present = ({ boxColor = "#fff", ribbonColor = "#e60202", ...props }) => (
         id={`${ribbonColor}-g`}
       >
         <stop stopColor={ribbonColor} offset="0%" />
-        <stop stopColor={darken(0.05, ribbonColor)} offset="100%" />
+        <stop stopColor={darken(0.05)(ribbonColor)} offset="100%" />
       </linearGradient>
       <linearGradient
         x1="50%"
@@ -75,7 +75,7 @@ const Present = ({ boxColor = "#fff", ribbonColor = "#e60202", ...props }) => (
         id={`${ribbonColor}-h`}
       >
         <stop stopColor={ribbonColor} offset="0%" />
-        <stop stopColor={darken(0.2, ribbonColor)} offset="100%" />
+        <stop stopColor={darken(0.2)(ribbonColor)} offset="100%" />
       </linearGradient>
       <linearGradient
         x1="50%"
@@ -84,8 +84,8 @@ const Present = ({ boxColor = "#fff", ribbonColor = "#e60202", ...props }) => (
         y2="100%"
         id={`${ribbonColor}-i`}
       >
-        <stop stopColor={darken(0.2, ribbonColor)} offset="0%" />
-        <stop stopColor={darken(0.15, ribbonColor)} offset="100%" />
+        <stop stopColor={darken(0.2)(ribbonColor)} offset="0%" />
+        <stop stopColor={darken(0.15)(ribbonColor)} offset="100%" />
       </linearGradient>
       <linearGradient
         x1="50%"
@@ -94,30 +94,30 @@ const Present = ({ boxColor = "#fff", ribbonColor = "#e60202", ...props }) => (
         id={`${ribbonColor}-j`}
       >
         <stop stopColor={ribbonColor} offset="0%" />
-        <stop stopColor={darken(0.1, ribbonColor)} offset="100%" />
+        <stop stopColor={darken(0.1)(ribbonColor)} offset="100%" />
       </linearGradient>
     </defs>
     <g fill="none" fillRule="evenodd">
-      <path fill={darken(0.1, boxColor)} d="M2 28.142v24L28 67V43z" />
-      <path fill={darken(0.15, boxColor)} d="M54 28.15v24L28 67V43z" />
+      <path fill={darken(0.1)(boxColor)} d="M2 28.142v24L28 67V43z" />
+      <path fill={darken(0.15)(boxColor)} d="M54 28.15v24L28 67V43z" />
       <path
         d="M11 33.285l8 4.572v24l-8-4.572v-24z"
-        fill={darken(0.1, ribbonColor)}
+        fill={darken(0.1)(ribbonColor)}
       />
       <path
         d="M45 57.29l-8 4.57v-24l8-4.57v24z"
-        fill={darken(0.15, ribbonColor)}
+        fill={darken(0.15)(ribbonColor)}
       />
       <g>
-        <path fill={darken(0.05, boxColor)} d="M0 19v8l28 16v-8z" />
-        <path fill={darken(0.1, boxColor)} d="M56 19v8L28 43v-8z" />
+        <path fill={darken(0.05)(boxColor)} d="M0 19v8l28 16v-8z" />
+        <path fill={darken(0.1)(boxColor)} d="M56 19v8L28 43v-8z" />
         <path
           d="M46 32.714l-8 4.572v-8l8-4.572v8z"
-          fill={darken(0.1, ribbonColor)}
+          fill={darken(0.1)(ribbonColor)}
         />
         <path
           d="M10 24.714l8 4.572v8l-8-4.572v-8z"
-          fill={darken(0.05, ribbonColor)}
+          fill={darken(0.05)(ribbonColor)}
         />
         <g>
           <path fill={boxColor} d="M28 3L0 19l28 16 28-16z" />

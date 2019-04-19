@@ -2,7 +2,15 @@ import React from "react"
 import styled from "styled-components"
 import { graphql, navigate } from "gatsby"
 
-import { Wrapper, Row, Column, Align, Button, VSpace } from "your-gift-hunt/ui"
+import {
+  Section,
+  Wrapper,
+  Row,
+  Column,
+  Align,
+  Button,
+  VSpace
+} from "your-gift-hunt/ui"
 import { Picture, Location, Friend, Play } from "your-gift-hunt/icons"
 
 import Layout from "components/Layout"
@@ -13,17 +21,6 @@ import Hexagon from "components/Hexagon"
 import createImage from "images/create.svg"
 import shareImage from "images/share.svg"
 import playImage from "images/play.svg"
-
-const Section = styled.section`
-  &::after {
-    content: "";
-    display: block;
-    clear: both;
-  }
-
-  position: relative;
-  margin: 4em 0;
-`
 
 const Demo = styled.div`
   position: relative;
@@ -111,7 +108,12 @@ export default ({ data }) => {
                   size="large"
                   importance="primary"
                   color="primary"
-                  href="https://play.yourgifthunt.com/wouter-raateland/for-pioneers"
+                  onClick={() =>
+                    window.open(
+                      "https://play.yourgifthunt.com/wouter-raateland/for-pioneers",
+                      "_blank"
+                    )
+                  }
                 >
                   <Play />
                   &nbsp;&nbsp;&nbsp;Play demo
