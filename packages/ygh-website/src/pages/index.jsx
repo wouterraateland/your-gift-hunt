@@ -80,6 +80,10 @@ const LearnMore = styled.p`
 const StyledHexagon = styled(Hexagon)`
   margin: -4em auto;
   color: #fff;
+
+  @media (max-width: 30em) {
+    margin: 0 auto 3em;
+  }
 `
 
 export default ({ data }) => {

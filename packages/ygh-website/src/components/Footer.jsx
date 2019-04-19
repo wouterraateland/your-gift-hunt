@@ -36,7 +36,7 @@ export default () => (
         <Column size={3} sSize={6}>
           <h3>Company</h3>
           <p>
-            <Link to="/home">Home</Link>
+            <Link to="/">Home</Link>
             <br />
             <a href="https://play.yourgifthunt.com">Showcase</a>
             <br />

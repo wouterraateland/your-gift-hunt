@@ -51,9 +51,11 @@ const MenuToggle = styled.div`
 `
 
 const Menu = styled.div`
+  position: relative;
+
+  margin: 0.2em 0;
   float: right;
 
-  position: relative;
   &:hover {
     & ${MenuToggle} {
       background-color: ${darken(0.05, "#ebedf5")};
