@@ -74,7 +74,10 @@ export default props => (
   <Nav {...props}>
     <StyledWrapper xlarge>
       <Small>
-        <StyledLogo size={3} />
+        <IndexLink to="/">
+          <StyledLogo size={3} />
+          <Name>Your Gift Hunt</Name>
+        </IndexLink>
         <Menu>
           <Menu.Toggle>Menu</Menu.Toggle>
           <Menu.ItemList>
