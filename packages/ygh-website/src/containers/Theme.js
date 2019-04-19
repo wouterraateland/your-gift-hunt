@@ -1,21 +1,30 @@
-import React from 'react'
-import { createGlobalStyle, ThemeProvider } from 'styled-components'
-import { opacify, transparentize } from 'polished'
+import React from "react"
+import { createGlobalStyle, ThemeProvider } from "styled-components"
+import { opacify, transparentize } from "polished"
 
 const theme = {
   color: {
-    text:       '#0009',
-    emphasis:   '#000d',
-    primary:    '#3f51b5',
-    accent:     '#ffd65a',
-    error:      '#d34d4e',
-    warning:    '#f7a600',
-    success:    '#41ac57',
+    text: "#0009",
+    emphasis: "#000d",
+    primary: "#3f51b5",
+    accent: "#ffd65a",
+    error: "#d34d4e",
+    warning: "#f7a600",
+    success: "#41ac57"
   },
-  borderRadius: 0,
+  borderRadius: "0.25em",
+  boxShadow: {
+    small: "0 0.25rem 0.75rem -0.25rem #0004",
+    medium: "0 0.5rem 1.5rem -0.5rem #0006",
+    large: "0 1rem 3rem -1rem #0008"
+  },
   columns: {
     count: 12,
-    gap: '2rem',
+    gap: "0.5em"
+  },
+  font: {
+    copy: "Montserrat, sans-serif",
+    heading: '"Playfair Display", serif'
   }
 }
 
@@ -24,35 +33,41 @@ export const GlobalStyles = createGlobalStyle`
     vertical-align: top;
 
     box-sizing: border-box;
+
+    -webkit-touch-callout: none;
+    user-select: none;
   }
 
   html {
-    @media (max-width: 30em) {
-      font-size: 90%;
+    font-family: Montserrat, sans-serif;
+
+    @media (max-width: 20em) {
+      font-size: 70%;
     }
 
-    @media (min-width: 30em) and (max-width: 64em) {
-      font-size: calc(90% + ((112.5 - 90) / 100) * (100vw - 30rem) / (64 - 30));
+    @media (min-width: 20em) and (max-width: 30em) {
+      font-size: calc(70% + ((100 - 70) / 100) * (100vw - 20rem) / (30 - 20));
     }
 
-    @media (min-width: 64em) {
-      font-size: 112.5%;
+    @media (min-width: 30em) {
+      font-size: 100%;
     }
   }
 
   body {
-    overflow-x: hidden;
-
     padding: 0;
     margin: 0;
 
-    background-color: ${transparentize(.95, theme.color.primary)};
-    color: ${theme.color.text};
-  }
+    background:
+      linear-gradient(-30deg, ${
+        theme.color.accent
+      } 30vw, #EBEDF5 30vw, #EBEDF5 40vw, transparent 40vw) no-repeat bottom right,
+      linear-gradient(150deg, ${
+        theme.color.accent
+      } 30vw, #EBEDF5 30vw, #EBEDF5 40vw, transparent 40vw) no-repeat top left;
 
-  form {
-    margin-left: -.79em;
-    margin-right: -.79em;
+    background-color: ${transparentize(0.95, theme.color.primary)};
+    color: ${theme.color.text};
   }
 
   input, textarea, select, button {
@@ -62,7 +77,7 @@ export const GlobalStyles = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     color: ${theme.color.emphasis};
-    font-weight: normal;
+    font-family: "Playfair Display", serif;
   }
 
   strong {
@@ -72,55 +87,36 @@ export const GlobalStyles = createGlobalStyle`
   hr {
     clear: both;
     height: .1em;
-    background: linear-gradient(90deg, transparent, ${transparentize(.5, theme.color.text)}, transparent);
+    background: linear-gradient(90deg, transparent, ${transparentize(
+      0.5,
+      theme.color.text
+    )}, transparent);
   }
 
   a {
     display: inline-block;
 
-    text-decoration: none;
+    text-decoration-color: ${transparentize(0.5, theme.color.text)};
 
     color: ${theme.color.text};
 
     transition: color .2s ease-out;
 
     &:hover {
-      color: ${opacify(.3, theme.color.text)};
+      color: ${opacify(0.3, theme.color.text)};
     }
   }
 
-  article {
-    max-width: 35em;
-  }
-
-  article a {
-    text-decoration: underline;
-    text-decoration-color: ${transparentize(.5, theme.color.text)};
-  }
-
-  svg {
+  img, svg {
     max-width: 100%;
-  }
-
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-
-  .draggable {
-    will-change: transform, z-index;
-    touch-action: none;
-    position: absolute;
-
-    opacity: 0;
-
-    animation: fadeIn 1s 1s ease-out forwards running;
   }
 `
 
-export default ({ children }) =>
+export default ({ children }) => (
   <ThemeProvider theme={theme}>
     <>
       <GlobalStyles />
       {children}
     </>
   </ThemeProvider>
+)

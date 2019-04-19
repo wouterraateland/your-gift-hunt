@@ -1,0 +1,99 @@
+<svg width="264" height="151" viewBox="0 0 264 151" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <rect id="b" y="56" width="32" height="32" rx="2"/>
+    <filter x="-25%" y="-12.5%" width="150%" height="150%" filterUnits="objectBoundingBox" id="a">
+      <feMorphology radius="2" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/>
+    </filter>
+    <rect id="d" x="214" width="32" height="32" rx="2"/>
+    <filter x="-25%" y="-12.5%" width="150%" height="150%" filterUnits="objectBoundingBox" id="c">
+      <feMorphology radius="2" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/>
+    </filter>
+    <rect id="f" x="112" y="37" width="32" height="32" rx="2"/>
+    <filter x="-25%" y="-12.5%" width="150%" height="150%" filterUnits="objectBoundingBox" id="e">
+      <feMorphology radius="2" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/>
+    </filter>
+    <rect id="h" x="112" y="79" width="32" height="32" rx="2"/>
+    <filter x="-25%" y="-12.5%" width="150%" height="150%" filterUnits="objectBoundingBox" id="g">
+      <feMorphology radius="2" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/>
+    </filter>
+    <rect id="j" x="204" y="111" width="32" height="32" rx="2"/>
+    <filter x="-25%" y="-12.5%" width="150%" height="150%" filterUnits="objectBoundingBox" id="i">
+      <feMorphology radius="2" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/>
+    </filter>
+    <rect id="l" x="224" y="37" width="32" height="32" rx="2"/>
+    <filter x="-25%" y="-12.5%" width="150%" height="150%" filterUnits="objectBoundingBox" id="k">
+      <feMorphology radius="2" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/>
+    </filter>
+    <rect id="n" x="214" y="74" width="32" height="32" rx="2"/>
+    <filter x="-25%" y="-12.5%" width="150%" height="150%" filterUnits="objectBoundingBox" id="m">
+      <feMorphology radius="2" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M4 0h256v143H4z"/>
+    <g transform="translate(4)">
+      <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+      <use fill="#FFF" xlink:href="#b"/>
+    </g>
+    <g transform="translate(4)">
+      <use fill="#000" filter="url(#c)" xlink:href="#d"/>
+      <use fill="#FFF" xlink:href="#d"/>
+    </g>
+    <g transform="translate(4)">
+      <use fill="#000" filter="url(#e)" xlink:href="#f"/>
+      <use fill="#FFF" xlink:href="#f"/>
+    </g>
+    <g transform="translate(4)">
+      <use fill="#000" filter="url(#g)" xlink:href="#h"/>
+      <use fill="#FFF" xlink:href="#h"/>
+    </g>
+    <g transform="translate(4)">
+      <use fill="#000" filter="url(#i)" xlink:href="#j"/>
+      <use fill="#FFF" xlink:href="#j"/>
+    </g>
+    <g transform="translate(4)">
+      <use fill="#000" filter="url(#k)" xlink:href="#l"/>
+      <use fill="#FFF" xlink:href="#l"/>
+    </g>
+    <g transform="translate(4)">
+      <use fill="#000" filter="url(#m)" xlink:href="#n"/>
+      <use fill="#FFF" xlink:href="#n"/>
+    </g>
+    <g fill-rule="nonzero">
+      <path d="M42.014 69.435l60.13-14.192-1.378-5.84L116 53l-12.018 10.029-1.378-5.84-60.13 14.193a7.002 7.002 0 0 1-13.787 2.226 7 7 0 0 1 13.327-4.173z" fill="#3F5BBF"/>
+      <path d="M42.936 72.953l59.885 17.218 1.658-5.767L116 95l-15.39 2.86 1.659-5.767-59.886-17.217a7.002 7.002 0 0 1-13.11-4.81 7 7 0 0 1 13.663 2.887z" fill="#3F5BBF"/>
+      <path d="M153.636 49.346l51.551-27.616-2.833-5.29L218 16l-9.035 12.781-2.833-5.288-51.552 27.616a7.002 7.002 0 0 1-12.75 5.697 7 7 0 0 1 11.806-7.46z" fill="#FFD65A"/>
+      <path d="M154.923 52.457l59.071-.37-.037-6L228 53l-13.956 7.087-.037-6-59.072.37A7.002 7.002 0 0 1 141 53.544a7 7 0 0 1 13.923-1.087z" fill="#FFD65A"/>
+      <path d="M154.606 55.817L206.05 82.64l2.774-5.32L218 90l-15.65-.266 2.774-5.32-51.442-26.824a7.002 7.002 0 0 1-11.889-7.326 7 7 0 0 1 12.813 5.553zM154.585 97.378l41.533 22.151 2.823-5.294L208 127l-15.647-.412 2.823-5.294-41.533-22.15a7.002 7.002 0 0 1-11.82-7.438 7 7 0 0 1 12.762 5.672z" fill="#FFD65A"/>
+    </g>
+    <g transform="translate(64 41)">
+      <rect stroke="#3F5BBF" stroke-width="2" fill="#488BD9" x="1" y="8" width="10" height="6" rx="2"/>
+      <path d="M9 5V3a3 3 0 1 0-6 0v4" stroke="#3F5BBF" stroke-width="2"/>
+      <circle fill="#FFD65A" cx="6" cy="11" r="1"/>
+    </g>
+    <text font-family="Montserrat-Bold, Montserrat" font-size="16" font-weight="bold" fill="#FFD65A" transform="translate(4)">
+      <tspan x="73.288" y="47">?</tspan>
+    </text>
+  </g>
+</svg>

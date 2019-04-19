@@ -1,22 +1,14 @@
-const proxy = require('http-proxy-middleware')
-const config = require('./site-config')
-const urljoin = require('url-join')
-const dotenv = require('dotenv')
+const config = require("./site-config")
+const urljoin = require("url-join")
+const dotenv = require("dotenv")
 
-const activeEnv = process.env.ACTIVE_ENV || process.env.NODE_ENV || 'development'
+const activeEnv =
+  process.env.ACTIVE_ENV || process.env.NODE_ENV || "development"
 
 dotenv.config({ path: `.env` })
 dotenv.config({ path: `.env.${activeEnv}` })
 
 module.exports = {
-  developMiddleware: app => (
-    app.use(proxy('/.netlify/functions/', {
-      target: 'http://localhost:9000/',
-      "pathRewrite": {
-        "^/\\.netlify/functions": ""
-      }
-    }))
-  ),
   siteMetadata: {
     title: config.siteTitle,
     description: config.siteDescription,
@@ -42,46 +34,46 @@ module.exports = {
     }
   },
   plugins: [
-    'gatsby-plugin-react-helmet',
+    "gatsby-plugin-react-helmet",
     {
       // keep as first gatsby-source-filesystem plugin for gatsby image support
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
         path: `${__dirname}/static/uploads`,
-        name: 'uploads',
-      },
+        name: "uploads"
+      }
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
         path: `${__dirname}/static/favicons`,
-        name: 'favicons',
-      },
+        name: "favicons"
+      }
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
         path: `${__dirname}/src/pages`,
-        name: 'pages',
-      },
+        name: "pages"
+      }
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
         path: `${__dirname}/src/images`,
-        name: 'images',
-      },
+        name: "images"
+      }
     },
     {
-      resolve: 'gatsby-source-shopify',
+      resolve: "gatsby-source-shopify",
       options: {
         shopName: process.env.SHOPIFY_STOREFRONT_SHOP_NAME,
         accessToken: process.env.SHOPIFY_STOREFRONT_API_KEY,
-        verbose: activeEnv === 'development',
-      },
+        verbose: activeEnv === "development"
+      }
     },
     {
-      resolve: 'gatsby-plugin-root-import',
+      resolve: "gatsby-plugin-root-import",
       options: {
         content: `${__dirname}/content`,
         components: `${__dirname}/src/components`,
@@ -92,45 +84,46 @@ module.exports = {
         layout: `${__dirname}/src/layout`,
         templates: `${__dirname}/src/templates`,
         utils: `${__dirname}/src/utils`,
+        "your-gift-hunt": `${__dirname}/src/your-gift-hunt`
       }
     },
-    'gatsby-plugin-styled-components',
+    "gatsby-plugin-styled-components",
     {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
-        omitGoogleFont: true,
+        omitGoogleFont: true
       }
     },
-    'gatsby-plugin-sharp',
-    'gatsby-transformer-sharp',
+    "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: "gatsby-transformer-remark",
       options: {
         plugins: [
           {
-            resolve: 'gatsby-remark-relative-images',
+            resolve: "gatsby-remark-relative-images",
             options: {
-              name: 'uploads',
-            },
+              name: "uploads"
+            }
           },
           {
-            resolve: 'gatsby-remark-images',
+            resolve: "gatsby-remark-images",
             options: {
               // It's important to specify the maxWidth (in pixels) of
               // the content container as this plugin uses this as the
               // base for generating different widths of each image.
-              maxWidth: 2048,
-            },
+              maxWidth: 2048
+            }
           },
           {
-            resolve: 'gatsby-remark-copy-linked-files',
+            resolve: "gatsby-remark-copy-linked-files",
             options: {
-              destinationDir: 'static',
+              destinationDir: "static"
             }
           }
-        ],
-      },
+        ]
+      }
     },
     {
       resolve: "gatsby-plugin-google-analytics",
@@ -140,7 +133,7 @@ module.exports = {
     },
     {
       resolve: "gatsby-plugin-create-client-paths",
-      options: { prefixes: ['/creator/*'] }
+      options: { prefixes: ["/creator/*"] }
     },
     "gatsby-plugin-sitemap",
     {
@@ -165,12 +158,6 @@ module.exports = {
             type: "image/png"
           }
         ]
-      }
-    },
-    {
-      resolve: 'gatsby-plugin-drift',
-      options: {
-        appId: 'k9sswgut4mh4',
       }
     },
     {
@@ -243,13 +230,6 @@ module.exports = {
         ]
       }
     },
-    {
-      resolve: 'gatsby-plugin-netlify-cms',
-      options: {
-        modulePath: `${__dirname}/src/cms/cms.js`,
-        enableIdentityWidget: true,
-      },
-    },
-    'gatsby-plugin-netlify', // make sure to keep it last in the array
-  ],
+    "gatsby-plugin-netlify" // make sure to keep it last in the array
+  ]
 }

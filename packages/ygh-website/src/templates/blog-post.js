@@ -7,10 +7,10 @@ import urljoin from 'url-join'
 
 import Content, { HTMLContent } from 'components/Content'
 import MailchimpForm from 'components/MailchimpForm'
-import { Wrapper, Article } from 'components/ui'
+import { Wrapper, Article } from "your-gift-hunt/ui"
 
-import Layout from 'components/landing/Layout'
-import Disqus from 'components/landing/Disqus'
+import Layout from 'components/Layout'
+import Disqus from 'components/Disqus'
 
 export const BlogPostTemplate = ({
   content,

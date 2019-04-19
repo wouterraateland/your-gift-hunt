@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { navigate } from 'gatsby-link'
 
-import Layout from 'components/landing/Layout'
-import { Wrapper, Field, Input, Textarea, Button } from 'components/ui'
+import Layout from 'components/Layout'
+import { Wrapper, Field, Input, Textarea, Button } from "your-gift-hunt/ui"
 
 function encode(data) {
   return Object.keys(data)

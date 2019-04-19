@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-import { Wrapper } from 'components/ui'
-import Layout from 'components/landing/Layout'
-import Floor from 'components/hunt/objects/Floor'
+import { Wrapper } from "your-gift-hunt/ui"
+import Layout from "components/Layout"
+import { Floor } from "your-gift-hunt/entities"
 
 const FullHeightWrapper = styled(Wrapper)`
   position: relative;

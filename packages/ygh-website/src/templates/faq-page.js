@@ -4,9 +4,9 @@ import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
 
 import Content, { HTMLContent } from 'components/Content'
-import { Wrapper } from 'components/ui'
-import Layout from 'components/landing/Layout'
-import QuestionList from 'components/landing/QuestionList'
+import { Wrapper } from "your-gift-hunt/ui"
+import Layout from 'components/Layout'
+import QuestionList from 'components/QuestionList'
 
 export const FAQPageTemplate = ({ content, questions, contentComponent }) => {
   const PageContent = contentComponent || Content

@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import PostPage from 'components/landing/PostPage'
+import PostPage from 'components/PostPage'
 
 const BlogPage = ({ data }) => <PostPage data={data} filter={null} />
 

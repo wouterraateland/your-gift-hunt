@@ -3,10 +3,10 @@ import { graphql } from 'gatsby'
 import styled from 'styled-components'
 import Helmet from 'react-helmet'
 
-import Layout from 'components/landing/Layout'
-import { Wrapper } from 'components/ui'
+import Layout from 'components/Layout'
+import { Wrapper } from "your-gift-hunt/ui"
 import Content, { HTMLContent } from 'components/Content'
-import Present from 'components/landing/Present'
+import Present from 'components/Present'
 
 const PresentsContainer = styled.div`
   position: relative;

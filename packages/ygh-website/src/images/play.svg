@@ -1,0 +1,37 @@
+<svg width="256" height="151" viewBox="0 0 256 151" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <radialGradient fx="50%" fy="50%" r="82.469%" gradientTransform="matrix(0 .5035 -1 0 1 .248)" id="c">
+      <stop stop-color="#FFD65A" offset="0%"/>
+      <stop stop-color="#FFF" offset="100%"/>
+    </radialGradient>
+    <rect id="b" width="72" height="143" rx="4"/>
+    <filter x="-11.1%" y="-2.8%" width="122.2%" height="111.2%" filterUnits="objectBoundingBox" id="a">
+      <feMorphology radius="2" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(92)">
+      <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+      <use fill="url(#c)" xlink:href="#b"/>
+      <rect fill="#3F5BBF" x="28" y="136" width="16" height="2" rx="1"/>
+      <path d="M52 1v.5A1.5 1.5 0 0 1 50.5 3h-28A1.5 1.5 0 0 1 21 1.5V1h31z" stroke="#3F5BBF" stroke-width="2"/>
+    </g>
+    <g transform="translate(147.58 19.165)" stroke-width="2">
+      <path d="M11.58 5.165a5 5 0 1 0-8.66 5l8.66-5zM15.42 5.165a5 5 0 0 1 8.66 5l-8.66-5z" stroke="#3F5BBF" fill="#488BD9"/>
+      <path d="M7.42 7.835l1 2M19.42 7.835l-1 2" stroke="#3F5BBF"/>
+      <circle stroke="#3F5BBF" fill="#488BD9" cx="13.42" cy="17.835" r="10"/>
+      <path stroke="#FFD65A" stroke-linecap="round" d="M13.42 13.835v4l2 2"/>
+    </g>
+    <g transform="rotate(-30 95.713 -118.354)" stroke="#3F5BBF" stroke-width="2">
+      <rect fill="#488BD9" x="1" y="1" width="30" height="30" rx="2"/>
+      <path d="M11.5 34H21M16.5 32v2" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(119 66)" stroke="#3F5BBF" stroke-width="2">
+      <circle fill="#488BD9" cx="30" cy="27" r="12"/>
+      <path d="M38.051 25.353c7.446.943 14.05 6.057 16.523 13.668-7.739 2.515-15.9.057-21.025-5.61 2.858 6.671 1.486 14.7-4.045 20.041-5.496-5.692-6.492-14.072-3.064-20.737-7 6.316-17.567 7.623-26.068 2.515 4.584-7.628 13.06-11.477 21.361-10.532C13.513 19.714 8.77 10.036 10.54 0c10.767 1.899 18.584 10.701 19.7 21.053C32.172 13.233 38.752 7.04 47.222 6c.974 7.932-2.838 15.349-9.172 19.353z" fill="#FFD65A"/>
+    </g>
+  </g>
+</svg>

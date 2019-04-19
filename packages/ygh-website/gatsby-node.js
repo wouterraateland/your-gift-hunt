@@ -1,7 +1,7 @@
-const _ = require('lodash')
-const path = require('path')
-const { createFilePath } = require('gatsby-source-filesystem')
-const { fmImagesToRelative } = require('gatsby-remark-relative-images')
+const _ = require("lodash")
+const path = require("path")
+const { createFilePath } = require("gatsby-source-filesystem")
+const { fmImagesToRelative } = require("gatsby-remark-relative-images")
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
@@ -46,8 +46,8 @@ exports.createPages = ({ actions, graphql }) => {
         ),
         // additional data can be passed via context
         context: {
-          id,
-        },
+          id
+        }
       })
     })
 
@@ -76,11 +76,15 @@ exports.createPages = ({ actions, graphql }) => {
     // Category pages:
     // Iterate through each post, putting all found categories into `categories`
     // Eliminate duplicate categories
-    const categories = _.uniq(posts.reduce((categories, edge) =>
-      _.get(edge, `node.frontmatter.category`)
-        ? [...categories, edge.node.frontmatter.category]
-        : categories
-      , []))
+    const categories = _.uniq(
+      posts.reduce(
+        (categories, edge) =>
+          _.get(edge, `node.frontmatter.category`)
+            ? [...categories, edge.node.frontmatter.category]
+            : categories,
+        []
+      )
+    )
 
     // Make category pages
     categories.forEach(category => {
@@ -90,19 +94,23 @@ exports.createPages = ({ actions, graphql }) => {
         path: categoryPath,
         component: path.resolve(`src/templates/categories.js`),
         context: {
-          category,
-        },
+          category
+        }
       })
     })
 
     // Author pages:
     // Iterate through each post, putting all found authors into `authors`
     // Eliminate duplicate authors
-    const authors = _.uniq(posts.reduce((authors, edge) =>
-      _.get(edge, `node.frontmatter.category`)
-        ? [...authors, edge.node.frontmatter.author]
-        : authors
-      , []))
+    const authors = _.uniq(
+      posts.reduce(
+        (authors, edge) =>
+          _.get(edge, `node.frontmatter.category`)
+            ? [...authors, edge.node.frontmatter.author]
+            : authors,
+        []
+      )
+    )
 
     // Make author pages
     authors.forEach(author => {
@@ -112,8 +120,8 @@ exports.createPages = ({ actions, graphql }) => {
         path: authorPath,
         component: path.resolve(`src/templates/authors.js`),
         context: {
-          author,
-        },
+          author
+        }
       })
     })
   })
@@ -128,7 +136,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value
     })
   }
 }

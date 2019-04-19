@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 
-import MailchimpSubscribe from 'react-mailchimp-subscribe'
-import { Input, Button, Field } from 'components/ui'
+import MailchimpSubscribe from "react-mailchimp-subscribe"
+import { Input, Button, Field } from "your-gift-hunt/ui"
 
-const url = 'https://yourgifthunt.us19.list-manage.com/subscribe/post?u=309a27bcdbc1a2943a6081ffb&id=c073769b3b'
+const MAILCHIMP_SUBSCRIBE_URL =
+  "https://yourgifthunt.us19.list-manage.com/subscribe/post?u=309a27bcdbc1a2943a6081ffb&id=c073769b3b"
 
 const MailchimpForm = ({ status, message, subscribe }) => {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState("")
 
   function handleOnSubmit(event) {
     event.preventDefault()
@@ -14,38 +15,33 @@ const MailchimpForm = ({ status, message, subscribe }) => {
     subscribe({ EMAIL: email })
   }
 
-  return status === 'success'
-    ? <div dangerouslySetInnerHTML={{ __html: message }} />
-    : (
-      <form
-        disabled={status === 'sending'}
-        onSubmit={handleOnSubmit}
-      >
-        <Field>
-          <Input
-            label="you@example.com"
-            type="email"
-            value={email}
-            onChange={event => setEmail(event.target.value)}
-          />
-        </Field>
-        <Field>
-          <Button
-            importance="primary"
-            color="accent"
-            type="submit"
-          >Subscribe</Button>
-        </Field>
-        {status === 'error' &&
-          <div dangerouslySetInnerHTML={{ __html: message }} />
-        }
-      </form>
-    )
+  return status === "success" ? (
+    <div dangerouslySetInnerHTML={{ __html: message }} />
+  ) : (
+    <form disabled={status === "sending"} onSubmit={handleOnSubmit}>
+      <Field>
+        <Input
+          label="Your email address"
+          type="email"
+          value={email}
+          onChange={event => setEmail(event.target.value)}
+        />
+      </Field>
+      <Field>
+        <Button importance="primary" color="primary" type="submit">
+          Subscribe
+        </Button>
+      </Field>
+      {status === "error" && (
+        <div dangerouslySetInnerHTML={{ __html: message }} />
+      )}
+    </form>
+  )
 }
 
 export default () => (
   <MailchimpSubscribe
-    url={url}
+    url={MAILCHIMP_SUBSCRIBE_URL}
     render={props => <MailchimpForm {...props} />}
   />
 )

@@ -1,0 +1,56 @@
+<svg width="264" height="151" viewBox="0 0 264 151" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <radialGradient cx="100%" cy="0%" fx="100%" fy="0%" r="73.68%" gradientTransform="matrix(0 1 -.4958 0 1 -1)" id="c">
+      <stop stop-color="#3F5BBF" offset="0%"/>
+      <stop stop-color="#FFF" offset="100%"/>
+    </radialGradient>
+    <rect id="b" width="119" height="59" rx="4"/>
+    <filter x="-6.7%" y="-6.8%" width="113.4%" height="127.1%" filterUnits="objectBoundingBox" id="a">
+      <feMorphology radius="2" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/>
+    </filter>
+    <rect id="e" width="119" height="59" rx="4"/>
+    <filter x="-6.7%" y="-6.8%" width="113.4%" height="127.1%" filterUnits="objectBoundingBox" id="d">
+      <feMorphology radius="2" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/>
+    </filter>
+    <rect id="g" width="119" height="59" rx="4"/>
+    <filter x="-6.7%" y="-6.8%" width="113.4%" height="127.1%" filterUnits="objectBoundingBox" id="f">
+      <feMorphology radius="2" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dy="4" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" in="shadowBlurOuter1"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M4 0h256v143H4z"/>
+    <g transform="translate(73)">
+      <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+      <use fill="url(#c)" xlink:href="#b"/>
+    </g>
+    <text font-family="PlayfairDisplay-Bold, Playfair Display" font-size="16" font-weight="bold" fill="#000" fill-opacity=".7" transform="translate(73)">
+      <tspan x="5" y="17">Puzzle</tspan>
+    </text>
+    <g transform="translate(141 84)">
+      <use fill="#000" filter="url(#d)" xlink:href="#e"/>
+      <use fill="#FFF" xlink:href="#e"/>
+    </g>
+    <text font-family="PlayfairDisplay-Bold, Playfair Display" font-size="16" font-weight="bold" fill="#000" fill-opacity=".7" transform="translate(141 84)">
+      <tspan x="4" y="17">Trigger</tspan>
+    </text>
+    <g transform="translate(4 84)">
+      <use fill="#000" filter="url(#f)" xlink:href="#g"/>
+      <rect stroke="#3F5BBF" stroke-width="2" stroke-linejoin="square" fill="url(#c)" x="1" y="1" width="117" height="57" rx="4"/>
+    </g>
+    <text font-family="PlayfairDisplay-Bold, Playfair Display" font-size="16" font-weight="bold" fill="#000" fill-opacity=".7" transform="translate(4 84)">
+      <tspan x="5.5" y="17">Reward</tspan>
+    </text>
+    <path d="M135.436 65.357c4.397 3.18 14.274 5.143 31.064 5.143 11.198 0 19.523.879 25.326 2.5l4.989-4.212L200.5 84l-14.381-6.18 3.837-3.24c-5.534-1.346-13.267-2.08-23.456-2.08-18.626 0-29.144-2.391-33.437-6.522a7 7 0 1 1 2.373-.621z" fill="#3F5BBF" fill-rule="nonzero"/>
+    <path d="M131.937 65.978c-4.293 4.13-14.811 6.522-33.437 6.522-10.442 0-18.367.74-24.045 2.094l3.756 3.558L63.5 83.5l4.548-14.977 4.689 4.443C78.674 71.368 87.144 70.5 98.5 70.5c16.79 0 26.667-1.963 31.064-5.143a7 7 0 1 1 2.372.62z" fill="#FFD65A" fill-rule="nonzero"/>
+  </g>
+</svg>

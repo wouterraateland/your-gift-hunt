@@ -1,6 +1,6 @@
 import React from 'react'
-import Layout from 'components/landing/Layout'
-import { Wrapper } from 'components/ui'
+import Layout from 'components/Layout'
+import { Wrapper } from "your-gift-hunt/ui"
 
 export default () => (
   <Layout>

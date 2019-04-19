@@ -1,314 +1,227 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import { graphql } from 'gatsby'
+import React from "react"
+import styled from "styled-components"
+import { graphql, navigate } from "gatsby"
 
-import { Wrapper, Row, Column, Align } from 'components/ui'
-import PreviewCompatibleImage from 'components/PreviewCompatibleImage'
+import { Wrapper, Row, Column, Align, Button, VSpace } from "your-gift-hunt/ui"
+import { Picture, Location, Friend, Play } from "your-gift-hunt/icons"
 
-import Layout from 'components/landing/Layout'
-import IndexHeader from 'components/landing/IndexHeader'
-import CTA from 'components/landing/CTA'
-import Trail from 'components/landing/Trail'
-import Cross from 'components/landing/Cross'
-import Tip from 'components/landing/Tip'
-import PuzzleTemplate from 'components/landing/PuzzleTemplate'
-import Present from 'components/landing/Present'
-import Tree from 'components/landing/Tree'
+import Layout from "components/Layout"
+import CTA from "components/CTA"
+import PreviewCompatibleImage from "components/PreviewCompatibleImage"
+import Hexagon from "components/Hexagon"
 
-import {
-  Location,
-  Friend,
-  Time,
-  Question,
-  Seek,
-  Picture
-} from 'components/icons'
-
-import map from 'images/map.svg'
+import createImage from "images/create.svg"
+import shareImage from "images/share.svg"
+import playImage from "images/play.svg"
 
 const Section = styled.section`
   &::after {
-    content: '';
+    content: "";
     display: block;
     clear: both;
   }
 
   position: relative;
-  padding: 2em 0;
-
-  ${props => props.darker && css`
-    background-color: #0001;
-  `}
+  margin: 4em 0;
 `
 
-const WrapperWithMap = styled(Wrapper)`
-  margin-bottom: -2em;
-  padding-bottom: 2em;
-  padding-right: 14em;
-
-  background: url(${map}) no-repeat right bottom / contain;
-`
-
-const IphoneImage = styled(PreviewCompatibleImage)`
-  max-width: 10em;
-  margin: 0 auto 2em;
-
-  filter: drop-shadow(-.5em .5em .5em #0004);
-`
-
-const RelativeColumn = styled(Column)`
+const Demo = styled.div`
   position: relative;
-  margin: 8em 0 2em;
+  width: 100%;
+  overflow: hidden;
 
-  @media (max-width: 30em) {
-    margin: 4em 0 8em;
-  }
+  border-radius: ${props => props.theme.borderRadius};
+  box-shadow: ${props => props.theme.boxShadow.large};
 
-  &::before {
-    content: '';
-    position: absolute;
-    left: -0.6em; top: -3.5em;
-    z-index: -3;
-
-    width: 10em;
-    height: 10em;
-
-    border-radius: 1rem;
-    box-shadow: .5rem .5rem 1.5rem -.5rem;
-
-    font-size: 5em;
-
-    background-color: hsl(34, 53%, 82%);
-    background-image:
-      repeating-linear-gradient(0deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
-        hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
-        hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
-        hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
-        hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
-        hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 120px, hsla(197, 62%, 11%, 0.5) 120px, hsla(197, 62%, 11%, 0.5) 140px
-      ),
-      repeating-linear-gradient(90deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
-        hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
-        hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
-        hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
-        hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
-        hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 140px, hsla(197, 62%, 11%, 0.5) 140px, hsla(197, 62%, 11%, 0.5) 160px
-      );
-
-    transform: scale(1, .52) rotate(45deg);
-
-    @media (max-width: 30em) {
-      left: 2.1em;
-    }
-
-    @media (max-width: 20em) {
-      left: 0em;
-    }
-  }
+  background-color: #0001;
 `
 
-const PresentOne = styled(Present)`
+const DemoButton = styled(Button)`
   position: absolute;
-  top: -8em;
-  right: 1em;
-
-  width: 7em;
-
-  filter: drop-shadow(.5rem 1rem .5rem #0004);
-`
-
-const PresentTwo = styled(PresentOne)`
-  top: 4em;
-  right: -3em;
-  width: 10em;
-`
-
-const PresentThree = styled(PresentOne)`
-  top: 10em;
-  right: 6em;
-  width: 5em;
-`
-
-const IphoneColumn = styled(Column)`
-  position: relative;
-`
-
-const TreeOne = styled(Tree)`
-  position: absolute;
-  bottom: 3em;
-  left: calc(50% + 3em);
-
-  width: 2em;
-
-  filter: drop-shadow(-.5rem .5rem .5rem #0004);
-`
-
-const TreeTwo = styled(TreeOne)`
-  bottom: 2em;
+  top: 50%;
   left: 50%;
 
-  width: 3em;
+  transform: translate(-50%, -50%);
 `
 
-const TreeThree = styled(TreeOne)`
-  bottom: 1em;
-  left: calc(50% + 1em);
+const Tagline = styled.p`
+  font-size: 1.5em;
+`
 
-  width: 1.7em;
+const Header = styled.header`
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 6em);
+  padding: 4em 0;
+`
+const LearnMore = styled.p`
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+
+  transform: translate(-50%, 0);
+
+  &::after {
+    content: "";
+
+    position: absolute;
+    left: 50%;
+    top: 1.5em;
+
+    width: 1em;
+    height: 1em;
+    border-right: 0.2em solid;
+    border-bottom: 0.2em solid;
+    border-radius: 0.1em;
+
+    transform: rotate(45deg) translate(-50%);
+  }
+`
+
+const StyledHexagon = styled(Hexagon)`
+  margin: -4em auto;
+  color: #fff;
 `
 
 export default ({ data }) => {
-  const headerImageInfo = {
-    alt: 'Background',
+  const demoImageInfo = {
+    alt: "Demo",
     image: {
-      childImageSharp: data.background.childImageSharp,
-    }
-  }
-  const playImageInfo = {
-    alt: 'Play',
-    image: {
-      childImageSharp: data.play.childImageSharp,
+      childImageSharp: data.demo.childImageSharp
     }
   }
 
   return (
     <Layout index>
-      <IndexHeader imageInfo={headerImageInfo} />
-      <Trail rtl />
-      <Section id="excite">
+      <Header>
         <Wrapper>
           <Row>
-            <Column size={8} mSize={12}>
-              <h2>Excite</h2>
-              <p>Build anticipation for the gift to come by playing a scavenger hunt full of puzzles and interpersonal memories.</p>
-              <Row vAlign="top">
-                <Column size={6} sSize={12}>
-                  <h3>For your partner</h3>
-                  <p>A unique way to give your partner a romantic and adventurous reminder of your relationship.</p>
-                </Column>
-                <Column size={6} sSize={12}>
-                  <h3>For a close friend</h3>
-                  <p>Send a close on an adventure that celebrates the times the two of you have had. A great way to show them your appreciation.</p>
-                </Column>
-              </Row>
+            <Column size={6} mSize={12}>
+              <h1>Create your own unique, personalized escape games</h1>
+              <Tagline>
+                Go beyond traditional puzzle games and amaze your friends
+              </Tagline>
+            </Column>
+            <Column size={6} mSize={12}>
+              <Demo>
+                <PreviewCompatibleImage imageInfo={demoImageInfo} />
+                <DemoButton
+                  size="large"
+                  importance="primary"
+                  color="primary"
+                  href="https://play.yourgifthunt.com/wouter-raateland/for-pioneers"
+                >
+                  <Play />
+                  &nbsp;&nbsp;&nbsp;Play demo
+                </DemoButton>
+              </Demo>
             </Column>
           </Row>
         </Wrapper>
-      </Section>
-      <Trail ltr />
-      <Section id="create">
-        <Wrapper>
-          <article>
-            <h2>1. Create</h2>
-            <p>We created a versatile collection of puzzle templates, so that you can be fully creative and make your unique and personal gift hunt.</p>
-          </article>
-          <Row vAlign="top">
-            <Column size={4} mSize={6} sSize={12}>
-              <PuzzleTemplate
-                icon={Location}
-                title="Location based challenges"
-                exerpt="Revisit memorable and personally meaningful places."
-              />
-            </Column>
-            <Column size={4} mSize={6} sSize={12}>
-              <PuzzleTemplate
-                icon={Friend}
-                title="Friend based challenges"
-                exerpt="Make the hunt even more fun by involving your or the player's friends."
-              />
-            </Column>
-            <Column size={4} mSize={6} sSize={12}>
-              <PuzzleTemplate
-                icon={Time}
-                title="Time based challenges"
-                exerpt="A challenge on your night out? Just after waking up? you name it."
-              />
-            </Column>
-            <Column size={4} mSize={6} sSize={12}>
-              <PuzzleTemplate
-                icon={Question}
-                title="Personal questions"
-                exerpt="Make sure the player remembers your facts."
-              />
-            </Column>
-            <Column size={4} mSize={6} sSize={12}>
-              <PuzzleTemplate
-                icon={Seek}
-                title="Hide and seek"
-                exerpt="Have the player collect codes and other hints."
-              />
-            </Column>
-            <Column size={4} mSize={6} sSize={12}>
-              <PuzzleTemplate
-                icon={Picture}
-                title="Picture challenges"
-                exerpt="How about a selfie to unlock next challenge..."
-              />
-            </Column>
-          </Row>
-        </Wrapper>
-      </Section>
-      <Trail rtl />
-      <Section id="play">
-        <Wrapper>
-          <Row>
-            <IphoneColumn rtl size={4} sSize={6}>
-              <IphoneImage imageInfo={playImageInfo} />
-              <TreeOne />
-              <TreeTwo />
-              <TreeThree />
-            </IphoneColumn>
-            <Column size={8} sSize={12}>
-              <h2>2. Play</h2>
-              <p>The hunt is playable completely from the app. You can track the players progress and help them with hints.</p>
-              <Row>
-                <Column size={6} mSize={12}>
-                  <h3>Track progress</h3>
-                  <p>You can track the player's progress using the progress dashboard.</p>
-                </Column>
-                <Column size={6} mSize={12}>
-                  <h3>Help with hints</h3>
-                  <p>When the player is stuck on some puzzle, you can of course help them with hints.</p>
-                </Column>
-              </Row>
-              <Tip>A hunt can span multiple days, a few weeks even. Use this to play and to build anticipation for the gift to come.</Tip>
-            </Column>
-          </Row>
-        </Wrapper>
-      </Section>
-      <Trail ltr />
-      <Section id="give">
-        <Wrapper>
-          <Row rtl vAlign="top">
-            <RelativeColumn size={4} sSize={12}>
-              <Cross />
-              <PresentOne boxColor="#22a1e8" ribbonColor="#fa6d07" />
-              <PresentTwo />
-              <PresentThree boxColor="#ffad33" />
-            </RelativeColumn>
-            <Column size={8} sSize={12}>
-              <article>
-                <h2>3. Give</h2>
-                <p>After the hard work of the hunt, it is time to give the player what he has been working so hard for. We promise that they will appreciate it more, for they have really earned it.</p>
-              </article>
-            </Column>
-          </Row>
-        </Wrapper>
-      </Section>
-      {/* <Section darker id="extra">
-        <WrapperWithMap xlarge>
-          <article>
-            <h2>Loved your hunt?</h2>
-            <p>For only <em>€5,-</em><sup>*</sup> you can look back on your adventure with the adventure poster. It details all the steps taken, places visited and friends met during the hunt, a great reminder!</p>
-          </article>
-          <sup>*</sup><small>Excluding shipping costs</small>
-        </WrapperWithMap>
-      </Section> */}
-      <Section id="cta">
+        <LearnMore>Learn More</LearnMore>
+      </Header>
+      <Section id="process">
         <Wrapper>
           <Align.Center>
-            <h2>Be the first to make your own hunt?</h2>
-            <p>Subscribe to our newsletter for early access and our latest stories.</p>
+            <h2>Get started in 3 easy steps</h2>
+            <Row>
+              <Column size={4} mSize={6} sSize={12}>
+                <h3>1. Create</h3>
+                <img src={createImage} alt="create" />
+                <p>
+                  Design your room layout, combine and modify puzzles from our
+                  collection of templates, and add your personal style.
+                </p>
+              </Column>
+              <Column size={4} mSize={6} sSize={12}>
+                <h3>2. Share</h3>
+                <img src={shareImage} alt="share" />
+                <p>
+                  Share your creation with the world via the showcase or make it
+                  especially for someone and share it privately with them.
+                </p>
+              </Column>
+              <Column size={4} mSize={6} sSize={12}>
+                <h3>3. Play</h3>
+                <img src={playImage} alt="play" />
+                <p>
+                  Play the game instantly on a mobile phone via an unique URL,
+                  no download required.
+                </p>
+              </Column>
+            </Row>
+          </Align.Center>
+        </Wrapper>
+      </Section>
+      <Section id="features">
+        <Wrapper>
+          <Align.Center>
+            <h2>Go beyond traditional puzzle games</h2>
+          </Align.Center>
+          <VSpace />
+          <Row>
+            <Column size={2} sSize={12}>
+              <StyledHexagon>
+                <Picture size={4} />
+              </StyledHexagon>
+            </Column>
+            <Column size={6} mSize={10} sSize={12}>
+              <h3>Mobile play bleeding into the real world</h3>
+              <p>
+                Hide codes for the player. They can scan them with code scanner
+                built straight into the app, if they can find them…
+              </p>
+            </Column>
+          </Row>
+          <VSpace />
+          <Row rtl>
+            <Column size={2} sSize={12}>
+              <StyledHexagon>
+                <Location size={4} />
+              </StyledHexagon>
+            </Column>
+            <Column size={6} mSize={10} sSize={12}>
+              <h3>Break out of the screen with location based puzzles</h3>
+              <p>
+                Send players en route to cool locations searching for hidden
+                hints.
+              </p>
+            </Column>
+          </Row>
+          <VSpace />
+          <Row>
+            <Column size={2} sSize={12}>
+              <StyledHexagon>
+                <Friend size={4} />
+              </StyledHexagon>
+            </Column>
+            <Column size={6} mSize={10} sSize={12}>
+              <h3>Play is more fun together</h3>
+              <p>
+                Distribute information necessary for the puzzles among your
+                friends and have the player play together with them.
+              </p>
+            </Column>
+          </Row>
+          <Align.Center>
+            <Button
+              onClick={() => navigate("/features")}
+              size="medium"
+              importance="secondary"
+              color="primary"
+            >
+              View more features
+            </Button>
+          </Align.Center>
+        </Wrapper>
+      </Section>
+      <Section id="signup">
+        <Wrapper>
+          <Align.Center>
+            <h2>Subscribe for Beta access</h2>
+            <p>Be the first to create your own unique puzzle games</p>
             <CTA />
           </Align.Center>
         </Wrapper>
@@ -319,14 +232,7 @@ export default ({ data }) => {
 
 export const pageQuery = graphql`
   query IndexQuery {
-    background: file(relativePath: { eq: "background.jpg" }) {
-      childImageSharp {
-        fluid(maxWidth: 960, quality: 100) {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    play: file(relativePath: { eq: "play.png" }) {
+    demo: file(relativePath: { eq: "demo.png" }) {
       childImageSharp {
         fluid(maxWidth: 960, quality: 100) {
           ...GatsbyImageSharpFluid
