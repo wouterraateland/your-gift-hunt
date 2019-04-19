@@ -1,21 +1,15 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
-import { createPortal } from "react-dom"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
-const ToolTip = styled.div.attrs(({ position }) => ({
-  style: {
-    left: position.x,
-    top: position.y
-  }
-}))`
-  position: fixed;
+const ToolTip = styled.div`
+  pointer-events: none;
+
+  position: absolute;
   z-index: 1;
 
-  width: 384px;
-  max-width: calc(100vw - 2em);
   padding: 0.5em;
   border-radius: ${props => props.theme.borderRadius};
 
+  white-space: nowrap;
   text-align: left;
   line-height: 1.5;
   font-size: 0.8rem;
@@ -27,6 +21,8 @@ const ToolTip = styled.div.attrs(({ position }) => ({
   & strong {
     color: #fff;
   }
+
+  opacity: 0;
 
   transition-property: opacity, transform;
   transition-duration: 0.2s;
@@ -42,52 +38,47 @@ const ToolTip = styled.div.attrs(({ position }) => ({
     border-bottom-right-radius: 0.25em;
   }
 
-  transform: translate(-${props => props.dx}px, -100%);
-
-  &::after {
-    left: ${props => props.dx}px;
-    top: calc(100% - 1px);
-
-    border-color: transparent #222 #222 transparent;
-    border-bottom-right-radius: 0.25em;
-
-    transform: translate(-50%, -50%) rotate(45deg);
+  *:hover > & {
+    opacity: 1;
   }
+
+  ${props =>
+    props.right
+      ? css`
+          left: 100%;
+          top: 50%;
+
+          transform: translate(0, -50%);
+
+          &::after {
+            right: calc(100% - 1px);
+            top: 50%;
+
+            transform: translate(50%, -50%) rotate(135deg);
+          }
+
+          *:hover > & {
+            transform: translate(0.5em, -50%);
+          }
+        `
+      : css`
+          left: 50%;
+          bottom: 100%;
+          transform: translate(-50%, 0);
+          &::after {
+            left: 50%;
+            top: calc(100% - 1px);
+
+            border-color: transparent #222 #222 transparent;
+            border-bottom-right-radius: 0.25em;
+
+            transform: translate(-50%, -50%) rotate(45deg);
+          }
+
+          *:hover > & {
+            transform: translate(-50%, -0.5em);
+          }
+        `}
 `
 
-const toolTipRoot = document.querySelector("#tooltip-root")
-export default props => {
-  const ref = useRef(null)
-  const position = useRef(null)
-  const [isVisible, setVisibility] = useState(false)
-
-  const toggleVisibility = useCallback(() => {
-    const rect = ref.current.parentElement.getClientRects()[0]
-    position.current = {
-      x: rect.x + rect.width / 2,
-      y: rect.y + rect.height / 2
-    }
-    setVisibility(v => !v)
-  }, [])
-
-  useEffect(() => {
-    ref.current.parentElement.addEventListener("click", toggleVisibility)
-    return () => {
-      ref.current.parentElement.removeEventListener("click", toggleVisibility)
-    }
-  }, [])
-
-  return (
-    <div ref={ref}>
-      {isVisible &&
-        createPortal(
-          <ToolTip
-            {...props}
-            position={position.current}
-            dx={Math.min(position.current.x - 10, 192)}
-          />,
-          toolTipRoot
-        )}
-    </div>
-  )
-}
+export default ToolTip
