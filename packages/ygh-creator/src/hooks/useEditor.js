@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
+import EditorContext from "contexts/Editor"
 
 const ACTION_TYPES = {
   DELETE_NODE: "DELETE_NODE"
 }
 
-const useEditor = () => {
+export const useEditorProvider = () => {
   const [upcomingAction, setUpcomingAction] = useState(null)
 
   return {
@@ -14,4 +15,5 @@ const useEditor = () => {
   }
 }
 
+const useEditor = () => useContext(EditorContext)
 export default useEditor

@@ -1,10 +1,10 @@
 import React, { createContext } from "react"
-import useInspector from "hooks/useInspector"
+import { useInspectorProvider } from "hooks/useInspector"
 
 const InspectorContext = createContext(null)
 
 export const InspectorProvider = ({ children }) => {
-  const value = useInspector()
+  const value = useInspectorProvider()
   return (
     <InspectorContext.Provider value={value}>
       {children}

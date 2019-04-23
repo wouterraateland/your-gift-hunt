@@ -1,7 +1,10 @@
+import { useCallback, useContext } from "react"
 import { useQuery } from "react-apollo-hooks"
 import { ENTITY_TEMPLATES } from "gql/queries"
 
-const useTemplates = () => {
+import TemplatesContext from "contexts/Templates"
+
+export const useTemplatesProvider = () => {
   const { data, error } = useQuery(ENTITY_TEMPLATES)
 
   if (error) {
@@ -12,12 +15,18 @@ const useTemplates = () => {
   const stateTemplates = entityTemplates.flatMap(({ states }) => states)
   const fieldTemplates = entityTemplates.flatMap(({ fields }) => fields)
 
-  const getEntityTemplateById = entityId =>
-    entityTemplates.find(({ id }) => id === entityId)
-  const getStateTemplateById = stateId =>
-    stateTemplates.find(({ id }) => id === stateId)
-  const getFieldTemplateById = fieldId =>
-    fieldTemplates.find(({ id }) => id === fieldId)
+  const getEntityTemplateById = useCallback(
+    entityId => entityTemplates.find(({ id }) => id === entityId),
+    [entityTemplates]
+  )
+  const getStateTemplateById = useCallback(
+    stateId => stateTemplates.find(({ id }) => id === stateId),
+    [stateTemplates]
+  )
+  const getFieldTemplateById = useCallback(
+    fieldId => fieldTemplates.find(({ id }) => id === fieldId),
+    [fieldTemplates]
+  )
 
   return {
     entityTemplates,
@@ -29,4 +38,5 @@ const useTemplates = () => {
   }
 }
 
+const useTemplates = () => useContext(TemplatesContext)
 export default useTemplates

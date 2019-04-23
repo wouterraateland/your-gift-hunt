@@ -1,20 +1,32 @@
-import { useState } from "react"
+import { useCallback, useContext, useState } from "react"
+import InspectorContext from "contexts/Inspector"
 
-const useInspector = () => {
+export const useInspectorProvider = () => {
   const [state, setState] = useState({
     nodeId: null,
     isOpen: false
   })
 
-  return {
-    closeInspector: () => setState(state => ({ ...state, isOpen: false })),
-    inspectNode: nodeId =>
+  const closeInspector = useCallback(
+    () => setState(state => ({ ...state, isOpen: false })),
+    []
+  )
+
+  const inspectNode = useCallback(
+    nodeId =>
       setState({
         nodeId,
         isOpen: true
       }),
+    []
+  )
+
+  return {
+    closeInspector,
+    inspectNode,
     ...state
   }
 }
 
+const useInspector = () => useContext(InspectorContext)
 export default useInspector

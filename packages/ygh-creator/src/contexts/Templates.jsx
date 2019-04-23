@@ -1,10 +1,10 @@
 import React, { createContext } from "react"
-import useTemplates from "hooks/useTemplates"
+import { useTemplatesProvider } from "hooks/useTemplates"
 
 const TemplatesContext = createContext(null)
 
 export const EntitiesProvider = ({ children }) => {
-  const value = useTemplates()
+  const value = useTemplatesProvider()
   return (
     <TemplatesContext.Provider value={value}>
       {children}

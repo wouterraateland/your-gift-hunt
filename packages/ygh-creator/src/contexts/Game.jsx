@@ -1,10 +1,10 @@
 import React, { createContext } from "react"
-import useGame from "hooks/useGame"
+import { useGameProvider } from "hooks/useGame"
 
 const GameContext = createContext(null)
 
 export const GameProvider = ({ children, ...otherProps }) => {
-  const value = useGame(otherProps)
+  const value = useGameProvider(otherProps)
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>
 }
 

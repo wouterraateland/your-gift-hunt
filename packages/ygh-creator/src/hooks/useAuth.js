@@ -1,11 +1,13 @@
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { useNetlifyIdentity } from "react-netlify-identity"
 import { navigate } from "@reach/router"
 import { useMutation } from "react-apollo-hooks"
 import { CREATE_USER } from "gql/mutations"
 import slugify from "limax"
 
-const useAuth = url => {
+import AuthContext from "contexts/Auth"
+
+export const useAuthProvider = url => {
   const identity = useNetlifyIdentity(url)
   const createUser = useMutation(CREATE_USER)
 
@@ -52,4 +54,5 @@ const useAuth = url => {
   return identity
 }
 
+const useAuth = () => useContext(AuthContext)
 export default useAuth

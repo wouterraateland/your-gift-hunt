@@ -1,3 +1,4 @@
+import { useContext } from "react"
 import useGameData from "hooks/useGameData"
 import useGameMutations from "hooks/useGameMutations"
 import useGameGraph from "hooks/useGameGraph"
@@ -5,7 +6,9 @@ import useGraphLayout from "hooks/useGraphLayout"
 import useGameDependencies from "hooks/useGameDependencies"
 import useSaveState from "hooks/useSaveState"
 
-const useGame = variables => {
+import GameContext from "contexts/Game"
+
+export const useGameProvider = variables => {
   const saveState = useSaveState()
 
   const game = useGameData(variables)
@@ -32,4 +35,5 @@ const useGame = variables => {
   }
 }
 
+const useGame = () => useContext(GameContext)
 export default useGame
