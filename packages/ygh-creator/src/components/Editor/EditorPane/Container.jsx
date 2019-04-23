@@ -1,8 +1,8 @@
 import { NODE_TYPES } from "data"
-import React, { useContext, useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import usePanZoom from "hooks/usePanZoom" //"use-pan-and-zoom"
 
@@ -31,7 +31,7 @@ const PanContainer = styled.div`
 `
 
 const EditorPane = ({ children }) => {
-  const { nodes, getNodePosition } = useContext(GameContext)
+  const { nodes, getNodePosition } = useGame()
   const container = useRef(null)
   const {
     transform,

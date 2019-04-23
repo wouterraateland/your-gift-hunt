@@ -1,6 +1,6 @@
-import React, { useCallback, useContext } from "react"
+import React, { useCallback } from "react"
 
-import AuthContext from "contexts/Auth"
+import useAuth from "hooks/useAuth"
 
 import { useMutation } from "react-apollo-hooks"
 import { USER_GAMES } from "gql/queries"
@@ -9,7 +9,7 @@ import { DELETE_GAME } from "gql/mutations"
 import Menu from "components/Menu"
 
 const MoreActions = ({ game }) => {
-  const { user } = useContext(AuthContext)
+  const { user } = useAuth()
   const userId = user.user_metadata.prismaUserId
 
   const deleteGameMutation = useMutation(DELETE_GAME)

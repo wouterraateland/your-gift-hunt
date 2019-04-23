@@ -1,9 +1,9 @@
-import React, { useCallback, useContext, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import styled from "styled-components"
 
-import GameContext from "contexts/Game"
-import TemplatesContext from "contexts/Templates"
-import InspectorContext from "contexts/Inspector"
+import useGame from "hooks/useGame"
+import useTemplates from "hooks/useTemplates"
+import useInspector from "hooks/useInspector"
 
 import EntitiesContainer from "./EntitiesContainer"
 import EntityEntry from "./EntityEntry"
@@ -52,9 +52,9 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
   const {
     game: { entities },
     createEntity
-  } = useContext(GameContext)
-  const { inspectNode } = useContext(InspectorContext)
-  const { entityTemplates } = useContext(TemplatesContext)
+  } = useGame()
+  const { inspectNode } = useInspector()
+  const { entityTemplates } = useTemplates()
   const visibleEntityTemplates = entityTemplates.filter(
     getEntitiesFilter(selectedType)
   )

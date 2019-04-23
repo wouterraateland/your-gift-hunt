@@ -1,14 +1,8 @@
-import React, {
-  useContext,
-  useRef,
-  useState,
-  useEffect,
-  useCallback
-} from "react"
+import React, { useRef, useState, useEffect, useCallback } from "react"
 import styled from "styled-components"
 import slugify from "limax"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import useClickOutside from "hooks/useClickOutside"
 import { useFormState } from "react-use-form-state"
@@ -42,7 +36,7 @@ const SettingsModal = () => {
   const ref = useRef(null)
   useClickOutside({ ref, onClickOutside: () => window.history.back() })
 
-  const { game, updateGameSettings } = useContext(GameContext)
+  const { game, updateGameSettings } = useGame()
 
   const [state, setState] = useState(null)
   const [formState, { text, select }] = useFormState({

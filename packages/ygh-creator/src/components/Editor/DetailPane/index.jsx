@@ -1,7 +1,7 @@
-import React, { forwardRef, useContext, useEffect } from "react"
+import React, { forwardRef, useEffect } from "react"
 
-import GameContext from "contexts/Game"
-import InspectorContext from "contexts/Inspector"
+import useGame from "hooks/useGame"
+import useInspector from "hooks/useInspector"
 
 import Container from "./Container"
 import Preview from "./Preview"
@@ -16,8 +16,8 @@ import Delete from "./Delete"
 import CloseButton from "./CloseButton"
 
 const DetailPane = forwardRef((_, ref) => {
-  const { isOpen, nodeId } = useContext(InspectorContext)
-  const { getNodeById } = useContext(GameContext)
+  const { isOpen, nodeId } = useInspector()
+  const { getNodeById } = useGame()
 
   const node = getNodeById(nodeId)
 

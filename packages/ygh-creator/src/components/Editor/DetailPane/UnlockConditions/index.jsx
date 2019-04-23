@@ -1,6 +1,6 @@
-import React, { useContext } from "react"
+import React from "react"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import Section from "components/Editor/DetailPane/Section"
 
@@ -8,7 +8,7 @@ import DefaultUnlockConditions from "./Default"
 import EditableUnlockConditions from "./Editable"
 
 const UnlockConditions = ({ node }) => {
-  const { isUnlockable } = useContext(GameContext)
+  const { isUnlockable } = useGame()
 
   return isUnlockable(node, true) ? (
     <Section title="Unlock conditions">

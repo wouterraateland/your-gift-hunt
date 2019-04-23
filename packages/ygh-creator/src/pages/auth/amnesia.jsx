@@ -1,13 +1,13 @@
-import React, { useState, useContext } from "react"
+import React, { useState } from "react"
 import { Link } from "@reach/router"
 
-import AuthContext from "contexts/Auth"
+import useAuth from "hooks/useAuth"
 
 import Layout from "layouts/Auth"
 import { Field, Input, Button } from "your-gift-hunt/ui"
 
 const AmnesiaPage = () => {
-  const { requestPasswordRecovery } = useContext(AuthContext)
+  const { requestPasswordRecovery } = useAuth()
   const [isSent, setSent] = useState(false)
 
   async function handleSubmit(event) {

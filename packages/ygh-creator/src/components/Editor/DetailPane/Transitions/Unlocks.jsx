@@ -2,7 +2,7 @@ import { EDGE_TYPES } from "data"
 import React, { useCallback, useContext, useState } from "react"
 import styled from "styled-components"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import useAsync from "hooks/useAsync"
 
@@ -50,7 +50,7 @@ const Unlocks = ({ from, to }) => {
     addUnlockToStateTransition,
     removeUnlockFromStateTransition,
     getPreviousNodes
-  } = useContext(GameContext)
+  } = useGame()
 
   const unlocks = edges
     .filter(

@@ -1,19 +1,19 @@
 import { NODE_TYPES } from "data"
 
-import React, { memo, useContext } from "react"
+import React, { memo } from "react"
 
-import EditorContext from "contexts/Editor"
-import InspectorContext from "contexts/Inspector"
-import GameContext from "contexts/Game"
+import useEditor from "hooks/useEditor"
+import useInspector from "hooks/useInspector"
+import useGame from "hooks/useGame"
 
 import EntryNode from "./EntryNode"
 import ExitNode from "./ExitNode"
 import EntityCard from "./EntityCard"
 
 const Node = memo(({ id, entity, state, type }) => {
-  const { ACTION_TYPES, upcomingAction } = useContext(EditorContext)
-  const { inspectNode, isOpen, nodeId } = useContext(InspectorContext)
-  const { getNodePosition } = useContext(GameContext)
+  const { ACTION_TYPES, upcomingAction } = useEditor()
+  const { inspectNode, isOpen, nodeId } = useInspector()
+  const { getNodePosition } = useGame()
   const position = getNodePosition(id)
 
   switch (type) {

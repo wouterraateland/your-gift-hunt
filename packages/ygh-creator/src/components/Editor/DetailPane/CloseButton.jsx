@@ -1,7 +1,7 @@
-import React, { useContext } from "react"
+import React from "react"
 import styled from "styled-components"
 
-import InspectorContext from "contexts/Inspector"
+import useInspector from "hooks/useInspector"
 
 const FloatingButton = styled.button`
   cursor: pointer;
@@ -30,7 +30,7 @@ const FloatingButton = styled.button`
 `
 
 const CloseButton = () => {
-  const { closeInspector } = useContext(InspectorContext)
+  const { closeInspector } = useInspector()
 
   return <FloatingButton onClick={closeInspector}>&times;</FloatingButton>
 }

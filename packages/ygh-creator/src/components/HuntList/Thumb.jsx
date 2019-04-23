@@ -1,9 +1,9 @@
-import React, { useContext } from "react"
+import React from "react"
 import styled from "styled-components"
 import moment from "moment"
 import { navigate } from "@reach/router"
 
-import AuthContext from "contexts/Auth"
+import useAuth from "hooks/useAuth"
 
 import { Edit } from "your-gift-hunt/icons"
 import { Present } from "your-gift-hunt/components"
@@ -99,7 +99,7 @@ const Actions = ({ game }) => (
 )
 
 const Thumb = ({ game }) => {
-  const { user } = useContext(AuthContext)
+  const { user } = useAuth()
   const editDate = moment(game.updatedAt)
   const now = moment()
   const sameYear = editDate.year() === now.year()

@@ -1,9 +1,9 @@
-import React, { useCallback, useContext, useEffect, useRef } from "react"
+import React, { useCallback, useEffect, useRef } from "react"
 import styled from "styled-components"
 
-import InspectorContext from "contexts/Inspector"
-import EditorContext from "contexts/Editor"
-import GameContext from "contexts/Game"
+import useInspector from "hooks/useInspector"
+import useEditor from "hooks/useEditor"
+import useGame from "hooks/useGame"
 
 import useClickOutside from "hooks/useClickOutside"
 
@@ -38,11 +38,9 @@ const Info = styled.small`
 
 const DeleteButton = ({ node, isOpen }) => {
   const ref = useRef(null)
-  const { closeInspector } = useContext(InspectorContext)
-  const { ACTION_TYPES, upcomingAction, setUpcomingAction } = useContext(
-    EditorContext
-  )
-  const { getDependentNodes, deleteNodes } = useContext(GameContext)
+  const { closeInspector } = useInspector()
+  const { ACTION_TYPES, upcomingAction, setUpcomingAction } = useEditor()
+  const { getDependentNodes, deleteNodes } = useGame()
 
   useClickOutside({ ref, onClickOutside: () => setUpcomingAction(null) })
 

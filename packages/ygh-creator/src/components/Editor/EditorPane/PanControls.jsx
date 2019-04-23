@@ -1,7 +1,7 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
-import GameContext from "contexts/Game"
-import InspectorContext from "contexts/Inspector"
+import useGame from "hooks/useGame"
+import useInspector from "hooks/useInspector"
 
 const INSPECTOR_WIDTH =
   25 * parseFloat(getComputedStyle(document.documentElement).fontSize)
@@ -18,8 +18,8 @@ const PanControls = ({ zoom, container, pan, setPan }) => {
     to: null
   })
 
-  const { getNodePosition } = useContext(GameContext)
-  const { nodeId } = useContext(InspectorContext)
+  const { getNodePosition } = useGame()
+  const { nodeId } = useInspector()
   const prevNodeId = useRef(null)
 
   useEffect(

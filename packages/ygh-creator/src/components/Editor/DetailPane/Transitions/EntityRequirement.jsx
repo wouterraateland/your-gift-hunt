@@ -1,13 +1,13 @@
 import { EDGE_TYPES, ACTION_TYPES } from "data"
-import React, { useContext } from "react"
+import React from "react"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import NodeTag from "components/Editor/NodeTag"
 import ListItem from "./ListItem"
 
 const EntityRequirement = ({ type, requiredEntity: { entityState } }) => {
-  const { nodes } = useContext(GameContext)
+  const { nodes } = useGame()
 
   const node = nodes.find(
     node => node.state && node.state.id === entityState.id

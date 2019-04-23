@@ -1,7 +1,7 @@
-import React, { useRef, useContext, useState } from "react"
+import React, { useRef, useState } from "react"
 import styled from "styled-components"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import { useFormState } from "react-use-form-state"
 import useClickOutside from "hooks/useClickOutside"
@@ -22,7 +22,7 @@ const Form = styled.form`
 
 const HintForm = ({ actionRequirementId, onClose, hint }) => {
   const isNewHint = !hint
-  const { createHint, updateHint } = useContext(GameContext)
+  const { createHint, updateHint } = useGame()
 
   const [{ isLoading, error }, setState] = useState({
     isLoading: false,

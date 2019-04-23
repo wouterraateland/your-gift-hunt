@@ -1,14 +1,14 @@
-import React, { useState, useContext } from "react"
+import React, { useState } from "react"
 import { Link, navigate } from "@reach/router"
 
-import AuthContext from "contexts/Auth"
+import useAuth from "hooks/useAuth"
 
 import { Field, Input, Button } from "your-gift-hunt/ui"
 import Layout from "layouts/Auth"
 
 const SignupPage = () => {
   const [errors, setErrors] = useState({})
-  const { signupUser } = useContext(AuthContext)
+  const { signupUser } = useAuth()
 
   async function handleSubmit(event) {
     event.preventDefault()

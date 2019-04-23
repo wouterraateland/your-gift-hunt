@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
 import { useFormState } from "react-use-form-state"
 import { useQuery, useMutation, useApolloClient } from "react-apollo-hooks"
 
-import AuthContext from "contexts/Auth"
+import useAuth from "hooks/useAuth"
 
 import Layout from "layouts/Overview"
 import {
@@ -28,7 +28,7 @@ const Form = styled.form`
 
 const NewGamePage = () => {
   const [state, setState] = useState(null)
-  const { user, updateUser } = useContext(AuthContext)
+  const { user, updateUser } = useAuth()
   const { data, error } = useQuery(USER, {
     variables: {
       userId: user.user_metadata.prismaUserId
@@ -61,10 +61,15 @@ const NewGamePage = () => {
     return res.data.usersConnection.aggregate.count !== 0
   }
 
-  useEffect(() => {
-    setUsernameExistence(false)
-    checkUsernameExistence(formState.values.username).then(setUsernameExistence)
-  }, [formState.values.username])
+  useEffect(
+    () => {
+      setUsernameExistence(false)
+      checkUsernameExistence(formState.values.username).then(
+        setUsernameExistence
+      )
+    },
+    [formState.values.username]
+  )
 
   async function onSubmit(event) {
     event.preventDefault()

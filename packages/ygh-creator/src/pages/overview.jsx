@@ -1,7 +1,7 @@
-import React, { Suspense, useContext, useState } from "react"
+import React, { Suspense, useState } from "react"
 import slugify from "limax"
 
-import AuthContext from "contexts/Auth"
+import useAuth from "hooks/useAuth"
 
 import { useQuery } from "react-apollo-hooks"
 import useDebounce from "hooks/useDebounce"
@@ -14,7 +14,7 @@ import HuntList from "components/HuntList"
 import { USER_GAMES } from "gql/queries"
 
 const Overview = ({ searchQuery }) => {
-  const { user } = useContext(AuthContext)
+  const { user } = useAuth()
   const { data, error } = useQuery(USER_GAMES, {
     variables: {
       userId: user.user_metadata.prismaUserId,

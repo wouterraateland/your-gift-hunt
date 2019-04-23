@@ -1,8 +1,8 @@
 import { EDGE_TYPES } from "data"
-import React, { useContext, useState, useCallback } from "react"
+import React, { useState, useCallback } from "react"
 import styled from "styled-components"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import useAsync from "hooks/useAsync"
 
@@ -25,7 +25,7 @@ const EditableUnlockConditions = ({ node }) => {
     addUnlockToStateTransition,
     removeUnlockFromStateTransition,
     getNextNodes
-  } = useContext(GameContext)
+  } = useGame()
 
   const unlockConditions = edges
     .filter(({ unlocks }) => unlocks === node.id)

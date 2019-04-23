@@ -1,8 +1,8 @@
-import React, { useContext } from "react"
+import React from "react"
 import styled from "styled-components"
 import { Link } from "@reach/router"
 
-import AuthContext from "contexts/Auth"
+import useAuth from "hooks/useAuth"
 
 import Menu from "components/Menu"
 
@@ -17,7 +17,7 @@ const Avatar = styled.div`
 `
 
 const Profile = () => {
-  const { logoutUser } = useContext(AuthContext)
+  const { logoutUser } = useAuth()
 
   return (
     <Menu.Container>

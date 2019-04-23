@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, useState, useEffect } from "react"
+import React, { useMemo, useState, useEffect } from "react"
 import { navigate } from "@reach/router"
 import styled from "styled-components"
 import randomstring from "randomstring"
@@ -7,7 +7,7 @@ import slugify from "limax"
 import { useFormState } from "react-use-form-state"
 import { useQuery, useMutation, useApolloClient } from "react-apollo-hooks"
 
-import AuthContext from "contexts/Auth"
+import useAuth from "hooks/useAuth"
 
 import Layout from "layouts/Overview"
 import {
@@ -70,7 +70,7 @@ const Slash = styled.span`
 `
 
 const NewGamePage = () => {
-  const { user } = useContext(AuthContext)
+  const { user } = useAuth()
   const { data, error } = useQuery(USER, {
     variables: {
       userId: user.user_metadata.prismaUserId

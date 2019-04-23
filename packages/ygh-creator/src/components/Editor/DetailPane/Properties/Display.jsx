@@ -1,6 +1,6 @@
-import React, { useCallback, useContext, useMemo } from "react"
+import React, { useCallback, useMemo } from "react"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import useAsync from "hooks/useAsync"
 
@@ -32,7 +32,7 @@ const Display = ({ field }) => {
     game,
     connectInformationSlotWithField,
     disconnectInformationSlotFromField
-  } = useContext(GameContext)
+  } = useGame()
 
   const [{ error, isLoading }, runAsync] = useAsync()
 

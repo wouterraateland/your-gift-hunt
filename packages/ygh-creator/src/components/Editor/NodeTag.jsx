@@ -1,8 +1,8 @@
 import { NODE_TYPES } from "data"
-import React, { useContext } from "react"
+import React from "react"
 import styled from "styled-components"
 
-import InspectorContext from "contexts/Inspector"
+import useInspector from "hooks/useInspector"
 
 import EntityTag from "./EntityTag"
 import StateTag from "./StateTag"
@@ -15,7 +15,7 @@ const StyledEntityTag = styled(EntityTag)`
 `
 
 const NodeTag = ({ node, isClickable = true, showEntity = false }) => {
-  const { inspectNode } = useContext(InspectorContext)
+  const { inspectNode } = useInspector()
 
   const containerProps =
     isClickable && node.type === NODE_TYPES.STATE

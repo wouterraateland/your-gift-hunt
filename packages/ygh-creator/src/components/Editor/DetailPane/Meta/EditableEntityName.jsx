@@ -1,13 +1,7 @@
-import React, {
-  useRef,
-  useContext,
-  useState,
-  useCallback,
-  useEffect
-} from "react"
+import React, { useRef, useState, useCallback, useEffect } from "react"
 import styled from "styled-components"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 import useClickOutside from "hooks/useClickOutside"
 
 import { Input, ActionButton, Button } from "your-gift-hunt/ui"
@@ -22,7 +16,7 @@ const Form = styled.form`
 
 const EditableEntityName = ({ entity }) => {
   const ref = useRef(null)
-  const { updateEntityName } = useContext(GameContext)
+  const { updateEntityName } = useGame()
 
   const [{ isEditable, isLoading, error, value }, setState] = useState({
     isEditable: false,

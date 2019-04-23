@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import useAsync from "hooks/useAsync"
 
@@ -13,7 +13,7 @@ const VSpace = styled.div`
 `
 
 const EditablePrevStates = ({ node, prevNodes, prevStateTemplates }) => {
-  const { addPreviousState } = useContext(GameContext)
+  const { addPreviousState } = useGame()
   const [{ isLoading, error }, runAsync] = useAsync()
   const [optionsVisible, setOptionsVisibility] = useState(false)
 

@@ -1,7 +1,7 @@
-import React, { useContext } from "react"
+import React from "react"
 
-import GameContext from "contexts/Game"
-import TemplatesContext from "contexts/Templates"
+import useGame from "hooks/useGame"
+import useTemplates from "hooks/useTemplates"
 
 import Section from "components/Editor/DetailPane/Section"
 
@@ -9,8 +9,8 @@ import StateTagList from "./StateTagList"
 import EditablePrevStates from "./Editable"
 
 const PreviousStates = ({ node }) => {
-  const { getNodeById } = useContext(GameContext)
-  const { getStateTemplateById } = useContext(TemplatesContext)
+  const { getNodeById } = useGame()
+  const { getStateTemplateById } = useTemplates()
 
   const prevNodes = node.state.incomingTransitions.map(({ from }) =>
     getNodeById(from.id)

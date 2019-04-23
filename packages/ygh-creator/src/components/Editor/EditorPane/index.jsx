@@ -1,13 +1,13 @@
 import React, { useContext } from "react"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import Container from "./Container"
 import Node from "./Node"
 import Edge from "./Edge"
 
 const EditorPane = () => {
-  const { nodes, edges } = useContext(GameContext)
+  const { nodes, edges } = useGame()
 
   return (
     <Container>

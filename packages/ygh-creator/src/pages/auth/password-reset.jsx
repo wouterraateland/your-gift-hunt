@@ -1,13 +1,13 @@
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import { navigate } from "@reach/router"
 
-import AuthContext from "contexts/Auth"
+import useAuth from "hooks/useAuth"
 
 import Layout from "layouts/Auth"
 import { Field, Input, Button } from "your-gift-hunt/ui"
 
 const PasswordResetPage = () => {
-  const { isLoggedIn, updateUser } = useContext(AuthContext)
+  const { isLoggedIn, updateUser } = useAuth()
   const [errors, setErrors] = useState({})
 
   async function handleSubmit(event) {

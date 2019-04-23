@@ -1,7 +1,7 @@
-import React, { useContext } from "react"
+import React from "react"
 import styled from "styled-components"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import { ActionButton, Float } from "your-gift-hunt/ui"
 import { Bin, Pen } from "your-gift-hunt/icons"
@@ -16,7 +16,7 @@ const Delay = styled.em`
 `
 
 const Hint = ({ hint: { id, text, delay }, onEditClick }) => {
-  const { deleteHint } = useContext(GameContext)
+  const { deleteHint } = useGame()
 
   return (
     <>

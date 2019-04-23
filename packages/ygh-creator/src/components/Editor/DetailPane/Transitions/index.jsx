@@ -1,13 +1,13 @@
 import { NODE_TYPES } from "data"
-import React, { useContext } from "react"
+import React from "react"
 
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import Section from "components/Editor/DetailPane/Section"
 import TransitionWithRequirements from "./TransitionWithRequirements"
 
 const OutgoingTransitions = ({ node }) => {
-  const { getNodeById } = useContext(GameContext)
+  const { getNodeById } = useGame()
 
   const outgoingTransitions = node.state.outgoingTransitions.map(
     outgoingTransition => ({
