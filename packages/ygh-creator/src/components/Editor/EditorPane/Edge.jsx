@@ -1,5 +1,5 @@
 import { EDGE_TYPES } from "data"
-import React, { memo, useContext } from "react"
+import React, { memo } from "react"
 
 import useGame from "hooks/useGame"
 

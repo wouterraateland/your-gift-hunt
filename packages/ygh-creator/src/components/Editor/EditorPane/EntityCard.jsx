@@ -8,8 +8,6 @@ import EntityPreview from "../EntityPreview"
 const Card = styled.div`
   cursor: pointer;
 
-  position: absolute;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -158,14 +156,7 @@ const PreviewContainer = styled.div`
   height: 4em;
 `
 
-const EntityCard = ({
-  entity,
-  state,
-  position,
-  onClick,
-  mayBeDeleted,
-  isFocussed
-}) => {
+const EntityCard = ({ entity, state, onClick, mayBeDeleted, isFocussed }) => {
   const hasPreview = entity && (entity.isItem || entity.isObject)
 
   const featuredFieldValue = entity.featuredField
@@ -192,7 +183,6 @@ const EntityCard = ({
     <Card
       hasPreview={hasPreview}
       onClick={onClick}
-      style={position}
       mayBeDeleted={mayBeDeleted}
       hasWarning={emptyFields.length > 0}
       hasError={false} // unmatchedFields.length > 0

@@ -1,13 +1,7 @@
-import React from "react"
+import styled from "styled-components"
 import EntryState from "../EntryState"
 
-const EntryNode = ({ position: { left, top } }) => (
-  <EntryState
-    style={{
-      left: `${left + 96}px`,
-      top: `${top + 112}px`
-    }}
-  />
-)
-
+const EntryNode = styled(EntryState)`
+  transform: translate(-50%, -50%) translate(96px, 112px);
+`
 export default EntryNode

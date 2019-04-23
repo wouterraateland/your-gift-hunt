@@ -28,10 +28,6 @@ const getPositionOnElement = compose(
   getOffset
 )
 
-const isChildOf = (child, parent) =>
-  !!(child && parent) &&
-  (child === parent || isChildOf(child.parentElement, parent))
-
 const usePanZoom = ({
   container,
   enablePan = true,
@@ -167,18 +163,8 @@ const usePanZoom = ({
     [preventClickOnPan]
   )
 
-  const onMouseOut = useCallback(
-    event => {
-      if (!isChildOf(event.relatedTarget, container.current)) {
-        endPanZoom()
-      }
-    },
-    [isPanning, onPanEnd]
-  )
-
   const onWheel = useCallback(
     event => {
-      event.preventDefault()
       if (enableZoom && container.current && (!requirePinch || event.ctrlKey)) {
         const { pageX, pageY, deltaY } = event
         const pointerPosition = getPositionOnElement(container.current)(
@@ -212,6 +198,7 @@ const usePanZoom = ({
   const onMouseMove = ({ pageX, pageY }) =>
     movePanZoom([{ x: pageX, y: pageY }])
   const onMouseUp = () => endPanZoom()
+  const onMouseLeave = () => endPanZoom()
 
   return {
     transform: `translate3D(${transform.x}px, ${transform.y}px, 0) scale(${
@@ -230,7 +217,7 @@ const usePanZoom = ({
       onMouseMove,
       onMouseUp,
       onClickCapture,
-      onMouseOut,
+      onMouseLeave,
       onWheel
     }
   }
