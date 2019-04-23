@@ -11,7 +11,7 @@ const DetailPaneContainer = styled(Paper.Container)`
   overflow-y: auto;
 
   width: 25em;
-  padding: 1em;
+  padding: 4.5em 1em 1em;
   max-width: 100%;
   border-radius: 0;
 
@@ -32,6 +32,10 @@ const DetailPaneContainer = styled(Paper.Container)`
   transition: transform ease-in-out 0.3s;
 
   will-change: transition;
+
+  @media (min-width: 40em) {
+    padding: 1em;
+  }
 `
 
 export default DetailPaneContainer

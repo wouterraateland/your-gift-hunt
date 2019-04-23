@@ -51,6 +51,6 @@ export default ({ type, name }) => {
         </SpecialTag>
       )
     default:
-      return <StateTag>{name}</StateTag>
+      return <StateTag>{name || "Default"}</StateTag>
   }
 }

@@ -1,20 +1,20 @@
 {
-    "name": "Your Gift Hunt",
-    "short_name": "Your Gift Hunt",
-    "icons": [
-        {
-            "src": "/android-chrome-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "/android-chrome-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
-    "theme_color": "#ffd65a",
-    "background_color": "#ffd65a",
-    "start_url": "https://yourgifthunt.com",
-    "display": "standalone"
+  "name": "Your Gift Hunt",
+  "short_name": "Your Gift Hunt",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffd65a",
+  "background_color": "#ffd65a",
+  "start_url": "https://create.yourgifthunt.com",
+  "display": "standalone"
 }
