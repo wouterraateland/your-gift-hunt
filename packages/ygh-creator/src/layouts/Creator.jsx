@@ -1,8 +1,8 @@
-import React, { useEffect, useContext } from "react"
+import React, { useEffect } from "react"
 import styled, { css, keyframes } from "styled-components"
 
-import GameContext from "contexts/Game"
-
+import useGame from "hooks/useGame"
+import useMetaActions from "hooks/useMetaActions"
 import useForceUpdate from "hooks/useForceUpdate"
 
 import { Cog, Logo } from "your-gift-hunt/icons"
@@ -98,9 +98,8 @@ const SaveState = ({ isSaving, isDirty, lastSaved }) => {
 }
 
 const CreatorLayout = ({ children }) => {
-  const { game, isSaving, isDirty, lastSaved, publish } = useContext(
-    GameContext
-  )
+  const { game, isSaving, isDirty, lastSaved, publish } = useGame()
+  const { testGame } = useMetaActions(game)
 
   return (
     <PageContainer>
@@ -119,14 +118,7 @@ const CreatorLayout = ({ children }) => {
           <Nav.Item to="settings">
             <Cog size={0.8} /> Settings
           </Nav.Item>
-          <Nav.Item
-            as="a"
-            href={`https://play.yourgifthunt.com/${game.creator.slug}/${
-              game.slug
-            }`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Nav.Item as="u" onClick={testGame}>
             Test
           </Nav.Item>
           <Nav.Item as="u" onClick={publish}>

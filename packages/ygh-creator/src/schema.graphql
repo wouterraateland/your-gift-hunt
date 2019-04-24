@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Sun Apr 14 2019 13:57:47 GMT+0200 (Midden-Europese zomertijd)
+# timestamp: Wed Apr 24 2019 11:26:59 GMT+0200 (Midden-Europese zomertijd)
 
 enum AccessType {
   NONE
@@ -5575,6 +5575,7 @@ type GamePlay implements Node {
   player: User
   actions(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Action!]
   service: Service
+  isTest: Boolean!
 }
 
 """A connection to a list of items."""
@@ -5588,6 +5589,7 @@ type GamePlayConnection {
 }
 
 input GamePlayCreateInput {
+  isTest: Boolean
   game: GameCreateOneWithoutPlaysInput!
   player: UserCreateOneWithoutPlaysInput
   actions: ActionCreateManyWithoutGamePlayInput
@@ -5615,24 +5617,28 @@ input GamePlayCreateOneWithoutActionsInput {
 }
 
 input GamePlayCreateWithoutActionsInput {
+  isTest: Boolean
   game: GameCreateOneWithoutPlaysInput!
   player: UserCreateOneWithoutPlaysInput
   service: ServiceCreateOneWithoutGamePlaysInput
 }
 
 input GamePlayCreateWithoutGameInput {
+  isTest: Boolean
   player: UserCreateOneWithoutPlaysInput
   actions: ActionCreateManyWithoutGamePlayInput
   service: ServiceCreateOneWithoutGamePlaysInput
 }
 
 input GamePlayCreateWithoutPlayerInput {
+  isTest: Boolean
   game: GameCreateOneWithoutPlaysInput!
   actions: ActionCreateManyWithoutGamePlayInput
   service: ServiceCreateOneWithoutGamePlaysInput
 }
 
 input GamePlayCreateWithoutServiceInput {
+  isTest: Boolean
   game: GameCreateOneWithoutPlaysInput!
   player: UserCreateOneWithoutPlaysInput
   actions: ActionCreateManyWithoutGamePlayInput
@@ -5650,6 +5656,8 @@ type GamePlayEdge {
 enum GamePlayOrderByInput {
   id_ASC
   id_DESC
+  isTest_ASC
+  isTest_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -5658,6 +5666,7 @@ enum GamePlayOrderByInput {
 
 type GamePlayPreviousValues {
   id: ID!
+  isTest: Boolean!
 }
 
 input GamePlayScalarWhereInput {
@@ -5709,6 +5718,10 @@ input GamePlayScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  isTest: Boolean
+
+  """All values that are not equal to given value."""
+  isTest_not: Boolean
 }
 
 type GamePlaySubscriptionPayload {
@@ -5749,10 +5762,19 @@ input GamePlaySubscriptionWhereInput {
 }
 
 input GamePlayUpdateInput {
+  isTest: Boolean
   game: GameUpdateOneRequiredWithoutPlaysInput
   player: UserUpdateOneWithoutPlaysInput
   actions: ActionUpdateManyWithoutGamePlayInput
   service: ServiceUpdateOneWithoutGamePlaysInput
+}
+
+input GamePlayUpdateManyDataInput {
+  isTest: Boolean
+}
+
+input GamePlayUpdateManyMutationInput {
+  isTest: Boolean
 }
 
 input GamePlayUpdateManyWithoutGameInput {
@@ -5761,6 +5783,7 @@ input GamePlayUpdateManyWithoutGameInput {
   disconnect: [GamePlayWhereUniqueInput!]
   delete: [GamePlayWhereUniqueInput!]
   update: [GamePlayUpdateWithWhereUniqueWithoutGameInput!]
+  updateMany: [GamePlayUpdateManyWithWhereNestedInput!]
   deleteMany: [GamePlayScalarWhereInput!]
   upsert: [GamePlayUpsertWithWhereUniqueWithoutGameInput!]
 }
@@ -5771,6 +5794,7 @@ input GamePlayUpdateManyWithoutPlayerInput {
   disconnect: [GamePlayWhereUniqueInput!]
   delete: [GamePlayWhereUniqueInput!]
   update: [GamePlayUpdateWithWhereUniqueWithoutPlayerInput!]
+  updateMany: [GamePlayUpdateManyWithWhereNestedInput!]
   deleteMany: [GamePlayScalarWhereInput!]
   upsert: [GamePlayUpsertWithWhereUniqueWithoutPlayerInput!]
 }
@@ -5781,8 +5805,14 @@ input GamePlayUpdateManyWithoutServiceInput {
   disconnect: [GamePlayWhereUniqueInput!]
   delete: [GamePlayWhereUniqueInput!]
   update: [GamePlayUpdateWithWhereUniqueWithoutServiceInput!]
+  updateMany: [GamePlayUpdateManyWithWhereNestedInput!]
   deleteMany: [GamePlayScalarWhereInput!]
   upsert: [GamePlayUpsertWithWhereUniqueWithoutServiceInput!]
+}
+
+input GamePlayUpdateManyWithWhereNestedInput {
+  where: GamePlayScalarWhereInput!
+  data: GamePlayUpdateManyDataInput!
 }
 
 input GamePlayUpdateOneRequiredWithoutActionsInput {
@@ -5793,24 +5823,28 @@ input GamePlayUpdateOneRequiredWithoutActionsInput {
 }
 
 input GamePlayUpdateWithoutActionsDataInput {
+  isTest: Boolean
   game: GameUpdateOneRequiredWithoutPlaysInput
   player: UserUpdateOneWithoutPlaysInput
   service: ServiceUpdateOneWithoutGamePlaysInput
 }
 
 input GamePlayUpdateWithoutGameDataInput {
+  isTest: Boolean
   player: UserUpdateOneWithoutPlaysInput
   actions: ActionUpdateManyWithoutGamePlayInput
   service: ServiceUpdateOneWithoutGamePlaysInput
 }
 
 input GamePlayUpdateWithoutPlayerDataInput {
+  isTest: Boolean
   game: GameUpdateOneRequiredWithoutPlaysInput
   actions: ActionUpdateManyWithoutGamePlayInput
   service: ServiceUpdateOneWithoutGamePlaysInput
 }
 
 input GamePlayUpdateWithoutServiceDataInput {
+  isTest: Boolean
   game: GameUpdateOneRequiredWithoutPlaysInput
   player: UserUpdateOneWithoutPlaysInput
   actions: ActionUpdateManyWithoutGamePlayInput
@@ -5903,6 +5937,10 @@ input GamePlayWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  isTest: Boolean
+
+  """All values that are not equal to given value."""
+  isTest_not: Boolean
   game: GameWhereInput
   player: UserWhereInput
   actions_every: ActionWhereInput
@@ -9227,6 +9265,7 @@ type Mutation {
   updateManyHints(data: HintUpdateManyMutationInput!, where: HintWhereInput): BatchPayload!
   updateManyInputRequirements(data: InputRequirementUpdateManyMutationInput!, where: InputRequirementWhereInput): BatchPayload!
   updateManyGames(data: GameUpdateManyMutationInput!, where: GameWhereInput): BatchPayload!
+  updateManyGamePlays(data: GamePlayUpdateManyMutationInput!, where: GamePlayWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyActions(data: ActionUpdateManyMutationInput!, where: ActionWhereInput): BatchPayload!
   updateManyServices(data: ServiceUpdateManyMutationInput!, where: ServiceWhereInput): BatchPayload!
@@ -10175,6 +10214,7 @@ input ServiceWhereInput {
 
 input ServiceWhereUniqueInput {
   id: ID
+  name: String
 }
 
 type State implements Node {

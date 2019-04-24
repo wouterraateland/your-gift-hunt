@@ -103,7 +103,7 @@ const Thumb = ({ game }) => {
   const editDate = moment(game.updatedAt)
   const now = moment()
   const sameYear = editDate.year() === now.year()
-  const playCount = game.plays.length
+  const playCount = game.plays.filter(({ isTest }) => !isTest).length
 
   return (
     <StyledThumb onClick={() => navigate(`/${game.creator.slug}/${game.slug}`)}>

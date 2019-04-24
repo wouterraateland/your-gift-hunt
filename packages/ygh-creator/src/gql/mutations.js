@@ -80,6 +80,21 @@ export const DELETE_GAME = gql`
   }
 `
 
+export const CREATE_GAME_PLAY = gql`
+  mutation createGamePlay($gameId: ID!, $userId: ID!, $serviceId: ID!) {
+    createGamePlay(
+      data: {
+        game: { connect: { id: $gameId } }
+        player: { connect: { id: $userId } }
+        service: { connect: { id: $serviceId } }
+        isTest: true
+      }
+    ) {
+      id
+    }
+  }
+`
+
 export const UPDATE_ENTITY_NAME = gql`
   mutation updateEntityName($entityId: ID!, $name: String!) {
     updateEntity(where: { id: $entityId }, data: { name: $name }) {

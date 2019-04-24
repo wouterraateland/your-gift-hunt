@@ -14,6 +14,14 @@ export const ENTITY_TEMPLATES = gql`
   ${ENTITY_TEMPLATE_FRAGMENT}
 `
 
+export const TEST_SERVICE = gql`
+  query {
+    service(where: { name: "play.yourgifthunt.com" }) {
+      id
+    }
+  }
+`
+
 export const GAME_BY_SLUG = gql`
   query gameBySlug($creatorSlug: String!, $gameSlug: String!) {
     games(where: { creator: { slug: $creatorSlug }, slug: $gameSlug }) {
@@ -55,6 +63,7 @@ export const USER_GAMES = gql`
 
         plays {
           id
+          isTest
         }
         creator {
           id

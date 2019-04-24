@@ -1,70 +1,17 @@
-import React, { useCallback } from "react"
+import React from "react"
 
-import useAuth from "hooks/useAuth"
-
-import { useMutation } from "react-apollo-hooks"
-import { USER_GAMES } from "gql/queries"
-import { DELETE_GAME } from "gql/mutations"
+import useMetaActions from "hooks/useMetaActions"
 
 import Menu from "components/Menu"
 
 const MoreActions = ({ game }) => {
-  const { user } = useAuth()
-  const userId = user.user_metadata.prismaUserId
+  const { deleteGame, testGame } = useMetaActions(game)
 
-  const deleteGameMutation = useMutation(DELETE_GAME)
-  const deleteGame = useCallback(
-    async () => {
-      await deleteGameMutation({
-        variables: {
-          gameId: game.id
-        },
-        update: (
-          proxy,
-          {
-            data: {
-              deleteGame: { id }
-            }
-          }
-        ) => {
-          const query = {
-            query: USER_GAMES,
-            variables: {
-              userId,
-              slugPrefix: ""
-            }
-          }
-
-          const { user } = proxy.readQuery(query)
-          const gameIndex = user.games.findIndex(game => game.id === id)
-          if (gameIndex !== -1) {
-            user.games.splice(gameIndex, 1)
-          }
-
-          proxy.writeQuery({
-            ...query,
-            data: {
-              user
-            }
-          })
-        }
-      })
-    },
-    [game.id, userId]
-  )
   return (
-    <Menu.Container>
+    <Menu.Container onClick={event => event.stopPropagation()}>
       <Menu.Toggle />
       <Menu>
-        <Menu.Item
-          as="a"
-          href={`https://play.yourgifthunt.com/${game.creator.slug}/${
-            game.slug
-          }`}
-          target="_blank"
-        >
-          Test
-        </Menu.Item>
+        <Menu.Item onClick={testGame}>Test</Menu.Item>
         <Menu.Item color="error" onClick={deleteGame}>
           Delete
         </Menu.Item>
