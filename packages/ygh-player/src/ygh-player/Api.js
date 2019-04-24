@@ -1,5 +1,7 @@
 const BASE_URL = "https://ygh-api.herokuapp.com"
 
+const t = f => options => f(options || {})
+
 class Api {
   key
   constructor(key) {
@@ -28,25 +30,37 @@ class Api {
   get = (url, params) => this.request(url, { ...params, method: "GET" })
   post = (url, params) => this.request(url, { ...params, method: "POST" })
 
-  getGameBySlug = ({ creatorSlug, gameSlug }) =>
+  getGameBySlug = t(({ creatorSlug, gameSlug }) =>
     this.post("getGameBySlug", { body: { creatorSlug, gameSlug } })
+  )
 
-  getGameById = ({ gameId }) => this.post("getGameById", { body: { gameId } })
+  getGameById = t(({ gameId }) =>
+    this.post("getGameById", { body: { gameId } })
+  )
 
-  createPlayToken = ({ gameId, accessCode }) =>
+  createPlayToken = t(({ gameId, accessCode }) =>
     this.post("createPlayToken", { body: { gameId, accessCode } })
+  )
 
-  isPlayTokenValid = ({ gameId, playToken }) =>
+  isPlayTokenValid = t(({ gameId, playToken }) =>
     this.post("isPlayTokenValid", { body: { gameId, playToken } })
+  )
 
-  getGameState = ({ playToken }) =>
+  getGameState = t(({ playToken }) =>
     this.post("getGameState", { body: { playToken } })
+  )
 
-  requestHints = ({ playToken }) =>
+  requestHints = t(({ playToken }) =>
     this.post("requestHints", { body: { playToken } })
+  )
 
-  dispatchAction = ({ playToken, action }) =>
+  dispatchAction = t(({ playToken, action }) =>
     this.post("dispatchAction", { body: { playToken, action } })
+  )
+
+  listPublicGames = t(({ skip, amount, orderBy, direction }) =>
+    this.post("listPublicGames", { body: { skip, amount, orderBy, direction } })
+  )
 }
 
 export default Api

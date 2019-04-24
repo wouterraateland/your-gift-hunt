@@ -18,30 +18,30 @@ const Label = styled.label`
   ${props =>
     !props.isSelect &&
     css`
-          border: 0.1em solid ${transparentize(0.5, props.theme.color.text)};
-          border-radius: ${props => props.theme.borderRadius};
+      border: 0.1em solid ${transparentize(0.5, props.theme.color.text)};
+      border-radius: ${props => props.theme.borderRadius};
 
-          ${!props.disabled &&
-            css`
-              &:hover {
-                border-color: #0004;
-              }
+      ${!props.disabled &&
+        css`
+          &:hover {
+            border-color: #0004;
+          }
 
-              &:focus-within {
-                border-color: #39f;
-              }
-            `}
+          &:focus-within {
+            border-color: ${props => props.theme.color.primary};
+          }
+        `}
 
-            background-color: ${
-              props.disabled
-                ? mix(
-                    0.2,
-                    props.theme.color.text,
-                    opacify(1, invert(props.theme.color.text))
-                  )
-                : opacify(1, invert(props.theme.color.text))
-            };
-        `};
+        background-color: ${
+          props.disabled
+            ? mix(
+                0.2,
+                props.theme.color.text,
+                opacify(1, invert(props.theme.color.text))
+              )
+            : opacify(1, invert(props.theme.color.text))
+        };
+    `};
 
   line-height: 1;
   vertical-align: middle;

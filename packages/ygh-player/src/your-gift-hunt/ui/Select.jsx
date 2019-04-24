@@ -20,7 +20,7 @@ const SELECT_STYLES = {
   indicatorSeparator: () => ({}),
   menu: base => ({
     ...base,
-    border: ".1em solid #39f",
+    border: ".1em solid #3f51b5",
     boxShadow: "0 .5em 1.5em -.5em #0004"
   })
 }

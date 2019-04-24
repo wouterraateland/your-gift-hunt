@@ -123,7 +123,7 @@ const GoogleMap = ({
             <Circle
               center={value.center}
               radius={value.radius}
-              strokeColor="#39f"
+              strokeColor="#3f51b5"
               strokeOpacity={1}
               strokeWeight={1}
               fillColor="39f"

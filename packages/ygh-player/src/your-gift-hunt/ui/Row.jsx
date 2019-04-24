@@ -8,6 +8,7 @@ const Row = styled.div`
   flex-wrap: wrap;
   flex-direction: ${props => (props.rtl ? "row-reverse" : "row")};
   align-items: ${props => (props.vAlign === "top" ? "stretch" : "center")};
+  justify-content: center;
 `
 
 export default Row

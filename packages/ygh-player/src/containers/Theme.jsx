@@ -35,9 +35,6 @@ export const StaticGlobalStyle = createGlobalStyle`
     vertical-align: top;
 
     box-sizing: border-box;
-
-    -webkit-touch-callout: none;
-    user-select: none;
   }
 
   html {
@@ -59,6 +56,8 @@ export const StaticGlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
+
+    background-color: ${transparentize(0.95, theme.color.primary)};
     color: ${theme.color.text};
   }
 
@@ -69,7 +68,6 @@ export const StaticGlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     color: ${theme.color.emphasis};
-    font-weight: normal;
     font-family: "Playfair Display", serif;
   }
 
@@ -91,7 +89,7 @@ export const StaticGlobalStyle = createGlobalStyle`
 
     text-decoration-color: ${transparentize(0.5, theme.color.text)};
 
-    color: ${theme.color.text};
+    color: ${opacify(0.1, theme.color.text)};
 
     transition: color .2s ease-out;
 
