@@ -56,15 +56,19 @@ class YGHPlayer {
   async setPlayToken(playToken) {
     this.ensureGameIsLoaded()
 
-    const isValid = await this.api.isPlayTokenValid({
-      gameId: this.game.id,
-      playToken
-    })
+    try {
+      const isValid = await this.api.isPlayTokenValid({
+        gameId: this.game.id,
+        playToken
+      })
 
-    if (isValid) {
-      this.playToken = playToken
-    } else {
-      throw Error("Invalid play token")
+      if (isValid) {
+        this.playToken = playToken
+      } else {
+        throw Error("Invalid play token")
+      }
+    } catch (error) {
+      throw Error(`Invalid play token: ${error}`)
     }
     await this.getGameState()
     return this.playToken

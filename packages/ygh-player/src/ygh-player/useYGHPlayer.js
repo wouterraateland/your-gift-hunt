@@ -20,7 +20,8 @@ const useAsync = () => {
 const useYGHPlayer = (apiKey, gameIdentifier) => {
   const yghPlayer = useRef(new YGHPlayerWeb(apiKey))
   const { isLoading, runAsync } = useAsync()
-  const [gameState, setGameState] = useState([])
+  const [error, setError] = useState(null)
+  const [gameState, setGameState] = useState({})
   const [authentication, setAuthentication] = useState({
     status: null,
     method: null
@@ -69,19 +70,22 @@ const useYGHPlayer = (apiKey, gameIdentifier) => {
   )
 
   useEffect(() => {
-    load()
+    load().catch(setError)
   }, [])
 
-  return {
-    isAuthenticated: authentication.status,
-    authenticationMethod: authentication.method,
-    authenticate,
-    isLoading,
-    dispatchAction,
-    requestHints,
-    gameState,
-    game: yghPlayer.current.game
-  }
+  return error
+    ? { error, gameState: {}, isLoading: false, isAuthenticated: false }
+    : {
+        isAuthenticated: authentication.status,
+        authenticationMethod: authentication.method,
+        authenticate,
+        isLoading,
+        dispatchAction,
+        requestHints,
+        gameState,
+        game: yghPlayer.current.game,
+        playToken: yghPlayer.current.playToken
+      }
 }
 
 export default useYGHPlayer

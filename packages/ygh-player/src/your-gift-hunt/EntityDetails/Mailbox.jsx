@@ -25,6 +25,7 @@ const MailboxContainer = styled(Entity)`
 
     border-radius: 12em 12em 0.5em 0.5em;
     box-shadow: 0.2em 0.2em 0.4em -0.1em #fff8, -0.2em -0.2em 0.4em -0.1em #0004;
+    background-color: #0009;
   }
 
   &::after {

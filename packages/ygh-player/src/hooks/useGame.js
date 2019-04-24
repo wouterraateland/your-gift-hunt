@@ -1,4 +1,4 @@
-import { useCallback, useContext } from "react"
+import { useCallback, useContext, useMemo } from "react"
 import GameContext from "contexts/Game"
 import useYGHPlayer from "ygh-player/react-hook"
 import useStore, { localStorageStoreCreator } from "hooks/useStore"
@@ -34,11 +34,14 @@ const containerize = entities =>
 export const useGameProvider = gameIdentifier => {
   const { popup } = useScreen()
   const yghPlayer = useYGHPlayer("super secret key", gameIdentifier)
-  const { read, write } = useStore(
-    localStorageStoreCreator({
-      name: `${gameIdentifier.creatorSlug}/${gameIdentifier.gameSlug}`
-    })
+  const config = useMemo(
+    () =>
+      yghPlayer.playToken
+        ? localStorageStoreCreator({ name: yghPlayer.playToken })
+        : {},
+    [yghPlayer.playToken]
   )
+  const { read, write } = useStore(config)
 
   const pickupEntity = useCallback(entityId => {
     write("inventoryItems", inventoryItems => [

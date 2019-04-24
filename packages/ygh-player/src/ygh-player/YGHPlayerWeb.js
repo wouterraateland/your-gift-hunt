@@ -22,14 +22,26 @@ class YGHPlayerWeb extends YGHPlayer {
     const params = querystring.decode(window.location.search.substr(1))
 
     if (params && params.playToken) {
-      await this.setPlayToken(params.playToken)
-      window.history.replaceState({}, "", window.location.path)
+      try {
+        await this.setPlayToken(params.playToken)
+      } catch (error) {
+        if (this.game.privacy === "PUBLIC") {
+          await this.createPlayToken({ gameId: this.game.id })
+        }
+      }
+      window.history.replaceState({}, "", window.location.pathname)
     }
 
     if (!this.playToken) {
       const playToken = playTokens.read(this.game.id)
       if (playToken) {
-        await this.setPlayToken(playToken)
+        try {
+          await this.setPlayToken(playToken)
+        } catch (error) {
+          if (this.game.privacy === "PUBLIC") {
+            await this.createPlayToken({ gameId: this.game.id })
+          }
+        }
       } else if (this.game.privacy === "PUBLIC") {
         await this.createPlayToken({ gameId: this.game.id })
       }

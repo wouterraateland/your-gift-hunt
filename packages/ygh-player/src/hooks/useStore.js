@@ -1,32 +1,58 @@
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import _ from "utils"
 
-const useStore = ({
-  initialState,
-  rootReducer = _.identity,
-  enhancer = _.identity
-}) => {
-  const [state, setState] = useState(initialState || {})
+const useStore = config => {
+  const {
+    initialState = {},
+    rootReducer = _.identity,
+    enhancer = _.identity
+  } = config
+  const [state, _setState] = useState(initialState)
 
-  return {
-    state,
-    setState: newState =>
+  useEffect(() => {
+    _setState(initialState)
+  }, [initialState])
+
+  const setState = useCallback(
+    newState =>
       enhancer(
-        setState(state => ({
+        _setState(state => ({
           ...state,
           ...newState
         }))
       ),
-    dispatch: action => enhancer(rootReducer(state, action)),
-    read: (key, defaultValue) =>
+    [enhancer]
+  )
+
+  const dispatch = useCallback(action => enhancer(rootReducer(state, action)), [
+    state,
+    enhancer,
+    rootReducer
+  ])
+
+  const read = useCallback(
+    (key, defaultValue) =>
       state[key] === undefined ? defaultValue : state[key],
-    write: (key, value) =>
-      setState(state =>
+    [state]
+  )
+
+  const write = useCallback(
+    (key, value) =>
+      _setState(state =>
         enhancer({
           ...state,
           [key]: typeof value === "function" ? value(state[key]) : value
         })
-      )
+      ),
+    [enhancer]
+  )
+
+  return {
+    state,
+    setState,
+    dispatch,
+    read,
+    write
   }
 }
 
@@ -38,8 +64,7 @@ export const createPersistentStoreCreator = ({
 }) => ({ name = "store", persistKey = _.constant(true) }) => ({
   initialState: deserialize(load(name)),
   enhancer: state => {
-    save(
-      name,
+    save(name)(
       serialize(
         Object.keys(state)
           .filter(persistKey)
@@ -53,8 +78,8 @@ export const createPersistentStoreCreator = ({
 export const localStorageStoreCreator = createPersistentStoreCreator({
   serialize: JSON.stringify,
   deserialize: JSON.parse,
-  load: key => window.localStorage.getItem(key),
-  save: (key, value) => window.localStorage.setItem(key, value)
+  load: key => window.localStorage.getItem(key) || "{}",
+  save: key => value => window.localStorage.setItem(key, value)
 })
 
 export default useStore
