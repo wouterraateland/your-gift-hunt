@@ -33,9 +33,6 @@ export const GlobalStyles = createGlobalStyle`
     vertical-align: top;
 
     box-sizing: border-box;
-
-    -webkit-touch-callout: none;
-    user-select: none;
   }
 
   html {
