@@ -7,7 +7,7 @@ const Safe = styled(Entity)`
   border-radius: 1em;
 
   box-shadow: inset 0.25em 0.25em 0.5em 0 #fff4,
-    inset -0.25em -0.25em 0.5em 0 #0004;
+    inset -0.25em -0.25em 0.5em 0 #0004 !important;
 
   background-image: linear-gradient(
     #263238,

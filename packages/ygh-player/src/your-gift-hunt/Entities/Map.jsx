@@ -18,6 +18,10 @@ const StyledMap = styled(Entity)`
     ${props => (props.isComplete ? completeClipPath : incompleteClipPath)}
   );
 
+  transform: rotateY(${props => (props.isTurned ? 180 : 0)}deg);
+
+  transition: transform 0.4s ease-in-out;
+
   &::before,
   &::after {
     left: 0;
@@ -34,9 +38,21 @@ const StyledMap = styled(Entity)`
       props.isClean
         ? css`
           content: "${props.code}";
+
           opacity: ${props.isTurned ? 1 : 0};
 
-          background-color: #fff;
+          padding: 3em .5em 0 0;
+
+          text-align: right;
+          font-family: ${props.theme.font.heading};
+          font-size: .25em;
+
+          box-shadow: inset 0 0 0.75em 0.75em #0009;
+
+          background-color: #d0c6b0;
+
+          transform: scale(-1.25, 1.25) rotate(10deg);
+          transition: opacity 0s .2s ease-in-out;
           `
         : css`
           opacity: ${1 - props.cleanliness * 2}

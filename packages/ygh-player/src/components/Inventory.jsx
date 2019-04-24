@@ -59,6 +59,11 @@ const Inventory = () => {
           </DragContainer>
         </ItemSlot>
       ))}
+      {Array(Math.max(0, 5 - inventoryItems.length))
+        .fill()
+        .map((_, i) => (
+          <ItemSlot key={i} />
+        ))}
     </InventoryContainer>
   )
 }

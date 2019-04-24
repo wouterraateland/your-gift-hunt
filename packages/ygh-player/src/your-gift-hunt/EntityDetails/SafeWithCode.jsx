@@ -13,8 +13,8 @@ const CodeLabel = styled.label`
   padding: 0.25em;
   border-radius: 0.25em;
 
-  font-size: 4em;
-  font-family: monospace;
+  font-size: 3rem;
+  font-variant-numeric: tabular-nums;
   text-align: center;
 
   box-shadow: inset 0 0 2em #0009, 0.125em 0.125em 0.25em 0 #fff4,

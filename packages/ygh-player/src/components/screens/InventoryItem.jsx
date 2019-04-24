@@ -32,6 +32,11 @@ const EntityName = styled.h2`
     background: #fff;
     box-shadow: inset -0.05em -0.05em 0.1em #0004;
   }
+
+  & small {
+    font-size: 0.75em;
+    vertical-align: bottom;
+  }
 `
 
 export default ({ entity, ...props }) => {
@@ -42,7 +47,10 @@ export default ({ entity, ...props }) => {
       <EntityContainer maxWidth={12} maxHeight={12} component={Component}>
         <Component {...entity} />
       </EntityContainer>
-      <EntityName>{entity.name}</EntityName>
+      <EntityName>
+        {entity.name}
+        <small> – {entity.state.name}</small>
+      </EntityName>
     </InventoryItemScreen>
   )
 }
