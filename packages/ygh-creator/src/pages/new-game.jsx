@@ -166,7 +166,7 @@ const NewGamePage = () => {
   }
 
   return (
-    <Layout title="New hunt">
+    <Layout title="New game">
       <Wrapper size="large">
         <Paper fullWidthOnMobile>
           <Paper.Section>
@@ -180,7 +180,7 @@ const NewGamePage = () => {
               />
             </CornerDecoration>
             <Clear.Both style={{ marginBottom: "-3.25em" }} />
-            <Title>Create a new hunt</Title>
+            <Title>Create a new game</Title>
             <Tagline>Lets get you up and running.</Tagline>
             <Form onSubmit={onSubmit}>
               <Field block>
@@ -194,8 +194,8 @@ const NewGamePage = () => {
                 />
               </Field>
               <small>
-                A good hunt name is short and descriptive. Need some
-                inspiration? How about <strong>{exampleName}</strong>?
+                A good name is short and descriptive. Need some inspiration? How
+                about <strong>{exampleName}</strong>?
               </small>
               <br />
               <br />
@@ -214,14 +214,14 @@ const NewGamePage = () => {
                   {...radio("privacy", PRIVACY.PUBLIC)}
                   required
                   label="Public"
-                  info="Anyone can see and play this hunt. You cannot use friend based puzzles."
+                  info="Playable for everyone from an url and from the showcase. Can't use friend based puzzles. Free to publish."
                 />
                 <Input
                   block
                   {...radio("privacy", PRIVACY.PRIVATE)}
                   required
                   label="Private"
-                  info="A hunt made for one player. You can include friend based puzzles."
+                  info="Playable for players you choose. You can include friend based puzzles. Only 5,- to publish while in Beta."
                 />
               </Field>
               {formState.values.privacy === PRIVACY.PRIVATE && (
@@ -257,15 +257,18 @@ const NewGamePage = () => {
               )}
               <hr />
               <Field block>
-                <Button
-                  type="submit"
-                  importance="primary"
-                  color="accent"
-                  disabled={state === "loading" || nameExists}
-                >
-                  Create
-                </Button>{" "}
-                <StatusMessage status={state} />
+                <Float.Right>
+                  <Button
+                    type="submit"
+                    importance="primary"
+                    color="primary"
+                    disabled={state === "loading" || nameExists}
+                  >
+                    Create
+                  </Button>
+                  <br />
+                  <StatusMessage status={state} />
+                </Float.Right>
               </Field>
             </Form>
           </Paper.Section>
