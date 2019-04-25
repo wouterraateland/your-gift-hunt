@@ -121,7 +121,11 @@ const CreatorLayout = ({ children }) => {
           <Nav.Item as="u" onClick={testGame}>
             Test
           </Nav.Item>
-          <Nav.Item to="publish">Publish</Nav.Item>
+          {game.publishedAt ? (
+            <Nav.Item to="published">Share</Nav.Item>
+          ) : (
+            <Nav.Item to="publish">Publish</Nav.Item>
+          )}
         </Nav.Items>
       </Nav.Container>
       <Main>{children}</Main>

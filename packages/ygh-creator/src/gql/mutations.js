@@ -51,6 +51,25 @@ export const CREATE_GAME = gql`
       slug
       createdAt
       updatedAt
+      publishedAt
+      creator {
+        id
+        name
+        slug
+      }
+    }
+  }
+`
+
+export const PUBLISH_GAME = gql`
+  mutation publishGame($gameId: ID!, $now: DateTime!) {
+    updateGame(where: { id: $gameId }, data: { publishedAt: $now }) {
+      id
+      name
+      slug
+      createdAt
+      updatedAt
+      publishedAt
       creator {
         id
         name

@@ -1,5 +1,5 @@
 import { PRIVACY, ACCESS_TYPES } from "data"
-import React from "react"
+import React, { useCallback, useState } from "react"
 import styled from "styled-components"
 
 import useGame from "hooks/useGame"
@@ -20,6 +20,20 @@ const Description = styled.p`
 const SettingsModal = () => {
   const { game } = useGame()
   const { publishGame } = useMetaActions(game)
+  const [isLoading, setLoading] = useState(false)
+
+  const onPublishClick = useCallback(async () => {
+    setLoading(true)
+    const published = await publishGame()
+    setLoading(false)
+    if (published) {
+      window.history.replaceState(
+        {},
+        "",
+        window.location.pathname.replace("publish", "published")
+      )
+    }
+  }, [])
 
   return (
     <Modal>
@@ -91,10 +105,16 @@ const SettingsModal = () => {
               onClick={() => window.history.back()}
               importance="tertiary"
               color="error"
+              disabled={isLoading}
             >
               Cancel
             </Button>
-            <Button onClick={publishGame} importance="primary" color="primary">
+            <Button
+              onClick={onPublishClick}
+              importance="primary"
+              color="primary"
+              disabled={isLoading}
+            >
               {game.privacy === PRIVACY.PUBLIC
                 ? "Publish"
                 : "Checkout and publish"}

@@ -29,6 +29,7 @@ export const GAME_BY_SLUG = gql`
       name
       description
       slug
+      publishedAt
 
       privacy
       accessType
