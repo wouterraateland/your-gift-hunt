@@ -119,7 +119,7 @@ const Hints = ({ id, hints }) => {
       <Button
         size="small"
         importance="primary"
-        color="accent"
+        color="primary"
         onClick={addHint}
       >
         + Add hint

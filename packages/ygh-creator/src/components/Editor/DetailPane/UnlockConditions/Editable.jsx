@@ -117,7 +117,7 @@ const EditableUnlockConditions = ({ node }) => {
         onClick={onAddButtonClick}
         size="small"
         importance="primary"
-        color="accent"
+        color="primary"
       >
         + Add condition
       </Button>

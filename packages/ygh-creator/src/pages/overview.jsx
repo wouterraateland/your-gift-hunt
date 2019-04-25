@@ -45,7 +45,7 @@ const OverviewPage = () => {
             <Button
               style={{ float: "right" }}
               importance="primary"
-              color="accent"
+              color="primary"
               as={Link}
               to="/new"
               block="small"

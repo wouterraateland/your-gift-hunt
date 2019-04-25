@@ -92,8 +92,8 @@ export const Menu = styled.div`
   }
 
   &::after {
-    right: 0.675em;
-    top: -0.3375em;
+    top: 0;
+    right: 1em;
 
     width: 0.7em;
     height: 0.7em;
@@ -103,7 +103,7 @@ export const Menu = styled.div`
     border-color: #fff transparent transparent #fff;
     border-top-left-radius: 0.125em;
 
-    transform: rotate(45deg);
+    transform: translate(50%, -50%) rotate(45deg);
   }
 
   ${MenuContainer}:hover & {

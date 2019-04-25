@@ -98,7 +98,7 @@ const SaveState = ({ isSaving, isDirty, lastSaved }) => {
 }
 
 const CreatorLayout = ({ children }) => {
-  const { game, isSaving, isDirty, lastSaved, publish } = useGame()
+  const { game, isSaving, isDirty, lastSaved } = useGame()
   const { testGame } = useMetaActions(game)
 
   return (
@@ -121,9 +121,7 @@ const CreatorLayout = ({ children }) => {
           <Nav.Item as="u" onClick={testGame}>
             Test
           </Nav.Item>
-          <Nav.Item as="u" onClick={publish}>
-            Publish
-          </Nav.Item>
+          <Nav.Item to="publish">Publish</Nav.Item>
         </Nav.Items>
       </Nav.Container>
       <Main>{children}</Main>

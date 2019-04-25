@@ -1,15 +1,14 @@
-import React, { useRef, useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import styled from "styled-components"
 import slugify from "limax"
 
 import useGame from "hooks/useGame"
 
-import useClickOutside from "hooks/useClickOutside"
 import { useFormState } from "react-use-form-state"
 import { useApolloClient } from "react-apollo-hooks"
 
 import Modal from "containers/Modal"
-import { Paper, Field, Input, Select, Button } from "your-gift-hunt/ui"
+import { Button, Field, Float, Input, Paper, Select } from "your-gift-hunt/ui"
 import StatusMessage from "components/StatusMessage"
 
 import { accessOptions, PRIVACY, ACCESS_TYPES } from "../../data"
@@ -21,7 +20,7 @@ const StyledPaper = styled(Paper.Container)`
 `
 
 const Form = styled.form`
-  margin: 1em 0;
+  margin: 0;
 `
 
 const Title = styled.h1`
@@ -33,9 +32,6 @@ const Tagline = styled.p`
 `
 
 const SettingsModal = () => {
-  const ref = useRef(null)
-  useClickOutside({ ref, onClickOutside: () => window.history.back() })
-
   const { game, updateGameSettings } = useGame()
 
   const [state, setState] = useState(null)
@@ -100,7 +96,7 @@ const SettingsModal = () => {
 
   return (
     <Modal>
-      <StyledPaper ref={ref}>
+      <StyledPaper>
         <Paper.Section>
           <Title>Settings for {game.name}</Title>
           <Tagline>
@@ -155,15 +151,25 @@ const SettingsModal = () => {
             )}
             <hr />
             <Field block>
-              <Button
-                type="submit"
-                importance="primary"
-                color="accent"
-                disabled={state === "loading" || nameExists}
-              >
-                Update settings
-              </Button>{" "}
-              <StatusMessage status={state} />
+              <Float.Right>
+                <Button
+                  onClick={() => window.history.back()}
+                  importance="tertiary"
+                  color="error"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  importance="primary"
+                  color="primary"
+                  disabled={state === "loading" || nameExists}
+                >
+                  Update settings
+                </Button>
+                <br />
+                <StatusMessage status={state} />
+              </Float.Right>
             </Field>
           </Form>
         </Paper.Section>

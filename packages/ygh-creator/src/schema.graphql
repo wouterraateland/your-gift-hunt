@@ -1,5 +1,5 @@
 # source: https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev
-# timestamp: Wed Apr 24 2019 11:26:59 GMT+0200 (Midden-Europese zomertijd)
+# timestamp: Wed Apr 24 2019 18:07:54 GMT+0200 (Midden-Europese zomertijd)
 
 enum AccessType {
   NONE
@@ -5442,6 +5442,7 @@ type Game implements Node {
   privacy: PrivacyType!
   accessType: AccessType!
   accessCode: String
+  publishedAt: DateTime
   creator: User
   cooperators(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   entities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity!]
@@ -5465,6 +5466,7 @@ input GameCreateInput {
   privacy: PrivacyType!
   accessType: AccessType!
   accessCode: String
+  publishedAt: DateTime
   creator: UserCreateOneWithoutGamesCreatedInput
   cooperators: UserCreateManyWithoutGamesInput
   entities: EntityCreateManyWithoutGameInput
@@ -5498,6 +5500,7 @@ input GameCreateWithoutCooperatorsInput {
   privacy: PrivacyType!
   accessType: AccessType!
   accessCode: String
+  publishedAt: DateTime
   creator: UserCreateOneWithoutGamesCreatedInput
   entities: EntityCreateManyWithoutGameInput
   plays: GamePlayCreateManyWithoutGameInput
@@ -5510,6 +5513,7 @@ input GameCreateWithoutCreatorInput {
   privacy: PrivacyType!
   accessType: AccessType!
   accessCode: String
+  publishedAt: DateTime
   cooperators: UserCreateManyWithoutGamesInput
   entities: EntityCreateManyWithoutGameInput
   plays: GamePlayCreateManyWithoutGameInput
@@ -5522,6 +5526,7 @@ input GameCreateWithoutEntitiesInput {
   privacy: PrivacyType!
   accessType: AccessType!
   accessCode: String
+  publishedAt: DateTime
   creator: UserCreateOneWithoutGamesCreatedInput
   cooperators: UserCreateManyWithoutGamesInput
   plays: GamePlayCreateManyWithoutGameInput
@@ -5534,6 +5539,7 @@ input GameCreateWithoutPlaysInput {
   privacy: PrivacyType!
   accessType: AccessType!
   accessCode: String
+  publishedAt: DateTime
   creator: UserCreateOneWithoutGamesCreatedInput
   cooperators: UserCreateManyWithoutGamesInput
   entities: EntityCreateManyWithoutGameInput
@@ -5567,6 +5573,8 @@ enum GameOrderByInput {
   accessType_DESC
   accessCode_ASC
   accessCode_DESC
+  publishedAt_ASC
+  publishedAt_DESC
 }
 
 type GamePlay implements Node {
@@ -5963,6 +5971,7 @@ type GamePreviousValues {
   privacy: PrivacyType!
   accessType: AccessType!
   accessCode: String
+  publishedAt: DateTime
 }
 
 input GameScalarWhereInput {
@@ -6238,6 +6247,28 @@ input GameScalarWhereInput {
 
   """All values not ending with the given string."""
   accessCode_not_ends_with: String
+  publishedAt: DateTime
+
+  """All values that are not equal to given value."""
+  publishedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  publishedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  publishedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  publishedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  publishedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  publishedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  publishedAt_gte: DateTime
 }
 
 type GameSubscriptionPayload {
@@ -6284,6 +6315,7 @@ input GameUpdateInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
+  publishedAt: DateTime
   creator: UserUpdateOneWithoutGamesCreatedInput
   cooperators: UserUpdateManyWithoutGamesInput
   entities: EntityUpdateManyWithoutGameInput
@@ -6297,6 +6329,7 @@ input GameUpdateManyDataInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
+  publishedAt: DateTime
 }
 
 input GameUpdateManyMutationInput {
@@ -6306,6 +6339,7 @@ input GameUpdateManyMutationInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
+  publishedAt: DateTime
 }
 
 input GameUpdateManyWithoutCooperatorsInput {
@@ -6358,6 +6392,7 @@ input GameUpdateWithoutCooperatorsDataInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
+  publishedAt: DateTime
   creator: UserUpdateOneWithoutGamesCreatedInput
   entities: EntityUpdateManyWithoutGameInput
   plays: GamePlayUpdateManyWithoutGameInput
@@ -6370,6 +6405,7 @@ input GameUpdateWithoutCreatorDataInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
+  publishedAt: DateTime
   cooperators: UserUpdateManyWithoutGamesInput
   entities: EntityUpdateManyWithoutGameInput
   plays: GamePlayUpdateManyWithoutGameInput
@@ -6382,6 +6418,7 @@ input GameUpdateWithoutEntitiesDataInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
+  publishedAt: DateTime
   creator: UserUpdateOneWithoutGamesCreatedInput
   cooperators: UserUpdateManyWithoutGamesInput
   plays: GamePlayUpdateManyWithoutGameInput
@@ -6394,6 +6431,7 @@ input GameUpdateWithoutPlaysDataInput {
   privacy: PrivacyType
   accessType: AccessType
   accessCode: String
+  publishedAt: DateTime
   creator: UserUpdateOneWithoutGamesCreatedInput
   cooperators: UserUpdateManyWithoutGamesInput
   entities: EntityUpdateManyWithoutGameInput
@@ -6704,6 +6742,28 @@ input GameWhereInput {
 
   """All values not ending with the given string."""
   accessCode_not_ends_with: String
+  publishedAt: DateTime
+
+  """All values that are not equal to given value."""
+  publishedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  publishedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  publishedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  publishedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  publishedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  publishedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  publishedAt_gte: DateTime
   creator: UserWhereInput
   cooperators_every: UserWhereInput
   cooperators_some: UserWhereInput

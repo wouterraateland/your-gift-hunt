@@ -51,7 +51,7 @@ const EditablePrevStates = ({ node, prevNodes, prevStateTemplates }) => {
         onClick={onAddButtonClick}
         size="small"
         importance="primary"
-        color="accent"
+        color="primary"
       >
         + Add previous state
       </Button>

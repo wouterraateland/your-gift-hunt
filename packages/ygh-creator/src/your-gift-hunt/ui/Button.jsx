@@ -11,9 +11,11 @@ const Button = styled.button`
   padding: ${props => {
     switch (props.size) {
       case "small":
-        return "0.5em 0.4em"
+        return "0.5em 0.65em"
+      case "large":
+        return "1em 1.15em"
       default:
-        return "0.85em 0.7em"
+        return "0.85em 1em"
     }
   }};
   border-radius: ${props => props.theme.borderRadius};
@@ -35,6 +37,10 @@ const Button = styled.button`
         break
       case "error":
         color = props.theme.color.error
+        secondaryColor = "#fff"
+        break
+      case "primary":
+        color = props.theme.color.primary
         secondaryColor = "#fff"
         break
       case "warning":
@@ -75,7 +81,7 @@ const Button = styled.button`
         return css`
           border: 0.1em solid;
 
-          background-color: #fff;
+          ${"" /* background-color: #fff; */}
           color: ${color};
 
           &:hover {
@@ -94,7 +100,7 @@ const Button = styled.button`
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 0.1em #39f;
+    box-shadow: inset 0 0 0 0.1em ${props => props.theme.color.primary};
   }
 `
 

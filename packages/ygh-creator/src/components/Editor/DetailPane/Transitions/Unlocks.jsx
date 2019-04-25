@@ -125,7 +125,7 @@ const Unlocks = ({ from, to }) => {
         onClick={onAddButtonClick}
         size="small"
         importance="primary"
-        color="accent"
+        color="primary"
       >
         + Add unlock
       </Button>

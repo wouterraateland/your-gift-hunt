@@ -77,9 +77,12 @@ const useMetaActions = game => {
     [gameId, userId, loading, data]
   )
 
+  const publishGame = useCallback(async () => {}, [gameId, userId])
+
   return {
     deleteGame,
-    testGame
+    testGame,
+    publishGame
   }
 }
 

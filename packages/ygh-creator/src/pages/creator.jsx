@@ -16,6 +16,7 @@ import EditorPane from "components/Editor/EditorPane"
 import DetailPane from "components/Editor/DetailPane"
 import Toolbox from "components/Editor/Toolbox"
 import SettingsModal from "components/modals/Settings"
+import PublishModal from "components/modals/Publish"
 
 const ClosableDetailPane = () => {
   const detailPane = useRef(null)
@@ -53,6 +54,7 @@ const CreatorWithModal = props => {
     <>
       <Creator />
       {props["*"] === "settings" && <SettingsModal />}
+      {props["*"] === "publish" && <PublishModal />}
     </>
   ) : null
 }
