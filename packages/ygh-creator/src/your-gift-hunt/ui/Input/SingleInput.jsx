@@ -6,7 +6,7 @@ import _ from "utils"
 import { LabelText } from "./LabelText"
 
 export const Input = styled.input`
-  display: inlinline-block;
+  display: inline-block;
   width: 15em;
   max-width: 100%;
   height: 1.5em;
@@ -42,6 +42,9 @@ export const Input = styled.input`
     props.isSelect
       ? css`
           width: 1em;
+          height: 1em;
+          min-height: none;
+          float: left;
         `
       : _.blockStyles(props)}
 `
