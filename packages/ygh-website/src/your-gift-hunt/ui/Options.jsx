@@ -23,7 +23,7 @@ const OptionsLocation = styled.div`
         height: 1em;
 
         border-bottom-right-radius: 0.25em;
-        border: 0.1em solid #39f;
+        border: 0.1em solid ${props => props.theme.color.primary};
         border-top-color: transparent;
         border-left-color: transparent;
 
@@ -47,7 +47,7 @@ const OptionsContainer = styled(Paper.Container)`
   min-width: 21em;
   max-height: 15em;
   padding: 0.25em 0;
-  border: 0.1em solid #39f;
+  border: 0.1em solid ${props => props.theme.color.primary};
 
   line-height: 1.3;
   text-align: left;

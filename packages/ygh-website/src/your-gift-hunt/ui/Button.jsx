@@ -100,7 +100,7 @@ const Button = styled.button`
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 0.1em #39f;
+    box-shadow: inset 0 0 0 0.1em ${props => props.theme.color.primary};
   }
 `
 

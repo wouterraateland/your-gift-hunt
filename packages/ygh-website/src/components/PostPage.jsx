@@ -11,7 +11,7 @@ import Layout from "components/Layout"
 import PostList from "components/PostList"
 
 const PostPageWithCategories = ({ postEdges, categories, filter }) => (
-  <Layout dark>
+  <Layout>
     <Helmet titleTemplate="%s | Your Gift Hunt Blog">
       <title>{filter ? filter : "All stories"}</title>
     </Helmet>
@@ -26,7 +26,7 @@ const PostPageWithCategories = ({ postEdges, categories, filter }) => (
       </article>
     </Header>
     <Wrapper xlarge>
-      <Row>
+      <Row vAlign="top">
         <Column size={8} mSize={12}>
           <h1>
             {filter ? (
@@ -45,13 +45,17 @@ const PostPageWithCategories = ({ postEdges, categories, filter }) => (
           {!filter && (
             <>
               <h3>Categories</h3>
-              {categories.map(category => (
-                <p key={category.fieldValue}>
-                  <Link to={`/categories/${kebabCase(category.fieldValue)}/`}>
-                    {category.fieldValue}
-                  </Link>
-                </p>
-              ))}
+              {categories.length
+                ? categories.map(category => (
+                    <p key={category.fieldValue}>
+                      <Link
+                        to={`/categories/${kebabCase(category.fieldValue)}/`}
+                      >
+                        {category.fieldValue}
+                      </Link>
+                    </p>
+                  ))
+                : "No categories yet"}
             </>
           )}
         </Column>

@@ -28,7 +28,7 @@ const Label = styled.label`
               }
 
               &:focus-within {
-                border-color: #39f;
+                border-color: ${props => props.theme.color.primary};
               }
             `}
 

@@ -81,9 +81,9 @@ export default props => (
         <Menu>
           <Menu.Toggle>Menu</Menu.Toggle>
           <Menu.ItemList>
-            <Menu.Item to="/products">Products</Menu.Item>
             <Menu.Item href="https://play.yourgifthunt.com">Showcase</Menu.Item>
-            <Menu.Item to="/docs">Docs</Menu.Item>
+            <Menu.Item to="/pricing">Pricing</Menu.Item>
+            <Menu.Item to="/about">About</Menu.Item>
             <Menu.Item to="/contact">Contact</Menu.Item>
             <Menu.Item href="https://create.yourgifthunt.com">Log in</Menu.Item>
           </Menu.ItemList>
@@ -95,9 +95,9 @@ export default props => (
             <StyledLogo size={3} />
             <Name>Your Gift Hunt</Name>
           </IndexLink>
-          <NavLink to="/products">Products</NavLink>
           <NavLink href="https://play.yourgifthunt.com">Showcase</NavLink>
-          <NavLink to="/docs">Docs</NavLink>
+          <NavLink to="/pricing">Pricing</NavLink>
+          <NavLink to="/about">About</NavLink>
         </Float.Left>
         <Float.Right>
           <NavLink to="/contact">Contact</NavLink>

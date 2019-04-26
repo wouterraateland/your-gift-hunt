@@ -40,7 +40,11 @@ const PostSummary = ({ detailed, excerpt, fields, frontmatter }) => (
 )
 
 export default ({ detailed, postEdges }) => {
-  return postEdges
-    .map(edge => edge.node)
-    .map(post => <PostSummary key={post.id} detailed={detailed} {...post} />)
+  return postEdges.length
+    ? postEdges
+        .map(edge => edge.node)
+        .map(post => (
+          <PostSummary key={post.id} detailed={detailed} {...post} />
+        ))
+    : "Stories coming soon..."
 }

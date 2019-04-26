@@ -1,7 +1,12 @@
 import React, { useState } from "react"
+import styled from "styled-components"
 
 import MailchimpSubscribe from "react-mailchimp-subscribe"
 import { Input, Button, Field } from "your-gift-hunt/ui"
+
+const Form = styled.form`
+  margin: 0 -1em 2em;
+`
 
 const MAILCHIMP_SUBSCRIBE_URL =
   "https://yourgifthunt.us19.list-manage.com/subscribe/post?u=309a27bcdbc1a2943a6081ffb&id=c073769b3b"
@@ -18,7 +23,7 @@ const MailchimpForm = ({ status, message, subscribe }) => {
   return status === "success" ? (
     <div dangerouslySetInnerHTML={{ __html: message }} />
   ) : (
-    <form disabled={status === "sending"} onSubmit={handleOnSubmit}>
+    <Form disabled={status === "sending"} onSubmit={handleOnSubmit}>
       <Field>
         <Input
           label="Your email address"
@@ -35,7 +40,7 @@ const MailchimpForm = ({ status, message, subscribe }) => {
       {status === "error" && (
         <div dangerouslySetInnerHTML={{ __html: message }} />
       )}
-    </form>
+    </Form>
   )
 }
 

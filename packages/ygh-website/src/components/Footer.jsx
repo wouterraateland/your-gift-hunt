@@ -40,11 +40,11 @@ export default () => (
             <br />
             <a href="https://play.yourgifthunt.com">Showcase</a>
             <br />
-            <Link to="/docs">Docs</Link>
-            <br />
-            <Link to="/contact">Contact</Link>
+            <Link to="/pricing">Pricing</Link>
             <br />
             <Link to="/about">About</Link>
+            <br />
+            <Link to="/contact">Contact</Link>
           </p>
         </Column>
         <Column size={3} sSize={6}>
