@@ -1,5 +1,5 @@
-import React from 'react'
-import Layout from 'components/Layout'
+import React from "react"
+import Layout from "components/Layout"
 import { Wrapper } from "your-gift-hunt/ui"
 
 export default () => (
@@ -9,4 +9,4 @@ export default () => (
       <p>We will come back to you as soon as we can.</p>
     </Wrapper>
   </Layout>
-);
+)

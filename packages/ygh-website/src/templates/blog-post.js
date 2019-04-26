@@ -1,16 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { kebabCase } from 'lodash'
-import Helmet from 'react-helmet'
-import { graphql, Link } from 'gatsby'
-import urljoin from 'url-join'
+import React from "react"
+import PropTypes from "prop-types"
+import { kebabCase } from "lodash"
+import Helmet from "react-helmet"
+import { graphql, Link } from "gatsby"
+import urljoin from "url-join"
 
-import Content, { HTMLContent } from 'components/Content'
-import MailchimpForm from 'components/MailchimpForm'
+import Content, { HTMLContent } from "components/Content"
+import MailchimpForm from "components/MailchimpForm"
 import { Wrapper, Article } from "your-gift-hunt/ui"
 
-import Layout from 'components/Layout'
-import Disqus from 'components/Disqus'
+import Layout from "components/Layout"
+import Disqus from "components/Disqus"
 
 export const BlogPostTemplate = ({
   content,
@@ -20,7 +20,7 @@ export const BlogPostTemplate = ({
   date,
   title,
   helmet,
-  slug,
+  slug
 }) => {
   const PostContent = contentComponent || Content
 
@@ -41,13 +41,13 @@ export const BlogPostTemplate = ({
       </Article>
       <hr />
       <h2>Newsletter</h2>
-      <p>Liked this story? Subscribe to our newsletter for early access and our latest stories.</p>
+      <p>
+        Liked this story? Subscribe to our newsletter for early access and our
+        latest stories.
+      </p>
       <MailchimpForm />
       <hr />
-      <Disqus
-        title={title}
-        url={slug}
-      />
+      <Disqus title={title} url={slug} />
     </Wrapper>
   )
 }
@@ -60,7 +60,7 @@ BlogPostTemplate.propTypes = {
   title: PropTypes.string,
   date: PropTypes.string,
   helmet: PropTypes.object,
-  slug: PropTypes.string,
+  slug: PropTypes.string
 }
 
 const BlogPost = ({ data }) => {
@@ -72,15 +72,15 @@ const BlogPost = ({ data }) => {
         content={post.html}
         contentComponent={HTMLContent}
         helmet={
-          <Helmet
-            titleTemplate="%s | Your Gift Hunt Blog"
-          >
+          <Helmet titleTemplate="%s | Your Gift Hunt Blog">
             <title>{post.frontmatter.title}</title>
             <meta
               name="description"
-              content={post.frontmatter.description
-                ? post.frontmatter.description
-                : post.excerpt}
+              content={
+                post.frontmatter.description
+                  ? post.frontmatter.description
+                  : post.excerpt
+              }
             />
           </Helmet>
         }
@@ -96,8 +96,8 @@ const BlogPost = ({ data }) => {
 
 BlogPost.propTypes = {
   data: PropTypes.shape({
-    markdownRemark: PropTypes.object,
-  }),
+    markdownRemark: PropTypes.object
+  })
 }
 
 export default BlogPost

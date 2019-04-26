@@ -1,5 +1,5 @@
 ---
-templateKey: 'faq-page'
+templateKey: "faq-page"
 path: /faq
 title: Frequently Asked Questions
 questions:

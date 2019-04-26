@@ -1,10 +1,11 @@
-import React from 'react'
-import { graphql } from 'gatsby'
+import React from "react"
+import { graphql } from "gatsby"
 
-import PostPage from 'components/PostPage'
+import PostPage from "components/PostPage"
 
-const AuthorRoute = ({ data, pageContext }) =>
+const AuthorRoute = ({ data, pageContext }) => (
   <PostPage data={data} filter={pageContext.author} />
+)
 
 export default AuthorRoute
 

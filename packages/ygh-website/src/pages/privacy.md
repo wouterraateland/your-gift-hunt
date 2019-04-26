@@ -1,5 +1,5 @@
 ---
-templateKey: 'info-page'
+templateKey: "info-page"
 path: /privacy
 title: Privacy Policy
 ---
@@ -13,6 +13,7 @@ This Privacy Policy describes how your personal information is collected, used, 
 When you visit the Site, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the cookies that are installed on your device. Additionally, as you browse the Site, we collect information about the individual web pages or products that you view, what websites or search terms referred you to the Site, and information about how you interact with the Site. We refer to this automatically-collected information as “Device Information”.
 
 We collect Device Information using the following technologies:
+
 - “Cookies” are data files that are placed on your device or computer and often include an anonymous unique identifier. For more information about cookies, and how to disable cookies, visit http://www.allaboutcookies.org.
 - “Log files” track actions occurring on the Site, and collect data including your IP address, browser type, Internet service provider, referring/exit pages, and date/time stamps.
 - “Web beacons”, “tags”, and “pixels” are electronic files used to record information about how you browse the Site.
@@ -24,6 +25,7 @@ When we talk about “Personal Information” in this Privacy Policy, we are tal
 ## HOW DO WE USE YOUR PERSONAL INFORMATION?
 
 We use the Order Information that we collect generally to fulfill any orders placed through the Site (including processing your payment information, arranging for shipping, and providing you with invoices and/or order confirmations). Additionally, we use this Order Information to:
+
 - Communicate with you;
 - Screen our orders for potential risk or fraud; and
 - When in line with the preferences you have shared with us, provide you with information or advertising relating to our products or services.
@@ -41,6 +43,7 @@ Finally, we may also share your Personal Information to comply with applicable l
 As described above, we use your Personal Information to provide you with targeted advertisements or marketing communications we believe may be of interest to you. For more information about how targeted advertising works, you can visit the Network Advertising Initiative’s (“NAI”) educational page at http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work.
 
 You can opt out of targeted advertising by using the links below:
+
 - Facebook: https://www.facebook.com/settings/?tab=ads
 - Google: https://www.google.com/settings/ads/anonymous
 - Bing: https://advertise.bingads.microsoft.com/en-us/resources/policies/personalized-ads

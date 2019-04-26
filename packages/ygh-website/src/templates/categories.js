@@ -1,9 +1,10 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import PostPage from 'components/PostPage'
+import React from "react"
+import { graphql } from "gatsby"
+import PostPage from "components/PostPage"
 
-const CategoryRoute = ({ data, pageContext }) =>
+const CategoryRoute = ({ data, pageContext }) => (
   <PostPage data={data} filter={pageContext.category} />
+)
 
 export default CategoryRoute
 

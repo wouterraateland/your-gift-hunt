@@ -27,11 +27,11 @@ const Outer = styled.div`
   }
 
   &::before {
-    top: 0.15em;
+    top: 0.1em;
   }
 
   &::after {
-    top: 2.55em;
+    top: 2.5em;
   }
 
   & span {

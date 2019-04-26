@@ -1,6 +1,6 @@
-import React from 'react'
-import { navigate } from 'gatsby-link'
-import Layout from 'components/Layout'
+import React from "react"
+import { navigate } from "gatsby-link"
+import Layout from "components/Layout"
 
 function encode(data) {
   const formData = new FormData()
@@ -64,9 +64,18 @@ export default class Contact extends React.Component {
                   </label>
                 </div>
                 <div className="field">
-                  <label className="label" htmlFor={"name"} >Your name</label>
+                  <label className="label" htmlFor={"name"}>
+                    Your name
+                  </label>
                   <div className="control">
-                    <input className="input" type={"text"} name={"name"} onChange={this.handleChange} id={"name"} required={true} />
+                    <input
+                      className="input"
+                      type={"text"}
+                      name={"name"}
+                      onChange={this.handleChange}
+                      id={"name"}
+                      required={true}
+                    />
                   </div>
                 </div>
                 <div className="field">
@@ -79,15 +88,15 @@ export default class Contact extends React.Component {
                         onChange={this.handleAttachment}
                       />
                       <span className="file-cta">
-                        <span className="file-label">
-                          Choose a file…
-                        </span>
+                        <span className="file-label">Choose a file…</span>
                       </span>
                     </label>
                   </div>
                 </div>
                 <div className="field">
-                  <button className="button is-link" type="submit">Send</button>
+                  <button className="button is-link" type="submit">
+                    Send
+                  </button>
                 </div>
               </form>
             </div>
