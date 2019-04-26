@@ -4,6 +4,11 @@ import * as serviceWorker from "./serviceWorker"
 
 import App from "components/App"
 
+import ReactGA from "react-ga"
+
+ReactGA.initialize("UA-130420308-1")
+ReactGA.pageview(window.location.pathname + window.location.search)
+
 // if (process.env.NODE_ENV !== "production") {
 //   const whyDidYouRender = require("@welldone-software/why-did-you-render")
 //   whyDidYouRender(React)
