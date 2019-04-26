@@ -336,7 +336,9 @@ const useGameMutations = (variables, save, dependencies) => {
             ? {
                 connect: {
                   id: states.find(
-                    state => state.template.id === stateTransitionTemplate.to.id
+                    state =>
+                      entity.states.some(({ id }) => id === state.id) &&
+                      state.template.id === stateTransitionTemplate.to.id
                   ).id
                 }
               }
