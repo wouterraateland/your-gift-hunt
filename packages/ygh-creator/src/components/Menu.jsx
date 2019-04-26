@@ -31,10 +31,10 @@ const MenuToggle = styled.div`
   width: 2em;
   height: 2em;
 
-  color: #0006;
+  color: ${props => props.theme.color.text};
 
-  &:hover {
-    color: #0008;
+  ${MenuContainer}:hover & {
+    color: ${props => props.theme.color.emphasis};
   }
 
   &::before {
@@ -44,11 +44,11 @@ const MenuToggle = styled.div`
     left: 50%;
     top: 50%;
 
-    width: 0.3em;
-    height: 0.3em;
+    width: 0.25em;
+    height: 0.25em;
 
-    border-radius: 100%;
-    box-shadow: 0 -0.6em, 0 0.6em;
+    border-radius: 0.25em;
+    box-shadow: 0 -0.5em, 0 0.5em;
 
     background: currentColor;
 

@@ -56,6 +56,7 @@ export const USER_GAMES = gql`
         id
         createdAt
         updatedAt
+        publishedAt
 
         name
         slug

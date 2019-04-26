@@ -49,7 +49,7 @@ const Preview = styled.div`
 
 const Info = styled.div`
   display: inline-block;
-  width: calc(100% - 25.5em);
+  width: calc(100% - 26.5em);
   vertical-align: middle;
 
   @media (max-width: 45em) {
@@ -59,7 +59,7 @@ const Info = styled.div`
 
 const Meta = styled.div`
   display: inline-block;
-  width: 15em;
+  width: 16em;
 
   @media (max-width: 45em) {
     display: none;
@@ -87,6 +87,11 @@ const EditProject = styled.span`
   width: 2em;
   height: 2em;
   padding: 0.25em 0.675em;
+  color: ${props => props.theme.color.text};
+
+  ${StyledThumb}:hover & {
+    color: ${props => props.theme.color.emphasis};
+  }
 `
 
 const Actions = ({ game }) => (
@@ -119,7 +124,11 @@ const Thumb = ({ game }) => {
         <small>
           {game.privacy === "PRIVATE" ? "Private" : "Public"} hunt
           {" • "}
-          Played {playCount} time{playCount === 1 ? "" : `s`}
+          {game.publishedAt ? (
+            `Played ${playCount} time${playCount === 1 ? "" : `s`}`
+          ) : (
+            <em>Not published yet</em>
+          )}
         </small>
       </Info>
       <Meta>
