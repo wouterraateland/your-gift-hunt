@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import styled, { css } from "styled-components"
 
 import EntityTypeIcon from "../EntityTypeIcon"
@@ -157,11 +157,19 @@ const PreviewContainer = styled.div`
 `
 
 const EntityCard = ({ entity, state, onClick, mayBeDeleted, isFocussed }) => {
-  const hasPreview = entity && (entity.isItem || entity.isObject)
+  const hasPreview = useMemo(
+    () => entity && (entity.isItem || entity.isObject),
+    [entity]
+  )
 
-  const featuredFieldValue = entity.featuredField
-    ? entity.fields.find(field => field.id === entity.featuredField.id).value
-    : null
+  const featuredFieldValue = useMemo(
+    () =>
+      entity.featuredField
+        ? entity.fields.find(field => field.id === entity.featuredField.id)
+            .value
+        : null,
+    [entity]
+  )
 
   // const unmatchedFields = entity.fields.filter(
   //   ({ id, isSecret, informationSlots }) =>

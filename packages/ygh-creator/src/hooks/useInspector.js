@@ -8,8 +8,8 @@ export const useInspectorProvider = () => {
   })
 
   const closeInspector = useCallback(
-    () => setState(state => ({ ...state, isOpen: false })),
-    []
+    () => state.isOpen && setState(state => ({ ...state, isOpen: false })),
+    [state.isOpen]
   )
 
   const inspectNode = useCallback(

@@ -19,7 +19,7 @@ const Container = styled.nav`
   background-color: ${props => props.theme.color.accent};
 `
 
-const BackControlContainer = styled.strong`
+const BackControlContainer = styled(Link)`
   cursor: pointer;
   display: inline-block;
   width: 1.5em;
@@ -28,8 +28,10 @@ const BackControlContainer = styled.strong`
   border-right: 0.1rem solid #0001;
 
   font-size: 2em;
+  font-weight: bold;
   line-height: 1.4em;
   text-align: center;
+  text-decoration: none;
 
   &:hover {
     background-color: #0001;
@@ -37,9 +39,7 @@ const BackControlContainer = styled.strong`
 `
 
 const BackControl = () => (
-  <BackControlContainer onClick={() => window.history.back()}>
-    &larr;
-  </BackControlContainer>
+  <BackControlContainer to="/">&larr;</BackControlContainer>
 )
 
 const Center = styled.div`

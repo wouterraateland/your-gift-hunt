@@ -5,12 +5,14 @@ import useGame from "hooks/useGame"
 import Container from "./Container"
 import Node from "./Node"
 import Edge from "./Edge"
+import ArrowDefs from "./ArrowDefs"
 
 const EditorPane = () => {
   const { nodes, edges } = useGame()
 
   return (
     <Container>
+      <ArrowDefs />
       {nodes.map(node => (
         <Node key={node.id} {...node} />
       ))}

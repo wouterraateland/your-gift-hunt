@@ -1,7 +1,13 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 
 import { EDGE_TYPES } from "data"
+import { getArrowColor } from "./ArrowDefs"
+
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`
 
 const Arrow = styled.svg`
   pointer-events: none;
@@ -9,22 +15,15 @@ const Arrow = styled.svg`
 
   max-width: none;
 
-  color: ${({ type }) => {
-    switch (type) {
-      case EDGE_TYPES.TRANSFORM:
-      case EDGE_TYPES.EXIT:
-        return "#f93"
-      case EDGE_TYPES.UNLOCK:
-      case EDGE_TYPES.ENTRY:
-        return "#39f"
-      case EDGE_TYPES.USE:
-        return "#3f9"
-      case EDGE_TYPES.INFO:
-        return "#f39"
-      default:
-        return "#ccc"
-    }
-  }};
+  transition-property: left, top;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+
+  animation: ${fadeIn} 0.5s ease-out forwards;
+
+  & path {
+    pointer-events: stroke;
+  }
 `
 
 const getD = (x1, y1, x2, y2, type) => {
@@ -59,39 +58,11 @@ const TransitionArrow = ({ x1, y1, x2, y2, type }) => {
       height={Math.abs(y2 - y1) + 64}
       style={{
         left: `${Math.min(x1, x2) - 32}px`,
-        top: `${Math.min(y1, y2) - 32}px`
+        top: `${Math.min(y1, y2) - 32}px`,
+        color: getArrowColor(type)
       }}
       type={type}
     >
-      <defs>
-        <marker
-          id={`circle-${type}`}
-          viewBox="0 0 10 10"
-          refX="5"
-          refY="5"
-          markerWidth="5"
-          markerHeight="5"
-          markerUnits="strokeWidth"
-          orient="auto"
-        >
-          <path
-            d="M 5, 5 m -5, 0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0"
-            fill="currentColor"
-          />
-        </marker>
-        <marker
-          id={`arrow-${type}`}
-          viewBox="0 0 10 10"
-          refX="5"
-          refY="5"
-          markerWidth="5"
-          markerHeight="5"
-          markerUnits="strokeWidth"
-          orient="auto"
-        >
-          <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-        </marker>
-      </defs>
       <path
         d={d}
         stroke="currentColor"

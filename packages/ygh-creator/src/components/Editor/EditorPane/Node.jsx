@@ -11,7 +11,7 @@ import EntryNode from "./EntryNode"
 import ExitNode from "./ExitNode"
 import EntityCard from "./EntityCard"
 
-const Node = memo(({ id, entity, state, type }) => {
+const Node = ({ id, entity, state, type }) => {
   const { ACTION_TYPES, upcomingAction } = useEditor()
   const { inspectNode, isOpen, nodeId } = useInspector()
   const { getNodePosition } = useGame()
@@ -53,6 +53,6 @@ const Node = memo(({ id, entity, state, type }) => {
       />
     </NodePosition>
   )
-})
+}
 
 export default Node
