@@ -8507,9 +8507,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-netlify-identity@https://github.com/wouterraateland/react-netlify-identity#wouterraateland-patch-1":
+react-netlify-identity@^0.0.7:
   version "0.0.7"
-  resolved "https://github.com/wouterraateland/react-netlify-identity#0ecb730a6601d477ed6018f99aa8a2b840a6fa1c"
+  resolved "https://registry.yarnpkg.com/react-netlify-identity/-/react-netlify-identity-0.0.7.tgz#92c5b1a07d240e7f201906ed677e61f037f3b68b"
+  integrity sha512-QvoZbdwPKvbmxSnykow+W5g6hhDb6aPtCxjGupkT06LanxcpLQ0rcPYxFapnvg4XD1Zpl6KyrahR84V4aZp91Q==
 
 react-router@^4.3.1:
   version "4.3.1"

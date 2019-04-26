@@ -25,7 +25,7 @@
     "react-dom": "^16.8.2",
     "react-error-boundary": "^1.2.3",
     "react-ga": "^2.5.7",
-    "react-netlify-identity": "https://github.com/wouterraateland/react-netlify-identity#wouterraateland-patch-1",
+    "react-netlify-identity": "^0.0.7",
     "react-router": "^4.3.1",
     "react-scripts": "2.1.2",
     "react-select": "^2.4.1",
