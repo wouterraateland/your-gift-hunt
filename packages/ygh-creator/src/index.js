@@ -10,6 +10,11 @@ import App from "components/App"
 import ApolloClient from "apollo-boost"
 import { ApolloProvider } from "react-apollo-hooks"
 
+import ReactGA from "react-ga"
+
+ReactGA.initialize("UA-130420308-1")
+ReactGA.pageview(window.location.pathname + window.location.search)
+
 const root = document.getElementById("app-root")
 
 if (process.env.NODE_ENV !== "production") {
