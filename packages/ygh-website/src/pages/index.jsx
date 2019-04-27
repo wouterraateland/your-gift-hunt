@@ -97,7 +97,7 @@ export default ({ data }) => {
             <Column size={6} mSize={12}>
               <Demo
                 imageInfo={demoImageInfo}
-                url="https://play.yourgifthunt.com/wouter-raateland/for-pioneers"
+                url="https://play.yourgifthunt.com/wouter-raateland/plant-care"
               />
             </Column>
           </Row>
