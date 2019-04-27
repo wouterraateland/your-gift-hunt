@@ -100,7 +100,7 @@ const Button = styled.div`
 
   width: 0.3em;
   height: 0.2em;
-  border-radius: 100%;
+  border-radius: 0.3em;
 
   background: radial-gradient(ellipse 50% 50% at 50% 50%, #000, #444);
 

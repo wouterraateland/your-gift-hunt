@@ -10,6 +10,7 @@ import withPickupBehaviour from "containers/withPickupBehaviour"
 
 const entityDetailComponents = [
   withEntityBehaviour(EntityDetails.Computer),
+  withEntityBehaviour(EntityDetails.DoorWithLock),
   withEntityBehaviour(EntityDetails.InstructionNote),
   withMailboxDetailBehaviour(EntityDetails.Mailbox),
   withEntityBehaviour(EntityDetails.Note),

@@ -49,7 +49,7 @@ export default ({ entity, ...props }) => {
       </EntityContainer>
       <EntityName>
         {entity.name}
-        <small> – {entity.state.name}</small>
+        {entity.state.name && <small> – {entity.state.name}</small>}
       </EntityName>
     </InventoryItemScreen>
   )

@@ -11,14 +11,32 @@ const DefaultScene = () => {
     name => entities.find(e => e.template.name === name),
     [entities]
   )
+  const treeItem = useMemo(
+    () =>
+      entities.find(
+        entity =>
+          entity.isItem &&
+          !isInInventory(entity) &&
+          entity.template.name === "Door key"
+      ),
+    [entities, isInInventory]
+  )
   const packagedItems = useMemo(
-    () => entities.filter(entity => entity.isItem && !isInInventory(entity)),
+    () =>
+      entities.filter(
+        entity =>
+          entity.isItem &&
+          !isInInventory(entity) &&
+          entity.template.name !== "Door key"
+      ),
     [entities, isInInventory]
   )
 
   const safeWithCodeExists = entities.some(
     ({ template }) => template && template.name === "Safe with code"
   )
+
+  const door = withTemplate("Door") || withTemplate("Door with lock")
 
   return (
     <Scene left={-20} top={-40} width={40} height={80}>
@@ -115,17 +133,35 @@ const DefaultScene = () => {
             top={3}
             rotation={-80}
           />
-          <Entities.InstructionNote
+          {/* <Entities.InstructionNote
             {...withTemplate("Instruction note")}
             left={3}
             top={9}
             rotation={-70}
-          />
+          /> */}
         </Entities.Desk>
 
-        <Entities.Door {...withTemplate("Door")} left={12} top={35} />
-        <Entities.Wall {...withTemplate("Wall")} />
+        <Entities.Wall
+          {...withTemplate("Wall")}
+          state={
+            door && door.state && ["Locked", "closed"].includes(door.state.name)
+              ? "Invisible"
+              : "Visible"
+          }
+        />
+        {door && door.template.name === "Door with lock" ? (
+          <Entities.DoorWithLock {...door} left={12} top={35} />
+        ) : (
+          <Entities.Door {...door} left={12} top={35} />
+        )}
       </Entities.Floor>
+      <Entities.Tree
+        left={-12}
+        top={28}
+        rotation={20}
+        containedEntity={treeItem}
+      />
+      <Entities.TreeStump left={10} top={25} rotation={150} />
     </Scene>
   )
 }

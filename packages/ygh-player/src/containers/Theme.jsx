@@ -118,11 +118,39 @@ const VariableGlobalStyle = () => {
   return <GlobalStyle vh={height * 0.01} />
 }
 
+const GooFilter = () => (
+  <svg style={{ display: "none" }}>
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+        <feColorMatrix
+          in="blur"
+          mode="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+          result="goo"
+        />
+        <feBlend in="SourceGraphic" in2="goo" />
+      </filter>
+      <filter id="fancy-goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+        <feColorMatrix
+          in="blur"
+          type="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+          result="goo"
+        />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+)
+
 export default ({ children }) => (
   <ThemeProvider theme={theme}>
     <>
       <VariableGlobalStyle />
       <StaticGlobalStyle />
+      <GooFilter />
       {children}
     </>
   </ThemeProvider>

@@ -12,6 +12,8 @@ import Computer from "./Computer"
 import Desk from "./Desk"
 import DeskChair from "./DeskChair"
 import Door from "./Door"
+import DoorKey from "./DoorKey"
+import DoorWithLock from "./DoorWithLock"
 import Flashlight from "./Flashlight"
 import Floor from "./Floor"
 import Grass from "./Grass"
@@ -27,6 +29,8 @@ import SafeKey from "./SafeKey"
 import SafeWithCode from "./SafeWithCode"
 import SafeWithKeyhole from "./SafeWithKeyhole"
 import Seeds from "./Seeds"
+import Tree from "./Tree"
+import TreeStump from "./TreeStump"
 import Wall from "./Wall"
 import WateringCan from "./WateringCan"
 import WorktopWithSink from "./WorktopWithSink"
@@ -42,6 +46,8 @@ export {
   Desk,
   DeskChair,
   Door,
+  DoorKey,
+  DoorWithLock,
   Flashlight,
   Floor,
   Grass,
@@ -57,6 +63,8 @@ export {
   SafeWithCode,
   SafeWithKeyhole,
   Seeds,
+  Tree,
+  TreeStump,
   Wall,
   WateringCan,
   WorktopWithSink
@@ -71,6 +79,8 @@ const entities = [
   Desk,
   DeskChair,
   Door,
+  DoorKey,
+  DoorWithLock,
   Flashlight,
   Floor,
   Grass,
@@ -86,6 +96,8 @@ const entities = [
   SafeWithCode,
   SafeWithKeyhole,
   Seeds,
+  Tree,
+  TreeStump,
   Wall,
   WateringCan,
   WorktopWithSink

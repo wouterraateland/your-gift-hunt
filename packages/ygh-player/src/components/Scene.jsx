@@ -6,6 +6,7 @@ import useWindowSize from "hooks/useWindowSize"
 const SceneOuter = styled.div`
   position: relative;
   overflow: hidden;
+  z-index: 0;
 
   font-size: ${props => props.size}px;
   width: ${props => props.width}em;

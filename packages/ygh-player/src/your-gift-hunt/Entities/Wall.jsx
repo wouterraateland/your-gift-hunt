@@ -35,6 +35,21 @@ const windows = [
   show
 }))
 
+const Roof = styled(Entity)`
+  top: 0.5em;
+  left: 0.5em;
+  width: calc(100% - 1em);
+  height: calc(100% - 1em);
+  border-radius: 0.25em;
+  background-color: ${props =>
+    props.state === "Invisible" ? "#000" : "transparent"};
+  transition: background-color 0.5s ease-out;
+`
+Roof.defaultProps = {
+  ...Entity.defaultProps,
+  noVisual: true
+}
+
 const WallPiece = styled(Entity)`
   border-radius: 0.25em;
 
@@ -86,13 +101,14 @@ Window.defaultProps = {
 }
 
 const Wall = forwardRef((props, ref) => (
-  <Entity noVisual {...props} ref={ref}>
+  <Entity {...props} ref={ref} noVisual>
     {windows.map((w, i) => (
       <Window key={i} {...w} />
     ))}
     {wallPieces.map((piece, i) => (
       <WallPiece key={i} {...piece} />
     ))}
+    <Roof {...props} noVisual />
   </Entity>
 ))
 Wall.name = "Wall"

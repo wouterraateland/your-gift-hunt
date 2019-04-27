@@ -6,6 +6,7 @@ import Entities from "your-gift-hunt/Entities"
 import withCameraBehaviour from "containers/withCameraBehaviour"
 import withEntityBehaviour from "containers/withEntityBehaviour"
 import withPackageBehaviour from "containers/withPackageBehaviour"
+import withTreeBehaviour from "containers/withTreeBehaviour"
 
 export const DefaultEntity = withEntityBehaviour(Entities.DefaultEntity)
 
@@ -19,6 +20,8 @@ const entityComponents = [
   withEntityBehaviour(Entities.Desk),
   withEntityBehaviour(Entities.DeskChair),
   withEntityBehaviour(Entities.Door),
+  withEntityBehaviour(Entities.DoorKey),
+  withEntityBehaviour(Entities.DoorWithLock),
   withEntityBehaviour(Entities.Flashlight),
   withEntityBehaviour(Entities.Floor),
   withEntityBehaviour(Entities.Grass),
@@ -34,6 +37,8 @@ const entityComponents = [
   withEntityBehaviour(Entities.SafeWithCode),
   withEntityBehaviour(Entities.SafeWithKeyhole),
   withEntityBehaviour(Entities.Seeds),
+  withTreeBehaviour(Entities.Tree),
+  withEntityBehaviour(Entities.TreeStump),
   withEntityBehaviour(Entities.Wall),
   withEntityBehaviour(Entities.WateringCan),
   withEntityBehaviour(Entities.WorktopWithSink)

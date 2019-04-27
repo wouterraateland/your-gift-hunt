@@ -24,6 +24,7 @@ import {
   PlantPot,
   SafeWithCode,
   SafeWithKeyhole,
+  Tree,
   WorktopWithSink,
   Wall
 } from "your-gift-hunt/Entities"
@@ -231,6 +232,17 @@ storiesOf("Objects", module)
           Unlocked: "unlocked"
         },
         "locked"
+      )}
+    />
+  ))
+  .add("Tree", () => (
+    <Tree
+      state={radios(
+        "state",
+        {
+          Default: ""
+        },
+        ""
       )}
     />
   ))

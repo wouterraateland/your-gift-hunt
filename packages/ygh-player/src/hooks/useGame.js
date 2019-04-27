@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo } from "react"
+import { useCallback, useContext, useEffect, useMemo } from "react"
 import GameContext from "contexts/Game"
 import useYGHPlayer from "ygh-player/react-hook"
 import useStore, { localStorageStoreCreator } from "hooks/useStore"
@@ -73,7 +73,15 @@ export const useGameProvider = gameIdentifier => {
       presentEntities.some(({ id }) => id === entity.id)
   )
 
-  if (yghPlayer.isLoading || !yghPlayer.isAuthenticated) {
+  const isLoading = yghPlayer.isLoading || !yghPlayer.isAuthenticated
+
+  useEffect(() => {
+    if (!isLoading) {
+      popup(Screens.Intro)
+    }
+  }, [isLoading])
+
+  if (isLoading) {
     return yghPlayer
   }
 

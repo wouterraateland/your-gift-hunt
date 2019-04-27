@@ -3,6 +3,7 @@ import Entities, { GenericEntity } from "../Entities"
 import _ from "utils"
 
 import Computer from "./Computer"
+import DoorWithLock from "./DoorWithLock"
 import InstructionNote from "./InstructionNote"
 import Mailbox from "./Mailbox"
 import Note from "./Note"
@@ -11,6 +12,7 @@ import SafeWithKeyhole from "./SafeWithKeyhole"
 
 export {
   Computer,
+  DoorWithLock,
   InstructionNote,
   Mailbox,
   Note,
@@ -20,6 +22,7 @@ export {
 
 const entityDetails = [
   Computer,
+  DoorWithLock,
   InstructionNote,
   Mailbox,
   Note,
