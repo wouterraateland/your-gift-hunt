@@ -5,7 +5,8 @@ import ModalBackground from "components/ModalBackground"
 import useClickOutside from "hooks/useClickOutside"
 import useModal from "hooks/useModal"
 
-const root = document ? document.getElementById("___modal") : null
+const root =
+  typeof document !== "undefined" ? document.getElementById("___modal") : null
 
 const Modal = () => {
   const ref = useRef(null)
