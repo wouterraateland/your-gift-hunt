@@ -5,7 +5,7 @@ import MailchimpSubscribe from "react-mailchimp-subscribe"
 import { Input, Button, Field } from "your-gift-hunt/ui"
 
 const Form = styled.form`
-  margin: 0 -1em 2em;
+  margin: 0 -1em;
 `
 
 const MAILCHIMP_SUBSCRIBE_URL =

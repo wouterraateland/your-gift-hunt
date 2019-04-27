@@ -11,35 +11,16 @@ import {
   Button,
   VSpace
 } from "your-gift-hunt/ui"
-import { Picture, Location, Friend, Play } from "your-gift-hunt/icons"
+import { Picture, Location, Friend } from "your-gift-hunt/icons"
 
 import Layout from "components/Layout"
 import CTA from "components/CTA"
-import PreviewCompatibleImage from "components/PreviewCompatibleImage"
 import Hexagon from "components/Hexagon"
+import Demo from "components/Demo"
 
 import createImage from "images/create.svg"
 import shareImage from "images/share.svg"
 import playImage from "images/play.svg"
-
-const Demo = styled.div`
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-
-  border-radius: ${props => props.theme.borderRadius};
-  box-shadow: ${props => props.theme.boxShadow.large};
-
-  background-color: #0001;
-`
-
-const DemoButton = styled(Button)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-`
 
 const Tagline = styled.p`
   font-size: 1.5em;
@@ -106,23 +87,10 @@ export default ({ data }) => {
               </Tagline>
             </Column>
             <Column size={6} mSize={12}>
-              <Demo>
-                <PreviewCompatibleImage imageInfo={demoImageInfo} />
-                <DemoButton
-                  size="large"
-                  importance="primary"
-                  color="primary"
-                  onClick={() =>
-                    window.open(
-                      "https://play.yourgifthunt.com/wouter-raateland/for-pioneers",
-                      "_blank"
-                    )
-                  }
-                >
-                  <Play />
-                  &nbsp;&nbsp;&nbsp;Play demo
-                </DemoButton>
-              </Demo>
+              <Demo
+                imageInfo={demoImageInfo}
+                url="https://play.yourgifthunt.com/wouter-raateland/for-pioneers"
+              />
             </Column>
           </Row>
         </Wrapper>

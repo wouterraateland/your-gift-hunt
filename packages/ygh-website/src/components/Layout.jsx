@@ -1,6 +1,8 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
+import { ModalProvider } from "contexts/Modal"
+
 import { FullHeight } from "your-gift-hunt/ui"
 import Theme from "containers/Theme"
 import SEO from "components/SEO"
@@ -29,14 +31,16 @@ const Layout = ({ children, ...rest }) => (
       }
     `}
     render={data => (
-      <FullHeight>
-        <SEO config={data.site.siteMetadata} />
-        <Theme>
-          <Nav {...rest} />
-          <Body index={rest.index}>{children}</Body>
-          <Footer />
-        </Theme>
-      </FullHeight>
+      <Theme>
+        <ModalProvider>
+          <SEO config={data.site.siteMetadata} />
+          <FullHeight>
+            <Nav {...rest} />
+            <Body index={rest.index}>{children}</Body>
+            <Footer />
+          </FullHeight>
+        </ModalProvider>
+      </Theme>
     )}
   />
 )

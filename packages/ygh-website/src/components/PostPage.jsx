@@ -1,5 +1,6 @@
 import { kebabCase } from "lodash"
 import React from "react"
+import styled from "styled-components"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Helmet from "react-helmet"
 
@@ -9,6 +10,10 @@ import MailchimpForm from "components/MailchimpForm"
 
 import Layout from "components/Layout"
 import PostList from "components/PostList"
+
+const FormMargins = styled.div`
+  margin-bottom: 2em;
+`
 
 const PostPageWithCategories = ({ postEdges, categories, filter }) => (
   <Layout>
@@ -41,7 +46,9 @@ const PostPageWithCategories = ({ postEdges, categories, filter }) => (
         </Column>
         <Column size={4} mSize={12}>
           <h3 id="#subscribe">Newsletter</h3>
-          <MailchimpForm />
+          <FormMargins>
+            <MailchimpForm />
+          </FormMargins>
           {!filter && (
             <>
               <h3>Categories</h3>

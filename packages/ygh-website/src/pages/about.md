@@ -2,6 +2,12 @@
 templateKey: "info-page"
 path: /about
 title: About us
+tags:
+  - about
+  - company
+category: page
+author: Wouter Raateland
+date: "2019-04-26"
 ---
 
 # Our Mission
