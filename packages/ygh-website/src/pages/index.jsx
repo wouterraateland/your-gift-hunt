@@ -33,6 +33,10 @@ const Header = styled.header`
   align-items: center;
   min-height: calc(100vh - 6em);
   padding: 4em 0;
+
+  @media (max-width: 45em) {
+    min-height: auto;
+  }
 `
 const LearnMore = styled.p`
   position: absolute;
@@ -46,7 +50,7 @@ const LearnMore = styled.p`
 
     position: absolute;
     left: 50%;
-    top: 1.5em;
+    top: 2em;
 
     width: 1em;
     height: 1em;
@@ -55,6 +59,10 @@ const LearnMore = styled.p`
     border-radius: 0.1em;
 
     transform: rotate(45deg) translate(-50%);
+  }
+
+  @media (max-width: 45em) {
+    display: none;
   }
 `
 

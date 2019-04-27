@@ -5,7 +5,7 @@ module.exports = {
   siteImage: "/favicons/og-image.png", // Logo used for SEO and manifest.
   siteUrl: "https://yourgifthunt.com", // Domain of your website without pathPrefix.
   pathPrefix: "", // Prefixes all links. For cases when deployed to example.github.io/gatsby-advanced-starter/.
-  siteDescription: "Make your gift a unique adventure with a personal scavenger gift hunt.", // Website description used for RSS feeds/meta description tag.
+  siteDescription: "Create unique and personal escape games for each other.", // Website description used for RSS feeds/meta description tag.
   siteRss: "/rss.xml", // Path to the RSS file.
   siteFBAppID: "314877482688772", // FB Application ID for using app insights
   googleAnalyticsID: "UA-130420308-1", // GA tracking ID.
@@ -17,4 +17,4 @@ module.exports = {
   copyright: `Copyright © ${new Date().getUTCFullYear()}. Your Gift Hunt`, // Copyright string for the footer of the website and RSS feed.
   themeColor: "#ffd65a", // Used for setting manifest and progress theme colors.
   backgroundColor: "#ffffff" // Used for setting manifest background color.
-};
+}
