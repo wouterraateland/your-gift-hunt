@@ -93,6 +93,16 @@ const Cursor = styled.span`
   }
 `
 
+const Nav = styled.div`
+  position: absolute;
+  left: 1ch;
+  bottom: 1em;
+
+  & span {
+    cursor: pointer;
+  }
+`
+
 const PromptText = styled.span`
   color: #ff0;
 `
@@ -182,9 +192,7 @@ const Computer = forwardRef(
               text={
                 entity === null
                   ? containedEntities.some(
-                      entity =>
-                        _.hasState("unanswered")(entity) ||
-                        _.hasState("empty")(entity)
+                      _.or(_.hasState("unanswered"), _.hasState("empty"))
                     )
                     ? "New questions available."
                     : "No new questions available."
@@ -197,6 +205,7 @@ const Computer = forwardRef(
               {entity === null ? (
                 containedEntities.length > 0 ? (
                   <span
+                    style={{ cursor: "pointer" }}
                     onClick={() => {
                       const firstUnreadIndex = containedEntities.findIndex(
                         _.or(_.hasState("unanswered"), _.hasState("empty"))
@@ -209,7 +218,11 @@ const Computer = forwardRef(
                       )
                     }}
                   >
-                    Show question
+                    {containedEntities.some(
+                      _.or(_.hasState("unanswered"), _.hasState("empty"))
+                    )
+                      ? "Show question"
+                      : "Show first question"}
                   </span>
                 ) : null
               ) : (
@@ -217,20 +230,18 @@ const Computer = forwardRef(
                   <AnswerMarker>&gt;</AnswerMarker>{" "}
                   {isAnswered ? _.getInputValue("answer")(entity) : answer}
                   {isUnanswered && <Cursor />}{" "}
-                  {isAnswered && <SuccessMarker>✔</SuccessMarker>}
+                  {isAnswered && <SuccessMarker>✓</SuccessMarker>}
                   {isUnanswered &&
                     _.getInputValue("answer")(entity) === answer && (
-                      <ErrorMarker>✘</ErrorMarker>
+                      <ErrorMarker>×</ErrorMarker>
                     )}
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <span onClick={() => goToEntity(entityIndex - 1)}>◀</span>
-                  {"  "}
-                  {entityIndex < containedEntities.length - 1 && (
-                    <span onClick={() => goToEntity(entityIndex + 1)}>▶</span>
-                  )}
+                  <Nav>
+                    <span onClick={() => goToEntity(entityIndex - 1)}>◀</span>
+                    {"  "}
+                    {entityIndex < containedEntities.length - 1 && (
+                      <span onClick={() => goToEntity(entityIndex + 1)}>▶</span>
+                    )}
+                  </Nav>
                 </>
               )}
             </Prompt>

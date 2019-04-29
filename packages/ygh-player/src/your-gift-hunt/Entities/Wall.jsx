@@ -36,10 +36,6 @@ const windows = [
 }))
 
 const Roof = styled(Entity)`
-  top: 0.5em;
-  left: 0.5em;
-  width: calc(100% - 1em);
-  height: calc(100% - 1em);
   border-radius: 0.25em;
   background-color: ${props =>
     props.state === "Invisible" ? "#000" : "transparent"};
@@ -108,7 +104,13 @@ const Wall = forwardRef((props, ref) => (
     {wallPieces.map((piece, i) => (
       <WallPiece key={i} {...piece} />
     ))}
-    <Roof {...props} noVisual />
+    <Roof
+      {...props}
+      width={props.width - 1}
+      height={props.height - 1}
+      noVisual
+      isInteractive={props.state === "Invisible"}
+    />
   </Entity>
 ))
 Wall.name = "Wall"

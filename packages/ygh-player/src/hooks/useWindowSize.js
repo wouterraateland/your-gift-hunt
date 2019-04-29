@@ -1,19 +1,16 @@
 import { useCallback, useEffect, useState } from "react"
 
-const useWindowSize = () => {
-  const [size, setSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight
-  })
+const getSize = () => ({
+  width: window.innerWidth,
+  height: window.innerHeight,
+  rem: parseFloat(getComputedStyle(document.documentElement).fontSize),
+  orientation: window.innerWidth > window.innerHeight ? "landscape" : "portrait"
+})
 
-  const handleOnWindowResize = useCallback(
-    () =>
-      setSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      }),
-    []
-  )
+const useWindowSize = () => {
+  const [size, setSize] = useState(getSize())
+
+  const handleOnWindowResize = useCallback(() => setSize(getSize()), [])
 
   useEffect(() => {
     window.addEventListener("resize", handleOnWindowResize)

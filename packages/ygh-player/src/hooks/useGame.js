@@ -81,6 +81,17 @@ export const useGameProvider = gameIdentifier => {
     }
   }, [isLoading])
 
+  useEffect(() => {
+    if (presentEntities) {
+      const plant = presentEntities.find(
+        ({ template: { name } }) => name === "Plant pot"
+      )
+      if (plant && plant.state.name === "grown") {
+        setTimeout(() => popup(Screens.Outro), 1000)
+      }
+    }
+  }, [presentEntities])
+
   if (isLoading) {
     return yghPlayer
   }

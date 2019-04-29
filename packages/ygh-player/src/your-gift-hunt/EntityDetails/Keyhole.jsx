@@ -1,36 +1,21 @@
-import styled, { keyframes } from "styled-components"
+import styled, { css, keyframes } from "styled-components"
 
 import { Entity } from "../Entities"
 
-const keyTurn1 = keyframes`
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.5);
-  }
-
+const keyTurnKeyframes = keyframes`
   50% {
     opacity: 1;
     transform: translate(-50%, -50%);
   }
 
   100% {
+    opacity: 1;
     transform: translate(-50%, -50%) rotate(90deg);
   }
 `
-const keyTurn2 = keyframes`
-  0% {
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
 
-  50% {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.5);
-  }
+const keyTurn = css`
+  animation: ${keyTurnKeyframes} 0.5s ease-in-out forwards;
 `
 
 const Keyhole = styled(Entity)`
@@ -64,11 +49,10 @@ const Keyhole = styled(Entity)`
 
     background-color: #face32;
 
-    transform: translate(-50%, -50%)
-      rotate(${props => (props.isUnlocked ? 0 : 90)}deg);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
 
-    animation: ${props => (props.isUnlocked ? keyTurn1 : keyTurn2)} 0.5s
-      ${props => (props.isUnlocked ? 0 : 1)}s ease-in-out forwards;
+    ${props => props.isUnlocked && keyTurn}
   }
 `
 Keyhole.defaultProps = {

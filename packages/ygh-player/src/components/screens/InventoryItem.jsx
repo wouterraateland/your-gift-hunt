@@ -1,9 +1,11 @@
 import React from "react"
 import styled from "styled-components"
 
-import Base from "./Base"
-import { getEntityDetailComponent } from "../EntityDetails"
+import useWindowSize from "hooks/useWindowSize"
+
+import { getEntityDetailComponent } from "components/EntityDetails"
 import EntityContainer from "components/EntityContainer"
+import Base from "./Base"
 
 const InventoryItemScreen = styled(Base)`
   display: flex;
@@ -39,14 +41,27 @@ const EntityName = styled.h2`
   }
 `
 
+const StyledEntityContainer = styled(EntityContainer)`
+  position: absolute;
+  top: calc(50% - 1.5em);
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+`
+
 export default ({ entity, ...props }) => {
+  const { width, height, rem, orientation } = useWindowSize()
   const Component = getEntityDetailComponent(entity.template.name)
 
   return (
     <InventoryItemScreen {...props}>
-      <EntityContainer maxWidth={12} maxHeight={12} component={Component}>
+      <StyledEntityContainer
+        component={Component}
+        maxWidth={(0.5 * width) / rem - (orientation === "portrait" ? 0 : 7)}
+        maxHeight={(0.5 * height) / rem - (orientation === "portrait" ? 11 : 4)}
+      >
         <Component {...entity} />
-      </EntityContainer>
+      </StyledEntityContainer>
       <EntityName>
         {entity.name}
         {entity.state.name && <small> – {entity.state.name}</small>}

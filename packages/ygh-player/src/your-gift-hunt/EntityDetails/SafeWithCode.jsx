@@ -87,7 +87,10 @@ const SafeWithCode = forwardRef(({ dispatchInputAction, ...props }, ref) => {
       <form onSubmit={handleOnSubmit}>
         <CodeLabel>
           <CodeInput value={code} onChange={handleOnChange} />
-          <Code correct={isUnlocked} wrong={!isUnlocked && code === codeInput}>
+          <Code
+            correct={isUnlocked}
+            wrong={!isUnlocked && parseInt(code, 10) === codeInput}
+          >
             {displayedCode}
           </Code>
           <Gray>{"0".repeat(4 - displayedCode.length)}</Gray>
