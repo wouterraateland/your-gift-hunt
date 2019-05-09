@@ -10,6 +10,9 @@ const Container = styled.div`
 `
 
 const Marker = styled.span`
+  -webkit-touch-callout: none;
+  user-select: none;
+
   ${props =>
     props.isActive &&
     css`

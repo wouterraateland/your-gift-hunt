@@ -3,6 +3,10 @@ import styled from "styled-components"
 
 import useDrag from "hooks/useDrag"
 
+const hasDropParent = el =>
+  el &&
+  (el.getAttribute("can-drop") === "true" || hasDropParent(el.parentElement))
+
 const Container = styled.div.attrs(props => ({
   style: {
     left: `${props.x}px`,
@@ -27,11 +31,7 @@ const DragImage = () => {
 
   const updatePosition = useCallback(event => {
     const cursor = event.touches ? event.touches[0] : event
-    if (
-      !event.path.find(
-        el => el.getAttribute && el.getAttribute("can-drop") === "true"
-      )
-    ) {
+    if (!hasDropParent(event.target)) {
       disableDrop()
     }
     setPosition({ x: cursor.clientX, y: cursor.clientY })

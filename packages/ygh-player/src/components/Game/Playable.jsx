@@ -18,11 +18,6 @@ const GamePage = styled.div`
   @media (orientation: landscape) {
     flex-direction: row-reverse;
   }
-
-  & * {
-    -webkit-touch-callout: none;
-    user-select: none;
-  }
 `
 
 const PlayableGame = () => (

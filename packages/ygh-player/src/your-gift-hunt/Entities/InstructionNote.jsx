@@ -63,6 +63,9 @@ const Text = styled.span`
   font-size: 0.6em;
 
   transform: translate(-0.5em, 1em) rotate(90deg);
+
+  -webkit-touch-callout: none;
+  user-select: none;
 `
 
 const InstructionNote = forwardRef(({ inspect, ...props }, ref) => (

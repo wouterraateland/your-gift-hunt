@@ -1,9 +1,12 @@
 import { useCallback, useEffect } from "react"
 
+const isParentOrSame = (el, parent) =>
+  el && (el === parent || isParentOrSame(el.parentElement, parent))
+
 const useClickOutside = ({ ref, onClickOutside, inputs = [] }) => {
   const onClick = useCallback(
     event => {
-      if (!event.path.includes(ref.current)) {
+      if (!isParentOrSame(event.target, ref.current)) {
         onClickOutside(event)
       }
     },

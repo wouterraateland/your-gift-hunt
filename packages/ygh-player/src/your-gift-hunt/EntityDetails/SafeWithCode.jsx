@@ -33,6 +33,7 @@ const Gray = styled.span`
 const CodeInput = styled.input`
   opacity: 0;
   position: absolute;
+  pointer-events: none;
 `
 
 const SafeButton = styled.button`
@@ -63,6 +64,7 @@ const SafeWithCode = forwardRef(({ dispatchInputAction, ...props }, ref) => {
   const [code, setCode] = useState("")
 
   const handleOnChange = useCallback(event => {
+    event.preventDefault()
     const regex = /^[0-9\b]+$/
 
     if (event.target.value === "" || regex.test(event.target.value)) {
