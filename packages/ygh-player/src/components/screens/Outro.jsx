@@ -1,10 +1,13 @@
 import React from "react"
 import styled from "styled-components"
+import moment from "moment"
+
+import useGame from "hooks/useGame"
 
 import Base from "./Base"
 import { Align, Wrapper } from "your-gift-hunt/ui"
 
-const IntroScreen = styled(Base)`
+const OutroScreen = styled(Base)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,16 +19,24 @@ const IntroScreen = styled(Base)`
   }
 `
 
-export default props => (
-  <IntroScreen {...props}>
-    <Align.Center>
-      <Wrapper small>
-        <h1>You finished the game</h1>
-        <p>
-          You did it! You have taken good care of Carl's plant, he can enjoy his
-          holiday now, thanks!
-        </p>
-      </Wrapper>
-    </Align.Center>
-  </IntroScreen>
-)
+export default props => {
+  const { game, gameState } = useGame()
+
+  const duration = moment.duration(
+    moment(gameState.startedAt).diff(moment(gameState.finishedAt))
+  )
+
+  return (
+    <OutroScreen {...props}>
+      <Align.Center>
+        <Wrapper small>
+          <h1>
+            Well done, you finished in {duration.hours()}-{duration.minutes()}-
+            {duration.seconds()}
+          </h1>
+          <p>{game.outro}</p>
+        </Wrapper>
+      </Align.Center>
+    </OutroScreen>
+  )
+}

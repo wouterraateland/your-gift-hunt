@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import styled from "styled-components"
 
 import useGame from "hooks/useGame"
@@ -19,7 +19,13 @@ const IntroScreen = styled(Base)`
 `
 
 export default ({ close, ...props }) => {
-  const { game } = useGame()
+  const { game, startGamePlay } = useGame()
+
+  const onClick = useCallback(() => {
+    startGamePlay()
+    close()
+  }, [startGamePlay, close])
+
   return (
     <IntroScreen {...props}>
       <Align.Center>
@@ -27,7 +33,7 @@ export default ({ close, ...props }) => {
           <h1>{game.name}</h1>
           <p>{game.description}</p>
           <VSpace />
-          <Button onClick={close} importance="primary" color="accent">
+          <Button onClick={onClick} importance="primary" color="accent">
             Start game
           </Button>
         </Wrapper>

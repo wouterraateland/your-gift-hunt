@@ -1,4 +1,5 @@
-const BASE_URL = "https://ygh-api.herokuapp.com"
+const BASE_URL =
+  process.env.REACT_APP_YGH_API_URL || "https://ygh-api.herokuapp.com"
 
 const t = f => options => f(options || {})
 
@@ -48,6 +49,10 @@ class Api {
 
   getGameState = t(({ playToken }) =>
     this.post("getGameState", { body: { playToken } })
+  )
+
+  startGamePlay = t(({ playToken }) =>
+    this.post("startGamePlay", { body: { playToken } })
   )
 
   requestHints = t(({ playToken }) =>

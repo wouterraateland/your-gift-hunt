@@ -103,6 +103,16 @@ class YGHPlayer {
     return this.gameState
   }
 
+  async startGamePlay() {
+    this.ensurePlayToken()
+
+    const stateUpdate = await this.api.startGamePlay({
+      playToken: this.playToken
+    })
+    this.gameState = getNextState(this.gameState, parseServerState(stateUpdate))
+    return this.gameState
+  }
+
   async dispatchAction(action) {
     this.ensurePlayToken()
 

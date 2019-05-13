@@ -1,5 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
+import _ from "utils"
 
 import useHints from "hooks/useHints"
 
@@ -10,8 +11,7 @@ const Container = styled.div`
 `
 
 const Marker = styled.span`
-  -webkit-touch-callout: none;
-  user-select: none;
+  ${_.unselectableStyles}
 
   ${props =>
     props.isActive &&

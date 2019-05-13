@@ -76,21 +76,16 @@ export const useGameProvider = gameIdentifier => {
   const isLoading = yghPlayer.isLoading || !yghPlayer.isAuthenticated
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && !yghPlayer.gameState.startedAt) {
       popup(Screens.Intro)
     }
-  }, [isLoading])
+  }, [isLoading, yghPlayer.gameState.startedAt])
 
   useEffect(() => {
-    if (presentEntities) {
-      const plant = presentEntities.find(
-        ({ template: { name } }) => name === "Plant pot"
-      )
-      if (plant && plant.state.name === "grown") {
-        setTimeout(() => popup(Screens.Outro), 1000)
-      }
+    if (yghPlayer.gameState.finishedAt) {
+      setTimeout(() => popup(Screens.Outro), 1000)
     }
-  }, [presentEntities])
+  }, [yghPlayer.gameState.finishedAt])
 
   if (isLoading) {
     return yghPlayer
