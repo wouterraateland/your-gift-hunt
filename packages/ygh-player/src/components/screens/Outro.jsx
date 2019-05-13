@@ -19,21 +19,24 @@ const OutroScreen = styled(Base)`
   }
 `
 
+const f = x => (x < 10 ? `0${x}` : x)
+
 export default props => {
   const { game, gameState } = useGame()
 
   const duration = moment.duration(
-    moment(gameState.startedAt).diff(moment(gameState.finishedAt))
+    moment(gameState.finishedAt).diff(moment(gameState.startedAt))
   )
 
   return (
     <OutroScreen {...props}>
       <Align.Center>
         <Wrapper small>
-          <h1>
-            Well done, you finished in {duration.hours()}-{duration.minutes()}-
-            {duration.seconds()}
-          </h1>
+          <h1>Game Complete</h1>
+          <p>
+            Time: {f(duration.hours())}:{f(duration.minutes())}:
+            {f(duration.seconds())}
+          </p>
           <p>{game.outro}</p>
         </Wrapper>
       </Align.Center>

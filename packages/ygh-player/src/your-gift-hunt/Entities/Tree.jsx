@@ -84,7 +84,7 @@ Branch.defaultProps = {
   ...Entity.defaultProps,
   origin: {
     left: 0,
-    top: 0.25
+    top: "50%"
   }
 }
 
