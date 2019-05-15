@@ -60,33 +60,33 @@ const Code = styled.span`
   text-shadow: 0 0 0.4em;
 `
 
-const SafeWithCode = forwardRef(({ dispatchInputAction, ...props }, ref) => {
-  const [code, setCode] = useState("")
+const SafeWithCodeFront = forwardRef(
+  ({ dispatchInputAction, ...props }, ref) => {
+    const [code, setCode] = useState("")
 
-  const handleOnChange = useCallback(event => {
-    event.preventDefault()
-    const regex = /^[0-9\b]+$/
-
-    if (event.target.value === "" || regex.test(event.target.value)) {
-      setCode(event.target.value.slice(0, 4))
-    }
-  }, [])
-
-  const handleOnSubmit = useCallback(
-    event => {
+    const handleOnChange = useCallback(event => {
       event.preventDefault()
-      dispatchInputAction(props.state, "code", parseInt(code, 10))
-    },
-    [props.state, code, dispatchInputAction]
-  )
+      const regex = /^[0-9\b]+$/
 
-  const isUnlocked = _.hasState("unlocked")(props)
-  const codeInput = _.getInputValue("code")(props)
-  const displayedCode = isUnlocked ? codeInput : code
+      if (event.target.value === "" || regex.test(event.target.value)) {
+        setCode(event.target.value.slice(0, 4))
+      }
+    }, [])
 
-  return (
-    <Safe ref={ref} {...props}>
-      <form onSubmit={handleOnSubmit}>
+    const handleOnSubmit = useCallback(
+      event => {
+        event.preventDefault()
+        dispatchInputAction(props.state, "code", parseInt(code, 10))
+      },
+      [props.state, code, dispatchInputAction]
+    )
+
+    const isUnlocked = _.hasState("unlocked")(props)
+    const codeInput = _.getInputValue("code")(props)
+    const displayedCode = isUnlocked ? codeInput : code
+
+    return (
+      <form ref={ref} onSubmit={handleOnSubmit}>
         <CodeLabel>
           <CodeInput value={code} onChange={handleOnChange} />
           <Code
@@ -99,9 +99,13 @@ const SafeWithCode = forwardRef(({ dispatchInputAction, ...props }, ref) => {
         </CodeLabel>
         <SafeButton type="submit" />
       </form>
-    </Safe>
-  )
-})
+    )
+  }
+)
+
+const SafeWithCode = forwardRef((props, ref) => (
+  <Safe ref={ref} {...props} Front={SafeWithCodeFront} />
+))
 SafeWithCode.name = "SafeWithCode"
 SafeWithCode.templateName = "Safe with code"
 SafeWithCode.defaultProps = Safe.defaultProps

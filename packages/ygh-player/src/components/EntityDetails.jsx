@@ -3,21 +3,28 @@ import _ from "utils"
 import Entities, { DefaultEntity } from "components/Entities"
 
 import EntityDetails from "your-gift-hunt/EntityDetails"
-import * as Screens from "components/screens"
+import MultiDetail from "components/screens/MultiDetail"
 
 import withEntityBehaviour from "containers/withEntityBehaviour"
-import withPickupBehaviour from "containers/withPickupBehaviour"
+import withSafeBehaviour from "containers/withSafeBehaviour"
+import withContainedEntities from "containers/withContainedEntities"
 
 const entityDetailComponents = [
-  withEntityBehaviour(EntityDetails.Computer),
+  withContainedEntities(withEntityBehaviour(EntityDetails.Computer)),
   withEntityBehaviour(EntityDetails.DoorWithLock),
   withEntityBehaviour(EntityDetails.InstructionNote),
-  withEntityBehaviour(EntityDetails.Mailbox, {
-    detailScreen: Screens.MultiDetail
-  }),
+  withContainedEntities(
+    withEntityBehaviour(EntityDetails.Mailbox, {
+      detailScreen: MultiDetail
+    })
+  ),
   withEntityBehaviour(EntityDetails.Note),
-  withPickupBehaviour(EntityDetails.SafeWithCode),
-  withPickupBehaviour(EntityDetails.SafeWithKeyhole),
+  withContainedEntities(
+    withSafeBehaviour(withEntityBehaviour(EntityDetails.SafeWithCode))
+  ),
+  withContainedEntities(
+    withSafeBehaviour(withEntityBehaviour(EntityDetails.SafeWithKeyhole))
+  ),
   ...Object.values(Entities)
 ]
 

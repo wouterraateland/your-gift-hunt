@@ -43,11 +43,6 @@ const InputForm = ({ value, label, isEnabled, onSubmit }) => {
   )
 }
 
-const t = x => {
-  console.log(x)
-  return x
-}
-
 const DefaultEntity = forwardRef(
   (
     {
@@ -100,7 +95,7 @@ const DefaultEntity = forwardRef(
         <br />
         {JSON.stringify(useSources)}
       </ToolTip>
-      {t(children)}
+      {children}
     </DefaultEntityContainer>
   )
 )

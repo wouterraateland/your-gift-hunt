@@ -1,10 +1,20 @@
-import styled from "styled-components"
+import React, { forwardRef } from "react"
+import styled, { css } from "styled-components"
+import _ from "utils"
+
 import { Entity } from "../Entities"
 
-const Safe = styled(Entity)`
-  position: relative;
-
+const SafeBack = styled(Entity)`
   border-radius: 1em;
+  box-shadow: inset 0 0 0 1em #37474f !important;
+
+  background-color: #263238;
+`
+
+const SafeFront = styled(Entity)`
+  border-radius: 1em;
+
+  overflow: hidden;
 
   box-shadow: inset 0.25em 0.25em 0.5em 0 #fff4,
     inset -0.25em -0.25em 0.5em 0 #0004 !important;
@@ -19,7 +29,33 @@ const Safe = styled(Entity)`
   );
   background-color: #37474f;
   color: #fff;
+
+  transition-property: left, width, border-width;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+
+  ${props =>
+    props.isUnlocked &&
+    css`
+      left: -1em;
+      width: 0;
+      border-right: 1em solid #37474f;
+    `}
 `
+
+const Safe = forwardRef(({ Front, children, ...props }, ref) => {
+  const isUnlocked = _.hasState("unlocked")(props)
+
+  return (
+    <SafeBack {...props}>
+      {children}
+      <SafeFront {...props} isUnlocked={isUnlocked} isInteractive={!isUnlocked}>
+        <Front ref={ref} {...props} />
+      </SafeFront>
+    </SafeBack>
+  )
+})
+
 Safe.defaultProps = {
   ...Entity.defaultProps,
   width: 16,

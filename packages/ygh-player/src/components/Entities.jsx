@@ -6,17 +6,20 @@ import * as Screens from "components/screens"
 
 import withEntityBehaviour from "containers/withEntityBehaviour"
 import withPackageBehaviour from "containers/withPackageBehaviour"
+import withContainedEntities from "containers/withContainedEntities"
 
 export const DefaultEntity = withEntityBehaviour(Entities.DefaultEntity)
 
 const entityComponents = [
   withEntityBehaviour(Entities.Armchair),
   withEntityBehaviour(Entities.Battery),
-  withEntityBehaviour(Entities.Camera, {
-    detailScreen: Screens.Camera
-  }),
+  withContainedEntities(
+    withEntityBehaviour(Entities.Camera, {
+      detailScreen: Screens.Camera
+    })
+  ),
   withEntityBehaviour(Entities.Carpet),
-  withEntityBehaviour(Entities.Computer),
+  withContainedEntities(withEntityBehaviour(Entities.Computer)),
   withEntityBehaviour(Entities.DefaultEntity),
   withEntityBehaviour(Entities.Desk),
   withEntityBehaviour(Entities.DeskChair),
@@ -28,16 +31,18 @@ const entityComponents = [
   withEntityBehaviour(Entities.Grass),
   withEntityBehaviour(Entities.InstructionNote),
   withEntityBehaviour(Entities.Lamp),
-  withEntityBehaviour(Entities.Mailbox),
+  withContainedEntities(withEntityBehaviour(Entities.Mailbox)),
   withEntityBehaviour(Entities.Map),
   withEntityBehaviour(Entities.MapPiece),
-  withPackageBehaviour(withEntityBehaviour(Entities.Package)),
+  withContainedEntities(
+    withPackageBehaviour(withEntityBehaviour(Entities.Package))
+  ),
   withEntityBehaviour(Entities.Path),
   withEntityBehaviour(Entities.PlantPot),
   withEntityBehaviour(Entities.Room),
   withEntityBehaviour(Entities.SafeKey),
-  withEntityBehaviour(Entities.SafeWithCode),
-  withEntityBehaviour(Entities.SafeWithKeyhole),
+  withContainedEntities(withEntityBehaviour(Entities.SafeWithCode)),
+  withContainedEntities(withEntityBehaviour(Entities.SafeWithKeyhole)),
   withEntityBehaviour(Entities.Seeds),
   withEntityBehaviour(Entities.Tree),
   withEntityBehaviour(Entities.TreeStump),

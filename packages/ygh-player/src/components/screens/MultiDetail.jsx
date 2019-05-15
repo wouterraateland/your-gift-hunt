@@ -5,6 +5,7 @@ import { getEntityDetailComponent } from "components/EntityDetails"
 import EntityContainer from "components/EntityContainer"
 import BaseScreen from "./Base"
 
+import useGame from "hooks/useGame"
 import useWindowSize from "hooks/useWindowSize"
 
 const Navigation = styled.div`
@@ -31,11 +32,18 @@ const StyledEntityContainer = styled(EntityContainer)`
 `
 
 export default ({ entity, close, ...props }) => {
+  const { entities } = useGame()
   const [entityIndex, setEntityIndex] = useState(0)
   const { width, height, rem, orientation } = useWindowSize()
 
+  const containedEntities = entities.filter(
+    ({ container }) =>
+      container &&
+      entity.portals.some(portal => container.id === portal.entrance.entity.id)
+  )
+
   const currentEntity =
-    entityIndex === -1 ? null : entity.containedEntities[entityIndex]
+    entityIndex === -1 ? null : containedEntities[entityIndex]
 
   const Component = getEntityDetailComponent(currentEntity.template.name)
 
@@ -46,7 +54,7 @@ export default ({ entity, close, ...props }) => {
           <span onClick={() => setEntityIndex(i => i - 1)}>Previous</span>
         )}
         <span onClick={() => close()}>Close</span>
-        {entityIndex < entity.containedEntities.length - 1 && (
+        {entityIndex < containedEntities.length - 1 && (
           <span onClick={() => setEntityIndex(i => i + 1)}>Next</span>
         )}
       </Navigation>

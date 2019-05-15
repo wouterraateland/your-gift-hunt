@@ -49,7 +49,8 @@ const Flap = styled(Entity)`
 Flap.defaultProps = {
   ...Entity.defaultProps,
   origin: { left: 0 },
-  z: 0.25
+  z: 0.25,
+  isInteractive: false
 }
 
 const Package = forwardRef(
