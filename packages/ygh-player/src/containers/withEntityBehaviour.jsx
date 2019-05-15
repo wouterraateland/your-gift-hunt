@@ -1,9 +1,9 @@
 import React, { memo } from "react"
 import useEntityBehaviour from "hooks/useEntityBehaviour"
 
-const withEntityBehaviour = WrappedComponent => {
+const withEntityBehaviour = (WrappedComponent, options) => {
   const EnhancedComponent = memo(props => {
-    const entityBehaviour = useEntityBehaviour(props)
+    const entityBehaviour = useEntityBehaviour(props, options)
     return <WrappedComponent {...props} {...entityBehaviour} />
   })
 

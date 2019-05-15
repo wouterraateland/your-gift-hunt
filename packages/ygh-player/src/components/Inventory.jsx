@@ -45,7 +45,7 @@ const Inventory = () => {
   const { entities, isInInventory } = useGame()
   const { popup } = useScreen()
 
-  const inventoryItems = entities.filter(isInInventory)
+  const inventoryItems = entities.filter(({ id }) => isInInventory(id))
 
   return (
     <InventoryContainer>

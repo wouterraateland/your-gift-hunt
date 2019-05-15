@@ -1,0 +1,116 @@
+{
+  "Outside": {
+    "left": 0,
+    "top": 0,
+    "width": 100,
+    "height": 80
+  },
+  "Room": {
+    "rotation": -5
+  },
+  "Path": {
+    "left": 50,
+    "top": 66.5,
+    "rotation": -5
+  },
+  "Package": {
+    "left": 50,
+    "top": 65,
+    "rotation": -15
+  },
+  "Item container": {
+    "left": 50.75,
+    "top": 63.75,
+    "width": 2,
+    "height": 2,
+    "rotation": -15
+  },
+  "Mailbox": {
+    "left": 44,
+    "top": 62,
+    "rotation": -5
+  },
+  "Carpet": {
+    "left": 21.5,
+    "top": 22.5,
+    "rotation": -5
+  },
+  "Armchair": {
+    "left": 23.5,
+    "top": 29.5,
+    "rotation": -45
+  },
+  "Camera": {
+    "left": 17.5,
+    "top": 23.5,
+    "rotation": 40
+  },
+  "Lamp": {
+    "left": 26.5,
+    "top": 25.5,
+    "rotation": 160
+  },
+  "Plant pot": {
+    "left": 3.5,
+    "top": 12.5
+  },
+  "Sink": {
+    "left": 3.25,
+    "top": 24,
+    "rotation": 90
+  },
+  "Safe with code": {
+    "left": 23.5,
+    "top": 4.5,
+    "rotation": 30
+  },
+  "Safe with keyhole": {
+    "left": 23.5,
+    "top": 4.5,
+    "rotation": 30
+  },
+  "Desk chair": {
+    "left": 7,
+    "top": 6.5,
+    "rotation": 10
+  },
+  "Desk": {
+    "left": 7.5,
+    "top": 4,
+    "rotation": 90
+  },
+  "Computer screen": {
+    "left": 10.5,
+    "top": 4,
+    "rotation": 10,
+    "z": 2.5
+  },
+  "Instruction note": {
+    "left": 3,
+    "top": 9,
+    "rotation": -70
+  },
+  "Door with lock": {
+    "left": 12,
+    "top": 35
+  },
+  "Door": {
+    "left": 12,
+    "top": 35
+  },
+  "Tree": {
+    "left": 38,
+    "top": 68,
+    "rotation": 20
+  },
+  "Door key": {
+    "left": 41,
+    "top": 69,
+    "rotation": 20
+  },
+  "Tree stump": {
+    "left": 60,
+    "top": 65,
+    "rotation": 150
+  }
+}

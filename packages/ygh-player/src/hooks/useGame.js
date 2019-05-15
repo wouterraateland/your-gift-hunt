@@ -6,31 +6,6 @@ import useScreen from "hooks/useScreen"
 
 import Screens from "components/screens"
 
-const containerRelations = [
-  { container: "Computer", contained: ["Question", "Input"] },
-  { container: "Mailbox", contained: ["Note"] },
-  { container: "Camera", contained: ["Code"] },
-  { container: "Instruction note", contained: [] }
-]
-
-const containerize = entities =>
-  containerRelations.reduce((entities, { container, contained }) => {
-    const containerEntity = entities.find(
-      ({ template }) => template.name === container
-    ) || { id: container, template: { name: container } }
-    const containedEntities = entities.filter(({ template }) =>
-      contained.includes(template.name)
-    )
-    const ids = (containerEntity.id
-      ? [containerEntity, ...containedEntities]
-      : containedEntities
-    ).map(({ id }) => id)
-    return [
-      ...entities.filter(({ id }) => !ids.includes(id)),
-      { ...containerEntity, containedEntities }
-    ]
-  }, entities)
-
 export const useGameProvider = gameIdentifier => {
   const { popup } = useScreen()
   const yghPlayer = useYGHPlayer("super secret key", gameIdentifier)
@@ -52,9 +27,7 @@ export const useGameProvider = gameIdentifier => {
   })
 
   const presentEntities = yghPlayer.gameState.entities
-    ? containerize(
-        yghPlayer.gameState.entities.filter(({ state }) => state !== null)
-      )
+    ? yghPlayer.gameState.entities.filter(({ state }) => state !== null)
     : []
 
   const getEntitiesByTemplateName = useCallback(
@@ -68,9 +41,9 @@ export const useGameProvider = gameIdentifier => {
   )
 
   const isInInventory = useCallback(
-    entity =>
-      read("inventoryItems", []).includes(entity.id) &&
-      presentEntities.some(({ id }) => id === entity.id)
+    entityId =>
+      read("inventoryItems", []).includes(entityId) &&
+      presentEntities.some(({ id }) => id === entityId)
   )
 
   const isLoading = yghPlayer.isLoading || !yghPlayer.isAuthenticated

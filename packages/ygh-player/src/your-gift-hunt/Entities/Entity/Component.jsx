@@ -49,10 +49,15 @@ const EntityComponent = styled.div.attrs(props =>
   }
 
   ${props =>
-    props.onClick &&
-    css`
-      cursor: pointer;
-    `}
+    props.isReachable
+      ? props.onClick &&
+        css`
+          cursor: pointer;
+        `
+      : !props.isContainer &&
+        css`
+          opacity: 0;
+        `}
 `
 
 export default EntityComponent

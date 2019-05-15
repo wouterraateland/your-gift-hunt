@@ -8,6 +8,19 @@ const FloorContainer = styled(Entity)`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+
+  &::after {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    pointer-events: none;
+
+    opacity: ${props => (props.isReachable ? 0 : 1)};
+
+    background-color: #000;
+  }
 `
 FloorContainer.displayName = "Floor.Container"
 
@@ -53,6 +66,7 @@ Floor.name = "Floor"
 Floor.templateName = "Floor"
 Floor.defaultProps = {
   ...Entity.defaultProps,
+  isContainer: true,
   z: 0,
   width: 29,
   height: 35

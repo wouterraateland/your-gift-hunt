@@ -67,11 +67,12 @@ const Window = styled(Entity).attrs(props => ({
   style: {
     ...props.style,
     margin: props.d === DIRECTION.VERTICAL ? "0 .25em" : ".25em 0",
-    boxShadow: props.show
-      ? Array(10)
-          .fill(0)
-          .map(
-            (_, i) => `
+    boxShadow:
+      props.show && props.isReachable
+        ? Array(10)
+            .fill()
+            .map(
+              (_, i) => `
         ${Math.cos(
           (-(-45 + props.parentRotation + props.rotation) * Math.PI) / 180
         ) *
@@ -83,9 +84,9 @@ const Window = styled(Entity).attrs(props => ({
           0.05 *
           (i * (i + 9))}em
         ${0.2 * i}em ${0.1 * i}em`
-          )
-          .join(", ")
-      : null
+            )
+            .join(", ")
+        : null
   }
 }))`
   color: #faf8d840;
@@ -93,13 +94,20 @@ const Window = styled(Entity).attrs(props => ({
 `
 Window.defaultProps = {
   z: 0,
-  origin: { left: 0, top: 0 }
+  origin: { left: 0, top: 0 },
+  isContainer: true
 }
 
 const Wall = forwardRef((props, ref) => (
   <Entity {...props} ref={ref} noVisual>
     {windows.map((w, i) => (
-      <Window key={i} {...w} />
+      <Window
+        key={i}
+        rotation={props.rotation}
+        parentRotation={props.parentRotation}
+        {...w}
+        isReachable={props.isReachable}
+      />
     ))}
     {wallPieces.map((piece, i) => (
       <WallPiece key={i} {...piece} />
@@ -120,6 +128,7 @@ Wall.defaultProps = {
   width: 30,
   height: 36,
   isInteractive: false,
+  isContainer: true,
   z: 5
 }
 

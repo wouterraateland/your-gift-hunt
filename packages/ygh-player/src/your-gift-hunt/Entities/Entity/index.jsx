@@ -51,6 +51,8 @@ Entity.defaultProps = {
   parentRotation: 0,
   z: 0,
   origin: { left: "50%", top: "50%" },
+  isReachable: true,
+  containedEntities: [],
   dispatchInputAction: () => {},
   inspect: () => {}
 }

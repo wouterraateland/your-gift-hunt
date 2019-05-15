@@ -2,18 +2,19 @@ import React from "react"
 import _ from "utils"
 
 import Entities from "your-gift-hunt/Entities"
+import * as Screens from "components/screens"
 
-import withCameraBehaviour from "containers/withCameraBehaviour"
 import withEntityBehaviour from "containers/withEntityBehaviour"
 import withPackageBehaviour from "containers/withPackageBehaviour"
-import withTreeBehaviour from "containers/withTreeBehaviour"
 
 export const DefaultEntity = withEntityBehaviour(Entities.DefaultEntity)
 
 const entityComponents = [
   withEntityBehaviour(Entities.Armchair),
   withEntityBehaviour(Entities.Battery),
-  withCameraBehaviour(Entities.Camera),
+  withEntityBehaviour(Entities.Camera, {
+    detailScreen: Screens.Camera
+  }),
   withEntityBehaviour(Entities.Carpet),
   withEntityBehaviour(Entities.Computer),
   withEntityBehaviour(Entities.DefaultEntity),
@@ -30,14 +31,15 @@ const entityComponents = [
   withEntityBehaviour(Entities.Mailbox),
   withEntityBehaviour(Entities.Map),
   withEntityBehaviour(Entities.MapPiece),
-  withPackageBehaviour(Entities.Package),
+  withPackageBehaviour(withEntityBehaviour(Entities.Package)),
   withEntityBehaviour(Entities.Path),
   withEntityBehaviour(Entities.PlantPot),
+  withEntityBehaviour(Entities.Room),
   withEntityBehaviour(Entities.SafeKey),
   withEntityBehaviour(Entities.SafeWithCode),
   withEntityBehaviour(Entities.SafeWithKeyhole),
   withEntityBehaviour(Entities.Seeds),
-  withTreeBehaviour(Entities.Tree),
+  withEntityBehaviour(Entities.Tree),
   withEntityBehaviour(Entities.TreeStump),
   withEntityBehaviour(Entities.Wall),
   withEntityBehaviour(Entities.WateringCan),

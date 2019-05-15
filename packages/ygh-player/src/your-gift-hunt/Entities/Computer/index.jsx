@@ -28,7 +28,7 @@ const Computer = forwardRef(({ containedEntities, inspect, ...props }, ref) => (
   </Entity>
 ))
 Computer.name = "Computer"
-Computer.templateName = "Computer"
+Computer.templateName = "Computer screen"
 Computer.defaultProps = {
   ...Entity.defaultProps,
   z: 0.25,

@@ -50,7 +50,7 @@ Plank.defaultProps = {
 }
 
 const Desk = forwardRef(({ children, ...props }, ref) => (
-  <Construction ref={ref} {...props}>
+  <Construction noVisual ref={ref} {...props}>
     <Plank left="18%" i={1} />
     <Plank i={2} />
     <Plank left="82%" i={3} />
@@ -63,6 +63,7 @@ Desk.name = "Desk"
 Desk.templateName = "Desk"
 Desk.defaultProps = {
   ...Entity.defaultProps,
+  z: 2,
   width: 6,
   height: 12
 }

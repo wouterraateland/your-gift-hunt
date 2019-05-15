@@ -9,7 +9,7 @@ import Screens from "components/screens"
 
 const useEntityBehaviour = (props, options = {}) => {
   const ref = useRef(null)
-  const { dispatchAction } = useGame()
+  const { dispatchAction, isInInventory, pickupEntity } = useGame()
   const { popup } = useScreen()
 
   useDrop({
@@ -36,11 +36,14 @@ const useEntityBehaviour = (props, options = {}) => {
     [(options.detailScreen, props.id)]
   )
 
-  return {
-    ref,
-    dispatchInputAction,
-    inspect
-  }
+  return props.isItem && !isInInventory(props.id)
+    ? {
+        ref,
+        dispatchInputAction,
+        inspect,
+        onClick: () => pickupEntity(props.id)
+      }
+    : { ref, dispatchInputAction, inspect }
 }
 
 export default useEntityBehaviour

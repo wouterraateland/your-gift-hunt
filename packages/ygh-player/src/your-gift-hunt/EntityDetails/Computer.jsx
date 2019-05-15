@@ -252,7 +252,7 @@ const Computer = forwardRef(
   }
 )
 Computer.name = "Computer"
-Computer.templateName = "Computer"
+Computer.templateName = "Computer screen"
 Computer.defaultProps = {
   ...Entity.defaultProps,
   width: 24,

@@ -3,16 +3,18 @@ import _ from "utils"
 import Entities, { DefaultEntity } from "components/Entities"
 
 import EntityDetails from "your-gift-hunt/EntityDetails"
+import * as Screens from "components/screens"
 
 import withEntityBehaviour from "containers/withEntityBehaviour"
-import withMailboxDetailBehaviour from "containers/withMailboxDetailBehaviour"
 import withPickupBehaviour from "containers/withPickupBehaviour"
 
 const entityDetailComponents = [
   withEntityBehaviour(EntityDetails.Computer),
   withEntityBehaviour(EntityDetails.DoorWithLock),
   withEntityBehaviour(EntityDetails.InstructionNote),
-  withMailboxDetailBehaviour(EntityDetails.Mailbox),
+  withEntityBehaviour(EntityDetails.Mailbox, {
+    detailScreen: Screens.MultiDetail
+  }),
   withEntityBehaviour(EntityDetails.Note),
   withPickupBehaviour(EntityDetails.SafeWithCode),
   withPickupBehaviour(EntityDetails.SafeWithKeyhole),
