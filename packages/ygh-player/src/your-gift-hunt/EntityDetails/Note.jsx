@@ -38,7 +38,7 @@ export const NoteContainer = styled(Entity)`
 `
 
 const Note = forwardRef(({ dispatchInputAction, ...props }, ref) => {
-  const isNew = useMemo(() => _.hasState("unread")(props), [])
+  const isNew = useMemo(() => _.hasState("unread")(props), [props.id])
   const text = _.getFieldValue("Text")(props)
 
   useEffect(() => {
