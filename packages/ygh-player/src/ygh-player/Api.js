@@ -1,5 +1,5 @@
 const BASE_URL =
-  process.env.REACT_APP_YGH_API_URL || "https://api.herokuapp.com"
+  process.env.REACT_APP_YGH_API_URL || "https://api.yourgifthunt.com"
 
 const t = f => options => f(options || {})
 
