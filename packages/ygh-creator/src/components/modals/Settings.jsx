@@ -3,6 +3,7 @@ import styled from "styled-components"
 import slugify from "limax"
 
 import useGame from "hooks/useGame"
+import useGameMutations from "hooks/useGameMutations"
 
 import { useFormState } from "react-use-form-state"
 import { useApolloClient } from "react-apollo-hooks"
@@ -32,7 +33,8 @@ const Tagline = styled.p`
 `
 
 const SettingsModal = () => {
-  const { game, updateGameSettings } = useGame()
+  const { game } = useGame()
+  const { updateGameSettings } = useGameMutations()
 
   const [state, setState] = useState(null)
   const [formState, { text, select }] = useFormState({

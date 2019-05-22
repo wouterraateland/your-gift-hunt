@@ -1,8 +1,10 @@
 import gql from "graphql-tag"
 import {
+  INFORMATION_SLOT_FRAGMENT,
   STATE_TRANSITION_FRAGMENT,
-  ENTITY_FRAGMENT,
-  INFORMATION_SLOT_FRAGMENT
+  PORTAL_FRAGMENT,
+  ENTRANCE_FRAGMENT,
+  ENTITY_FRAGMENT
 } from "./fragments"
 
 export const CREATE_USER = gql`
@@ -91,6 +93,20 @@ export const UPDATE_GAME_SETTINGS = gql`
   }
 `
 
+export const SET_START_CONTAINER = gql`
+  mutation updateGame($gameId: ID!, $containerId: ID!) {
+    updateGame(
+      where: { id: $gameId }
+      data: { startContainer: { connect: { id: $containerId } } }
+    ) {
+      id
+      startContainer {
+        id
+      }
+    }
+  }
+`
+
 export const DELETE_GAME = gql`
   mutation deleteGame($gameId: ID!) {
     deleteGame(where: { id: $gameId }) {
@@ -119,6 +135,34 @@ export const UPDATE_ENTITY_NAME = gql`
     updateEntity(where: { id: $entityId }, data: { name: $name }) {
       id
       name
+    }
+  }
+`
+
+export const UPDATE_ENTITY_CONTAINER = gql`
+  mutation updateEntityContainer($entityId: ID!, $containerId: ID!) {
+    updateEntity(
+      where: { id: $entityId }
+      data: { container: { connect: { id: $containerId } } }
+    ) {
+      id
+      container {
+        id
+      }
+    }
+  }
+`
+
+export const DISCONNECT_ENTITY_FROM_CONTAINER = gql`
+  mutation disconnectEntityFromContainer($entityId: ID!) {
+    updateEntity(
+      where: { id: $entityId }
+      data: { container: { disconnect: true } }
+    ) {
+      id
+      container {
+        id
+      }
     }
   }
 `
@@ -169,6 +213,42 @@ export const DELETE_HINT = gql`
   }
 `
 
+export const CONNECT_PORTAL_WITH_ENTRANCE = gql`
+  mutation connectPortalWithEntrance($portalId: ID!, $entranceId: ID!) {
+    updatePortal(
+      where: { id: $portalId }
+      data: { entrance: { connect: { id: $entranceId } } }
+    ) {
+      ...PortalFragment
+    }
+  }
+  ${PORTAL_FRAGMENT}
+`
+
+export const DISCONNECT_PORTAL_FROM_ENTRANCE = gql`
+  mutation disconnectPortalFromEntrance($entranceId: ID!) {
+    updateEntrance(
+      where: { id: $entranceId }
+      data: { portal: { disconnect: true } }
+    ) {
+      ...EntranceFragment
+    }
+  }
+  ${ENTRANCE_FRAGMENT}
+`
+
+export const DISCONNECT_ENTRANCE_FROM_PORTAL = gql`
+  mutation disconnectEntranceFromPortal($portalId: ID!) {
+    updatePortal(
+      where: { id: $portalId }
+      data: { entrance: { disconnect: true } }
+    ) {
+      ...PortalFragment
+    }
+  }
+  ${PORTAL_FRAGMENT}
+`
+
 export const ADD_UNLOCK_TO_STATE_TRANSITION = gql`
   mutation addUnlockToStateTransition($stateTransitionId: ID!, $stateId: ID!) {
     updateStateTransition(
@@ -196,8 +276,8 @@ export const REMOVE_UNLOCK_FROM_STATE_TRANSITION = gql`
   ${STATE_TRANSITION_FRAGMENT}
 `
 
-export const CREATE_STATE_TRANSITIONS = gql`
-  mutation createStateTransitions(
+export const UPDATE_ENTITIES = gql`
+  mutation updateEntities(
     $gameId: ID!
     $entityUpdates: [EntityUpdateWithWhereUniqueWithoutGameInput!]!
   ) {
@@ -237,63 +317,63 @@ export const CREATE_ENTITIES = gql`
 
 export const DELETE_NODES = gql`
   mutation deleteNodes($entityIds: [ID!]!, $stateIds: [ID!]!) {
-    deleteManyEntityRequirements(
-      where: {
-        payload: {
-          actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
-        }
-      }
-    ) {
-      count
-    }
-
-    deleteManyInputRequirements(
-      where: {
-        payload: {
-          actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
-        }
-      }
-    ) {
-      count
-    }
-
-    deleteManyPayloadRequirements(
-      where: {
-        actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
-      }
-    ) {
-      count
-    }
-
-    deleteManyHints(
-      where: {
-        actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
-      }
-    ) {
-      count
-    }
-
-    deleteManyActionRequirements(
-      where: { stateTransition: { from: { id_in: $stateIds } } }
-    ) {
-      count
-    }
-
-    deleteManyStateTransitions(where: { from: { id_in: $stateIds } }) {
-      count
-    }
+    # deleteManyEntityRequirements(
+    #   where: {
+    #     payload: {
+    #       actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
+    #     }
+    #   }
+    # ) {
+    #   count
+    # }
+    #
+    # deleteManyInputRequirements(
+    #   where: {
+    #     payload: {
+    #       actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
+    #     }
+    #   }
+    # ) {
+    #   count
+    # }
+    #
+    # deleteManyPayloadRequirements(
+    #   where: {
+    #     actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
+    #   }
+    # ) {
+    #   count
+    # }
+    #
+    # deleteManyHints(
+    #   where: {
+    #     actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
+    #   }
+    # ) {
+    #   count
+    # }
+    #
+    # deleteManyActionRequirements(
+    #   where: { stateTransition: { from: { id_in: $stateIds } } }
+    # ) {
+    #   count
+    # }
+    #
+    # deleteManyStateTransitions(where: { from: { id_in: $stateIds } }) {
+    #   count
+    # }
 
     deleteManyStates(where: { id_in: $stateIds }) {
       count
     }
 
-    deleteManyInformationSlots(where: { entity: { id_in: $entityIds } }) {
-      count
-    }
-
-    deleteManyFields(where: { entity: { id_in: $entityIds } }) {
-      count
-    }
+    # deleteManyInformationSlots(where: { entity: { id_in: $entityIds } }) {
+    #   count
+    # }
+    #
+    # deleteManyFields(where: { entity: { id_in: $entityIds } }) {
+    #   count
+    # }
 
     deleteManyEntities(where: { id_in: $entityIds }) {
       count

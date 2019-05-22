@@ -14,6 +14,10 @@ export const useTemplatesProvider = () => {
   const { entityTemplates } = data
   const stateTemplates = entityTemplates.flatMap(({ states }) => states)
   const fieldTemplates = entityTemplates.flatMap(({ fields }) => fields)
+  const portalTemplates = entityTemplates.flatMap(({ portals }) => portals)
+  const entranceTemplates = entityTemplates.flatMap(
+    ({ entrances }) => entrances
+  )
 
   const getEntityTemplateById = useCallback(
     entityId => entityTemplates.find(({ id }) => id === entityId),
@@ -27,14 +31,26 @@ export const useTemplatesProvider = () => {
     fieldId => fieldTemplates.find(({ id }) => id === fieldId),
     [fieldTemplates]
   )
+  const getPortalTemplateById = useCallback(
+    portalId => portalTemplates.find(({ id }) => id === portalId),
+    [portalTemplates]
+  )
+  const getEntranceTemplateById = useCallback(
+    entranceId => entranceTemplates.find(({ id }) => id === entranceId),
+    [entranceTemplates]
+  )
 
   return {
     entityTemplates,
     stateTemplates,
     fieldTemplates,
+    portalTemplates,
+    entranceTemplates,
     getEntityTemplateById,
     getStateTemplateById,
-    getFieldTemplateById
+    getFieldTemplateById,
+    getPortalTemplateById,
+    getEntranceTemplateById
   }
 }
 

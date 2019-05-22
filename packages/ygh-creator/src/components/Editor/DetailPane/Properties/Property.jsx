@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
-import useGame from "hooks/useGame"
+import useGameMutations from "hooks/useGameMutations"
 import useDebounce from "hooks/useDebounce"
 
 import { Eye, Field, Input, Paper, ToolTip } from "your-gift-hunt/ui"
@@ -18,7 +18,7 @@ const Property = ({ field }) => {
   const [newValue, setNewValue] = useState(
     field.value ? JSON.parse(field.value) : null
   )
-  const { updateFieldValue } = useGame()
+  const { updateFieldValue } = useGameMutations()
 
   const debouncedValue = useDebounce(newValue, 1000)
 

@@ -1,27 +1,22 @@
 import React, { useState } from "react"
-import styled from "styled-components"
 
-import useGame from "hooks/useGame"
+import useGameMutations from "hooks/useGameMutations"
 
 import useAsync from "hooks/useAsync"
 
-import { Button, Message, Options } from "your-gift-hunt/ui"
+import { Button, Message, Options, VSpace } from "your-gift-hunt/ui"
 import StateTag from "components/Editor/StateTag"
 
-const VSpace = styled.div`
-  margin-bottom: 0.5em;
-`
-
-const EditablePrevStates = ({ node, prevNodes, prevStateTemplates }) => {
-  const { addPreviousState } = useGame()
+const EditablePrevStates = ({ state, prevStates, prevStateTemplates }) => {
+  const { addPreviousState } = useGameMutations()
   const [{ isLoading, error }, runAsync] = useAsync()
   const [optionsVisible, setOptionsVisibility] = useState(false)
 
   const options = prevStateTemplates.filter(({ id }) =>
-    prevNodes.every(node => node.state.template.id !== id)
+    prevStates.every(state => state.template.id !== id)
   )
   const onOptionClick = runAsync(stateTemplateId =>
-    addPreviousState(stateTemplateId, node.id)
+    addPreviousState(stateTemplateId, state.id)
   )
 
   if (error) {
@@ -31,7 +26,7 @@ const EditablePrevStates = ({ node, prevNodes, prevStateTemplates }) => {
   const onOptionsClose = () => setOptionsVisibility(false)
   const onAddButtonClick = () => setOptionsVisibility(true)
 
-  const hasUnlocks = node.state.unlockedBy.length > 0
+  const hasUnlocks = state.unlockedBy.length > 0
 
   return (
     <>
@@ -39,7 +34,7 @@ const EditablePrevStates = ({ node, prevNodes, prevStateTemplates }) => {
       <Options
         closeOnClick
         components={{
-          Option: ({ data }) => <StateTag name={data.name} />
+          Option: ({ data }) => <StateTag state={data} />
         }}
         options={options}
         onClose={onOptionsClose}

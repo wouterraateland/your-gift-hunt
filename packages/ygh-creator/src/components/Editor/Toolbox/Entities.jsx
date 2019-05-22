@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react"
 import styled from "styled-components"
 
-import useGame from "hooks/useGame"
+import useEntities from "hooks/useEntities"
 import useTemplates from "hooks/useTemplates"
 import useInspector from "hooks/useInspector"
+import useGameMutations from "hooks/useGameMutations"
 
 import EntitiesContainer from "./EntitiesContainer"
 import EntityEntry from "./EntityEntry"
@@ -31,16 +32,18 @@ const BackButton = styled.button`
 const getEntitiesFilter = type => {
   switch (type) {
     case "challenge":
-      return ({ isObject, isItem, isTrigger }) =>
-        !isObject && !isItem && !isTrigger
+      return ({ isObject, isItem, isTrigger, isContainer }) =>
+        !isObject && !isItem && !isTrigger && !isContainer
+    case "container":
+      return ({ isContainer }) => isContainer
     case "object":
-      return ({ isObject }) => isObject
-    case "item":
-      return ({ isItem, states }) =>
-        isItem &&
-        states.every(({ outgoingTransitions }) =>
-          outgoingTransitions.every(({ to }) => to)
-        )
+      return ({ isContainer, isObject, isItem, states }) =>
+        !isContainer &&
+        (isObject ||
+          (isItem &&
+            states.every(({ outgoingTransitions }) =>
+              outgoingTransitions.every(({ to }) => to)
+            )))
     case "trigger":
       return ({ name, isTrigger }) => isTrigger && name !== "Start trigger"
     default:
@@ -49,11 +52,9 @@ const getEntitiesFilter = type => {
 }
 
 const Entities = ({ isVisible, selectedType, onBackClick }) => {
-  const {
-    game: { entities },
-    createEntity
-  } = useGame()
-  const { inspectNode } = useInspector()
+  const { entities } = useEntities()
+  const { createEntity } = useGameMutations()
+  const { inspectState } = useInspector()
   const { entityTemplates } = useTemplates()
   const visibleEntityTemplates = entityTemplates.filter(
     getEntitiesFilter(selectedType)
@@ -89,7 +90,7 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
   useEffect(
     () => {
       if (isEntityCreated) {
-        inspectNode(entities[entities.length - 1].states[0].id)
+        inspectState(entities[entities.length - 1].states[0].id)
         setEntityCreated(false)
       }
     },
@@ -105,10 +106,13 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
           entity={entityTemplate}
           isAvailable={
             !["object", "item"].includes(selectedType) ||
-            !entities.some(entity => entity.template.id === entityTemplate.id)
+            !entities.some(
+              entity =>
+                entity.template && entity.template.id === entityTemplate.id
+            )
           }
-          isPro={entityTemplate.name === "Plant pot"}
-          isUpcoming={false} //selectedType === "trigger"}
+          isPro={false}
+          isUpcoming={false}
           isExpanded={expandedEntityTemplate === entityTemplate.id}
           onClick={() => onEntityTemplateClick(entityTemplate.id)}
           onInfoClick={event => {

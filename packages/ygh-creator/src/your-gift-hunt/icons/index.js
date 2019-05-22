@@ -12,10 +12,13 @@ export { default as Seek } from "./challenges/Seek"
 export { default as Time } from "./challenges/Time"
 
 export { default as Challenge } from "./entities/Challenge"
+export { default as Container } from "./entities/Container"
 export { default as Info } from "./entities/Info"
 export { default as Item } from "./entities/Item"
 export { default as Object } from "./entities/Object"
 export { default as Trigger } from "./entities/Trigger"
+export { default as Portal } from "./entities/Portal"
+export { default as Entrance } from "./entities/Entrance"
 
 export { default as Bin } from "./Bin"
 export { default as Cog } from "./Cog"

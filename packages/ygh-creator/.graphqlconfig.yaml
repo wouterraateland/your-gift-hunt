@@ -3,4 +3,7 @@ projects:
     schemaPath: src/schema.graphql
     extensions:
       endpoints:
-        default: "https://hunt-api-e7bdecad20.herokuapp.com/hunt-api/dev"
+        default:
+          url: "https://api.yourgifthunt.com/prisma/hunt-api/dev"
+          headers:
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJodW50LWFwaUBkZXYiLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTU4MDE3NzU4LCJleHAiOjE1NTg2MjI1NTh9.IPaKIddNe3yfJ2JnZTbh_KhebGc9L8In40S9IJRfSs4"

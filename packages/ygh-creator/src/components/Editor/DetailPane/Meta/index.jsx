@@ -1,11 +1,14 @@
 import React from "react"
 import styled from "styled-components"
 
-import { Paper } from "your-gift-hunt/ui"
+import { Paper, VSpace } from "your-gift-hunt/ui"
 import EntityTypeIcon from "components/Editor/EntityTypeIcon"
 import StateTag from "components/Editor/StateTag"
 
 import EditableEntityName from "./EditableEntityName"
+import Container from "./Container"
+import ContainedEntities from "./ContainedEntities"
+import StartContainer from "./StartContainer"
 
 const Name = styled.h2`
   margin: 0 0 0.25em;
@@ -14,16 +17,22 @@ const Name = styled.h2`
 
 const Description = styled.blockquote``
 
-const Meta = ({ node: { entity, state } }) => (
+const Meta = ({ entity, state }) => (
   <Paper>
     <Paper.Section>
       <Name>
         <EntityTypeIcon {...entity} /> <EditableEntityName entity={entity} />
       </Name>
-      {state.name && <StateTag name={state.name} />}
+      {state && <StateTag state={state} />}
       <Description>
-        {entity.description} {state.description}
+        {entity.description} {state && state.description}
       </Description>
+      <VSpace />
+      <Container entity={entity} />
+      {entity.isContainer && <ContainedEntities entity={entity} />}
+      {entity.isContainer && entity.isObject && (
+        <StartContainer entity={entity} />
+      )}
     </Paper.Section>
   </Paper>
 )

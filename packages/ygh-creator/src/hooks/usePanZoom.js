@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 const clamp = (min, max) => value => Math.max(min, Math.min(value, max))
 const identity = x => x
@@ -33,6 +33,7 @@ const usePanZoom = ({
   enablePan = true,
   enableZoom = true,
   requirePinch = false,
+  panOnDrag = false,
   preventClickOnPan = true,
   zoomSensitivity = 0.01,
   minZoom = 0,
@@ -165,23 +166,42 @@ const usePanZoom = ({
 
   const onWheel = useCallback(
     event => {
-      if (enableZoom && container.current && (!requirePinch || event.ctrlKey)) {
-        const { pageX, pageY, deltaY } = event
-        const pointerPosition = getPositionOnElement(container.current)(
-          pageX,
-          pageY
-        )
+      event.preventDefault()
 
-        setZoom(
-          zoom => zoom * Math.pow(1 - zoomSensitivity, deltaY),
-          pointerPosition
-        )
+      if (enableZoom && container.current) {
+        if (!requirePinch || event.ctrlKey) {
+          const { pageX, pageY, deltaY } = event
+          const pointerPosition = getPositionOnElement(container.current)(
+            pageX,
+            pageY
+          )
 
-        onZoom()
+          setZoom(
+            zoom => zoom * Math.pow(1 - zoomSensitivity, deltaY),
+            pointerPosition
+          )
+
+          onZoom()
+        } else {
+          const { deltaX, deltaY } = event
+          setPan(({ x, y }) => ({
+            x: x - deltaX,
+            y: y - deltaY
+          }))
+        }
       }
     },
     [enableZoom, requirePinch, onZoom, minX, maxX, minY, maxY, minZoom, maxZoom]
   )
+
+  useEffect(() => {
+    if (container.current) {
+      container.current.addEventListener("wheel", onWheel)
+      return () => {
+        container.current.removeEventListener("wheel", onWheel)
+      }
+    }
+  }, [])
 
   const onTouchStart = ({ touches }) =>
     startPanZoom(
@@ -208,18 +228,19 @@ const usePanZoom = ({
     zoom: transform.zoom,
     setPan,
     setZoom,
-    panZoomHandlers: {
-      onTouchStart,
-      onTouchMove,
-      onTouchEnd,
-      onTouchCancel,
-      onMouseDown,
-      onMouseMove,
-      onMouseUp,
-      onClickCapture,
-      onMouseLeave,
-      onWheel
-    }
+    panZoomHandlers: panOnDrag
+      ? {
+          onTouchStart,
+          onTouchMove,
+          onTouchEnd,
+          onTouchCancel,
+          onMouseDown,
+          onMouseMove,
+          onMouseUp,
+          onClickCapture,
+          onMouseLeave
+        }
+      : {}
   }
 }
 

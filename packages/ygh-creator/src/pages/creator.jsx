@@ -1,10 +1,17 @@
 import React, { memo, useEffect, useRef } from "react"
 import { navigate } from "@reach/router"
 
-import { EntitiesProvider } from "contexts/Templates"
+import { SaveStateProvider } from "contexts/SaveState"
+import { TemplatesProvider } from "contexts/Templates"
 import { GameProvider } from "contexts/Game"
-import { InspectorProvider } from "contexts/Inspector"
+import { EntitiesProvider } from "contexts/Entities"
+import { EntityGraphProvider } from "contexts/EntityGraph"
+import { EntityAreasProvider } from "contexts/EntityAreas"
+import { EntityDependenciesProvider } from "contexts/EntityDependencies"
+import { GameQueriesProvider } from "contexts/GameQueries"
+import { GameMutationsProvider } from "contexts/GameMutations"
 import { EditorProvider } from "contexts/Editor"
+import { InspectorProvider } from "contexts/Inspector"
 
 import useClickOutside from "hooks/useClickOutside"
 import useGame from "hooks/useGame"
@@ -63,15 +70,29 @@ const CreatorWithModal = props => {
 }
 
 const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => (
-  <EntitiesProvider>
-    <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
-      <EditorProvider>
-        <InspectorProvider>
-          <CreatorWithModal {...otherProps} />
-        </InspectorProvider>
-      </EditorProvider>
-    </GameProvider>
-  </EntitiesProvider>
+  <SaveStateProvider>
+    <TemplatesProvider>
+      <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
+        <EntitiesProvider>
+          <EntityGraphProvider>
+            <EntityAreasProvider>
+              <EntityDependenciesProvider>
+                <GameQueriesProvider>
+                  <GameMutationsProvider>
+                    <EditorProvider>
+                      <InspectorProvider>
+                        <CreatorWithModal {...otherProps} />
+                      </InspectorProvider>
+                    </EditorProvider>
+                  </GameMutationsProvider>
+                </GameQueriesProvider>
+              </EntityDependenciesProvider>
+            </EntityAreasProvider>
+          </EntityGraphProvider>
+        </EntitiesProvider>
+      </GameProvider>
+    </TemplatesProvider>
+  </SaveStateProvider>
 )
 
 export default CreatorPage

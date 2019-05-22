@@ -1,10 +1,17 @@
+import { Maybe } from "./functionals"
+
+export const and = (...fns) => x => fns.reduce((v, f) => v && f(x), true)
 export const chooseRandom = xs => xs[Math.floor(Math.random() * xs.length)]
 export const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x)
 export const constant = x => () => x
+export const flip = f => x => y => f(y)(x)
 export const identity = x => x
 export const iff = p => (a, b) => v => (p(v) ? a(v) : b(v))
 export const is = x => y => x === y
 export const noop = () => {}
+export const maybe = iff(Maybe.isNothing)
+export const or = (...fns) => x => fns.reduce((v, f) => v || f(x), false)
+export const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x)
 
 export const pruneData = d =>
   Array.isArray(d)
@@ -28,12 +35,17 @@ export const pruneData = d =>
     : d
 
 export default {
+  and,
   chooseRandom,
   compose,
   constant,
+  flip,
   identity,
   iff,
   is,
+  maybe,
   noop,
+  or,
+  pipe,
   pruneData
 }

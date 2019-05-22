@@ -1,37 +1,40 @@
 import { EDGE_TYPES } from "data"
 import React, { useState, useCallback } from "react"
-import styled from "styled-components"
 
-import useGame from "hooks/useGame"
+import useEntityGraph from "hooks/useEntityGraph"
+import useEntityDependencies from "hooks/useEntityDependencies"
+import useGameQueries from "hooks/useGameQueries"
+import useGameMutations from "hooks/useGameMutations"
 
 import useAsync from "hooks/useAsync"
 
-import { Button, Message, Options } from "your-gift-hunt/ui"
+import { Button, Message, Options, VSpace } from "your-gift-hunt/ui"
 
+import EntityTag from "components/Editor/EntityTag"
 import Transition from "components/Editor/Transition"
 
 import DefaultUnlockConditions from "./Default"
 import UnlockCondition from "./UnlockCondition"
 
-const VSpace = styled.div`
-  margin-bottom: 0.5em;
-`
-
-const EditableUnlockConditions = ({ node }) => {
+const EditableUnlockConditions = ({ entity, state }) => {
+  const { edges, getEdgeById } = useEntityGraph()
+  const { getNextNodes } = useEntityDependencies()
+  const { getStateById, getEntityByStateId } = useGameQueries()
   const {
-    edges,
-    getEdgeById,
-    getNodeById,
     addUnlockToStateTransition,
-    removeUnlockFromStateTransition,
-    getNextNodes
-  } = useGame()
+    removeUnlockFromStateTransition
+  } = useGameMutations()
 
   const unlockConditions = edges
-    .filter(({ unlocks }) => unlocks === node.id)
-    .map(({ id }) => getEdgeById(id))
+    .filter(({ unlocks }) => unlocks === state.id)
+    .map(({ from, to, ...edge }) => ({
+      ...edge,
+      entity: getEntityByStateId(from),
+      from: getStateById(from),
+      to: getStateById(to)
+    }))
 
-  const nextNodes = getNextNodes(node.id)
+  const nextNodes = getNextNodes(state.id)
   const options = edges
     .filter(
       ({ from, type }) =>
@@ -40,14 +43,15 @@ const EditableUnlockConditions = ({ node }) => {
     )
     .map(({ from, to, ...edge }) => ({
       ...edge,
-      from: getNodeById(from),
-      to: getNodeById(to)
+      entity: getEntityByStateId(from),
+      from: getStateById(from),
+      to: getStateById(to)
     }))
     .filter(
-      ({ from }) =>
-        from.entity.id !== node.entity.id &&
-        !unlockConditions.some(
-          unlockCondition => unlockCondition.from.entity.id === from.entity.id
+      edge =>
+        edge.entity.id !== entity.id &&
+        unlockConditions.every(unlockCondition =>
+          edge.entity.states.every(({ id }) => id !== unlockCondition.from.id)
         )
     )
 
@@ -58,24 +62,24 @@ const EditableUnlockConditions = ({ node }) => {
     runAsync(id => {
       const edge = getEdgeById(id)
       return addUnlockToStateTransition(
-        edge.from.id,
-        edge.to.state ? edge.to.id : null,
-        node.state.id
+        edge.from,
+        edge.to.endsWith("-exit") ? null : edge.to,
+        state.id
       )
     }),
-    [node, edges]
+    [state, edges]
   )
 
   const removeUnlockCondition = useCallback(
     runAsync(id => {
       const edge = getEdgeById(id)
       return removeUnlockFromStateTransition(
-        edge.from.id,
-        edge.to.state ? edge.to.id : null,
-        node.state.id
+        edge.from,
+        edge.to.endsWith("-exit") ? null : edge.to,
+        state.id
       )
     }),
-    [node, edges]
+    [state, edges]
   )
 
   const onAddButtonClick = useCallback(() => setOptionsVisibility(true), [])
@@ -94,18 +98,22 @@ const EditableUnlockConditions = ({ node }) => {
         unlockConditions.map(unlockCondition => (
           <UnlockCondition
             key={unlockCondition.id}
-            data={unlockCondition}
+            {...unlockCondition}
             onDeleteClick={() => removeUnlockCondition(unlockCondition.id)}
           />
         ))
       ) : (
-        <DefaultUnlockConditions />
+        <DefaultUnlockConditions entity={entity} />
       )}
       <VSpace />
       <Options
         closeOnClick
         components={{
-          Option: ({ data }) => <Transition {...data} />
+          Option: ({ data }) => (
+            <EntityTag entity={data.entity}>
+              <Transition from={data.from} to={data.to} />
+            </EntityTag>
+          )
         }}
         options={options}
         onClose={onOptionsClose}

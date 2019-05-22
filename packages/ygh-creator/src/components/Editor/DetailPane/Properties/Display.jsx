@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from "react"
 
-import useGame from "hooks/useGame"
+import useEntities from "hooks/useEntities"
+import useGameMutations from "hooks/useGameMutations"
 
 import useAsync from "hooks/useAsync"
 
@@ -28,17 +29,17 @@ const MultiValue = ({ data, ...otherProps }) => (
 )
 
 const Display = ({ field }) => {
+  const { entities } = useEntities()
   const {
-    game,
     connectInformationSlotWithField,
     disconnectInformationSlotFromField
-  } = useGame()
+  } = useGameMutations()
 
   const [{ error, isLoading }, runAsync] = useAsync()
 
   const options = useMemo(
     () =>
-      game.entities.flatMap(entity =>
+      entities.flatMap(entity =>
         entity.informationSlots
           .filter(
             ({ id, allowedTypes }) =>
@@ -56,7 +57,7 @@ const Display = ({ field }) => {
             entity
           }))
       ),
-    [field.type, game.entities]
+    [field.type, entities]
   )
 
   const onChange = useCallback(

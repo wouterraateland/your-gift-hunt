@@ -1,9 +1,16 @@
 import { useCallback, useEffect } from "react"
 
+const isParentOrSame = (el, parent) =>
+  el && (el === parent || isParentOrSame(el.parentElement, parent))
+
 const useClickOutside = ({ ref, onClickOutside, inputs = [] }) => {
   const onClick = useCallback(
-    event => event.path.includes(ref.current) || onClickOutside(),
-    [ref, ...inputs]
+    event => {
+      if (!isParentOrSame(event.target, ref.current)) {
+        onClickOutside(event)
+      }
+    },
+    [ref, onClickOutside, ...inputs]
   )
 
   useEffect(
@@ -13,7 +20,7 @@ const useClickOutside = ({ ref, onClickOutside, inputs = [] }) => {
         window.removeEventListener("mouseup", onClick)
       }
     },
-    [ref, ...inputs]
+    [ref, onClickOutside, ...inputs]
   )
 }
 

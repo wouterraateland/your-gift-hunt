@@ -4,13 +4,9 @@ import EntityTag from "./EntityTag"
 
 const InformationSlotTag = ({ entity, informationSlot, showEntity = true }) => {
   return (
-    <EntityTag
-      name={
-        showEntity
-          ? `${entity.name}.${informationSlot.name}`
-          : informationSlot.name
-      }
-    />
+    <EntityTag entity={entity} showEntity={showEntity}>
+      {informationSlot.name}
+    </EntityTag>
   )
 }
 

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback, useEffect } from "react"
 import styled from "styled-components"
 
-import useGame from "hooks/useGame"
+import useGameMutations from "hooks/useGameMutations"
 import useClickOutside from "hooks/useClickOutside"
 
 import { Input, ActionButton, Button } from "your-gift-hunt/ui"
@@ -9,14 +9,19 @@ import { Pen } from "your-gift-hunt/icons"
 
 const Form = styled.form`
   display: inline-block;
+  width: calc(100% - 2em);
   margin: -0.4em 0 0 0;
   font-size: 1rem;
   font-family: ${props => props.theme.font.copy};
 `
 
+const StyledInput = styled(Input)`
+  width: calc(100% - 2.8em);
+`
+
 const EditableEntityName = ({ entity }) => {
   const ref = useRef(null)
-  const { updateEntityName } = useGame()
+  const { updateEntityName } = useGameMutations()
 
   const [{ isEditable, isLoading, error, value }, setState] = useState({
     isEditable: false,
@@ -75,7 +80,7 @@ const EditableEntityName = ({ entity }) => {
 
   return isEditable ? (
     <Form onSubmit={onSubmit} ref={ref}>
-      <Input
+      <StyledInput
         value={value}
         onChange={onChange}
         disabled={isLoading}

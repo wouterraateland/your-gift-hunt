@@ -67,7 +67,7 @@ const LoginPage = () => {
           <Link to="/auth/amnesia">Forgot your password?</Link>
         </small>
         <Field block>
-          <Button block type="submit" color="accent" importance="primary">
+          <Button block type="submit" color="primary" importance="primary">
             Log in
           </Button>
         </Field>

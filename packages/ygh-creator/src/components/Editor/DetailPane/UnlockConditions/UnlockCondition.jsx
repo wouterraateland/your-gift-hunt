@@ -1,9 +1,9 @@
-import { EDGE_TYPES } from "data"
 import React from "react"
 import { ActionButton } from "your-gift-hunt/ui"
 import { Bin } from "your-gift-hunt/icons"
 
 import styled from "styled-components"
+import EntityTag from "components/Editor/EntityTag"
 import Transition from "components/Editor/Transition"
 
 const UnlockConditionContainer = styled.div`
@@ -14,8 +14,7 @@ const UnlockConditionContainer = styled.div`
   }
 
   &::before {
-    content: ${props =>
-      props.type === EDGE_TYPES.ENTRY ? '"\u2022"' : '"\u2192"'};
+    content: ${props => (props.type ? '"\u2192"' : '"\u2022"')};
 
     margin-right: 0.5em;
 
@@ -25,9 +24,24 @@ const UnlockConditionContainer = styled.div`
   }
 `
 
-const UnlockCondition = ({ data, isDeletable = true, onDeleteClick }) => (
-  <UnlockConditionContainer type={data.from.type}>
-    <Transition {...data} />
+const UnlockCondition = ({
+  entity,
+  from,
+  to,
+  isDeletable = true,
+  onDeleteClick
+}) => (
+  <UnlockConditionContainer type={from}>
+    {from ? (
+      <EntityTag entity={entity}>
+        {" "}
+        <Transition from={from} to={to} />
+      </EntityTag>
+    ) : entity.container ? (
+      "Entity accessible"
+    ) : (
+      "Game starts"
+    )}
     {isDeletable && (
       <ActionButton color="error" onClick={onDeleteClick}>
         <Bin />

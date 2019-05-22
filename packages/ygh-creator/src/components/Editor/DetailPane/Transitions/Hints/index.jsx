@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 
-import { Button } from "your-gift-hunt/ui"
+import { Button, VSpace } from "your-gift-hunt/ui"
 
 import Hint from "./Hint"
 import HintForm from "./HintForm"
@@ -49,10 +49,6 @@ const Em = styled.em``
 
 const Placeholder = styled.p`
   margin: 0;
-`
-
-const VSpace = styled.div`
-  margin-bottom: 0.5em;
 `
 
 const Hints = ({ id, hints }) => {
@@ -109,6 +105,15 @@ const Hints = ({ id, hints }) => {
               />
             </li>
           )}
+        </Ol>
+      ) : state.isNewHint ? (
+        <Ol>
+          <li>
+            <HintForm
+              actionRequirementId={id}
+              onClose={() => selectHint(null)}
+            />
+          </li>
         </Ol>
       ) : (
         <Placeholder>

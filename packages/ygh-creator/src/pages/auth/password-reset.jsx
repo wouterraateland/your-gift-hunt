@@ -42,7 +42,7 @@ const PasswordResetPage = () => {
             />
           </Field>
           <Field block>
-            <Button block type="submit" color="accent" importance="primary">
+            <Button block type="submit" color="primary" importance="primary">
               Reset password
             </Button>
           </Field>

@@ -1,8 +1,9 @@
+import { useContext, useState } from "react"
 import moment from "moment"
 
-import { useState } from "react"
+import SaveStateContext from "contexts/SaveState"
 
-const useSaveState = () => {
+export const useSaveStateProvider = () => {
   const [saveState, setSaveState] = useState({
     isSaving: false,
     isDirty: false,
@@ -26,4 +27,5 @@ const useSaveState = () => {
   }
 }
 
+const useSaveState = () => useContext(SaveStateContext)
 export default useSaveState

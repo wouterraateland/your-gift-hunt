@@ -1,22 +1,36 @@
+import _ from "utils"
+import { useContext } from "react"
 import { useMutation, useApolloClient } from "react-apollo-hooks"
+
 import useTemplates from "hooks/useTemplates"
-import useGameData from "hooks/useGameData"
+import useGame from "hooks/useGame"
+import useEntities from "hooks/useEntities"
+import useSaveState from "hooks/useSaveState"
+import useEntityDependencies from "hooks/useEntityDependencies"
+
+import GameMutationsContext from "contexts/GameMutations"
 
 import { GAME_BY_SLUG, STATE_TRANSITIONS } from "gql/queries"
 import {
   UPDATE_GAME_SETTINGS,
   UPDATE_ENTITY_NAME,
+  UPDATE_ENTITY_CONTAINER,
+  DISCONNECT_ENTITY_FROM_CONTAINER,
   UPDATE_FIELD_VALUE,
   CREATE_HINT,
   UPDATE_HINT,
   DELETE_HINT,
   ADD_UNLOCK_TO_STATE_TRANSITION,
   REMOVE_UNLOCK_FROM_STATE_TRANSITION,
-  CREATE_STATE_TRANSITIONS,
+  UPDATE_ENTITIES,
   CREATE_ENTITIES,
   DELETE_NODES,
   CONNECT_INFORMATION_SLOT_WITH_FIELD,
-  DISCONNECT_INFORMATION_SLOT_FROM_FIELD
+  DISCONNECT_INFORMATION_SLOT_FROM_FIELD,
+  CONNECT_PORTAL_WITH_ENTRANCE,
+  DISCONNECT_PORTAL_FROM_ENTRANCE,
+  DISCONNECT_ENTRANCE_FROM_PORTAL,
+  SET_START_CONTAINER
 } from "gql/mutations"
 
 const useMutationWith = save => (mutation, transform) => {
@@ -24,14 +38,18 @@ const useMutationWith = save => (mutation, transform) => {
   return save((...args) => actualMutation(transform(...args)))
 }
 
-const useGameMutations = (variables, save, dependencies) => {
+export const useGameMutationsProvider = () => {
   const {
     entityTemplates,
     getEntityTemplateById,
     getStateTemplateById
   } = useTemplates()
+  const { game, variables } = useGame()
+  const { entities } = useEntities()
+  const { getAdjacentStates } = useEntityDependencies()
+  const { save } = useSaveState()
+
   const useMutationWithSave = useMutationWith(save)
-  const game = useGameData(variables)
   const client = useApolloClient()
 
   const query = { query: GAME_BY_SLUG, variables }
@@ -52,6 +70,53 @@ const useGameMutations = (variables, save, dependencies) => {
       variables: {
         entityId,
         name
+      }
+    })
+  )
+
+  const updateEntityContainer = useMutationWithSave(
+    UPDATE_ENTITY_CONTAINER,
+    (entityId, containerId) => ({
+      variables: {
+        entityId,
+        containerId
+      },
+      update: proxy => {
+        const data = proxy.readQuery(query)
+        const entities = data.games[0].entities
+        entities.forEach(entity => {
+          if (entity.id === containerId) {
+            entity.containedEntities.push(
+              entities.find(({ id }) => id === entityId)
+            )
+          } else if (entity.isContainer && entity.containedEntities.length) {
+            entity.containedEntities = entity.containedEntities.filter(
+              ({ id }) => id !== entityId
+            )
+          }
+        })
+
+        proxy.writeQuery({ ...query, data })
+      }
+    })
+  )
+
+  const disconnectEntityFromContainer = useMutationWithSave(
+    DISCONNECT_ENTITY_FROM_CONTAINER,
+    entityId => ({
+      variables: { entityId },
+      update: proxy => {
+        const data = proxy.readQuery(query)
+        const entities = data.games[0].entities
+        entities.forEach(entity => {
+          if (entity.isContainer && entity.containedEntities.length) {
+            entity.containedEntities = entity.containedEntities.filter(
+              ({ id }) => id !== entityId
+            )
+          }
+        })
+
+        proxy.writeQuery({ ...query, data })
       }
     })
   )
@@ -237,8 +302,8 @@ const useGameMutations = (variables, save, dependencies) => {
     })
   )
 
-  const createStateTransitions = useMutationWithSave(
-    CREATE_STATE_TRANSITIONS,
+  const updateEntities = useMutationWithSave(
+    UPDATE_ENTITIES,
     (gameId, entityUpdates) => ({
       variables: {
         gameId,
@@ -362,6 +427,13 @@ const useGameMutations = (variables, save, dependencies) => {
                 )
                 .map(({ id }) => ({ id }))
             },
+            openPortals: {
+              connect: entity.portals
+                .filter(({ template }) =>
+                  stateTemplate.openPortals.some(({ id }) => template.id === id)
+                )
+                .map(({ id }) => ({ id }))
+            },
             outgoingTransitions: {
               create: stateTemplate.outgoingTransitions
                 .filter(
@@ -408,12 +480,30 @@ const useGameMutations = (variables, save, dependencies) => {
 
     const entityUpdates = entities.map(createEntityUpdate)
 
-    await createStateTransitions(gameId, entityUpdates)
+    await updateEntities(gameId, entityUpdates)
+  }
+
+  const moveEntities = async (gameId, entityMoves) => {
+    const entityUpdates = entityMoves.map(
+      ({ id, graphPosition: { top, left } }) => ({
+        where: { id },
+        data: {
+          graphPosition: {
+            upsert: {
+              create: { top, left },
+              update: { top, left }
+            }
+          }
+        }
+      })
+    )
+
+    await updateEntities(gameId, entityUpdates)
   }
 
   const createNodes = async (sourceStateTemplateIds, originStateId) => {
     const originEntity = originStateId
-      ? game.entities.find(({ states }) =>
+      ? entities.find(({ states }) =>
           states.some(({ id }) => originStateId === id)
         )
       : null
@@ -421,12 +511,8 @@ const useGameMutations = (variables, save, dependencies) => {
       ? originEntity.template.id
       : null
 
-    const stateTemplateIds = dependencies.getAdjacentStates(
-      sourceStateTemplateIds
-    )
-    const existingEntityTemplateIds = game.entities.map(
-      ({ template: { id } }) => id
-    )
+    const stateTemplateIds = getAdjacentStates(sourceStateTemplateIds)
+    const existingEntityTemplateIds = entities.map(({ template: { id } }) => id)
     const entityTemplatesThatShouldExist = entityTemplates.filter(
       ({ states }) => states.some(({ id }) => stateTemplateIds.includes(id))
     )
@@ -437,7 +523,7 @@ const useGameMutations = (variables, save, dependencies) => {
         (!(isObject || isItem) || !existingEntityTemplateIds.includes(id))
     )
     const entitiesToCreate = entityTemplatesToCreate.map(entityTemplate => {
-      const existingEntitiesWithTemplate = game.entities.filter(
+      const existingEntitiesWithTemplate = entities.filter(
         ({ template }) => template.id === entityTemplate.id
       )
       return {
@@ -449,6 +535,7 @@ const useGameMutations = (variables, save, dependencies) => {
         isItem: entityTemplate.isItem,
         isObject: entityTemplate.isObject,
         isTrigger: entityTemplate.isTrigger,
+        isContainer: entityTemplate.isContainer,
         fields: {
           create: entityTemplate.fields.map(fieldTemplate => ({
             template: { connect: { id: fieldTemplate.id } },
@@ -466,6 +553,20 @@ const useGameMutations = (variables, save, dependencies) => {
               name: stateTemplate.name,
               description: stateTemplate.description
             }))
+        },
+        entrances: {
+          create: entityTemplate.entrances.map(entranceTemplate => ({
+            template: { connect: { id: entranceTemplate.id } },
+            name: entranceTemplate.name,
+            description: entranceTemplate.description
+          }))
+        },
+        portals: {
+          create: entityTemplate.portals.map(portalTemplate => ({
+            template: { connect: { id: portalTemplate.id } },
+            name: portalTemplate.name,
+            description: portalTemplate.description
+          }))
         },
         informationSlots: {
           create: entityTemplate.informationSlots.map(
@@ -516,9 +617,7 @@ const useGameMutations = (variables, save, dependencies) => {
 
   const createEntity = async entityTemplateId => {
     const entityTemplate = getEntityTemplateById(entityTemplateId)
-    const entityStateTemplates = dependencies.getMinimalStateSpan(
-      entityTemplate.states
-    )
+    const entityStateTemplates = _.getMinimalStateSpan(entityTemplate.states)
 
     if (
       entityStateTemplates.length === 1 &&
@@ -558,6 +657,10 @@ const useGameMutations = (variables, save, dependencies) => {
             ({ id }) => !stateIds.includes(id)
           )
 
+          if (entity.container && entityIds.includes(entity.container.id)) {
+            entity.container = null
+          }
+
           entity.states.forEach(state => {
             state.outgoingTransitions.forEach(outgoingTransition => {
               outgoingTransition.unlocks = outgoingTransition.unlocks.filter(
@@ -565,6 +668,10 @@ const useGameMutations = (variables, save, dependencies) => {
               )
             })
           })
+
+          entity.containedEntities = entity.containedEntities.filter(
+            ({ id }) => !entityIds.includes(id)
+          )
         })
 
         proxy.writeQuery({ ...query, data })
@@ -573,7 +680,7 @@ const useGameMutations = (variables, save, dependencies) => {
   )
 
   const deleteNodes = async nodeIds => {
-    const entityIds = game.entities
+    const entityIds = entities
       .filter(({ states }) => states.every(({ id }) => nodeIds.includes(id)))
       .map(({ id }) => id)
 
@@ -633,9 +740,58 @@ const useGameMutations = (variables, save, dependencies) => {
     })
   )
 
+  const connectPortalWithEntrance = useMutationWithSave(
+    CONNECT_PORTAL_WITH_ENTRANCE,
+    (portalId, entranceId) => ({
+      variables: {
+        portalId,
+        entranceId
+      }
+    })
+  )
+
+  const disconnectPortalFromEntrance = useMutationWithSave(
+    DISCONNECT_PORTAL_FROM_ENTRANCE,
+    entranceId => ({
+      variables: {
+        entranceId
+      }
+    })
+  )
+
+  const disconnectEntranceFromPortal = useMutationWithSave(
+    DISCONNECT_ENTRANCE_FROM_PORTAL,
+    portalId => ({
+      variables: {
+        portalId
+      }
+    })
+  )
+
+  const setStartContainer = useMutationWithSave(
+    SET_START_CONTAINER,
+    containerId => ({
+      variables: {
+        gameId: game.id,
+        containerId
+      },
+      update: proxy => {
+        const data = proxy.readQuery(query)
+
+        data.games[0].startContainer = data.games[0].entities.find(
+          ({ id }) => id === containerId
+        )
+
+        proxy.writeQuery({ ...query, data })
+      }
+    })
+  )
+
   return {
     updateGameSettings,
     updateEntityName,
+    updateEntityContainer,
+    disconnectEntityFromContainer,
     updateFieldValue,
 
     // Hint mutations
@@ -651,10 +807,17 @@ const useGameMutations = (variables, save, dependencies) => {
     createEntity,
     addPreviousState,
     deleteNodes,
+    moveEntities,
 
     connectInformationSlotWithField,
-    disconnectInformationSlotFromField
+    disconnectInformationSlotFromField,
+
+    connectPortalWithEntrance,
+    disconnectPortalFromEntrance,
+    disconnectEntranceFromPortal,
+    setStartContainer
   }
 }
 
+const useGameMutations = () => useContext(GameMutationsContext)
 export default useGameMutations

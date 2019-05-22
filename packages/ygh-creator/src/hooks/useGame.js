@@ -1,38 +1,26 @@
 import { useContext } from "react"
-import useGameData from "hooks/useGameData"
-import useGameMutations from "hooks/useGameMutations"
-import useGameGraph from "hooks/useGameGraph"
-import useGraphLayout from "hooks/useGraphLayout"
-import useGameDependencies from "hooks/useGameDependencies"
-import useSaveState from "hooks/useSaveState"
+import { useQuery } from "react-apollo-hooks"
+import { GAME_BY_SLUG } from "gql/queries"
 
 import GameContext from "contexts/Game"
 
 export const useGameProvider = variables => {
-  const saveState = useSaveState()
+  const { data, error } = useQuery(GAME_BY_SLUG, { variables })
 
-  const game = useGameData(variables)
-
-  if (!game) {
-    return {
-      gameExists: false
-    }
+  if (error) {
+    throw error
   }
 
-  const graph = useGameGraph(game.entities)
-  const graphLayout = useGraphLayout(graph)
-  const dependencies = useGameDependencies(graph)
-  const mutations = useGameMutations(variables, saveState.save, dependencies)
-
-  return {
-    gameExists: true,
-    game,
-    ...saveState,
-    ...mutations,
-    ...graph,
-    ...graphLayout,
-    ...dependencies
-  }
+  return data.games.length === 1
+    ? {
+        gameExists: true,
+        game: data.games[0],
+        variables
+      }
+    : {
+        gameExists: false,
+        variables
+      }
 }
 
 const useGame = () => useContext(GameContext)

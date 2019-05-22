@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 
-import useGame from "hooks/useGame"
+import useEntityAreas from "hooks/useEntityAreas"
 import useInspector from "hooks/useInspector"
 
 const INSPECTOR_WIDTH =
@@ -18,24 +18,24 @@ const PanControls = ({ zoom, container, pan, setPan }) => {
     to: null
   })
 
-  const { getNodePosition } = useGame()
-  const { nodeId } = useInspector()
-  const prevNodeId = useRef(null)
+  const { getEntityArea } = useEntityAreas()
+  const { inspectedEntity } = useInspector()
+  const prevInspectedEntity = useRef(null)
 
   useEffect(
     () => {
       if (
         container &&
         container.current &&
-        nodeId &&
-        nodeId !== prevNodeId.current
+        inspectedEntity &&
+        inspectedEntity !== prevInspectedEntity.current
       ) {
-        const { left, top } = getNodePosition(nodeId)
+        const { centerX, centerY } = getEntityArea(inspectedEntity)
         const to = {
           x:
             (container.current.offsetWidth - INSPECTOR_WIDTH) / 2 -
-            (left + 96) * zoom,
-          y: container.current.offsetHeight / 2 - (top + 48) * zoom
+            centerX * 32 * zoom,
+          y: container.current.offsetHeight / 2 - centerY * 32 * zoom
         }
 
         if (to.x !== pan.x || to.y !== pan.y) {
@@ -46,9 +46,9 @@ const PanControls = ({ zoom, container, pan, setPan }) => {
           })
         }
       }
-      prevNodeId.current = nodeId
+      prevInspectedEntity.current = inspectedEntity
     },
-    [pan, zoom, nodeId, container]
+    [pan, zoom, inspectedEntity, getEntityArea, container]
   )
 
   useEffect(

@@ -2,13 +2,17 @@ import { EDGE_TYPES } from "data"
 import React, { useCallback, useState } from "react"
 import styled from "styled-components"
 
-import useGame from "hooks/useGame"
+import useEntityGraph from "hooks/useEntityGraph"
+import useGameQueries from "hooks/useGameQueries"
+import useEntityDependencies from "hooks/useEntityDependencies"
+import useGameMutations from "hooks/useGameMutations"
 
 import useAsync from "hooks/useAsync"
 
 import { ActionButton, Button, Message, Options } from "your-gift-hunt/ui"
 import { Bin } from "your-gift-hunt/icons"
-import NodeTag from "components/Editor/NodeTag"
+import EntityTag from "components/Editor/EntityTag"
+import StateTag from "components/Editor/StateTag"
 
 const UnlockContainer = styled.div`
   display: block;
@@ -32,7 +36,10 @@ const Em = styled.em`
 
 const Unlock = ({ data, isDeletable = true, onDeleteClick }) => (
   <UnlockContainer>
-    <NodeTag node={data} showEntity />
+    <EntityTag entity={data.entity}>
+      {" "}
+      <StateTag state={data.state} />
+    </EntityTag>
     {isDeletable && (
       <ActionButton color="error" onClick={onDeleteClick}>
         <Bin />
@@ -42,22 +49,21 @@ const Unlock = ({ data, isDeletable = true, onDeleteClick }) => (
 )
 
 const Unlocks = ({ from, to }) => {
+  const { edges, nodes, getNodeById } = useEntityGraph()
+  const { isUnlockable } = useGameQueries()
+  const { getPreviousNodes } = useEntityDependencies()
+
   const {
-    edges,
-    nodes,
-    getNodeById,
-    isUnlockable,
     addUnlockToStateTransition,
-    removeUnlockFromStateTransition,
-    getPreviousNodes
-  } = useGame()
+    removeUnlockFromStateTransition
+  } = useGameMutations()
 
   const unlocks = edges
     .filter(
       edge =>
         edge.type === EDGE_TYPES.UNLOCK &&
         edge.from === from.id &&
-        edge.to === to.id
+        (to ? edge.to === to.id : edge.to.endsWith("-exit"))
     )
     .map(({ unlocks }) => getNodeById(unlocks))
 
@@ -74,15 +80,13 @@ const Unlocks = ({ from, to }) => {
   )
 
   const addUnlock = useCallback(
-    runAsync(id =>
-      addUnlockToStateTransition(from.id, to.state ? to.id : null, id)
-    ),
+    runAsync(id => addUnlockToStateTransition(from.id, to ? to.id : null, id)),
     [from, to]
   )
 
   const removeUnlock = useCallback(
     runAsync(id =>
-      removeUnlockFromStateTransition(from.id, to.state ? to.id : null, id)
+      removeUnlockFromStateTransition(from.id, to ? to.id : null, id)
     ),
     [from, to]
   )
@@ -108,12 +112,15 @@ const Unlocks = ({ from, to }) => {
         closeOnClick
         components={{
           Option: ({ data }) => (
-            <NodeTag node={data} showEntity isClickable={false} />
+            <EntityTag entity={data.entity}>
+              {" "}
+              <StateTag state={data.state} />
+            </EntityTag>
           )
         }}
         options={options.filter(
           ({ id, entity }) =>
-            entity.id !== from.entity.id &&
+            entity.states.every(state => state.id !== from.id) &&
             !unlocks.find(unlock => unlock.id === id)
         )}
         onClose={onOptionsClose}

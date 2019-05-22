@@ -15,7 +15,19 @@ const Label = styled.label`
 `
 
 const createStyles = theme => ({
-  control: base => ({ ...base, borderWidth: ".1em", boxShadow: "none" }),
+  control: (base, state) => ({
+    ...base,
+    borderWidth: ".1em",
+    boxShadow: "none",
+    borderColor: state.isDisabled
+      ? "#0001"
+      : state.isFocused
+      ? theme.color.primary
+      : "#0002",
+    ":hover": {
+      borderColor: state.isFocused ? theme.color.primary : "#0004"
+    }
+  }),
   dropdownIndicator: base => ({ ...base, cursor: "pointer" }),
   indicatorsContainer: base => ({ ...base, backgroundColor: "#0001" }),
   indicatorSeparator: () => ({}),
@@ -51,7 +63,7 @@ const SelectWithLabel = ({
         value={
           otherProps.isMulti
             ? options.filter(option => value.includes(option.value))
-            : options.find(option => option.value === value)
+            : options.find(option => option.value === value) || null
         }
         onChange={
           otherProps.isMulti

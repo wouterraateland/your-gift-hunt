@@ -1,24 +1,23 @@
 import React from "react"
 
-import useGame from "hooks/useGame"
+import useEntities from "hooks/useEntities"
+import useEntityGraph from "hooks/useEntityGraph"
+import useEntityAreaUpdates from "hooks/useEntityAreaUpdates"
 
 import Container from "./Container"
-import Node from "./Node"
-import Edge from "./Edge"
-import ArrowDefs from "./ArrowDefs"
+import Entity from "./Entity"
+import Edges from "./Edges"
 
 const EditorPane = () => {
-  const { nodes, edges } = useGame()
-
+  const { rootEntities } = useEntities()
+  const { edges } = useEntityGraph()
+  useEntityAreaUpdates()
   return (
     <Container>
-      <ArrowDefs />
-      {nodes.map(node => (
-        <Node key={node.id} {...node} />
+      {rootEntities.map(entity => (
+        <Entity key={entity.id} entity={entity} />
       ))}
-      {edges.map(edge => (
-        <Edge key={edge.id} {...edge} />
-      ))}
+      <Edges edges={edges} />
     </Container>
   )
 }

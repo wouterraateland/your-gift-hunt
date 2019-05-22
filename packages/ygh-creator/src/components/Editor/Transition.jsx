@@ -1,8 +1,9 @@
-import { NODE_TYPES } from "data"
 import React from "react"
 import styled from "styled-components"
 
-import NodeTag from "./NodeTag"
+import StateTag from "./StateTag"
+import EntryState from "./EntryState"
+import ExitState from "./ExitState"
 
 const Arrow = styled.span`
   margin: 0 0.5em;
@@ -11,15 +12,24 @@ const Arrow = styled.span`
   color: #f93;
 `
 
-const Transition = ({ from, to }) =>
-  from.type === NODE_TYPES.ENTRY ? (
-    "Game starts"
-  ) : (
-    <>
-      <NodeTag node={from} showEntity />
-      <Arrow>&rarr;</Arrow>
-      <NodeTag node={to} />
-    </>
-  )
+const StyledEntryState = styled(EntryState)`
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+`
+
+const StyledExitState = styled(ExitState)`
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+`
+
+const Transition = ({ from, to }) => (
+  <>
+    {from ? <StateTag state={from} /> : <StyledEntryState />}
+    <Arrow>&rarr;</Arrow>
+    {to ? <StateTag state={to} /> : <StyledExitState />}
+  </>
+)
 
 export default Transition

@@ -1,25 +1,29 @@
 import React, { forwardRef, useEffect } from "react"
 
-import useGame from "hooks/useGame"
+import useGameQueries from "hooks/useGameQueries"
 import useInspector from "hooks/useInspector"
 
-import Container from "./Container"
-import Preview from "./Preview"
-import Meta from "./Meta"
-import Properties from "./Properties"
-import Information from "./Information"
-import PreviousStates from "./PreviousStates"
-import UnlockConditions from "./UnlockConditions"
-import Transitions from "./Transitions"
 import Delete from "./Delete"
+import Entrances from "./Entrances"
+import InformationSlots from "./InformationSlots"
+import Meta from "./Meta"
+import Portals from "./Portals"
+import Preview from "./Preview"
+import PreviousStates from "./PreviousStates"
+import Properties from "./Properties"
+import States from "./States"
+import Transitions from "./Transitions"
+import UnlockConditions from "./UnlockConditions"
 
+import Background from "./Background"
 import CloseButton from "./CloseButton"
 
 const DetailPane = forwardRef((_, ref) => {
-  const { isOpen, nodeId } = useInspector()
-  const { getNodeById } = useGame()
+  const { isOpen, inspectedEntity, inspectedState } = useInspector()
+  const { getEntityById, getStateById } = useGameQueries()
 
-  const node = getNodeById(nodeId)
+  const entity = getEntityById(inspectedEntity)
+  const state = getStateById(inspectedState)
 
   useEffect(
     () => {
@@ -27,29 +31,28 @@ const DetailPane = forwardRef((_, ref) => {
         ref.current.scrollTo(0, 0)
       }
     },
-    [isOpen, nodeId]
+    [isOpen, inspectedEntity, inspectedState]
   )
 
   return (
-    <Container
+    <Background
       isOpen={isOpen}
       ref={ref}
-      hasPreview={!!node && (node.entity.isObject || node.entity.isItem)}
+      hasPreview={!!entity && (entity.isObject || entity.isItem)}
     >
-      {!!node && (
-        <>
-          <Preview node={node} isOpen={isOpen} />
-          <Meta node={node} isOpen={isOpen} />
-          <Properties node={node} isOpen={isOpen} />
-          <Information node={node} isOpen={isOpen} />
-          <PreviousStates node={node} isOpen={isOpen} />
-          <UnlockConditions node={node} isOpen={isOpen} />
-          <Transitions node={node} isOpen={isOpen} />
-          <Delete node={node} isOpen={isOpen} />
-        </>
-      )}
+      {entity && <Preview entity={entity} state={state} />}
+      {entity && <Meta entity={entity} state={state} />}
+      {entity && <Properties entity={entity} />}
+      {entity && <InformationSlots entity={entity} state={state} />}
+      {entity && <Portals entity={entity} state={state} />}
+      {entity && <Entrances entity={entity} />}
+      {entity && !state && <States entity={entity} />}
+      {state && <PreviousStates state={state} />}
+      {state && <UnlockConditions entity={entity} state={state} />}
+      {state && <Transitions state={state} />}
+      {entity && <Delete entity={entity} state={state} />}
       <CloseButton />
-    </Container>
+    </Background>
   )
 })
 

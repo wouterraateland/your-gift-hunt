@@ -3,11 +3,7 @@ import React from "react"
 import Section from "components/Editor/DetailPane/Section"
 import Property from "./Property"
 
-const Properties = ({
-  node: {
-    entity: { fields }
-  }
-}) =>
+const Properties = ({ entity: { fields } }) =>
   fields.length ? (
     <Section title="Properties" wrapChildren>
       {fields.map(field => (

@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import useGame from "hooks/useGame"
+import useGameMutations from "hooks/useGameMutations"
 
 import { ActionButton, Float } from "your-gift-hunt/ui"
 import { Bin, Pen } from "your-gift-hunt/icons"
@@ -16,7 +16,7 @@ const Delay = styled.em`
 `
 
 const Hint = ({ hint: { id, text, delay }, onEditClick }) => {
-  const { deleteHint } = useGame()
+  const { deleteHint } = useGameMutations()
 
   return (
     <>

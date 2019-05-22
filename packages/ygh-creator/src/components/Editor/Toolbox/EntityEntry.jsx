@@ -69,6 +69,7 @@ const PreviewContainer = styled.div`
 
   width: 4em;
   height: 4em;
+  padding: 0.75em;
 
   opacity: ${props => (props.isDisabled ? 0.5 : 1)};
 `

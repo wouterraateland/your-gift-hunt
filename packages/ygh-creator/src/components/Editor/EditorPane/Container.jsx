@@ -1,9 +1,9 @@
-import { NODE_TYPES } from "data"
 import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 
-import useGame from "hooks/useGame"
+import { PanZoomProvider } from "contexts/PanZoom"
 
+import useEntityAreas from "hooks/useEntityAreas"
 import usePanZoom from "hooks/usePanZoom" //"use-pan-and-zoom"
 
 import ZoomControls from "./ZoomControls"
@@ -31,7 +31,7 @@ const PanContainer = styled.div`
 `
 
 const EditorPane = ({ children }) => {
-  const { nodes, getNodePosition } = useGame()
+  const { getCompleteArea } = useEntityAreas()
   const container = useRef(null)
   const {
     transform,
@@ -44,47 +44,45 @@ const EditorPane = ({ children }) => {
     container,
     enableZoom: true,
     minZoom: 0.1,
-    maxZoom: 2
+    maxZoom: 2,
+    requirePinch: true
   })
 
   useEffect(() => {
-    const ps = nodes
-      .filter(({ type }) => type === NODE_TYPES.STATE)
-      .map(({ id }) => getNodePosition(id))
-
-    if (container.current && ps.length) {
-      const meanX = ps.reduce((acc, p) => acc + p.left + 96, 0) / ps.length
-      const meanY = ps.reduce((acc, p) => acc + p.top + 48, 0) / ps.length
+    if (container.current) {
+      const { centerX, centerY } = getCompleteArea()
 
       setPan({
-        x: container.current.offsetWidth / 2 - meanX,
-        y: container.current.offsetHeight / 2 - meanY
+        x: container.current.offsetWidth / 2 - 32 * centerX,
+        y: container.current.offsetHeight / 2 - 32 * centerY
       })
     }
   }, [])
 
   return (
-    <StyledEditorPane
-      ref={container}
-      {...panZoomHandlers}
-      style={{
-        backgroundSize: `${2 * zoom}em ${2 * zoom}em`,
-        backgroundPosition: `${x}px ${y}px`
-      }}
-    >
-      <PanContainer style={{ transform }}>{children}</PanContainer>
-      <ZoomControls
-        steps={[0.1, 0.25, 0.5, 1, 1.5, 2]}
-        zoom={zoom}
-        setZoom={setZoom}
-      />
-      <PanControls
-        container={container}
-        zoom={zoom}
-        pan={{ x, y }}
-        setPan={setPan}
-      />
-    </StyledEditorPane>
+    <PanZoomProvider pan={{ x, y }} zoom={zoom}>
+      <StyledEditorPane
+        ref={container}
+        {...panZoomHandlers}
+        style={{
+          backgroundSize: `${2 * zoom}em ${2 * zoom}em`,
+          backgroundPosition: `${x}px ${y}px`
+        }}
+      >
+        <PanContainer style={{ transform }}>{children}</PanContainer>
+        <ZoomControls
+          steps={[0.1, 0.25, 0.5, 1, 1.5, 2]}
+          zoom={zoom}
+          setZoom={setZoom}
+        />
+        <PanControls
+          container={container}
+          zoom={zoom}
+          pan={{ x, y }}
+          setPan={setPan}
+        />
+      </StyledEditorPane>
+    </PanZoomProvider>
   )
 }
 

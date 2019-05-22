@@ -6,19 +6,14 @@ import _ from "utils"
 
 const FieldTag = ({ entity, field, showEntity = false, showInfo = true }) => {
   return (
-    <EntityTag
-      name={
-        <>
-          {showEntity ? `${entity.name}.${field.name}` : field.name}
-          <InputType
-            type={_.toInputType(field.type.type)}
-            isMulti={field.type.isMulti}
-            showInfo={showInfo}
-          />
-        </>
-      }
-      showIcon={false}
-    />
+    <EntityTag entity={entity} showEntity={showEntity} showIcon={false}>
+      .{field.name}
+      <InputType
+        type={_.toInputType(field.type.type)}
+        isMulti={field.type.isMulti}
+        showInfo={showInfo}
+      />
+    </EntityTag>
   )
 }
 

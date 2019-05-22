@@ -42,7 +42,7 @@ const AmnesiaPage = () => {
               <Input block label="Email" name="email" type="email" required />
             </Field>
             <Field block>
-              <Button block type="submit" color="accent" importance="primary">
+              <Button block type="submit" color="primary" importance="primary">
                 Get reset link
               </Button>
             </Field>

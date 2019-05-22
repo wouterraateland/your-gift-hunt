@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
 import styled from "styled-components"
 
-import useGame from "hooks/useGame"
+import useGameMutations from "hooks/useGameMutations"
 
 import { useFormState } from "react-use-form-state"
 import useClickOutside from "hooks/useClickOutside"
@@ -9,20 +9,21 @@ import useClickOutside from "hooks/useClickOutside"
 import { Field, Input, Button } from "your-gift-hunt/ui"
 
 const Form = styled.form`
-  margin-top: 1.5em;
+  margin-top: 0.25em;
+  margin-left: 0;
 
   & > div:nth-child(1) {
     width: 100%;
     margin-top: -0.79em;
   }
   & > div:nth-child(2) {
-    width: calc(100% - 4em);
+    width: calc(100% - 4.4em);
   }
 `
 
 const HintForm = ({ actionRequirementId, onClose, hint }) => {
   const isNewHint = !hint
-  const { createHint, updateHint } = useGame()
+  const { createHint, updateHint } = useGameMutations()
 
   const [{ isLoading, error }, setState] = useState({
     isLoading: false,

@@ -3,7 +3,8 @@ import styled from "styled-components"
 
 import useInspector from "hooks/useInspector"
 import useEditor from "hooks/useEditor"
-import useGame from "hooks/useGame"
+import useEntityDependencies from "hooks/useEntityDependencies"
+import useGameMutations from "hooks/useGameMutations"
 
 import useClickOutside from "hooks/useClickOutside"
 
@@ -36,11 +37,12 @@ const Info = styled.small`
   }
 `
 
-const DeleteButton = ({ node, isOpen }) => {
+const DeleteButton = ({ entity, state }) => {
   const ref = useRef(null)
-  const { closeInspector } = useInspector()
+  const { isOpen, closeInspector } = useInspector()
   const { ACTION_TYPES, upcomingAction, setUpcomingAction } = useEditor()
-  const { getDependentNodes, deleteNodes } = useGame()
+  const { getDependentNodes } = useEntityDependencies()
+  const { deleteNodes } = useGameMutations()
 
   useClickOutside({ ref, onClickOutside: () => setUpcomingAction(null) })
 
@@ -50,30 +52,34 @@ const DeleteButton = ({ node, isOpen }) => {
         setUpcomingAction(null)
       }
     },
-    [node, isOpen]
+    [entity, state, isOpen]
   )
 
   const isDeleting =
     upcomingAction &&
     upcomingAction.type === ACTION_TYPES.DELETE_NODE &&
-    upcomingAction.payload.node === node.id
+    (upcomingAction.payload.entityId === entity.id ||
+      (state && upcomingAction.payload.stateId === state.id))
 
   const onClick = useCallback(
     async () => {
       if (isDeleting) {
         closeInspector()
-        await deleteNodes(upcomingAction.payload.dependentNodes)
+        await deleteNodes(upcomingAction.payload.dependentStates)
       } else {
         setUpcomingAction({
           type: ACTION_TYPES.DELETE_NODE,
           payload: {
-            node: node.id,
-            dependentNodes: getDependentNodes(node.id)
+            entityId: entity.id,
+            stateId: state ? state.id : null,
+            dependentStates: getDependentNodes(
+              state ? [state.id] : entity.states.map(({ id }) => id)
+            )
           }
         })
       }
     },
-    [isDeleting, node]
+    [isDeleting, entity, state]
   )
 
   return (
@@ -88,9 +94,11 @@ const DeleteButton = ({ node, isOpen }) => {
         <Bin />{" "}
         {isDeleting
           ? `Confirm deletion of ${
-              upcomingAction.payload.dependentNodes.length
+              upcomingAction.payload.dependentStates.length
             } nodes`
-          : "Delete node"}
+          : state
+          ? "Delete state"
+          : "Delete entity"}
       </Button>
       <Info>
         Deleting this node also deletes all nodes that are dependent on it.

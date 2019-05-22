@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import styled, { css, keyframes } from "styled-components"
 
 import useGame from "hooks/useGame"
+import useSaveState from "hooks/useSaveState"
 import useMetaActions from "hooks/useMetaActions"
 import useForceUpdate from "hooks/useForceUpdate"
 
@@ -98,7 +99,8 @@ const SaveState = ({ isSaving, isDirty, lastSaved }) => {
 }
 
 const CreatorLayout = ({ children }) => {
-  const { game, isSaving, isDirty, lastSaved } = useGame()
+  const { isSaving, isDirty, lastSaved } = useSaveState()
+  const { game } = useGame()
   const { testGame } = useMetaActions(game)
 
   return (

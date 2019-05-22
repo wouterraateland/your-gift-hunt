@@ -37,16 +37,25 @@ export const nameOptions = {
 }
 
 export const NODE_TYPES = {
+  ENTITY: "entity",
   ENTRY: "entry",
   EXIT: "exit",
-  STATE: "state"
+  STATE: "state",
+  INFORMATION_SLOT: "information-slot",
+  FIELD: "field",
+  PORTAL: "portal",
+  ENTRANCE: "entrance"
 }
 
 export const EDGE_TYPES = {
   ENTRY: "entry",
   EXIT: "exit",
+  INFO: "info",
+  INFO_AVAILABILITY: "info-availability",
+  FIELD_USAGE: "field-usage",
+  PORTAL: "portal",
+  PORTAL_OPENNESS: "portal-openness",
   TRANSFORM: "transform",
   UNLOCK: "unlock",
-  USE: "use",
-  INFO: "info"
+  USE: "use"
 }

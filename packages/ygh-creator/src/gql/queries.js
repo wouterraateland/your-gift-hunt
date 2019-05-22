@@ -43,6 +43,9 @@ export const GAME_BY_SLUG = gql`
       entities {
         ...EntityFragment
       }
+      startContainer {
+        id
+      }
     }
   }
   ${ENTITY_FRAGMENT}

@@ -1,21 +1,24 @@
 import React from "react"
 
-import useGame from "hooks/useGame"
+import useGameQueries from "hooks/useGameQueries"
+import useEntityGraph from "hooks/useEntityGraph"
 
 import Section from "components/Editor/DetailPane/Section"
 
 import DefaultUnlockConditions from "./Default"
 import EditableUnlockConditions from "./Editable"
 
-const UnlockConditions = ({ node }) => {
-  const { isUnlockable } = useGame()
+const UnlockConditions = ({ entity, state }) => {
+  const { isUnlockable } = useGameQueries()
+  const { getStateNodes } = useEntityGraph()
 
-  return isUnlockable(node, true) ? (
+  return isUnlockable(state) ||
+    (entity.isObject && state.id === getStateNodes(entity.id)[0].id) ? (
     <Section title="Unlock conditions">
-      {node.entity.isObject ? (
-        <DefaultUnlockConditions node={node} />
+      {entity.isObject ? (
+        <DefaultUnlockConditions entity={entity} state={state} />
       ) : (
-        <EditableUnlockConditions node={node} />
+        <EditableUnlockConditions entity={entity} state={state} />
       )}
     </Section>
   ) : null

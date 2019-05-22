@@ -1,33 +1,24 @@
-import { NODE_TYPES } from "data"
 import React from "react"
 
-import useGame from "hooks/useGame"
+import useGameQueries from "hooks/useGameQueries"
 
 import Section from "components/Editor/DetailPane/Section"
 import TransitionWithRequirements from "./TransitionWithRequirements"
 
-const OutgoingTransitions = ({ node }) => {
-  const { getNodeById } = useGame()
-
-  const outgoingTransitions = node.state.outgoingTransitions.map(
+const OutgoingTransitions = ({ state }) => {
+  const { getStateById } = useGameQueries()
+  const outgoingTransitions = state.outgoingTransitions.map(
     outgoingTransition => ({
       ...outgoingTransition,
-      from: node,
-      to: getNodeById(
-        outgoingTransition.to
-          ? outgoingTransition.to.id
-          : `${node.entity.id}-${NODE_TYPES.EXIT}`
-      )
+      from: state,
+      to: outgoingTransition.to ? getStateById(outgoingTransition.to.id) : null
     })
   )
 
   return outgoingTransitions.length ? (
     <Section title="Transitions" wrapChildren>
       {outgoingTransitions.map(transition => (
-        <TransitionWithRequirements
-          key={[transition.from.id, transition.to.id]}
-          {...transition}
-        />
+        <TransitionWithRequirements key={transition.to} {...transition} />
       ))}
     </Section>
   ) : null

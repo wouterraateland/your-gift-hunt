@@ -54,8 +54,8 @@ const Input = ({
   </Label>
 )
 
-export default ({ error, ...otherProps }) => (
-  <Container block={otherProps.block}>
+export default ({ error, className, ...otherProps }) => (
+  <Container className={className} block={otherProps.block}>
     <Input
       {...otherProps}
       isSelect={["radio", "checkbox"].includes(otherProps.type)}
