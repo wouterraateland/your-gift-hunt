@@ -76,7 +76,13 @@ const DefaultEntity = forwardRef(
             label={key}
             value={value}
             isEnabled={isEnabled}
-            onSubmit={value => dispatchInputAction(key, value)}
+            onSubmit={value =>
+              dispatchInputAction(
+                state,
+                key,
+                isNaN(parseInt(value, 10)) ? value : parseInt(value, 10)
+              )
+            }
           />
         ))}
         <strong>Fields:</strong>

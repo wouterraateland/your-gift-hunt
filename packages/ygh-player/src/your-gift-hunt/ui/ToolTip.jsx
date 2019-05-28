@@ -9,7 +9,7 @@ const ToolTip = styled.div.attrs(({ position }) => ({
   }
 }))`
   position: fixed;
-  z-index: 1;
+  z-index: 10;
 
   width: 384px;
   max-width: calc(100vw - 2em);
@@ -61,7 +61,8 @@ export default props => {
   const position = useRef(null)
   const [isVisible, setVisibility] = useState(false)
 
-  const toggleVisibility = useCallback(() => {
+  const toggleVisibility = useCallback(event => {
+    event.stopPropagation()
     const rect = ref.current.parentElement.getClientRects()[0]
     position.current = {
       x: rect.x + rect.width / 2,

@@ -17,13 +17,9 @@ const GenericEntityWithContainedEntities = props => {
   )
 
   return (
-    <GenericEntity {...props}>
+    <GenericEntity {...defaultProps[props.template.name]} {...props}>
       {containedEntities.map(entity => (
-        <GenericEntityWithContainedEntities
-          key={entity.id}
-          {...defaultProps[entity.template.name]}
-          {...entity}
-        />
+        <GenericEntityWithContainedEntities key={entity.id} {...entity} />
       ))}
     </GenericEntity>
   )

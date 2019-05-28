@@ -112,5 +112,84 @@
     "left": 60,
     "top": 65,
     "rotation": 150
+  },
+
+  "Room A": {
+    "left": 0,
+    "top": 0,
+    "width": 20,
+    "height": 14
+  },
+  "Power Drawings": {
+    "left": 0,
+    "top": 0,
+    "width": 1,
+    "height": 1
+  },
+  "UTP Cable": {
+    "left": 0,
+    "top": 0,
+    "width": 1,
+    "height": 1
+  },
+  "Rythm Lamps": {
+    "left": 0.5,
+    "top": 3,
+    "width": 1,
+    "height": 4
+  },
+  "Power Sockets": {
+    "left": 0,
+    "top": 0,
+    "width": 1,
+    "height": 1
+  },
+  "Posters": {
+    "left": 8,
+    "top": 13.5,
+    "width": 7,
+    "height": 1
+  },
+  "USB Stick": {
+    "left": 0,
+    "top": 0,
+    "width": 1,
+    "height": 1
+  },
+  "Computer": {
+    "left": 10,
+    "top": 2,
+    "width": 3,
+    "height": 3
+  },
+  "Tag Holder": {
+    "left": 14,
+    "top": 4,
+    "width": 3,
+    "height": 3
+  },
+  "Congierge Tag": {
+    "left": 1,
+    "top": 1,
+    "width": 1,
+    "height": 1
+  },
+  "Electric Door": {
+    "left": 0,
+    "top": 12,
+    "width": 1,
+    "height": 5
+  },
+  "Central hall": {
+    "left": 20,
+    "top": -3,
+    "width": 20,
+    "height": 20
+  },
+  "Radio Controlled Car": {
+    "left": 0,
+    "top": 0,
+    "width": 1,
+    "height": 1
   }
 }
