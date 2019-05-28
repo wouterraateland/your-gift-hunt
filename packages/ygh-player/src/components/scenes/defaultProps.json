@@ -121,10 +121,10 @@
     "height": 14
   },
   "Power Drawings": {
-    "left": 2,
-    "top": 2,
-    "width": 1,
-    "height": 11
+    "left": 1,
+    "top": 11,
+    "width": 2,
+    "height": 2
   },
   "UTP Cable": {
     "left": 5,
@@ -157,8 +157,8 @@
     "height": 1
   },
   "Computer": {
-    "left": 10,
-    "top": 2,
+    "left": -2,
+    "top": -1,
     "width": 3,
     "height": 3
   },
