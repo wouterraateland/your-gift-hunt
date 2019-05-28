@@ -121,16 +121,16 @@
     "height": 14
   },
   "Power Drawings": {
-    "left": 0,
-    "top": 0,
+    "left": 2,
+    "top": 2,
     "width": 1,
-    "height": 1
+    "height": 11
   },
   "UTP Cable": {
-    "left": 0,
-    "top": 0,
-    "width": 1,
-    "height": 1
+    "left": 5,
+    "top": 7,
+    "width": 2,
+    "height": 3
   },
   "Rythm Lamps": {
     "left": 0.5,
@@ -139,10 +139,10 @@
     "height": 4
   },
   "Power Sockets": {
-    "left": 0,
-    "top": 0,
-    "width": 1,
-    "height": 1
+    "left": 10,
+    "top": 8,
+    "width": 3,
+    "height": 2
   },
   "Posters": {
     "left": 8,
@@ -151,8 +151,8 @@
     "height": 1
   },
   "USB Stick": {
-    "left": 0,
-    "top": 0,
+    "left": 1,
+    "top": 8,
     "width": 1,
     "height": 1
   },
@@ -180,7 +180,7 @@
     "width": 1,
     "height": 5
   },
-  "Central hall": {
+  "Central Hall": {
     "left": 20,
     "top": -3,
     "width": 20,
