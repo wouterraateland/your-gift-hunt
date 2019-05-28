@@ -49,7 +49,10 @@ const getUseEdges = nodes =>
     .flatMap(({ id, state: { outgoingTransitions } }) =>
       outgoingTransitions.flatMap(({ requiredActions }) =>
         requiredActions
-          .filter(({ type }) => type === ACTION_TYPES.USE)
+          .filter(
+            ({ type, payload }) =>
+              type === ACTION_TYPES.USE && payload.requiredEntity
+          )
           .map(({ payload: { requiredEntity: { entityState } } }) => ({
             from: id,
             to: entityState.id,
@@ -64,7 +67,10 @@ const getTargetOfUseEdges = nodes =>
     .flatMap(({ id, state: { outgoingTransitions } }) =>
       outgoingTransitions.flatMap(({ requiredActions }) =>
         requiredActions
-          .filter(({ type }) => type === ACTION_TYPES.TARGET_OF_USE)
+          .filter(
+            ({ type, payload }) =>
+              type === ACTION_TYPES.TARGET_OF_USE && payload.requiredEntity
+          )
           .map(({ payload: { requiredEntity: { entityState } } }) => ({
             from: entityState.id,
             to: id,
