@@ -25,18 +25,19 @@ export { default as Cog } from "./Cog"
 export { default as Edit } from "./Edit"
 export { default as Pen } from "./Pen"
 
-const Icon = styled.svg.attrs(({ size }) => ({
+const Icon = styled.svg.attrs(({ size, weight }) => ({
   style: {
-    height: `${size}em`
+    height: `${size}em`,
+    strokeWidth: `${weight / 8}em`
   }
 }))`
   fill: currentColor;
   stroke: currentColor;
-  stroke-width: 0;
 `
 
 Icon.defaultProps = {
-  size: 1
+  size: 1,
+  weight: 1
 }
 
 export default Icon

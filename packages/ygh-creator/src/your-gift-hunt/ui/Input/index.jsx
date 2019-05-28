@@ -1,5 +1,8 @@
 import React from "react"
 
+import HorizontalSelect from "../HorizontalSelect"
+import Select from "../Select"
+
 import Container from "./Container"
 import Label from "./Label"
 import LabelText from "./LabelText"
@@ -40,10 +43,6 @@ const Input = ({
     <LabelText
       isSelect={isSelect}
       up={true}
-      //   otherProps.value !== undefined &&
-      //   otherProps.value !== null &&
-      //   (isMulti ? otherProps.value.length > 0 : otherProps.value !== "")
-      // }
       label={label}
       info={info}
       showType={showType}
@@ -54,7 +53,7 @@ const Input = ({
   </Label>
 )
 
-export default ({ error, className, ...otherProps }) => (
+const InputWithError = ({ error, className, ...otherProps }) => (
   <Container className={className} block={otherProps.block}>
     <Input
       {...otherProps}
@@ -63,3 +62,14 @@ export default ({ error, className, ...otherProps }) => (
     {!!error && <ErrorMessage>{error}</ErrorMessage>}
   </Container>
 )
+
+export default props =>
+  props.type === "select" ? (
+    props.format === "horizontal" ? (
+      <HorizontalSelect {...props} />
+    ) : (
+      <Select {...props} />
+    )
+  ) : (
+    <InputWithError {...props} />
+  )

@@ -12,7 +12,7 @@ const Label = styled.label`
   ${props =>
     !props.isMap &&
     css`
-      padding: ${props.isSelect ? "0 0 0.5em" : "0.5em 0.7em"};
+      padding: ${props.isSelect ? "0.5em 0" : "0.5em 0.7em"};
     `}
 
   ${props =>

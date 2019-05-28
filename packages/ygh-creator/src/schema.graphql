@@ -1,5 +1,5 @@
 # source: https://api.yourgifthunt.com/prisma/hunt-api/dev
-# timestamp: Mon May 20 2019 16:01:29 GMT+0200 (Midden-Europese zomertijd)
+# timestamp: Tue May 28 2019 12:38:29 GMT+0200 (Midden-Europese zomertijd)
 
 enum AccessType {
   NONE
@@ -2461,6 +2461,10 @@ type AggregateEntityTemplate {
   count: Int!
 }
 
+type AggregateEntityTemplateSet {
+  count: Int!
+}
+
 type AggregateEntrance {
   count: Int!
 }
@@ -3649,7 +3653,7 @@ type EntityRequirementTemplate implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   entityState: StateTemplate!
-  payload: PayloadRequirementTemplate!
+  payload: PayloadRequirementTemplate
 }
 
 """A connection to a list of items."""
@@ -3665,7 +3669,7 @@ type EntityRequirementTemplateConnection {
 input EntityRequirementTemplateCreateInput {
   id: ID
   entityState: StateTemplateCreateOneInput!
-  payload: PayloadRequirementTemplateCreateOneWithoutRequiredEntityInput!
+  payload: PayloadRequirementTemplateCreateOneWithoutRequiredEntityInput
 }
 
 input EntityRequirementTemplateCreateOneInput {
@@ -3746,12 +3750,12 @@ input EntityRequirementTemplateSubscriptionWhereInput {
 
 input EntityRequirementTemplateUpdateDataInput {
   entityState: StateTemplateUpdateOneRequiredInput
-  payload: PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredEntityInput
+  payload: PayloadRequirementTemplateUpdateOneWithoutRequiredEntityInput
 }
 
 input EntityRequirementTemplateUpdateInput {
   entityState: StateTemplateUpdateOneRequiredInput
-  payload: PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredEntityInput
+  payload: PayloadRequirementTemplateUpdateOneWithoutRequiredEntityInput
 }
 
 input EntityRequirementTemplateUpdateOneInput {
@@ -4286,6 +4290,7 @@ type EntityTemplate implements Node {
   portals(where: PortalTemplateWhereInput, orderBy: PortalTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PortalTemplate!]
   featuredField: FieldTemplate
   defaultState: StateTemplate
+  set: EntityTemplateSet
 }
 
 """A connection to a list of items."""
@@ -4313,6 +4318,12 @@ input EntityTemplateCreateInput {
   portals: PortalTemplateCreateManyWithoutEntityInput
   featuredField: FieldTemplateCreateOneInput
   defaultState: StateTemplateCreateOneInput
+  set: EntityTemplateSetCreateOneWithoutEntityTemplatesInput
+}
+
+input EntityTemplateCreateManyWithoutSetInput {
+  create: [EntityTemplateCreateWithoutSetInput!]
+  connect: [EntityTemplateWhereUniqueInput!]
 }
 
 input EntityTemplateCreateOneInput {
@@ -4359,6 +4370,7 @@ input EntityTemplateCreateWithoutEntrancesInput {
   portals: PortalTemplateCreateManyWithoutEntityInput
   featuredField: FieldTemplateCreateOneInput
   defaultState: StateTemplateCreateOneInput
+  set: EntityTemplateSetCreateOneWithoutEntityTemplatesInput
 }
 
 input EntityTemplateCreateWithoutFieldsInput {
@@ -4375,6 +4387,7 @@ input EntityTemplateCreateWithoutFieldsInput {
   portals: PortalTemplateCreateManyWithoutEntityInput
   featuredField: FieldTemplateCreateOneInput
   defaultState: StateTemplateCreateOneInput
+  set: EntityTemplateSetCreateOneWithoutEntityTemplatesInput
 }
 
 input EntityTemplateCreateWithoutInformationSlotsInput {
@@ -4391,6 +4404,7 @@ input EntityTemplateCreateWithoutInformationSlotsInput {
   portals: PortalTemplateCreateManyWithoutEntityInput
   featuredField: FieldTemplateCreateOneInput
   defaultState: StateTemplateCreateOneInput
+  set: EntityTemplateSetCreateOneWithoutEntityTemplatesInput
 }
 
 input EntityTemplateCreateWithoutPortalsInput {
@@ -4405,6 +4419,24 @@ input EntityTemplateCreateWithoutPortalsInput {
   states: StateTemplateCreateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateCreateManyWithoutEntityInput
   entrances: EntranceTemplateCreateManyWithoutEntityTemplateInput
+  featuredField: FieldTemplateCreateOneInput
+  defaultState: StateTemplateCreateOneInput
+  set: EntityTemplateSetCreateOneWithoutEntityTemplatesInput
+}
+
+input EntityTemplateCreateWithoutSetInput {
+  id: ID
+  name: String
+  description: String
+  isTrigger: Boolean
+  isItem: Boolean
+  isObject: Boolean
+  isContainer: Boolean
+  fields: FieldTemplateCreateManyWithoutEntityInput
+  states: StateTemplateCreateManyWithoutEntityInput
+  informationSlots: InformationSlotTemplateCreateManyWithoutEntityInput
+  entrances: EntranceTemplateCreateManyWithoutEntityTemplateInput
+  portals: PortalTemplateCreateManyWithoutEntityInput
   featuredField: FieldTemplateCreateOneInput
   defaultState: StateTemplateCreateOneInput
 }
@@ -4423,6 +4455,7 @@ input EntityTemplateCreateWithoutStatesInput {
   portals: PortalTemplateCreateManyWithoutEntityInput
   featuredField: FieldTemplateCreateOneInput
   defaultState: StateTemplateCreateOneInput
+  set: EntityTemplateSetCreateOneWithoutEntityTemplatesInput
 }
 
 """An edge in a connection."""
@@ -4465,6 +4498,798 @@ type EntityTemplatePreviousValues {
   isItem: Boolean!
   isObject: Boolean!
   isContainer: Boolean!
+}
+
+input EntityTemplateScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EntityTemplateScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EntityTemplateScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EntityTemplateScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  isTrigger: Boolean
+
+  """All values that are not equal to given value."""
+  isTrigger_not: Boolean
+  isItem: Boolean
+
+  """All values that are not equal to given value."""
+  isItem_not: Boolean
+  isObject: Boolean
+
+  """All values that are not equal to given value."""
+  isObject_not: Boolean
+  isContainer: Boolean
+
+  """All values that are not equal to given value."""
+  isContainer_not: Boolean
+}
+
+type EntityTemplateSet implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  description: String
+  entityTemplates(where: EntityTemplateWhereInput, orderBy: EntityTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityTemplate!]
+  games(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game!]
+  creator: User!
+}
+
+"""A connection to a list of items."""
+type EntityTemplateSetConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [EntityTemplateSetEdge]!
+  aggregate: AggregateEntityTemplateSet!
+}
+
+input EntityTemplateSetCreateInput {
+  id: ID
+  name: String
+  description: String
+  entityTemplates: EntityTemplateCreateManyWithoutSetInput
+  games: GameCreateManyWithoutEntityTemplateSetsInput
+  creator: UserCreateOneWithoutEntityTemplateSetsCreatedInput!
+}
+
+input EntityTemplateSetCreateManyWithoutCreatorInput {
+  create: [EntityTemplateSetCreateWithoutCreatorInput!]
+  connect: [EntityTemplateSetWhereUniqueInput!]
+}
+
+input EntityTemplateSetCreateManyWithoutGamesInput {
+  create: [EntityTemplateSetCreateWithoutGamesInput!]
+  connect: [EntityTemplateSetWhereUniqueInput!]
+}
+
+input EntityTemplateSetCreateOneWithoutEntityTemplatesInput {
+  create: EntityTemplateSetCreateWithoutEntityTemplatesInput
+  connect: EntityTemplateSetWhereUniqueInput
+}
+
+input EntityTemplateSetCreateWithoutCreatorInput {
+  id: ID
+  name: String
+  description: String
+  entityTemplates: EntityTemplateCreateManyWithoutSetInput
+  games: GameCreateManyWithoutEntityTemplateSetsInput
+}
+
+input EntityTemplateSetCreateWithoutEntityTemplatesInput {
+  id: ID
+  name: String
+  description: String
+  games: GameCreateManyWithoutEntityTemplateSetsInput
+  creator: UserCreateOneWithoutEntityTemplateSetsCreatedInput!
+}
+
+input EntityTemplateSetCreateWithoutGamesInput {
+  id: ID
+  name: String
+  description: String
+  entityTemplates: EntityTemplateCreateManyWithoutSetInput
+  creator: UserCreateOneWithoutEntityTemplateSetsCreatedInput!
+}
+
+"""An edge in a connection."""
+type EntityTemplateSetEdge {
+  """The item at the end of the edge."""
+  node: EntityTemplateSet!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum EntityTemplateSetOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+}
+
+type EntityTemplateSetPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  description: String
+}
+
+input EntityTemplateSetScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EntityTemplateSetScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EntityTemplateSetScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EntityTemplateSetScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+}
+
+type EntityTemplateSetSubscriptionPayload {
+  mutation: MutationType!
+  node: EntityTemplateSet
+  updatedFields: [String!]
+  previousValues: EntityTemplateSetPreviousValues
+}
+
+input EntityTemplateSetSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EntityTemplateSetSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EntityTemplateSetSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EntityTemplateSetSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: EntityTemplateSetWhereInput
+}
+
+input EntityTemplateSetUpdateInput {
+  name: String
+  description: String
+  entityTemplates: EntityTemplateUpdateManyWithoutSetInput
+  games: GameUpdateManyWithoutEntityTemplateSetsInput
+  creator: UserUpdateOneRequiredWithoutEntityTemplateSetsCreatedInput
+}
+
+input EntityTemplateSetUpdateManyDataInput {
+  name: String
+  description: String
+}
+
+input EntityTemplateSetUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input EntityTemplateSetUpdateManyWithoutCreatorInput {
+  create: [EntityTemplateSetCreateWithoutCreatorInput!]
+  connect: [EntityTemplateSetWhereUniqueInput!]
+  set: [EntityTemplateSetWhereUniqueInput!]
+  disconnect: [EntityTemplateSetWhereUniqueInput!]
+  delete: [EntityTemplateSetWhereUniqueInput!]
+  update: [EntityTemplateSetUpdateWithWhereUniqueWithoutCreatorInput!]
+  updateMany: [EntityTemplateSetUpdateManyWithWhereNestedInput!]
+  deleteMany: [EntityTemplateSetScalarWhereInput!]
+  upsert: [EntityTemplateSetUpsertWithWhereUniqueWithoutCreatorInput!]
+}
+
+input EntityTemplateSetUpdateManyWithoutGamesInput {
+  create: [EntityTemplateSetCreateWithoutGamesInput!]
+  connect: [EntityTemplateSetWhereUniqueInput!]
+  set: [EntityTemplateSetWhereUniqueInput!]
+  disconnect: [EntityTemplateSetWhereUniqueInput!]
+  delete: [EntityTemplateSetWhereUniqueInput!]
+  update: [EntityTemplateSetUpdateWithWhereUniqueWithoutGamesInput!]
+  updateMany: [EntityTemplateSetUpdateManyWithWhereNestedInput!]
+  deleteMany: [EntityTemplateSetScalarWhereInput!]
+  upsert: [EntityTemplateSetUpsertWithWhereUniqueWithoutGamesInput!]
+}
+
+input EntityTemplateSetUpdateManyWithWhereNestedInput {
+  where: EntityTemplateSetScalarWhereInput!
+  data: EntityTemplateSetUpdateManyDataInput!
+}
+
+input EntityTemplateSetUpdateOneWithoutEntityTemplatesInput {
+  create: EntityTemplateSetCreateWithoutEntityTemplatesInput
+  connect: EntityTemplateSetWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: EntityTemplateSetUpdateWithoutEntityTemplatesDataInput
+  upsert: EntityTemplateSetUpsertWithoutEntityTemplatesInput
+}
+
+input EntityTemplateSetUpdateWithoutCreatorDataInput {
+  name: String
+  description: String
+  entityTemplates: EntityTemplateUpdateManyWithoutSetInput
+  games: GameUpdateManyWithoutEntityTemplateSetsInput
+}
+
+input EntityTemplateSetUpdateWithoutEntityTemplatesDataInput {
+  name: String
+  description: String
+  games: GameUpdateManyWithoutEntityTemplateSetsInput
+  creator: UserUpdateOneRequiredWithoutEntityTemplateSetsCreatedInput
+}
+
+input EntityTemplateSetUpdateWithoutGamesDataInput {
+  name: String
+  description: String
+  entityTemplates: EntityTemplateUpdateManyWithoutSetInput
+  creator: UserUpdateOneRequiredWithoutEntityTemplateSetsCreatedInput
+}
+
+input EntityTemplateSetUpdateWithWhereUniqueWithoutCreatorInput {
+  where: EntityTemplateSetWhereUniqueInput!
+  data: EntityTemplateSetUpdateWithoutCreatorDataInput!
+}
+
+input EntityTemplateSetUpdateWithWhereUniqueWithoutGamesInput {
+  where: EntityTemplateSetWhereUniqueInput!
+  data: EntityTemplateSetUpdateWithoutGamesDataInput!
+}
+
+input EntityTemplateSetUpsertWithoutEntityTemplatesInput {
+  update: EntityTemplateSetUpdateWithoutEntityTemplatesDataInput!
+  create: EntityTemplateSetCreateWithoutEntityTemplatesInput!
+}
+
+input EntityTemplateSetUpsertWithWhereUniqueWithoutCreatorInput {
+  where: EntityTemplateSetWhereUniqueInput!
+  update: EntityTemplateSetUpdateWithoutCreatorDataInput!
+  create: EntityTemplateSetCreateWithoutCreatorInput!
+}
+
+input EntityTemplateSetUpsertWithWhereUniqueWithoutGamesInput {
+  where: EntityTemplateSetWhereUniqueInput!
+  update: EntityTemplateSetUpdateWithoutGamesDataInput!
+  create: EntityTemplateSetCreateWithoutGamesInput!
+}
+
+input EntityTemplateSetWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EntityTemplateSetWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EntityTemplateSetWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EntityTemplateSetWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  entityTemplates_every: EntityTemplateWhereInput
+  entityTemplates_some: EntityTemplateWhereInput
+  entityTemplates_none: EntityTemplateWhereInput
+  games_every: GameWhereInput
+  games_some: GameWhereInput
+  games_none: GameWhereInput
+  creator: UserWhereInput
+}
+
+input EntityTemplateSetWhereUniqueInput {
+  id: ID
 }
 
 type EntityTemplateSubscriptionPayload {
@@ -4518,6 +5343,7 @@ input EntityTemplateUpdateDataInput {
   portals: PortalTemplateUpdateManyWithoutEntityInput
   featuredField: FieldTemplateUpdateOneInput
   defaultState: StateTemplateUpdateOneInput
+  set: EntityTemplateSetUpdateOneWithoutEntityTemplatesInput
 }
 
 input EntityTemplateUpdateInput {
@@ -4534,6 +5360,16 @@ input EntityTemplateUpdateInput {
   portals: PortalTemplateUpdateManyWithoutEntityInput
   featuredField: FieldTemplateUpdateOneInput
   defaultState: StateTemplateUpdateOneInput
+  set: EntityTemplateSetUpdateOneWithoutEntityTemplatesInput
+}
+
+input EntityTemplateUpdateManyDataInput {
+  name: String
+  description: String
+  isTrigger: Boolean
+  isItem: Boolean
+  isObject: Boolean
+  isContainer: Boolean
 }
 
 input EntityTemplateUpdateManyMutationInput {
@@ -4543,6 +5379,23 @@ input EntityTemplateUpdateManyMutationInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+}
+
+input EntityTemplateUpdateManyWithoutSetInput {
+  create: [EntityTemplateCreateWithoutSetInput!]
+  connect: [EntityTemplateWhereUniqueInput!]
+  set: [EntityTemplateWhereUniqueInput!]
+  disconnect: [EntityTemplateWhereUniqueInput!]
+  delete: [EntityTemplateWhereUniqueInput!]
+  update: [EntityTemplateUpdateWithWhereUniqueWithoutSetInput!]
+  updateMany: [EntityTemplateUpdateManyWithWhereNestedInput!]
+  deleteMany: [EntityTemplateScalarWhereInput!]
+  upsert: [EntityTemplateUpsertWithWhereUniqueWithoutSetInput!]
+}
+
+input EntityTemplateUpdateManyWithWhereNestedInput {
+  where: EntityTemplateScalarWhereInput!
+  data: EntityTemplateUpdateManyDataInput!
 }
 
 input EntityTemplateUpdateOneInput {
@@ -4602,6 +5455,7 @@ input EntityTemplateUpdateWithoutEntrancesDataInput {
   portals: PortalTemplateUpdateManyWithoutEntityInput
   featuredField: FieldTemplateUpdateOneInput
   defaultState: StateTemplateUpdateOneInput
+  set: EntityTemplateSetUpdateOneWithoutEntityTemplatesInput
 }
 
 input EntityTemplateUpdateWithoutFieldsDataInput {
@@ -4617,6 +5471,7 @@ input EntityTemplateUpdateWithoutFieldsDataInput {
   portals: PortalTemplateUpdateManyWithoutEntityInput
   featuredField: FieldTemplateUpdateOneInput
   defaultState: StateTemplateUpdateOneInput
+  set: EntityTemplateSetUpdateOneWithoutEntityTemplatesInput
 }
 
 input EntityTemplateUpdateWithoutInformationSlotsDataInput {
@@ -4632,6 +5487,7 @@ input EntityTemplateUpdateWithoutInformationSlotsDataInput {
   portals: PortalTemplateUpdateManyWithoutEntityInput
   featuredField: FieldTemplateUpdateOneInput
   defaultState: StateTemplateUpdateOneInput
+  set: EntityTemplateSetUpdateOneWithoutEntityTemplatesInput
 }
 
 input EntityTemplateUpdateWithoutPortalsDataInput {
@@ -4645,6 +5501,23 @@ input EntityTemplateUpdateWithoutPortalsDataInput {
   states: StateTemplateUpdateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateUpdateManyWithoutEntityInput
   entrances: EntranceTemplateUpdateManyWithoutEntityTemplateInput
+  featuredField: FieldTemplateUpdateOneInput
+  defaultState: StateTemplateUpdateOneInput
+  set: EntityTemplateSetUpdateOneWithoutEntityTemplatesInput
+}
+
+input EntityTemplateUpdateWithoutSetDataInput {
+  name: String
+  description: String
+  isTrigger: Boolean
+  isItem: Boolean
+  isObject: Boolean
+  isContainer: Boolean
+  fields: FieldTemplateUpdateManyWithoutEntityInput
+  states: StateTemplateUpdateManyWithoutEntityInput
+  informationSlots: InformationSlotTemplateUpdateManyWithoutEntityInput
+  entrances: EntranceTemplateUpdateManyWithoutEntityTemplateInput
+  portals: PortalTemplateUpdateManyWithoutEntityInput
   featuredField: FieldTemplateUpdateOneInput
   defaultState: StateTemplateUpdateOneInput
 }
@@ -4662,6 +5535,12 @@ input EntityTemplateUpdateWithoutStatesDataInput {
   portals: PortalTemplateUpdateManyWithoutEntityInput
   featuredField: FieldTemplateUpdateOneInput
   defaultState: StateTemplateUpdateOneInput
+  set: EntityTemplateSetUpdateOneWithoutEntityTemplatesInput
+}
+
+input EntityTemplateUpdateWithWhereUniqueWithoutSetInput {
+  where: EntityTemplateWhereUniqueInput!
+  data: EntityTemplateUpdateWithoutSetDataInput!
 }
 
 input EntityTemplateUpsertNestedInput {
@@ -4692,6 +5571,12 @@ input EntityTemplateUpsertWithoutPortalsInput {
 input EntityTemplateUpsertWithoutStatesInput {
   update: EntityTemplateUpdateWithoutStatesDataInput!
   create: EntityTemplateCreateWithoutStatesInput!
+}
+
+input EntityTemplateUpsertWithWhereUniqueWithoutSetInput {
+  where: EntityTemplateWhereUniqueInput!
+  update: EntityTemplateUpdateWithoutSetDataInput!
+  create: EntityTemplateCreateWithoutSetInput!
 }
 
 input EntityTemplateWhereInput {
@@ -4900,6 +5785,7 @@ input EntityTemplateWhereInput {
   portals_none: PortalTemplateWhereInput
   featuredField: FieldTemplateWhereInput
   defaultState: StateTemplateWhereInput
+  set: EntityTemplateSetWhereInput
 }
 
 input EntityTemplateWhereUniqueInput {
@@ -8297,6 +9183,7 @@ type Game implements Node {
   plays(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GamePlay!]
   entities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity!]
   startContainer: Entity
+  entityTemplateSets(where: EntityTemplateSetWhereInput, orderBy: EntityTemplateSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityTemplateSet!]
 }
 
 """A connection to a list of items."""
@@ -8324,6 +9211,7 @@ input GameCreateInput {
   plays: GamePlayCreateManyWithoutGameInput
   entities: EntityCreateManyWithoutGameInput
   startContainer: EntityCreateOneInput
+  entityTemplateSets: EntityTemplateSetCreateManyWithoutGamesInput
 }
 
 input GameCreateManyWithoutCooperatorsInput {
@@ -8333,6 +9221,11 @@ input GameCreateManyWithoutCooperatorsInput {
 
 input GameCreateManyWithoutCreatorInput {
   create: [GameCreateWithoutCreatorInput!]
+  connect: [GameWhereUniqueInput!]
+}
+
+input GameCreateManyWithoutEntityTemplateSetsInput {
+  create: [GameCreateWithoutEntityTemplateSetsInput!]
   connect: [GameWhereUniqueInput!]
 }
 
@@ -8360,6 +9253,7 @@ input GameCreateWithoutCooperatorsInput {
   plays: GamePlayCreateManyWithoutGameInput
   entities: EntityCreateManyWithoutGameInput
   startContainer: EntityCreateOneInput
+  entityTemplateSets: EntityTemplateSetCreateManyWithoutGamesInput
 }
 
 input GameCreateWithoutCreatorInput {
@@ -8376,6 +9270,7 @@ input GameCreateWithoutCreatorInput {
   plays: GamePlayCreateManyWithoutGameInput
   entities: EntityCreateManyWithoutGameInput
   startContainer: EntityCreateOneInput
+  entityTemplateSets: EntityTemplateSetCreateManyWithoutGamesInput
 }
 
 input GameCreateWithoutEntitiesInput {
@@ -8391,6 +9286,24 @@ input GameCreateWithoutEntitiesInput {
   creator: UserCreateOneWithoutGamesCreatedInput
   cooperators: UserCreateManyWithoutGamesInput
   plays: GamePlayCreateManyWithoutGameInput
+  startContainer: EntityCreateOneInput
+  entityTemplateSets: EntityTemplateSetCreateManyWithoutGamesInput
+}
+
+input GameCreateWithoutEntityTemplateSetsInput {
+  id: ID
+  name: String!
+  slug: String!
+  description: String
+  outro: String
+  privacy: PrivacyType!
+  accessType: AccessType!
+  accessCode: String
+  publishedAt: DateTime
+  creator: UserCreateOneWithoutGamesCreatedInput
+  cooperators: UserCreateManyWithoutGamesInput
+  plays: GamePlayCreateManyWithoutGameInput
+  entities: EntityCreateManyWithoutGameInput
   startContainer: EntityCreateOneInput
 }
 
@@ -8408,6 +9321,7 @@ input GameCreateWithoutPlaysInput {
   cooperators: UserCreateManyWithoutGamesInput
   entities: EntityCreateManyWithoutGameInput
   startContainer: EntityCreateOneInput
+  entityTemplateSets: EntityTemplateSetCreateManyWithoutGamesInput
 }
 
 """An edge in a connection."""
@@ -9450,6 +10364,7 @@ input GameUpdateInput {
   plays: GamePlayUpdateManyWithoutGameInput
   entities: EntityUpdateManyWithoutGameInput
   startContainer: EntityUpdateOneInput
+  entityTemplateSets: EntityTemplateSetUpdateManyWithoutGamesInput
 }
 
 input GameUpdateManyDataInput {
@@ -9498,6 +10413,18 @@ input GameUpdateManyWithoutCreatorInput {
   upsert: [GameUpsertWithWhereUniqueWithoutCreatorInput!]
 }
 
+input GameUpdateManyWithoutEntityTemplateSetsInput {
+  create: [GameCreateWithoutEntityTemplateSetsInput!]
+  connect: [GameWhereUniqueInput!]
+  set: [GameWhereUniqueInput!]
+  disconnect: [GameWhereUniqueInput!]
+  delete: [GameWhereUniqueInput!]
+  update: [GameUpdateWithWhereUniqueWithoutEntityTemplateSetsInput!]
+  updateMany: [GameUpdateManyWithWhereNestedInput!]
+  deleteMany: [GameScalarWhereInput!]
+  upsert: [GameUpsertWithWhereUniqueWithoutEntityTemplateSetsInput!]
+}
+
 input GameUpdateManyWithWhereNestedInput {
   where: GameScalarWhereInput!
   data: GameUpdateManyDataInput!
@@ -9532,6 +10459,7 @@ input GameUpdateWithoutCooperatorsDataInput {
   plays: GamePlayUpdateManyWithoutGameInput
   entities: EntityUpdateManyWithoutGameInput
   startContainer: EntityUpdateOneInput
+  entityTemplateSets: EntityTemplateSetUpdateManyWithoutGamesInput
 }
 
 input GameUpdateWithoutCreatorDataInput {
@@ -9547,6 +10475,7 @@ input GameUpdateWithoutCreatorDataInput {
   plays: GamePlayUpdateManyWithoutGameInput
   entities: EntityUpdateManyWithoutGameInput
   startContainer: EntityUpdateOneInput
+  entityTemplateSets: EntityTemplateSetUpdateManyWithoutGamesInput
 }
 
 input GameUpdateWithoutEntitiesDataInput {
@@ -9561,6 +10490,23 @@ input GameUpdateWithoutEntitiesDataInput {
   creator: UserUpdateOneWithoutGamesCreatedInput
   cooperators: UserUpdateManyWithoutGamesInput
   plays: GamePlayUpdateManyWithoutGameInput
+  startContainer: EntityUpdateOneInput
+  entityTemplateSets: EntityTemplateSetUpdateManyWithoutGamesInput
+}
+
+input GameUpdateWithoutEntityTemplateSetsDataInput {
+  name: String
+  slug: String
+  description: String
+  outro: String
+  privacy: PrivacyType
+  accessType: AccessType
+  accessCode: String
+  publishedAt: DateTime
+  creator: UserUpdateOneWithoutGamesCreatedInput
+  cooperators: UserUpdateManyWithoutGamesInput
+  plays: GamePlayUpdateManyWithoutGameInput
+  entities: EntityUpdateManyWithoutGameInput
   startContainer: EntityUpdateOneInput
 }
 
@@ -9577,6 +10523,7 @@ input GameUpdateWithoutPlaysDataInput {
   cooperators: UserUpdateManyWithoutGamesInput
   entities: EntityUpdateManyWithoutGameInput
   startContainer: EntityUpdateOneInput
+  entityTemplateSets: EntityTemplateSetUpdateManyWithoutGamesInput
 }
 
 input GameUpdateWithWhereUniqueWithoutCooperatorsInput {
@@ -9587,6 +10534,11 @@ input GameUpdateWithWhereUniqueWithoutCooperatorsInput {
 input GameUpdateWithWhereUniqueWithoutCreatorInput {
   where: GameWhereUniqueInput!
   data: GameUpdateWithoutCreatorDataInput!
+}
+
+input GameUpdateWithWhereUniqueWithoutEntityTemplateSetsInput {
+  where: GameWhereUniqueInput!
+  data: GameUpdateWithoutEntityTemplateSetsDataInput!
 }
 
 input GameUpsertWithoutEntitiesInput {
@@ -9609,6 +10561,12 @@ input GameUpsertWithWhereUniqueWithoutCreatorInput {
   where: GameWhereUniqueInput!
   update: GameUpdateWithoutCreatorDataInput!
   create: GameCreateWithoutCreatorInput!
+}
+
+input GameUpsertWithWhereUniqueWithoutEntityTemplateSetsInput {
+  where: GameWhereUniqueInput!
+  update: GameUpdateWithoutEntityTemplateSetsDataInput!
+  create: GameCreateWithoutEntityTemplateSetsInput!
 }
 
 input GameWhereInput {
@@ -9957,6 +10915,9 @@ input GameWhereInput {
   entities_some: EntityWhereInput
   entities_none: EntityWhereInput
   startContainer: EntityWhereInput
+  entityTemplateSets_every: EntityTemplateSetWhereInput
+  entityTemplateSets_some: EntityTemplateSetWhereInput
+  entityTemplateSets_none: EntityTemplateSetWhereInput
 }
 
 input GameWhereUniqueInput {
@@ -12293,7 +13254,7 @@ type InputRequirementTemplate implements Node {
   value: String
   not: Boolean!
   comparator: ComparatorType!
-  payload: PayloadRequirementTemplate!
+  payload: PayloadRequirementTemplate
 }
 
 """A connection to a list of items."""
@@ -12313,7 +13274,7 @@ input InputRequirementTemplateCreateInput {
   not: Boolean
   comparator: ComparatorType
   field: FieldTemplateCreateOneInput
-  payload: PayloadRequirementTemplateCreateOneWithoutRequiredInputInput!
+  payload: PayloadRequirementTemplateCreateOneWithoutRequiredInputInput
 }
 
 input InputRequirementTemplateCreateOneInput {
@@ -12414,7 +13375,7 @@ input InputRequirementTemplateUpdateDataInput {
   not: Boolean
   comparator: ComparatorType
   field: FieldTemplateUpdateOneInput
-  payload: PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredInputInput
+  payload: PayloadRequirementTemplateUpdateOneWithoutRequiredInputInput
 }
 
 input InputRequirementTemplateUpdateInput {
@@ -12423,7 +13384,7 @@ input InputRequirementTemplateUpdateInput {
   not: Boolean
   comparator: ComparatorType
   field: FieldTemplateUpdateOneInput
-  payload: PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredInputInput
+  payload: PayloadRequirementTemplateUpdateOneWithoutRequiredInputInput
 }
 
 input InputRequirementTemplateUpdateManyMutationInput {
@@ -13253,8 +14214,9 @@ type Mutation {
   createEntityRequirement(data: EntityRequirementCreateInput!): EntityRequirement!
   createInputRequirement(data: InputRequirementCreateInput!): InputRequirement!
   createGame(data: GameCreateInput!): Game!
-  createGamePlay(data: GamePlayCreateInput!): GamePlay!
+  createEntityTemplateSet(data: EntityTemplateSetCreateInput!): EntityTemplateSet!
   createUser(data: UserCreateInput!): User!
+  createGamePlay(data: GamePlayCreateInput!): GamePlay!
   createAction(data: ActionCreateInput!): Action!
   createActionPayload(data: ActionPayloadCreateInput!): ActionPayload!
   createService(data: ServiceCreateInput!): Service!
@@ -13288,8 +14250,9 @@ type Mutation {
   updateEntityRequirement(data: EntityRequirementUpdateInput!, where: EntityRequirementWhereUniqueInput!): EntityRequirement
   updateInputRequirement(data: InputRequirementUpdateInput!, where: InputRequirementWhereUniqueInput!): InputRequirement
   updateGame(data: GameUpdateInput!, where: GameWhereUniqueInput!): Game
-  updateGamePlay(data: GamePlayUpdateInput!, where: GamePlayWhereUniqueInput!): GamePlay
+  updateEntityTemplateSet(data: EntityTemplateSetUpdateInput!, where: EntityTemplateSetWhereUniqueInput!): EntityTemplateSet
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateGamePlay(data: GamePlayUpdateInput!, where: GamePlayWhereUniqueInput!): GamePlay
   updateAction(data: ActionUpdateInput!, where: ActionWhereUniqueInput!): Action
   updateActionPayload(data: ActionPayloadUpdateInput!, where: ActionPayloadWhereUniqueInput!): ActionPayload
   updateService(data: ServiceUpdateInput!, where: ServiceWhereUniqueInput!): Service
@@ -13323,8 +14286,9 @@ type Mutation {
   deleteEntityRequirement(where: EntityRequirementWhereUniqueInput!): EntityRequirement
   deleteInputRequirement(where: InputRequirementWhereUniqueInput!): InputRequirement
   deleteGame(where: GameWhereUniqueInput!): Game
-  deleteGamePlay(where: GamePlayWhereUniqueInput!): GamePlay
+  deleteEntityTemplateSet(where: EntityTemplateSetWhereUniqueInput!): EntityTemplateSet
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteGamePlay(where: GamePlayWhereUniqueInput!): GamePlay
   deleteAction(where: ActionWhereUniqueInput!): Action
   deleteActionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
   deleteService(where: ServiceWhereUniqueInput!): Service
@@ -13358,8 +14322,9 @@ type Mutation {
   upsertEntityRequirement(where: EntityRequirementWhereUniqueInput!, create: EntityRequirementCreateInput!, update: EntityRequirementUpdateInput!): EntityRequirement!
   upsertInputRequirement(where: InputRequirementWhereUniqueInput!, create: InputRequirementCreateInput!, update: InputRequirementUpdateInput!): InputRequirement!
   upsertGame(where: GameWhereUniqueInput!, create: GameCreateInput!, update: GameUpdateInput!): Game!
-  upsertGamePlay(where: GamePlayWhereUniqueInput!, create: GamePlayCreateInput!, update: GamePlayUpdateInput!): GamePlay!
+  upsertEntityTemplateSet(where: EntityTemplateSetWhereUniqueInput!, create: EntityTemplateSetCreateInput!, update: EntityTemplateSetUpdateInput!): EntityTemplateSet!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertGamePlay(where: GamePlayWhereUniqueInput!, create: GamePlayCreateInput!, update: GamePlayUpdateInput!): GamePlay!
   upsertAction(where: ActionWhereUniqueInput!, create: ActionCreateInput!, update: ActionUpdateInput!): Action!
   upsertActionPayload(where: ActionPayloadWhereUniqueInput!, create: ActionPayloadCreateInput!, update: ActionPayloadUpdateInput!): ActionPayload!
   upsertService(where: ServiceWhereUniqueInput!, create: ServiceCreateInput!, update: ServiceUpdateInput!): Service!
@@ -13390,8 +14355,9 @@ type Mutation {
   updateManyHints(data: HintUpdateManyMutationInput!, where: HintWhereInput): BatchPayload!
   updateManyInputRequirements(data: InputRequirementUpdateManyMutationInput!, where: InputRequirementWhereInput): BatchPayload!
   updateManyGames(data: GameUpdateManyMutationInput!, where: GameWhereInput): BatchPayload!
-  updateManyGamePlays(data: GamePlayUpdateManyMutationInput!, where: GamePlayWhereInput): BatchPayload!
+  updateManyEntityTemplateSets(data: EntityTemplateSetUpdateManyMutationInput!, where: EntityTemplateSetWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyGamePlays(data: GamePlayUpdateManyMutationInput!, where: GamePlayWhereInput): BatchPayload!
   updateManyActions(data: ActionUpdateManyMutationInput!, where: ActionWhereInput): BatchPayload!
   updateManyServices(data: ServiceUpdateManyMutationInput!, where: ServiceWhereInput): BatchPayload!
   updateManyApiKeys(data: ApiKeyUpdateManyMutationInput!, where: ApiKeyWhereInput): BatchPayload!
@@ -13421,8 +14387,9 @@ type Mutation {
   deleteManyEntityRequirements(where: EntityRequirementWhereInput): BatchPayload!
   deleteManyInputRequirements(where: InputRequirementWhereInput): BatchPayload!
   deleteManyGames(where: GameWhereInput): BatchPayload!
-  deleteManyGamePlays(where: GamePlayWhereInput): BatchPayload!
+  deleteManyEntityTemplateSets(where: EntityTemplateSetWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyGamePlays(where: GamePlayWhereInput): BatchPayload!
   deleteManyActions(where: ActionWhereInput): BatchPayload!
   deleteManyActionPayloads(where: ActionPayloadWhereInput): BatchPayload!
   deleteManyServices(where: ServiceWhereInput): BatchPayload!
@@ -13746,20 +14713,6 @@ input PayloadRequirementTemplateUpdateOneInput {
   upsert: PayloadRequirementTemplateUpsertNestedInput
 }
 
-input PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredEntityInput {
-  create: PayloadRequirementTemplateCreateWithoutRequiredEntityInput
-  connect: PayloadRequirementTemplateWhereUniqueInput
-  update: PayloadRequirementTemplateUpdateWithoutRequiredEntityDataInput
-  upsert: PayloadRequirementTemplateUpsertWithoutRequiredEntityInput
-}
-
-input PayloadRequirementTemplateUpdateOneRequiredWithoutRequiredInputInput {
-  create: PayloadRequirementTemplateCreateWithoutRequiredInputInput
-  connect: PayloadRequirementTemplateWhereUniqueInput
-  update: PayloadRequirementTemplateUpdateWithoutRequiredInputDataInput
-  upsert: PayloadRequirementTemplateUpsertWithoutRequiredInputInput
-}
-
 input PayloadRequirementTemplateUpdateOneWithoutActionRequirementInput {
   create: PayloadRequirementTemplateCreateWithoutActionRequirementInput
   connect: PayloadRequirementTemplateWhereUniqueInput
@@ -13767,6 +14720,24 @@ input PayloadRequirementTemplateUpdateOneWithoutActionRequirementInput {
   delete: Boolean
   update: PayloadRequirementTemplateUpdateWithoutActionRequirementDataInput
   upsert: PayloadRequirementTemplateUpsertWithoutActionRequirementInput
+}
+
+input PayloadRequirementTemplateUpdateOneWithoutRequiredEntityInput {
+  create: PayloadRequirementTemplateCreateWithoutRequiredEntityInput
+  connect: PayloadRequirementTemplateWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: PayloadRequirementTemplateUpdateWithoutRequiredEntityDataInput
+  upsert: PayloadRequirementTemplateUpsertWithoutRequiredEntityInput
+}
+
+input PayloadRequirementTemplateUpdateOneWithoutRequiredInputInput {
+  create: PayloadRequirementTemplateCreateWithoutRequiredInputInput
+  connect: PayloadRequirementTemplateWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: PayloadRequirementTemplateUpdateWithoutRequiredInputDataInput
+  upsert: PayloadRequirementTemplateUpsertWithoutRequiredInputInput
 }
 
 input PayloadRequirementTemplateUpdateWithoutActionRequirementDataInput {
@@ -15550,8 +16521,9 @@ type Query {
   entityRequirements(where: EntityRequirementWhereInput, orderBy: EntityRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityRequirement]!
   inputRequirements(where: InputRequirementWhereInput, orderBy: InputRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InputRequirement]!
   games(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game]!
-  gamePlays(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GamePlay]!
+  entityTemplateSets(where: EntityTemplateSetWhereInput, orderBy: EntityTemplateSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityTemplateSet]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  gamePlays(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GamePlay]!
   actions(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Action]!
   actionPayloads(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionPayload]!
   services(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Service]!
@@ -15585,8 +16557,9 @@ type Query {
   entityRequirement(where: EntityRequirementWhereUniqueInput!): EntityRequirement
   inputRequirement(where: InputRequirementWhereUniqueInput!): InputRequirement
   game(where: GameWhereUniqueInput!): Game
-  gamePlay(where: GamePlayWhereUniqueInput!): GamePlay
+  entityTemplateSet(where: EntityTemplateSetWhereUniqueInput!): EntityTemplateSet
   user(where: UserWhereUniqueInput!): User
+  gamePlay(where: GamePlayWhereUniqueInput!): GamePlay
   action(where: ActionWhereUniqueInput!): Action
   actionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
   service(where: ServiceWhereUniqueInput!): Service
@@ -15620,8 +16593,9 @@ type Query {
   entityRequirementsConnection(where: EntityRequirementWhereInput, orderBy: EntityRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityRequirementConnection!
   inputRequirementsConnection(where: InputRequirementWhereInput, orderBy: InputRequirementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InputRequirementConnection!
   gamesConnection(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GameConnection!
-  gamePlaysConnection(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GamePlayConnection!
+  entityTemplateSetsConnection(where: EntityTemplateSetWhereInput, orderBy: EntityTemplateSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityTemplateSetConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  gamePlaysConnection(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GamePlayConnection!
   actionsConnection(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionConnection!
   actionPayloadsConnection(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionPayloadConnection!
   servicesConnection(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ServiceConnection!
@@ -18525,8 +19499,9 @@ type Subscription {
   entityRequirement(where: EntityRequirementSubscriptionWhereInput): EntityRequirementSubscriptionPayload
   inputRequirement(where: InputRequirementSubscriptionWhereInput): InputRequirementSubscriptionPayload
   game(where: GameSubscriptionWhereInput): GameSubscriptionPayload
-  gamePlay(where: GamePlaySubscriptionWhereInput): GamePlaySubscriptionPayload
+  entityTemplateSet(where: EntityTemplateSetSubscriptionWhereInput): EntityTemplateSetSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  gamePlay(where: GamePlaySubscriptionWhereInput): GamePlaySubscriptionPayload
   action(where: ActionSubscriptionWhereInput): ActionSubscriptionPayload
   actionPayload(where: ActionPayloadSubscriptionWhereInput): ActionPayloadSubscriptionPayload
   service(where: ServiceSubscriptionWhereInput): ServiceSubscriptionPayload
@@ -18562,6 +19537,7 @@ type User implements Node {
   gamesCreated(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game!]
   games(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game!]
   plays(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GamePlay!]
+  entityTemplateSetsCreated(where: EntityTemplateSetWhereInput, orderBy: EntityTemplateSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityTemplateSet!]
 }
 
 """A connection to a list of items."""
@@ -18582,11 +19558,17 @@ input UserCreateInput {
   gamesCreated: GameCreateManyWithoutCreatorInput
   games: GameCreateManyWithoutCooperatorsInput
   plays: GamePlayCreateManyWithoutPlayerInput
+  entityTemplateSetsCreated: EntityTemplateSetCreateManyWithoutCreatorInput
 }
 
 input UserCreateManyWithoutGamesInput {
   create: [UserCreateWithoutGamesInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutEntityTemplateSetsCreatedInput {
+  create: UserCreateWithoutEntityTemplateSetsCreatedInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutGamesCreatedInput {
@@ -18599,6 +19581,16 @@ input UserCreateOneWithoutPlaysInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateWithoutEntityTemplateSetsCreatedInput {
+  id: ID
+  name: String!
+  slug: String!
+  netlifyUserId: String
+  gamesCreated: GameCreateManyWithoutCreatorInput
+  games: GameCreateManyWithoutCooperatorsInput
+  plays: GamePlayCreateManyWithoutPlayerInput
+}
+
 input UserCreateWithoutGamesCreatedInput {
   id: ID
   name: String!
@@ -18606,6 +19598,7 @@ input UserCreateWithoutGamesCreatedInput {
   netlifyUserId: String
   games: GameCreateManyWithoutCooperatorsInput
   plays: GamePlayCreateManyWithoutPlayerInput
+  entityTemplateSetsCreated: EntityTemplateSetCreateManyWithoutCreatorInput
 }
 
 input UserCreateWithoutGamesInput {
@@ -18615,6 +19608,7 @@ input UserCreateWithoutGamesInput {
   netlifyUserId: String
   gamesCreated: GameCreateManyWithoutCreatorInput
   plays: GamePlayCreateManyWithoutPlayerInput
+  entityTemplateSetsCreated: EntityTemplateSetCreateManyWithoutCreatorInput
 }
 
 input UserCreateWithoutPlaysInput {
@@ -18624,6 +19618,7 @@ input UserCreateWithoutPlaysInput {
   netlifyUserId: String
   gamesCreated: GameCreateManyWithoutCreatorInput
   games: GameCreateManyWithoutCooperatorsInput
+  entityTemplateSetsCreated: EntityTemplateSetCreateManyWithoutCreatorInput
 }
 
 """An edge in a connection."""
@@ -18918,6 +19913,7 @@ input UserUpdateInput {
   gamesCreated: GameUpdateManyWithoutCreatorInput
   games: GameUpdateManyWithoutCooperatorsInput
   plays: GamePlayUpdateManyWithoutPlayerInput
+  entityTemplateSetsCreated: EntityTemplateSetUpdateManyWithoutCreatorInput
 }
 
 input UserUpdateManyDataInput {
@@ -18949,6 +19945,13 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
+input UserUpdateOneRequiredWithoutEntityTemplateSetsCreatedInput {
+  create: UserCreateWithoutEntityTemplateSetsCreatedInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutEntityTemplateSetsCreatedDataInput
+  upsert: UserUpsertWithoutEntityTemplateSetsCreatedInput
+}
+
 input UserUpdateOneWithoutGamesCreatedInput {
   create: UserCreateWithoutGamesCreatedInput
   connect: UserWhereUniqueInput
@@ -18967,12 +19970,22 @@ input UserUpdateOneWithoutPlaysInput {
   upsert: UserUpsertWithoutPlaysInput
 }
 
+input UserUpdateWithoutEntityTemplateSetsCreatedDataInput {
+  name: String
+  slug: String
+  netlifyUserId: String
+  gamesCreated: GameUpdateManyWithoutCreatorInput
+  games: GameUpdateManyWithoutCooperatorsInput
+  plays: GamePlayUpdateManyWithoutPlayerInput
+}
+
 input UserUpdateWithoutGamesCreatedDataInput {
   name: String
   slug: String
   netlifyUserId: String
   games: GameUpdateManyWithoutCooperatorsInput
   plays: GamePlayUpdateManyWithoutPlayerInput
+  entityTemplateSetsCreated: EntityTemplateSetUpdateManyWithoutCreatorInput
 }
 
 input UserUpdateWithoutGamesDataInput {
@@ -18981,6 +19994,7 @@ input UserUpdateWithoutGamesDataInput {
   netlifyUserId: String
   gamesCreated: GameUpdateManyWithoutCreatorInput
   plays: GamePlayUpdateManyWithoutPlayerInput
+  entityTemplateSetsCreated: EntityTemplateSetUpdateManyWithoutCreatorInput
 }
 
 input UserUpdateWithoutPlaysDataInput {
@@ -18989,11 +20003,17 @@ input UserUpdateWithoutPlaysDataInput {
   netlifyUserId: String
   gamesCreated: GameUpdateManyWithoutCreatorInput
   games: GameUpdateManyWithoutCooperatorsInput
+  entityTemplateSetsCreated: EntityTemplateSetUpdateManyWithoutCreatorInput
 }
 
 input UserUpdateWithWhereUniqueWithoutGamesInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutGamesDataInput!
+}
+
+input UserUpsertWithoutEntityTemplateSetsCreatedInput {
+  update: UserUpdateWithoutEntityTemplateSetsCreatedDataInput!
+  create: UserCreateWithoutEntityTemplateSetsCreatedInput!
 }
 
 input UserUpsertWithoutGamesCreatedInput {
@@ -19234,6 +20254,9 @@ input UserWhereInput {
   plays_every: GamePlayWhereInput
   plays_some: GamePlayWhereInput
   plays_none: GamePlayWhereInput
+  entityTemplateSetsCreated_every: EntityTemplateSetWhereInput
+  entityTemplateSetsCreated_some: EntityTemplateSetWhereInput
+  entityTemplateSetsCreated_none: EntityTemplateSetWhereInput
 }
 
 input UserWhereUniqueInput {

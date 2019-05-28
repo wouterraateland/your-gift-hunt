@@ -66,6 +66,10 @@ export const ENTITY_TEMPLATE_FRAGMENT = gql`
       name
       description
 
+      states {
+        id
+      }
+
       connectableEntrances {
         id
       }

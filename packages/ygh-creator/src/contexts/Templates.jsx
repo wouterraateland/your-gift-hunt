@@ -3,8 +3,8 @@ import { useTemplatesProvider } from "hooks/useTemplates"
 
 const TemplatesContext = createContext(null)
 
-export const TemplatesProvider = ({ children }) => {
-  const value = useTemplatesProvider()
+export const TemplatesProvider = ({ children, ...otherProps }) => {
+  const value = useTemplatesProvider(otherProps)
   return (
     <TemplatesContext.Provider value={value}>
       {children}

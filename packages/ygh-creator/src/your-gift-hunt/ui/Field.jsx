@@ -16,6 +16,10 @@ const Field = styled.div`
   &:last-child {
     padding-bottom: 0;
   }
+
+  &:empty {
+    display: none;
+  }
 `
 
 export default Field

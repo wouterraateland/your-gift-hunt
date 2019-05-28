@@ -69,9 +69,28 @@ const SelectWithLabel = ({
           otherProps.isMulti
             ? values =>
                 onChange({
-                  target: { value: values.map(({ value }) => value) }
+                  target: {
+                    value: values.map(({ value }) => value),
+                    options: options.map(({ value }) => ({
+                      value,
+                      selected: values.some(v => v.value === value)
+                    })),
+                    validity: {
+                      valid: true
+                    },
+                    validationMessage: ""
+                  }
                 })
-            : next => onChange({ target: { value: next ? next.value : null } })
+            : next =>
+                onChange({
+                  target: {
+                    value: next ? next.value : null,
+                    validity: {
+                      valid: true
+                    },
+                    validationMessage: ""
+                  }
+                })
         }
       />
       <LabelText

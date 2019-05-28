@@ -5,9 +5,9 @@ import randomstring from "randomstring"
 import slugify from "limax"
 
 import { useFormState } from "react-use-form-state"
-import { useQuery, useMutation, useApolloClient } from "react-apollo-hooks"
+import { useMutation, useApolloClient } from "react-apollo-hooks"
 
-import useAuth from "hooks/useAuth"
+import useUser from "hooks/useUser"
 
 import Layout from "layouts/Overview"
 import {
@@ -24,7 +24,7 @@ import Present from "components/Present"
 import BackButton from "components/BackButton"
 import StatusMessage from "components/StatusMessage"
 
-import { USER, USER_GAMES, GAME_COUNT_BY_SLUG } from "gql/queries"
+import { USER_GAMES, GAME_COUNT_BY_SLUG } from "gql/queries"
 import { CREATE_GAME } from "gql/mutations"
 import { ACCESS_TYPES, PRIVACY, accessOptions, nameOptions } from "../data"
 
@@ -70,16 +70,8 @@ const Slash = styled.span`
 `
 
 const NewGamePage = () => {
-  const { user } = useAuth()
-  const { data, error } = useQuery(USER, {
-    variables: {
-      userId: user.user_metadata.prismaUserId
-    }
-  })
-  if (error) {
-    throw error
-  }
-  const userSlug = data.user.slug
+  const { user } = useUser()
+  const userSlug = user.slug
   const exampleName = useMemo(
     () =>
       `${
@@ -129,7 +121,7 @@ const NewGamePage = () => {
     try {
       const gameSlug = slugify(formState.values.name)
 
-      const creatorId = data.user.id
+      const creatorId = user.id
 
       await createGame({
         variables: {
@@ -147,7 +139,7 @@ const NewGamePage = () => {
             variables: { userId: creatorId, slugPrefix: "" }
           }
           const data = proxy.readQuery(query)
-          data.user.games.push(createGame)
+          user.games.push(createGame)
 
           proxy.writeQuery({ ...query, data })
         }

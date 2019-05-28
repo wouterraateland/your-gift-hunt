@@ -1,7 +1,11 @@
-import React from "react"
+import { navigate } from "@reach/router"
+
+import useUser from "hooks/useUser"
 
 const NotFoundPage = () => {
-  return <h1>Nothing here...</h1>
+  const { user } = useUser()
+  navigate(`/${user.slug}/games`)
+  return null
 }
 
 export default NotFoundPage

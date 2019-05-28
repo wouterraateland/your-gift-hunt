@@ -7,9 +7,12 @@ const getSortedStates = entity => {
 
   const sortedStates =
     startStates.length === 0
-      ? entity.states.filter(({ outgoingTransitions }) =>
-          outgoingTransitions.every(({ to }) => to)
-        )
+      ? entity.defaultState &&
+        entity.states.some(state => state.id === entity.defaultState.id)
+        ? entity.states.filter(state => state.id === entity.defaultState.id)
+        : entity.states.filter(({ outgoingTransitions }) =>
+            outgoingTransitions.every(({ to }) => to)
+          )
       : startStates.length > 1 &&
         entity.defaultState &&
         startStates.some(state => state.id === entity.defaultState.id)

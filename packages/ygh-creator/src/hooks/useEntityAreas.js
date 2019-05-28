@@ -142,7 +142,7 @@ export const useEntityAreasProvider = () => {
 
   const getCompleteArea = () => {
     const areas = entities
-      .filter(({ container }) => !container)
+      .filter(({ id, container }) => !container && entityAreas[id])
       .map(({ id }) => entityAreas[id])
 
     return _.completeArea(

@@ -4,7 +4,8 @@ import {
   STATE_TRANSITION_FRAGMENT,
   PORTAL_FRAGMENT,
   ENTRANCE_FRAGMENT,
-  ENTITY_FRAGMENT
+  ENTITY_FRAGMENT,
+  ENTITY_TEMPLATE_FRAGMENT
 } from "./fragments"
 
 export const CREATE_USER = gql`
@@ -403,4 +404,65 @@ export const DISCONNECT_INFORMATION_SLOT_FROM_FIELD = gql`
     }
   }
   ${INFORMATION_SLOT_FRAGMENT}
+`
+
+export const UPDATE_TEMPLATE_SET_SETTINGS = gql`
+  mutation updateEntityTemplateSet(
+    $templateSetId: ID!
+    $values: EntityTemplateSetUpdateInput!
+  ) {
+    updateEntityTemplateSet(where: { id: $templateSetId }, data: $values) {
+      id
+      name
+      description
+    }
+  }
+`
+
+export const CREATE_ENTITY_TEMPLATE = gql`
+  mutation createEntityTemplate($templateSetId: ID!) {
+    createEntityTemplate(
+      data: {
+        states: { create: [{}] }
+        set: { connect: { id: $templateSetId } }
+      }
+    ) {
+      ...EntityTemplateFragment
+    }
+  }
+  ${ENTITY_TEMPLATE_FRAGMENT}
+`
+
+export const UPDATE_ENTITY_TEMPLATE = gql`
+  mutation updateEntityTemplate(
+    $entityTemplateId: ID!
+    $update: EntityTemplateUpdateInput!
+  ) {
+    updateEntityTemplate(where: { id: $entityTemplateId }, data: $update) {
+      ...EntityTemplateFragment
+    }
+  }
+  ${ENTITY_TEMPLATE_FRAGMENT}
+`
+
+export const DELETE_ENTITY_TEMPLATE = gql`
+  mutation deleteEntityTemplate($entityTemplateId: ID!) {
+    deleteEntityTemplate(where: { id: $entityTemplateId }) {
+      id
+    }
+  }
+`
+
+export const UPDATE_STATE_TRANSITION_TEMPLATE = gql`
+  mutation updateStateTransitionTemplate(
+    $stateTransitionTemplateId: ID!
+    $update: StateTransitionTemplateUpdateInput!
+  ) {
+    updateStateTransitionTemplate(
+      where: { id: $stateTransitionTemplateId }
+      data: $update
+    ) {
+      id
+    }
+  }
 `

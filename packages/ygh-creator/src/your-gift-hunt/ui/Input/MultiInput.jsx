@@ -54,11 +54,26 @@ const MultiInput = ({ value, onChange }) => {
   }
 
   function setValue(value) {
-    onChange({ target: { value } })
+    onChange({
+      target: {
+        value,
+        validity: {
+          valid: true
+        },
+        validationMessage: ""
+      }
+    })
+  }
+
+  function handleOnKeyDown(event) {
+    if (["Tab", "Enter"].includes(event.key)) {
+      event.preventDefault()
+    }
   }
 
   function handleOnKeyUp(event) {
     if (["Tab", "Enter"].includes(event.key) && nextValue !== "") {
+      event.preventDefault()
       setValue([...(value || []), nextValue])
       setNextValue("")
     }
@@ -75,6 +90,7 @@ const MultiInput = ({ value, onChange }) => {
         ref={input}
         value={nextValue}
         onChange={updateNextValue}
+        onKeyDown={handleOnKeyDown}
         onKeyUp={handleOnKeyUp}
         isSelect={false}
       />

@@ -58,6 +58,21 @@ const getUseEdges = nodes =>
       )
     )
 
+const getTargetOfUseEdges = nodes =>
+  nodes
+    .filter(({ type }) => type === NODE_TYPES.STATE)
+    .flatMap(({ id, state: { outgoingTransitions } }) =>
+      outgoingTransitions.flatMap(({ requiredActions }) =>
+        requiredActions
+          .filter(({ type }) => type === ACTION_TYPES.TARGET_OF_USE)
+          .map(({ payload: { requiredEntity: { entityState } } }) => ({
+            from: entityState.id,
+            to: id,
+            type: EDGE_TYPES.USE
+          }))
+      )
+    )
+
 const getInfoEdges = nodes =>
   nodes
     .filter(({ type }) => type === NODE_TYPES.INFORMATION_SLOT)
@@ -133,12 +148,16 @@ const withEdgeId = edge => ({
   id: hash(Object.values(edge))
 })
 
+const uniqueBy = key => (acc, x) =>
+  acc.some(y => y[key] === x[key]) ? acc : [...acc, x]
+
 const calcEdges = nodes =>
   [
     getEntryEdges,
     getTransformEdges,
     getUnlockEdges,
     getUseEdges,
+    getTargetOfUseEdges,
     getInfoEdges,
     getInfoAvailabilityEdges,
     getFieldUsageEdges,
@@ -147,5 +166,6 @@ const calcEdges = nodes =>
   ]
     .reduce((edges, f) => edges.concat(f(nodes)), [])
     .map(withEdgeId)
+    .reduce(uniqueBy("id"), [])
 
 export default calcEdges

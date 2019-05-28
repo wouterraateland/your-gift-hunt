@@ -8,10 +8,15 @@ import Login from "pages/auth/login"
 import Signup from "pages/auth/signup"
 import Amnesia from "pages/auth/amnesia"
 
-import Overview from "pages/overview"
-import NewGame from "pages/new-game"
-import Creator from "pages/creator"
 import Profile from "pages/profile"
+
+import GamesOverview from "pages/games-overview"
+import NewGame from "pages/new-game"
+import GameCreator from "pages/game-creator"
+
+import TemplateSetsOverview from "pages/template-sets-overview"
+import NewTemplateSet from "pages/new-template-set"
+import TemplateSetCreator from "pages/template-set-creator"
 
 import NotFound from "pages/404"
 
@@ -22,11 +27,16 @@ const MainRouter = () => {
     <Router>
       <Redirect from="/auth/login" to="/" noThrow />
       <PasswordReset path="/auth/password-reset" />
-
-      <Overview path="/" />
       <Profile path="/profile" />
-      <NewGame path="/new" />
-      <Creator path="/:creatorSlug/:gameSlug/*" />
+
+      <GamesOverview path="/:creatorSlug/games" />
+      <NewGame path=":creatorSlug/new-game" />
+      <GameCreator path="/:creatorSlug/game/:gameSlug/*" />
+
+      <TemplateSetsOverview path="/:creatorSlug/template-sets" />
+      <NewTemplateSet path=":creatorSlug/new-template-set" />
+      <TemplateSetCreator path="/:creatorSlug/template-set/:templateSetId/*" />
+
       <NotFound default />
     </Router>
   ) : (

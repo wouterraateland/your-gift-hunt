@@ -5,11 +5,11 @@ import { useContext } from "react"
 
 import EntityDependenciesContext from "contexts/EntityDependencies"
 
-import useTemplates from "./useTemplates"
+import useGameTemplates from "./useGameTemplates"
 import useEntityGraph from "./useEntityGraph"
 
 export const useEntityDependenciesProvider = () => {
-  const { getStateTemplateById } = useTemplates()
+  const { getStateTemplateById } = useGameTemplates()
   const { getNodeById, edges } = useEntityGraph()
 
   const targetOfUseRequiredForTransition = (fromId, toId) => {

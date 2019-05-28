@@ -38,16 +38,10 @@ export const LabelText = styled.span`
               vertical-align: baseline;
             }
           }
-          ${props.up
-            ? css`
-                left: 0;
-                top: -1.7em;
-                font-size: 0.7em;
-              `
-            : css`
-                left: 0.7rem;
-                top: 0.7em;
-              `}
+
+          left: 0;
+          top: -1.7em;
+          font-size: 0.7em;
         `}
 `
 

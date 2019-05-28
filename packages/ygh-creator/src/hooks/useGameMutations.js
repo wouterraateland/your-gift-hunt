@@ -1,8 +1,9 @@
 import _ from "utils"
+import { ACTION_TYPES } from "data"
 import { useContext } from "react"
 import { useMutation, useApolloClient } from "react-apollo-hooks"
 
-import useTemplates from "hooks/useTemplates"
+import useGameTemplates from "hooks/useGameTemplates"
 import useGame from "hooks/useGame"
 import useEntities from "hooks/useEntities"
 import useSaveState from "hooks/useSaveState"
@@ -43,7 +44,7 @@ export const useGameMutationsProvider = () => {
     entityTemplates,
     getEntityTemplateById,
     getStateTemplateById
-  } = useTemplates()
+  } = useGameTemplates()
   const { game, variables } = useGame()
   const { entities } = useEntities()
   const { getAdjacentStates } = useEntityDependencies()
@@ -362,22 +363,29 @@ export const useGameMutationsProvider = () => {
             : null
         })
 
-        const createPayloadRequirementFromTemplate = payloadRequirementTemplate => ({
+        const createPayloadRequirementFromTemplate = (
+          type,
+          payloadRequirementTemplate
+        ) => ({
           template: { connect: { id: payloadRequirementTemplate.id } },
-          requiredEntity: payloadRequirementTemplate.requiredEntity
-            ? {
-                create: createEntityRequirementFromTemplate(
-                  payloadRequirementTemplate.requiredEntity
-                )
-              }
-            : null,
-          requiredInput: payloadRequirementTemplate.requiredInput
-            ? {
-                create: createInputRequirementFromTemplate(
-                  payloadRequirementTemplate.requiredInput
-                )
-              }
-            : null
+          requiredEntity:
+            [ACTION_TYPES.USE, ACTION_TYPES.TARGET_OF_USE].includes(type) &&
+            payloadRequirementTemplate.requiredEntity
+              ? {
+                  create: createEntityRequirementFromTemplate(
+                    payloadRequirementTemplate.requiredEntity
+                  )
+                }
+              : null,
+          requiredInput:
+            type === ACTION_TYPES.INPUT &&
+            payloadRequirementTemplate.requiredInput
+              ? {
+                  create: createInputRequirementFromTemplate(
+                    payloadRequirementTemplate.requiredInput
+                  )
+                }
+              : null
         })
 
         const createActionRequirementFromTemplate = actionRequirementTemplate => ({
@@ -390,6 +398,7 @@ export const useGameMutationsProvider = () => {
           },
           payload: {
             create: createPayloadRequirementFromTemplate(
+              actionRequirementTemplate.type,
               actionRequirementTemplate.payload
             )
           }

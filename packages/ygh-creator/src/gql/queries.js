@@ -5,9 +5,21 @@ import {
   STATE_TRANSITION_FRAGMENT
 } from "./fragments"
 
+export const TEMPLATE_OPTIONS = gql`
+  query templateOptions {
+    fieldTypes {
+      id
+      type
+      isMulti
+    }
+  }
+`
+
 export const ENTITY_TEMPLATES = gql`
-  query {
-    entityTemplates {
+  query entityTemplatesForGame($gameId: ID!) {
+    entityTemplates(
+      where: { OR: [{ set: { games_some: { id: $gameId } } }, { set: null }] }
+    ) {
       ...EntityTemplateFragment
     }
   }
@@ -20,6 +32,31 @@ export const TEST_SERVICE = gql`
       id
     }
   }
+`
+
+export const ENTITY_TEMPLATE_SET_BY_ID = gql`
+  query entityTemplateSetById($templateSetId: ID!) {
+    entityTemplateSet(where: { id: $templateSetId }) {
+      id
+      name
+      description
+
+      games {
+        id
+      }
+
+      creator {
+        id
+        name
+        slug
+      }
+
+      entityTemplates {
+        ...EntityTemplateFragment
+      }
+    }
+  }
+  ${ENTITY_TEMPLATE_FRAGMENT}
 `
 
 export const GAME_BY_SLUG = gql`
@@ -73,6 +110,33 @@ export const USER_GAMES = gql`
         creator {
           id
           name
+          slug
+        }
+      }
+    }
+  }
+`
+
+export const USER_ENTITY_TEMPLATE_SETS = gql`
+  query createdEntityTemplateSets($userId: ID!) {
+    user(where: { id: $userId }) {
+      id
+      entityTemplateSetsCreated(orderBy: updatedAt_DESC) {
+        id
+        createdAt
+        updatedAt
+
+        name
+        description
+
+        games {
+          id
+        }
+        entityTemplates {
+          id
+        }
+        creator {
+          id
           slug
         }
       }
