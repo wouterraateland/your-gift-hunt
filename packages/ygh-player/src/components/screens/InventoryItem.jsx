@@ -3,6 +3,7 @@ import styled from "styled-components"
 
 import useWindowSize from "hooks/useWindowSize"
 
+import { DefaultEntity } from "components/Entities"
 import { getEntityDetailComponent } from "components/EntityDetails"
 import EntityContainer from "components/EntityContainer"
 import Base from "./Base"
@@ -51,7 +52,8 @@ const StyledEntityContainer = styled(EntityContainer)`
 
 export default ({ entity, ...props }) => {
   const { width, height, rem, orientation } = useWindowSize()
-  const Component = getEntityDetailComponent(entity.template.name)
+  const Component =
+    getEntityDetailComponent(entity.template.name) || DefaultEntity
 
   return (
     <InventoryItemScreen {...props}>

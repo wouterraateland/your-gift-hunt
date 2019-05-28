@@ -62,11 +62,11 @@ const DefaultEntity = forwardRef(
   ) => (
     <DefaultEntityContainer {...otherProps} ref={ref} noVisual>
       <span>
-        {name}&lt;{state}&gt;
+        {name}&lt;{state.name}&gt;
       </span>
       <ToolTip>
         <strong>
-          {name}&lt;{state}&gt; #{id}
+          {name}&lt;{state.name}&gt; #{id}
         </strong>
         <br />
         <strong>Inputs:</strong>

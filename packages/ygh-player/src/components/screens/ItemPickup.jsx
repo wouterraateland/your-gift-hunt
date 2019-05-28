@@ -2,7 +2,7 @@ import React from "react"
 import styled, { css, keyframes } from "styled-components"
 
 import BaseScreen from "./Base"
-import { getEntityComponent } from "your-gift-hunt/Entities"
+import { getEntityComponent, DefaultEntity } from "your-gift-hunt/Entities"
 import EntityContainer from "components/EntityContainer"
 
 const animationKeyframes = {
@@ -104,7 +104,7 @@ const EntityName = styled.p`
 `
 
 export default ({ entity, ...props }) => {
-  const Component = getEntityComponent(entity.template.name)
+  const Component = getEntityComponent(entity.template.name) || DefaultEntity
   return (
     <ItemPickupScreen {...props}>
       <StyledEntityContainer maxWidth={6} maxHeight={6} component={Component}>
