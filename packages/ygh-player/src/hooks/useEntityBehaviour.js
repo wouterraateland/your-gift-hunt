@@ -41,7 +41,11 @@ const useEntityBehaviour = (props, options = {}) => {
         ref,
         dispatchInputAction,
         inspect,
-        onClick: () => pickupEntity(props.id)
+        onMouseDownCapture: event => {
+          event.stopPropagation()
+          event.preventDefault()
+          pickupEntity(props.id)
+        }
       }
     : { ref, dispatchInputAction, inspect }
 }
