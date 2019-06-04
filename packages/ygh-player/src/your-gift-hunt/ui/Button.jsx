@@ -79,9 +79,9 @@ const Button = styled.button`
         `
       default:
         return css`
-          border: 0.1em solid;
+          box-shadow: inset 0 0 0 0.1em;
+          border: none;
 
-          ${"" /* background-color: #fff; */}
           color: ${color};
 
           &:hover {

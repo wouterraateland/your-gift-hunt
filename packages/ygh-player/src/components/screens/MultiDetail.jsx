@@ -1,7 +1,10 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 
-import { getEntityDetailComponent } from "components/EntityDetails"
+import {
+  DefaultEntityDetail,
+  getEntityDetailComponent
+} from "components/EntityDetails"
 import EntityContainer from "components/EntityContainer"
 import BaseScreen from "./Base"
 
@@ -46,7 +49,8 @@ export default ({ entity, close, ...props }) => {
     entityIndex === -1 ? null : containedEntities[entityIndex]
 
   const Component = currentEntity
-    ? getEntityDetailComponent(currentEntity.template.name)
+    ? getEntityDetailComponent(currentEntity.template.name) ||
+      DefaultEntityDetail
     : null
 
   return (

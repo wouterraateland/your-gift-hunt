@@ -1,166 +1,44 @@
-import React, { forwardRef, useEffect, useState } from "react"
+import React, { forwardRef } from "react"
 import styled from "styled-components"
 import Entity from "./Entity"
-import { ToolTip } from "your-gift-hunt/ui"
+import _ from "utils"
 
-const DefaultEntityContainer = styled(Entity)`
-  border: 1px solid #f00;
+const Container = styled(Entity)`
+  padding: 0.25em;
+  border: 0.1em solid ${props => props.theme.color.primary};
+  border-radius: ${props => props.theme.borderRadius};
+
   background-color: #fff;
-  color: #000;
+  color: ${props => props.theme.color.text};
 `
 
-const Form = styled.form`
-  & input,
-  & button {
-    background: #fff;
-  }
+const Name = styled.span`
+  font-size: smaller;
+
+  ${_.unselectableStyles}
 `
-
-const Name = styled.span``
-
-const InputForm = ({ value, label, isEnabled, onSubmit }) => {
-  const [state, setState] = useState(value)
-
-  useEffect(() => {
-    if (!isEnabled) {
-      setState(value)
-    }
-  }, [isEnabled])
-
-  return (
-    <Form
-      disabled={isEnabled}
-      onSubmit={event => {
-        event.preventDefault()
-        onSubmit(state)
-      }}
-    >
-      {label}:{" "}
-      <input
-        value={state === undefined || state === null ? "" : state}
-        onChange={event => setState(event.target.value)}
-      />
-      <button type="submit">&rarr;</button>
-    </Form>
-  )
-}
 
 const DefaultEntity = forwardRef(
-  (
-    {
-      children,
-      id,
-      name,
-      state,
-      fields,
-      inputs,
-      informationSlots,
-      useDestinations,
-      useSources,
-      dispatchInputAction,
-      ...otherProps
-    },
-    ref
-  ) => (
-    <DefaultEntityContainer {...otherProps} ref={ref} noVisual>
+  ({ children, name, state, inspect, ...otherProps }, ref) => (
+    <Container
+      {...otherProps}
+      ref={ref}
+      onClick={
+        otherProps.isReachable
+          ? event => {
+              event.stopPropagation()
+              inspect()
+            }
+          : undefined
+      }
+      noVisual
+    >
       <Name>
         {name}
         {state.name ? ` <${state.name}>` : null}
       </Name>
-      {otherProps.isReachable && (
-        <ToolTip>
-          <strong>
-            {name}&lt;{state.name}&gt; #{id}
-          </strong>
-          <br />
-          <strong>Inputs:</strong>
-          {inputs.length ? (
-            inputs.map(({ key, value, isEnabled }) => (
-              <InputForm
-                key={key}
-                label={key}
-                value={value}
-                isEnabled={isEnabled}
-                onSubmit={value =>
-                  dispatchInputAction(
-                    state,
-                    key,
-                    isNaN(parseInt(value, 10)) ? value : parseInt(value, 10)
-                  )
-                }
-              />
-            ))
-          ) : (
-            <>
-              {" "}
-              None
-              <br />
-            </>
-          )}
-          <strong>Fields:</strong>
-          {fields.length ? (
-            <>
-              <br />
-              {fields.map(({ id, name, value }) => (
-                <li key={id}>
-                  {name}: {value}
-                </li>
-              ))}
-            </>
-          ) : (
-            <>
-              {" "}
-              None
-              <br />
-            </>
-          )}
-          <strong>InformationSlots:</strong>
-          {informationSlots.length ? (
-            <>
-              <br />
-              {informationSlots.map(({ id, name, value }) => (
-                <li key={id}>
-                  {name}: {value}
-                </li>
-              ))}
-            </>
-          ) : (
-            <>
-              {" "}
-              None
-              <br />
-            </>
-          )}
-          <strong>useDestinations:</strong>
-          {useDestinations.length ? (
-            <>
-              <br />
-              {useDestinations.map(({ id }) => (
-                <li key={id}>{id}</li>
-              ))}
-            </>
-          ) : (
-            <>
-              {" "}
-              None
-              <br />
-            </>
-          )}
-          <strong>useSources:</strong>
-          {useSources.length ? (
-            <>
-              <br />
-              {useSources.map(({ id }) => (
-                <li key={id}>{id}</li>
-              ))}
-            </>
-          ) : (
-            " None"
-          )}
-        </ToolTip>
-      )}
       {children}
-    </DefaultEntityContainer>
+    </Container>
   )
 )
 DefaultEntity.defaultProps = {

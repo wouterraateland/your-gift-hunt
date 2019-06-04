@@ -1,6 +1,6 @@
 import React from "react"
 import _ from "utils"
-import Entities, { DefaultEntity } from "components/Entities"
+import Entities, { getEntityComponent } from "components/Entities"
 
 import EntityDetails from "your-gift-hunt/EntityDetails"
 import MultiDetail from "components/screens/MultiDetail"
@@ -8,6 +8,10 @@ import MultiDetail from "components/screens/MultiDetail"
 import withEntityBehaviour from "containers/withEntityBehaviour"
 import withSafeBehaviour from "containers/withSafeBehaviour"
 import withContainedEntities from "containers/withContainedEntities"
+
+export const DefaultEntityDetail = withEntityBehaviour(
+  EntityDetails.DefaultEntityDetail
+)
 
 const entityDetailComponents = [
   withContainedEntities(withEntityBehaviour(EntityDetails.Computer)),
@@ -36,7 +40,8 @@ export const getEntityDetailComponent = templateName =>
 export const GenericEntityDetail = props =>
   _.compose(
     Component => <Component {...props} />,
-    _.maybe(() => DefaultEntity, _.identity),
+    _.maybe(() => DefaultEntityDetail, _.identity),
+    _.maybe(() => getEntityComponent(props.template.name), _.identity),
     getEntityDetailComponent
   )(props.template.name)
 

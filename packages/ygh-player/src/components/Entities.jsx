@@ -20,7 +20,6 @@ const entityComponents = [
   ),
   withEntityBehaviour(Entities.Carpet),
   withContainedEntities(withEntityBehaviour(Entities.Computer)),
-  withEntityBehaviour(Entities.DefaultEntity),
   withEntityBehaviour(Entities.Desk),
   withEntityBehaviour(Entities.DeskChair),
   withEntityBehaviour(Entities.Door),

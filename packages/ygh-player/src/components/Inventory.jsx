@@ -4,10 +4,11 @@ import styled from "styled-components"
 import useScreen from "hooks/useScreen"
 import useGame from "hooks/useGame"
 
-import { GenericEntity } from "components/Entities"
+import { getEntityComponent, DefaultEntity } from "components/Entities"
 import Screens from "components/screens"
 
 import DragContainer from "components/DragContainer"
+import EntityContainer from "components/EntityContainer"
 
 const InventoryContainer = styled.div`
   overflow: auto;
@@ -26,7 +27,7 @@ const InventoryContainer = styled.div`
 
 const ItemSlot = styled.div`
   flex-shrink: 0;
-  padding: 2em;
+  padding: 0.5em;
   margin: 0.5em;
   border-radius: ${props => props.theme.borderRadius};
 
@@ -35,10 +36,6 @@ const ItemSlot = styled.div`
     inset -0.1em -0.1em 0.1em -0.1em #fff9;
 
   background-color: #0004;
-
-  & > * {
-    font-size: 1.5em;
-  }
 `
 
 const Inventory = () => {
@@ -49,16 +46,22 @@ const Inventory = () => {
 
   return (
     <InventoryContainer>
-      {inventoryItems.map(entity => (
-        <ItemSlot
-          key={entity.id}
-          onClick={() => popup(Screens.InventoryItem, entity.id)}
-        >
-          <DragContainer data={entity}>
-            <GenericEntity {...entity} />
-          </DragContainer>
-        </ItemSlot>
-      ))}
+      {inventoryItems.map(entity => {
+        const Component =
+          getEntityComponent(entity.template.name) || DefaultEntity
+        return (
+          <ItemSlot
+            key={entity.id}
+            onClick={() => popup(Screens.InventoryItem, entity.id)}
+          >
+            <DragContainer data={entity}>
+              <EntityContainer maxWidth={3} maxHeight={3} component={Component}>
+                <Component {...entity} />
+              </EntityContainer>
+            </DragContainer>
+          </ItemSlot>
+        )
+      })}
       {Array(Math.max(0, 5 - inventoryItems.length))
         .fill()
         .map((_, i) => (
