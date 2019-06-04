@@ -21,7 +21,7 @@ const OutroScreen = styled(Base)`
 
 const f = x => (x < 10 ? `0${x}` : x)
 
-export default props => {
+export default ({ close, ...props }) => {
   const { game, gameState } = useGame()
 
   const duration = moment.duration(

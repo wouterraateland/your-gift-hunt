@@ -29,7 +29,7 @@ const BaseScreen = ({ close, ...props }) => {
   return (
     <Screen
       ref={screen}
-      onClick={event => event.target === screen.current && close()}
+      onClick={event => event.target === screen.current && close && close()}
       {...props}
     />
   )
