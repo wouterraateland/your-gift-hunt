@@ -1,5 +1,7 @@
-import React, { useLayoutEffect, useRef } from "react"
+import React, { useLayoutEffect } from "react"
 import styled from "styled-components"
+
+import useViewport from "hooks/useViewport"
 
 const Viewport = styled.div`
   position: relative;
@@ -17,11 +19,11 @@ const scrollToCenter = el => {
 }
 
 export default props => {
-  const ref = useRef(null)
+  const { viewportRef } = useViewport()
 
   useLayoutEffect(() => {
-    scrollToCenter(ref.current)
+    scrollToCenter(viewportRef.current)
   }, [])
 
-  return <Viewport ref={ref} {...props} />
+  return <Viewport ref={viewportRef} {...props} />
 }

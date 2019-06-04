@@ -2,6 +2,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import styled from "styled-components"
 
+import useClickOutside from "hooks/useClickOutside"
+import useScroll from "hooks/useScroll"
+import useViewport from "hooks/useViewport"
+
 const ToolTip = styled.div.attrs(({ position }) => ({
   style: {
     left: position.x,
@@ -12,7 +16,7 @@ const ToolTip = styled.div.attrs(({ position }) => ({
   z-index: 10;
 
   width: 384px;
-  max-width: calc(100vw - 2em);
+  max-width: calc(100vw - 32px);
   padding: 0.5em;
   border-radius: ${props => props.theme.borderRadius};
 
@@ -28,9 +32,10 @@ const ToolTip = styled.div.attrs(({ position }) => ({
     color: #fff;
   }
 
-  transition-property: opacity, transform;
-  transition-duration: 0.2s;
-  transition-timing-function: ease-out;
+  transform: translate(
+    -${props => props.dx}px,
+    ${props => (props.bottom ? 0 : -100)}%
+  );
 
   &::after {
     content: "";
@@ -38,54 +43,63 @@ const ToolTip = styled.div.attrs(({ position }) => ({
     position: absolute;
 
     border: 0.4em solid;
-    border-color: transparent #222 #222 transparent;
-    border-bottom-right-radius: 0.25em;
-  }
-
-  transform: translate(-${props => props.dx}px, -100%);
-
-  &::after {
     left: ${props => props.dx}px;
-    top: calc(100% - 1px);
+    top: ${props => (props.bottom ? "1px" : "calc(100% - 1px)")};
 
     border-color: transparent #222 #222 transparent;
     border-bottom-right-radius: 0.25em;
 
-    transform: translate(-50%, -50%) rotate(45deg);
+    transform: translate(-50%, -50%)
+      rotate(${props => (props.bottom ? 225 : 45)}deg);
   }
 `
 
 const toolTipRoot = document.querySelector("#tooltip-root")
 export default props => {
-  const ref = useRef(null)
-  const position = useRef(null)
+  const { viewportRef } = useViewport()
+  const container = useRef(null)
+  const toolTip = useRef(null)
+  const [position, _setPosition] = useState({ x: 0, y: 0 })
   const [isVisible, setVisibility] = useState(false)
 
-  const toggleVisibility = useCallback(event => {
-    event.stopPropagation()
-    const rect = ref.current.parentElement.getClientRects()[0]
-    position.current = {
+  useClickOutside({ ref: toolTip, onClickOutside: () => setVisibility(false) })
+
+  const setPosition = () => {
+    const rect = container.current.parentElement.getClientRects()[0]
+    _setPosition({
       x: rect.x + rect.width / 2,
       y: rect.y + rect.height / 2
-    }
-    setVisibility(v => !v)
+    })
+  }
+
+  const scroll = useScroll(viewportRef)
+  useEffect(setPosition, [scroll])
+
+  const show = useCallback(event => {
+    event.stopPropagation()
+    setPosition()
+    setVisibility(true)
   }, [])
 
   useEffect(() => {
-    ref.current.parentElement.addEventListener("click", toggleVisibility)
+    container.current.parentElement.addEventListener("click", show)
     return () => {
-      ref.current.parentElement.removeEventListener("click", toggleVisibility)
+      container.current.parentElement.removeEventListener("click", show)
     }
   }, [])
 
+  const width = Math.min(384, window.innerWidth - 32)
+
   return (
-    <div ref={ref}>
+    <div ref={container}>
       {isVisible &&
         createPortal(
           <ToolTip
             {...props}
-            position={position.current}
-            dx={Math.min(position.current.x - 10, 192)}
+            ref={toolTip}
+            position={position}
+            bottom={position.y < window.innerHeight / 2}
+            dx={Math.max(16, Math.min(position.x - 16, width - 16))}
           />,
           toolTipRoot
         )}

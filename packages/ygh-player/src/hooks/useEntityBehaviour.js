@@ -36,7 +36,7 @@ const useEntityBehaviour = (props, options = {}) => {
     [(options.detailScreen, props.id)]
   )
 
-  return props.isItem && !isInInventory(props.id)
+  return props.isReachable && props.isItem && !isInInventory(props.id)
     ? {
         ref,
         dispatchInputAction,

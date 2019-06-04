@@ -16,6 +16,8 @@ const Form = styled.form`
   }
 `
 
+const Name = styled.span``
+
 const InputForm = ({ value, label, isEnabled, onSubmit }) => {
   const [state, setState] = useState(value)
 
@@ -33,7 +35,7 @@ const InputForm = ({ value, label, isEnabled, onSubmit }) => {
         onSubmit(state)
       }}
     >
-      {label}:
+      {label}:{" "}
       <input
         value={state === undefined || state === null ? "" : state}
         onChange={event => setState(event.target.value)}
@@ -61,46 +63,102 @@ const DefaultEntity = forwardRef(
     ref
   ) => (
     <DefaultEntityContainer {...otherProps} ref={ref} noVisual>
-      <span>
-        {name}&lt;{state.name}&gt;
-      </span>
-      <ToolTip>
-        <strong>
-          {name}&lt;{state.name}&gt; #{id}
-        </strong>
-        <br />
-        <strong>Inputs:</strong>
-        {inputs.map(({ key, value, isEnabled }) => (
-          <InputForm
-            key={key}
-            label={key}
-            value={value}
-            isEnabled={isEnabled}
-            onSubmit={value =>
-              dispatchInputAction(
-                state,
-                key,
-                isNaN(parseInt(value, 10)) ? value : parseInt(value, 10)
-              )
-            }
-          />
-        ))}
-        <strong>Fields:</strong>
-        <br />
-        {JSON.stringify(fields)}
-        <br />
-        <strong>InformationSlots:</strong>
-        <br />
-        {JSON.stringify(informationSlots)}
-        <br />
-        <strong>useDestinations:</strong>
-        <br />
-        {JSON.stringify(useDestinations)}
-        <br />
-        <strong>useSources:</strong>
-        <br />
-        {JSON.stringify(useSources)}
-      </ToolTip>
+      <Name>
+        {name}
+        {state.name ? ` <${state.name}>` : null}
+      </Name>
+      {otherProps.isReachable && (
+        <ToolTip>
+          <strong>
+            {name}&lt;{state.name}&gt; #{id}
+          </strong>
+          <br />
+          <strong>Inputs:</strong>
+          {inputs.length ? (
+            inputs.map(({ key, value, isEnabled }) => (
+              <InputForm
+                key={key}
+                label={key}
+                value={value}
+                isEnabled={isEnabled}
+                onSubmit={value =>
+                  dispatchInputAction(
+                    state,
+                    key,
+                    isNaN(parseInt(value, 10)) ? value : parseInt(value, 10)
+                  )
+                }
+              />
+            ))
+          ) : (
+            <>
+              {" "}
+              None
+              <br />
+            </>
+          )}
+          <strong>Fields:</strong>
+          {fields.length ? (
+            <>
+              <br />
+              {fields.map(({ id, name, value }) => (
+                <li key={id}>
+                  {name}: {value}
+                </li>
+              ))}
+            </>
+          ) : (
+            <>
+              {" "}
+              None
+              <br />
+            </>
+          )}
+          <strong>InformationSlots:</strong>
+          {informationSlots.length ? (
+            <>
+              <br />
+              {informationSlots.map(({ id, name, value }) => (
+                <li key={id}>
+                  {name}: {value}
+                </li>
+              ))}
+            </>
+          ) : (
+            <>
+              {" "}
+              None
+              <br />
+            </>
+          )}
+          <strong>useDestinations:</strong>
+          {useDestinations.length ? (
+            <>
+              <br />
+              {useDestinations.map(({ id }) => (
+                <li key={id}>{id}</li>
+              ))}
+            </>
+          ) : (
+            <>
+              {" "}
+              None
+              <br />
+            </>
+          )}
+          <strong>useSources:</strong>
+          {useSources.length ? (
+            <>
+              <br />
+              {useSources.map(({ id }) => (
+                <li key={id}>{id}</li>
+              ))}
+            </>
+          ) : (
+            " None"
+          )}
+        </ToolTip>
+      )}
       {children}
     </DefaultEntityContainer>
   )
