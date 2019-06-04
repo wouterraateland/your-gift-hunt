@@ -27,7 +27,8 @@ const InventoryContainer = styled.div`
 
 const ItemSlot = styled.div`
   flex-shrink: 0;
-  padding: 0.5em;
+  position: relative;
+  padding: 2em;
   margin: 0.5em;
   border-radius: ${props => props.theme.borderRadius};
 
@@ -36,6 +37,11 @@ const ItemSlot = styled.div`
     inset -0.1em -0.1em 0.1em -0.1em #fff9;
 
   background-color: #0004;
+`
+
+const StyledEntityContainer = styled(EntityContainer)`
+  position: absolute;
+  transform: translate(-50%, -50%);
 `
 
 const Inventory = () => {
@@ -55,9 +61,13 @@ const Inventory = () => {
             onClick={() => popup(Screens.InventoryItem, entity.id)}
           >
             <DragContainer data={entity}>
-              <EntityContainer maxWidth={3} maxHeight={3} component={Component}>
+              <StyledEntityContainer
+                maxWidth={3}
+                maxHeight={3}
+                component={Component}
+              >
                 <Component {...entity} />
-              </EntityContainer>
+              </StyledEntityContainer>
             </DragContainer>
           </ItemSlot>
         )
