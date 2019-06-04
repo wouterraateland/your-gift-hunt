@@ -187,7 +187,11 @@ const Letter = styled.div`
 `
 
 const Mailbox = forwardRef(({ containedEntities, inspect, ...props }, ref) => (
-  <MailboxContainer ref={ref} onClick={inspect} {...props}>
+  <MailboxContainer
+    ref={ref}
+    onClick={containedEntities.length ? inspect : undefined}
+    {...props}
+  >
     {containedEntities.slice(0, 5).map((_, i) => (
       <Letter key={i} />
     ))}

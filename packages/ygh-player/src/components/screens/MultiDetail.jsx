@@ -33,19 +33,21 @@ const StyledEntityContainer = styled(EntityContainer)`
 
 export default ({ entity, close, ...props }) => {
   const { entities } = useGame()
-  const [entityIndex, setEntityIndex] = useState(0)
-  const { width, height, rem, orientation } = useWindowSize()
-
   const containedEntities = entities.filter(
     ({ container }) =>
       container &&
       entity.portals.some(portal => container.id === portal.entrance.entity.id)
   )
 
+  const [entityIndex, setEntityIndex] = useState(containedEntities.length - 1)
+  const { width, height, rem, orientation } = useWindowSize()
+
   const currentEntity =
     entityIndex === -1 ? null : containedEntities[entityIndex]
 
-  const Component = getEntityDetailComponent(currentEntity.template.name)
+  const Component = currentEntity
+    ? getEntityDetailComponent(currentEntity.template.name)
+    : null
 
   return (
     <BaseScreen {...props}>
@@ -58,13 +60,17 @@ export default ({ entity, close, ...props }) => {
           <span onClick={() => setEntityIndex(i => i + 1)}>Next</span>
         )}
       </Navigation>
-      <StyledEntityContainer
-        maxWidth={(0.8 * width) / rem - (orientation === "portrait" ? 0 : 7)}
-        maxHeight={(0.8 * height) / rem - (orientation === "portrait" ? 10 : 3)}
-        component={Component}
-      >
-        <Component {...currentEntity} />
-      </StyledEntityContainer>
+      {Component && (
+        <StyledEntityContainer
+          maxWidth={(0.8 * width) / rem - (orientation === "portrait" ? 0 : 7)}
+          maxHeight={
+            (0.8 * height) / rem - (orientation === "portrait" ? 10 : 3)
+          }
+          component={Component}
+        >
+          <Component {...currentEntity} />
+        </StyledEntityContainer>
+      )}
     </BaseScreen>
   )
 }
