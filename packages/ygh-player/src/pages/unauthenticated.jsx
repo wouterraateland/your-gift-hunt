@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from "react"
 import styled from "styled-components"
 import GameContext from "contexts/Game"
 
-import { Input, Button, Field } from "your-gift-hunt/ui"
+import { Input, Button, Field, Wrapper } from "your-gift-hunt/ui"
 
 const Container = styled.div`
   display: flex;
@@ -10,6 +10,7 @@ const Container = styled.div`
   justify-content: center;
 
   height: 100vh;
+
   background-color: #f9f9f9;
 `
 
@@ -26,17 +27,17 @@ const RequestAccess = ({ authenticate }) => {
 
   return (
     <form onSubmit={onFormSubmit}>
+      <h1>This game requires an access code to play.</h1>
       <Field block>
         <Input
-          block
           label="Access code"
           value={accessCode}
           onChange={event => setAccessCode(event.target.value)}
         />
       </Field>
       <Field block>
-        <Button block type="submit" color="accent" importance="primary">
-          Request Access
+        <Button type="submit" color="accent" importance="primary">
+          Confirm
         </Button>
       </Field>
     </form>
@@ -46,7 +47,7 @@ const RequestAccess = ({ authenticate }) => {
 const NoAccess = () => (
   <h1>
     This game is only accessible for invited people. Request a magic link from
-    the makers or play another game.
+    the creator.
   </h1>
 )
 
@@ -55,11 +56,13 @@ const UnauthenticatedPage = () => {
 
   return (
     <Container>
-      {authenticationMethod === "CODE" ? (
-        <RequestAccess authenticate={authenticate} />
-      ) : (
-        <NoAccess />
-      )}
+      <Wrapper medium>
+        {authenticationMethod === "CODE" ? (
+          <RequestAccess authenticate={authenticate} />
+        ) : (
+          <NoAccess />
+        )}
+      </Wrapper>
     </Container>
   )
 }

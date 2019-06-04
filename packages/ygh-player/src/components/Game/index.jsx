@@ -16,7 +16,7 @@ const Game = () => {
     <NotFoundPage />
   ) : isAuthenticated && !isLoading ? (
     <PlayableGame />
-  ) : game && game.privacy === "PRIVACY" && !isAuthenticated ? (
+  ) : game && game.privacy === "PRIVATE" && !isAuthenticated ? (
     <UnauthenticatedPage />
   ) : (
     <FullHeight>
