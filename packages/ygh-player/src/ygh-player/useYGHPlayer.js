@@ -1,31 +1,38 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import YGHPlayerWeb from "./YGHPlayerWeb"
 
 const useAsync = () => {
-  const [isLoading, setLoading] = useState(false)
+  const [state, setState] = useState(false)
 
   const runAsync = f => async (...args) => {
-    setLoading(true)
-    const v = await f(...args)
-    setLoading(false)
-    return v
+    setState({ isLoading: true, error: null })
+    try {
+      const v = await f(...args)
+      setState({ isLoading: false, error: null })
+      return v
+    } catch (error) {
+      setState({ isLoading: false, error })
+      return null
+    }
   }
 
-  return {
-    isLoading,
-    runAsync
-  }
+  return [state, runAsync]
 }
 
-const useYGHPlayer = (apiKey, gameIdentifier) => {
+const useYGHPlayer = ({ apiKey }) => {
   const yghPlayer = useRef(new YGHPlayerWeb(apiKey))
-  const { isLoading, runAsync } = useAsync()
-  const [error, setError] = useState(null)
+  const [{ isLoading, error }, runAsync] = useAsync()
+  const [user, setUser] = useState(yghPlayer.current.user)
   const [gameState, setGameState] = useState({})
   const [authentication, setAuthentication] = useState({
     status: null,
     method: null
   })
+
+  const listPublicGames = useCallback(
+    runAsync((...args) => yghPlayer.current.listPublicGames(...args)),
+    []
+  )
 
   const startGamePlay = useCallback(async () => {
     const gameState = await yghPlayer.current.startGamePlay()
@@ -57,6 +64,10 @@ const useYGHPlayer = (apiKey, gameIdentifier) => {
     }
   }, [])
 
+  const updateUser = useCallback(() => {
+    setUser(yghPlayer.current.user)
+  }, [])
+
   const authenticate = useCallback(
     runAsync(async accessCode => {
       try {
@@ -67,32 +78,60 @@ const useYGHPlayer = (apiKey, gameIdentifier) => {
     []
   )
 
-  const load = useCallback(
-    runAsync(async () => {
-      await yghPlayer.current.loadFromContext(gameIdentifier)
+  const loadGameFromContext = useCallback(
+    runAsync(async gameIdentifier => {
+      await yghPlayer.current.loadGameFromContext(gameIdentifier)
       updateAuthentication()
     }),
     []
   )
 
-  useEffect(() => {
-    load().catch(setError)
-  }, [])
+  const loginUser = useCallback(
+    runAsync(async (...args) => {
+      await yghPlayer.current.loginUser(...args)
+      updateUser()
+    }),
+    []
+  )
 
-  return error
-    ? { error, gameState: {}, isLoading: false, isAuthenticated: false }
-    : {
-        isAuthenticated: authentication.status,
-        authenticationMethod: authentication.method,
-        authenticate,
-        isLoading,
-        startGamePlay,
-        dispatchAction,
-        requestHints,
-        gameState,
-        game: yghPlayer.current.game,
-        playToken: yghPlayer.current.playToken
-      }
+  const registerUser = useCallback(
+    runAsync(async (...args) => {
+      await yghPlayer.current.registerUser(...args)
+      updateUser()
+    }),
+    []
+  )
+
+  const logoutUser = useCallback(
+    runAsync(async (...args) => {
+      await yghPlayer.current.logoutUser(...args)
+      updateUser()
+    }),
+    []
+  )
+
+  return {
+    error,
+    isLoading,
+    isAuthenticated: error ? false : authentication.status,
+    authenticationMethod: authentication.method,
+    isLoggedIn: !!user,
+    user,
+    game: yghPlayer.current.game,
+    playToken: yghPlayer.current.playToken,
+    gameState,
+
+    loginUser,
+    registerUser,
+    logoutUser,
+
+    listPublicGames,
+    authenticate,
+    loadGameFromContext,
+    startGamePlay,
+    dispatchAction,
+    requestHints
+  }
 }
 
 export default useYGHPlayer

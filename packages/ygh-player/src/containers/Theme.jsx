@@ -18,7 +18,9 @@ const theme = {
   },
   borderRadius: "0.25em",
   boxShadow: {
-    medium: "0 0.5rem 1.5rem -.5rem #0004"
+    small: "0 0.25rem 0.75rem -0.25rem #0004",
+    medium: "0 0.5rem 1.5rem -0.5rem #0006",
+    large: "0 1rem 3rem -1rem #0009"
   },
   columns: {
     count: 12,

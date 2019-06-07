@@ -4,9 +4,15 @@ const BASE_URL =
 const t = f => options => f(options || {})
 
 class Api {
-  key
-  constructor(key) {
-    this.key = key
+  apiKey
+  userToken
+
+  constructor(apiKey) {
+    this.apiKey = apiKey
+  }
+
+  setUserToken(userToken) {
+    this.userToken = userToken
   }
 
   async request(lambda, params = {}) {
@@ -15,7 +21,12 @@ class Api {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "X-API-Key": this.key,
+        "X-API-Key": this.apiKey,
+        ...(this.userToken
+          ? {
+              Authorization: `Bearer ${this.userToken}`
+            }
+          : {}),
         ...params.headers
       },
       body: params.body ? JSON.stringify(params.body) : null
@@ -66,6 +77,37 @@ class Api {
   listPublicGames = t(({ skip, amount, orderBy, direction }) =>
     this.post("listPublicGames", { body: { skip, amount, orderBy, direction } })
   )
+
+  loginUser = t(({ email, password, playTokens }) =>
+    this.post("loginUser", { body: { email, password, playTokens } })
+  )
+
+  registerUser = t(
+    ({
+      firstName,
+      middleName,
+      lastName,
+      username,
+      email,
+      password,
+      playTokens
+    }) =>
+      this.post("registerUser", {
+        body: {
+          firstName,
+          middleName,
+          lastName,
+          username,
+          email,
+          password,
+          playTokens
+        }
+      })
+  )
+
+  getUser = t(() => this.post("getUser"))
+
+  logoutUser = t(() => this.post("logoutUser"))
 }
 
 export default Api

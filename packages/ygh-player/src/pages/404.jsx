@@ -1,8 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 
-import Theme from "containers/Theme"
-
 import { Link } from "@reach/router"
 import { FullHeight } from "your-gift-hunt/ui"
 import { Logo } from "your-gift-hunt/icons"
@@ -24,15 +22,13 @@ const StyledLogo = styled(Logo)`
 `
 
 const NotFoundPage = () => (
-  <Theme>
-    <Center>
-      <StyledLogo size={4} />
-      <h1>No games to play here...</h1>
-      <p>
-        Visit <Link to={"/"}>the showcase</Link> to play many public games
-      </p>
-    </Center>
-  </Theme>
+  <Center>
+    <StyledLogo size={4} />
+    <h1>No games to play here...</h1>
+    <p>
+      Visit <Link to={"/"}>the showcase</Link> to play many public games
+    </p>
+  </Center>
 )
 
 export default NotFoundPage

@@ -3,6 +3,8 @@ import styled from "styled-components"
 import { Map, Circle, GoogleApiWrapper } from "google-maps-react"
 import * as deepmerge from "deepmerge"
 
+import useTheme from "hooks/useTheme"
+
 import Paper from "../Paper"
 import Input from "./"
 
@@ -70,6 +72,7 @@ const GoogleMap = ({
   value,
   onChange
 }) => {
+  const theme = useTheme()
   const [isInputVisible, setInputVisibility] = useState(false)
   const onMapClick = useCallback(
     (_1, { zoom }, e) =>
@@ -123,10 +126,10 @@ const GoogleMap = ({
             <Circle
               center={value.center}
               radius={value.radius}
-              strokeColor="#3f51b5"
+              strokeColor={theme.color.primary}
               strokeOpacity={1}
               strokeWeight={1}
-              fillColor="39f"
+              fillColor={theme.color.primary}
               fillOpacity={0.5}
             />
           )}

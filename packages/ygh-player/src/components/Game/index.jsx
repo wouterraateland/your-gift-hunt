@@ -12,11 +12,15 @@ import PlayableGame from "./Playable"
 const Game = () => {
   const { isLoading, isAuthenticated, game, error } = useGame()
 
+  if (error) {
+    console.error(error)
+  }
+
   return error ? (
     <NotFoundPage />
   ) : isAuthenticated && !isLoading ? (
     <PlayableGame />
-  ) : game && game.privacy === "PRIVATE" && !isAuthenticated ? (
+  ) : game && game.privacy !== "PUBLIC" && !isAuthenticated ? (
     <UnauthenticatedPage />
   ) : (
     <FullHeight>

@@ -10,6 +10,10 @@ export const angle = (p1, p2) => Math.atan2(p2.y - p1.y, p2.x - p1.x)
 export const dist = (p1, p2) =>
   Math.sqrt(Math.pow(p2.y - p1.y, 2) + Math.pow(p2.x - p1.x, 2))
 
+export const average = xs =>
+  xs && xs.length ? xs.reduce((acc, x) => acc + x, 0) / xs.length : 0
+export const count = xs => (xs && xs.length ? xs.length : 0)
+
 export const xA = (x, A) => {
   const b = x.map(() => 0)
   for (let i = 0; i < A.length; i++) {
@@ -35,6 +39,8 @@ export default {
   mean,
   angle,
   dist,
+  count,
+  average,
   xA,
   approximateStationaryDistribution
 }

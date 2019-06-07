@@ -1,6 +1,6 @@
-import React, { useCallback, useContext, useState } from "react"
+import React, { useCallback, useState } from "react"
 import styled from "styled-components"
-import GameContext from "contexts/Game"
+import useGame from "hooks/useGame"
 
 import { Input, Button, Field, Wrapper } from "your-gift-hunt/ui"
 
@@ -52,7 +52,7 @@ const NoAccess = () => (
 )
 
 const UnauthenticatedPage = () => {
-  const { authenticationMethod, authenticate } = useContext(GameContext)
+  const { authenticationMethod, authenticate } = useGame()
 
   return (
     <Container>

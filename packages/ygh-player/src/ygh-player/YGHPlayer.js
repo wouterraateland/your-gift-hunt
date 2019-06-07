@@ -25,12 +25,17 @@ const parseServerState = state => ({
 
 class YGHPlayer {
   api
+  user
   game
   playToken
   gameState
 
   constructor(apiToken) {
     this.api = new Api(apiToken)
+  }
+
+  async listPublicGames(...args) {
+    return await this.api.listPublicGames(...args)
   }
 
   async loadGame({ creatorSlug, gameSlug, gameId }) {
@@ -130,6 +135,30 @@ class YGHPlayer {
     const hints = await this.api.requestHints({ playToken: this.playToken })
     this.gameState = { ...this.gameState, hints }
     return this.gameState.hints
+  }
+
+  setUser(user) {
+    this.api.setUserToken(user ? user.token : null)
+    this.user = user
+    return this.user
+  }
+
+  async loginUser(...args) {
+    return this.setUser(await this.api.loginUser(...args))
+  }
+
+  async registerUser(...args) {
+    return this.setUser(await this.api.registerUser(...args))
+  }
+
+  async getUser(...args) {
+    return this.setUser(await this.api.getUser(...args))
+  }
+
+  async logoutUser(...args) {
+    const res = await this.api.logoutUser(...args)
+    this.setUser(null)
+    return res
   }
 }
 

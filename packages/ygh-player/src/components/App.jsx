@@ -1,16 +1,16 @@
 import React from "react"
-import { Router } from "@reach/router"
 
-import IndexPage from "pages/index"
-import GamePage from "pages/game"
-import NotFoundPage from "pages/404"
+import { YGHPlayerProvider } from "ygh-player/react-hook"
+
+import Theme from "containers/Theme"
+import Router from "containers/Router"
 
 const App = () => (
-  <Router>
-    <IndexPage path="/" />
-    <GamePage path="/:creatorSlug/:gameSlug" />
-    <NotFoundPage default />
-  </Router>
+  <Theme>
+    <YGHPlayerProvider apiKey={process.env.REACT_APP_YGH_PLAYER_KEY}>
+      <Router />
+    </YGHPlayerProvider>
+  </Theme>
 )
 
 export default App

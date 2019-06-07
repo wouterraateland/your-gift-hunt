@@ -32,7 +32,7 @@ export default ({ close, ...props }) => {
         <Wrapper small>
           <h1>{game.name}</h1>
           <p>{game.description}</p>
-          <VSpace />
+          <VSpace.Small />
           <Button onClick={onClick} importance="primary" color="accent">
             Start game
           </Button>

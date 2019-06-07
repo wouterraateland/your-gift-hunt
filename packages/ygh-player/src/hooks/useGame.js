@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useMemo } from "react"
 import GameContext from "contexts/Game"
-import useYGHPlayer from "ygh-player/react-hook"
+import { useYGHPlayerContext } from "ygh-player/react-hook"
 import useStore, { localStorageStoreCreator } from "hooks/useStore"
 import useScreen from "hooks/useScreen"
 
@@ -8,7 +8,8 @@ import Screens from "components/screens"
 
 export const useGameProvider = gameIdentifier => {
   const { popup } = useScreen()
-  const yghPlayer = useYGHPlayer("super secret key", gameIdentifier)
+  const yghPlayer = useYGHPlayerContext()
+
   const config = useMemo(
     () =>
       yghPlayer.playToken
@@ -59,6 +60,10 @@ export const useGameProvider = gameIdentifier => {
       setTimeout(() => popup(Screens.Outro), 1000)
     }
   }, [yghPlayer.gameState.finishedAt])
+
+  useEffect(() => {
+    yghPlayer.loadGameFromContext(gameIdentifier)
+  }, [])
 
   if (isLoading) {
     return yghPlayer
