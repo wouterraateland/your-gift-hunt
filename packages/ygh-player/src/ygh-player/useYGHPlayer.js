@@ -66,7 +66,7 @@ const useYGHPlayer = ({ apiKey }) => {
     if (yghPlayer.current.playToken) {
       setGameState(yghPlayer.current.gameState)
       setAuthentication({ status: true })
-      yghPlayer.current.startGamePlaySession()
+      yghPlayer.current.openSession()
     } else {
       setAuthentication({
         status: false,
@@ -121,19 +121,19 @@ const useYGHPlayer = ({ apiKey }) => {
     []
   )
 
-  const stopGamePlaySession = useCallback(
+  const closeSession = useCallback(
     runAsync(async () => {
       if (yghPlayer.current.playToken) {
-        await yghPlayer.current.stopGamePlaySession()
+        await yghPlayer.current.closeSession()
       }
     }),
     []
   )
 
   useEffect(() => {
-    window.addEventListener("beforeunload", stopGamePlaySession)
+    window.addEventListener("beforeunload", closeSession)
     return () => {
-      window.removeEventListener("beforeunload", stopGamePlaySession)
+      window.removeEventListener("beforeunload", closeSession)
     }
   }, [])
 

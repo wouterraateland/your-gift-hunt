@@ -28,7 +28,7 @@ const Account = () => {
       <Menu.Container>
         <Menu.Toggle as={Avatar} bgImage={user.avatar} />
         <Menu.Items>
-          <Menu.Item to="/profile">Profile</Menu.Item>
+          <Menu.Item to={`/${user.username}`}>Profile</Menu.Item>
           <Menu.Item as="a" onClick={logoutUser}>
             Log out
           </Menu.Item>

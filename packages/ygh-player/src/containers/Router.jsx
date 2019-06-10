@@ -7,6 +7,7 @@ import Signup from "pages/auth/signup"
 import Amnesia from "pages/auth/amnesia"
 
 import IndexPage from "pages/index"
+import UserPage from "pages/user"
 import GamePage from "pages/game"
 import GamePlayPage from "pages/play"
 import NotFoundPage from "pages/404"
@@ -19,8 +20,9 @@ const MainRouter = () => (
     <PasswordReset path="/auth/password-reset" />
 
     <IndexPage path="/" />
-    <GamePlayPage path="/play/:creatorSlug/:gameSlug" />
+    <UserPage path="/:userSlug" />
     <GamePage path="/:creatorSlug/:gameSlug" />
+    <GamePlayPage path="/play/:creatorSlug/:gameSlug" />
     <NotFoundPage default />
   </Router>
 )

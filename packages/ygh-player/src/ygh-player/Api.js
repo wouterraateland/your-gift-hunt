@@ -66,12 +66,12 @@ class Api {
     this.post("startGamePlay", { body: { playToken } })
   )
 
-  startGamePlaySession = t(({ playToken }) =>
-    this.post("startGamePlaySession", { body: { playToken } })
+  openSession = t(({ playToken }) =>
+    this.post("openSession", { body: { playToken } })
   )
 
-  stopGamePlaySession = t(({ playToken }) =>
-    this.post("stopGamePlaySession", { body: { playToken } })
+  closeSession = t(({ playToken }) =>
+    this.post("closeSession", { body: { playToken } })
   )
 
   requestHints = t(({ playToken }) =>

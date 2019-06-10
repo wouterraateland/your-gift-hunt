@@ -122,14 +122,14 @@ class YGHPlayer {
     return this.gameState
   }
 
-  async startGamePlaySession() {
+  async openSession() {
     this.ensurePlayToken()
-    await this.api.startGamePlaySession({ playToken: this.playToken })
+    await this.api.openSession({ playToken: this.playToken })
   }
 
-  async stopGamePlaySession() {
+  async closeSession() {
     this.ensurePlayToken()
-    await this.api.stopGamePlaySession({ playToken: this.playToken })
+    await this.api.closeSession({ playToken: this.playToken })
   }
 
   async dispatchAction(action) {

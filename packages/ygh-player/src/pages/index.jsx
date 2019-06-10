@@ -110,17 +110,6 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
             >
               My games
             </GameFilter>
-            {user && (
-              <>
-                {" / "}
-                <GameFilter
-                  isSelected={type === "creator"}
-                  onClick={() => setType("creator")}
-                >
-                  Created by me
-                </GameFilter>
-              </>
-            )}
           </GameFilters>
           <p>
             {type === "public" &&
