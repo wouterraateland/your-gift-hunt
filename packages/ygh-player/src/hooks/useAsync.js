@@ -1,32 +1,21 @@
-import { useCallback, useEffect, useState } from "react"
-import _ from "utils"
+import { useState } from "react"
 
-const useAsync = (f = _.noop, inputs = []) => {
-  const [state, setState] = useState({
-    isLoading: true,
-    error: null,
-    data: null
-  })
+const useAsync = () => {
+  const [state, setState] = useState(false)
 
-  const run = useCallback(async () => {
-    setState(state => ({ ...state, isLoading: true }))
+  const runAsync = f => async (...args) => {
+    setState({ isLoading: true, error: null })
     try {
-      const data = await f()
-      setState({ isLoading: false, error: null, data })
+      const v = await f(...args)
+      setState({ isLoading: false, error: null })
+      return v
     } catch (error) {
-      setState(state => ({ ...state, isLoading: false, error }))
+      setState({ isLoading: false, error })
+      return null
     }
-    setState(state => ({ ...state, isLoading: false }))
-  }, [f, ...inputs])
-
-  useEffect(() => {
-    run()
-  }, [f, ...inputs])
-
-  return {
-    ...state,
-    run
   }
+
+  return [state, runAsync]
 }
 
 export default useAsync

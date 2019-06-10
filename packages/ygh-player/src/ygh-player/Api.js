@@ -66,6 +66,14 @@ class Api {
     this.post("startGamePlay", { body: { playToken } })
   )
 
+  startGamePlaySession = t(({ playToken }) =>
+    this.post("startGamePlaySession", { body: { playToken } })
+  )
+
+  stopGamePlaySession = t(({ playToken }) =>
+    this.post("stopGamePlaySession", { body: { playToken } })
+  )
+
   requestHints = t(({ playToken }) =>
     this.post("requestHints", { body: { playToken } })
   )
@@ -74,8 +82,16 @@ class Api {
     this.post("dispatchAction", { body: { playToken, action } })
   )
 
-  listPublicGames = t(({ skip, amount, orderBy, direction }) =>
-    this.post("listPublicGames", { body: { skip, amount, orderBy, direction } })
+  listGames = t(({ skip, amount, orderBy, direction, playTokens }) =>
+    this.post("listGames", {
+      body: { skip, amount, orderBy, direction, playTokens }
+    })
+  )
+
+  getLeaderboard = t(({ skip, amount, gameId }) =>
+    this.post("getLeaderboard", {
+      body: { skip, amount, gameId }
+    })
   )
 
   loginUser = t(({ email, password, playTokens }) =>

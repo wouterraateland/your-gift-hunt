@@ -4,9 +4,12 @@ import playTokensStore from "./playTokensStore"
 import userStore from "./userStore"
 
 class YGHPlayerWeb extends YGHPlayer {
+  gamePlays = []
+
   constructor(...args) {
     super(...args)
     super.setUser(userStore.read())
+    this.gamePlays = this.user ? this.user.plays : playTokensStore.read()
   }
 
   async loadGameFromContext(gameIdentifier) {
@@ -30,8 +33,9 @@ class YGHPlayerWeb extends YGHPlayer {
     }
 
     if (!this.playToken) {
-      const gamePlays = this.user ? this.user.plays : playTokensStore.read()
-      const gamePlay = gamePlays.find(({ game }) => game.id === this.game.id)
+      const gamePlay = this.gamePlays.find(
+        ({ game }) => game.id === this.game.id
+      )
       if (gamePlay) {
         try {
           await this.setPlayToken(gamePlay.id)
@@ -50,19 +54,22 @@ class YGHPlayerWeb extends YGHPlayer {
     super.ensureGameIsLoaded()
 
     if (this.user) {
+      const plays = [
+        ...this.user.plays.filter(({ id }) => id !== playToken),
+        { id: playToken, game: { id: this.game.id } }
+      ]
       userStore.write({
         ...this.user,
-        plays: [
-          ...this.user.plays,
-          { id: playToken, game: { id: this.game.id } }
-        ]
+        plays
       })
+      this.gamePlays = plays
     } else {
-      const gamePlays = playTokensStore.read()
-      playTokensStore.write([
-        ...gamePlays,
+      const plays = [
+        ...this.gamePlays.filter(({ id }) => id !== playToken),
         { id: playToken, game: { id: this.game.id } }
-      ])
+      ]
+      playTokensStore.write(plays)
+      this.gamePlays = plays
     }
   }
 
@@ -87,6 +94,7 @@ class YGHPlayerWeb extends YGHPlayer {
     playTokensStore.write(
       gamePlays.filter(({ id }) => !userPlayTokens.includes(id))
     )
+    this.gamePlays = user.plays
     return user
   }
 
@@ -99,18 +107,25 @@ class YGHPlayerWeb extends YGHPlayer {
     playTokensStore.write(
       gamePlays.filter(({ id }) => !userPlayTokens.includes(id))
     )
+    this.gamePlays = user.plays
     return user
   }
 
   async getUser(...args) {
     const user = await super.getUser(...args)
     userStore.write(user)
+    if (user) {
+      this.gamePlays = user.plays
+    } else {
+      this.gamePlays = playTokensStore.read()
+    }
     return user
   }
 
   async logoutUser(...args) {
     await super.logoutUser(...args)
     userStore.write(null)
+    this.gamePlays = playTokensStore.read()
     return null
   }
 }

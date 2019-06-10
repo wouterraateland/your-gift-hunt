@@ -34,8 +34,12 @@ class YGHPlayer {
     this.api = new Api(apiToken)
   }
 
-  async listPublicGames(...args) {
-    return await this.api.listPublicGames(...args)
+  async listGames(...args) {
+    return await this.api.listGames(...args)
+  }
+
+  async getLeaderboard(...args) {
+    return await this.api.getLeaderboard(...args)
   }
 
   async loadGame({ creatorSlug, gameSlug, gameId }) {
@@ -116,6 +120,16 @@ class YGHPlayer {
     })
     this.gameState = getNextState(this.gameState, parseServerState(stateUpdate))
     return this.gameState
+  }
+
+  async startGamePlaySession() {
+    this.ensurePlayToken()
+    await this.api.startGamePlaySession({ playToken: this.playToken })
+  }
+
+  async stopGamePlaySession() {
+    this.ensurePlayToken()
+    await this.api.stopGamePlaySession({ playToken: this.playToken })
   }
 
   async dispatchAction(action) {

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import YGHPlayerWeb from "./YGHPlayerWeb"
 
 const useAsync = () => {
@@ -29,8 +29,18 @@ const useYGHPlayer = ({ apiKey }) => {
     method: null
   })
 
-  const listPublicGames = useCallback(
-    runAsync((...args) => yghPlayer.current.listPublicGames(...args)),
+  const listGames = useCallback(
+    runAsync(options =>
+      yghPlayer.current.listGames({
+        ...options,
+        playTokens: yghPlayer.current.gamePlays.map(({ id }) => id)
+      })
+    ),
+    []
+  )
+
+  const getLeaderboard = useCallback(
+    runAsync(options => yghPlayer.current.getLeaderboard(options)),
     []
   )
 
@@ -56,6 +66,7 @@ const useYGHPlayer = ({ apiKey }) => {
     if (yghPlayer.current.playToken) {
       setGameState(yghPlayer.current.gameState)
       setAuthentication({ status: true })
+      yghPlayer.current.startGamePlaySession()
     } else {
       setAuthentication({
         status: false,
@@ -110,6 +121,22 @@ const useYGHPlayer = ({ apiKey }) => {
     []
   )
 
+  const stopGamePlaySession = useCallback(
+    runAsync(async () => {
+      if (yghPlayer.current.playToken) {
+        await yghPlayer.current.stopGamePlaySession()
+      }
+    }),
+    []
+  )
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", stopGamePlaySession)
+    return () => {
+      window.removeEventListener("beforeunload", stopGamePlaySession)
+    }
+  }, [])
+
   return {
     error,
     isLoading,
@@ -117,6 +144,7 @@ const useYGHPlayer = ({ apiKey }) => {
     authenticationMethod: authentication.method,
     isLoggedIn: !!user,
     user,
+    gamePlays: yghPlayer.current.gamePlays,
     game: yghPlayer.current.game,
     playToken: yghPlayer.current.playToken,
     gameState,
@@ -125,7 +153,9 @@ const useYGHPlayer = ({ apiKey }) => {
     registerUser,
     logoutUser,
 
-    listPublicGames,
+    listGames,
+    getLeaderboard,
+
     authenticate,
     loadGameFromContext,
     startGamePlay,

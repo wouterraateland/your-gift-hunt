@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import styled from "styled-components"
+import React, { useEffect, useMemo, useState } from "react"
+import styled, { css } from "styled-components"
 
 import { useYGHPlayerContext } from "ygh-player/react-hook"
 
@@ -38,7 +38,7 @@ const StyledLogo = styled(Logo)`
   }
 `
 
-const Introduction = styled.p`
+const Introduction = styled.div`
   max-width: 30em;
   padding: 1em;
   margin: auto;
@@ -49,46 +49,111 @@ const Introduction = styled.p`
   background: #0001;
 `
 
-const ActiveIndexPage = ({ games }) => (
-  <Background>
-    <Wrapper>
-      <Nav
-        as="a"
-        href="https://yourgifthunt.com"
-        title={
-          <>
-            <StyledLogo size={1.58} />
-            &nbsp;&nbsp;&nbsp;&nbsp;Your Gift Hunt Showcase
-          </>
-        }
-      />
-      <VSpace.Large />
-      <Introduction>
-        Escape room games made by the community, for everyone.
-      </Introduction>
-      <VSpace.Large />
-      <Row>
-        {games.map(game => (
-          <Column key={game.id} size={4} mSize={6} sSize={12}>
-            <GameThumb game={game} />
-          </Column>
-        ))}
-      </Row>
-      <Align.Center>
-        <h2>Subscribe for Beta access</h2>
-        <p>And be the first to create your own unique puzzle games</p>
-        <MailchimpForm />
-      </Align.Center>
-    </Wrapper>
-  </Background>
-)
+const GameFilters = styled.div`
+  padding-bottom: 1em;
+`
+
+const GameFilter = styled.strong`
+  cursor: pointer;
+  ${props =>
+    props.isSelected &&
+    css`
+      border-bottom: 0.1em solid;
+    `}
+`
+
+const ActiveIndexPage = ({ games, gamePlays, user }) => {
+  const [type, setType] = useState("public")
+
+  const gameFilters = useMemo(
+    () => ({
+      public: game => game.privacy === "PUBLIC",
+      accessible: game =>
+        gamePlays.some(gamePlay => gamePlay.game.id === game.id),
+      creator: game => user && game.creator.id === user.id
+    }),
+    [gamePlays]
+  )
+
+  const visibleGames = useMemo(() => games.filter(gameFilters[type]), [
+    type,
+    games,
+    gamePlays
+  ])
+
+  return (
+    <Background>
+      <Wrapper>
+        <Nav
+          as="a"
+          href="https://yourgifthunt.com"
+          title={
+            <>
+              <StyledLogo size={1.58} />
+              &nbsp;&nbsp;&nbsp;&nbsp;Your Gift Hunt Showcase
+            </>
+          }
+        />
+        <VSpace.Large />
+        <Introduction>
+          <GameFilters>
+            <GameFilter
+              isSelected={type === "public"}
+              onClick={() => setType("public")}
+            >
+              Public games
+            </GameFilter>
+            {" / "}
+            <GameFilter
+              isSelected={type === "accessible"}
+              onClick={() => setType("accessible")}
+            >
+              My games
+            </GameFilter>
+            {user && (
+              <>
+                {" / "}
+                <GameFilter
+                  isSelected={type === "creator"}
+                  onClick={() => setType("creator")}
+                >
+                  Created by me
+                </GameFilter>
+              </>
+            )}
+          </GameFilters>
+          <p>
+            {type === "public" &&
+              "Escape room games made by the community, for everyone."}
+            {type === "accessible" &&
+              "Games you have access to, are playing or have played."}
+            {type === "creator" && "Games created by you."}
+          </p>
+        </Introduction>
+        <VSpace.Large />
+        <Row>
+          {visibleGames.map(game => (
+            <Column key={game.id} size={4} mSize={6}>
+              <GameThumb game={game} />
+            </Column>
+          ))}
+        </Row>
+        <Align.Center>
+          <h2>Subscribe for Beta access</h2>
+          <p>And be the first to create your own unique puzzle games</p>
+          <MailchimpForm />
+        </Align.Center>
+      </Wrapper>
+    </Background>
+  )
+}
 
 const IndexPage = () => {
-  const [publicGames, setPublicGames] = useState([])
-  const { isLoading, error, listPublicGames } = useYGHPlayerContext()
+  const [games, setGames] = useState([])
+  const { isLoading, error, listGames, gamePlays, user } = useYGHPlayerContext()
 
   useEffect(() => {
-    listPublicGames().then(setPublicGames)
+    listGames().then(setGames)
   }, [])
 
   return error ? (
@@ -100,7 +165,7 @@ const IndexPage = () => {
       <Loader />
     </FullHeight>
   ) : (
-    <ActiveIndexPage games={publicGames} />
+    <ActiveIndexPage games={games} gamePlays={gamePlays} user={user} />
   )
 }
 
