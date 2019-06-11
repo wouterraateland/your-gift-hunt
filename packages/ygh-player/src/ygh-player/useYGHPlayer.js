@@ -44,6 +44,11 @@ const useYGHPlayer = ({ apiKey }) => {
     []
   )
 
+  const getUserProfile = useCallback(
+    runAsync(options => yghPlayer.current.getUserProfile(options)),
+    []
+  )
+
   const startGamePlay = useCallback(async () => {
     const gameState = await yghPlayer.current.startGamePlay()
     setGameState(gameState)
@@ -155,6 +160,7 @@ const useYGHPlayer = ({ apiKey }) => {
 
     listGames,
     getLeaderboard,
+    getUserProfile,
 
     authenticate,
     loadGameFromContext,

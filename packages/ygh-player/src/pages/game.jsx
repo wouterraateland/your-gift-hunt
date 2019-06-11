@@ -74,7 +74,7 @@ const ActiveGamePage = ({ game, gamePlays }) => (
     <Wrapper>
       <Nav title="← Back" to="/" />
       <VSpace.Small />
-      <Row>
+      <Row align="left">
         <Column size={6}>
           <GamePreview src={game.image} />
         </Column>

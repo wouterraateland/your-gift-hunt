@@ -42,6 +42,10 @@ class YGHPlayer {
     return await this.api.getLeaderboard(...args)
   }
 
+  async getUserProfile(...args) {
+    return await this.api.getUserProfile(...args)
+  }
+
   async loadGame({ creatorSlug, gameSlug, gameId }) {
     this.game = await (gameId
       ? this.api.getGameById({ gameId })

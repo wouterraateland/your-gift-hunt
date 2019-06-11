@@ -94,6 +94,10 @@ class Api {
     })
   )
 
+  getUserProfile = t(({ userSlug }) =>
+    this.post("getUserProfile", { body: { userSlug } })
+  )
+
   loginUser = t(({ email, password, playTokens }) =>
     this.post("loginUser", { body: { email, password, playTokens } })
   )
