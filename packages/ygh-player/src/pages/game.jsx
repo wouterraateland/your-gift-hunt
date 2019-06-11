@@ -124,9 +124,11 @@ const ActiveGamePage = ({ game, gamePlays }) => (
           </Stats>
         </Column>
         <Column size={6} sSize={12} />
+        <Column size={6} mSize={12}>
+          <h2>Leaderboard</h2>
+          <Leaderboard game={game} />
+        </Column>
       </Row>
-      <h2>Leaderboard</h2>
-      <Leaderboard game={game} />
     </Wrapper>
   </Background>
 )
