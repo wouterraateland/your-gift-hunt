@@ -17,7 +17,7 @@ const ScreenShot = styled.div`
     no-repeat center / cover;
 
   ${props =>
-    props.progress > 0 &&
+    props.progress !== null &&
     css`
       &::after {
         content: "";
@@ -56,7 +56,7 @@ const ProgressBar = styled.div`
 const GamePreview = props => (
   <ScreenShot {...props}>
     {!props.src && <StyledPresent />}
-    {props.progress > 0 && (
+    {props.progress !== null && (
       <ProgressBar>{(props.progress * 100).toFixed(0)}% Completed</ProgressBar>
     )}
   </ScreenShot>

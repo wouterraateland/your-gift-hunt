@@ -68,9 +68,8 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
   const gameFilters = useMemo(
     () => ({
       public: game => game.privacy === "PUBLIC",
-      accessible: game =>
-        gamePlays.some(gamePlay => gamePlay.game.id === game.id),
-      creator: game => user && game.creator.id === user.id
+      progress: game => game.progress !== null && game.progress !== 1,
+      completed: game => game.progress === 1
     }),
     [gamePlays]
   )
@@ -105,10 +104,17 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
             </GameFilter>
             {" / "}
             <GameFilter
-              isSelected={type === "accessible"}
-              onClick={() => setType("accessible")}
+              isSelected={type === "progress"}
+              onClick={() => setType("progress")}
             >
-              My games
+              In progress
+            </GameFilter>
+            {" / "}
+            <GameFilter
+              isSelected={type === "completed"}
+              onClick={() => setType("completed")}
+            >
+              Completed games
             </GameFilter>
           </GameFilters>
           <p>

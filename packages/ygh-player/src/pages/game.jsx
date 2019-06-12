@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { navigate } from "@reach/router"
 import _ from "utils"
 
-import useAsync from "hooks/useAsync"
+import useQuery from "hooks/useQuery"
 import { useYGHPlayerContext } from "ygh-player/react-hook"
 
 import Helmet from "react-helmet"
@@ -110,7 +110,9 @@ const ActiveGamePage = ({ game, gamePlays }) => (
           <Stats>
             <Stat>
               <StatValue>
-                {_.average(game.ratings)}
+                {_.average(game.ratings)
+                  .toFixed(1)
+                  .replace(".", ",")}
                 <span role="img" aria-label="rating">
                   ⭐️
                 </span>
@@ -134,25 +136,14 @@ const ActiveGamePage = ({ game, gamePlays }) => (
 )
 
 const GamePage = ({ gameSlug, creatorSlug }) => {
-  const [game, setGame] = useState(null)
-  const [{ isLoading }, runAsync] = useAsync()
-  const { error, listGames, gamePlays } = useYGHPlayerContext()
+  const { listGames, gamePlays } = useYGHPlayerContext()
+  const [{ data, error, isLoading }] = useQuery(listGames)
 
-  const loadGame = useCallback(
-    runAsync(async () => {
-      const games = await listGames()
-      setGame(
-        games.find(
-          game => game.slug === gameSlug && game.creator.slug === creatorSlug
-        )
+  const game = data
+    ? data.find(
+        game => game.slug === gameSlug && game.creator.slug === creatorSlug
       )
-    }),
-    []
-  )
-
-  useEffect(() => {
-    loadGame()
-  }, [])
+    : null
 
   return error ? (
     <Message.Error>

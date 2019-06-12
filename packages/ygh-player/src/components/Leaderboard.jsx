@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React from "react"
 import styled, { css } from "styled-components"
 import { Link } from "@reach/router"
 import moment from "moment"
 
-import useAsync from "hooks/useAsync"
+import useQuery from "hooks/useQuery"
 import { useYGHPlayerContext } from "ygh-player/react-hook"
 
 import { Loader } from "your-gift-hunt/ui"
@@ -60,6 +60,16 @@ const Duration = styled.strong`
   margin-left: auto;
 `
 
+const EmptyLeaderboard = styled.div`
+  padding: 1em;
+  margin-top: 1em;
+  border-radius: ${props => props.theme.borderRadius};
+
+  text-align: center;
+
+  background-color: #0001;
+`
+
 const padd = x => x.toString(10).padStart(2, "0")
 
 const LeaderboardEntry = ({ netDuration, position, player, isYours }) => {
@@ -89,7 +99,7 @@ const ActiveLeaderboard = ({ rankedPlays, yourBestPlay }) => {
     yourBestPlay &&
     rankedPlays.some(play => play.player.id === yourBestPlay.player.id)
 
-  return (
+  return rankedPlays.length ? (
     <>
       <Entry>
         <span style={{ width: "1.5em", textAlign: "center" }}>#</span>
@@ -107,25 +117,16 @@ const ActiveLeaderboard = ({ rankedPlays, yourBestPlay }) => {
         <LeaderboardEntry isYours {...yourBestPlay} />
       )}
     </>
+  ) : (
+    <EmptyLeaderboard>No scores for this room yet.</EmptyLeaderboard>
   )
 }
 
 const Leaderboard = ({ game }) => {
-  const [{ isLoading }, runAsync] = useAsync()
-  const [leaderboard, setLeaderboard] = useState(null)
   const { getLeaderboard } = useYGHPlayerContext()
-
-  const loadLeaderboard = useCallback(
-    runAsync(async gameId => {
-      const leaderboard = await getLeaderboard({ gameId })
-      setLeaderboard(leaderboard)
-    }),
-    []
+  const [{ data: leaderboard, isLoading }] = useQuery(() =>
+    getLeaderboard({ gameId: game.id })
   )
-
-  useEffect(() => {
-    loadLeaderboard(game.id)
-  }, [game.id])
 
   return isLoading ? (
     <Loader />

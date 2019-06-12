@@ -15,7 +15,7 @@ const RatingContainer = styled.div`
 
 const Rating = ({ rating }) => (
   <RatingContainer>
-    {rating}{" "}
+    {rating.toFixed(1).replace(".", ",")}{" "}
     <span role="img" aria-label="rating">
       ⭐️
     </span>

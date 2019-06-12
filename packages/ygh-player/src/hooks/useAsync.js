@@ -1,7 +1,10 @@
 import { useState } from "react"
 
 const useAsync = () => {
-  const [state, setState] = useState(false)
+  const [state, setState] = useState({
+    isLoading: false,
+    error: null
+  })
 
   const runAsync = f => async (...args) => {
     setState({ isLoading: true, error: null })

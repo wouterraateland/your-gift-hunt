@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React from "react"
 import styled from "styled-components"
 
-import useAsync from "hooks/useAsync"
+import useQuery from "hooks/useQuery"
 import { useYGHPlayerContext } from "ygh-player/react-hook"
 
 import Helmet from "react-helmet"
@@ -99,18 +99,10 @@ const ActiveUserProfilePage = ({ user, userProfile }) => (
 )
 
 const UserProfilePage = ({ userSlug }) => {
-  const [userProfile, setUserProfile] = useState(null)
-  const [{ error, isLoading }, runAsync] = useAsync()
   const { user, getUserProfile } = useYGHPlayerContext()
-
-  const loadUserProfile = useCallback(
-    runAsync(userSlug => getUserProfile({ userSlug }).then(setUserProfile)),
-    []
+  const [{ data: userProfile, error, isLoading }] = useQuery(() =>
+    getUserProfile({ userSlug })
   )
-
-  useEffect(() => {
-    loadUserProfile(userSlug)
-  }, [userSlug])
 
   return error ? (
     <Message.Error>
