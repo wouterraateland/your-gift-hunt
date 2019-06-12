@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useCallback } from "react"
 import styled from "styled-components"
 
 import useQuery from "hooks/useQuery"
@@ -6,7 +6,12 @@ import { useYGHPlayerContext } from "ygh-player/react-hook"
 
 import Helmet from "react-helmet"
 import {
+  Button,
   Column,
+  Field,
+  Float,
+  Form,
+  Input,
   Loader,
   Message,
   Row,
@@ -34,7 +39,7 @@ const Avatar = styled.div.attrs(({ avatar }) => ({
   margin-right: 2em;
 
   border-radius: 100%;
-  box-shadow: ${props => props.theme.boxShadow.large};
+  box-shadow: ${props => props.theme.boxShadow.medium};
 
   background: #0009 no-repeat center / cover;
 `
@@ -43,43 +48,184 @@ const Meta = styled.div`
   flex-grow: 1;
 `
 
+const FloatRight = styled(Float.Right)`
+  margin-top: 0.5em;
+`
+
 const Name = styled.h1`
   margin: 0;
 `
 
 const Username = styled.strong``
 
-const ActiveUserProfilePage = ({ user, userProfile }) => (
-  <Layout>
-    <Helmet title={`${userProfile.name} | Your Gift Hunt`} />
-    <Wrapper medium>
-      <VSpace.Large />
-      <Info>
-        <Avatar avatar={userProfile.avatar} />
-        <Meta>
-          <Name>{userProfile.name}</Name>
-          <Username>@{userProfile.username}</Username>
-        </Meta>
-      </Info>
-      <h2>Rooms created ({userProfile.gamesCreated.length})</h2>
-      <Row align="left">
-        {userProfile.gamesCreated.map(game => (
-          <Column key={game.id} size={4} mSize={6}>
-            <GameThumb game={game} />
-          </Column>
-        ))}
-      </Row>
-      <h2>Rooms played ({userProfile.gamesPlayed.length})</h2>
-      <Row align="left">
-        {userProfile.gamesPlayed.map(game => (
-          <Column key={game.id} size={4} mSize={6}>
-            <GameThumb game={game} />
-          </Column>
-        ))}
-      </Row>
-    </Wrapper>
-  </Layout>
+const UserProfileDisplay = ({ profile, canEdit, onEditClick }) => (
+  <>
+    <Info>
+      <Avatar avatar={profile.avatar} />
+      <Meta>
+        {canEdit && (
+          <FloatRight>
+            <Button
+              size="small"
+              importance="primary"
+              color="primary"
+              onClick={onEditClick}
+            >
+              Edit profile
+            </Button>
+          </FloatRight>
+        )}
+        <Name>{profile.name}</Name>
+        <Username>@{profile.username}</Username>
+      </Meta>
+    </Info>
+    <h2>Rooms created ({profile.gamesCreated.length})</h2>
+    <Row align="left">
+      {profile.gamesCreated.map(game => (
+        <Column key={game.id} size={4} mSize={6}>
+          <GameThumb game={game} />
+        </Column>
+      ))}
+    </Row>
+    <h2>Rooms played ({profile.gamesPlayed.length})</h2>
+    <Row align="left">
+      {profile.gamesPlayed.map(game => (
+        <Column key={game.id} size={4} mSize={6}>
+          <GameThumb game={game} />
+        </Column>
+      ))}
+    </Row>
+  </>
 )
+
+const UserMetaForm = ({ user }) => {
+  const [values, setValues] = useState(user)
+
+  return (
+    <Form>
+      <h2>Edit profile</h2>
+      <Row>
+        <Column size={4}>
+          <Field block>
+            <Input block value={values["firstName"]} label="First name" />
+          </Field>
+        </Column>
+        <Column size={3}>
+          <Field block>
+            <Input block value={values["middleName"]} label="Middle name" />
+          </Field>
+        </Column>
+        <Column size={5}>
+          <Field block>
+            <Input block value={values["lastName"]} label="Last name" />
+          </Field>
+        </Column>
+      </Row>
+      <Field block>
+        <Input
+          block
+          type="email"
+          value={values["email"]}
+          label="Email address"
+        />
+      </Field>
+      <Field block>
+        <Input block value={values["username"]} label="Username" />
+      </Field>
+      <Float.Right>
+        <Button
+          type="submit"
+          color="primary"
+          importance="primary"
+          size="medium"
+        >
+          Update profile
+        </Button>
+      </Float.Right>
+    </Form>
+  )
+}
+
+const PasswordForm = () => {
+  const [values, setValues] = useState({})
+
+  return (
+    <Form>
+      <h2>Change password</h2>
+      <Field block>
+        <Input
+          block
+          type="password"
+          value={values["currentPassword"]}
+          label="Current password"
+        />
+      </Field>
+      <Field block>
+        <Input
+          block
+          type="password"
+          value={values["newPassword"]}
+          label="New password"
+        />
+      </Field>
+      <Field block>
+        <Input
+          block
+          type="password"
+          value={values["confirmPassword"]}
+          label="Confirm new password"
+        />
+      </Field>
+      <Float.Right>
+        <Button
+          type="submit"
+          color="primary"
+          importance="primary"
+          size="medium"
+        >
+          Change passwords
+        </Button>
+      </Float.Right>
+    </Form>
+  )
+}
+
+const EditableUserProfile = ({ user }) => {
+  const [values, setValues] = useState(user)
+  return (
+    <>
+      <UserMetaForm user={user} />
+      <PasswordForm />
+    </>
+  )
+}
+
+const ActiveUserProfilePage = ({ user, userProfile }) => {
+  const [isEditing, setEditing] = useState(false)
+
+  const canEdit = user.id === userProfile.id
+  const onEditClick = useCallback(() => (canEdit ? setEditing(true) : null), [
+    canEdit
+  ])
+
+  return (
+    <Layout>
+      <Helmet title={`${userProfile.name} | Your Gift Hunt`} />
+      <Wrapper medium>
+        <VSpace.Large />
+        {isEditing ? (
+          <EditableUserProfile user={user} userProfile={userProfile} />
+        ) : (
+          <UserProfileDisplay
+            profile={userProfile}
+            canEdit={canEdit}
+            onEditClick={onEditClick}
+          />
+        )}
+      </Wrapper>
+    </Layout>
+  )
+}
 
 const UserProfilePage = ({ userSlug }) => {
   const { user, getUserProfile } = useYGHPlayerContext()
