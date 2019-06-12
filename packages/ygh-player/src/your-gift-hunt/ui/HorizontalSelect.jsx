@@ -22,6 +22,9 @@ const HorizontalSelect = styled.div`
   max-width: 100%;
   border: 0.1em solid #0002;
   border-radius: ${props => props.theme.borderRadius};
+
+  background-color: #fff;
+  background-clip: padding-box;
 `
 
 const HorizontalOption = styled.label`

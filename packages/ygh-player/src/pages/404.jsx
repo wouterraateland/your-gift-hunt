@@ -2,10 +2,11 @@ import React from "react"
 import styled from "styled-components"
 
 import { Link } from "@reach/router"
-import { FullHeight } from "your-gift-hunt/ui"
 import { Logo } from "your-gift-hunt/icons"
+import Layout from "components/Layout"
 
-const Center = styled(FullHeight)`
+const Center = styled.div`
+  height: 100%;
   padding: 1em;
 
   display: flex;
@@ -22,13 +23,15 @@ const StyledLogo = styled(Logo)`
 `
 
 const NotFoundPage = () => (
-  <Center>
-    <StyledLogo size={4} />
-    <h1>No games to play here...</h1>
-    <p>
-      Visit <Link to={"/"}>the showcase</Link> to play many public games
-    </p>
-  </Center>
+  <Layout>
+    <Center>
+      <StyledLogo size={4} />
+      <h1>No games to play here...</h1>
+      <p>
+        Visit <Link to={"/"}>the showcase</Link> to play many public games
+      </p>
+    </Center>
+  </Layout>
 )
 
 export default NotFoundPage

@@ -30,7 +30,9 @@ export const MenuItem = styled(Link)`
 
 const MenuToggle = styled.div`
   position: relative;
-  width: 2em;
+  &:empty {
+    width: 2em;
+  }
   height: 2em;
 
   color: ${props => props.theme.color.text};
@@ -39,7 +41,7 @@ const MenuToggle = styled.div`
     color: ${props => props.theme.color.emphasis};
   }
 
-  &::before {
+  &:empty::before {
     content: "";
 
     position: absolute;

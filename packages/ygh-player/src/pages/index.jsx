@@ -1,12 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react"
-import styled, { css } from "styled-components"
 
 import { useYGHPlayerContext } from "ygh-player/react-hook"
 
 import {
   Align,
   Column,
-  FullHeight,
+  Input,
   Loader,
   Message,
   Row,
@@ -14,53 +13,8 @@ import {
   Wrapper
 } from "your-gift-hunt/ui"
 import { MailchimpForm } from "your-gift-hunt/components"
-import { Logo } from "your-gift-hunt/icons"
-import Nav from "components/Nav"
+import Layout from "components/Layout"
 import GameThumb from "components/GameThumb"
-
-const Background = styled(FullHeight)`
-  padding: 1em 0;
-
-  background: linear-gradient(
-      150deg,
-      ${props => props.theme.color.accent} 30vw,
-      #ebedf5 30vw,
-      #ebedf5 40vw,
-      transparent 40vw
-    )
-    no-repeat top left;
-`
-
-const StyledLogo = styled(Logo)`
-  color: #000;
-  .background {
-    fill: #fff;
-  }
-`
-
-const Introduction = styled.div`
-  max-width: 30em;
-  padding: 1em;
-  margin: auto;
-  border-radius: ${props => props.theme.borderRadius};
-
-  text-align: center;
-
-  background: #0001;
-`
-
-const GameFilters = styled.div`
-  padding-bottom: 1em;
-`
-
-const GameFilter = styled.strong`
-  cursor: pointer;
-  ${props =>
-    props.isSelected &&
-    css`
-      border-bottom: 0.1em solid;
-    `}
-`
 
 const ActiveIndexPage = ({ games, gamePlays, user }) => {
   const [type, setType] = useState("public")
@@ -81,50 +35,23 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
   ])
 
   return (
-    <Background>
+    <Layout>
       <Wrapper>
-        <Nav
-          as="a"
-          href="https://yourgifthunt.com"
-          title={
-            <>
-              <StyledLogo size={1.58} />
-              &nbsp;&nbsp;&nbsp;&nbsp;Your Gift Hunt Showcase
-            </>
-          }
-        />
         <VSpace.Large />
-        <Introduction>
-          <GameFilters>
-            <GameFilter
-              isSelected={type === "public"}
-              onClick={() => setType("public")}
-            >
-              Public games
-            </GameFilter>
-            {" / "}
-            <GameFilter
-              isSelected={type === "progress"}
-              onClick={() => setType("progress")}
-            >
-              In progress
-            </GameFilter>
-            {" / "}
-            <GameFilter
-              isSelected={type === "completed"}
-              onClick={() => setType("completed")}
-            >
-              Completed games
-            </GameFilter>
-          </GameFilters>
-          <p>
-            {type === "public" &&
-              "Escape room games made by the community, for everyone."}
-            {type === "accessible" &&
-              "Games you have access to, are playing or have played."}
-            {type === "creator" && "Games created by you."}
-          </p>
-        </Introduction>
+        <Align.Center>
+          <h1>Games made by the community, for everyone.</h1>
+          <Input
+            type="select"
+            format="horizontal"
+            value={type}
+            onChange={event => setType(event.target.value)}
+            options={[
+              { label: "Public games", value: "public" },
+              { label: "Gameplay in progress", value: "progress" },
+              { label: "Completed games", value: "completed" }
+            ]}
+          />
+        </Align.Center>
         <VSpace.Large />
         <Row>
           {visibleGames.map(game => (
@@ -139,7 +66,7 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
           <MailchimpForm />
         </Align.Center>
       </Wrapper>
-    </Background>
+    </Layout>
   )
 }
 
@@ -152,13 +79,15 @@ const IndexPage = () => {
   }, [])
 
   return error ? (
-    <Message.Error>
-      Something went wrong, please reload. (${error.message})
-    </Message.Error>
+    <Layout>
+      <Message.Error>
+        Something went wrong, please reload. (${error.message})
+      </Message.Error>
+    </Layout>
   ) : isLoading ? (
-    <FullHeight>
+    <Layout>
       <Loader />
-    </FullHeight>
+    </Layout>
   ) : (
     <ActiveIndexPage games={games} gamePlays={gamePlays} user={user} />
   )

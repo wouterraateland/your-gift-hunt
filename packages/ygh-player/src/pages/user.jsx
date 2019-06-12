@@ -7,7 +7,6 @@ import { useYGHPlayerContext } from "ygh-player/react-hook"
 import Helmet from "react-helmet"
 import {
   Column,
-  FullHeight,
   Loader,
   Message,
   Row,
@@ -17,21 +16,8 @@ import {
 
 import NotFoundPage from "pages/404"
 
-import Nav from "components/Nav"
+import Layout from "components/Layout"
 import GameThumb from "components/GameThumb"
-
-const Background = styled(FullHeight)`
-  padding: 1em 0;
-
-  background: linear-gradient(
-      150deg,
-      ${props => props.theme.color.accent} 30vw,
-      #ebedf5 30vw,
-      #ebedf5 40vw,
-      transparent 40vw
-    )
-    no-repeat top left;
-`
 
 const Info = styled.div`
   display: flex;
@@ -64,11 +50,8 @@ const Name = styled.h1`
 const Username = styled.strong``
 
 const ActiveUserProfilePage = ({ user, userProfile }) => (
-  <Background>
+  <Layout>
     <Helmet title={`${userProfile.name} | Your Gift Hunt`} />
-    <Wrapper>
-      <Nav title="← Back" to="/" />
-    </Wrapper>
     <Wrapper medium>
       <VSpace.Large />
       <Info>
@@ -95,7 +78,7 @@ const ActiveUserProfilePage = ({ user, userProfile }) => (
         ))}
       </Row>
     </Wrapper>
-  </Background>
+  </Layout>
 )
 
 const UserProfilePage = ({ userSlug }) => {
@@ -105,13 +88,15 @@ const UserProfilePage = ({ userSlug }) => {
   )
 
   return error ? (
-    <Message.Error>
-      Something went wrong, please reload. (${error.message})
-    </Message.Error>
+    <Layout>
+      <Message.Error>
+        Something went wrong, please reload. (${error.message})
+      </Message.Error>
+    </Layout>
   ) : isLoading ? (
-    <FullHeight>
+    <Layout>
       <Loader />
-    </FullHeight>
+    </Layout>
   ) : userProfile ? (
     <ActiveUserProfilePage user={user} userProfile={userProfile} />
   ) : (

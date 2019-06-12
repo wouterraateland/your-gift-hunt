@@ -11,7 +11,6 @@ import {
   Align,
   Button,
   Column,
-  FullHeight,
   Loader,
   Menu,
   Message,
@@ -22,22 +21,9 @@ import {
 
 import NotFoundPage from "pages/404"
 
-import Nav from "components/Nav"
+import Layout from "components/Layout"
 import GamePreview from "components/GamePreview"
 import Leaderboard from "components/Leaderboard"
-
-const Background = styled(FullHeight)`
-  padding: 1em 0;
-
-  background: linear-gradient(
-      150deg,
-      ${props => props.theme.color.accent} 30vw,
-      #ebedf5 30vw,
-      #ebedf5 40vw,
-      transparent 40vw
-    )
-    no-repeat top left;
-`
 
 const Title = styled.h1`
   margin: 0;
@@ -69,11 +55,10 @@ const StatLabel = styled.span`
 `
 
 const ActiveGamePage = ({ game, gamePlays }) => (
-  <Background>
+  <Layout>
     <Helmet title={`${game.name} by ${game.creator.name} | Your Gift Hunt`} />
+    <VSpace.Large />
     <Wrapper>
-      <Nav title="← Back" to="/" />
-      <VSpace.Small />
       <Row align="left">
         <Column size={6}>
           <GamePreview src={game.image} />
@@ -132,7 +117,7 @@ const ActiveGamePage = ({ game, gamePlays }) => (
         </Column>
       </Row>
     </Wrapper>
-  </Background>
+  </Layout>
 )
 
 const GamePage = ({ gameSlug, creatorSlug }) => {
@@ -146,13 +131,15 @@ const GamePage = ({ gameSlug, creatorSlug }) => {
     : null
 
   return error ? (
-    <Message.Error>
-      Something went wrong, please reload. (${error.message})
-    </Message.Error>
+    <Layout>
+      <Message.Error>
+        Something went wrong, please reload. (${error.message})
+      </Message.Error>
+    </Layout>
   ) : isLoading ? (
-    <FullHeight>
+    <Layout>
       <Loader />
-    </FullHeight>
+    </Layout>
   ) : game ? (
     <ActiveGamePage
       game={game}

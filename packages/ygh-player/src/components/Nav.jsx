@@ -1,31 +1,146 @@
 import React from "react"
 import styled from "styled-components"
-import { Link } from "@reach/router"
 
+import { useYGHPlayerContext } from "ygh-player/react-hook"
+
+import { Link } from "@reach/router"
+import { Float, Menu, Wrapper } from "your-gift-hunt/ui"
+import { Logo } from "your-gift-hunt/icons"
 import Account from "components/Account"
 
-const Container = styled.nav`
-  display: flex;
-  justify-content: space-between;
+const Nav = styled.nav`
+  padding: 1em 0;
 `
 
-const Title = styled.h2`
-  margin: 0;
+const StyledWrapper = styled(Wrapper)`
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 2rem;
+    bottom: -1em;
+    right: 2rem;
+    border-bottom: 0.1em solid #0001;
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
 `
 
-const Nav = ({ title, ...otherProps }) => (
-  <Container>
-    {otherProps.href ? (
-      <a {...otherProps}>
-        <Title>{title}</Title>
-      </a>
-    ) : (
-      <Link {...otherProps}>
-        <Title>{title}</Title>
-      </Link>
-    )}
-    <Account />
-  </Container>
-)
+const StyledLogo = styled(Logo)`
+  float: left;
 
-export default Nav
+  color: #000d;
+
+  .background {
+    fill: #fff;
+  }
+`
+
+const Name = styled.h1`
+  margin: 0.8rem 0 0.8rem 3.6rem;
+  white-space: nowrap;
+
+  font-size: 1.5rem;
+  line-height: 1.1;
+`
+
+const IndexLink = styled.a`
+  text-decoration: none;
+`
+
+const StyledLink = styled(IndexLink)`
+  margin: 1.2em 0 0 1em;
+  line-height: 1.58;
+`
+
+const NavLink = props => <StyledLink as={props.href ? "a" : Link} {...props} />
+
+const Small = styled.div`
+  display: none;
+  @media (max-width: 45em) {
+    display: block;
+  }
+`
+
+const Large = styled.div`
+  display: block;
+  @media (max-width: 45em) {
+    display: none;
+  }
+`
+
+const MenuContainer = styled(Menu.Container)`
+  float: right;
+  margin-top: 0.8em;
+`
+
+const Btn = styled.div`
+  padding: 0.5em;
+  line-height: 1;
+  border-radius: ${props => props.theme.borderRadius};
+
+  background-color: #0001;
+`
+
+export default props => {
+  const { isLoggedIn, user, logoutUser } = useYGHPlayerContext()
+  return (
+    <Nav {...props}>
+      <StyledWrapper xlarge>
+        <Small>
+          <IndexLink href="https://yourgift.com">
+            <StyledLogo size={3} />
+            <Name>Your Gift Hunt</Name>
+          </IndexLink>
+          <MenuContainer>
+            <Menu.Toggle>
+              <Btn>Menu</Btn>
+            </Menu.Toggle>
+            <Menu.Items>
+              <Menu.Item to="/">Showcase</Menu.Item>
+              <Menu.Item as="a" href="https://yourgifthunt.com/pricing">
+                Pricing
+              </Menu.Item>
+              <Menu.Item as="a" href="https://yourgifthunt.com/about">
+                About
+              </Menu.Item>
+              <Menu.Item as="a" href="https://yourgifthunt.com/contact">
+                Contact
+              </Menu.Item>
+              {isLoggedIn ? (
+                <>
+                  <Menu.Item to={`/${user.username}`}>Profile</Menu.Item>
+                  <Menu.Item as="a" onClick={logoutUser}>
+                    Log out
+                  </Menu.Item>
+                </>
+              ) : (
+                <Menu.Item to="/auth/login">Log in</Menu.Item>
+              )}
+            </Menu.Items>
+          </MenuContainer>
+        </Small>
+        <Large>
+          <Float.Left>
+            <IndexLink href="https://yourgifthunt.com">
+              <StyledLogo size={3} />
+              <Name>Your Gift Hunt</Name>
+            </IndexLink>
+            <NavLink to="/">Showcase</NavLink>
+            <NavLink href="https://yourgifthunt.com/pricing">Pricing</NavLink>
+            <NavLink href="https://yourgifthunt.com/about">About</NavLink>
+          </Float.Left>
+          <Float.Right>
+            <NavLink href="https://yourgifthunt.com/contact">Contact</NavLink>
+            <Account />
+          </Float.Right>
+        </Large>
+      </StyledWrapper>
+    </Nav>
+  )
+}
