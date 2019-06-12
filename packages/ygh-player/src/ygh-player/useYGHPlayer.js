@@ -30,24 +30,52 @@ const useYGHPlayer = ({ apiKey }) => {
   })
 
   const listGames = useCallback(
-    runAsync(options =>
+    options =>
       yghPlayer.current.listGames({
         ...options,
         playTokens: yghPlayer.current.gamePlays.map(({ id }) => id)
-      })
-    ),
+      }),
     []
   )
 
   const getLeaderboard = useCallback(
-    runAsync(options => yghPlayer.current.getLeaderboard(options)),
+    options => yghPlayer.current.getLeaderboard(options),
     []
   )
 
   const getUserProfile = useCallback(
-    runAsync(options => yghPlayer.current.getUserProfile(options)),
+    options => yghPlayer.current.getUserProfile(options),
     []
   )
+
+  const updateUser = useCallback(() => {
+    setUser(yghPlayer.current.user)
+  }, [])
+
+  const loginUser = useCallback(async (...args) => {
+    await yghPlayer.current.loginUser(...args)
+    updateUser()
+  }, [])
+
+  const registerUser = useCallback(async (...args) => {
+    await yghPlayer.current.registerUser(...args)
+    updateUser()
+  }, [])
+
+  const logoutUser = useCallback(async (...args) => {
+    await yghPlayer.current.logoutUser(...args)
+    updateUser()
+  }, [])
+
+  const updateUserProfile = useCallback(async (...args) => {
+    await yghPlayer.current.updateUserProfile(...args)
+    updateUser()
+  }, [])
+
+  const updateUserPassword = useCallback(async (...args) => {
+    await yghPlayer.current.updateUserPassword(...args)
+    updateUser()
+  }, [])
 
   const startGamePlay = useCallback(async () => {
     const gameState = await yghPlayer.current.startGamePlay()
@@ -80,10 +108,6 @@ const useYGHPlayer = ({ apiKey }) => {
     }
   }, [])
 
-  const updateUser = useCallback(() => {
-    setUser(yghPlayer.current.user)
-  }, [])
-
   const authenticate = useCallback(
     runAsync(async accessCode => {
       try {
@@ -98,30 +122,6 @@ const useYGHPlayer = ({ apiKey }) => {
     runAsync(async gameIdentifier => {
       await yghPlayer.current.loadGameFromContext(gameIdentifier)
       updateAuthentication()
-    }),
-    []
-  )
-
-  const loginUser = useCallback(
-    runAsync(async (...args) => {
-      await yghPlayer.current.loginUser(...args)
-      updateUser()
-    }),
-    []
-  )
-
-  const registerUser = useCallback(
-    runAsync(async (...args) => {
-      await yghPlayer.current.registerUser(...args)
-      updateUser()
-    }),
-    []
-  )
-
-  const logoutUser = useCallback(
-    runAsync(async (...args) => {
-      await yghPlayer.current.logoutUser(...args)
-      updateUser()
     }),
     []
   )
@@ -157,6 +157,8 @@ const useYGHPlayer = ({ apiKey }) => {
     loginUser,
     registerUser,
     logoutUser,
+    updateUserProfile,
+    updateUserPassword,
 
     listGames,
     getLeaderboard,

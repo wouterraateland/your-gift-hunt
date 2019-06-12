@@ -128,6 +128,18 @@ class YGHPlayerWeb extends YGHPlayer {
     this.gamePlays = playTokensStore.read()
     return null
   }
+
+  async updateUserProfile(...args) {
+    const user = await super.updateUserProfile(...args)
+    userStore.write(user)
+    return user
+  }
+
+  async updateUserPassword(...args) {
+    const user = await super.updateUserPassword(...args)
+    userStore.write(user)
+    return user
+  }
 }
 
 export default YGHPlayerWeb

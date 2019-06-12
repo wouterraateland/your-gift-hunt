@@ -33,7 +33,17 @@ class Api {
     })
 
     if (!response.ok) {
-      throw new Error(await response.text())
+      if (response.status === 404) {
+        return null
+      }
+      let error
+      try {
+        const body = await response.json()
+        error = body.error
+      } catch (e) {
+        error = await response.text()
+      }
+      throw new Error(error)
     }
     const json = await response.json()
     return json
@@ -128,6 +138,9 @@ class Api {
   getUser = t(() => this.post("getUser"))
 
   logoutUser = t(() => this.post("logoutUser"))
+
+  updateUserProfile = t(body => this.post("updateUserProfile", { body }))
+  updateUserPassword = t(body => this.post("updateUserPassword", { body }))
 }
 
 export default Api

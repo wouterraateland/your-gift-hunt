@@ -178,6 +178,14 @@ class YGHPlayer {
     this.setUser(null)
     return res
   }
+
+  async updateUserProfile(...args) {
+    return this.setUser(await this.api.updateUserProfile(...args))
+  }
+
+  async updateUserPassword(...args) {
+    return this.setUser(await this.api.updateUserPassword(...args))
+  }
 }
 
 export default YGHPlayer

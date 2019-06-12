@@ -2,7 +2,9 @@ import React, { useState, useCallback } from "react"
 import styled from "styled-components"
 
 import useQuery from "hooks/useQuery"
+import useMutation from "hooks/useMutation"
 import { useYGHPlayerContext } from "ygh-player/react-hook"
+import { useFormState } from "react-use-form-state"
 
 import Helmet from "react-helmet"
 import {
@@ -99,38 +101,50 @@ const UserProfileDisplay = ({ profile, canEdit, onEditClick }) => (
 )
 
 const UserMetaForm = ({ user }) => {
-  const [values, setValues] = useState(user)
+  const [formState, { text, email }] = useFormState({
+    avatar: user.avatar,
+    firstName: user.firstName,
+    middleName: user.middleName,
+    lastName: user.lastName,
+    email: user.email,
+    username: user.username || user.slug
+  })
+  const { updateUserProfile } = useYGHPlayerContext()
+  const [{ isLoading, error }, runMutation] = useMutation(updateUserProfile)
+
+  const handleSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      runMutation(formState.values)
+    },
+    [formState.values, runMutation]
+  )
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <h2>Edit profile</h2>
       <Row>
         <Column size={4}>
           <Field block>
-            <Input block value={values["firstName"]} label="First name" />
+            <Input block {...text("firstName")} label="First name" />
           </Field>
         </Column>
         <Column size={3}>
           <Field block>
-            <Input block value={values["middleName"]} label="Middle name" />
+            <Input block {...text("middleName")} label="Middle name" />
           </Field>
         </Column>
         <Column size={5}>
           <Field block>
-            <Input block value={values["lastName"]} label="Last name" />
+            <Input block {...text("lastName")} label="Last name" />
           </Field>
         </Column>
       </Row>
       <Field block>
-        <Input
-          block
-          type="email"
-          value={values["email"]}
-          label="Email address"
-        />
+        <Input block {...email("email")} label="Email address" />
       </Field>
       <Field block>
-        <Input block value={values["username"]} label="Username" />
+        <Input block {...text("username")} label="Username" />
       </Field>
       <Float.Right>
         <Button
@@ -138,25 +152,41 @@ const UserMetaForm = ({ user }) => {
           color="primary"
           importance="primary"
           size="medium"
+          disabled={isLoading}
         >
           Update profile
         </Button>
+        {error && <Message.Error>{error.message}</Message.Error>}
       </Float.Right>
     </Form>
   )
 }
 
 const PasswordForm = () => {
-  const [values, setValues] = useState({})
+  const [formState, { password }] = useFormState()
+  const { updateUserPassword } = useYGHPlayerContext()
+  const [{ isLoading, error }, runMutation] = useMutation(updateUserPassword)
+
+  const handleSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      runMutation({
+        currentPassword: formState.values.currentPassword || undefined,
+        newPassword: formState.values.newPassword || undefined,
+        confirmPassword: formState.values.confirmPassword || undefined
+      })
+    },
+    [formState.values, runMutation]
+  )
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <h2>Change password</h2>
       <Field block>
         <Input
           block
           type="password"
-          value={values["currentPassword"]}
+          {...password("currentPassword")}
           label="Current password"
         />
       </Field>
@@ -164,7 +194,7 @@ const PasswordForm = () => {
         <Input
           block
           type="password"
-          value={values["newPassword"]}
+          {...password("newPassword")}
           label="New password"
         />
       </Field>
@@ -172,7 +202,7 @@ const PasswordForm = () => {
         <Input
           block
           type="password"
-          value={values["confirmPassword"]}
+          {...password("confirmPassword")}
           label="Confirm new password"
         />
       </Field>
@@ -182,23 +212,25 @@ const PasswordForm = () => {
           color="primary"
           importance="primary"
           size="medium"
+          disabled={isLoading}
         >
           Change passwords
         </Button>
+        {error && <Message.Error>{error.message}</Message.Error>}
       </Float.Right>
     </Form>
   )
 }
 
-const EditableUserProfile = ({ user }) => {
-  const [values, setValues] = useState(user)
-  return (
-    <>
-      <UserMetaForm user={user} />
-      <PasswordForm />
-    </>
-  )
-}
+const EditableUserProfile = ({ user, onBackClick }) => (
+  <>
+    <Button onClick={onBackClick} size="small">
+      &larr; Back
+    </Button>
+    <UserMetaForm user={user} />
+    <PasswordForm />
+  </>
+)
 
 const ActiveUserProfilePage = ({ user, userProfile }) => {
   const [isEditing, setEditing] = useState(false)
@@ -208,13 +240,19 @@ const ActiveUserProfilePage = ({ user, userProfile }) => {
     canEdit
   ])
 
+  const onBackClick = useCallback(() => setEditing(false), [])
+
   return (
     <Layout>
       <Helmet title={`${userProfile.name} | Your Gift Hunt`} />
       <Wrapper medium>
         <VSpace.Large />
         {isEditing ? (
-          <EditableUserProfile user={user} userProfile={userProfile} />
+          <EditableUserProfile
+            user={user}
+            userProfile={userProfile}
+            onBackClick={onBackClick}
+          />
         ) : (
           <UserProfileDisplay
             profile={userProfile}
