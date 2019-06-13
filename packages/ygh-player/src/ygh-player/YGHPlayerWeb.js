@@ -20,6 +20,7 @@ class YGHPlayerWeb extends YGHPlayer {
     }
 
     const params = querystring.decode(window.location.search.substr(1))
+    window.history.replaceState({}, "", window.location.pathname)
 
     if (params && params.playToken) {
       try {
@@ -29,14 +30,13 @@ class YGHPlayerWeb extends YGHPlayer {
           await this.createPlayToken({ gameId: this.game.id })
         }
       }
-      window.history.replaceState({}, "", window.location.pathname)
     }
 
     if (!this.playToken) {
       const gamePlay = this.gamePlays.find(
         ({ game }) => game.id === this.game.id
       )
-      if (gamePlay) {
+      if (gamePlay && params.restart === undefined) {
         try {
           await this.setPlayToken(gamePlay.id)
         } catch (error) {
@@ -55,8 +55,8 @@ class YGHPlayerWeb extends YGHPlayer {
 
     if (this.user) {
       const plays = [
-        ...this.user.plays.filter(({ id }) => id !== playToken),
-        { id: playToken, game: { id: this.game.id } }
+        { id: playToken, createdAt: new Date(), game: { id: this.game.id } },
+        ...this.user.plays.filter(({ id }) => id !== playToken)
       ]
       userStore.write({
         ...this.user,
@@ -65,8 +65,8 @@ class YGHPlayerWeb extends YGHPlayer {
       this.gamePlays = plays
     } else {
       const plays = [
-        ...this.gamePlays.filter(({ id }) => id !== playToken),
-        { id: playToken, game: { id: this.game.id } }
+        { id: playToken, createdAt: new Date(), game: { id: this.game.id } },
+        ...this.gamePlays.filter(({ id }) => id !== playToken)
       ]
       playTokensStore.write(plays)
       this.gamePlays = plays

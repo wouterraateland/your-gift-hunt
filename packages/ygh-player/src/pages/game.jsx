@@ -73,7 +73,9 @@ const ActiveGamePage = ({ game, gamePlays }) => (
                 <Menu.Container>
                   <Menu.Toggle />
                   <Menu.Items>
-                    <Menu.Item to={`/play/${game.creator.slug}/${game.slug}`}>
+                    <Menu.Item
+                      to={`/play/${game.creator.slug}/${game.slug}?restart`}
+                    >
                       Restart
                     </Menu.Item>
                   </Menu.Items>
