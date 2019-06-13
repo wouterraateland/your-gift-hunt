@@ -61,14 +61,15 @@ const ActiveGamePage = ({ game, gamePlays }) => (
     <Wrapper>
       <Row align="left">
         <Column size={6}>
-          <GamePreview src={game.image} />
+          <GamePreview src={game.image} progress={game.progress} />
         </Column>
         <Column size={6}>
           <Title>{game.name}</Title>
           <Creator>{game.creator.name}</Creator>
           <p>{game.description}</p>
           <Align.Right>
-            {gamePlays.length > 0 &&
+            {game.progress !== null &&
+              game.progress !== 1 &&
               (game.privacy === "PUBLIC" || game.accessType === "CODE") && (
                 <Menu.Container>
                   <Menu.Toggle />
@@ -84,11 +85,24 @@ const ActiveGamePage = ({ game, gamePlays }) => (
             <Button
               importance="primary"
               color="primary"
+              disabled={
+                game.progress === 1 &&
+                !(game.privacy === "PUBLIC" || game.accessType === "CODE")
+              }
               onClick={() =>
-                navigate(`/play/${game.creator.slug}/${game.slug}`)
+                navigate(
+                  `/play/${game.creator.slug}/${game.slug}${
+                    game.progress === 1 ? "?restart" : ""
+                  }`
+                )
               }
             >
-              ▷ {gamePlays.length > 0 ? "Resume" : "Play now"}
+              ▷{" "}
+              {gamePlays.length > 0
+                ? game.progress === 1
+                  ? "Play again"
+                  : "Resume"
+                : "Play now"}
             </Button>
             <VSpace.Small />
           </Align.Right>

@@ -83,6 +83,12 @@ const useYGHPlayer = ({ apiKey }) => {
     return gameState
   }, [])
 
+  const rateGamePlay = useCallback(async (...args) => {
+    const gameState = await yghPlayer.current.rateGamePlay(...args)
+    setGameState(gameState)
+    return gameState
+  }, [])
+
   const dispatchAction = useCallback(async action => {
     const gameState = await yghPlayer.current.dispatchAction(action)
     setGameState(gameState)
@@ -174,6 +180,7 @@ const useYGHPlayer = ({ apiKey }) => {
     loadGameFromContext,
     unloadGame,
     startGamePlay,
+    rateGamePlay,
     dispatchAction,
     requestHints
   }

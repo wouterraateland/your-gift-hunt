@@ -125,6 +125,17 @@ class YGHPlayer {
     return this.gameState
   }
 
+  async rateGamePlay(rating) {
+    this.ensurePlayToken()
+
+    const stateUpdate = await this.api.rateGamePlay({
+      playToken: this.playToken,
+      rating
+    })
+    this.gameState = getNextState(this.gameState, parseServerState(stateUpdate))
+    return this.gameState
+  }
+
   async openSession() {
     this.ensurePlayToken()
     await this.api.openSession({ playToken: this.playToken })

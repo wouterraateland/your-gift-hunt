@@ -70,6 +70,10 @@ class Api {
     this.post("startGamePlay", { body: { playToken } })
   )
 
+  rateGamePlay = t(({ playToken, rating }) =>
+    this.post("rateGamePlay", { body: { playToken, rating } })
+  )
+
   openSession = t(({ playToken }) =>
     this.post("openSession", { body: { playToken } })
   )
