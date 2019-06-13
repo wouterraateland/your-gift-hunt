@@ -4,13 +4,13 @@ import queryString from "querystring"
 
 import useAuth from "hooks/useAuth"
 
-import { Field, Input, Button } from "your-gift-hunt/ui"
+import { Button, Column, Field, Input, Row } from "your-gift-hunt/ui"
 import Layout from "layouts/Auth"
 
 const SignupPage = props => {
   const { redirect = "/" } = queryString.parse(props.location.search.substr(1))
   const [errors, setErrors] = useState({})
-  const { signupUser } = useAuth()
+  const { registerUser } = useAuth()
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -23,7 +23,7 @@ const SignupPage = props => {
     const password = event.target.password.value
 
     try {
-      await signupUser({
+      await registerUser({
         email,
         password,
         firstName,
@@ -33,38 +33,44 @@ const SignupPage = props => {
       })
 
       navigate(redirect)
-    } catch (error) {
-      if (error.json) {
-        if (error.json.code === 400) {
-          setErrors({ email: error.json.msg })
-        } else {
-          console.log(error.json)
-        }
-      } else {
-        console.log(error)
-      }
+    } catch ({ params }) {
+      setErrors(params)
     }
   }
 
   return (
     <Layout>
       <form onSubmit={handleSubmit}>
-        <p>Sign up with your name, email address and password.</p>
-        <Field block>
-          <Input
-            block
-            label="First name"
-            name="firstName"
-            type="text"
-            required
-          />
-        </Field>
-        <Field block>
-          <Input block label="Middle name" name="middleName" type="text" />
-        </Field>
-        <Field block>
-          <Input block label="Last name" name="lastName" type="text" required />
-        </Field>
+        <p>Sign up with a username, your name, email address and password.</p>
+        <Row vAlign="top">
+          <Column size={4}>
+            <Field block>
+              <Input
+                block
+                label="First name"
+                name="firstName"
+                type="text"
+                required
+              />
+            </Field>
+          </Column>
+          <Column size={3}>
+            <Field block>
+              <Input block label="Middle name" name="middleName" type="text" />
+            </Field>
+          </Column>
+          <Column size={5}>
+            <Field block>
+              <Input
+                block
+                label="Last name"
+                name="lastName"
+                type="text"
+                required
+              />
+            </Field>
+          </Column>
+        </Row>
         <Field block>
           <Input
             block

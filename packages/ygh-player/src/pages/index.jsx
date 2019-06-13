@@ -13,7 +13,7 @@ import {
   Wrapper
 } from "your-gift-hunt/ui"
 import { MailchimpForm } from "your-gift-hunt/components"
-import Layout from "components/Layout"
+import Layout from "layouts/Page"
 import GameThumb from "components/GameThumb"
 
 const ActiveIndexPage = ({ games, gamePlays, user }) => {

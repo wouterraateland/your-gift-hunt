@@ -9,7 +9,7 @@ class YGHPlayerWeb extends YGHPlayer {
   constructor(...args) {
     super(...args)
     super.setUser(userStore.read())
-    this.gamePlays = this.user ? this.user.plays : playTokensStore.read()
+    this.gamePlays = this.user ? this.user.plays || [] : playTokensStore.read()
   }
 
   async loadGameFromContext(gameIdentifier) {

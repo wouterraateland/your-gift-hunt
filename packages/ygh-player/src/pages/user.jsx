@@ -23,7 +23,7 @@ import {
 
 import NotFoundPage from "pages/404"
 
-import Layout from "components/Layout"
+import Layout from "layouts/Page"
 import GameThumb from "components/GameThumb"
 
 const Info = styled.div`
@@ -120,33 +120,61 @@ const UserMetaForm = ({ user }) => {
     [formState.values, runMutation]
   )
 
+  const errors = error ? error.params : {}
+
   return (
     <Form onSubmit={handleSubmit}>
       <h2>Edit profile</h2>
-      <Row>
+      <Row vAlign="top">
         <Column size={4}>
           <Field block>
-            <Input block {...text("firstName")} label="First name" />
+            <Input
+              block
+              {...text("firstName")}
+              label="First name"
+              error={errors["firstName"]}
+            />
           </Field>
         </Column>
         <Column size={3}>
           <Field block>
-            <Input block {...text("middleName")} label="Middle name" />
+            <Input
+              block
+              {...text("middleName")}
+              label="Middle name"
+              error={errors["middleName"]}
+            />
           </Field>
         </Column>
         <Column size={5}>
           <Field block>
-            <Input block {...text("lastName")} label="Last name" />
+            <Input
+              block
+              {...text("lastName")}
+              label="Last name"
+              error={errors["lastName"]}
+            />
           </Field>
         </Column>
       </Row>
       <Field block>
-        <Input block {...email("email")} label="Email address" />
+        <Input
+          block
+          {...email("email")}
+          label="Email address"
+          error={errors["email"]}
+        />
       </Field>
       <Field block>
-        <Input block {...text("username")} label="Username" />
+        <Input
+          block
+          {...text("username")}
+          label="Username"
+          error={errors["username"]}
+        />
       </Field>
       <Float.Right>
+        {error && <Message.Error>{error.message}</Message.Error>}{" "}
         <Button
           type="submit"
           color="primary"
@@ -156,7 +184,6 @@ const UserMetaForm = ({ user }) => {
         >
           Update profile
         </Button>
-        {error && <Message.Error>{error.message}</Message.Error>}
       </Float.Right>
     </Form>
   )
@@ -179,6 +206,8 @@ const PasswordForm = () => {
     [formState.values, runMutation]
   )
 
+  const errors = error ? error.params : {}
+
   return (
     <Form onSubmit={handleSubmit}>
       <h2>Change password</h2>
@@ -188,6 +217,7 @@ const PasswordForm = () => {
           type="password"
           {...password("currentPassword")}
           label="Current password"
+          error={errors["currentPassword"]}
         />
       </Field>
       <Field block>
@@ -196,6 +226,7 @@ const PasswordForm = () => {
           type="password"
           {...password("newPassword")}
           label="New password"
+          error={errors["newPassword"]}
         />
       </Field>
       <Field block>
@@ -204,9 +235,11 @@ const PasswordForm = () => {
           type="password"
           {...password("confirmPassword")}
           label="Confirm new password"
+          error={errors["confirmPassword"]}
         />
       </Field>
       <Float.Right>
+        {error && <Message.Error>{error.message}</Message.Error>}{" "}
         <Button
           type="submit"
           color="primary"
@@ -216,7 +249,6 @@ const PasswordForm = () => {
         >
           Change passwords
         </Button>
-        {error && <Message.Error>{error.message}</Message.Error>}
       </Float.Right>
     </Form>
   )
@@ -235,7 +267,7 @@ const EditableUserProfile = ({ user, onBackClick }) => (
 const ActiveUserProfilePage = ({ user, userProfile }) => {
   const [isEditing, setEditing] = useState(false)
 
-  const canEdit = user.id === userProfile.id
+  const canEdit = user && user.id === userProfile.id
   const onEditClick = useCallback(() => (canEdit ? setEditing(true) : null), [
     canEdit
   ])

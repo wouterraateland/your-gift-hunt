@@ -21,7 +21,7 @@ import {
 
 import NotFoundPage from "pages/404"
 
-import Layout from "components/Layout"
+import Layout from "layouts/Page"
 import GamePreview from "components/GamePreview"
 import Leaderboard from "components/Leaderboard"
 

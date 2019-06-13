@@ -22,6 +22,13 @@ const Avatar = styled.div`
   }
 `
 
+const StyledLink = styled(Link)`
+  margin: 1.2em 0 0 1em;
+
+  line-height: 1.58;
+  text-decoration: none;
+`
+
 const Account = () => {
   const { isLoggedIn, user, logoutUser } = useYGHPlayerContext()
   return isLoggedIn ? (
@@ -37,7 +44,7 @@ const Account = () => {
       </Menu.Container>
     </>
   ) : (
-    <Link to="/auth/login">Login</Link>
+    <StyledLink to="/auth/login">Login</StyledLink>
   )
 }
 

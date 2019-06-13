@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import { Link } from "@reach/router"
 import { Logo } from "your-gift-hunt/icons"
-import Layout from "components/Layout"
+import Layout from "layouts/Page"
 
 const Center = styled.div`
   height: 100%;

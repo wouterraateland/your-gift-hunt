@@ -36,14 +36,8 @@ class Api {
       if (response.status === 404) {
         return null
       }
-      let error
-      try {
-        const body = await response.json()
-        error = body.error
-      } catch (e) {
-        error = await response.text()
-      }
-      throw new Error(error)
+      const error = await response.json()
+      throw error
     }
     const json = await response.json()
     return json

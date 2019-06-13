@@ -22,14 +22,8 @@ const LoginPage = props => {
     try {
       await loginUser({ email, password, shouldRemind })
       navigate(redirect)
-    } catch ({ json: { error, error_description } }) {
-      switch (error) {
-        case "invalid_grant":
-          setErrors({ email: error_description })
-          break
-        default:
-          console.log(error, error_description)
-      }
+    } catch ({ params }) {
+      setErrors(params)
     }
   }
 

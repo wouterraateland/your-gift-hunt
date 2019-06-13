@@ -8,7 +8,7 @@ const useMutation = f => {
 
   const run = useCallback(
     async (...args) => {
-      setState({ isLoading: true, error: null })
+      setState(state => ({ ...state, isLoading: true }))
       try {
         const v = await f(...args)
         setState({ isLoading: false, error: null })
