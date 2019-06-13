@@ -126,6 +126,12 @@ const useYGHPlayer = ({ apiKey }) => {
     []
   )
 
+  const unloadGame = useCallback(() => {
+    yghPlayer.current.playToken = null
+    setGameState((yghPlayer.current.gameState = {}))
+    setAuthentication({ status: null, method: null })
+  }, [])
+
   const closeSession = useCallback(
     runAsync(async () => {
       if (yghPlayer.current.playToken) {
@@ -166,6 +172,7 @@ const useYGHPlayer = ({ apiKey }) => {
 
     authenticate,
     loadGameFromContext,
+    unloadGame,
     startGamePlay,
     dispatchAction,
     requestHints

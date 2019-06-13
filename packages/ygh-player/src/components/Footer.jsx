@@ -17,7 +17,7 @@ const FooterLogo = styled(Logo)`
 `
 
 const SocialLink = styled.a`
-  margin: 0 1em;
+  margin: 0 1em 0 0;
 `
 
 export default () => (

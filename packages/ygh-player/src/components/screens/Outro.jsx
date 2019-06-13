@@ -24,9 +24,7 @@ const f = x => (x < 10 ? `0${x}` : x)
 export default ({ close, ...props }) => {
   const { game, gameState } = useGame()
 
-  const duration = moment.duration(
-    moment(gameState.finishedAt).diff(moment(gameState.startedAt))
-  )
+  const duration = moment.duration(gameState.timePlayed)
 
   return (
     <OutroScreen {...props}>

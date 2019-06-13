@@ -24,6 +24,8 @@ const Avatar = styled.div.attrs(({ avatar }) => ({
   margin: 0.5em 1em;
   border-radius: 100%;
 
+  flex-shrink: 0;
+
   background: #0009 no-repeat center / cover;
 `
 
@@ -33,6 +35,8 @@ const PositionIndicator = styled.strong`
   height: 1.5em;
   padding: .25em;
   border-radius: 100%;
+
+  flex-shrink: 0;
 
   line-height: 1;
   text-align: center;

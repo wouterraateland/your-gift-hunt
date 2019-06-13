@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { useYGHPlayerContext } from "ygh-player/react-hook"
 
 import { Link } from "@reach/router"
-import { Float, Menu, Wrapper } from "your-gift-hunt/ui"
+import { Button, Float, Menu, Wrapper } from "your-gift-hunt/ui"
 import { Logo } from "your-gift-hunt/icons"
 import Account from "components/Account"
 
@@ -87,6 +87,12 @@ const Btn = styled.div`
   background-color: #0001;
 `
 
+const AccountMenuItem = styled.div`
+  padding: 0.5em 0.5em 0.25em;
+  display: flex;
+  justify-content: space-around;
+`
+
 export default props => {
   const { isLoggedIn, user, logoutUser } = useYGHPlayerContext()
   return (
@@ -120,7 +126,14 @@ export default props => {
                   </Menu.Item>
                 </>
               ) : (
-                <Menu.Item to="/auth/login">Log in</Menu.Item>
+                <AccountMenuItem>
+                  <Button size="tiny" as={Link} to="/auth/login">
+                    Log in
+                  </Button>
+                  <Button size="tiny" as={Link} to="/auth/signup">
+                    Sign up
+                  </Button>
+                </AccountMenuItem>
               )}
             </Menu.Items>
           </MenuContainer>

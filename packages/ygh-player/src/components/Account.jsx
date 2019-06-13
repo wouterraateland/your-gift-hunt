@@ -22,29 +22,42 @@ const Avatar = styled.div`
   }
 `
 
-const StyledLink = styled(Link)`
+const Container = styled.span`
+  position: relative;
+`
+
+const SignupLink = styled(Link)`
   margin: 1.2em 0 0 1em;
 
   line-height: 1.58;
   text-decoration: none;
 `
 
+const SignInLink = styled.small`
+  position: absolute;
+  right: 0;
+  white-space: nowrap;
+`
+
 const Account = () => {
   const { isLoggedIn, user, logoutUser } = useYGHPlayerContext()
   return isLoggedIn ? (
-    <>
-      <Menu.Container>
-        <Menu.Toggle as={Avatar} bgImage={user.avatar} />
-        <Menu.Items>
-          <Menu.Item to={`/${user.username}`}>Profile</Menu.Item>
-          <Menu.Item as="a" onClick={logoutUser}>
-            Log out
-          </Menu.Item>
-        </Menu.Items>
-      </Menu.Container>
-    </>
+    <Menu.Container>
+      <Menu.Toggle as={Avatar} bgImage={user.avatar} />
+      <Menu.Items>
+        <Menu.Item to={`/${user.username}`}>Profile</Menu.Item>
+        <Menu.Item as="a" onClick={logoutUser}>
+          Log out
+        </Menu.Item>
+      </Menu.Items>
+    </Menu.Container>
   ) : (
-    <StyledLink to="/auth/login">Login</StyledLink>
+    <Container>
+      <SignInLink>
+        Already have an account? <Link to="/auth/login">Log in</Link>
+      </SignInLink>
+      <SignupLink to="/auth/signup">Sign up</SignupLink>
+    </Container>
   )
 }
 

@@ -63,6 +63,9 @@ export const useGameProvider = gameIdentifier => {
 
   useEffect(() => {
     yghPlayer.loadGameFromContext(gameIdentifier)
+    return () => {
+      yghPlayer.unloadGame()
+    }
   }, [])
 
   if (isLoading) {

@@ -106,13 +106,12 @@ class YGHPlayer {
   async getGameState() {
     this.ensurePlayToken()
 
-    if (!this.gameState) {
-      this.gameState = parseServerState(
-        await this.api.getGameState({
-          playToken: this.playToken
-        })
-      )
-    }
+    this.gameState = parseServerState(
+      await this.api.getGameState({
+        playToken: this.playToken
+      })
+    )
+
     return this.gameState
   }
 

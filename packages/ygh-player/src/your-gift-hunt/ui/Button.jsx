@@ -10,7 +10,7 @@ const Button = styled.button`
   display: inline-block;
   padding: ${props => {
     switch (props.size) {
-      case "xsmall":
+      case "tiny":
         return "0.35em 0.5em"
       case "small":
         return "0.5em 0.65em"
