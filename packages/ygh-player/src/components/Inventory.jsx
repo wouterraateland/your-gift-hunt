@@ -15,13 +15,25 @@ const InventoryContainer = styled.div`
 
   display: flex;
 
+  &::before,
+  &::after {
+    content: "";
+
+    display: block;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
   @media (orientation: portrait) {
     mask: linear-gradient(90deg, transparent, #fff 10%, #fff 90%, transparent);
+    margin: 0 -1em;
   }
 
   @media (orientation: landscape) {
     flex-direction: column;
     mask: linear-gradient(transparent, #fff 10%, #fff 90%, transparent);
+    margin: -1em 0;
   }
 `
 
