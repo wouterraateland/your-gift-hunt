@@ -99,7 +99,7 @@ export default props => {
     <Nav {...props}>
       <StyledWrapper xlarge>
         <Small>
-          <IndexLink href="https://yourgift.com">
+          <IndexLink href="https://yourgifthunt.com">
             <StyledLogo size={3} />
             <Name>Your Gift Hunt</Name>
           </IndexLink>

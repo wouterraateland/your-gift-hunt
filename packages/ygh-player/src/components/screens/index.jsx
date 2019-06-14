@@ -4,6 +4,7 @@ import Intro from "./Intro"
 import ItemPickup from "./ItemPickup"
 import MultiDetail from "./MultiDetail"
 import Outro from "./Outro"
+import Pause from "./Pause"
 import SingleDetail from "./SingleDetail"
 
 export {
@@ -13,6 +14,7 @@ export {
   ItemPickup,
   MultiDetail,
   Outro,
+  Pause,
   SingleDetail
 }
 
@@ -23,5 +25,6 @@ export default {
   ItemPickup,
   MultiDetail,
   Outro,
+  Pause,
   SingleDetail
 }

@@ -3,6 +3,7 @@ import styled from "styled-components"
 
 import HintsIndicator from "./HintsIndicator"
 import Inventory from "./Inventory"
+import MenuToggle from "./MenuToggle"
 
 const SidebarContainer = styled.div`
   position: relative;
@@ -11,6 +12,7 @@ const SidebarContainer = styled.div`
   display: flex;
   flex-shrink: 0;
   align-items: center;
+  justify-content: space-between;
   padding: 0.5em;
 
   @media (orientation: portrait) {
@@ -47,6 +49,7 @@ const Sidebar = () => (
   <SidebarContainer>
     <HintsIndicator />
     <Inventory />
+    <MenuToggle />
   </SidebarContainer>
 )
 
