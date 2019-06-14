@@ -1,12 +1,14 @@
 import React, { useState } from "react"
-import { Link } from "@reach/router"
+import { Link, navigate } from "@reach/router"
+import queryString from "querystring"
 
 import useAuth from "hooks/useAuth"
 
 import { Field, Input, Button } from "your-gift-hunt/ui"
 import Layout from "layouts/Auth"
 
-const LoginPage = () => {
+const LoginPage = props => {
+  const { redirect = "/" } = queryString.parse(props.location.search.substr(1))
   const [errors, setErrors] = useState({})
   const { loginUser } = useAuth()
 
@@ -18,15 +20,11 @@ const LoginPage = () => {
     const shouldRemind = event.target.remind.checked
 
     try {
-      await loginUser(email, password, shouldRemind)
-    } catch ({ json: { error, error_description } }) {
-      switch (error) {
-        case "invalid_grant":
-          setErrors({ email: error_description })
-          break
-        default:
-          console.log(error, error_description)
-      }
+      await loginUser({ email, password, shouldRemind })
+      navigate(redirect)
+    } catch (error) {
+      console.log(error)
+      setErrors(error.params)
     }
   }
 

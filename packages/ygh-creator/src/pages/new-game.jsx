@@ -7,7 +7,7 @@ import slugify from "limax"
 import { useFormState } from "react-use-form-state"
 import { useMutation, useApolloClient } from "react-apollo-hooks"
 
-import useUser from "hooks/useUser"
+import useAuth from "hooks/useAuth"
 
 import Layout from "layouts/Overview"
 import {
@@ -70,8 +70,8 @@ const Slash = styled.span`
 `
 
 const NewGamePage = () => {
-  const { user } = useUser()
-  const userSlug = user.slug
+  const { user } = useAuth()
+  const userSlug = user.username
   const exampleName = useMemo(
     () =>
       `${

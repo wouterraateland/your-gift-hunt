@@ -1,73 +1,83 @@
 import React, { useState } from "react"
 import { Link, navigate } from "@reach/router"
+import queryString from "querystring"
 
 import useAuth from "hooks/useAuth"
 
-import { Field, Input, Button } from "your-gift-hunt/ui"
+import { Button, Column, Field, Input, Row } from "your-gift-hunt/ui"
 import Layout from "layouts/Auth"
 
-const SignupPage = () => {
+const SignupPage = props => {
+  const { redirect = "/" } = queryString.parse(props.location.search.substr(1))
   const [errors, setErrors] = useState({})
-  const { signupUser } = useAuth()
+  const { registerUser } = useAuth()
 
   async function handleSubmit(event) {
     event.preventDefault()
 
-    const first_name = event.target.first_name.value
-    const middle_name = event.target.middle_name.value
-    const last_name = event.target.last_name.value
+    const firstName = event.target.firstName.value
+    const middleName = event.target.middleName.value
+    const lastName = event.target.lastName.value
+    const username = event.target.username.value
     const email = event.target.email.value
     const password = event.target.password.value
 
-    const full_name = middle_name
-      ? `${first_name} ${middle_name} ${last_name}`
-      : `${first_name} ${last_name}`
-
     try {
-      await signupUser(email, password, {
-        first_name,
-        middle_name,
-        last_name,
-        full_name,
-        email
+      await registerUser({
+        email,
+        password,
+        firstName,
+        middleName,
+        lastName,
+        username
       })
 
-      navigate("/")
-    } catch (error) {
-      if (error.json) {
-        if (error.json.code === 400) {
-          setErrors({ email: error.json.msg })
-        } else {
-          console.log(error.json)
-        }
-      } else {
-        console.log(error)
-      }
+      navigate(redirect)
+    } catch ({ params }) {
+      setErrors(params)
     }
   }
 
   return (
     <Layout>
       <form onSubmit={handleSubmit}>
-        <p>Sign up with your name, email address and password.</p>
+        <p>Sign up with a username, your name, email address and password.</p>
+        <Row vAlign="top">
+          <Column size={4}>
+            <Field block>
+              <Input
+                block
+                label="First name"
+                name="firstName"
+                type="text"
+                required
+              />
+            </Field>
+          </Column>
+          <Column size={3}>
+            <Field block>
+              <Input block label="Middle name" name="middleName" type="text" />
+            </Field>
+          </Column>
+          <Column size={5}>
+            <Field block>
+              <Input
+                block
+                label="Last name"
+                name="lastName"
+                type="text"
+                required
+              />
+            </Field>
+          </Column>
+        </Row>
         <Field block>
           <Input
             block
-            label="First name"
-            name="first_name"
-            type="text"
-            required
-          />
-        </Field>
-        <Field block>
-          <Input block label="Middle name" name="middle_name" type="text" />
-        </Field>
-        <Field block>
-          <Input
-            block
-            label="Last name"
-            name="last_name"
-            type="text"
+            label="Username"
+            name="username"
+            type="username"
+            error={errors["username"]}
             required
           />
         </Field>

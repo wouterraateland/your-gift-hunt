@@ -1,58 +1,15 @@
-import { useContext, useEffect } from "react"
-import { useNetlifyIdentity } from "react-netlify-identity"
-import { navigate } from "@reach/router"
-import { useMutation } from "react-apollo-hooks"
-import { CREATE_USER } from "gql/mutations"
-import slugify from "limax"
+import { useYGHPlayerContext } from "ygh-player/react-hook"
 
-import AuthContext from "contexts/Auth"
+const useAuth = () => {
+  const { user, loginUser, registerUser, logoutUser } = useYGHPlayerContext()
 
-export const useAuthProvider = url => {
-  const identity = useNetlifyIdentity(url)
-  const createUser = useMutation(CREATE_USER)
-
-  useEffect(
-    () => {
-      const user = identity.user
-      if (user && user.user_metadata && !user.user_metadata.prismaUserId) {
-        const { full_name } = user.user_metadata
-
-        createUser({
-          variables: {
-            netlifyUserId: user.id,
-            name: full_name,
-            slug: slugify(full_name)
-          }
-        })
-          .then(response =>
-            identity.updateUser({
-              data: {
-                prismaUserId: response.data.createUser.id
-              }
-            })
-          )
-          .catch(e => {
-            console.log(e)
-          })
-      }
-    },
-    [identity.user]
-  )
-
-  useEffect(() => {
-    const hash = window.location.hash.substring(1)
-    if (hash.slice(0, 15) === "recovery_token=") {
-      // we are in a recovery!
-      const token = hash.slice(15)
-      identity
-        .recoverAccount(token, true)
-        .then(() => navigate("/auth/password-reset"))
-        .catch(() => navigate("/auth/password-reset"))
-    }
-  }, [])
-
-  return identity
+  return {
+    user,
+    isLoggedIn: !!user,
+    loginUser,
+    registerUser,
+    logoutUser
+  }
 }
 
-const useAuth = () => useContext(AuthContext)
 export default useAuth

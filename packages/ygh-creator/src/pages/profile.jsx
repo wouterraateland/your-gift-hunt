@@ -31,7 +31,7 @@ const NewGamePage = () => {
   const { user, updateUser } = useAuth()
   const { data, error } = useQuery(USER, {
     variables: {
-      userId: user.user_metadata.prismaUserId
+      userId: user.id
     }
   })
   if (error) {
@@ -47,7 +47,7 @@ const NewGamePage = () => {
     first_name: user.user_metadata.first_name,
     middle_name: user.user_metadata.middle_name,
     last_name: user.user_metadata.last_name,
-    username: data.user.slug
+    username: data.user.username
   })
 
   async function checkUsernameExistence(username) {
@@ -92,7 +92,7 @@ const NewGamePage = () => {
 
       await updateUserSlug({
         variables: {
-          userId: user.user_metadata.prismaUserId,
+          userId: user.id,
           slug: username
         }
       })
@@ -133,7 +133,7 @@ const NewGamePage = () => {
                   label="Username"
                   error={
                     usernameExists &&
-                    formState.values.username !== data.user.slug
+                    formState.values.username !== data.user.username
                       ? "This username is already taken"
                       : null
                   }

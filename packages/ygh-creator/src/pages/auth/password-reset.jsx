@@ -13,15 +13,15 @@ const PasswordResetPage = () => {
   async function handleSubmit(event) {
     event.preventDefault()
 
-    const password = event.target.newPassword.value
+    const password = event.target.password.value
 
     if (password.length < 8) {
-      setErrors({ newPassword: "Password requires at least 8 characters" })
+      setErrors({ password: "Password requires at least 8 characters" })
       try {
         await updateUser({ password })
         navigate("/")
-      } catch (e) {
-        console.log(e)
+      } catch (error) {
+        console.error(error)
       }
     }
   }
@@ -35,9 +35,9 @@ const PasswordResetPage = () => {
             <Input
               block
               label="New password"
-              name="newPassword"
+              name="password"
               type="password"
-              error={errors["newPassword"]}
+              error={errors["password"]}
               required
             />
           </Field>

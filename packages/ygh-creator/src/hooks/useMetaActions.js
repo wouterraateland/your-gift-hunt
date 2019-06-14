@@ -14,7 +14,7 @@ const client = Client.buildClient({
 const useMetaActions = game => {
   const { user } = useAuth()
   const gameId = game.id
-  const userId = user.user_metadata.prismaUserId
+  const userId = user.id
 
   const { loading, data } = useQuery(TEST_SERVICE)
   const deleteGameMutation = useMutation(DELETE_GAME)

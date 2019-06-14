@@ -1,10 +1,10 @@
 import { navigate } from "@reach/router"
 
-import useUser from "hooks/useUser"
+import useAuth from "hooks/useAuth"
 
 const NotFoundPage = () => {
-  const { user } = useUser()
-  navigate(`/${user.slug}/games`)
+  const { user } = useAuth()
+  navigate(`/${user.username}/games`)
   return null
 }
 

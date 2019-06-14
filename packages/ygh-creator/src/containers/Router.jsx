@@ -1,7 +1,7 @@
-import React, { useContext } from "react"
+import React from "react"
 import { Router, Redirect } from "@reach/router"
 
-import AuthContext from "contexts/Auth"
+import useAuth from "hooks/useAuth"
 
 import PasswordReset from "pages/auth/password-reset"
 import Login from "pages/auth/login"
@@ -21,7 +21,7 @@ import TemplateSetCreator from "pages/template-set-creator"
 import NotFound from "pages/404"
 
 const MainRouter = () => {
-  const { isLoggedIn } = useContext(AuthContext)
+  const { isLoggedIn } = useAuth()
 
   return isLoggedIn ? (
     <Router>

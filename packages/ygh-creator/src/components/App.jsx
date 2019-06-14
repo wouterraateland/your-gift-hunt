@@ -1,7 +1,7 @@
 import React, { Suspense } from "react"
 
 import ErrorBoundary from "react-error-boundary"
-import { AuthProvider } from "contexts/Auth"
+import { YGHPlayerProvider } from "ygh-player/react-hook"
 
 import Theme from "containers/Theme"
 import Router from "containers/Router"
@@ -11,11 +11,11 @@ import { Loader } from "your-gift-hunt/ui"
 const App = () => (
   <Theme>
     <Suspense fallback={<Loader />}>
-      <AuthProvider>
+      <YGHPlayerProvider>
         <ErrorBoundary>
           <Router />
         </ErrorBoundary>
-      </AuthProvider>
+      </YGHPlayerProvider>
     </Suspense>
   </Theme>
 )

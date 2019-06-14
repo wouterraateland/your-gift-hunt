@@ -3,7 +3,7 @@ import styled from "styled-components"
 import moment from "moment"
 import { navigate } from "@reach/router"
 
-import useUser from "hooks/useUser"
+import useAuth from "hooks/useAuth"
 
 import { Edit } from "your-gift-hunt/icons"
 
@@ -80,7 +80,7 @@ const Actions = ({ templateSet }) => (
 )
 
 const TemplateSet = ({ templateSet }) => {
-  const { user } = useUser()
+  const { user } = useAuth()
   const editDate = moment(templateSet.updatedAt)
   const now = moment()
   const sameYear = editDate.year() === now.year()

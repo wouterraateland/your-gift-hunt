@@ -1,7 +1,7 @@
 import React, { Suspense, useState } from "react"
 import slugify from "limax"
 
-import useUser from "hooks/useUser"
+import useAuth from "hooks/useAuth"
 
 import { useQuery } from "react-apollo-hooks"
 import useDebounce from "hooks/useDebounce"
@@ -31,7 +31,7 @@ const Overview = ({ user, searchQuery }) => {
 }
 
 const OverviewPage = () => {
-  const { user } = useUser()
+  const { user } = useAuth()
   const [query, setQuery] = useState("")
   const debouncedQuery = useDebounce(query, 500)
 
@@ -41,11 +41,11 @@ const OverviewPage = () => {
       items={[
         {
           label: "Games",
-          to: `/${user.slug}/games`
+          to: `/${user.username}/games`
         },
         {
           label: "Template sets",
-          to: `/${user.slug}/template-sets`
+          to: `/${user.username}/template-sets`
         }
       ]}
     >
@@ -65,7 +65,7 @@ const OverviewPage = () => {
               importance="primary"
               color="primary"
               as={Link}
-              to={`/${user.slug}/new-template-set`}
+              to={`/${user.username}/new-template-set`}
               block="small"
               disabled
             >

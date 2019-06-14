@@ -73,13 +73,13 @@ const NewGamePage = () => {
   const { user } = useAuth()
   const { data, error } = useQuery(USER, {
     variables: {
-      userId: user.user_metadata.prismaUserId
+      userId: user.id
     }
   })
   if (error) {
     throw error
   }
-  const userSlug = data.user.slug
+  const userSlug = data.user.username
   const exampleName = useMemo(
     () =>
       `${
