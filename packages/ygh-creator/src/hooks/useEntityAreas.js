@@ -5,11 +5,14 @@ import EntityAreasContext from "contexts/EntityAreas"
 
 import useEntities from "hooks/useEntities"
 import useEntityGraph from "hooks/useEntityGraph"
+import useForceUpdate from "hooks/useForceUpdate"
 
 export const useEntityAreasProvider = () => {
   const { entities, getEntityById } = useEntities()
   const { nodes, edges, getNodeById } = useEntityGraph()
+  const forceUpdate = useForceUpdate()
   const hasChanged = useRef(false)
+  const toSync = useRef([])
 
   const [entityAreas, setEntityAreas] = useState(
     _.calcEntityAreas(entities, nodes)
@@ -162,9 +165,31 @@ export const useEntityAreasProvider = () => {
     )
   }
 
+  const syncEntityGraphPosition = (
+    entityId,
+    prevContainerId,
+    nextContainerId
+  ) => {
+    toSync.current.push({ entityId, prevContainerId, nextContainerId })
+    forceUpdate()
+  }
+
   const flush = () => {
     hasChanged.current = false
   }
+
+  toSync.current.forEach(({ entityId, nextContainerId }) => {
+    const entityArea = getEntityArea(entityId)
+    const nextContainerArea = nextContainerId
+      ? getEntityArea(nextContainerId)
+      : { top: 0, left: 0 }
+
+    setEntityPosition(entityId, {
+      top: entityArea.top - nextContainerArea.top,
+      left: entityArea.left - nextContainerArea.left
+    })
+  })
+  toSync.current = []
 
   return {
     getNodeArea,
@@ -173,6 +198,7 @@ export const useEntityAreasProvider = () => {
     nodeAreas,
     entityAreas,
     setEntityPosition,
+    syncEntityGraphPosition,
     hasChanged,
     flush
   }

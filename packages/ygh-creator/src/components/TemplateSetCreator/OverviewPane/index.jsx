@@ -60,9 +60,13 @@ const OverviewPane = () => {
     ["name"]
   )
 
-  const onButtonClick = useCallback(runAsync(createEntityTemplate), [
-    createEntityTemplate
-  ])
+  const onButtonClick = useCallback(
+    runAsync(async () => {
+      const { data } = await createEntityTemplate()
+      inspectTemplate(data.createEntityTemplate.id)
+    }),
+    [createEntityTemplate]
+  )
 
   return (
     <ScrollablePaper isOpen={isOpen}>
@@ -75,7 +79,7 @@ const OverviewPane = () => {
           disabled={isLoading}
           onClick={onButtonClick}
         >
-          Add template
+          + New template
         </Button>
         {error && (
           <Message.Error>{JSON.stringify(error.message)}</Message.Error>

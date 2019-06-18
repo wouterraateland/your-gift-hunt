@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { forwardRef, useEffect, useRef } from "react"
 import styled, { css } from "styled-components"
 
 export const PaperTitle = styled.h2`
@@ -145,12 +145,13 @@ const ExpandingPaper = ({ isExpanded, ...otherProps }) => {
   )
 }
 
-const Paper = ({ expanding, ...otherProps }) =>
+const Paper = forwardRef(({ expanding, ...otherProps }, ref) =>
   expanding ? (
     <ExpandingPaper {...otherProps} />
   ) : (
-    <PaperContainer {...otherProps} />
+    <PaperContainer ref={ref} {...otherProps} />
   )
+)
 
 Paper.Container = PaperContainer
 Paper.Section = PaperSection

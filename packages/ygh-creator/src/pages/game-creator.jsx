@@ -16,12 +16,15 @@ import { InspectorProvider } from "contexts/Inspector"
 import useClickOutside from "hooks/useClickOutside"
 import useGame from "hooks/useGame"
 import useInspector from "hooks/useInspector"
+import useEditor from "hooks/useEditor"
 
 import Layout from "layouts/GameCreator"
 
 import EditorPane from "components/GameCreator/EditorPane"
+import GraphicPane from "components/GameCreator/GraphicPane"
 import DetailPane from "components/GameCreator/DetailPane"
 import Toolbox from "components/GameCreator/Toolbox"
+import ViewSwitch from "components/GameCreator/ViewSwitch"
 
 import SettingsModal from "components/modals/GameSettings"
 import PublishModal from "components/modals/Publish"
@@ -39,13 +42,18 @@ const ClosableDetailPane = () => {
   return <DetailPane ref={detailPane} />
 }
 
-const Creator = memo(() => (
-  <Layout>
-    <EditorPane />
-    <Toolbox />
-    <ClosableDetailPane />
-  </Layout>
-))
+const Creator = memo(() => {
+  const { selectedView } = useEditor()
+  return (
+    <Layout>
+      {selectedView === "logic" && <EditorPane />}
+      {selectedView === "graphic" && <GraphicPane />}
+      <Toolbox />
+      <ViewSwitch />
+      <ClosableDetailPane />
+    </Layout>
+  )
+})
 
 const CreatorWithModal = props => {
   const { gameExists } = useGame()

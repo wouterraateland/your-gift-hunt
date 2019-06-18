@@ -11,6 +11,9 @@ const client = Client.buildClient({
   domain: "your-gift-hunt.myshopify.com"
 })
 
+const PLAY_URL =
+  process.env.REACT_APP_PLAY_URL || `https://play.yourgifthunt.com/play`
+
 const useMetaActions = game => {
   const { user } = useAuth()
   const gameId = game.id
@@ -76,9 +79,7 @@ const useMetaActions = game => {
       const playToken = response.data.createGamePlay.id
 
       window.open(
-        `https://play.yourgifthunt.com/${game.creator.slug}/${
-          game.slug
-        }?playToken=${playToken}`,
+        `${PLAY_URL}/${game.creator.slug}/${game.slug}?playToken=${playToken}`,
         "_blank"
       )
     },

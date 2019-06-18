@@ -1,5 +1,6 @@
 import { PRIVACY, ACCESS_TYPES } from "data"
 import React, { useCallback, useState } from "react"
+import { navigate } from "@reach/router"
 import styled from "styled-components"
 
 import useGame from "hooks/useGame"
@@ -27,11 +28,9 @@ const SettingsModal = () => {
     const published = await publishGame()
     setLoading(false)
     if (published) {
-      window.history.replaceState(
-        {},
-        "",
-        window.location.pathname.replace("publish", "published")
-      )
+      navigate(`/${game.creator.slug}/game/${game.slug}/published`, {
+        replace: true
+      })
     }
   }, [])
 

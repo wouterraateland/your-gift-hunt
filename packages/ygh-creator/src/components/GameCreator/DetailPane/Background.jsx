@@ -14,6 +14,7 @@ const DetailPaneBackground = styled(Paper.Container)`
   padding: 4.5em 1em 1em;
   max-width: 100%;
   border-radius: 0;
+  margin: 0 !important;
 
   transform: translate3D(${props => (props.isOpen ? 0 : 100)}%, 0, 0);
 

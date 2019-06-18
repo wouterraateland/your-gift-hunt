@@ -1,6 +1,7 @@
 import React, { useCallback } from "react"
 
 import useEntities from "hooks/useEntities"
+import useEntityAreas from "hooks/useEntityAreas"
 import useGameMutations from "hooks/useGameMutations"
 import useAsync from "hooks/useAsync"
 
@@ -24,6 +25,7 @@ const SingleValue = ({ data, ...otherProps }) => (
 
 const Container = ({ entity }) => {
   const { entities } = useEntities()
+  const { syncEntityGraphPosition } = useEntityAreas()
   const {
     updateEntityContainer,
     disconnectEntityFromContainer
@@ -38,12 +40,20 @@ const Container = ({ entity }) => {
     }))
 
   const onChange = useCallback(
-    runAsync(({ target: { value } }) =>
-      value
-        ? updateEntityContainer(entity.id, value)
-        : disconnectEntityFromContainer(entity.id)
-    ),
-    [entity.id]
+    runAsync(async ({ target: { value } }) => {
+      if (value) {
+        await updateEntityContainer(entity.id, value)
+      } else {
+        await disconnectEntityFromContainer(entity.id)
+      }
+
+      syncEntityGraphPosition(
+        entity.id,
+        entity.container ? entity.container.id : null,
+        value ? value : null
+      )
+    }),
+    [entity.id, syncEntityGraphPosition]
   )
 
   return (

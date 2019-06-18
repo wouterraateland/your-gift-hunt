@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useCallback, useContext, useState } from "react"
 import EditorContext from "contexts/Editor"
 
 const ACTION_TYPES = {
@@ -6,12 +6,22 @@ const ACTION_TYPES = {
 }
 
 export const useEditorProvider = () => {
+  const [selectedView, _selectView] = useState(
+    window.localStorage.getItem("viewPreference") || "graphic"
+  )
   const [upcomingAction, setUpcomingAction] = useState(null)
+
+  const selectView = useCallback(v => {
+    _selectView(v)
+    window.localStorage.setItem("viewPreference", v)
+  }, [])
 
   return {
     ACTION_TYPES,
     upcomingAction,
-    setUpcomingAction
+    setUpcomingAction,
+    selectedView,
+    selectView
   }
 }
 
