@@ -1,7 +1,9 @@
-import styled from "styled-components"
+import React, { forwardRef } from "react"
+import styled, { css } from "styled-components"
 import Entity from "./Entity"
+import _ from "utils"
 
-const Carpet = styled(Entity)`
+const CarpetInner = styled(Entity)`
   width: 100%;
   height: 100%;
   border-radius: 0.5em;
@@ -59,7 +61,37 @@ const Carpet = styled(Entity)`
       hsla(197, 62%, 11%, 0.5) 7em,
       hsla(197, 62%, 11%, 0.5) 13em
     );
+
+  ${props =>
+    props.isFolded &&
+    css`
+      clip-path: polygon(-10% 40%, 40% -10%, 110% -10%, 110% 110%, -10% 110%);
+
+      &::after {
+        width: 30%;
+        height: 30%;
+
+        border: 0.25em solid #0004;
+        border-color: transparent #0004 #0004 transparent;
+        border-bottom-right-radius: 0.5em;
+        box-shadow: 0.25em 0.25em 0.75em -0.25em #0009;
+
+        background: linear-gradient(120deg, #3e3935 30%, #c1ac9a 70%);
+      }
+    `}
 `
+
+const Carpet = forwardRef(({ dispatchInputAction, ...props }, ref) => {
+  const isFolded = _.hasState("folded")(props)
+  return (
+    <CarpetInner
+      isFolded={isFolded}
+      onClick={() => dispatchInputAction(props.state, "fold", "valley")}
+      ref={ref}
+      {...props}
+    />
+  )
+})
 Carpet.name = "Carpet"
 Carpet.templateName = "Carpet"
 Carpet.defaultProps = {
