@@ -83,11 +83,15 @@ const LeaderboardEntry = ({ netDuration, position, player, isYours }) => {
       <PositionIndicator position={position}>
         {position ? position : "You"}
       </PositionIndicator>
-      <Avatar avatar={player.avatar} />
-      <Link to={`/${player.username}`}>
-        {player.name}
-        {isYours && position && ` (You)`}
-      </Link>
+      <Avatar avatar={player ? player.avatar : null} />
+      {player ? (
+        <Link to={`/${player.username}`}>
+          {player.name}
+          {isYours && position && ` (You)`}
+        </Link>
+      ) : (
+        <em>Anonymous</em>
+      )}
       <Duration>
         {duration.hours()}:{padd(duration.minutes())}:{padd(duration.seconds())}
       </Duration>
@@ -101,7 +105,9 @@ const RankedPlays = ({ plays }) =>
 const ActiveLeaderboard = ({ rankedPlays, yourBestPlay }) => {
   const containsYours =
     yourBestPlay &&
-    rankedPlays.some(play => play.player.id === yourBestPlay.player.id)
+    rankedPlays.some(
+      play => play.player && play.player.id === yourBestPlay.player.id
+    )
 
   return rankedPlays.length ? (
     <>
@@ -114,7 +120,10 @@ const ActiveLeaderboard = ({ rankedPlays, yourBestPlay }) => {
         plays={rankedPlays.map((play, i) => ({
           ...play,
           position: i + 1,
-          isYours: yourBestPlay && yourBestPlay.player.id === play.player.id
+          isYours:
+            yourBestPlay &&
+            play.player &&
+            yourBestPlay.player.id === play.player.id
         }))}
       />
       {yourBestPlay && !containsYours && (

@@ -18,11 +18,11 @@ const AmnesiaPage = () => {
     try {
       await requestPasswordRecovery(email)
       setSent(true)
-    } catch ({ json }) {
-      if (json.code === 404) {
+    } catch (error) {
+      if (error.status === 404) {
         setSent(true)
       } else {
-        console.log(json)
+        console.error(error)
       }
     }
   }
