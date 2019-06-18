@@ -15,6 +15,9 @@ const BeforeLabel = styled.div`
   ${props =>
     props.type === "search" &&
     css`
+      color: #000;
+      opacity: 0.5;
+
       &::before,
       &::after {
         content: "";

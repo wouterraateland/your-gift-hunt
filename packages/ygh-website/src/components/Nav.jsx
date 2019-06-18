@@ -2,9 +2,9 @@ import React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
 
-import { Wrapper, Float } from "your-gift-hunt/ui"
+import { Button, Float, Menu, Wrapper } from "your-gift-hunt/ui"
 import { Logo } from "your-gift-hunt/icons"
-import Menu from "components/Menu"
+import Account from "components/Account"
 
 const Nav = styled.nav`
   padding: 1em 0;
@@ -70,6 +70,25 @@ const Large = styled.div`
   }
 `
 
+const MenuContainer = styled(Menu.Container)`
+  float: right;
+  margin-top: 0.8em;
+`
+
+const Btn = styled.div`
+  padding: 0.5em;
+  line-height: 1;
+  border-radius: ${props => props.theme.borderRadius};
+
+  background-color: #0001;
+`
+
+const AccountMenuItem = styled.div`
+  padding: 0.5em 0.5em 0.25em;
+  display: flex;
+  justify-content: space-around;
+`
+
 export default props => (
   <Nav {...props}>
     <StyledWrapper xlarge>
@@ -78,16 +97,41 @@ export default props => (
           <StyledLogo size={3} />
           <Name>Your Gift Hunt</Name>
         </IndexLink>
-        <Menu>
-          <Menu.Toggle>Menu</Menu.Toggle>
-          <Menu.ItemList>
-            <Menu.Item href="https://play.yourgifthunt.com">Showcase</Menu.Item>
+        <MenuContainer>
+          <Menu.Toggle>
+            <Btn>Menu</Btn>
+          </Menu.Toggle>
+          <Menu.Items>
+            <Menu.Item as="a" href="https://play.yourgifthunt.com">
+              Showcase
+            </Menu.Item>
+            <Menu.Item as="a" href="https://create.yourgifthunt.com">
+              Creator
+            </Menu.Item>
             <Menu.Item to="/pricing">Pricing</Menu.Item>
             <Menu.Item to="/about">About</Menu.Item>
             <Menu.Item to="/contact">Contact</Menu.Item>
-            <Menu.Item href="https://create.yourgifthunt.com">Log in</Menu.Item>
-          </Menu.ItemList>
-        </Menu>
+            <AccountMenuItem>
+              <Button
+                size="tiny"
+                as="a"
+                href="https://create.yourgifthunt.com/auth/signup"
+                importance="primary"
+                color="primary"
+              >
+                Sign up
+              </Button>
+              <Button
+                size="tiny"
+                as="a"
+                href="https://create.yourgifthunt.com/auth/login"
+                importance="tertiary"
+              >
+                Log in
+              </Button>
+            </AccountMenuItem>
+          </Menu.Items>
+        </MenuContainer>
       </Small>
       <Large>
         <Float.Left>
@@ -96,12 +140,13 @@ export default props => (
             <Name>Your Gift Hunt</Name>
           </IndexLink>
           <NavLink href="https://play.yourgifthunt.com">Showcase</NavLink>
+          <NavLink href="https://create.yourgifthunt.com">Creator</NavLink>
           <NavLink to="/pricing">Pricing</NavLink>
           <NavLink to="/about">About</NavLink>
         </Float.Left>
         <Float.Right>
           <NavLink to="/contact">Contact</NavLink>
-          <NavLink href="https://create.yourgifthunt.com">Log in</NavLink>
+          <Account />
         </Float.Right>
       </Large>
     </StyledWrapper>

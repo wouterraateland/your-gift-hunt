@@ -6,8 +6,6 @@ import InputType from "../InputType"
 export const LabelText = styled.span`
   pointer-events: none;
 
-  position: absolute;
-
   color: ${props => transparentize(0.2, props.theme.color.text)};
 
   transition: left 0.2s ease-out, top 0.2s ease-out, font-size 0.2s ease-out;
@@ -15,8 +13,9 @@ export const LabelText = styled.span`
   ${props =>
     props.isSelect
       ? css`
-          left: 2em;
-          top: 0.3em;
+          display: block;
+          margin-left: 2em;
+
           font-weight: bold;
           color: ${props.theme.color.emphasis};
           & small {
@@ -26,6 +25,7 @@ export const LabelText = styled.span`
           }
         `
       : css`
+          position: absolute;
           & small {
             margin-left: 0.5em;
             vertical-align: baseline;
@@ -38,16 +38,10 @@ export const LabelText = styled.span`
               vertical-align: baseline;
             }
           }
-          ${props.up
-            ? css`
-                left: 0;
-                top: -1.7em;
-                font-size: 0.7em;
-              `
-            : css`
-                left: 0.7rem;
-                top: 0.7em;
-              `}
+
+          left: 0;
+          top: -1.7em;
+          font-size: 0.7em;
         `}
 `
 

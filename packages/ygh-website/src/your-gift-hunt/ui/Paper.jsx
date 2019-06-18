@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import styled, { css } from "styled-components"
 
 export const PaperTitle = styled.h2`
@@ -29,7 +29,15 @@ export const PaperContainer = styled.div`
   }
 
   border-radius: ${props => props.theme.borderRadius};
-  box-shadow: ${props => props.theme.boxShadow.medium};
+
+  ${props =>
+    props.isFlat
+      ? css`
+          border: 1px solid #0002;
+        `
+      : css`
+          box-shadow: ${props.theme.boxShadow.medium};
+        `}
 
   background: #fff;
 
@@ -42,6 +50,41 @@ export const PaperContainer = styled.div`
         border-radius: 0;
       }
     `}
+`
+
+export const PaperTabs = styled.div`
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid #0002;
+  border-radius: ${props => props.theme.borderRadius}
+    ${props => props.theme.borderRadius} 0 0;
+`
+
+export const PaperTab = styled.strong`
+  cursor: pointer;
+
+  display: inline-block;
+  padding: 1em;
+
+  background-clip: padding-box;
+
+  &:not(:first-child) {
+    border-left: 1px solid #0002;
+  }
+
+  ${props =>
+    props.isSelected
+      ? css`
+          background-color: #0002;
+        `
+      : css`
+          &:hover {
+            background-color: #0001;
+          }
+        `}
 `
 
 export const ExpandingPaperContainer = styled(PaperContainer)`
@@ -58,8 +101,6 @@ export const ExpandingPaperContainer = styled(PaperContainer)`
         opacity: 0;
       }
     `}
-
-  transition: max-height 0.2s ease-out;
 `
 
 const ExpandingPaper = ({ isExpanded, ...otherProps }) => {
@@ -67,16 +108,32 @@ const ExpandingPaper = ({ isExpanded, ...otherProps }) => {
 
   useEffect(
     () => {
+      if (!ref.current) {
+        return
+      }
+
       const el = ref.current
-      if (el) {
-        el.style.maxHeight = "0"
-        if (isExpanded) {
-          const offset = el.offsetHeight
-          el.style.maxHeight = `${Math.max(offset, el.scrollHeight)}px`
+      const start = Date.now()
+      const duration = 200
+
+      el.style.height = "0"
+      const offset = el.offsetHeight
+      const maxHeight = Math.max(offset, el.scrollHeight)
+
+      const update = () => {
+        const p = (Date.now() - start) / duration
+
+        if (p < 1) {
+          el.style.height = `${maxHeight * (isExpanded ? p : 1 - p)}px`
+          requestAnimationFrame(update)
+        } else {
+          el.style.height = isExpanded ? "" : "0"
         }
       }
+
+      update()
     },
-    [isExpanded, otherProps.children]
+    [isExpanded]
   )
 
   return (
@@ -88,18 +145,19 @@ const ExpandingPaper = ({ isExpanded, ...otherProps }) => {
   )
 }
 
-const Paper = forwardRef(({ expanding, ...otherProps }, ref) =>
+const Paper = ({ expanding, ...otherProps }) =>
   expanding ? (
-    <ExpandingPaper {...otherProps} ref={ref} />
+    <ExpandingPaper {...otherProps} />
   ) : (
-    <PaperContainer {...otherProps} ref={ref} />
+    <PaperContainer {...otherProps} />
   )
-)
 
 Paper.Container = PaperContainer
 Paper.Section = PaperSection
 Paper.Title = ({ size, ...otherProps }) => (
   <PaperTitle as={`h${size}`} {...otherProps} />
 )
+Paper.Tabs = PaperTabs
+Paper.Tab = PaperTab
 
 export default Paper

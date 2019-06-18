@@ -18,7 +18,7 @@ const FooterLogo = styled(Logo)`
 `
 
 const SocialLink = styled(OutboundLink)`
-  margin: 0 1em;
+  margin: 0 1em 0 0;
 `
 
 export default () => (
@@ -39,6 +39,8 @@ export default () => (
             <Link to="/">Home</Link>
             <br />
             <a href="https://play.yourgifthunt.com">Showcase</a>
+            <br />
+            <a href="https://create.yourgifthunt.com">Creator</a>
             <br />
             <Link to="/pricing">Pricing</Link>
             <br />

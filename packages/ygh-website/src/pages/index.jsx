@@ -97,7 +97,7 @@ export default ({ data }) => {
             <Column size={6} mSize={12}>
               <Demo
                 imageInfo={demoImageInfo}
-                url="https://play.yourgifthunt.com/wouter-raateland/plant-care"
+                url="https://play.yourgifthunt.com/play/wouter-raateland/escape-the-shed"
               />
             </Column>
           </Row>
@@ -142,7 +142,7 @@ export default ({ data }) => {
           <Align.Center>
             <h2>Go beyond traditional puzzle games</h2>
           </Align.Center>
-          <VSpace />
+          <VSpace.Small />
           <Row>
             <Column size={2} sSize={12}>
               <StyledHexagon>
@@ -157,7 +157,7 @@ export default ({ data }) => {
               </p>
             </Column>
           </Row>
-          <VSpace />
+          <VSpace.Small />
           <Row rtl>
             <Column size={2} sSize={12}>
               <StyledHexagon>
@@ -172,7 +172,7 @@ export default ({ data }) => {
               </p>
             </Column>
           </Row>
-          <VSpace />
+          <VSpace.Small />
           <Row>
             <Column size={2} sSize={12}>
               <StyledHexagon>

@@ -10,6 +10,8 @@ const Button = styled.button`
   display: inline-block;
   padding: ${props => {
     switch (props.size) {
+      case "tiny":
+        return "0.35em 0.5em"
       case "small":
         return "0.5em 0.65em"
       case "large":
@@ -60,7 +62,7 @@ const Button = styled.button`
           border: none;
 
           background-color: ${color};
-          color: ${secondaryColor};
+          color: ${secondaryColor} !important;
 
           &:hover {
             background-color: ${opacify(0.3, _.darken(0.05)(color))};
@@ -95,8 +97,15 @@ const Button = styled.button`
 
   &:disabled {
     pointer-events: none;
-    filter: grayscale(50%);
+    filter: grayscale(100%);
   }
+
+  ${props =>
+    props.disabled &&
+    css`
+      pointer-events: none;
+      filter: grayscale(100%);
+    `}
 
   &:focus {
     outline: none;

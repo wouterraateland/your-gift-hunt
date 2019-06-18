@@ -6,8 +6,9 @@ import SingleInput from "./SingleInput"
 const MultiInputContainer = styled.span`
   display: inline-block;
   max-width: 100%;
-  margin-bottom: -0.25em;
-  margin-right: -0.25em;
+  margin-bottom: -0.25rem;
+  margin-right: -0.25rem;
+  font-size: smaller;
 `
 
 const InputValue = styled.span`
@@ -18,8 +19,7 @@ const InputValue = styled.span`
 
   word-break: break-word;
 
-  background-color: ${props => props.theme.color.text};
-  color: #fff;
+  background-color: #e6e6e6;
 `
 
 const Close = styled.strong`
@@ -54,11 +54,26 @@ const MultiInput = ({ value, onChange }) => {
   }
 
   function setValue(value) {
-    onChange({ target: { value } })
+    onChange({
+      target: {
+        value,
+        validity: {
+          valid: true
+        },
+        validationMessage: ""
+      }
+    })
+  }
+
+  function handleOnKeyDown(event) {
+    if (["Tab", "Enter"].includes(event.key)) {
+      event.preventDefault()
+    }
   }
 
   function handleOnKeyUp(event) {
     if (["Tab", "Enter"].includes(event.key) && nextValue !== "") {
+      event.preventDefault()
       setValue([...(value || []), nextValue])
       setNextValue("")
     }
@@ -75,6 +90,7 @@ const MultiInput = ({ value, onChange }) => {
         ref={input}
         value={nextValue}
         onChange={updateNextValue}
+        onKeyDown={handleOnKeyDown}
         onKeyUp={handleOnKeyUp}
         isSelect={false}
       />

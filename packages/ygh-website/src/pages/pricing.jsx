@@ -73,7 +73,7 @@ export default () => (
         <Align.Center>
           <h1>Simple pricing for your games</h1>
         </Align.Center>
-        <VSpace />
+        <VSpace.Small />
         <Row vAlign="top">
           <Column size={4} mSize={6} sSize={12}>
             <Paper>

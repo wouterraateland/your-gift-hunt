@@ -1,10 +1,10 @@
 import styled from "styled-components"
 
 const FullHeight = styled.div`
+  height: 100vh;
+
   display: flex;
   flex-direction: column;
-
-  min-height: 100vh;
 `
 
 export default FullHeight
