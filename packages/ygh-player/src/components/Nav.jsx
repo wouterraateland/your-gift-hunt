@@ -109,6 +109,9 @@ export default props => {
             </Menu.Toggle>
             <Menu.Items>
               <Menu.Item to="/">Showcase</Menu.Item>
+              <Menu.Item as="a" href="https://create.yourgifthunt.com">
+                Creator
+              </Menu.Item>
               <Menu.Item as="a" href="https://yourgifthunt.com/pricing">
                 Pricing
               </Menu.Item>
@@ -127,11 +130,22 @@ export default props => {
                 </>
               ) : (
                 <AccountMenuItem>
-                  <Button size="tiny" as={Link} to="/auth/login">
-                    Log in
-                  </Button>
-                  <Button size="tiny" as={Link} to="/auth/signup">
+                  <Button
+                    size="tiny"
+                    as={Link}
+                    to="/auth/signup"
+                    color="primary"
+                    importance="primary"
+                  >
                     Sign up
+                  </Button>
+                  <Button
+                    size="tiny"
+                    as={Link}
+                    to="/auth/login"
+                    importance="tertiary"
+                  >
+                    Log in
                   </Button>
                 </AccountMenuItem>
               )}
@@ -145,6 +159,7 @@ export default props => {
               <Name>Your Gift Hunt</Name>
             </IndexLink>
             <NavLink to="/">Showcase</NavLink>
+            <NavLink href="https://create.yourgifthunt.com">Creator</NavLink>
             <NavLink href="https://yourgifthunt.com/pricing">Pricing</NavLink>
             <NavLink href="https://yourgifthunt.com/about">About</NavLink>
           </Float.Left>

@@ -39,6 +39,8 @@ export default () => (
             <br />
             <Link to="/">Showcase</Link>
             <br />
+            <a href="https://create.yourgifthunt.com">Creator</a>
+            <br />
             <a href="https://yourgifthunt.com/pricing">Pricing</a>
             <br />
             <a href="https://yourgifthunt.com/about">About</a>

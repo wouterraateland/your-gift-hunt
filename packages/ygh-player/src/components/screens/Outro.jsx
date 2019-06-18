@@ -45,7 +45,7 @@ export default ({ close, ...props }) => {
             Your rating:{" "}
             <Rating onRate={rateGamePlay} rating={gameState.rating} />
           </strong>
-          <VSpace.Medium />
+          <VSpace.Large />
           {isLoggedIn ? (
             <Button
               as={Link}
@@ -69,7 +69,7 @@ export default ({ close, ...props }) => {
               Log in to join leaderboard
             </Button>
           )}
-          &nbsp;&nbsp;&nbsp;&nbsp;
+          <VSpace.Medium />
           <Button
             as={Link}
             to="/"
