@@ -79,12 +79,7 @@ Door.defaultProps = {
 const SafeWithCode = forwardRef(({ inspect, ...props }, ref) => {
   const isUnlocked = _.hasState("unlocked")(props)
   return (
-    <Entity
-      noVisual
-      {...props}
-      onClick={() => !isUnlocked && inspect()}
-      ref={ref}
-    >
+    <Entity noVisual {...props} onClick={inspect} ref={ref}>
       <Safe top={2} />
       <Door
         isUnlocked={isUnlocked}

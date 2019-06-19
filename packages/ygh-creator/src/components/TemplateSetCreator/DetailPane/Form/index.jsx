@@ -150,7 +150,7 @@ export default ({
         <FloatRight>
           <Button
             color="error"
-            size="xsmall"
+            size="tiny"
             importance="tertiary"
             onClick={event => {
               event.preventDefault()
@@ -161,7 +161,7 @@ export default ({
           </Button>{" "}
           <Button
             color="primary"
-            size="xsmall"
+            size="tiny"
             importance="tertiary"
             onClick={event => {
               event.preventDefault()

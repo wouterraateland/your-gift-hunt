@@ -8,6 +8,10 @@ const PreviewContainer = styled.div`
   position: relative;
   height: 8em;
   margin-bottom: 1em;
+
+  &:empty {
+    display: none;
+  }
 `
 
 export default PreviewContainer

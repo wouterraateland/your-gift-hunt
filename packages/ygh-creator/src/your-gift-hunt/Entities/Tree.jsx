@@ -76,6 +76,8 @@ Branches.defaultProps = {
 }
 
 const Branch = styled(Entity)`
+  pointer-events: none;
+
   border-radius: 0 100% 100% 0;
   box-shadow: inset 0 0 0.5em 0.5em #382718 !important;
   background: linear-gradient(90deg, #382718, #9a6a3b);
@@ -88,18 +90,13 @@ Branch.defaultProps = {
   }
 }
 
-const Tree = forwardRef(({ dispatchInputAction, ...props }, ref) => {
+const Tree = forwardRef((props, ref) => {
   const branches = useMemo(createBranches, [])
   const leafs = useMemo(() => createLeafs(branches), [])
   return (
-    <Entity
-      noVisual
-      {...props}
-      onClick={() => dispatchInputAction(props.state)}
-      ref={ref}
-    >
+    <Entity noVisual isInteractive={false} {...props} ref={ref}>
       <TreeStump isCovered />
-      <Branches>
+      <Branches isInteractive={false}>
         {branches.map(({ scale, rotation }, i) => (
           <Branch
             key={i}
@@ -109,7 +106,7 @@ const Tree = forwardRef(({ dispatchInputAction, ...props }, ref) => {
           />
         ))}
       </Branches>
-      <Leafs boxShadow={leafs} />
+      <Leafs boxShadow={leafs} isInteractive={false} />
     </Entity>
   )
 })

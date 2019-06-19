@@ -25,6 +25,7 @@ import MapPiece from "./MapPiece"
 import Package from "./Package"
 import Path from "./Path"
 import PlantPot from "./PlantPot"
+import Room from "./Room"
 import SafeKey from "./SafeKey"
 import SafeWithCode from "./SafeWithCode"
 import SafeWithKeyhole from "./SafeWithKeyhole"
@@ -59,6 +60,7 @@ export {
   Package,
   Path,
   PlantPot,
+  Room,
   SafeKey,
   SafeWithCode,
   SafeWithKeyhole,
@@ -92,6 +94,7 @@ const entities = [
   Package,
   Path,
   PlantPot,
+  Room,
   SafeKey,
   SafeWithCode,
   SafeWithKeyhole,

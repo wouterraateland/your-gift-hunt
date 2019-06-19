@@ -3,7 +3,6 @@ import styled, { css } from "styled-components"
 import _ from "utils"
 
 import Entity from "./Entity"
-import { getEntityComponent } from "./"
 
 const Bottom = styled(Entity)`
   border-radius: 0.1em;
@@ -50,61 +49,24 @@ const Flap = styled(Entity)`
 Flap.defaultProps = {
   ...Entity.defaultProps,
   origin: { left: 0 },
-  z: 0.25
-}
-
-const ItemContainer = styled.div`
-  position: absolute;
-  z-index: 0;
-  left: 50%;
-  top: 50%;
-
-  transform: scale(${props => props.scale});
-`
-
-const getInputValue = state => {
-  switch (state.name) {
-    case "closed":
-      return "open"
-    case "open":
-      return "empty"
-    default:
-      return "empty"
-  }
+  z: 0.25,
+  isInteractive: false
 }
 
 const Package = forwardRef(
-  ({ containedEntities, dispatchInputAction, ...props }, ref) => {
+  (
+    { containedEntities = [], dispatchInputAction, children, ...props },
+    ref
+  ) => {
     const isOpen = _.hasState("open")(props)
-    const isEmpty = _.hasState("empty")(props)
-
-    const Components = containedEntities.map(containedEntity =>
-      getEntityComponent(containedEntity.template.name)
-    )
 
     return (
       <Bottom
         {...props}
-        onClick={() =>
-          dispatchInputAction(props.state, "state", getInputValue(props.state))
-        }
+        onClick={() => dispatchInputAction(props.state)}
         ref={ref}
       >
-        {!isEmpty &&
-          Components.map((Component, i) => (
-            <ItemContainer
-              key={i}
-              scale={
-                2 /
-                Math.max(
-                  Component.defaultProps.width,
-                  Component.defaultProps.height
-                )
-              }
-            >
-              <Component rotation={-45} />
-            </ItemContainer>
-          ))}
+        {children}
         <Flap
           isOpen={isOpen}
           width={props.width / 2}
