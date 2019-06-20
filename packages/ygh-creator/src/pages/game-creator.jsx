@@ -7,6 +7,7 @@ import { GameProvider } from "contexts/Game"
 import { EntitiesProvider } from "contexts/Entities"
 import { EntityGraphProvider } from "contexts/EntityGraph"
 import { EntityAreasProvider } from "contexts/EntityAreas"
+import { EntityPositionsProvider } from "contexts/EntityPositions"
 import { EntityDependenciesProvider } from "contexts/EntityDependencies"
 import { GameQueriesProvider } from "contexts/GameQueries"
 import { GameMutationsProvider } from "contexts/GameMutations"
@@ -84,17 +85,19 @@ const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => (
         <EntitiesProvider>
           <EntityGraphProvider>
             <EntityAreasProvider>
-              <EntityDependenciesProvider>
-                <GameQueriesProvider>
-                  <GameMutationsProvider>
-                    <EditorProvider>
-                      <InspectorProvider>
-                        <CreatorWithModal {...otherProps} />
-                      </InspectorProvider>
-                    </EditorProvider>
-                  </GameMutationsProvider>
-                </GameQueriesProvider>
-              </EntityDependenciesProvider>
+              <EntityPositionsProvider>
+                <EntityDependenciesProvider>
+                  <GameQueriesProvider>
+                    <GameMutationsProvider>
+                      <EditorProvider>
+                        <InspectorProvider>
+                          <CreatorWithModal {...otherProps} />
+                        </InspectorProvider>
+                      </EditorProvider>
+                    </GameMutationsProvider>
+                  </GameQueriesProvider>
+                </EntityDependenciesProvider>
+              </EntityPositionsProvider>
             </EntityAreasProvider>
           </EntityGraphProvider>
         </EntitiesProvider>

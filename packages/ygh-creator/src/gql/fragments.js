@@ -403,6 +403,15 @@ export const ENTITY_FRAGMENT = gql`
       left
       top
     }
+    physicalPosition {
+      id
+      left
+      top
+      z
+      width
+      height
+      rotation
+    }
   }
   ${FIELD_FRAGMENT}
   ${ENTRANCE_FRAGMENT}

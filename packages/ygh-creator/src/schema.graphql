@@ -1,5 +1,5 @@
 # source: https://api.yourgifthunt.com/prisma/hunt-api/dev
-# timestamp: Tue May 28 2019 12:38:29 GMT+0200 (Midden-Europese zomertijd)
+# timestamp: Thu Jun 20 2019 14:56:28 GMT+0200 (Midden-Europese zomertijd)
 
 enum AccessType {
   NONE
@@ -2517,15 +2517,15 @@ type AggregateInputRequirementTemplate {
   count: Int!
 }
 
-type AggregateLocationSpecification {
-  count: Int!
-}
-
 type AggregatePayloadRequirement {
   count: Int!
 }
 
 type AggregatePayloadRequirementTemplate {
+  count: Int!
+}
+
+type AggregatePhysicalPosition {
   count: Int!
 }
 
@@ -2542,6 +2542,10 @@ type AggregatePosition {
 }
 
 type AggregateService {
+  count: Int!
+}
+
+type AggregateSession {
   count: Int!
 }
 
@@ -3144,7 +3148,7 @@ type Entity implements Node {
   entrances(where: EntranceWhereInput, orderBy: EntranceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entrance!]
   portals(where: PortalWhereInput, orderBy: PortalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Portal!]
   graphPosition: Position
-  locationSpecification: LocationSpecification
+  physicalPosition: PhysicalPosition
   game: Game
 }
 
@@ -3177,7 +3181,7 @@ input EntityCreateInput {
   entrances: EntranceCreateManyWithoutEntityInput
   portals: PortalCreateManyWithoutEntityInput
   graphPosition: PositionCreateOneInput
-  locationSpecification: LocationSpecificationCreateOneInput
+  physicalPosition: PhysicalPositionCreateOneInput
   game: GameCreateOneWithoutEntitiesInput
 }
 
@@ -3244,7 +3248,7 @@ input EntityCreateWithoutContainedEntitiesInput {
   entrances: EntranceCreateManyWithoutEntityInput
   portals: PortalCreateManyWithoutEntityInput
   graphPosition: PositionCreateOneInput
-  locationSpecification: LocationSpecificationCreateOneInput
+  physicalPosition: PhysicalPositionCreateOneInput
   game: GameCreateOneWithoutEntitiesInput
 }
 
@@ -3266,7 +3270,7 @@ input EntityCreateWithoutContainerInput {
   entrances: EntranceCreateManyWithoutEntityInput
   portals: PortalCreateManyWithoutEntityInput
   graphPosition: PositionCreateOneInput
-  locationSpecification: LocationSpecificationCreateOneInput
+  physicalPosition: PhysicalPositionCreateOneInput
   game: GameCreateOneWithoutEntitiesInput
 }
 
@@ -3288,7 +3292,7 @@ input EntityCreateWithoutEntrancesInput {
   containedEntities: EntityCreateManyWithoutContainerInput
   portals: PortalCreateManyWithoutEntityInput
   graphPosition: PositionCreateOneInput
-  locationSpecification: LocationSpecificationCreateOneInput
+  physicalPosition: PhysicalPositionCreateOneInput
   game: GameCreateOneWithoutEntitiesInput
 }
 
@@ -3310,7 +3314,7 @@ input EntityCreateWithoutFieldsInput {
   entrances: EntranceCreateManyWithoutEntityInput
   portals: PortalCreateManyWithoutEntityInput
   graphPosition: PositionCreateOneInput
-  locationSpecification: LocationSpecificationCreateOneInput
+  physicalPosition: PhysicalPositionCreateOneInput
   game: GameCreateOneWithoutEntitiesInput
 }
 
@@ -3333,7 +3337,7 @@ input EntityCreateWithoutGameInput {
   entrances: EntranceCreateManyWithoutEntityInput
   portals: PortalCreateManyWithoutEntityInput
   graphPosition: PositionCreateOneInput
-  locationSpecification: LocationSpecificationCreateOneInput
+  physicalPosition: PhysicalPositionCreateOneInput
 }
 
 input EntityCreateWithoutInformationSlotsInput {
@@ -3354,7 +3358,7 @@ input EntityCreateWithoutInformationSlotsInput {
   entrances: EntranceCreateManyWithoutEntityInput
   portals: PortalCreateManyWithoutEntityInput
   graphPosition: PositionCreateOneInput
-  locationSpecification: LocationSpecificationCreateOneInput
+  physicalPosition: PhysicalPositionCreateOneInput
   game: GameCreateOneWithoutEntitiesInput
 }
 
@@ -3376,7 +3380,7 @@ input EntityCreateWithoutPortalsInput {
   containedEntities: EntityCreateManyWithoutContainerInput
   entrances: EntranceCreateManyWithoutEntityInput
   graphPosition: PositionCreateOneInput
-  locationSpecification: LocationSpecificationCreateOneInput
+  physicalPosition: PhysicalPositionCreateOneInput
   game: GameCreateOneWithoutEntitiesInput
 }
 
@@ -3398,7 +3402,7 @@ input EntityCreateWithoutStatesInput {
   entrances: EntranceCreateManyWithoutEntityInput
   portals: PortalCreateManyWithoutEntityInput
   graphPosition: PositionCreateOneInput
-  locationSpecification: LocationSpecificationCreateOneInput
+  physicalPosition: PhysicalPositionCreateOneInput
   game: GameCreateOneWithoutEntitiesInput
 }
 
@@ -5810,7 +5814,7 @@ input EntityUpdateDataInput {
   entrances: EntranceUpdateManyWithoutEntityInput
   portals: PortalUpdateManyWithoutEntityInput
   graphPosition: PositionUpdateOneInput
-  locationSpecification: LocationSpecificationUpdateOneInput
+  physicalPosition: PhysicalPositionUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
 }
 
@@ -5832,7 +5836,7 @@ input EntityUpdateInput {
   entrances: EntranceUpdateManyWithoutEntityInput
   portals: PortalUpdateManyWithoutEntityInput
   graphPosition: PositionUpdateOneInput
-  locationSpecification: LocationSpecificationUpdateOneInput
+  physicalPosition: PhysicalPositionUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
 }
 
@@ -5953,7 +5957,7 @@ input EntityUpdateWithoutContainedEntitiesDataInput {
   entrances: EntranceUpdateManyWithoutEntityInput
   portals: PortalUpdateManyWithoutEntityInput
   graphPosition: PositionUpdateOneInput
-  locationSpecification: LocationSpecificationUpdateOneInput
+  physicalPosition: PhysicalPositionUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
 }
 
@@ -5974,7 +5978,7 @@ input EntityUpdateWithoutContainerDataInput {
   entrances: EntranceUpdateManyWithoutEntityInput
   portals: PortalUpdateManyWithoutEntityInput
   graphPosition: PositionUpdateOneInput
-  locationSpecification: LocationSpecificationUpdateOneInput
+  physicalPosition: PhysicalPositionUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
 }
 
@@ -5995,7 +5999,7 @@ input EntityUpdateWithoutEntrancesDataInput {
   containedEntities: EntityUpdateManyWithoutContainerInput
   portals: PortalUpdateManyWithoutEntityInput
   graphPosition: PositionUpdateOneInput
-  locationSpecification: LocationSpecificationUpdateOneInput
+  physicalPosition: PhysicalPositionUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
 }
 
@@ -6016,7 +6020,7 @@ input EntityUpdateWithoutFieldsDataInput {
   entrances: EntranceUpdateManyWithoutEntityInput
   portals: PortalUpdateManyWithoutEntityInput
   graphPosition: PositionUpdateOneInput
-  locationSpecification: LocationSpecificationUpdateOneInput
+  physicalPosition: PhysicalPositionUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
 }
 
@@ -6038,7 +6042,7 @@ input EntityUpdateWithoutGameDataInput {
   entrances: EntranceUpdateManyWithoutEntityInput
   portals: PortalUpdateManyWithoutEntityInput
   graphPosition: PositionUpdateOneInput
-  locationSpecification: LocationSpecificationUpdateOneInput
+  physicalPosition: PhysicalPositionUpdateOneInput
 }
 
 input EntityUpdateWithoutInformationSlotsDataInput {
@@ -6058,7 +6062,7 @@ input EntityUpdateWithoutInformationSlotsDataInput {
   entrances: EntranceUpdateManyWithoutEntityInput
   portals: PortalUpdateManyWithoutEntityInput
   graphPosition: PositionUpdateOneInput
-  locationSpecification: LocationSpecificationUpdateOneInput
+  physicalPosition: PhysicalPositionUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
 }
 
@@ -6079,7 +6083,7 @@ input EntityUpdateWithoutPortalsDataInput {
   containedEntities: EntityUpdateManyWithoutContainerInput
   entrances: EntranceUpdateManyWithoutEntityInput
   graphPosition: PositionUpdateOneInput
-  locationSpecification: LocationSpecificationUpdateOneInput
+  physicalPosition: PhysicalPositionUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
 }
 
@@ -6100,7 +6104,7 @@ input EntityUpdateWithoutStatesDataInput {
   entrances: EntranceUpdateManyWithoutEntityInput
   portals: PortalUpdateManyWithoutEntityInput
   graphPosition: PositionUpdateOneInput
-  locationSpecification: LocationSpecificationUpdateOneInput
+  physicalPosition: PhysicalPositionUpdateOneInput
   game: GameUpdateOneWithoutEntitiesInput
 }
 
@@ -6373,7 +6377,7 @@ input EntityWhereInput {
   portals_some: PortalWhereInput
   portals_none: PortalWhereInput
   graphPosition: PositionWhereInput
-  locationSpecification: LocationSpecificationWhereInput
+  physicalPosition: PhysicalPositionWhereInput
   game: GameWhereInput
 }
 
@@ -9364,11 +9368,15 @@ type GamePlay implements Node {
   updatedAt: DateTime!
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   game: Game!
   player: User
   actions(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Action!]
   service: Service
   isTest: Boolean!
+  sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session!]
+  progress: Float!
+  rating: Int
 }
 
 """A connection to a list of items."""
@@ -9385,11 +9393,15 @@ input GamePlayCreateInput {
   id: ID
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
   game: GameCreateOneWithoutPlaysInput!
   player: UserCreateOneWithoutPlaysInput
   actions: ActionCreateManyWithoutGamePlayInput
   service: ServiceCreateOneWithoutGamePlaysInput
+  sessions: SessionCreateManyWithoutGamePlayInput
 }
 
 input GamePlayCreateManyWithoutGameInput {
@@ -9412,44 +9424,79 @@ input GamePlayCreateOneWithoutActionsInput {
   connect: GamePlayWhereUniqueInput
 }
 
+input GamePlayCreateOneWithoutSessionsInput {
+  create: GamePlayCreateWithoutSessionsInput
+  connect: GamePlayWhereUniqueInput
+}
+
 input GamePlayCreateWithoutActionsInput {
   id: ID
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
   game: GameCreateOneWithoutPlaysInput!
   player: UserCreateOneWithoutPlaysInput
   service: ServiceCreateOneWithoutGamePlaysInput
+  sessions: SessionCreateManyWithoutGamePlayInput
 }
 
 input GamePlayCreateWithoutGameInput {
   id: ID
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
   player: UserCreateOneWithoutPlaysInput
   actions: ActionCreateManyWithoutGamePlayInput
   service: ServiceCreateOneWithoutGamePlaysInput
+  sessions: SessionCreateManyWithoutGamePlayInput
 }
 
 input GamePlayCreateWithoutPlayerInput {
   id: ID
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
   game: GameCreateOneWithoutPlaysInput!
   actions: ActionCreateManyWithoutGamePlayInput
   service: ServiceCreateOneWithoutGamePlaysInput
+  sessions: SessionCreateManyWithoutGamePlayInput
 }
 
 input GamePlayCreateWithoutServiceInput {
   id: ID
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
   game: GameCreateOneWithoutPlaysInput!
   player: UserCreateOneWithoutPlaysInput
   actions: ActionCreateManyWithoutGamePlayInput
+  sessions: SessionCreateManyWithoutGamePlayInput
+}
+
+input GamePlayCreateWithoutSessionsInput {
+  id: ID
+  startedAt: DateTime
+  finishedAt: DateTime
+  netDuration: Int
+  isTest: Boolean
+  progress: Float
+  rating: Int
+  game: GameCreateOneWithoutPlaysInput!
+  player: UserCreateOneWithoutPlaysInput
+  actions: ActionCreateManyWithoutGamePlayInput
+  service: ServiceCreateOneWithoutGamePlaysInput
 }
 
 """An edge in a connection."""
@@ -9472,8 +9519,14 @@ enum GamePlayOrderByInput {
   startedAt_DESC
   finishedAt_ASC
   finishedAt_DESC
+  netDuration_ASC
+  netDuration_DESC
   isTest_ASC
   isTest_DESC
+  progress_ASC
+  progress_DESC
+  rating_ASC
+  rating_DESC
 }
 
 type GamePlayPreviousValues {
@@ -9482,7 +9535,10 @@ type GamePlayPreviousValues {
   updatedAt: DateTime!
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean!
+  progress: Float!
+  rating: Int
 }
 
 input GamePlayScalarWhereInput {
@@ -9622,10 +9678,76 @@ input GamePlayScalarWhereInput {
 
   """All values greater than or equal the given value."""
   finishedAt_gte: DateTime
+  netDuration: Int
+
+  """All values that are not equal to given value."""
+  netDuration_not: Int
+
+  """All values that are contained in given list."""
+  netDuration_in: [Int!]
+
+  """All values that are not contained in given list."""
+  netDuration_not_in: [Int!]
+
+  """All values less than the given value."""
+  netDuration_lt: Int
+
+  """All values less than or equal the given value."""
+  netDuration_lte: Int
+
+  """All values greater than the given value."""
+  netDuration_gt: Int
+
+  """All values greater than or equal the given value."""
+  netDuration_gte: Int
   isTest: Boolean
 
   """All values that are not equal to given value."""
   isTest_not: Boolean
+  progress: Float
+
+  """All values that are not equal to given value."""
+  progress_not: Float
+
+  """All values that are contained in given list."""
+  progress_in: [Float!]
+
+  """All values that are not contained in given list."""
+  progress_not_in: [Float!]
+
+  """All values less than the given value."""
+  progress_lt: Float
+
+  """All values less than or equal the given value."""
+  progress_lte: Float
+
+  """All values greater than the given value."""
+  progress_gt: Float
+
+  """All values greater than or equal the given value."""
+  progress_gte: Float
+  rating: Int
+
+  """All values that are not equal to given value."""
+  rating_not: Int
+
+  """All values that are contained in given list."""
+  rating_in: [Int!]
+
+  """All values that are not contained in given list."""
+  rating_not_in: [Int!]
+
+  """All values less than the given value."""
+  rating_lt: Int
+
+  """All values less than or equal the given value."""
+  rating_lte: Int
+
+  """All values greater than the given value."""
+  rating_gt: Int
+
+  """All values greater than or equal the given value."""
+  rating_gte: Int
 }
 
 type GamePlaySubscriptionPayload {
@@ -9668,23 +9790,33 @@ input GamePlaySubscriptionWhereInput {
 input GamePlayUpdateInput {
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
   game: GameUpdateOneRequiredWithoutPlaysInput
   player: UserUpdateOneWithoutPlaysInput
   actions: ActionUpdateManyWithoutGamePlayInput
   service: ServiceUpdateOneWithoutGamePlaysInput
+  sessions: SessionUpdateManyWithoutGamePlayInput
 }
 
 input GamePlayUpdateManyDataInput {
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
 }
 
 input GamePlayUpdateManyMutationInput {
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
 }
 
 input GamePlayUpdateManyWithoutGameInput {
@@ -9735,40 +9867,76 @@ input GamePlayUpdateOneRequiredWithoutActionsInput {
   upsert: GamePlayUpsertWithoutActionsInput
 }
 
+input GamePlayUpdateOneRequiredWithoutSessionsInput {
+  create: GamePlayCreateWithoutSessionsInput
+  connect: GamePlayWhereUniqueInput
+  update: GamePlayUpdateWithoutSessionsDataInput
+  upsert: GamePlayUpsertWithoutSessionsInput
+}
+
 input GamePlayUpdateWithoutActionsDataInput {
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
   game: GameUpdateOneRequiredWithoutPlaysInput
   player: UserUpdateOneWithoutPlaysInput
   service: ServiceUpdateOneWithoutGamePlaysInput
+  sessions: SessionUpdateManyWithoutGamePlayInput
 }
 
 input GamePlayUpdateWithoutGameDataInput {
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
   player: UserUpdateOneWithoutPlaysInput
   actions: ActionUpdateManyWithoutGamePlayInput
   service: ServiceUpdateOneWithoutGamePlaysInput
+  sessions: SessionUpdateManyWithoutGamePlayInput
 }
 
 input GamePlayUpdateWithoutPlayerDataInput {
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
   game: GameUpdateOneRequiredWithoutPlaysInput
   actions: ActionUpdateManyWithoutGamePlayInput
   service: ServiceUpdateOneWithoutGamePlaysInput
+  sessions: SessionUpdateManyWithoutGamePlayInput
 }
 
 input GamePlayUpdateWithoutServiceDataInput {
   startedAt: DateTime
   finishedAt: DateTime
+  netDuration: Int
   isTest: Boolean
+  progress: Float
+  rating: Int
   game: GameUpdateOneRequiredWithoutPlaysInput
   player: UserUpdateOneWithoutPlaysInput
   actions: ActionUpdateManyWithoutGamePlayInput
+  sessions: SessionUpdateManyWithoutGamePlayInput
+}
+
+input GamePlayUpdateWithoutSessionsDataInput {
+  startedAt: DateTime
+  finishedAt: DateTime
+  netDuration: Int
+  isTest: Boolean
+  progress: Float
+  rating: Int
+  game: GameUpdateOneRequiredWithoutPlaysInput
+  player: UserUpdateOneWithoutPlaysInput
+  actions: ActionUpdateManyWithoutGamePlayInput
+  service: ServiceUpdateOneWithoutGamePlaysInput
 }
 
 input GamePlayUpdateWithWhereUniqueWithoutGameInput {
@@ -9789,6 +9957,11 @@ input GamePlayUpdateWithWhereUniqueWithoutServiceInput {
 input GamePlayUpsertWithoutActionsInput {
   update: GamePlayUpdateWithoutActionsDataInput!
   create: GamePlayCreateWithoutActionsInput!
+}
+
+input GamePlayUpsertWithoutSessionsInput {
+  update: GamePlayUpdateWithoutSessionsDataInput!
+  create: GamePlayCreateWithoutSessionsInput!
 }
 
 input GamePlayUpsertWithWhereUniqueWithoutGameInput {
@@ -9946,16 +10119,85 @@ input GamePlayWhereInput {
 
   """All values greater than or equal the given value."""
   finishedAt_gte: DateTime
+  netDuration: Int
+
+  """All values that are not equal to given value."""
+  netDuration_not: Int
+
+  """All values that are contained in given list."""
+  netDuration_in: [Int!]
+
+  """All values that are not contained in given list."""
+  netDuration_not_in: [Int!]
+
+  """All values less than the given value."""
+  netDuration_lt: Int
+
+  """All values less than or equal the given value."""
+  netDuration_lte: Int
+
+  """All values greater than the given value."""
+  netDuration_gt: Int
+
+  """All values greater than or equal the given value."""
+  netDuration_gte: Int
   isTest: Boolean
 
   """All values that are not equal to given value."""
   isTest_not: Boolean
+  progress: Float
+
+  """All values that are not equal to given value."""
+  progress_not: Float
+
+  """All values that are contained in given list."""
+  progress_in: [Float!]
+
+  """All values that are not contained in given list."""
+  progress_not_in: [Float!]
+
+  """All values less than the given value."""
+  progress_lt: Float
+
+  """All values less than or equal the given value."""
+  progress_lte: Float
+
+  """All values greater than the given value."""
+  progress_gt: Float
+
+  """All values greater than or equal the given value."""
+  progress_gte: Float
+  rating: Int
+
+  """All values that are not equal to given value."""
+  rating_not: Int
+
+  """All values that are contained in given list."""
+  rating_in: [Int!]
+
+  """All values that are not contained in given list."""
+  rating_not_in: [Int!]
+
+  """All values less than the given value."""
+  rating_lt: Int
+
+  """All values less than or equal the given value."""
+  rating_lte: Int
+
+  """All values greater than the given value."""
+  rating_gt: Int
+
+  """All values greater than or equal the given value."""
+  rating_gte: Int
   game: GameWhereInput
   player: UserWhereInput
   actions_every: ActionWhereInput
   actions_some: ActionWhereInput
   actions_none: ActionWhereInput
   service: ServiceWhereInput
+  sessions_every: SessionWhereInput
+  sessions_some: SessionWhereInput
+  sessions_none: SessionWhereInput
 }
 
 input GamePlayWhereUniqueInput {
@@ -13861,342 +14103,6 @@ input InputRequirementWhereUniqueInput {
   id: ID
 }
 
-type LocationSpecification implements Node {
-  id: ID!
-  x: Int
-  y: Int
-  z: Int
-  width: Int
-  height: Int
-  rotation: Int
-}
-
-"""A connection to a list of items."""
-type LocationSpecificationConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [LocationSpecificationEdge]!
-  aggregate: AggregateLocationSpecification!
-}
-
-input LocationSpecificationCreateInput {
-  id: ID
-  x: Int
-  y: Int
-  z: Int
-  width: Int
-  height: Int
-  rotation: Int
-}
-
-input LocationSpecificationCreateOneInput {
-  create: LocationSpecificationCreateInput
-  connect: LocationSpecificationWhereUniqueInput
-}
-
-"""An edge in a connection."""
-type LocationSpecificationEdge {
-  """The item at the end of the edge."""
-  node: LocationSpecification!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum LocationSpecificationOrderByInput {
-  id_ASC
-  id_DESC
-  x_ASC
-  x_DESC
-  y_ASC
-  y_DESC
-  z_ASC
-  z_DESC
-  width_ASC
-  width_DESC
-  height_ASC
-  height_DESC
-  rotation_ASC
-  rotation_DESC
-}
-
-type LocationSpecificationPreviousValues {
-  id: ID!
-  x: Int
-  y: Int
-  z: Int
-  width: Int
-  height: Int
-  rotation: Int
-}
-
-type LocationSpecificationSubscriptionPayload {
-  mutation: MutationType!
-  node: LocationSpecification
-  updatedFields: [String!]
-  previousValues: LocationSpecificationPreviousValues
-}
-
-input LocationSpecificationSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [LocationSpecificationSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [LocationSpecificationSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [LocationSpecificationSubscriptionWhereInput!]
-
-  """The subscription event gets dispatched when it's listed in mutation_in"""
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: LocationSpecificationWhereInput
-}
-
-input LocationSpecificationUpdateDataInput {
-  x: Int
-  y: Int
-  z: Int
-  width: Int
-  height: Int
-  rotation: Int
-}
-
-input LocationSpecificationUpdateInput {
-  x: Int
-  y: Int
-  z: Int
-  width: Int
-  height: Int
-  rotation: Int
-}
-
-input LocationSpecificationUpdateManyMutationInput {
-  x: Int
-  y: Int
-  z: Int
-  width: Int
-  height: Int
-  rotation: Int
-}
-
-input LocationSpecificationUpdateOneInput {
-  create: LocationSpecificationCreateInput
-  connect: LocationSpecificationWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: LocationSpecificationUpdateDataInput
-  upsert: LocationSpecificationUpsertNestedInput
-}
-
-input LocationSpecificationUpsertNestedInput {
-  update: LocationSpecificationUpdateDataInput!
-  create: LocationSpecificationCreateInput!
-}
-
-input LocationSpecificationWhereInput {
-  """Logical AND on all given filters."""
-  AND: [LocationSpecificationWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [LocationSpecificationWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [LocationSpecificationWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  x: Int
-
-  """All values that are not equal to given value."""
-  x_not: Int
-
-  """All values that are contained in given list."""
-  x_in: [Int!]
-
-  """All values that are not contained in given list."""
-  x_not_in: [Int!]
-
-  """All values less than the given value."""
-  x_lt: Int
-
-  """All values less than or equal the given value."""
-  x_lte: Int
-
-  """All values greater than the given value."""
-  x_gt: Int
-
-  """All values greater than or equal the given value."""
-  x_gte: Int
-  y: Int
-
-  """All values that are not equal to given value."""
-  y_not: Int
-
-  """All values that are contained in given list."""
-  y_in: [Int!]
-
-  """All values that are not contained in given list."""
-  y_not_in: [Int!]
-
-  """All values less than the given value."""
-  y_lt: Int
-
-  """All values less than or equal the given value."""
-  y_lte: Int
-
-  """All values greater than the given value."""
-  y_gt: Int
-
-  """All values greater than or equal the given value."""
-  y_gte: Int
-  z: Int
-
-  """All values that are not equal to given value."""
-  z_not: Int
-
-  """All values that are contained in given list."""
-  z_in: [Int!]
-
-  """All values that are not contained in given list."""
-  z_not_in: [Int!]
-
-  """All values less than the given value."""
-  z_lt: Int
-
-  """All values less than or equal the given value."""
-  z_lte: Int
-
-  """All values greater than the given value."""
-  z_gt: Int
-
-  """All values greater than or equal the given value."""
-  z_gte: Int
-  width: Int
-
-  """All values that are not equal to given value."""
-  width_not: Int
-
-  """All values that are contained in given list."""
-  width_in: [Int!]
-
-  """All values that are not contained in given list."""
-  width_not_in: [Int!]
-
-  """All values less than the given value."""
-  width_lt: Int
-
-  """All values less than or equal the given value."""
-  width_lte: Int
-
-  """All values greater than the given value."""
-  width_gt: Int
-
-  """All values greater than or equal the given value."""
-  width_gte: Int
-  height: Int
-
-  """All values that are not equal to given value."""
-  height_not: Int
-
-  """All values that are contained in given list."""
-  height_in: [Int!]
-
-  """All values that are not contained in given list."""
-  height_not_in: [Int!]
-
-  """All values less than the given value."""
-  height_lt: Int
-
-  """All values less than or equal the given value."""
-  height_lte: Int
-
-  """All values greater than the given value."""
-  height_gt: Int
-
-  """All values greater than or equal the given value."""
-  height_gte: Int
-  rotation: Int
-
-  """All values that are not equal to given value."""
-  rotation_not: Int
-
-  """All values that are contained in given list."""
-  rotation_in: [Int!]
-
-  """All values that are not contained in given list."""
-  rotation_not_in: [Int!]
-
-  """All values less than the given value."""
-  rotation_lt: Int
-
-  """All values less than or equal the given value."""
-  rotation_lte: Int
-
-  """All values greater than the given value."""
-  rotation_gt: Int
-
-  """All values greater than or equal the given value."""
-  rotation_gte: Int
-}
-
-input LocationSpecificationWhereUniqueInput {
-  id: ID
-}
-
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -14217,6 +14123,7 @@ type Mutation {
   createEntityTemplateSet(data: EntityTemplateSetCreateInput!): EntityTemplateSet!
   createUser(data: UserCreateInput!): User!
   createGamePlay(data: GamePlayCreateInput!): GamePlay!
+  createSession(data: SessionCreateInput!): Session!
   createAction(data: ActionCreateInput!): Action!
   createActionPayload(data: ActionPayloadCreateInput!): ActionPayload!
   createService(data: ServiceCreateInput!): Service!
@@ -14224,6 +14131,7 @@ type Mutation {
   createActionPayloadInputValue(data: ActionPayloadInputValueCreateInput!): ActionPayloadInputValue!
   createPortalTemplate(data: PortalTemplateCreateInput!): PortalTemplate!
   createInputRequirementTemplate(data: InputRequirementTemplateCreateInput!): InputRequirementTemplate!
+  createPhysicalPosition(data: PhysicalPositionCreateInput!): PhysicalPosition!
   createEntityTemplate(data: EntityTemplateCreateInput!): EntityTemplate!
   createPosition(data: PositionCreateInput!): Position!
   createEntityRequirementTemplate(data: EntityRequirementTemplateCreateInput!): EntityRequirementTemplate!
@@ -14234,7 +14142,6 @@ type Mutation {
   createField(data: FieldCreateInput!): Field!
   createActionRequirementTemplate(data: ActionRequirementTemplateCreateInput!): ActionRequirementTemplate!
   createStateTransitionTemplate(data: StateTransitionTemplateCreateInput!): StateTransitionTemplate!
-  createLocationSpecification(data: LocationSpecificationCreateInput!): LocationSpecification!
   createStateTemplate(data: StateTemplateCreateInput!): StateTemplate!
   createHintTemplate(data: HintTemplateCreateInput!): HintTemplate!
   createFieldType(data: FieldTypeCreateInput!): FieldType!
@@ -14253,6 +14160,7 @@ type Mutation {
   updateEntityTemplateSet(data: EntityTemplateSetUpdateInput!, where: EntityTemplateSetWhereUniqueInput!): EntityTemplateSet
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateGamePlay(data: GamePlayUpdateInput!, where: GamePlayWhereUniqueInput!): GamePlay
+  updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
   updateAction(data: ActionUpdateInput!, where: ActionWhereUniqueInput!): Action
   updateActionPayload(data: ActionPayloadUpdateInput!, where: ActionPayloadWhereUniqueInput!): ActionPayload
   updateService(data: ServiceUpdateInput!, where: ServiceWhereUniqueInput!): Service
@@ -14260,6 +14168,7 @@ type Mutation {
   updateActionPayloadInputValue(data: ActionPayloadInputValueUpdateInput!, where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   updatePortalTemplate(data: PortalTemplateUpdateInput!, where: PortalTemplateWhereUniqueInput!): PortalTemplate
   updateInputRequirementTemplate(data: InputRequirementTemplateUpdateInput!, where: InputRequirementTemplateWhereUniqueInput!): InputRequirementTemplate
+  updatePhysicalPosition(data: PhysicalPositionUpdateInput!, where: PhysicalPositionWhereUniqueInput!): PhysicalPosition
   updateEntityTemplate(data: EntityTemplateUpdateInput!, where: EntityTemplateWhereUniqueInput!): EntityTemplate
   updatePosition(data: PositionUpdateInput!, where: PositionWhereUniqueInput!): Position
   updateEntityRequirementTemplate(data: EntityRequirementTemplateUpdateInput!, where: EntityRequirementTemplateWhereUniqueInput!): EntityRequirementTemplate
@@ -14270,7 +14179,6 @@ type Mutation {
   updateField(data: FieldUpdateInput!, where: FieldWhereUniqueInput!): Field
   updateActionRequirementTemplate(data: ActionRequirementTemplateUpdateInput!, where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   updateStateTransitionTemplate(data: StateTransitionTemplateUpdateInput!, where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
-  updateLocationSpecification(data: LocationSpecificationUpdateInput!, where: LocationSpecificationWhereUniqueInput!): LocationSpecification
   updateStateTemplate(data: StateTemplateUpdateInput!, where: StateTemplateWhereUniqueInput!): StateTemplate
   updateHintTemplate(data: HintTemplateUpdateInput!, where: HintTemplateWhereUniqueInput!): HintTemplate
   updateFieldType(data: FieldTypeUpdateInput!, where: FieldTypeWhereUniqueInput!): FieldType
@@ -14289,6 +14197,7 @@ type Mutation {
   deleteEntityTemplateSet(where: EntityTemplateSetWhereUniqueInput!): EntityTemplateSet
   deleteUser(where: UserWhereUniqueInput!): User
   deleteGamePlay(where: GamePlayWhereUniqueInput!): GamePlay
+  deleteSession(where: SessionWhereUniqueInput!): Session
   deleteAction(where: ActionWhereUniqueInput!): Action
   deleteActionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
   deleteService(where: ServiceWhereUniqueInput!): Service
@@ -14296,6 +14205,7 @@ type Mutation {
   deleteActionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   deletePortalTemplate(where: PortalTemplateWhereUniqueInput!): PortalTemplate
   deleteInputRequirementTemplate(where: InputRequirementTemplateWhereUniqueInput!): InputRequirementTemplate
+  deletePhysicalPosition(where: PhysicalPositionWhereUniqueInput!): PhysicalPosition
   deleteEntityTemplate(where: EntityTemplateWhereUniqueInput!): EntityTemplate
   deletePosition(where: PositionWhereUniqueInput!): Position
   deleteEntityRequirementTemplate(where: EntityRequirementTemplateWhereUniqueInput!): EntityRequirementTemplate
@@ -14306,7 +14216,6 @@ type Mutation {
   deleteField(where: FieldWhereUniqueInput!): Field
   deleteActionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   deleteStateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
-  deleteLocationSpecification(where: LocationSpecificationWhereUniqueInput!): LocationSpecification
   deleteStateTemplate(where: StateTemplateWhereUniqueInput!): StateTemplate
   deleteHintTemplate(where: HintTemplateWhereUniqueInput!): HintTemplate
   deleteFieldType(where: FieldTypeWhereUniqueInput!): FieldType
@@ -14325,6 +14234,7 @@ type Mutation {
   upsertEntityTemplateSet(where: EntityTemplateSetWhereUniqueInput!, create: EntityTemplateSetCreateInput!, update: EntityTemplateSetUpdateInput!): EntityTemplateSet!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertGamePlay(where: GamePlayWhereUniqueInput!, create: GamePlayCreateInput!, update: GamePlayUpdateInput!): GamePlay!
+  upsertSession(where: SessionWhereUniqueInput!, create: SessionCreateInput!, update: SessionUpdateInput!): Session!
   upsertAction(where: ActionWhereUniqueInput!, create: ActionCreateInput!, update: ActionUpdateInput!): Action!
   upsertActionPayload(where: ActionPayloadWhereUniqueInput!, create: ActionPayloadCreateInput!, update: ActionPayloadUpdateInput!): ActionPayload!
   upsertService(where: ServiceWhereUniqueInput!, create: ServiceCreateInput!, update: ServiceUpdateInput!): Service!
@@ -14332,6 +14242,7 @@ type Mutation {
   upsertActionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!, create: ActionPayloadInputValueCreateInput!, update: ActionPayloadInputValueUpdateInput!): ActionPayloadInputValue!
   upsertPortalTemplate(where: PortalTemplateWhereUniqueInput!, create: PortalTemplateCreateInput!, update: PortalTemplateUpdateInput!): PortalTemplate!
   upsertInputRequirementTemplate(where: InputRequirementTemplateWhereUniqueInput!, create: InputRequirementTemplateCreateInput!, update: InputRequirementTemplateUpdateInput!): InputRequirementTemplate!
+  upsertPhysicalPosition(where: PhysicalPositionWhereUniqueInput!, create: PhysicalPositionCreateInput!, update: PhysicalPositionUpdateInput!): PhysicalPosition!
   upsertEntityTemplate(where: EntityTemplateWhereUniqueInput!, create: EntityTemplateCreateInput!, update: EntityTemplateUpdateInput!): EntityTemplate!
   upsertPosition(where: PositionWhereUniqueInput!, create: PositionCreateInput!, update: PositionUpdateInput!): Position!
   upsertEntityRequirementTemplate(where: EntityRequirementTemplateWhereUniqueInput!, create: EntityRequirementTemplateCreateInput!, update: EntityRequirementTemplateUpdateInput!): EntityRequirementTemplate!
@@ -14342,7 +14253,6 @@ type Mutation {
   upsertField(where: FieldWhereUniqueInput!, create: FieldCreateInput!, update: FieldUpdateInput!): Field!
   upsertActionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!, create: ActionRequirementTemplateCreateInput!, update: ActionRequirementTemplateUpdateInput!): ActionRequirementTemplate!
   upsertStateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!, create: StateTransitionTemplateCreateInput!, update: StateTransitionTemplateUpdateInput!): StateTransitionTemplate!
-  upsertLocationSpecification(where: LocationSpecificationWhereUniqueInput!, create: LocationSpecificationCreateInput!, update: LocationSpecificationUpdateInput!): LocationSpecification!
   upsertStateTemplate(where: StateTemplateWhereUniqueInput!, create: StateTemplateCreateInput!, update: StateTemplateUpdateInput!): StateTemplate!
   upsertHintTemplate(where: HintTemplateWhereUniqueInput!, create: HintTemplateCreateInput!, update: HintTemplateUpdateInput!): HintTemplate!
   upsertFieldType(where: FieldTypeWhereUniqueInput!, create: FieldTypeCreateInput!, update: FieldTypeUpdateInput!): FieldType!
@@ -14358,12 +14268,14 @@ type Mutation {
   updateManyEntityTemplateSets(data: EntityTemplateSetUpdateManyMutationInput!, where: EntityTemplateSetWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyGamePlays(data: GamePlayUpdateManyMutationInput!, where: GamePlayWhereInput): BatchPayload!
+  updateManySessions(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): BatchPayload!
   updateManyActions(data: ActionUpdateManyMutationInput!, where: ActionWhereInput): BatchPayload!
   updateManyServices(data: ServiceUpdateManyMutationInput!, where: ServiceWhereInput): BatchPayload!
   updateManyApiKeys(data: ApiKeyUpdateManyMutationInput!, where: ApiKeyWhereInput): BatchPayload!
   updateManyActionPayloadInputValues(data: ActionPayloadInputValueUpdateManyMutationInput!, where: ActionPayloadInputValueWhereInput): BatchPayload!
   updateManyPortalTemplates(data: PortalTemplateUpdateManyMutationInput!, where: PortalTemplateWhereInput): BatchPayload!
   updateManyInputRequirementTemplates(data: InputRequirementTemplateUpdateManyMutationInput!, where: InputRequirementTemplateWhereInput): BatchPayload!
+  updateManyPhysicalPositions(data: PhysicalPositionUpdateManyMutationInput!, where: PhysicalPositionWhereInput): BatchPayload!
   updateManyEntityTemplates(data: EntityTemplateUpdateManyMutationInput!, where: EntityTemplateWhereInput): BatchPayload!
   updateManyPositions(data: PositionUpdateManyMutationInput!, where: PositionWhereInput): BatchPayload!
   updateManyInformationSlotTemplates(data: InformationSlotTemplateUpdateManyMutationInput!, where: InformationSlotTemplateWhereInput): BatchPayload!
@@ -14371,7 +14283,6 @@ type Mutation {
   updateManyEntities(data: EntityUpdateManyMutationInput!, where: EntityWhereInput): BatchPayload!
   updateManyFields(data: FieldUpdateManyMutationInput!, where: FieldWhereInput): BatchPayload!
   updateManyActionRequirementTemplates(data: ActionRequirementTemplateUpdateManyMutationInput!, where: ActionRequirementTemplateWhereInput): BatchPayload!
-  updateManyLocationSpecifications(data: LocationSpecificationUpdateManyMutationInput!, where: LocationSpecificationWhereInput): BatchPayload!
   updateManyStateTemplates(data: StateTemplateUpdateManyMutationInput!, where: StateTemplateWhereInput): BatchPayload!
   updateManyHintTemplates(data: HintTemplateUpdateManyMutationInput!, where: HintTemplateWhereInput): BatchPayload!
   updateManyFieldTypes(data: FieldTypeUpdateManyMutationInput!, where: FieldTypeWhereInput): BatchPayload!
@@ -14390,6 +14301,7 @@ type Mutation {
   deleteManyEntityTemplateSets(where: EntityTemplateSetWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyGamePlays(where: GamePlayWhereInput): BatchPayload!
+  deleteManySessions(where: SessionWhereInput): BatchPayload!
   deleteManyActions(where: ActionWhereInput): BatchPayload!
   deleteManyActionPayloads(where: ActionPayloadWhereInput): BatchPayload!
   deleteManyServices(where: ServiceWhereInput): BatchPayload!
@@ -14397,6 +14309,7 @@ type Mutation {
   deleteManyActionPayloadInputValues(where: ActionPayloadInputValueWhereInput): BatchPayload!
   deleteManyPortalTemplates(where: PortalTemplateWhereInput): BatchPayload!
   deleteManyInputRequirementTemplates(where: InputRequirementTemplateWhereInput): BatchPayload!
+  deleteManyPhysicalPositions(where: PhysicalPositionWhereInput): BatchPayload!
   deleteManyEntityTemplates(where: EntityTemplateWhereInput): BatchPayload!
   deleteManyPositions(where: PositionWhereInput): BatchPayload!
   deleteManyEntityRequirementTemplates(where: EntityRequirementTemplateWhereInput): BatchPayload!
@@ -14407,7 +14320,6 @@ type Mutation {
   deleteManyFields(where: FieldWhereInput): BatchPayload!
   deleteManyActionRequirementTemplates(where: ActionRequirementTemplateWhereInput): BatchPayload!
   deleteManyStateTransitionTemplates(where: StateTransitionTemplateWhereInput): BatchPayload!
-  deleteManyLocationSpecifications(where: LocationSpecificationWhereInput): BatchPayload!
   deleteManyStateTemplates(where: StateTemplateWhereInput): BatchPayload!
   deleteManyHintTemplates(where: HintTemplateWhereInput): BatchPayload!
   deleteManyFieldTypes(where: FieldTypeWhereInput): BatchPayload!
@@ -15040,6 +14952,342 @@ input PayloadRequirementWhereInput {
 }
 
 input PayloadRequirementWhereUniqueInput {
+  id: ID
+}
+
+type PhysicalPosition implements Node {
+  id: ID!
+  left: Float!
+  top: Float!
+  z: Float
+  width: Float
+  height: Float
+  rotation: Float!
+}
+
+"""A connection to a list of items."""
+type PhysicalPositionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PhysicalPositionEdge]!
+  aggregate: AggregatePhysicalPosition!
+}
+
+input PhysicalPositionCreateInput {
+  id: ID
+  left: Float
+  top: Float
+  z: Float
+  width: Float
+  height: Float
+  rotation: Float
+}
+
+input PhysicalPositionCreateOneInput {
+  create: PhysicalPositionCreateInput
+  connect: PhysicalPositionWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type PhysicalPositionEdge {
+  """The item at the end of the edge."""
+  node: PhysicalPosition!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PhysicalPositionOrderByInput {
+  id_ASC
+  id_DESC
+  left_ASC
+  left_DESC
+  top_ASC
+  top_DESC
+  z_ASC
+  z_DESC
+  width_ASC
+  width_DESC
+  height_ASC
+  height_DESC
+  rotation_ASC
+  rotation_DESC
+}
+
+type PhysicalPositionPreviousValues {
+  id: ID!
+  left: Float!
+  top: Float!
+  z: Float
+  width: Float
+  height: Float
+  rotation: Float!
+}
+
+type PhysicalPositionSubscriptionPayload {
+  mutation: MutationType!
+  node: PhysicalPosition
+  updatedFields: [String!]
+  previousValues: PhysicalPositionPreviousValues
+}
+
+input PhysicalPositionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PhysicalPositionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PhysicalPositionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PhysicalPositionSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PhysicalPositionWhereInput
+}
+
+input PhysicalPositionUpdateDataInput {
+  left: Float
+  top: Float
+  z: Float
+  width: Float
+  height: Float
+  rotation: Float
+}
+
+input PhysicalPositionUpdateInput {
+  left: Float
+  top: Float
+  z: Float
+  width: Float
+  height: Float
+  rotation: Float
+}
+
+input PhysicalPositionUpdateManyMutationInput {
+  left: Float
+  top: Float
+  z: Float
+  width: Float
+  height: Float
+  rotation: Float
+}
+
+input PhysicalPositionUpdateOneInput {
+  create: PhysicalPositionCreateInput
+  connect: PhysicalPositionWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: PhysicalPositionUpdateDataInput
+  upsert: PhysicalPositionUpsertNestedInput
+}
+
+input PhysicalPositionUpsertNestedInput {
+  update: PhysicalPositionUpdateDataInput!
+  create: PhysicalPositionCreateInput!
+}
+
+input PhysicalPositionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PhysicalPositionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PhysicalPositionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PhysicalPositionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  left: Float
+
+  """All values that are not equal to given value."""
+  left_not: Float
+
+  """All values that are contained in given list."""
+  left_in: [Float!]
+
+  """All values that are not contained in given list."""
+  left_not_in: [Float!]
+
+  """All values less than the given value."""
+  left_lt: Float
+
+  """All values less than or equal the given value."""
+  left_lte: Float
+
+  """All values greater than the given value."""
+  left_gt: Float
+
+  """All values greater than or equal the given value."""
+  left_gte: Float
+  top: Float
+
+  """All values that are not equal to given value."""
+  top_not: Float
+
+  """All values that are contained in given list."""
+  top_in: [Float!]
+
+  """All values that are not contained in given list."""
+  top_not_in: [Float!]
+
+  """All values less than the given value."""
+  top_lt: Float
+
+  """All values less than or equal the given value."""
+  top_lte: Float
+
+  """All values greater than the given value."""
+  top_gt: Float
+
+  """All values greater than or equal the given value."""
+  top_gte: Float
+  z: Float
+
+  """All values that are not equal to given value."""
+  z_not: Float
+
+  """All values that are contained in given list."""
+  z_in: [Float!]
+
+  """All values that are not contained in given list."""
+  z_not_in: [Float!]
+
+  """All values less than the given value."""
+  z_lt: Float
+
+  """All values less than or equal the given value."""
+  z_lte: Float
+
+  """All values greater than the given value."""
+  z_gt: Float
+
+  """All values greater than or equal the given value."""
+  z_gte: Float
+  width: Float
+
+  """All values that are not equal to given value."""
+  width_not: Float
+
+  """All values that are contained in given list."""
+  width_in: [Float!]
+
+  """All values that are not contained in given list."""
+  width_not_in: [Float!]
+
+  """All values less than the given value."""
+  width_lt: Float
+
+  """All values less than or equal the given value."""
+  width_lte: Float
+
+  """All values greater than the given value."""
+  width_gt: Float
+
+  """All values greater than or equal the given value."""
+  width_gte: Float
+  height: Float
+
+  """All values that are not equal to given value."""
+  height_not: Float
+
+  """All values that are contained in given list."""
+  height_in: [Float!]
+
+  """All values that are not contained in given list."""
+  height_not_in: [Float!]
+
+  """All values less than the given value."""
+  height_lt: Float
+
+  """All values less than or equal the given value."""
+  height_lte: Float
+
+  """All values greater than the given value."""
+  height_gt: Float
+
+  """All values greater than or equal the given value."""
+  height_gte: Float
+  rotation: Float
+
+  """All values that are not equal to given value."""
+  rotation_not: Float
+
+  """All values that are contained in given list."""
+  rotation_in: [Float!]
+
+  """All values that are not contained in given list."""
+  rotation_not_in: [Float!]
+
+  """All values less than the given value."""
+  rotation_lt: Float
+
+  """All values less than or equal the given value."""
+  rotation_lte: Float
+
+  """All values greater than the given value."""
+  rotation_gt: Float
+
+  """All values greater than or equal the given value."""
+  rotation_gte: Float
+}
+
+input PhysicalPositionWhereUniqueInput {
   id: ID
 }
 
@@ -16524,6 +16772,7 @@ type Query {
   entityTemplateSets(where: EntityTemplateSetWhereInput, orderBy: EntityTemplateSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityTemplateSet]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   gamePlays(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GamePlay]!
+  sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session]!
   actions(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Action]!
   actionPayloads(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionPayload]!
   services(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Service]!
@@ -16531,6 +16780,7 @@ type Query {
   actionPayloadInputValues(where: ActionPayloadInputValueWhereInput, orderBy: ActionPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionPayloadInputValue]!
   portalTemplates(where: PortalTemplateWhereInput, orderBy: PortalTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PortalTemplate]!
   inputRequirementTemplates(where: InputRequirementTemplateWhereInput, orderBy: InputRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InputRequirementTemplate]!
+  physicalPositions(where: PhysicalPositionWhereInput, orderBy: PhysicalPositionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PhysicalPosition]!
   entityTemplates(where: EntityTemplateWhereInput, orderBy: EntityTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityTemplate]!
   positions(where: PositionWhereInput, orderBy: PositionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Position]!
   entityRequirementTemplates(where: EntityRequirementTemplateWhereInput, orderBy: EntityRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntityRequirementTemplate]!
@@ -16541,7 +16791,6 @@ type Query {
   fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
   actionRequirementTemplates(where: ActionRequirementTemplateWhereInput, orderBy: ActionRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirementTemplate]!
   stateTransitionTemplates(where: StateTransitionTemplateWhereInput, orderBy: StateTransitionTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTransitionTemplate]!
-  locationSpecifications(where: LocationSpecificationWhereInput, orderBy: LocationSpecificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LocationSpecification]!
   stateTemplates(where: StateTemplateWhereInput, orderBy: StateTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTemplate]!
   hintTemplates(where: HintTemplateWhereInput, orderBy: HintTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [HintTemplate]!
   fieldTypes(where: FieldTypeWhereInput, orderBy: FieldTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldType]!
@@ -16560,6 +16809,7 @@ type Query {
   entityTemplateSet(where: EntityTemplateSetWhereUniqueInput!): EntityTemplateSet
   user(where: UserWhereUniqueInput!): User
   gamePlay(where: GamePlayWhereUniqueInput!): GamePlay
+  session(where: SessionWhereUniqueInput!): Session
   action(where: ActionWhereUniqueInput!): Action
   actionPayload(where: ActionPayloadWhereUniqueInput!): ActionPayload
   service(where: ServiceWhereUniqueInput!): Service
@@ -16567,6 +16817,7 @@ type Query {
   actionPayloadInputValue(where: ActionPayloadInputValueWhereUniqueInput!): ActionPayloadInputValue
   portalTemplate(where: PortalTemplateWhereUniqueInput!): PortalTemplate
   inputRequirementTemplate(where: InputRequirementTemplateWhereUniqueInput!): InputRequirementTemplate
+  physicalPosition(where: PhysicalPositionWhereUniqueInput!): PhysicalPosition
   entityTemplate(where: EntityTemplateWhereUniqueInput!): EntityTemplate
   position(where: PositionWhereUniqueInput!): Position
   entityRequirementTemplate(where: EntityRequirementTemplateWhereUniqueInput!): EntityRequirementTemplate
@@ -16577,7 +16828,6 @@ type Query {
   field(where: FieldWhereUniqueInput!): Field
   actionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   stateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
-  locationSpecification(where: LocationSpecificationWhereUniqueInput!): LocationSpecification
   stateTemplate(where: StateTemplateWhereUniqueInput!): StateTemplate
   hintTemplate(where: HintTemplateWhereUniqueInput!): HintTemplate
   fieldType(where: FieldTypeWhereUniqueInput!): FieldType
@@ -16596,6 +16846,7 @@ type Query {
   entityTemplateSetsConnection(where: EntityTemplateSetWhereInput, orderBy: EntityTemplateSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityTemplateSetConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   gamePlaysConnection(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GamePlayConnection!
+  sessionsConnection(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SessionConnection!
   actionsConnection(where: ActionWhereInput, orderBy: ActionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionConnection!
   actionPayloadsConnection(where: ActionPayloadWhereInput, orderBy: ActionPayloadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionPayloadConnection!
   servicesConnection(where: ServiceWhereInput, orderBy: ServiceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ServiceConnection!
@@ -16603,6 +16854,7 @@ type Query {
   actionPayloadInputValuesConnection(where: ActionPayloadInputValueWhereInput, orderBy: ActionPayloadInputValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionPayloadInputValueConnection!
   portalTemplatesConnection(where: PortalTemplateWhereInput, orderBy: PortalTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PortalTemplateConnection!
   inputRequirementTemplatesConnection(where: InputRequirementTemplateWhereInput, orderBy: InputRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InputRequirementTemplateConnection!
+  physicalPositionsConnection(where: PhysicalPositionWhereInput, orderBy: PhysicalPositionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PhysicalPositionConnection!
   entityTemplatesConnection(where: EntityTemplateWhereInput, orderBy: EntityTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityTemplateConnection!
   positionsConnection(where: PositionWhereInput, orderBy: PositionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PositionConnection!
   entityRequirementTemplatesConnection(where: EntityRequirementTemplateWhereInput, orderBy: EntityRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EntityRequirementTemplateConnection!
@@ -16613,7 +16865,6 @@ type Query {
   fieldsConnection(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldConnection!
   actionRequirementTemplatesConnection(where: ActionRequirementTemplateWhereInput, orderBy: ActionRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionRequirementTemplateConnection!
   stateTransitionTemplatesConnection(where: StateTransitionTemplateWhereInput, orderBy: StateTransitionTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StateTransitionTemplateConnection!
-  locationSpecificationsConnection(where: LocationSpecificationWhereInput, orderBy: LocationSpecificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LocationSpecificationConnection!
   stateTemplatesConnection(where: StateTemplateWhereInput, orderBy: StateTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StateTemplateConnection!
   hintTemplatesConnection(where: HintTemplateWhereInput, orderBy: HintTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HintTemplateConnection!
   fieldTypesConnection(where: FieldTypeWhereInput, orderBy: FieldTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldTypeConnection!
@@ -16980,6 +17231,340 @@ input ServiceWhereInput {
 input ServiceWhereUniqueInput {
   id: ID
   name: String
+}
+
+type Session implements Node {
+  id: ID!
+  createdAt: DateTime!
+  closedAt: DateTime
+  gamePlay: GamePlay!
+}
+
+"""A connection to a list of items."""
+type SessionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SessionEdge]!
+  aggregate: AggregateSession!
+}
+
+input SessionCreateInput {
+  id: ID
+  closedAt: DateTime
+  gamePlay: GamePlayCreateOneWithoutSessionsInput!
+}
+
+input SessionCreateManyWithoutGamePlayInput {
+  create: [SessionCreateWithoutGamePlayInput!]
+  connect: [SessionWhereUniqueInput!]
+}
+
+input SessionCreateWithoutGamePlayInput {
+  id: ID
+  closedAt: DateTime
+}
+
+"""An edge in a connection."""
+type SessionEdge {
+  """The item at the end of the edge."""
+  node: Session!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SessionOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  closedAt_ASC
+  closedAt_DESC
+}
+
+type SessionPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  closedAt: DateTime
+}
+
+input SessionScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SessionScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SessionScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SessionScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  closedAt: DateTime
+
+  """All values that are not equal to given value."""
+  closedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  closedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  closedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  closedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  closedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  closedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  closedAt_gte: DateTime
+}
+
+type SessionSubscriptionPayload {
+  mutation: MutationType!
+  node: Session
+  updatedFields: [String!]
+  previousValues: SessionPreviousValues
+}
+
+input SessionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SessionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SessionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SessionSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SessionWhereInput
+}
+
+input SessionUpdateInput {
+  closedAt: DateTime
+  gamePlay: GamePlayUpdateOneRequiredWithoutSessionsInput
+}
+
+input SessionUpdateManyDataInput {
+  closedAt: DateTime
+}
+
+input SessionUpdateManyMutationInput {
+  closedAt: DateTime
+}
+
+input SessionUpdateManyWithoutGamePlayInput {
+  create: [SessionCreateWithoutGamePlayInput!]
+  connect: [SessionWhereUniqueInput!]
+  set: [SessionWhereUniqueInput!]
+  disconnect: [SessionWhereUniqueInput!]
+  delete: [SessionWhereUniqueInput!]
+  update: [SessionUpdateWithWhereUniqueWithoutGamePlayInput!]
+  updateMany: [SessionUpdateManyWithWhereNestedInput!]
+  deleteMany: [SessionScalarWhereInput!]
+  upsert: [SessionUpsertWithWhereUniqueWithoutGamePlayInput!]
+}
+
+input SessionUpdateManyWithWhereNestedInput {
+  where: SessionScalarWhereInput!
+  data: SessionUpdateManyDataInput!
+}
+
+input SessionUpdateWithoutGamePlayDataInput {
+  closedAt: DateTime
+}
+
+input SessionUpdateWithWhereUniqueWithoutGamePlayInput {
+  where: SessionWhereUniqueInput!
+  data: SessionUpdateWithoutGamePlayDataInput!
+}
+
+input SessionUpsertWithWhereUniqueWithoutGamePlayInput {
+  where: SessionWhereUniqueInput!
+  update: SessionUpdateWithoutGamePlayDataInput!
+  create: SessionCreateWithoutGamePlayInput!
+}
+
+input SessionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SessionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SessionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SessionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  closedAt: DateTime
+
+  """All values that are not equal to given value."""
+  closedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  closedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  closedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  closedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  closedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  closedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  closedAt_gte: DateTime
+  gamePlay: GamePlayWhereInput
+}
+
+input SessionWhereUniqueInput {
+  id: ID
 }
 
 type State implements Node {
@@ -19502,6 +20087,7 @@ type Subscription {
   entityTemplateSet(where: EntityTemplateSetSubscriptionWhereInput): EntityTemplateSetSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   gamePlay(where: GamePlaySubscriptionWhereInput): GamePlaySubscriptionPayload
+  session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
   action(where: ActionSubscriptionWhereInput): ActionSubscriptionPayload
   actionPayload(where: ActionPayloadSubscriptionWhereInput): ActionPayloadSubscriptionPayload
   service(where: ServiceSubscriptionWhereInput): ServiceSubscriptionPayload
@@ -19509,6 +20095,7 @@ type Subscription {
   actionPayloadInputValue(where: ActionPayloadInputValueSubscriptionWhereInput): ActionPayloadInputValueSubscriptionPayload
   portalTemplate(where: PortalTemplateSubscriptionWhereInput): PortalTemplateSubscriptionPayload
   inputRequirementTemplate(where: InputRequirementTemplateSubscriptionWhereInput): InputRequirementTemplateSubscriptionPayload
+  physicalPosition(where: PhysicalPositionSubscriptionWhereInput): PhysicalPositionSubscriptionPayload
   entityTemplate(where: EntityTemplateSubscriptionWhereInput): EntityTemplateSubscriptionPayload
   position(where: PositionSubscriptionWhereInput): PositionSubscriptionPayload
   entityRequirementTemplate(where: EntityRequirementTemplateSubscriptionWhereInput): EntityRequirementTemplateSubscriptionPayload
@@ -19519,7 +20106,6 @@ type Subscription {
   field(where: FieldSubscriptionWhereInput): FieldSubscriptionPayload
   actionRequirementTemplate(where: ActionRequirementTemplateSubscriptionWhereInput): ActionRequirementTemplateSubscriptionPayload
   stateTransitionTemplate(where: StateTransitionTemplateSubscriptionWhereInput): StateTransitionTemplateSubscriptionPayload
-  locationSpecification(where: LocationSpecificationSubscriptionWhereInput): LocationSpecificationSubscriptionPayload
   stateTemplate(where: StateTemplateSubscriptionWhereInput): StateTemplateSubscriptionPayload
   hintTemplate(where: HintTemplateSubscriptionWhereInput): HintTemplateSubscriptionPayload
   fieldType(where: FieldTypeSubscriptionWhereInput): FieldTypeSubscriptionPayload
@@ -19532,8 +20118,15 @@ type User implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
   slug: String!
-  netlifyUserId: String
+  email: String!
+  emailConfirmed: Boolean!
+  password: String!
+  avatar: String
+  token: String!
   gamesCreated(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game!]
   games(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game!]
   plays(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GamePlay!]
@@ -19553,8 +20146,15 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   name: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
   slug: String!
-  netlifyUserId: String
+  email: String!
+  emailConfirmed: Boolean
+  password: String!
+  avatar: String
+  token: String!
   gamesCreated: GameCreateManyWithoutCreatorInput
   games: GameCreateManyWithoutCooperatorsInput
   plays: GamePlayCreateManyWithoutPlayerInput
@@ -19584,8 +20184,15 @@ input UserCreateOneWithoutPlaysInput {
 input UserCreateWithoutEntityTemplateSetsCreatedInput {
   id: ID
   name: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
   slug: String!
-  netlifyUserId: String
+  email: String!
+  emailConfirmed: Boolean
+  password: String!
+  avatar: String
+  token: String!
   gamesCreated: GameCreateManyWithoutCreatorInput
   games: GameCreateManyWithoutCooperatorsInput
   plays: GamePlayCreateManyWithoutPlayerInput
@@ -19594,8 +20201,15 @@ input UserCreateWithoutEntityTemplateSetsCreatedInput {
 input UserCreateWithoutGamesCreatedInput {
   id: ID
   name: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
   slug: String!
-  netlifyUserId: String
+  email: String!
+  emailConfirmed: Boolean
+  password: String!
+  avatar: String
+  token: String!
   games: GameCreateManyWithoutCooperatorsInput
   plays: GamePlayCreateManyWithoutPlayerInput
   entityTemplateSetsCreated: EntityTemplateSetCreateManyWithoutCreatorInput
@@ -19604,8 +20218,15 @@ input UserCreateWithoutGamesCreatedInput {
 input UserCreateWithoutGamesInput {
   id: ID
   name: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
   slug: String!
-  netlifyUserId: String
+  email: String!
+  emailConfirmed: Boolean
+  password: String!
+  avatar: String
+  token: String!
   gamesCreated: GameCreateManyWithoutCreatorInput
   plays: GamePlayCreateManyWithoutPlayerInput
   entityTemplateSetsCreated: EntityTemplateSetCreateManyWithoutCreatorInput
@@ -19614,8 +20235,15 @@ input UserCreateWithoutGamesInput {
 input UserCreateWithoutPlaysInput {
   id: ID
   name: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
   slug: String!
-  netlifyUserId: String
+  email: String!
+  emailConfirmed: Boolean
+  password: String!
+  avatar: String
+  token: String!
   gamesCreated: GameCreateManyWithoutCreatorInput
   games: GameCreateManyWithoutCooperatorsInput
   entityTemplateSetsCreated: EntityTemplateSetCreateManyWithoutCreatorInput
@@ -19639,10 +20267,24 @@ enum UserOrderByInput {
   updatedAt_DESC
   name_ASC
   name_DESC
+  firstName_ASC
+  firstName_DESC
+  middleName_ASC
+  middleName_DESC
+  lastName_ASC
+  lastName_DESC
   slug_ASC
   slug_DESC
-  netlifyUserId_ASC
-  netlifyUserId_DESC
+  email_ASC
+  email_DESC
+  emailConfirmed_ASC
+  emailConfirmed_DESC
+  password_ASC
+  password_DESC
+  avatar_ASC
+  avatar_DESC
+  token_ASC
+  token_DESC
 }
 
 type UserPreviousValues {
@@ -19650,8 +20292,15 @@ type UserPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
   slug: String!
-  netlifyUserId: String
+  email: String!
+  emailConfirmed: Boolean!
+  password: String!
+  avatar: String
+  token: String!
 }
 
 input UserScalarWhereInput {
@@ -19787,6 +20436,126 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  firstName: String
+
+  """All values that are not equal to given value."""
+  firstName_not: String
+
+  """All values that are contained in given list."""
+  firstName_in: [String!]
+
+  """All values that are not contained in given list."""
+  firstName_not_in: [String!]
+
+  """All values less than the given value."""
+  firstName_lt: String
+
+  """All values less than or equal the given value."""
+  firstName_lte: String
+
+  """All values greater than the given value."""
+  firstName_gt: String
+
+  """All values greater than or equal the given value."""
+  firstName_gte: String
+
+  """All values containing the given string."""
+  firstName_contains: String
+
+  """All values not containing the given string."""
+  firstName_not_contains: String
+
+  """All values starting with the given string."""
+  firstName_starts_with: String
+
+  """All values not starting with the given string."""
+  firstName_not_starts_with: String
+
+  """All values ending with the given string."""
+  firstName_ends_with: String
+
+  """All values not ending with the given string."""
+  firstName_not_ends_with: String
+  middleName: String
+
+  """All values that are not equal to given value."""
+  middleName_not: String
+
+  """All values that are contained in given list."""
+  middleName_in: [String!]
+
+  """All values that are not contained in given list."""
+  middleName_not_in: [String!]
+
+  """All values less than the given value."""
+  middleName_lt: String
+
+  """All values less than or equal the given value."""
+  middleName_lte: String
+
+  """All values greater than the given value."""
+  middleName_gt: String
+
+  """All values greater than or equal the given value."""
+  middleName_gte: String
+
+  """All values containing the given string."""
+  middleName_contains: String
+
+  """All values not containing the given string."""
+  middleName_not_contains: String
+
+  """All values starting with the given string."""
+  middleName_starts_with: String
+
+  """All values not starting with the given string."""
+  middleName_not_starts_with: String
+
+  """All values ending with the given string."""
+  middleName_ends_with: String
+
+  """All values not ending with the given string."""
+  middleName_not_ends_with: String
+  lastName: String
+
+  """All values that are not equal to given value."""
+  lastName_not: String
+
+  """All values that are contained in given list."""
+  lastName_in: [String!]
+
+  """All values that are not contained in given list."""
+  lastName_not_in: [String!]
+
+  """All values less than the given value."""
+  lastName_lt: String
+
+  """All values less than or equal the given value."""
+  lastName_lte: String
+
+  """All values greater than the given value."""
+  lastName_gt: String
+
+  """All values greater than or equal the given value."""
+  lastName_gte: String
+
+  """All values containing the given string."""
+  lastName_contains: String
+
+  """All values not containing the given string."""
+  lastName_not_contains: String
+
+  """All values starting with the given string."""
+  lastName_starts_with: String
+
+  """All values not starting with the given string."""
+  lastName_not_starts_with: String
+
+  """All values ending with the given string."""
+  lastName_ends_with: String
+
+  """All values not ending with the given string."""
+  lastName_not_ends_with: String
   slug: String
 
   """All values that are not equal to given value."""
@@ -19827,46 +20596,170 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   slug_not_ends_with: String
-  netlifyUserId: String
+  email: String
 
   """All values that are not equal to given value."""
-  netlifyUserId_not: String
+  email_not: String
 
   """All values that are contained in given list."""
-  netlifyUserId_in: [String!]
+  email_in: [String!]
 
   """All values that are not contained in given list."""
-  netlifyUserId_not_in: [String!]
+  email_not_in: [String!]
 
   """All values less than the given value."""
-  netlifyUserId_lt: String
+  email_lt: String
 
   """All values less than or equal the given value."""
-  netlifyUserId_lte: String
+  email_lte: String
 
   """All values greater than the given value."""
-  netlifyUserId_gt: String
+  email_gt: String
 
   """All values greater than or equal the given value."""
-  netlifyUserId_gte: String
+  email_gte: String
 
   """All values containing the given string."""
-  netlifyUserId_contains: String
+  email_contains: String
 
   """All values not containing the given string."""
-  netlifyUserId_not_contains: String
+  email_not_contains: String
 
   """All values starting with the given string."""
-  netlifyUserId_starts_with: String
+  email_starts_with: String
 
   """All values not starting with the given string."""
-  netlifyUserId_not_starts_with: String
+  email_not_starts_with: String
 
   """All values ending with the given string."""
-  netlifyUserId_ends_with: String
+  email_ends_with: String
 
   """All values not ending with the given string."""
-  netlifyUserId_not_ends_with: String
+  email_not_ends_with: String
+  emailConfirmed: Boolean
+
+  """All values that are not equal to given value."""
+  emailConfirmed_not: Boolean
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  avatar: String
+
+  """All values that are not equal to given value."""
+  avatar_not: String
+
+  """All values that are contained in given list."""
+  avatar_in: [String!]
+
+  """All values that are not contained in given list."""
+  avatar_not_in: [String!]
+
+  """All values less than the given value."""
+  avatar_lt: String
+
+  """All values less than or equal the given value."""
+  avatar_lte: String
+
+  """All values greater than the given value."""
+  avatar_gt: String
+
+  """All values greater than or equal the given value."""
+  avatar_gte: String
+
+  """All values containing the given string."""
+  avatar_contains: String
+
+  """All values not containing the given string."""
+  avatar_not_contains: String
+
+  """All values starting with the given string."""
+  avatar_starts_with: String
+
+  """All values not starting with the given string."""
+  avatar_not_starts_with: String
+
+  """All values ending with the given string."""
+  avatar_ends_with: String
+
+  """All values not ending with the given string."""
+  avatar_not_ends_with: String
+  token: String
+
+  """All values that are not equal to given value."""
+  token_not: String
+
+  """All values that are contained in given list."""
+  token_in: [String!]
+
+  """All values that are not contained in given list."""
+  token_not_in: [String!]
+
+  """All values less than the given value."""
+  token_lt: String
+
+  """All values less than or equal the given value."""
+  token_lte: String
+
+  """All values greater than the given value."""
+  token_gt: String
+
+  """All values greater than or equal the given value."""
+  token_gte: String
+
+  """All values containing the given string."""
+  token_contains: String
+
+  """All values not containing the given string."""
+  token_not_contains: String
+
+  """All values starting with the given string."""
+  token_starts_with: String
+
+  """All values not starting with the given string."""
+  token_not_starts_with: String
+
+  """All values ending with the given string."""
+  token_ends_with: String
+
+  """All values not ending with the given string."""
+  token_not_ends_with: String
 }
 
 type UserSubscriptionPayload {
@@ -19908,8 +20801,15 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   name: String
+  firstName: String
+  middleName: String
+  lastName: String
   slug: String
-  netlifyUserId: String
+  email: String
+  emailConfirmed: Boolean
+  password: String
+  avatar: String
+  token: String
   gamesCreated: GameUpdateManyWithoutCreatorInput
   games: GameUpdateManyWithoutCooperatorsInput
   plays: GamePlayUpdateManyWithoutPlayerInput
@@ -19918,14 +20818,28 @@ input UserUpdateInput {
 
 input UserUpdateManyDataInput {
   name: String
+  firstName: String
+  middleName: String
+  lastName: String
   slug: String
-  netlifyUserId: String
+  email: String
+  emailConfirmed: Boolean
+  password: String
+  avatar: String
+  token: String
 }
 
 input UserUpdateManyMutationInput {
   name: String
+  firstName: String
+  middleName: String
+  lastName: String
   slug: String
-  netlifyUserId: String
+  email: String
+  emailConfirmed: Boolean
+  password: String
+  avatar: String
+  token: String
 }
 
 input UserUpdateManyWithoutGamesInput {
@@ -19972,8 +20886,15 @@ input UserUpdateOneWithoutPlaysInput {
 
 input UserUpdateWithoutEntityTemplateSetsCreatedDataInput {
   name: String
+  firstName: String
+  middleName: String
+  lastName: String
   slug: String
-  netlifyUserId: String
+  email: String
+  emailConfirmed: Boolean
+  password: String
+  avatar: String
+  token: String
   gamesCreated: GameUpdateManyWithoutCreatorInput
   games: GameUpdateManyWithoutCooperatorsInput
   plays: GamePlayUpdateManyWithoutPlayerInput
@@ -19981,8 +20902,15 @@ input UserUpdateWithoutEntityTemplateSetsCreatedDataInput {
 
 input UserUpdateWithoutGamesCreatedDataInput {
   name: String
+  firstName: String
+  middleName: String
+  lastName: String
   slug: String
-  netlifyUserId: String
+  email: String
+  emailConfirmed: Boolean
+  password: String
+  avatar: String
+  token: String
   games: GameUpdateManyWithoutCooperatorsInput
   plays: GamePlayUpdateManyWithoutPlayerInput
   entityTemplateSetsCreated: EntityTemplateSetUpdateManyWithoutCreatorInput
@@ -19990,8 +20918,15 @@ input UserUpdateWithoutGamesCreatedDataInput {
 
 input UserUpdateWithoutGamesDataInput {
   name: String
+  firstName: String
+  middleName: String
+  lastName: String
   slug: String
-  netlifyUserId: String
+  email: String
+  emailConfirmed: Boolean
+  password: String
+  avatar: String
+  token: String
   gamesCreated: GameUpdateManyWithoutCreatorInput
   plays: GamePlayUpdateManyWithoutPlayerInput
   entityTemplateSetsCreated: EntityTemplateSetUpdateManyWithoutCreatorInput
@@ -19999,8 +20934,15 @@ input UserUpdateWithoutGamesDataInput {
 
 input UserUpdateWithoutPlaysDataInput {
   name: String
+  firstName: String
+  middleName: String
+  lastName: String
   slug: String
-  netlifyUserId: String
+  email: String
+  emailConfirmed: Boolean
+  password: String
+  avatar: String
+  token: String
   gamesCreated: GameUpdateManyWithoutCreatorInput
   games: GameUpdateManyWithoutCooperatorsInput
   entityTemplateSetsCreated: EntityTemplateSetUpdateManyWithoutCreatorInput
@@ -20165,6 +21107,126 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  firstName: String
+
+  """All values that are not equal to given value."""
+  firstName_not: String
+
+  """All values that are contained in given list."""
+  firstName_in: [String!]
+
+  """All values that are not contained in given list."""
+  firstName_not_in: [String!]
+
+  """All values less than the given value."""
+  firstName_lt: String
+
+  """All values less than or equal the given value."""
+  firstName_lte: String
+
+  """All values greater than the given value."""
+  firstName_gt: String
+
+  """All values greater than or equal the given value."""
+  firstName_gte: String
+
+  """All values containing the given string."""
+  firstName_contains: String
+
+  """All values not containing the given string."""
+  firstName_not_contains: String
+
+  """All values starting with the given string."""
+  firstName_starts_with: String
+
+  """All values not starting with the given string."""
+  firstName_not_starts_with: String
+
+  """All values ending with the given string."""
+  firstName_ends_with: String
+
+  """All values not ending with the given string."""
+  firstName_not_ends_with: String
+  middleName: String
+
+  """All values that are not equal to given value."""
+  middleName_not: String
+
+  """All values that are contained in given list."""
+  middleName_in: [String!]
+
+  """All values that are not contained in given list."""
+  middleName_not_in: [String!]
+
+  """All values less than the given value."""
+  middleName_lt: String
+
+  """All values less than or equal the given value."""
+  middleName_lte: String
+
+  """All values greater than the given value."""
+  middleName_gt: String
+
+  """All values greater than or equal the given value."""
+  middleName_gte: String
+
+  """All values containing the given string."""
+  middleName_contains: String
+
+  """All values not containing the given string."""
+  middleName_not_contains: String
+
+  """All values starting with the given string."""
+  middleName_starts_with: String
+
+  """All values not starting with the given string."""
+  middleName_not_starts_with: String
+
+  """All values ending with the given string."""
+  middleName_ends_with: String
+
+  """All values not ending with the given string."""
+  middleName_not_ends_with: String
+  lastName: String
+
+  """All values that are not equal to given value."""
+  lastName_not: String
+
+  """All values that are contained in given list."""
+  lastName_in: [String!]
+
+  """All values that are not contained in given list."""
+  lastName_not_in: [String!]
+
+  """All values less than the given value."""
+  lastName_lt: String
+
+  """All values less than or equal the given value."""
+  lastName_lte: String
+
+  """All values greater than the given value."""
+  lastName_gt: String
+
+  """All values greater than or equal the given value."""
+  lastName_gte: String
+
+  """All values containing the given string."""
+  lastName_contains: String
+
+  """All values not containing the given string."""
+  lastName_not_contains: String
+
+  """All values starting with the given string."""
+  lastName_starts_with: String
+
+  """All values not starting with the given string."""
+  lastName_not_starts_with: String
+
+  """All values ending with the given string."""
+  lastName_ends_with: String
+
+  """All values not ending with the given string."""
+  lastName_not_ends_with: String
   slug: String
 
   """All values that are not equal to given value."""
@@ -20205,46 +21267,170 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   slug_not_ends_with: String
-  netlifyUserId: String
+  email: String
 
   """All values that are not equal to given value."""
-  netlifyUserId_not: String
+  email_not: String
 
   """All values that are contained in given list."""
-  netlifyUserId_in: [String!]
+  email_in: [String!]
 
   """All values that are not contained in given list."""
-  netlifyUserId_not_in: [String!]
+  email_not_in: [String!]
 
   """All values less than the given value."""
-  netlifyUserId_lt: String
+  email_lt: String
 
   """All values less than or equal the given value."""
-  netlifyUserId_lte: String
+  email_lte: String
 
   """All values greater than the given value."""
-  netlifyUserId_gt: String
+  email_gt: String
 
   """All values greater than or equal the given value."""
-  netlifyUserId_gte: String
+  email_gte: String
 
   """All values containing the given string."""
-  netlifyUserId_contains: String
+  email_contains: String
 
   """All values not containing the given string."""
-  netlifyUserId_not_contains: String
+  email_not_contains: String
 
   """All values starting with the given string."""
-  netlifyUserId_starts_with: String
+  email_starts_with: String
 
   """All values not starting with the given string."""
-  netlifyUserId_not_starts_with: String
+  email_not_starts_with: String
 
   """All values ending with the given string."""
-  netlifyUserId_ends_with: String
+  email_ends_with: String
 
   """All values not ending with the given string."""
-  netlifyUserId_not_ends_with: String
+  email_not_ends_with: String
+  emailConfirmed: Boolean
+
+  """All values that are not equal to given value."""
+  emailConfirmed_not: Boolean
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  avatar: String
+
+  """All values that are not equal to given value."""
+  avatar_not: String
+
+  """All values that are contained in given list."""
+  avatar_in: [String!]
+
+  """All values that are not contained in given list."""
+  avatar_not_in: [String!]
+
+  """All values less than the given value."""
+  avatar_lt: String
+
+  """All values less than or equal the given value."""
+  avatar_lte: String
+
+  """All values greater than the given value."""
+  avatar_gt: String
+
+  """All values greater than or equal the given value."""
+  avatar_gte: String
+
+  """All values containing the given string."""
+  avatar_contains: String
+
+  """All values not containing the given string."""
+  avatar_not_contains: String
+
+  """All values starting with the given string."""
+  avatar_starts_with: String
+
+  """All values not starting with the given string."""
+  avatar_not_starts_with: String
+
+  """All values ending with the given string."""
+  avatar_ends_with: String
+
+  """All values not ending with the given string."""
+  avatar_not_ends_with: String
+  token: String
+
+  """All values that are not equal to given value."""
+  token_not: String
+
+  """All values that are contained in given list."""
+  token_in: [String!]
+
+  """All values that are not contained in given list."""
+  token_not_in: [String!]
+
+  """All values less than the given value."""
+  token_lt: String
+
+  """All values less than or equal the given value."""
+  token_lte: String
+
+  """All values greater than the given value."""
+  token_gt: String
+
+  """All values greater than or equal the given value."""
+  token_gte: String
+
+  """All values containing the given string."""
+  token_contains: String
+
+  """All values not containing the given string."""
+  token_not_contains: String
+
+  """All values starting with the given string."""
+  token_starts_with: String
+
+  """All values not starting with the given string."""
+  token_not_starts_with: String
+
+  """All values ending with the given string."""
+  token_ends_with: String
+
+  """All values not ending with the given string."""
+  token_not_ends_with: String
   gamesCreated_every: GameWhereInput
   gamesCreated_some: GameWhereInput
   gamesCreated_none: GameWhereInput
@@ -20262,6 +21448,8 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   slug: String
+  email: String
+  token: String
 }
 
 enum ValueType {

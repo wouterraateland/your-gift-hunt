@@ -3,18 +3,16 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import PanZoomContext from "contexts/PanZoom"
 
 import useContext from "hooks/useContext"
-import useEntityAreas from "./useEntityAreas"
+import { useEntityPosition } from "./useEntityPositions"
 
-const useDragOnGrid = entity => {
+const usePhysicalDrag = entity => {
   const [isDragging, setDragging] = useState(false)
   const dragStart = useRef(null)
   const posStart = useRef(null)
   const wasDragging = useRef(false)
   const { zoom } = useContext(PanZoomContext, 0b100)
 
-  const { getEntityArea, setEntityPosition } = useEntityAreas()
-
-  const entityId = entity ? entity.id : null
+  const [position, setPosition] = useEntityPosition(entity.id)
 
   const onMouseDown = useCallback(
     event => {
@@ -24,9 +22,9 @@ const useDragOnGrid = entity => {
         y: event.pageY
       }
       wasDragging.current = false
-      posStart.current = getEntityArea(entityId)
+      posStart.current = position
     },
-    [getEntityArea, entityId]
+    [position]
   )
 
   const onWindowMouseMove = useCallback(
@@ -39,17 +37,17 @@ const useDragOnGrid = entity => {
           wasDragging.current = true
         }
 
-        setEntityPosition(entityId, {
+        setPosition({
           top:
             posStart.current.top +
-            Math.round((event.pageY - dragStart.current.y) / 32 / zoom),
+            (event.pageY - dragStart.current.y) / 16 / zoom,
           left:
             posStart.current.left +
-            Math.round((event.pageX - dragStart.current.x) / 32 / zoom)
+            (event.pageX - dragStart.current.x) / 16 / zoom
         })
       }
     },
-    [isDragging, entityId, setEntityPosition]
+    [isDragging, setPosition]
   )
 
   useEffect(
@@ -60,7 +58,7 @@ const useDragOnGrid = entity => {
         window.removeEventListener("mousemove", onWindowMouseMove)
       }
     },
-    [isDragging, entityId, setEntityPosition]
+    [isDragging, setPosition]
   )
 
   const onWindowMouseUp = useCallback(() => {
@@ -88,4 +86,4 @@ const useDragOnGrid = entity => {
   return { isDragging, onMouseDown, onClickCapture }
 }
 
-export default useDragOnGrid
+export default usePhysicalDrag

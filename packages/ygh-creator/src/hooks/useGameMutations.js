@@ -510,6 +510,24 @@ export const useGameMutationsProvider = () => {
     await updateEntities(gameId, entityUpdates)
   }
 
+  const updateEntityPositions = async (gameId, entityPositions) => {
+    const entityUpdates = entityPositions.map(
+      ({ id, physicalPosition: { id: positionId, ...rest } }) => ({
+        where: { id },
+        data: {
+          physicalPosition: {
+            upsert: {
+              create: rest,
+              update: rest
+            }
+          }
+        }
+      })
+    )
+
+    await updateEntities(gameId, entityUpdates)
+  }
+
   const createNodes = async (sourceStateTemplateIds, originStateId) => {
     const originEntity = originStateId
       ? entities.find(({ states }) =>
@@ -817,6 +835,7 @@ export const useGameMutationsProvider = () => {
     addPreviousState,
     deleteNodes,
     moveEntities,
+    updateEntityPositions,
 
     connectInformationSlotWithField,
     disconnectInformationSlotFromField,

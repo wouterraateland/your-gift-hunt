@@ -4,7 +4,7 @@ import styled from "styled-components"
 import useInspector from "hooks/useInspector"
 
 const Container = styled.div`
-  pointer-events: ${props => (props.isVisible ? "none" : "initial")};
+  pointer-events: ${props => (props.isVisible ? "none" : "auto")};
 
   position: absolute;
   top: -0.5em;
@@ -17,6 +17,7 @@ const Container = styled.div`
 
   border: 0.1em solid ${props => props.theme.color.primary};
 `
+Container.displayName = "ControlsContainer"
 
 const SingleControl = styled.div`
   pointer-events: auto;
@@ -42,12 +43,14 @@ const Resize = styled(SingleControl)`
     content: '${props => (props.horizontal ? "↔" : "↕")}';
   }
 `
+Resize.displayName = "ResizeControl"
 
 const Rotate = styled(SingleControl)`
   &::after {
     content: "↷";
   }
 `
+Resize.displayName = "RotateControl"
 
 const Controls = ({ entity }) => {
   const { inspectEntity, isOpen, inspectedEntity } = useInspector()

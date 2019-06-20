@@ -295,6 +295,15 @@ export const UPDATE_ENTITIES = gql`
   ${ENTITY_FRAGMENT}
 `
 
+export const UPDATE_ENTITY = gql`
+  mutation updateEntity($entityId: ID!, $entityUpdate: EntityUpdateInput!) {
+    updateEntity(where: { id: $entityId }, data: $entityUpdate) {
+      ...EntityFragment
+    }
+  }
+  ${ENTITY_FRAGMENT}
+`
+
 export const CREATE_ENTITIES = gql`
   mutation createEntities(
     $gameId: ID!
@@ -318,63 +327,9 @@ export const CREATE_ENTITIES = gql`
 
 export const DELETE_NODES = gql`
   mutation deleteNodes($entityIds: [ID!]!, $stateIds: [ID!]!) {
-    # deleteManyEntityRequirements(
-    #   where: {
-    #     payload: {
-    #       actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
-    #     }
-    #   }
-    # ) {
-    #   count
-    # }
-    #
-    # deleteManyInputRequirements(
-    #   where: {
-    #     payload: {
-    #       actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
-    #     }
-    #   }
-    # ) {
-    #   count
-    # }
-    #
-    # deleteManyPayloadRequirements(
-    #   where: {
-    #     actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
-    #   }
-    # ) {
-    #   count
-    # }
-    #
-    # deleteManyHints(
-    #   where: {
-    #     actionRequirement: { stateTransition: { from: { id_in: $stateIds } } }
-    #   }
-    # ) {
-    #   count
-    # }
-    #
-    # deleteManyActionRequirements(
-    #   where: { stateTransition: { from: { id_in: $stateIds } } }
-    # ) {
-    #   count
-    # }
-    #
-    # deleteManyStateTransitions(where: { from: { id_in: $stateIds } }) {
-    #   count
-    # }
-
     deleteManyStates(where: { id_in: $stateIds }) {
       count
     }
-
-    # deleteManyInformationSlots(where: { entity: { id_in: $entityIds } }) {
-    #   count
-    # }
-    #
-    # deleteManyFields(where: { entity: { id_in: $entityIds } }) {
-    #   count
-    # }
 
     deleteManyEntities(where: { id_in: $entityIds }) {
       count

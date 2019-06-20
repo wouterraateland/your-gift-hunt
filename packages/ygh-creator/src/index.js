@@ -17,10 +17,10 @@ ReactGA.pageview(window.location.pathname + window.location.search)
 
 const root = document.getElementById("app-root")
 
-// if (process.env.NODE_ENV !== "production") {
-//   const whyDidYouRender = require("@welldone-software/why-did-you-render")
-//   whyDidYouRender(React)
-// }
+if (process.env.NODE_ENV !== "production") {
+  const whyDidYouRender = require("@welldone-software/why-did-you-render")
+  whyDidYouRender(React)
+}
 
 const render = Component =>
   ReactDOM.render(
