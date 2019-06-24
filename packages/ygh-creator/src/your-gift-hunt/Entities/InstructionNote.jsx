@@ -68,12 +68,13 @@ const Text = styled.span`
   user-select: none;
 `
 
-const InstructionNote = forwardRef(({ inspect, ...props }, ref) => (
+const InstructionNote = forwardRef(({ children, inspect, ...props }, ref) => (
   <Note {...props} onClick={inspect} ref={ref}>
     <Paper />
     <PaperClip />
     <PaperClip2 />
     <Text>Read me</Text>
+    {children}
   </Note>
 ))
 InstructionNote.name = "InstructionNote"

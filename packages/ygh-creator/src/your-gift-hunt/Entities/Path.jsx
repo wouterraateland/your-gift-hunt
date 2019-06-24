@@ -76,7 +76,7 @@ const Stone = styled.div`
 `
 Stone.displayName = "Path.Stone"
 
-const Path = forwardRef((props, ref) => (
+const Path = forwardRef(({ children, ...props }, ref) => (
   <Entity noVisual {...props} ref={ref}>
     {stones.map(({ scale, rotation, ...stone }, i) => (
       <Stone
@@ -91,6 +91,7 @@ const Path = forwardRef((props, ref) => (
         }}
       />
     ))}
+    {children}
   </Entity>
 ))
 Path.name = "Path"

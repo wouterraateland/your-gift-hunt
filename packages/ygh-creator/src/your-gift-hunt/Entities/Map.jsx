@@ -69,37 +69,43 @@ const StyledMap = styled(Entity)`
 `
 StyledMap.displayName = "Map"
 
-const StatefulMap = forwardRef(({ dispatchInputAction, ...props }, ref) => {
-  const [isTurned, setTurned] = useState(false)
-  const isClean = _.hasState("Clean")(props)
-  const isComplete = _.hasState("Dusty")(props) || isClean
+const StatefulMap = forwardRef(
+  ({ children, dispatchInputAction, ...props }, ref) => {
+    const [isTurned, setTurned] = useState(false)
+    const isClean = _.hasState("Clean")(props)
+    const isComplete = _.hasState("Dusty")(props) || isClean
 
-  const cleanliness = _.getInputValue("part_cleaned")(props) || 0
-  const code = _.getInformationSlotValue("Code")(props) || ""
+    const cleanliness = _.getInputValue("part_cleaned")(props) || 0
+    const code = _.getInformationSlotValue("Code")(props) || ""
 
-  const onClick = useCallback(() => {
-    if (isClean) {
-      setTurned(isTurned => !isTurned)
-    } else if (isComplete) {
-      dispatchInputAction(props.state, "part_cleaned", cleanliness + 0.1)
-    }
-  }, [props.state, isClean, isComplete, cleanliness])
+    const onClick = useCallback(
+      () => {
+        if (isClean) {
+          setTurned(isTurned => !isTurned)
+        } else if (isComplete) {
+          dispatchInputAction(props.state, "part_cleaned", cleanliness + 0.1)
+        }
+      },
+      [props.state, isClean, isComplete, cleanliness]
+    )
 
-  return (
-    <StyledMap
-      {...props}
-      onClick={onClick}
-      ref={ref}
-      isComplete={isComplete}
-      isClean={isClean}
-      isTurned={isTurned}
-      cleanliness={cleanliness}
-      code={code}
-    >
-      <MapTexture />
-    </StyledMap>
-  )
-})
+    return (
+      <StyledMap
+        {...props}
+        onClick={onClick}
+        ref={ref}
+        isComplete={isComplete}
+        isClean={isClean}
+        isTurned={isTurned}
+        cleanliness={cleanliness}
+        code={code}
+      >
+        <MapTexture />
+        {children}
+      </StyledMap>
+    )
+  }
+)
 StatefulMap.name = "Map"
 StatefulMap.templateName = "Map"
 StatefulMap.defaultProps = {

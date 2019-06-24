@@ -138,13 +138,14 @@ const Plant = plantProps =>
       />
     ))
 
-const PlantPot = forwardRef((props, ref) => {
+const PlantPot = forwardRef(({ children, ...props }, ref) => {
   const isGrown = _.hasState("grown")(props)
   const isPlanted = _.hasState("planted")(props) || isGrown
 
   return (
     <Pot {...props} ref={ref}>
       <Plant isPlanted={isPlanted} isGrown={isGrown} />
+      {children}
     </Pot>
   )
 })

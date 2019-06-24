@@ -99,7 +99,7 @@ Wheel.defaultProps = {
   height: 0.25
 }
 
-const SafeWithKeyhole = forwardRef(({ inspect, ...props }, ref) => {
+const SafeWithKeyhole = forwardRef(({ children, inspect, ...props }, ref) => {
   const isUnlocked = _.hasState("unlocked")(props)
   return (
     <Entity noVisual {...props} onClick={inspect} ref={ref}>
@@ -107,6 +107,7 @@ const SafeWithKeyhole = forwardRef(({ inspect, ...props }, ref) => {
       <Door left={0} top={4} rotation={isUnlocked ? 45 : 0}>
         <Wheel top={1.25} />
       </Door>
+      {children}
     </Entity>
   )
 })

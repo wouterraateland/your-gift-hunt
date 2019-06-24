@@ -24,11 +24,13 @@ export { default as Bin } from "./Bin"
 export { default as Cog } from "./Cog"
 export { default as Edit } from "./Edit"
 export { default as Pen } from "./Pen"
+export { default as Resize } from "./Resize"
+export { default as Rotate } from "./Rotate"
 
 const Icon = styled.svg.attrs(({ size, weight }) => ({
   style: {
     height: `${size}em`,
-    strokeWidth: `${weight / 8}em`
+    strokeWidth: `${weight / 8}rem`
   }
 }))`
   fill: currentColor;

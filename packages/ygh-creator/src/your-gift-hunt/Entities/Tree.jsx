@@ -90,7 +90,7 @@ Branch.defaultProps = {
   }
 }
 
-const Tree = forwardRef((props, ref) => {
+const Tree = forwardRef(({ children, ...props }, ref) => {
   const branches = useMemo(createBranches, [])
   const leafs = useMemo(() => createLeafs(branches), [])
   return (
@@ -107,6 +107,7 @@ const Tree = forwardRef((props, ref) => {
         ))}
       </Branches>
       <Leafs boxShadow={leafs} isInteractive={false} />
+      {children}
     </Entity>
   )
 })

@@ -1,9 +1,19 @@
 import React, { useCallback } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import useInspector from "hooks/useInspector"
+import useContext from "hooks/useContext"
+import useResizeRotateControls from "hooks/useResizeRotateControls"
 
-const Container = styled.div`
+import PanZoomContext from "contexts/PanZoom"
+
+import { Resize, Rotate } from "your-gift-hunt/icons"
+
+const Container = styled.div.attrs(({ zoom }) => ({
+  style: {
+    fontSize: `${1 / zoom}em`
+  }
+}))`
   pointer-events: ${props => (props.isVisible ? "none" : "auto")};
 
   position: absolute;
@@ -19,7 +29,7 @@ const Container = styled.div`
 `
 Container.displayName = "ControlsContainer"
 
-const SingleControl = styled.div`
+const controlStyles = css`
   pointer-events: auto;
 
   position: absolute;
@@ -28,55 +38,54 @@ const SingleControl = styled.div`
 
   width: 1em;
   height: 1em;
+  padding: 0.2em;
 
   text-align: center;
   line-height: 1;
 
   background-color: ${props => props.theme.color.primary};
   color: #fff;
-
-  transform: translate(-50%, -50%);
 `
 
-const Resize = styled(SingleControl)`
-  &::after {
-    content: '${props => (props.horizontal ? "↔" : "↕")}';
-  }
+const ResizeControl = styled(Resize)`
+  ${controlStyles}
+  transform: translate(-50%, -50%)
+    rotate(${props => (props.horizontal ? 90 : 0)}deg);
 `
-Resize.displayName = "ResizeControl"
+ResizeControl.displayName = "ResizeControl"
 
-const Rotate = styled(SingleControl)`
-  &::after {
-    content: "↷";
-  }
+const RotateControl = styled(Rotate)`
+  ${controlStyles}
+  transform: translate(-50%, -50%)
+    rotate(
+      ${props =>
+        props.top ? (props.left ? -90 : 0) : props.left ? 180 : 90}deg
+    );
 `
-Resize.displayName = "RotateControl"
+RotateControl.displayName = "RotateControl"
 
 const Controls = ({ entity }) => {
   const { inspectEntity, isOpen, inspectedEntity } = useInspector()
+  const { zoom } = useContext(PanZoomContext, 0b100)
 
-  const handleClick = useCallback(
-    event => {
-      // event.stopPropagation()
-      console.log(entity.name)
-      inspectEntity(entity.id)
-    },
-    [entity.id]
-  )
+  const handleClick = useCallback(() => inspectEntity(entity.id), [entity.id])
+
+  const { resizeHandlers, rotateHandlers } = useResizeRotateControls(entity)
 
   return (
     <Container
       onClick={handleClick}
       isVisible={isOpen && inspectedEntity === entity.id}
+      zoom={zoom}
     >
-      <Resize vertical top />
-      <Resize horizontal right />
-      <Resize vertical bottom />
-      <Resize horizontal left />
-      <Rotate top left />
-      <Rotate top right />
-      <Rotate bottom right />
-      <Rotate bottom left />
+      <ResizeControl {...resizeHandlers.top} vertical top />
+      <ResizeControl {...resizeHandlers.right} horizontal right />
+      <ResizeControl {...resizeHandlers.bottom} vertical bottom />
+      <ResizeControl {...resizeHandlers.left} horizontal left />
+      <RotateControl {...rotateHandlers.topLeft} top left />
+      <RotateControl {...rotateHandlers.topRight} top right />
+      <RotateControl {...rotateHandlers.bottomRight} bottom right />
+      <RotateControl {...rotateHandlers.bottomLeft} bottom left />
     </Container>
   )
 }

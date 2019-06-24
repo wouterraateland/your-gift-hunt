@@ -98,7 +98,7 @@ Window.defaultProps = {
   isContainer: true
 }
 
-const Wall = forwardRef((props, ref) => (
+const Wall = forwardRef(({ children, ...props }, ref) => (
   <Entity {...props} ref={ref} noVisual>
     {windows.map((w, i) => (
       <Window
@@ -119,6 +119,7 @@ const Wall = forwardRef((props, ref) => (
       noVisual
       isInteractive={props.state === "Invisible"}
     />
+    {children}
   </Entity>
 ))
 Wall.name = "Wall"

@@ -32,9 +32,10 @@ const StyledMapPiece = styled(Entity)`
   background-color: #d0c6b0;
 `
 
-const MapPiece = forwardRef((props, ref) => (
+const MapPiece = forwardRef(({ children, ...props }, ref) => (
   <StyledMapPiece ref={ref} {...props}>
     <MapTexture size={2} />
+    {children}
   </StyledMapPiece>
 ))
 MapPiece.name = "MapPiece"

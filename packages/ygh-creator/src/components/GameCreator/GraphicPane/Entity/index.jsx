@@ -23,14 +23,14 @@ const EntityComponent = memo(
 )
 
 const EntityContainer = ({ entity }) => {
-  const { entities } = useEntities()
+  const { entities, getContainer } = useEntities()
   const [position] = useEntityPosition(entity.id)
   const dragProps = usePhysicalDrag(entity)
 
-  const containedEntities = entities.filter(
-    ({ isObject, isItem, container }) =>
-      (isObject || isItem) && container && container.id === entity.id
-  )
+  const containedEntities = entities.filter(({ isObject, isItem, id }) => {
+    const container = getContainer(id)
+    return (isObject || isItem) && container && container.id === entity.id
+  })
 
   return (
     <EntityComponent

@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import diff from "deep-diff"
 
+import { getEntityComponent } from "your-gift-hunt/Entities"
+
 import EntityPositionsContext from "contexts/EntityPositions"
 
 import useContext from "hooks/useContext"
@@ -15,6 +17,21 @@ const clean = o =>
     {}
   )
 
+const getDefaultProps = entity => {
+  const component = getEntityComponent(entity.template.name)
+  return component
+    ? {
+        width: component.defaultProps.width,
+        height: component.defaultProps.height,
+        z: component.defaultProps.z
+      }
+    : {
+        width: 4,
+        height: 4,
+        z: 0
+      }
+}
+
 export const useEntityPositionsProvider = () => {
   const { entities } = useEntities()
   const hasChanged = useRef(false)
@@ -25,16 +42,16 @@ export const useEntityPositionsProvider = () => {
       entities.reduce(
         (acc, entity) => ({
           ...acc,
-          [entity.id]: clean(
-            entity.physicalPosition || {
-              left: 0,
-              top: 0,
-              z: null,
-              width: null,
-              height: null,
-              rotation: 0
-            }
-          )
+          [entity.id]: clean({
+            ...getDefaultProps(entity),
+            ...clean(
+              entity.physicalPosition || {
+                left: 0,
+                top: 0,
+                rotation: 0
+              }
+            )
+          })
         }),
         {}
       ),

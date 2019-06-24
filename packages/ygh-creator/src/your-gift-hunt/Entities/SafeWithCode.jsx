@@ -76,7 +76,7 @@ Door.defaultProps = {
   origin: { left: 0, top: 0 }
 }
 
-const SafeWithCode = forwardRef(({ inspect, ...props }, ref) => {
+const SafeWithCode = forwardRef(({ children, inspect, ...props }, ref) => {
   const isUnlocked = _.hasState("unlocked")(props)
   return (
     <Entity noVisual {...props} onClick={inspect} ref={ref}>
@@ -87,6 +87,7 @@ const SafeWithCode = forwardRef(({ inspect, ...props }, ref) => {
         left={0}
         rotation={isUnlocked ? 45 : 0}
       />
+      {children}
     </Entity>
   )
 })

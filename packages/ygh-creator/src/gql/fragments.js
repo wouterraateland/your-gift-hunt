@@ -209,6 +209,9 @@ export const PORTAL_FRAGMENT = gql`
 
     entrance {
       id
+      entity {
+        id
+      }
     }
   }
 `
@@ -225,6 +228,9 @@ export const ENTRANCE_FRAGMENT = gql`
 
     portal {
       id
+      entity {
+        id
+      }
     }
   }
 `

@@ -178,7 +178,7 @@ Neck.defaultProps = {
   z: 0.5
 }
 
-const Sink = forwardRef((props, ref) => {
+const Sink = forwardRef(({ children, ...props }, ref) => {
   const isConnected = _.hasState("connected")(props)
 
   return (
@@ -189,6 +189,7 @@ const Sink = forwardRef((props, ref) => {
         <Warm rotation={60} top="30%" left="90%" />
         <Neck rotation={20} top="50%" left="50%" />
       </Faucet>
+      {children}
     </SinkContainer>
   )
 })

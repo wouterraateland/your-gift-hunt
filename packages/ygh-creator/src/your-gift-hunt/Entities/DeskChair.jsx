@@ -95,10 +95,11 @@ Backrest.defaultProps = {
   height: 1
 }
 
-const DeskChair = forwardRef((props, ref) => (
+const DeskChair = forwardRef(({ children, ...props }, ref) => (
   <Entity noVisual ref={ref} {...props}>
     <Seat top="50%" left="50%" />
     <Backrest top={4.5} left="50%" />
+    {children}
   </Entity>
 ))
 DeskChair.name = "DeskChair"

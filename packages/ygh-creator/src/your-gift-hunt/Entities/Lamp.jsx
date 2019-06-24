@@ -83,7 +83,7 @@ Light.defaultProps = {
   height: 7.5
 }
 
-const Lamp = forwardRef(({ dispatchInputAction, ...props }, ref) => {
+const Lamp = forwardRef(({ children, dispatchInputAction, ...props }, ref) => {
   const isOn = _.hasState("on")(props)
   return (
     <Entity
@@ -98,6 +98,7 @@ const Lamp = forwardRef(({ dispatchInputAction, ...props }, ref) => {
       <Foot />
       <Head left={6} />
       <Neck />
+      {children}
     </Entity>
   )
 })
