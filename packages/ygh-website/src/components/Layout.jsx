@@ -1,4 +1,5 @@
 import React from "react"
+import styled from "styled-components"
 import { StaticQuery, graphql } from "gatsby"
 
 import { ModalProvider } from "contexts/Modal"
@@ -9,6 +10,11 @@ import SEO from "components/SEO"
 import Nav from "components/Nav"
 import Body from "components/Body"
 import Footer from "components/Footer"
+
+const FlexColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
 const Layout = ({ children, ...rest }) => (
   <StaticQuery
@@ -34,11 +40,11 @@ const Layout = ({ children, ...rest }) => (
       <Theme>
         <ModalProvider>
           <SEO config={data.site.siteMetadata} />
-          <FullHeight>
+          <FlexColumn>
             <Nav {...rest} />
             <Body index={rest.index}>{children}</Body>
             <Footer />
-          </FullHeight>
+          </FlexColumn>
         </ModalProvider>
       </Theme>
     )}
