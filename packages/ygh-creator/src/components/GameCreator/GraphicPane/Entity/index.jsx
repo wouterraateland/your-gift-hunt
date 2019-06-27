@@ -22,10 +22,10 @@ const EntityComponent = memo(
     prevProps.position === nextProps.position
 )
 
-const EntityContainer = ({ entity }) => {
+const EntityContainer = ({ entity, parentRotation }) => {
   const { entities, getContainer } = useEntities()
   const [position] = useEntityPosition(entity.id)
-  const dragProps = usePhysicalDrag(entity)
+  const dragProps = usePhysicalDrag(entity, parentRotation)
 
   const containedEntities = entities.filter(({ isObject, isItem, id }) => {
     const container = getContainer(id)

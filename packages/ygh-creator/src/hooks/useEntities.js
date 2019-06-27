@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useCallback, useContext, useMemo } from "react"
 
 import useGame from "hooks/useGame"
 
@@ -7,31 +7,41 @@ import EntitiesContext from "contexts/Entities"
 export const useEntitiesProvider = () => {
   const { gameExists, game } = useGame()
 
-  const entities = gameExists ? game.entities : []
-  const rootEntities = entities.filter(({ container }) => container === null)
-
-  const entityMap = entities.reduce(
-    (acc, entity) => ({ ...acc, [entity.id]: entity }),
-    {}
+  const entities = useMemo(() => (gameExists ? game.entities : []), [
+    game.entities
+  ])
+  const rootEntities = useMemo(
+    () => entities.filter(({ container }) => container === null),
+    [entities]
+  )
+  const entityMap = useMemo(
+    () =>
+      entities.reduce((acc, entity) => ({ ...acc, [entity.id]: entity }), {}),
+    [entities]
   )
 
-  const getEntityById = entityId => entityMap[entityId]
+  const getEntityById = useCallback(entityId => entityMap[entityId], [
+    entityMap
+  ])
 
-  const getContainer = entityId => {
-    const entity = entityMap[entityId]
-    const container = entity.portals.some(
-      ({ entrance }) =>
-        entrance && entrance.entity && entityMap[entrance.entity.id].isObject
-    )
-      ? entity.portals.find(
-          ({ entrance }) =>
-            entrance &&
-            entrance.entity &&
-            entityMap[entrance.entity.id].isObject
-        ).entrance.entity
-      : entity.container
-    return container ? entityMap[container.id] : null
-  }
+  const getContainer = useCallback(
+    entityId => {
+      const entity = entityMap[entityId]
+      const container = entity.portals.some(
+        ({ entrance }) =>
+          entrance && entrance.entity && entityMap[entrance.entity.id].isObject
+      )
+        ? entity.portals.find(
+            ({ entrance }) =>
+              entrance &&
+              entrance.entity &&
+              entityMap[entrance.entity.id].isObject
+          ).entrance.entity
+        : entity.container
+      return container ? entityMap[container.id] : null
+    },
+    [entityMap]
+  )
 
   return {
     entities,

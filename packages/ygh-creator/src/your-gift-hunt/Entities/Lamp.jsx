@@ -63,8 +63,6 @@ Head.defaultProps = {
 }
 
 const Light = styled(Entity)`
-  cursor: initial;
-  pointer-events: none;
   z-index: -1;
 
   opacity: ${props => (props.isOn ? 1 : 0)};
@@ -80,7 +78,8 @@ const Light = styled(Entity)`
 Light.defaultProps = {
   ...Entity.defaultProps,
   width: 7.5,
-  height: 7.5
+  height: 7.5,
+  isInteractive: false
 }
 
 const Lamp = forwardRef(({ children, dispatchInputAction, ...props }, ref) => {

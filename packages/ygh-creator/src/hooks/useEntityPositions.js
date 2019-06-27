@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
-import diff from "deep-diff"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 import { getEntityComponent } from "your-gift-hunt/Entities"
 
@@ -60,34 +59,26 @@ export const useEntityPositionsProvider = () => {
 
   const [entityPositions, setEntityPositions] = useState(getEntityPositions)
 
-  useEffect(
-    () => {
-      setEntityPositions(getEntityPositions)
-      hasChanged.current = false
-    },
-    [entities]
-  )
+  useEffect(() => {
+    setEntityPositions(getEntityPositions)
+    hasChanged.current = false
+  }, [entities])
 
   const getEntityPosition = entityId => entityPositions[entityId]
 
-  const setEntityPosition = (entityId, position) => {
-    const entityPosition = getEntityPosition(entityId)
-    const d = diff(position, entityPosition)
-    if (!d || d.length === 0) {
-      return
-    }
+  const setEntityPosition = useCallback((entityId, position) => {
     lastUpdated.current = entityId
     hasChanged.current = true
 
     setEntityPositions(entityPositions => ({
       ...entityPositions,
-      [entityId]: clean({ ...entityPosition, ...position })
+      [entityId]: clean({ ...entityPositions[entityId], ...position })
     }))
-  }
+  }, [])
 
-  const flush = () => {
+  const flush = useCallback(() => {
     hasChanged.current = false
-  }
+  }, [])
 
   return {
     updatedIndex: lastUpdated.current
@@ -103,15 +94,22 @@ export const useEntityPositionsProvider = () => {
 
 export const useEntityPosition = entityId => {
   const { entities } = useEntities()
-  const observedBits = 1 << entities.findIndex(({ id }) => id === entityId) % 31
+  const observedBits = useMemo(
+    () => 1 << entities.findIndex(({ id }) => id === entityId) % 31,
+    [entityId, entities]
+  )
+
   const { entityPositions, setEntityPosition } = useContext(
     EntityPositionsContext,
     observedBits
   )
-  return [
-    entityPositions[entityId],
-    position => setEntityPosition(entityId, position)
-  ]
+
+  const _setEntityPosition = useCallback(
+    position => setEntityPosition(entityId, position),
+    [setEntityPosition, entityId]
+  )
+
+  return [entityPositions[entityId], _setEntityPosition]
 }
 
 const useEntityPositions = () => React.useContext(EntityPositionsContext)

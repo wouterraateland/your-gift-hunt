@@ -5,13 +5,31 @@ import PanZoomContext from "contexts/PanZoom"
 import useContext from "hooks/useContext"
 import { useEntityPosition } from "./useEntityPositions"
 
-const useResizeControls = entity => {
+const getCornerAngle = (corner, width, height) => {
+  switch (corner) {
+    case "topLeft":
+      return Math.atan2(-height, -width)
+    case "topRight":
+      return Math.atan2(-height, width)
+    case "bottomRight":
+      return Math.atan2(height, width)
+    case "bottomLeft":
+      return Math.atan2(height, -width)
+    default:
+      return 0
+  }
+}
+
+const toDeg = x => Math.round((x * 180) / Math.PI)
+
+const useResizeControls = (entity, parentRotation) => {
   const [isDragging, setDragging] = useState(false)
   const dragStart = useRef(null)
   const posStart = useRef(null)
   const wasDragging = useRef(false)
   const dragType = useRef(null)
   const dragParams = useRef(null)
+  const snap = useRef(false)
   const { zoom } = useContext(PanZoomContext, 0b100)
 
   const [position, setPosition] = useEntityPosition(entity.id)
@@ -24,11 +42,14 @@ const useResizeControls = entity => {
         y: event.pageY
       }
       wasDragging.current = false
-      posStart.current = position
+      posStart.current = {
+        ...position,
+        rotation: parentRotation
+      }
       dragType.current = type
       dragParams.current = params
     },
-    [position]
+    [position, parentRotation]
   )
 
   const onWindowMouseMove = useCallback(
@@ -44,84 +65,108 @@ const useResizeControls = entity => {
         const visibleWidth = posStart.current.width * 16 * zoom
         const visibleHeight = posStart.current.height * 16 * zoom
         const currentAngle = (posStart.current.rotation * Math.PI) / 180
+        let width = posStart.current.width
+        let height = posStart.current.height
 
         if (dragType.current === "resize") {
-          const scale =
-            Math.abs(
-              (dragParams.current.x *
-                (visibleWidth +
+          if (dragParams.current.x !== 0) {
+            width =
+              (visibleWidth +
+                dragParams.current.x *
                   (Math.cos(currentAngle) *
                     (event.pageX - dragStart.current.x) +
                     Math.sin(currentAngle) *
-                      (event.pageY - dragStart.current.y)) *
-                    dragParams.current.x)) /
-                visibleWidth
-            ) +
-            Math.abs(
-              (dragParams.current.y *
-                (visibleHeight +
+                      (event.pageY - dragStart.current.y))) /
+              (16 * zoom)
+          }
+          if (dragParams.current.y !== 0) {
+            height =
+              (visibleHeight +
+                dragParams.current.y *
                   (Math.cos(currentAngle) *
                     (event.pageY - dragStart.current.y) -
                     Math.sin(currentAngle) *
-                      (event.pageX - dragStart.current.x)) *
-                    dragParams.current.y)) /
-                visibleHeight
-            )
+                      (event.pageX - dragStart.current.x))) /
+              (16 * zoom)
+          }
 
           setPosition({
-            height: posStart.current.height * scale,
-            width: posStart.current.width * scale
+            width: snap.current ? Math.round(width) : width,
+            height: snap.current ? Math.round(height) : height
           })
         } else {
-          const initialAngle =
-            ((posStart.current.rotation + dragParams.current) * Math.PI) / 180
-          const center = {
-            x:
-              dragStart.current.x - (visibleWidth / 2) * Math.cos(initialAngle),
-            y:
-              dragStart.current.y - (visibleHeight / 2) * Math.sin(initialAngle)
-          }
-          const currentAngle = Math.atan2(
-            event.pageY - center.y,
-            event.pageX - center.x
+          const cornerAngle = getCornerAngle(
+            dragParams.current,
+            visibleWidth,
+            visibleHeight
           )
+          const initialAngle = cornerAngle + currentAngle
+          const diagonal = Math.sqrt(
+            Math.pow(visibleWidth, 2) + Math.pow(visibleHeight, 2)
+          )
+
+          const centerX =
+            dragStart.current.x - (diagonal / 2) * Math.cos(initialAngle)
+          const centerY =
+            dragStart.current.y - (diagonal / 2) * Math.sin(initialAngle)
+
+          const rotation =
+            (360 +
+              ((currentAngle +
+                Math.atan2(event.pageY - centerY, event.pageX - centerX) -
+                Math.atan2(
+                  dragStart.current.y - centerY,
+                  dragStart.current.x - centerX
+                )) *
+                180) /
+                Math.PI) %
+            360
+
           setPosition({
-            rotation:
-              (360 +
-                posStart.current.rotation +
-                ((currentAngle - initialAngle) * 180) / Math.PI -
-                initialAngle) %
-              360
+            rotation: snap.current ? Math.round(rotation / 15) * 15 : rotation
           })
         }
       }
     },
-    [isDragging, setPosition]
+    [isDragging, setPosition, parentRotation]
   )
 
-  useEffect(
-    () => {
-      window.addEventListener("mousemove", onWindowMouseMove)
+  useEffect(() => {
+    window.addEventListener("mousemove", onWindowMouseMove)
 
-      return () => {
-        window.removeEventListener("mousemove", onWindowMouseMove)
-      }
-    },
-    [isDragging, setPosition]
-  )
+    return () => {
+      window.removeEventListener("mousemove", onWindowMouseMove)
+    }
+  }, [isDragging, setPosition])
 
   const onWindowMouseUp = useCallback(() => {
     dragStart.current = null
     setDragging(false)
   }, [])
 
+  const onWindowKeyDown = useCallback(event => {
+    if (event.key === "Shift") {
+      snap.current = true
+    }
+  }, [])
+
+  const onWindowKeyUp = useCallback(event => {
+    if (event.key === "Shift") {
+      snap.current = false
+    }
+  }, [])
+
   useEffect(() => {
     window.addEventListener("mouseup", onWindowMouseUp)
     window.addEventListener("mouseleave", onWindowMouseUp)
+    window.addEventListener("keydown", onWindowKeyDown)
+    window.addEventListener("keyup", onWindowKeyUp)
 
     return () => {
       window.removeEventListener("mouseup", onWindowMouseUp)
       window.removeEventListener("mouseleave", onWindowMouseUp)
+      window.removeEventListener("keydown", onWindowKeyDown)
+      window.removeEventListener("keyup", onWindowKeyUp)
     }
   }, [])
 
@@ -140,10 +185,13 @@ const useResizeControls = entity => {
       left: { onMouseDown: start("resize", { x: -1, y: 0 }), onClickCapture }
     },
     rotateHandlers: {
-      topLeft: { onMouseDown: start("rotate", 225), onClickCapture },
-      topRight: { onMouseDown: start("rotate", 315), onClickCapture },
-      bottomRight: { onMouseDown: start("rotate", 45), onClickCapture },
-      bottomLeft: { onMouseDown: start("rotate", 135), onClickCapture }
+      topLeft: { onMouseDown: start("rotate", "topLeft"), onClickCapture },
+      topRight: { onMouseDown: start("rotate", "topRight"), onClickCapture },
+      bottomRight: {
+        onMouseDown: start("rotate", "bottomRight"),
+        onClickCapture
+      },
+      bottomLeft: { onMouseDown: start("rotate", "bottomLeft"), onClickCapture }
     }
   }
 }

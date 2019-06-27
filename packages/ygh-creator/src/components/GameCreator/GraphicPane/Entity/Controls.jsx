@@ -64,13 +64,16 @@ const RotateControl = styled(Rotate)`
 `
 RotateControl.displayName = "RotateControl"
 
-const Controls = ({ entity }) => {
+const Controls = ({ entity, parentRotation }) => {
   const { inspectEntity, isOpen, inspectedEntity } = useInspector()
   const { zoom } = useContext(PanZoomContext, 0b100)
 
   const handleClick = useCallback(() => inspectEntity(entity.id), [entity.id])
 
-  const { resizeHandlers, rotateHandlers } = useResizeRotateControls(entity)
+  const { resizeHandlers, rotateHandlers } = useResizeRotateControls(
+    entity,
+    parentRotation
+  )
 
   return (
     <Container
