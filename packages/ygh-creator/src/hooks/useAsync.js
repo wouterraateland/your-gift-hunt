@@ -13,7 +13,7 @@ const useAsync = () => {
       await f(...args)
       setState(state => ({ ...state, isLoading: false, error: null }))
     } catch (error) {
-      setState(state => ({ ...state, error }))
+      setState(state => ({ ...state, isLoading: false, error }))
     }
   }
 

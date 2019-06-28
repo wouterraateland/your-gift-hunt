@@ -3,6 +3,14 @@ const BASE_URL =
 
 const t = f => options => f(options || {})
 
+const buildFormData = object => {
+  const fd = new FormData()
+  Object.keys(object).forEach(key => {
+    fd.append(key, object[key])
+  })
+  return fd
+}
+
 class Api {
   apiKey
   userToken
@@ -16,11 +24,15 @@ class Api {
   }
 
   async request(lambda, params = {}) {
+    const containsFile = params.body
+      ? Object.values(params.body).some(v => v instanceof File)
+      : false
+
     const response = await fetch(`${BASE_URL}/${lambda}`, {
       ...params,
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        ...(containsFile ? {} : { "Content-Type": "application/json" }),
         "X-API-Key": this.apiKey,
         ...(this.userToken
           ? {
@@ -29,7 +41,11 @@ class Api {
           : {}),
         ...params.headers
       },
-      body: params.body ? JSON.stringify(params.body) : null
+      body: params.body
+        ? containsFile
+          ? buildFormData(params.body)
+          : JSON.stringify(params.body)
+        : null
     })
 
     if (!response.ok) {

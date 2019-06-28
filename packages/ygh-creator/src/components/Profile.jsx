@@ -17,11 +17,11 @@ const Avatar = styled.div`
 `
 
 const Profile = () => {
-  const { logoutUser } = useAuth()
+  const { user, logoutUser } = useAuth()
 
   return (
     <Menu.Container>
-      <Avatar src={null} />
+      <Avatar src={user.avatar} />
       <Menu>
         <Menu.Item as={Link} to="/profile">
           Profile

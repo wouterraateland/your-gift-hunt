@@ -20,8 +20,6 @@ const getCornerAngle = (corner, width, height) => {
   }
 }
 
-const toDeg = x => Math.round((x * 180) / Math.PI)
-
 const useResizeControls = (entity, parentRotation) => {
   const [isDragging, setDragging] = useState(false)
   const dragStart = useRef(null)

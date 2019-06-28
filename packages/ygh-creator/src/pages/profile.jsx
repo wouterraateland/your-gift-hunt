@@ -1,93 +1,69 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback } from "react"
 import styled from "styled-components"
 
 import { useFormState } from "react-use-form-state"
-import { useQuery, useMutation, useApolloClient } from "react-apollo-hooks"
-
+import { useMutation } from "react-apollo-hooks"
+import { useYGHPlayerContext } from "ygh-player/react-hook"
+import useAsync from "hooks/useAsync"
 import useAuth from "hooks/useAuth"
 
 import Layout from "layouts/Overview"
 import {
-  Wrapper,
-  Row,
+  Button,
   Column,
-  Paper,
   Field,
+  Float,
   Input,
-  Button
+  Paper,
+  Row,
+  Wrapper
 } from "your-gift-hunt/ui"
 import BackButton from "components/BackButton"
 import StatusMessage from "components/StatusMessage"
+import EditableAvatar from "components/EditableAvatar"
 
-import { USER, USER_COUNT_BY_SLUG } from "gql/queries"
 import { UPDATE_USER_SLUG } from "gql/mutations"
 
 const Form = styled.form`
   padding: 0 1em;
 `
 
-const NewGamePage = () => {
-  const [state, setState] = useState(null)
-  const { user, updateUser } = useAuth()
-  const { data, error } = useQuery(USER, {
-    variables: {
-      userId: user.id
-    }
-  })
-  if (error) {
-    throw new Error(error)
-  }
-
-  const client = useApolloClient()
+const ProfilePage = () => {
+  const [{ isLoading, error }, runAsync] = useAsync()
+  const { user } = useAuth()
+  const { updateUserProfile } = useYGHPlayerContext()
 
   const updateUserSlug = useMutation(UPDATE_USER_SLUG)
 
-  const [usernameExists, setUsernameExistence] = useState(false)
   const [formState, { text }] = useFormState({
-    first_name: user.user_metadata.first_name,
-    middle_name: user.user_metadata.middle_name,
-    last_name: user.user_metadata.last_name,
-    username: data.user.username
+    avatar: null,
+    firstName: user.firstName,
+    middleName: user.middleName,
+    lastName: user.lastName,
+    email: user.email,
+    username: user.username
   })
 
-  async function checkUsernameExistence(username) {
-    const res = await client.query({
-      query: USER_COUNT_BY_SLUG,
-      variables: {
-        slug: username
-      }
-    })
+  const onSubmit = useCallback(
+    runAsync(async event => {
+      event.preventDefault()
 
-    return res.data.usersConnection.aggregate.count !== 0
-  }
+      const {
+        firstName,
+        middleName,
+        lastName,
+        email,
+        username,
+        avatar
+      } = formState.values
 
-  useEffect(
-    () => {
-      setUsernameExistence(false)
-      checkUsernameExistence(formState.values.username).then(
-        setUsernameExistence
-      )
-    },
-    [formState.values.username]
-  )
-
-  async function onSubmit(event) {
-    event.preventDefault()
-
-    setState("loading")
-
-    const { first_name, middle_name, last_name, username } = formState.values
-
-    try {
-      await updateUser({
-        data: {
-          first_name: first_name,
-          middle_name: middle_name,
-          last_name: last_name,
-          full_name: middle_name
-            ? `${first_name} ${middle_name} ${last_name}`
-            : `${first_name} ${last_name}`
-        }
+      await updateUserProfile({
+        firstName,
+        middleName,
+        lastName,
+        email,
+        username,
+        avatar
       })
 
       await updateUserSlug({
@@ -96,12 +72,11 @@ const NewGamePage = () => {
           slug: username
         }
       })
-      setState("success")
-    } catch (error) {
-      console.log(error)
-      setState("error")
-    }
-  }
+    }),
+    []
+  )
+
+  const errors = error ? error.params : {}
 
   return (
     <Layout title="Profile">
@@ -111,48 +86,70 @@ const NewGamePage = () => {
             <BackButton />
             <h1>Edit your profile</h1>
             <Form onSubmit={onSubmit}>
+              <Row>
+                <Column size={4} mSize={12}>
+                  <EditableAvatar
+                    placeholder={user.avatar}
+                    onChange={avatar => formState.setField("avatar", avatar)}
+                  />
+                </Column>
+                <Column size={8} mSize={12}>
+                  <Field block>
+                    <Row>
+                      <Column size={4} sSize={12}>
+                        <Input
+                          block
+                          {...text("firstName")}
+                          label="First name"
+                        />
+                      </Column>
+                      <Column size={3} sSize={12}>
+                        <Input
+                          block
+                          {...text("middleName")}
+                          label="Middle name"
+                        />
+                      </Column>
+                      <Column size={5} sSize={12}>
+                        <Input block {...text("lastName")} label="Last name" />
+                      </Column>
+                    </Row>
+                  </Field>
+                  <Field block>
+                    <Input
+                      block
+                      {...text("email")}
+                      label="Email"
+                      error={errors["email"]}
+                    />
+                  </Field>
+                  <Field block>
+                    <Input
+                      block
+                      {...text("username")}
+                      label="Username"
+                      error={errors["username"]}
+                    />
+                  </Field>
+                  <small>
+                    https://play.yourgifthunt.com/{formState.values.username}
+                  </small>
+                </Column>
+              </Row>
               <Field block>
-                <Row>
-                  <Column size={4} sSize={12}>
-                    <Input block {...text("first_name")} label="First name" />
-                  </Column>
-                  <Column size={3} sSize={12}>
-                    <Input block {...text("middle_name")} label="Middle name" />
-                  </Column>
-                  <Column size={5} sSize={12}>
-                    <Input block {...text("last_name")} label="Last name" />
-                  </Column>
-                </Row>
-              </Field>
-              <hr />
-              <br />
-              <Field block>
-                <Input
-                  block
-                  {...text("username")}
-                  label="Username"
-                  error={
-                    usernameExists &&
-                    formState.values.username !== data.user.username
-                      ? "This username is already taken"
-                      : null
-                  }
-                />
-              </Field>
-              <small>
-                https://play.yourgifthunt.com/{formState.values.username}
-              </small>
-              <hr />
-              <Field block>
-                <Button
-                  type="submit"
-                  importance="primary"
-                  color="accent"
-                  disabled={state === "loading"}
-                >
-                  Update profile
-                </Button>{" "}
-                <StatusMessage status={state} />
+                <Float.Right>
+                  <StatusMessage
+                    status={isLoading ? "loading" : error ? "error" : null}
+                  />{" "}
+                  <Button
+                    type="submit"
+                    importance="primary"
+                    color="primary"
+                    disabled={isLoading}
+                  >
+                    Update profile
+                  </Button>
+                </Float.Right>
               </Field>
             </Form>
           </Paper.Section>
@@ -162,4 +159,4 @@ const NewGamePage = () => {
   )
 }
 
-export default NewGamePage
+export default ProfilePage

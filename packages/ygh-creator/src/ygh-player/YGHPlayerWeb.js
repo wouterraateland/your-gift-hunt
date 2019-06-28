@@ -22,7 +22,7 @@ class YGHPlayerWeb extends YGHPlayer {
     const params = querystring.decode(window.location.search.substr(1))
     window.history.replaceState({}, "", window.location.pathname)
 
-    if (params && params.playToken) {
+    if (params.playToken) {
       try {
         await this.setPlayToken(params.playToken)
       } catch (error) {
@@ -104,8 +104,8 @@ class YGHPlayerWeb extends YGHPlayer {
     const gamePlays = playTokensStore.read()
     const playTokens = gamePlays.map(({ id }) => id)
     const user = await super.registerUser({ ...options, playTokens })
-    userStore.write(user)
     if (user) {
+      userStore.write(user)
       const userPlayTokens = user.plays.map(({ id }) => id)
       playTokensStore.write(
         gamePlays.filter(({ id }) => !userPlayTokens.includes(id))
