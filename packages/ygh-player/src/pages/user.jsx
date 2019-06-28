@@ -25,6 +25,7 @@ import NotFoundPage from "pages/404"
 
 import Layout from "layouts/Page"
 import GameThumb from "components/GameThumb"
+import EditableAvatar from "components/EditableAvatar"
 
 const Info = styled.div`
   display: flex;
@@ -102,7 +103,7 @@ const UserProfileDisplay = ({ profile, canEdit, onEditClick }) => (
 
 const UserMetaForm = ({ user }) => {
   const [formState, { text, email }] = useFormState({
-    avatar: user.avatar,
+    avatar: null,
     firstName: user.firstName,
     middleName: user.middleName,
     lastName: user.lastName,
@@ -125,6 +126,11 @@ const UserMetaForm = ({ user }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <h2>Edit profile</h2>
+      <EditableAvatar
+        placeholder={user.avatar}
+        onChange={avatar => formState.setField("avatar", avatar)}
+        error={errors["avatar"]}
+      />
       <Row vAlign="top">
         <Column size={4}>
           <Field block>
