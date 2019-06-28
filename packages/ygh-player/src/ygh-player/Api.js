@@ -24,7 +24,9 @@ class Api {
   }
 
   async request(lambda, params = {}) {
-    const containsFile = Object.values(params.body).some(v => v instanceof File)
+    const containsFile = params.body
+      ? Object.values(params.body).some(v => v instanceof File)
+      : false
 
     const response = await fetch(`${BASE_URL}/${lambda}`, {
       ...params,
