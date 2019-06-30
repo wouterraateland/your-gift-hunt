@@ -1,0 +1,64 @@
+import React from "react"
+import Helmet from "react-helmet"
+
+import useGame from "hooks/useGame"
+
+const GameSEO = () => {
+  const { game } = useGame()
+
+  return (
+    <Helmet>
+      <title>{game.name} | Your Gift Hunt</title>
+      <meta name="title" content={`${game.name} | Your Gift Hunt`} />
+      <meta
+        name="description"
+        content={
+          game.description
+            ? game.description
+            : `A game made by ${game.creator.name}`
+        }
+      />
+
+      <meta property="og:type" content="website" />
+      <meta
+        property="og:url"
+        content={`https://play.yourgifthunt.com/play/${game.creator.slug}/${
+          game.slug
+        }`}
+      />
+      <meta property="og:title" content={`${game.name} | Your Gift Hunt`} />
+      <meta
+        property="og:description"
+        content={
+          game.description
+            ? game.description
+            : `A game made by ${game.creator.name}`
+        }
+      />
+      {game.image && <meta property="og:image" content={game.image} />}
+
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta
+        property="twitter:url"
+        content={`https://play.yourgifthunt.com/play/${game.creator.slug}/${
+          game.slug
+        }`}
+      />
+      <meta
+        property="twitter:title"
+        content={`${game.name} | Your Gift Hunt`}
+      />
+      <meta
+        property="twitter:description"
+        content={
+          game.description
+            ? game.description
+            : `A game made by ${game.creator.name}`
+        }
+      />
+      {game.image && <meta property="twitter:image" content={game.image} />}
+    </Helmet>
+  )
+}
+
+export default GameSEO

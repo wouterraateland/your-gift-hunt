@@ -1,6 +1,7 @@
 import React from "react"
 import styled, { createGlobalStyle } from "styled-components"
 
+import GameSEO from "components/Game/SEO"
 import Viewport from "components/Viewport"
 import Sidebar from "components/Sidebar"
 import ScreenContainer from "components/ScreenContainer"
@@ -10,11 +11,11 @@ import Hints from "components/Hints"
 import DefaultScene from "components/scenes/default"
 
 const GlobalGameStyle = createGlobalStyle`
-body {
-  overflow: hidden;
-  position: fixed;
-  left: 0; top: 0; right: 0; bottom: 0;
-}
+  body {
+    overflow: hidden;
+    position: fixed;
+    left: 0; top: 0; right: 0; bottom: 0;
+  }
 `
 
 const GamePage = styled.div`
@@ -30,6 +31,7 @@ const GamePage = styled.div`
 
 const PlayableGame = () => (
   <GamePage>
+    <GameSEO />
     <GlobalGameStyle />
     <Viewport>
       <DefaultScene />

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react"
+import Helmet from "react-helmet"
 
 import { useYGHPlayerContext } from "ygh-player/react-hook"
 
@@ -36,6 +37,37 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Showcase | Your Gift Hunt</title>
+        <meta
+          name="description"
+          content="Create unique and personal escape games for each other."
+        />
+
+        <meta property="og:url" content="https://yourgifthunt.com" />
+        <meta property="og:title" content="Your Gift Hunt" />
+        <meta
+          property="og:description"
+          content="Make your gift a unique adventure with a personal scavenger gift hunt."
+        />
+        <meta
+          property="og:image"
+          content="https://play.yourgifthunt.com/og-image.png"
+        />
+        <meta property="fb:app_id" content="314877482688772" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="YourGiftHunt" />
+        <meta name="twitter:title" content="Your Gift Hunt" />
+        <meta
+          name="twitter:description"
+          content="Make your gift a unique adventure with a personal scavenger gift hunt."
+        />
+        <meta
+          name="twitter:image"
+          content="https://play.yourgifthunt.com/og-image.png"
+        />
+      </Helmet>
       <Wrapper>
         <VSpace.Large />
         <Align.Center>
