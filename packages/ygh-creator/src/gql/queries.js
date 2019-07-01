@@ -64,8 +64,13 @@ export const GAME_BY_SLUG = gql`
     games(where: { creator: { slug: $creatorSlug }, slug: $gameSlug }) {
       id
       name
-      description
       slug
+      description
+      image
+
+      intro
+      outro
+
       publishedAt
 
       privacy
@@ -100,6 +105,7 @@ export const USER_GAMES = gql`
 
         name
         slug
+        image
 
         privacy
 

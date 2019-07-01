@@ -39,12 +39,12 @@ const useYGHPlayer = ({ apiKey }) => {
   )
 
   const getLeaderboard = useCallback(
-    options => yghPlayer.current.getLeaderboard(options),
+    (...args) => yghPlayer.current.getLeaderboard(...args),
     []
   )
 
   const getUserProfile = useCallback(
-    options => yghPlayer.current.getUserProfile(options),
+    (...args) => yghPlayer.current.getUserProfile(...args),
     []
   )
 
@@ -76,6 +76,11 @@ const useYGHPlayer = ({ apiKey }) => {
     await yghPlayer.current.updateUserPassword(...args)
     updateUser()
   }, [])
+
+  const updateGameImage = useCallback(
+    (...args) => yghPlayer.current.updateGameImage(...args),
+    []
+  )
 
   const startGamePlay = useCallback(async () => {
     const gameState = await yghPlayer.current.startGamePlay()
@@ -171,6 +176,7 @@ const useYGHPlayer = ({ apiKey }) => {
     logoutUser,
     updateUserProfile,
     updateUserPassword,
+    updateGameImage,
 
     listGames,
     getLeaderboard,

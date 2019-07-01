@@ -199,6 +199,10 @@ class YGHPlayer {
   async updateUserPassword(...args) {
     return this.setUser(await this.api.updateUserPassword(...args))
   }
+
+  async updateGameImage(...args) {
+    return await this.api.updateGameImage(...args)
+  }
 }
 
 export default YGHPlayer
