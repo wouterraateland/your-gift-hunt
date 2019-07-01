@@ -44,7 +44,7 @@ const usePhysicalDrag = (entity, parentRotation) => {
         const dx = event.pageX - dragStart.current.x
         const dy = event.pageY - dragStart.current.y
         const rdx = dx * Math.cos(parentAngle) + dy * Math.sin(parentAngle)
-        const rdy = dy * Math.cos(parentAngle) - dx * Math.sign(parentAngle)
+        const rdy = dy * Math.cos(parentAngle) - dx * Math.sin(parentAngle)
 
         const top = posStart.current.top + rdy / 16 / zoom
         const left = posStart.current.left + rdx / 16 / zoom
