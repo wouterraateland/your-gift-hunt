@@ -361,15 +361,61 @@ export const DISCONNECT_INFORMATION_SLOT_FROM_FIELD = gql`
   ${INFORMATION_SLOT_FRAGMENT}
 `
 
-export const UPDATE_TEMPLATE_SET_SETTINGS = gql`
+export const CREATE_TEMPLATE_SET = gql`
+  mutation createEntityTemplateSet($values: EntityTemplateSetCreateInput!) {
+    createEntityTemplateSet(data: $values) {
+      id
+      createdAt
+      updatedAt
+
+      name
+      description
+
+      games {
+        id
+      }
+      entityTemplates {
+        id
+      }
+      creator {
+        id
+        slug
+      }
+    }
+  }
+`
+
+export const UPDATE_TEMPLATE_SET = gql`
   mutation updateEntityTemplateSet(
     $templateSetId: ID!
     $values: EntityTemplateSetUpdateInput!
   ) {
     updateEntityTemplateSet(where: { id: $templateSetId }, data: $values) {
       id
+      createdAt
+      updatedAt
+
       name
       description
+
+      games {
+        id
+      }
+      entityTemplates {
+        id
+      }
+      creator {
+        id
+        slug
+      }
+    }
+  }
+`
+
+export const DELETE_TEMPLATE_SET = gql`
+  mutation deleteEntityTemplateSet($templateSetId: ID!) {
+    deleteEntityTemplateSet(where: { id: $templateSetId }) {
+      id
     }
   }
 `

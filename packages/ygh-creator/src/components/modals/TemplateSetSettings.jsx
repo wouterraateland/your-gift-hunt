@@ -1,14 +1,14 @@
-import React, { useState, useCallback } from "react"
+import React, { useCallback } from "react"
 import styled from "styled-components"
 
 import useTemplateSet from "hooks/useTemplateSet"
 import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 
+import useAsync from "hooks/useAsync"
 import { useFormState } from "react-use-form-state"
 
 import Modal from "containers/Modal"
 import { Button, Field, Float, Input, Paper } from "your-gift-hunt/ui"
-import StatusMessage from "components/StatusMessage"
 
 const StyledPaper = styled(Paper.Container)`
   width: 45em;
@@ -20,7 +20,7 @@ const Form = styled.form`
 `
 
 const Title = styled.h1`
-  margin-bottom: 0;
+  margin: 0;
 `
 const Tagline = styled.p`
   margin-top: 0;
@@ -31,25 +31,31 @@ const SettingsModal = () => {
   const { templateSet } = useTemplateSet()
   const { updateTemplateSetSettings } = useTemplateSetMutations()
 
-  const [state, setState] = useState(null)
-  const [formState, { text }] = useFormState({
+  const [{ isLoading, error }, runAsync] = useAsync()
+  const [formState, { text, textarea }] = useFormState({
     name: templateSet.name,
     description: templateSet.description
   })
 
-  const handleSubmit = useCallback(
-    async event => {
-      event.preventDefault()
+  if (error && !error.params) {
+    throw error
+  }
 
-      setState("loading")
-      try {
-        await updateTemplateSetSettings(templateSet.id, formState.values)
-        setState("success")
-      } catch (error) {
-        console.log(error)
-        setState("error")
+  const errors = error ? error.params : []
+
+  const handleSubmit = useCallback(
+    runAsync(async event => {
+      event.preventDefault()
+      if (!formState.values.name) {
+        // eslint-disable-next-line no-throw-literal
+        throw {
+          params: {
+            name: formState.values.name ? null : "Name can't be empty"
+          }
+        }
       }
-    },
+      await updateTemplateSetSettings(templateSet.id, formState.values)
+    }),
     [templateSet.id, formState.values]
   )
 
@@ -64,17 +70,18 @@ const SettingsModal = () => {
           </Tagline>
           <Form onSubmit={handleSubmit}>
             <Field block>
-              <Input block {...text("name")} label="Name" />
+              <Input block {...text("name")} label="Name" error={errors.name} />
             </Field>
             <Field block>
               <Input
                 block
-                {...text("description")}
+                {...textarea("description")}
+                type="textarea"
                 label="Description"
                 info="optional"
+                error={errors.description}
               />
             </Field>
-            <hr />
             <Field block>
               <Float.Right>
                 <Button
@@ -88,12 +95,10 @@ const SettingsModal = () => {
                   type="submit"
                   importance="primary"
                   color="primary"
-                  disabled={state === "loading"}
+                  disabled={isLoading}
                 >
                   Update settings
                 </Button>
-                <br />
-                <StatusMessage status={state} />
               </Float.Right>
             </Field>
           </Form>

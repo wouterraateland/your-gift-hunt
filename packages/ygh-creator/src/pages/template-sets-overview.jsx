@@ -11,10 +11,10 @@ import { Wrapper, Paper, Input, Button, Loader } from "your-gift-hunt/ui"
 import Layout from "layouts/Overview"
 import TemplateSetsOverview from "components/TemplateSetsOverview"
 
-import { USER_ENTITY_TEMPLATE_SETS } from "gql/queries"
+import { USER_TEMPLATE_SETS } from "gql/queries"
 
 const Overview = ({ user, searchQuery }) => {
-  const { data, error } = useQuery(USER_ENTITY_TEMPLATE_SETS, {
+  const { data, error } = useQuery(USER_TEMPLATE_SETS, {
     variables: {
       userId: user.id
     }
@@ -67,7 +67,6 @@ const OverviewPage = () => {
               as={Link}
               to={`/${user.username}/new-template-set`}
               block="small"
-              disabled
             >
               New set
             </Button>

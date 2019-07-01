@@ -6,9 +6,9 @@ import useTemplateSet from "hooks/useTemplateSet"
 
 import TemplateSetMutationsContext from "contexts/TemplateSetMutations"
 
-import { ENTITY_TEMPLATE_SET_BY_ID } from "gql/queries"
+import { TEMPLATE_SET_BY_ID } from "gql/queries"
 import {
-  UPDATE_TEMPLATE_SET_SETTINGS,
+  UPDATE_TEMPLATE_SET,
   CREATE_ENTITY_TEMPLATE,
   UPDATE_ENTITY_TEMPLATE,
   DELETE_ENTITY_TEMPLATE,
@@ -22,14 +22,14 @@ const useMutationWith = save => (mutation, transform) => {
 
 export const useTemplateSetMutationsProvider = () => {
   const { templateSet, variables } = useTemplateSet()
-  const query = { query: ENTITY_TEMPLATE_SET_BY_ID, variables }
+  const query = { query: TEMPLATE_SET_BY_ID, variables }
 
   const { save } = useSaveState()
 
   const useMutationWithSave = useMutationWith(save)
 
   const updateTemplateSetSettings = useMutationWithSave(
-    UPDATE_TEMPLATE_SET_SETTINGS,
+    UPDATE_TEMPLATE_SET,
     (templateSetId, values) => ({
       variables: {
         templateSetId,

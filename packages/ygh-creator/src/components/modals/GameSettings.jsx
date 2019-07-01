@@ -44,7 +44,7 @@ const Form = styled.form`
 `
 
 const Title = styled.h1`
-  margin-bottom: 0;
+  margin: 0;
 `
 const Tagline = styled.p`
   margin-top: 0;

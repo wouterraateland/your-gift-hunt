@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import styled, { css, keyframes } from "styled-components"
 
+import useAuth from "hooks/useAuth"
 import useTemplateSet from "hooks/useTemplateSet"
 import useSaveState from "hooks/useSaveState"
 import useForceUpdate from "hooks/useForceUpdate"
@@ -104,11 +105,12 @@ const SaveState = ({ isSaving, isDirty, lastSaved }) => {
 const TemplateSetCreatorLayout = ({ children }) => {
   const { isSaving, isDirty, lastSaved } = useSaveState()
   const { templateSet } = useTemplateSet()
+  const { user } = useAuth()
 
   return (
     <PageContainer>
       <Nav.Container>
-        <Nav.BackControl />
+        <Nav.BackControl to={`/${user.username}/template-sets`} />
         <Nav.Center>
           <StyledLogo size={2} />
           <Nav.Title>{templateSet.name}</Nav.Title>

@@ -1,11 +1,11 @@
 import { useContext } from "react"
 import { useQuery } from "react-apollo-hooks"
-import { ENTITY_TEMPLATE_SET_BY_ID } from "gql/queries"
+import { TEMPLATE_SET_BY_ID } from "gql/queries"
 
 import TemplateSetContext from "contexts/TemplateSet"
 
 export const useTemplateSetProvider = variables => {
-  const { data, error } = useQuery(ENTITY_TEMPLATE_SET_BY_ID, { variables })
+  const { data, error } = useQuery(TEMPLATE_SET_BY_ID, { variables })
 
   if (error) {
     throw error

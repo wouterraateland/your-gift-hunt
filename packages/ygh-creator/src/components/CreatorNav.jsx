@@ -19,7 +19,7 @@ const Container = styled.nav`
   background-color: ${props => props.theme.color.accent};
 `
 
-const BackControlContainer = styled.span`
+const BackControlContainer = styled(Link)`
   cursor: pointer;
   display: inline-block;
   width: 1.5em;
@@ -38,10 +38,8 @@ const BackControlContainer = styled.span`
   }
 `
 
-const BackControl = () => (
-  <BackControlContainer onClick={() => window.history.back()}>
-    &larr;
-  </BackControlContainer>
+const BackControl = ({ to = "/" }) => (
+  <BackControlContainer to={to}>&larr;</BackControlContainer>
 )
 
 const Center = styled.div`

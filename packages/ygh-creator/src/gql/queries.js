@@ -34,7 +34,7 @@ export const TEST_SERVICE = gql`
   }
 `
 
-export const ENTITY_TEMPLATE_SET_BY_ID = gql`
+export const TEMPLATE_SET_BY_ID = gql`
   query entityTemplateSetById($templateSetId: ID!) {
     entityTemplateSet(where: { id: $templateSetId }) {
       id
@@ -123,7 +123,7 @@ export const USER_GAMES = gql`
   }
 `
 
-export const USER_ENTITY_TEMPLATE_SETS = gql`
+export const USER_TEMPLATE_SETS = gql`
   query createdEntityTemplateSets($userId: ID!) {
     user(where: { id: $userId }) {
       id

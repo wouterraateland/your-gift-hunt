@@ -25,11 +25,11 @@ const Container = styled.div`
 
 const Info = styled.div`
   display: inline-block;
-  width: calc(100% - 20em);
+  width: calc(100% - 22em);
   vertical-align: middle;
 
   @media (max-width: 45em) {
-    width: calc(100% - 2em);
+    width: calc(100% - 4em);
   }
 `
 
@@ -72,7 +72,7 @@ const EditTemplateSet = styled.span`
 
 const Actions = ({ templateSet }) => (
   <ActionsContainer>
-    {/* <MoreActions templateSet={templateSet} /> */}
+    <MoreActions templateSet={templateSet} />
     <EditTemplateSet>
       <Edit size={1.5} />
     </EditTemplateSet>

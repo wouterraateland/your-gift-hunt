@@ -1,24 +1,24 @@
 import React, { Suspense } from "react"
 
-import ErrorBoundary from "react-error-boundary"
 import { YGHPlayerProvider } from "ygh-player/react-hook"
 import { ViewportProvider } from "contexts/Viewport"
 
 import Theme from "containers/Theme"
 import Router from "containers/Router"
+import ErrorBoundary from "containers/ErrorBoundary"
 
 import { Loader } from "your-gift-hunt/ui"
 
 const App = () => (
   <Theme>
     <ViewportProvider>
-      <Suspense fallback={<Loader />}>
-        <YGHPlayerProvider>
-          <ErrorBoundary>
+      <ErrorBoundary>
+        <Suspense fallback={<Loader />}>
+          <YGHPlayerProvider>
             <Router />
-          </ErrorBoundary>
-        </YGHPlayerProvider>
-      </Suspense>
+          </YGHPlayerProvider>
+        </Suspense>
+      </ErrorBoundary>
     </ViewportProvider>
   </Theme>
 )
