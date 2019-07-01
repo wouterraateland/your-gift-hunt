@@ -5,8 +5,6 @@ import useGame from "hooks/useGame"
 import Scene from "components/Scene"
 import { GenericEntity } from "components/Entities"
 
-import defaultProps from "./defaultProps.json"
-
 const GenericEntityWithContainedEntities = props => {
   const { entities, isInInventory } = useGame()
   const containedEntities = entities.filter(
@@ -17,7 +15,7 @@ const GenericEntityWithContainedEntities = props => {
   )
 
   return (
-    <GenericEntity {...defaultProps[props.template.name]} {...props}>
+    <GenericEntity {...props}>
       {containedEntities.map(entity => (
         <GenericEntityWithContainedEntities key={entity.id} {...entity} />
       ))}

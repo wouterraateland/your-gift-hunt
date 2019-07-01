@@ -67,9 +67,9 @@ export const MenuItems = styled.div`
   z-index: 3;
 
   width: 12em;
-  padding: .25em 0;
+  padding: 0.25em 0;
 
-  border-radius: ${props => props.theme.borderRadius}
+  border-radius: ${props => props.theme.borderRadius};
   box-shadow: 0 0 60em 60em #0000;
 
   background: #fff;

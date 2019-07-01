@@ -1,7 +1,7 @@
 import { Maybe } from "./functionals"
 
 export const hasState = stateName => entity =>
-  !!(entity && entity.state) &&
+  !!(entity && entity.state && entity.state.name) &&
   entity.state.name.toLowerCase() === stateName.toLowerCase()
 
 export const getFieldValue = fieldName => entity =>
