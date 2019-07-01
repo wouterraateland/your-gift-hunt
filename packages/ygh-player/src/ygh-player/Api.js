@@ -155,6 +155,10 @@ class Api {
 
   updateUserProfile = t(body => this.post("updateUserProfile", { body }))
   updateUserPassword = t(body => this.post("updateUserPassword", { body }))
+
+  updateGameImage = t(({ gameId, image }) =>
+    this.post("updateGameImage", { body: { gameId, image } })
+  )
 }
 
 export default Api
