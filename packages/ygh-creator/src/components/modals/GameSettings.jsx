@@ -9,7 +9,7 @@ import useGame from "hooks/useGame"
 import useGameMutations from "hooks/useGameMutations"
 
 import { useFormState } from "react-use-form-state"
-import { useApolloClient } from "react-apollo-hooks"
+import { useQuery, useApolloClient } from "react-apollo-hooks"
 
 import Modal from "containers/Modal"
 import {
@@ -26,7 +26,7 @@ import StatusMessage from "components/StatusMessage"
 import ImageInput from "components/ImageInput"
 
 import { accessOptions, PRIVACY, ACCESS_TYPES } from "../../data"
-import { GAME_COUNT_BY_SLUG } from "gql/queries"
+import { USER_TEMPLATE_SETS, GAME_COUNT_BY_SLUG } from "gql/queries"
 
 import defaultImage from "assets/default_thumb.png"
 
@@ -70,15 +70,30 @@ const SettingsModal = () => {
   const { updateGameSettings } = useGameMutations()
   const { updateGameImage } = useYGHPlayerContext()
 
+  const {
+    data: {
+      user: { entityTemplateSetsCreated }
+    }
+  } = useQuery(USER_TEMPLATE_SETS, {
+    variables: {
+      userId: user.id
+    }
+  })
+  const templateSetOptions = entityTemplateSetsCreated.map(({ id, name }) => ({
+    value: id,
+    label: name
+  }))
+
   const [{ isLoading, error }, runAsync] = useAsync()
-  const [formState, { text, textarea, select }] = useFormState({
+  const [formState, { text, textarea, select, selectMultiple }] = useFormState({
     image: null,
     name: game.name,
     description: game.description,
     intro: game.intro,
     outro: game.outro,
     accessType: game.accessType,
-    accessCode: game.accessCode
+    accessCode: game.accessCode,
+    entityTemplateSets: game.entityTemplateSets.map(({ id }) => id)
   })
 
   const client = useApolloClient()
@@ -114,14 +129,18 @@ const SettingsModal = () => {
     runAsync(async event => {
       event.preventDefault()
 
-      const { image, ...otherValues } = formState.values
+      const { image, entityTemplateSets, ...otherValues } = formState.values
 
       if (image) {
         await updateGameImage({ gameId: game.id, image })
       }
 
       const slug = slugify(formState.values.name)
-      await updateGameSettings(game.id, { ...otherValues, slug })
+      await updateGameSettings(game.id, {
+        ...otherValues,
+        entityTemplateSets: { set: entityTemplateSets.map(id => ({ id })) },
+        slug
+      })
     }),
     [game.id, formState.values]
   )
@@ -198,6 +217,15 @@ const SettingsModal = () => {
                     type="textarea"
                     label="Outro text"
                     info="optional"
+                  />
+                </Field>
+                <Field block>
+                  <Select
+                    block
+                    {...selectMultiple("entityTemplateSets")}
+                    isMulti
+                    options={templateSetOptions}
+                    label="Included template sets"
                   />
                 </Field>
               </Column>

@@ -5,8 +5,8 @@ import _ from "utils"
 
 const Container = styled(Entity)`
   padding: 0.25em;
-  border: 0.1em solid ${props => props.theme.color.primary};
   border-radius: ${props => props.theme.borderRadius};
+  box-shadow: inset 0 0 0 0.1em ${props => props.theme.color.primary};
 
   background-color: #fff;
   color: ${props => props.theme.color.text};

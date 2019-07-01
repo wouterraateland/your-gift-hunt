@@ -11,7 +11,7 @@ import useEntityDependencies from "hooks/useEntityDependencies"
 
 import GameMutationsContext from "contexts/GameMutations"
 
-import { GAME_BY_SLUG, STATE_TRANSITIONS } from "gql/queries"
+import { ENTITY_TEMPLATES, GAME_BY_SLUG, STATE_TRANSITIONS } from "gql/queries"
 import {
   UPDATE_GAME_SETTINGS,
   UPDATE_ENTITY_NAME,
@@ -61,7 +61,8 @@ export const useGameMutationsProvider = () => {
       variables: {
         gameId,
         values
-      }
+      },
+      refetchQueries: () => [{ query: ENTITY_TEMPLATES, variables: { gameId } }]
     })
   )
 

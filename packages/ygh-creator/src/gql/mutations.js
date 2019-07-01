@@ -87,9 +87,24 @@ export const UPDATE_GAME_SETTINGS = gql`
     updateGame(where: { id: $gameId }, data: $values) {
       id
       name
+      slug
       description
+      image
+
+      intro
+      outro
+
+      publishedAt
+
+      privacy
       accessType
       accessCode
+
+      entityTemplateSets {
+        id
+        name
+        description
+      }
     }
   }
 `

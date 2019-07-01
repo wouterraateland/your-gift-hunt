@@ -34,7 +34,7 @@ const EditorPane = ({ children }) => {
   const {
     transform,
     pan: { x, y },
-    setPan,
+    // setPan,
     zoom,
     setZoom,
     panZoomHandlers

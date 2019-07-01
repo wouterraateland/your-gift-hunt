@@ -85,6 +85,11 @@ export const GAME_BY_SLUG = gql`
       entities {
         ...EntityFragment
       }
+      entityTemplateSets {
+        id
+        name
+        description
+      }
       startContainer {
         id
       }

@@ -66,10 +66,12 @@ export default props => {
 
   const setPosition = () => {
     const rect = container.current.parentElement.getClientRects()[0]
-    _setPosition({
-      x: rect.x + rect.width / 2,
-      y: rect.y + rect.height / 2
-    })
+    if (rect) {
+      _setPosition({
+        x: rect.x + rect.width / 2,
+        y: rect.y + rect.height / 2
+      })
+    }
   }
 
   const scroll = useScroll(viewportRef)
