@@ -146,6 +146,7 @@ const SettingsModal = () => {
             .
           </Tagline>
           <Form onSubmit={handleSubmit}>
+            <h2>General</h2>
             <Row vAlign="top">
               <Column size={4} mSize={12}>
                 <Small>Thumbnail</Small>
@@ -203,7 +204,7 @@ const SettingsModal = () => {
             </Row>
             {game.privacy === PRIVACY.PRIVATE && (
               <>
-                <hr />
+                <h2>Privacy</h2>
                 <Field block>
                   <Select
                     {...select("accessType")}
