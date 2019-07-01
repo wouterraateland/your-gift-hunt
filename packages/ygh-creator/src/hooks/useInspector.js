@@ -2,9 +2,11 @@ import { useCallback, useContext, useState } from "react"
 import InspectorContext from "contexts/Inspector"
 
 import useEntities from "hooks/useEntities"
+import useGameTemplates from "hooks/useGameTemplates"
 
 export const useInspectorProvider = () => {
   const { entities } = useEntities()
+  const { entityTemplates } = useGameTemplates()
 
   const [state, setState] = useState({
     inspectedEntity: null,
@@ -12,33 +14,40 @@ export const useInspectorProvider = () => {
     isOpen: false
   })
 
-  const closeInspector = useCallback(
-    () => {
-      if (state.isOpen) {
-        setState(state => ({ ...state, isOpen: false }))
+  const closeInspector = useCallback(() => {
+    if (state.isOpen) {
+      setState(state => ({ ...state, isOpen: false }))
+    }
+  }, [state.isOpen])
+
+  const inspectEntity = useCallback(
+    inspectedEntity => {
+      const entity = entities.find(({ id }) => id === inspectedEntity)
+      if (entityTemplates.some(({ id }) => id === entity.template.id)) {
+        setState({
+          inspectedEntity,
+          inspectedState: null,
+          isOpen: true
+        })
       }
     },
-    [state.isOpen]
-  )
-
-  const inspectEntity = useCallback(inspectedEntity =>
-    setState({
-      inspectedEntity,
-      inspectedState: null,
-      isOpen: true
-    })
+    [entityTemplates, entities]
   )
 
   const inspectState = useCallback(
-    inspectedState =>
-      setState({
-        inspectedEntity: entities.find(({ states }) =>
-          states.some(({ id }) => id === inspectedState)
-        ).id,
-        inspectedState,
-        isOpen: true
-      }),
-    [entities]
+    inspectedState => {
+      const entity = entities.find(({ states }) =>
+        states.some(({ id }) => id === inspectedState)
+      )
+      if (entityTemplates.some(({ id }) => id === entity.template.id)) {
+        setState({
+          inspectedEntity: entity.id,
+          inspectedState,
+          isOpen: true
+        })
+      }
+    },
+    [entityTemplates, entities]
   )
 
   return {

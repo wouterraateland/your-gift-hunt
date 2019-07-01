@@ -25,14 +25,11 @@ const DetailPane = forwardRef((_, ref) => {
   const entity = getEntityById(inspectedEntity)
   const state = getStateById(inspectedState)
 
-  useEffect(
-    () => {
-      if (ref.current) {
-        ref.current.scrollTo(0, 0)
-      }
-    },
-    [isOpen, inspectedEntity, inspectedState]
-  )
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollTo(0, 0)
+    }
+  }, [isOpen, inspectedEntity, inspectedState])
 
   return (
     <Background
@@ -42,14 +39,14 @@ const DetailPane = forwardRef((_, ref) => {
     >
       {entity && <Preview entity={entity} state={state} />}
       {entity && <Meta entity={entity} state={state} />}
+      {state && <PreviousStates state={state} />}
+      {state && <UnlockConditions entity={entity} state={state} />}
+      {state && <Transitions state={state} />}
       {entity && <Properties entity={entity} />}
       {entity && <InformationSlots entity={entity} state={state} />}
       {entity && <Portals entity={entity} state={state} />}
       {entity && <Entrances entity={entity} />}
       {entity && !state && <States entity={entity} />}
-      {state && <PreviousStates state={state} />}
-      {state && <UnlockConditions entity={entity} state={state} />}
-      {state && <Transitions state={state} />}
       {entity && <Delete entity={entity} state={state} />}
       <CloseButton />
     </Background>
