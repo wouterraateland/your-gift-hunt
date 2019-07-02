@@ -31,7 +31,7 @@ const DefaultScene = () => {
   )
 
   return (
-    <Scene left={-40} top={-40} width={80} height={80}>
+    <Scene left={-5} top={-42} width={80} height={80}>
       {rootEntities.map(entity => (
         <GenericEntityWithContainedEntities key={entity.id} {...entity} />
       ))}
