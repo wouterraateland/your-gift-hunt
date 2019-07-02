@@ -46,14 +46,11 @@ const DeleteButton = ({ entity, state }) => {
 
   useClickOutside({ ref, onClickOutside: () => setUpcomingAction(null) })
 
-  useEffect(
-    () => {
-      return () => {
-        setUpcomingAction(null)
-      }
-    },
-    [entity, state, isOpen]
-  )
+  useEffect(() => {
+    return () => {
+      setUpcomingAction(null)
+    }
+  }, [entity, state, isOpen])
 
   const isDeleting =
     upcomingAction &&
@@ -61,26 +58,23 @@ const DeleteButton = ({ entity, state }) => {
     (upcomingAction.payload.entityId === entity.id ||
       (state && upcomingAction.payload.stateId === state.id))
 
-  const onClick = useCallback(
-    async () => {
-      if (isDeleting) {
-        closeInspector()
-        await deleteNodes(upcomingAction.payload.dependentStates)
-      } else {
-        setUpcomingAction({
-          type: ACTION_TYPES.DELETE_NODE,
-          payload: {
-            entityId: entity.id,
-            stateId: state ? state.id : null,
-            dependentStates: getDependentNodes(
-              state ? [state.id] : entity.states.map(({ id }) => id)
-            )
-          }
-        })
-      }
-    },
-    [isDeleting, entity, state]
-  )
+  const onClick = useCallback(async () => {
+    if (isDeleting) {
+      closeInspector()
+      await deleteNodes(upcomingAction.payload.dependentStates)
+    } else {
+      setUpcomingAction({
+        type: ACTION_TYPES.DELETE_NODE,
+        payload: {
+          entityId: entity.id,
+          stateId: state ? state.id : null,
+          dependentStates: getDependentNodes(
+            state ? [state.id] : entity.states.map(({ id }) => id)
+          )
+        }
+      })
+    }
+  }, [isDeleting, entity, state])
 
   return (
     <Container>
@@ -93,9 +87,7 @@ const DeleteButton = ({ entity, state }) => {
       >
         <Bin />{" "}
         {isDeleting
-          ? `Confirm deletion of ${
-              upcomingAction.payload.dependentStates.length
-            } nodes`
+          ? `Confirm deletion`
           : state
           ? "Delete state"
           : "Delete entity"}

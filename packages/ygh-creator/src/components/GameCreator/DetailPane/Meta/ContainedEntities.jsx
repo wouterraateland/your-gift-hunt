@@ -1,7 +1,6 @@
 import React, { useCallback } from "react"
 
 import useEntities from "hooks/useEntities"
-import useEntityAreas from "hooks/useEntityAreas"
 import useGameMutations from "hooks/useGameMutations"
 import useAsync from "hooks/useAsync"
 
@@ -25,7 +24,6 @@ const MultiValue = ({ data, ...otherProps }) => (
 
 const Container = ({ entity }) => {
   const { entities, getEntityById } = useEntities()
-  const { syncEntityGraphPosition } = useEntityAreas()
   const {
     updateEntityContainer,
     disconnectEntityFromContainer
@@ -49,22 +47,16 @@ const Container = ({ entity }) => {
             containedEntity.container.id !== entity.id
           ) {
             await updateEntityContainer(containedEntity.id, entity.id)
-            syncEntityGraphPosition(
-              containedEntity.id,
-              containedEntity.container ? containedEntity.container.id : null,
-              entity.id
-            )
           }
         }),
         ...entity.containedEntities
           .filter(({ id }) => !value.includes(id))
           .map(async ({ id }) => {
             await disconnectEntityFromContainer(id)
-            syncEntityGraphPosition(id, entity.id, null)
           })
       ])
     ),
-    [getEntityById, syncEntityGraphPosition, entity.id]
+    [getEntityById, entity.id]
   )
 
   return (

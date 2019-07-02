@@ -1,7 +1,7 @@
 import { EDGE_TYPES, NODE_TYPES } from "data"
 import { completeArea } from "./areaLogic"
 
-const NON_CONTAINER_WIDTH = 6
+export const NON_CONTAINER_WIDTH = 6
 
 export const calcEntityAreas = (entities, nodes) => {
   const entityAreas = []
@@ -57,7 +57,7 @@ export const calcEntityAreas = (entities, nodes) => {
   return entityAreas
 }
 
-export const calcNodeAreas = (entities, nodes, edges) => {
+export const calcEntityNodeAreas = (entity, nodes, edges) => {
   const nodeAreas = {}
 
   const calcMetaNodeAreas = (nodes, side, edgeType) => {
@@ -94,58 +94,65 @@ export const calcNodeAreas = (entities, nodes, edges) => {
     }
   }
 
-  const calcNodeAreas = entity => {
-    const entryNode = nodes.find(
-      node => node.type === NODE_TYPES.ENTRY && node.entity.id === entity.id
-    )
-    if (entryNode) {
-      nodeAreas[entryNode.id] = completeArea({
-        centerX: NON_CONTAINER_WIDTH / 2,
-        centerY: 3,
-        width: 0.5,
-        height: 0.5
-      })
-    }
-
-    const exitNode = nodes.find(
-      node => node.type === NODE_TYPES.EXIT && node.entity.id === entity.id
-    )
-    if (exitNode) {
-      nodeAreas[exitNode.id] = completeArea({
-        centerX: NON_CONTAINER_WIDTH / 2,
-        centerY: 3 + entity.states.length * 2 + (entryNode ? 2 : 0),
-        width: 1,
-        height: 1
-      })
-    }
-
-    const stateNodes = nodes.filter(
-      node => node.type === NODE_TYPES.STATE && node.entity.id === entity.id
-    )
-    stateNodes.forEach((stateNode, i) => {
-      nodeAreas[stateNode.id] = completeArea({
-        centerX: NON_CONTAINER_WIDTH / 2,
-        centerY: 3 + i * 2 + (entryNode ? 2 : 0),
-        width: NON_CONTAINER_WIDTH - 2,
-        height: 1
-      })
+  const entryNode = nodes.find(
+    node => node.type === NODE_TYPES.ENTRY && node.entity.id === entity.id
+  )
+  if (entryNode) {
+    nodeAreas[entryNode.id] = completeArea({
+      centerX: NON_CONTAINER_WIDTH / 2,
+      centerY: 3,
+      width: 0.5,
+      height: 0.5
     })
-
-    calcMetaNodeAreas(entity.fields, "left", EDGE_TYPES.FIELD_USAGE)
-    calcMetaNodeAreas(
-      entity.informationSlots,
-      "right",
-      EDGE_TYPES.INFO_AVAILABILITY
-    )
-    calcMetaNodeAreas(entity.entrances, "left")
-    calcMetaNodeAreas(entity.portals, "right", EDGE_TYPES.PORTAL_OPENNESS)
   }
-  entities.forEach(calcNodeAreas)
+
+  const exitNode = nodes.find(
+    node => node.type === NODE_TYPES.EXIT && node.entity.id === entity.id
+  )
+  if (exitNode) {
+    nodeAreas[exitNode.id] = completeArea({
+      centerX: NON_CONTAINER_WIDTH / 2,
+      centerY: 3 + entity.states.length * 2 + (entryNode ? 2 : 0),
+      width: 1,
+      height: 1
+    })
+  }
+
+  const stateNodes = nodes.filter(
+    node => node.type === NODE_TYPES.STATE && node.entity.id === entity.id
+  )
+  stateNodes.forEach((stateNode, i) => {
+    nodeAreas[stateNode.id] = completeArea({
+      centerX: NON_CONTAINER_WIDTH / 2,
+      centerY: 3 + i * 2 + (entryNode ? 2 : 0),
+      width: NON_CONTAINER_WIDTH - 2,
+      height: 1
+    })
+  })
+
+  calcMetaNodeAreas(entity.fields, "left", EDGE_TYPES.FIELD_USAGE)
+  calcMetaNodeAreas(
+    entity.informationSlots,
+    "right",
+    EDGE_TYPES.INFO_AVAILABILITY
+  )
+  calcMetaNodeAreas(entity.entrances, "left")
+  calcMetaNodeAreas(entity.portals, "right", EDGE_TYPES.PORTAL_OPENNESS)
 
   return nodeAreas
 }
 
+export const calcNodeAreas = (entities, nodes, edges) =>
+  entities.reduce(
+    (acc, entity) => ({
+      ...acc,
+      ...calcEntityNodeAreas(entity, nodes, edges)
+    }),
+    {}
+  )
+
 export default {
   calcEntityAreas,
-  calcNodeAreas
+  calcNodeAreas,
+  calcEntityNodeAreas
 }
