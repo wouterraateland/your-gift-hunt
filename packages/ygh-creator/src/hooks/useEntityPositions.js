@@ -72,7 +72,11 @@ export const useEntityPositionsProvider = () => {
 
     setEntityPositions(entityPositions => ({
       ...entityPositions,
-      [entityId]: clean({ ...entityPositions[entityId], ...position })
+      [entityId]: clean(
+        typeof position === "function"
+          ? position(entityPositions[entityId])
+          : { ...entityPositions[entityId], ...position }
+      )
     }))
   }, [])
 
@@ -82,7 +86,7 @@ export const useEntityPositionsProvider = () => {
 
   return {
     updatedIndex: lastUpdated.current
-      ? entities.findIndex(({ id }) => id === lastUpdated.current)
+      ? entities.findIndex(({ id }) => id === lastUpdated.current) + 1
       : null,
     entityPositions,
     getEntityPosition,
@@ -95,7 +99,7 @@ export const useEntityPositionsProvider = () => {
 export const useEntityPosition = entityId => {
   const { entities } = useEntities()
   const observedBits = useMemo(
-    () => 1 << entities.findIndex(({ id }) => id === entityId) % 31,
+    () => 1 << (entities.findIndex(({ id }) => id === entityId) + 1) % 31,
     [entityId, entities]
   )
 

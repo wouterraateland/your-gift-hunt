@@ -7,33 +7,29 @@ import { useEntityPosition } from "./useEntityPositions"
 
 const usePhysicalDrag = (entity, parentRotation) => {
   const [isDragging, setDragging] = useState(false)
-  const dragStart = useRef(null)
-  const posStart = useRef(null)
+  const prevCursor = useRef(null)
   const wasDragging = useRef(false)
   const snap = useRef(false)
   const { zoom } = useContext(PanZoomContext, 0b100)
 
-  const [position, setPosition] = useEntityPosition(entity.id)
+  const [, setPosition] = useEntityPosition(entity.id)
 
-  const onMouseDown = useCallback(
-    event => {
-      event.stopPropagation()
-      dragStart.current = {
-        x: event.pageX,
-        y: event.pageY
-      }
-      wasDragging.current = false
-      posStart.current = position
-    },
-    [position]
-  )
+  const onMouseDown = useCallback(event => {
+    event.stopPropagation()
+    prevCursor.current = {
+      x: event.pageX,
+      y: event.pageY
+    }
+    wasDragging.current = false
+  }, [])
 
   const onWindowMouseMove = useCallback(
     event => {
-      if (dragStart.current) {
+      if (prevCursor.current) {
         event.preventDefault()
+        const { pageX, pageY } = event
 
-        if (!isDragging) {
+        if (!wasDragging.current) {
           setDragging(true)
           wasDragging.current = true
         }
@@ -41,21 +37,32 @@ const usePhysicalDrag = (entity, parentRotation) => {
         const parentAngle = parentRotation
           ? (parentRotation * Math.PI) / 180
           : 0
-        const dx = event.pageX - dragStart.current.x
-        const dy = event.pageY - dragStart.current.y
+        const s = 16 * zoom
+        const dx = (pageX - prevCursor.current.x) / s
+        const dy = (pageY - prevCursor.current.y) / s
         const rdx = dx * Math.cos(parentAngle) + dy * Math.sin(parentAngle)
         const rdy = dy * Math.cos(parentAngle) - dx * Math.sin(parentAngle)
 
-        const top = posStart.current.top + rdy / 16 / zoom
-        const left = posStart.current.left + rdx / 16 / zoom
+        setPosition(position => {
+          const top = snap.current
+            ? Math.round(position.top + rdy)
+            : position.top + rdy
+          const left = snap.current
+            ? Math.round(position.left + rdx)
+            : position.left + rdx
 
-        setPosition({
-          top: snap.current ? Math.round(top) : top,
-          left: snap.current ? Math.round(left) : left
+          const dt = (top - position.top) * s
+          const dl = (left - position.left) * s
+          prevCursor.current.y +=
+            dt * Math.cos(parentAngle) + dl * Math.sin(parentAngle)
+          prevCursor.current.x +=
+            dl * Math.cos(parentAngle) - dt * Math.sin(parentAngle)
+
+          return { ...position, top, left }
         })
       }
     },
-    [parentRotation, isDragging, setPosition]
+    [parentRotation, setPosition]
   )
 
   useEffect(() => {
@@ -64,10 +71,10 @@ const usePhysicalDrag = (entity, parentRotation) => {
     return () => {
       window.removeEventListener("mousemove", onWindowMouseMove)
     }
-  }, [parentRotation, isDragging, setPosition])
+  }, [parentRotation, setPosition])
 
   const onWindowMouseUp = useCallback(() => {
-    dragStart.current = null
+    prevCursor.current = null
     setDragging(false)
   }, [])
 

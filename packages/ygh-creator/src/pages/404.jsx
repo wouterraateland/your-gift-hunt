@@ -1,11 +1,11 @@
-import { navigate } from "@reach/router"
+import React from "react"
+import { Redirect } from "@reach/router"
 
 import useAuth from "hooks/useAuth"
 
 const NotFoundPage = () => {
   const { user } = useAuth()
-  navigate(`/${user.username}/games`)
-  return null
+  return <Redirect default to={`/${user.username}/games`} noThrow />
 }
 
 export default NotFoundPage

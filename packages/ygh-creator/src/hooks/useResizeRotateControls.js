@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef } from "react"
 
 import PanZoomContext from "contexts/PanZoom"
 
@@ -21,7 +21,6 @@ const getCornerAngle = (corner, width, height) => {
 }
 
 const useResizeControls = (entity, parentRotation) => {
-  const [isDragging, setDragging] = useState(false)
   const dragStart = useRef(null)
   const posStart = useRef(null)
   const wasDragging = useRef(false)
@@ -55,10 +54,7 @@ const useResizeControls = (entity, parentRotation) => {
       if (dragStart.current) {
         event.preventDefault()
 
-        if (!isDragging) {
-          setDragging(true)
-          wasDragging.current = true
-        }
+        wasDragging.current = true
 
         const visibleWidth = posStart.current.width * 16 * zoom
         const visibleHeight = posStart.current.height * 16 * zoom
@@ -126,7 +122,7 @@ const useResizeControls = (entity, parentRotation) => {
         }
       }
     },
-    [isDragging, setPosition, parentRotation]
+    [setPosition, parentRotation]
   )
 
   useEffect(() => {
@@ -135,11 +131,14 @@ const useResizeControls = (entity, parentRotation) => {
     return () => {
       window.removeEventListener("mousemove", onWindowMouseMove)
     }
-  }, [isDragging, setPosition])
+  }, [setPosition, parentRotation])
 
-  const onWindowMouseUp = useCallback(() => {
+  const onWindowMouseUp = useCallback(event => {
+    if (wasDragging.current) {
+      event.stopPropagation()
+      wasDragging.current = false
+    }
     dragStart.current = null
-    setDragging(false)
   }, [])
 
   const onWindowKeyDown = useCallback(event => {
@@ -155,41 +154,37 @@ const useResizeControls = (entity, parentRotation) => {
   }, [])
 
   useEffect(() => {
-    window.addEventListener("mouseup", onWindowMouseUp)
+    window.addEventListener("mouseup", onWindowMouseUp, { capture: true })
     window.addEventListener("mouseleave", onWindowMouseUp)
     window.addEventListener("keydown", onWindowKeyDown)
     window.addEventListener("keyup", onWindowKeyUp)
 
     return () => {
-      window.removeEventListener("mouseup", onWindowMouseUp)
+      window.removeEventListener("mouseup", onWindowMouseUp, { capture: true })
       window.removeEventListener("mouseleave", onWindowMouseUp)
       window.removeEventListener("keydown", onWindowKeyDown)
       window.removeEventListener("keyup", onWindowKeyUp)
     }
   }, [])
 
-  const onClickCapture = useCallback(event => {
-    if (wasDragging.current) {
-      event.stopPropagation()
-      wasDragging.current = false
-    }
-  }, [])
-
   return {
     resizeHandlers: {
-      top: { onMouseDown: start("resize", { x: 0, y: -1 }), onClickCapture },
-      right: { onMouseDown: start("resize", { x: 1, y: 0 }), onClickCapture },
-      bottom: { onMouseDown: start("resize", { x: 0, y: 1 }), onClickCapture },
-      left: { onMouseDown: start("resize", { x: -1, y: 0 }), onClickCapture }
+      top: { onMouseDown: start("resize", { x: 0, y: -1 }) },
+      right: { onMouseDown: start("resize", { x: 1, y: 0 }) },
+      bottom: {
+        onMouseDown: start("resize", { x: 0, y: 1 })
+      },
+      left: { onMouseDown: start("resize", { x: -1, y: 0 }) }
     },
     rotateHandlers: {
-      topLeft: { onMouseDown: start("rotate", "topLeft"), onClickCapture },
-      topRight: { onMouseDown: start("rotate", "topRight"), onClickCapture },
+      topLeft: { onMouseDown: start("rotate", "topLeft") },
+      topRight: { onMouseDown: start("rotate", "topRight") },
       bottomRight: {
-        onMouseDown: start("rotate", "bottomRight"),
-        onClickCapture
+        onMouseDown: start("rotate", "bottomRight")
       },
-      bottomLeft: { onMouseDown: start("rotate", "bottomLeft"), onClickCapture }
+      bottomLeft: {
+        onMouseDown: start("rotate", "bottomLeft")
+      }
     }
   }
 }

@@ -1,8 +1,10 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useRef } from "react"
 import styled, { css } from "styled-components"
 
+import useClickOutside from "hooks/useClickOutside"
 import useInspector from "hooks/useInspector"
 import useContext from "hooks/useContext"
+import useEntityFocus from "hooks/useEntityFocus"
 import useResizeRotateControls from "hooks/useResizeRotateControls"
 
 import PanZoomContext from "contexts/PanZoom"
@@ -45,6 +47,8 @@ const controlStyles = css`
 
   background-color: ${props => props.theme.color.primary};
   color: #fff;
+
+  transform: translate(-50%, -50%);
 `
 
 const ResizeControl = styled(Resize)`
@@ -64,11 +68,25 @@ const RotateControl = styled(Rotate)`
 `
 RotateControl.displayName = "RotateControl"
 
+const InspectControl = styled.div`
+  ${controlStyles}
+`
+InspectControl.displayName = "InspectControl"
+
 const Controls = ({ entity, parentRotation }) => {
-  const { inspectEntity, isOpen, inspectedEntity } = useInspector()
+  const ref = useRef(null)
+  const { focusedEntityId, focus, blur } = useEntityFocus()
+  const { inspectEntity } = useInspector()
   const { zoom } = useContext(PanZoomContext, 0b100)
 
-  const handleClick = useCallback(() => inspectEntity(entity.id), [entity.id])
+  const isVisible = focusedEntityId === entity.id
+
+  const handleClick = useCallback(() => focus(entity.id), [entity.id])
+  const handleInspectClick = useCallback(() => inspectEntity(entity.id), [
+    entity.id
+  ])
+
+  useClickOutside({ ref, onClickOutside: blur })
 
   const { resizeHandlers, rotateHandlers } = useResizeRotateControls(
     entity,
@@ -77,18 +95,24 @@ const Controls = ({ entity, parentRotation }) => {
 
   return (
     <Container
+      ref={ref}
       onClick={handleClick}
-      isVisible={isOpen && inspectedEntity === entity.id}
+      isVisible={isVisible}
       zoom={zoom}
     >
-      <ResizeControl {...resizeHandlers.top} vertical top />
-      <ResizeControl {...resizeHandlers.right} horizontal right />
-      <ResizeControl {...resizeHandlers.bottom} vertical bottom />
-      <ResizeControl {...resizeHandlers.left} horizontal left />
-      <RotateControl {...rotateHandlers.topLeft} top left />
-      <RotateControl {...rotateHandlers.topRight} top right />
-      <RotateControl {...rotateHandlers.bottomRight} bottom right />
-      <RotateControl {...rotateHandlers.bottomLeft} bottom left />
+      {isVisible && (
+        <>
+          <ResizeControl {...resizeHandlers.top} vertical top />
+          <ResizeControl {...resizeHandlers.right} horizontal right />
+          <ResizeControl {...resizeHandlers.bottom} vertical bottom />
+          <ResizeControl {...resizeHandlers.left} horizontal left />
+          <RotateControl {...rotateHandlers.topLeft} top left />
+          <RotateControl {...rotateHandlers.topRight} top right />
+          <RotateControl {...rotateHandlers.bottomRight} bottom right />
+          <RotateControl {...rotateHandlers.bottomLeft} bottom left />
+          <InspectControl onClick={handleInspectClick}>+</InspectControl>
+        </>
+      )}
     </Container>
   )
 }

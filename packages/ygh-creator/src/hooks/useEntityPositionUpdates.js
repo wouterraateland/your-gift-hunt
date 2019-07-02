@@ -12,34 +12,28 @@ const useEntityPositionUpdates = () => {
   const { entities } = useEntities()
   const { entityPositions, hasChanged, flush } = useEntityPositions()
 
-  const flushEntityPositions = useCallback(
-    () => {
-      flush()
-      updateEntityPositions(
-        game.id,
-        entities
-          .filter(({ id, physicalPosition }) => {
-            const d = diff(physicalPosition, entityPositions[id])
-            return !d || d.length > 0
-          })
-          .map(({ id }) => ({ id, physicalPosition: entityPositions[id] }))
-      )
-    },
-    [game.id, entities, entityPositions, flush]
-  )
+  const flushEntityPositions = useCallback(() => {
+    flush()
+    updateEntityPositions(
+      game.id,
+      entities
+        .filter(({ id, physicalPosition }) => {
+          const d = diff(physicalPosition, entityPositions[id])
+          return !d || d.length > 0
+        })
+        .map(({ id }) => ({ id, physicalPosition: entityPositions[id] }))
+    )
+  }, [game.id, entities, entityPositions, flush])
 
-  useEffect(
-    () => {
-      if (hasChanged.current) {
-        const t = setTimeout(flushEntityPositions, 4000)
+  useEffect(() => {
+    if (hasChanged.current) {
+      const t = setTimeout(flushEntityPositions, 4000)
 
-        return () => {
-          clearTimeout(t)
-        }
+      return () => {
+        clearTimeout(t)
       }
-    },
-    [entityPositions, flush]
-  )
+    }
+  }, [entityPositions, flush])
 }
 
 export default useEntityPositionUpdates

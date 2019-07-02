@@ -5,6 +5,7 @@ import { SaveStateProvider } from "contexts/SaveState"
 import { GameTemplatesProvider } from "contexts/GameTemplates"
 import { GameProvider } from "contexts/Game"
 import { EntitiesProvider } from "contexts/Entities"
+import { EntityFocusProvider } from "contexts/EntityFocus"
 import { EntityGraphProvider } from "contexts/EntityGraph"
 import { EntityAreasProvider } from "contexts/EntityAreas"
 import { EntityPositionsProvider } from "contexts/EntityPositions"
@@ -59,14 +60,11 @@ const Creator = memo(() => {
 const CreatorWithModal = props => {
   const { gameExists } = useGame()
 
-  useEffect(
-    () => {
-      if (!gameExists) {
-        navigate("/")
-      }
-    },
-    [gameExists]
-  )
+  useEffect(() => {
+    if (!gameExists) {
+      navigate("/")
+    }
+  }, [gameExists])
 
   return gameExists ? (
     <>
@@ -80,29 +78,31 @@ const CreatorWithModal = props => {
 
 const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => (
   <SaveStateProvider>
-    <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
-      <GameTemplatesProvider>
-        <EntitiesProvider>
-          <EntityGraphProvider>
-            <EntityAreasProvider>
-              <EntityPositionsProvider>
-                <EntityDependenciesProvider>
-                  <GameQueriesProvider>
-                    <GameMutationsProvider>
-                      <EditorProvider>
-                        <InspectorProvider>
-                          <CreatorWithModal {...otherProps} />
-                        </InspectorProvider>
-                      </EditorProvider>
-                    </GameMutationsProvider>
-                  </GameQueriesProvider>
-                </EntityDependenciesProvider>
-              </EntityPositionsProvider>
-            </EntityAreasProvider>
-          </EntityGraphProvider>
-        </EntitiesProvider>
-      </GameTemplatesProvider>
-    </GameProvider>
+    <EntityFocusProvider>
+      <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
+        <GameTemplatesProvider>
+          <EntitiesProvider>
+            <EntityGraphProvider>
+              <EntityAreasProvider>
+                <EntityPositionsProvider>
+                  <EntityDependenciesProvider>
+                    <GameQueriesProvider>
+                      <GameMutationsProvider>
+                        <EditorProvider>
+                          <InspectorProvider>
+                            <CreatorWithModal {...otherProps} />
+                          </InspectorProvider>
+                        </EditorProvider>
+                      </GameMutationsProvider>
+                    </GameQueriesProvider>
+                  </EntityDependenciesProvider>
+                </EntityPositionsProvider>
+              </EntityAreasProvider>
+            </EntityGraphProvider>
+          </EntitiesProvider>
+        </GameTemplatesProvider>
+      </GameProvider>
+    </EntityFocusProvider>
   </SaveStateProvider>
 )
 
