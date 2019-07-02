@@ -20,6 +20,9 @@ import useGame from "hooks/useGame"
 import useInspector from "hooks/useInspector"
 import useEditor from "hooks/useEditor"
 
+import useEntityPositionUpdates from "hooks/useEntityPositionUpdates"
+import useEntityAreaUpdates from "hooks/useEntityAreaUpdates"
+
 import Layout from "layouts/GameCreator"
 
 import EditorPane from "components/GameCreator/EditorPane"
@@ -45,6 +48,9 @@ const ClosableDetailPane = () => {
 }
 
 const Creator = memo(() => {
+  useEntityPositionUpdates()
+  useEntityAreaUpdates()
+
   const { selectedView } = useEditor()
   return (
     <Layout>
