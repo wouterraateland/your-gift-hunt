@@ -4,6 +4,8 @@ import { darken } from "utils/colors"
 import Entity from "./Entity"
 
 const Grass = styled(Entity)`
+  border-radius: 8em;
+
   ${props =>
     props.isReachable
       ? css`
