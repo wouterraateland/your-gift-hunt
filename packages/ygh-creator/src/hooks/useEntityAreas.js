@@ -18,24 +18,26 @@ const getEntityContainerMap = entities =>
     {}
   )
 
-const getEntityStatesMap = entities =>
+const getEntityStateNodesMap = (entities, nodes = []) =>
   entities.reduce(
     (map, entity) => ({
       ...map,
-      [entity.id]: entity.states.length
+      [entity.id]: nodes
+        .filter(node => node.entity.id === entity.id)
+        .map(({ id }) => id)
+        .join("-")
     }),
     {}
   )
 
 export const useEntityAreasProvider = () => {
   const { entities } = useEntities()
-
-  const entityStatesMap = useRef(getEntityStatesMap(entities))
-  const entityContainerMap = useRef(getEntityContainerMap(entities))
-
   const { nodes, edges, getNodeById } = useEntityGraph()
   const forceUpdate = useForceUpdate()
   const hasChanged = useRef(false)
+
+  const entityStateNodesMap = useRef(getEntityStateNodesMap(entities, nodes))
+  const entityContainerMap = useRef(getEntityContainerMap(entities))
 
   const [getEntityAreas, setEntityAreas] = useGetSet(
     _.calcEntityAreas(entities, nodes)
@@ -209,90 +211,75 @@ export const useEntityAreasProvider = () => {
     const prevEntityContainerMap = entityContainerMap.current
     entityContainerMap.current = getEntityContainerMap(entities)
 
-    const prevEntityStatesMap = entityStatesMap.current
-    entityStatesMap.current = getEntityStatesMap(entities)
+    const prevEntityStateNodesMap = entityStateNodesMap.current
+    entityStateNodesMap.current = getEntityStateNodesMap(entities, nodes)
 
     entities.forEach(entity => {
-      const entityArea = _getEntityArea(entity.id)
       const prevContainerId = prevEntityContainerMap[entity.id]
       const nextContainerId = entityContainerMap.current[entity.id]
 
       if (
-        !entity.isContainer &&
-        entityStatesMap.current[entity.id] !== prevEntityStatesMap[entity.id] &&
-        prevEntityStatesMap[entity.id] > 0
+        entityStateNodesMap.current[entity.id] !==
+        prevEntityStateNodesMap[entity.id]
       ) {
         setNodeAreas(nodeAreas => ({
           ...nodeAreas,
           ..._.calcEntityNodeAreas(entity, nodes, edges)
         }))
 
-        const hasEntryNode = nodes.some(
-          node => node.type === NODE_TYPES.ENTRY && node.entity.id === entity.id
-        )
-        const hasExitNode = nodes.some(
-          node => node.type === NODE_TYPES.EXIT && node.entity.id === entity.id
-        )
-        const width = _.NON_CONTAINER_WIDTH
-        const height =
-          2 +
-          2 * entity.states.length +
-          (hasEntryNode ? 2 : 0) +
-          (hasExitNode ? 2 : 0)
-        _setEntityArea(entity.id, {
-          top: entityArea.top,
-          left: entityArea.left,
-          width,
-          height
-        })
+        const entityArea = _getEntityArea(entity.id) || {
+          top: 0,
+          left: 0
+        }
+
+        if (entity.isContainer) {
+          _setEntityArea(entity.id, {
+            top: entityArea.top,
+            left: entityArea.left,
+            width: 4,
+            height: 4
+          })
+        } else {
+          const hasEntryNode = nodes.some(
+            node =>
+              node.type === NODE_TYPES.ENTRY && node.entity.id === entity.id
+          )
+          const hasExitNode = nodes.some(
+            node =>
+              node.type === NODE_TYPES.EXIT && node.entity.id === entity.id
+          )
+
+          const width = _.NON_CONTAINER_WIDTH
+          const height =
+            2 +
+            2 * entity.states.length +
+            (hasEntryNode ? 2 : 0) +
+            (hasExitNode ? 2 : 0)
+          _setEntityArea(entity.id, {
+            top: entityArea.top,
+            left: entityArea.left,
+            width,
+            height
+          })
+        }
+        forceUpdate()
       }
 
       if (nextContainerId !== prevContainerId) {
-        if (entityArea) {
-          const prevContainerArea = getEntityArea(prevContainerId)
-          const nextContainerArea = getEntityArea(nextContainerId)
+        const entityArea = _getEntityArea(entity.id)
+        const prevContainerArea = getEntityArea(prevContainerId)
+        const nextContainerArea = getEntityArea(nextContainerId)
 
-          _setEntityArea(entity.id, {
-            top: entityArea.top + prevContainerArea.top - nextContainerArea.top,
-            left:
-              entityArea.left + prevContainerArea.left - nextContainerArea.left,
-            width: entityArea.width,
-            height: entityArea.height
-          })
+        _setEntityArea(entity.id, {
+          top: entityArea.top + prevContainerArea.top - nextContainerArea.top,
+          left:
+            entityArea.left + prevContainerArea.left - nextContainerArea.left,
+          width: entityArea.width,
+          height: entityArea.height
+        })
 
-          prevContainerId && fitContainer(prevContainerId)
-          nextContainerId && fitContainer(nextContainerId)
-        } else {
-          setNodeAreas(nodeAreas => ({
-            ...nodeAreas,
-            ..._.calcEntityNodeAreas(entity, nodes, edges)
-          }))
-
-          if (entity.isContainer) {
-            _setEntityArea(entity.id, {
-              top: 0,
-              left: 0,
-              width: 4,
-              height: 4
-            })
-          } else {
-            const hasEntryNode = nodes.some(
-              node =>
-                node.type === NODE_TYPES.ENTRY && node.entity.id === entity.id
-            )
-            const hasExitNode = nodes.some(
-              node =>
-                node.type === NODE_TYPES.EXIT && node.entity.id === entity.id
-            )
-            const width = _.NON_CONTAINER_WIDTH
-            const height =
-              2 +
-              2 * entity.states.length +
-              (hasEntryNode ? 2 : 0) +
-              (hasExitNode ? 2 : 0)
-            _setEntityArea(entity.id, { top: 0, left: 0, width, height })
-          }
-        }
+        prevContainerId && fitContainer(prevContainerId)
+        nextContainerId && fitContainer(nextContainerId)
 
         forceUpdate()
       }
