@@ -85,18 +85,21 @@ const Bars = styled.div`
     cubic-bezier(0.3, 0, 0.3, 1);
 `
 
-const SafeWithKeyhole = forwardRef((props, ref) => {
+const SafeWithKeyholeFront = forwardRef((props, ref) => {
   const isUnlocked = _.hasState("unlocked")(props)
-
   return (
-    <Safe {...props}>
+    <>
       <Keyhole left={2} top={3} isUnlocked={isUnlocked} ref={ref} />
       <Wheel>
         <Bars isUnlocked={isUnlocked} />
       </Wheel>
-    </Safe>
+    </>
   )
 })
+
+const SafeWithKeyhole = forwardRef((props, ref) => (
+  <Safe ref={ref} {...props} Front={SafeWithKeyholeFront} />
+))
 SafeWithKeyhole.name = "SafeWithKeyhole"
 SafeWithKeyhole.templateName = "Safe with keyhole"
 SafeWithKeyhole.defaultProps = Safe.defaultProps

@@ -5,6 +5,7 @@ import Entities from "your-gift-hunt/Entities"
 import * as Screens from "components/screens"
 
 import withEntityBehaviour from "containers/withEntityBehaviour"
+import withPathBehaviour from "containers/withPathBehaviour"
 import withCarpetBehaviour from "containers/withCarpetBehaviour"
 import withPackageBehaviour from "containers/withPackageBehaviour"
 import withContainedEntities from "containers/withContainedEntities"
@@ -39,7 +40,7 @@ const entityComponents = [
   withContainedEntities(
     withPackageBehaviour(withEntityBehaviour(Entities.Package))
   ),
-  withEntityBehaviour(Entities.Path),
+  withContainedEntities(withPathBehaviour(withEntityBehaviour(Entities.Path))),
   withEntityBehaviour(Entities.PlantPot),
   withEntityBehaviour(Entities.Room),
   withEntityBehaviour(Entities.SafeKey),

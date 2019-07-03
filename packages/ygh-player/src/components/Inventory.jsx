@@ -78,7 +78,7 @@ const Inventory = () => {
                 maxHeight={3}
                 component={Component}
               >
-                <Component {...entity} />
+                <Component {...entity} left={0} top={0} rotation={0} />
               </StyledEntityContainer>
             </DragContainer>
           </ItemSlot>

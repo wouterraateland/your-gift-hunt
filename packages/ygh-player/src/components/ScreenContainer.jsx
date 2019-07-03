@@ -7,8 +7,10 @@ const ScreenContainer = () => {
   const { screen, close } = useScreen()
   const Component = screen ? screen.component : null
   const entity = getEntityById(screen.entityId)
+  const { left, top, rotation, width, height, z, ...strippedEntity } =
+    entity || {}
 
-  return Component ? <Component entity={entity} close={close} /> : null
+  return Component ? <Component entity={strippedEntity} close={close} /> : null
 }
 
 export default ScreenContainer
