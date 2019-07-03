@@ -122,7 +122,7 @@ const useResizeControls = (entity, parentRotation) => {
         }
       }
     },
-    [setPosition, parentRotation]
+    [zoom, setPosition, parentRotation]
   )
 
   useEffect(() => {
@@ -131,7 +131,7 @@ const useResizeControls = (entity, parentRotation) => {
     return () => {
       window.removeEventListener("mousemove", onWindowMouseMove)
     }
-  }, [setPosition, parentRotation])
+  }, [zoom, setPosition, parentRotation])
 
   const onWindowMouseUp = useCallback(event => {
     if (wasDragging.current) {

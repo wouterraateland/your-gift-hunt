@@ -7,9 +7,20 @@ const Container = styled.label.attrs(({ src }) => ({
   }
 }))`
   position: relative;
-  display: block;
 
-  background: #0001 no-repeat center / cover;
+  display: block;
+  border: 0.1em solid #0002;
+
+  background: #0001 no-repeat center padding-box / cover;
+
+  &:hover {
+    border-color: #0004;
+  }
+
+  &:focus,
+  &:focus-within {
+    border-color: ${props => props.theme.color.primary};
+  }
 `
 
 const Input = styled.input`

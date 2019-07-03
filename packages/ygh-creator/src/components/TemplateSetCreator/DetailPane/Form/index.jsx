@@ -14,7 +14,6 @@ import DisabledSelect from "./DisabledSelect"
 
 const StyledForm = styled(Form)`
   position: relative;
-  z-index: 1;
 `
 
 const FloatRight = styled(Float.Right)`
@@ -122,27 +121,21 @@ export default ({
     [inputs]
   )
 
-  useEffect(
-    () => {
-      Object.keys(initialValues).forEach(name =>
-        formState.setField(name, initialValues[name])
-      )
-    },
-    [initialValues]
-  )
+  useEffect(() => {
+    Object.keys(initialValues).forEach(name =>
+      formState.setField(name, initialValues[name])
+    )
+  }, [initialValues])
 
   const debouncedValues = useDebounce(formState.values, 1000)
 
-  useEffect(
-    () => {
-      const difference = diff(initialValues, debouncedValues)
+  useEffect(() => {
+    const difference = diff(initialValues, debouncedValues)
 
-      if (difference) {
-        onFlush(debouncedValues)
-      }
-    },
-    [debouncedValues]
-  )
+    if (difference) {
+      onFlush(debouncedValues)
+    }
+  }, [debouncedValues])
 
   return (
     <StyledForm disabled={!isEditable} ref={ref}>

@@ -47,6 +47,7 @@ export const CREATE_GAME = gql`
         privacy: $privacy
         accessType: $accessType
         accessCode: $accessCode
+        entityTemplateSets: { connect: { id: "cjvz7l2lb03240732dj26hv9e" } }
       }
     ) {
       id

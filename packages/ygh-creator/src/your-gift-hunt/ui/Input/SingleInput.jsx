@@ -62,12 +62,9 @@ const setHeight = el => {
 const SingleInput = forwardRef(({ value, onChange, ...otherProps }, ref) => {
   const myRef = useRef(null)
 
-  useEffect(
-    () => {
-      myRef && myRef.current && setHeight(myRef.current)
-    },
-    [value]
-  )
+  useEffect(() => {
+    myRef && myRef.current && setHeight(myRef.current)
+  }, [value])
 
   return (
     <Input
@@ -78,14 +75,22 @@ const SingleInput = forwardRef(({ value, onChange, ...otherProps }, ref) => {
         onChange === undefined
           ? undefined
           : otherProps.type === "number"
-          ? event =>
-              onChange({
+          ? event => {
+              const v = event.target.value
+                ? parseInt(event.target.value, 10)
+                : undefined
+              return onChange({
                 ...event,
                 target: {
                   ...event.target,
-                  value: parseInt(event.target.value, 10)
+                  value: v,
+                  validity: {
+                    valid: true
+                  },
+                  validationMessage: ""
                 }
               })
+            }
           : onChange
       }
       {...otherProps}

@@ -62,7 +62,7 @@ const usePhysicalDrag = (entity, parentRotation) => {
         })
       }
     },
-    [parentRotation, setPosition]
+    [zoom, parentRotation, setPosition]
   )
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const usePhysicalDrag = (entity, parentRotation) => {
     return () => {
       window.removeEventListener("mousemove", onWindowMouseMove)
     }
-  }, [parentRotation, setPosition])
+  }, [zoom, parentRotation, setPosition])
 
   const onWindowMouseUp = useCallback(() => {
     prevCursor.current = null

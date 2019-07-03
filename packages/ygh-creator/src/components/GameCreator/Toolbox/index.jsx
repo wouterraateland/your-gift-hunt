@@ -15,15 +15,12 @@ const Toolbox = () => {
   })
 
   const hideEntities = useCallback(
-    () => {
-      if (entitiesVisible) {
-        setState(state => ({
-          ...state,
-          entitiesVisible: false
-        }))
-      }
-    },
-    [entitiesVisible]
+    () =>
+      setState(state => ({
+        ...state,
+        entitiesVisible: false
+      })),
+    []
   )
 
   useClickOutside({

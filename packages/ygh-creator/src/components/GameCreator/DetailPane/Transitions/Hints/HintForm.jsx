@@ -10,7 +10,6 @@ import { Field, Input, Button } from "your-gift-hunt/ui"
 
 const Form = styled.form`
   margin-top: 0.25em;
-  margin-left: 0;
 
   & > div:nth-child(1) {
     width: 100%;

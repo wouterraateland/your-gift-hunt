@@ -22,13 +22,13 @@ const EntityEntryContainer = styled.div`
         `}
 
   &:first-child {
-    border-radius: ${props => props.theme.borderRadius}
-      ${props => props.theme.borderRadius} 0 0;
+    border-radius: ${props =>
+      `${props.theme.borderRadius} ${props.theme.borderRadius} 0 0`};
   }
 
   &:last-child {
-    border-radius: 0 0 ${props => props.theme.borderRadius}
-      ${props => props.theme.borderRadius};
+    border-radius: ${props =>
+      `0 0 ${props.theme.borderRadius} ${props.theme.borderRadius}`};
   }
 
   &:nth-child(2n) {

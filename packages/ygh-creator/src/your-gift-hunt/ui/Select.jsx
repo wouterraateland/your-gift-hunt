@@ -34,7 +34,8 @@ const createStyles = theme => ({
   menu: base => ({
     ...base,
     border: `.1em solid ${theme.color.primary}`,
-    boxShadow: "0 .5em 1.5em -.5em #0004"
+    boxShadow: "0 .5em 1.5em -.5em #0004",
+    zIndex: 2
   })
 })
 

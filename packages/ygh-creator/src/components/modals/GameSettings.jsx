@@ -153,19 +153,19 @@ const SettingsModal = () => {
     <Modal>
       <StyledPaper>
         <Paper.Section>
-          <Title>Settings for {game.name}</Title>
+          <Title>Settings</Title>
           <Tagline>
+            {game.name} is a{" "}
             <strong>
               {game.privacy === PRIVACY.PUBLIC ? "Public" : "Private"}
             </strong>{" "}
-            hunt, created by{" "}
+            game, created by{" "}
             <strong>
               {game.creator.id === user.id ? "you" : game.creator.name}
             </strong>
             .
           </Tagline>
           <Form onSubmit={handleSubmit}>
-            <h2>General</h2>
             <Row vAlign="top">
               <Column size={4} mSize={12}>
                 <Small>Thumbnail</Small>

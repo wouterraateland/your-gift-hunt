@@ -1,9 +1,10 @@
-import React, { useMemo, useState, useEffect } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { navigate } from "@reach/router"
 import styled from "styled-components"
 import randomstring from "randomstring"
 import slugify from "limax"
 
+import useAsync from "hooks/useAsync"
 import { useFormState } from "react-use-form-state"
 import { useMutation, useApolloClient } from "react-apollo-hooks"
 
@@ -22,7 +23,6 @@ import {
 } from "your-gift-hunt/ui"
 import Present from "components/Present"
 import BackButton from "components/BackButton"
-import StatusMessage from "components/StatusMessage"
 
 import { USER_GAMES, GAME_COUNT_BY_SLUG } from "gql/queries"
 import { CREATE_GAME } from "gql/mutations"
@@ -82,80 +82,76 @@ const NewGamePage = () => {
     []
   )
 
-  const [formState, { text, radio, select }] = useFormState({
+  const [formState, { text, textarea, radio, select }] = useFormState({
     accessType: ACCESS_TYPES.CODE,
     accessCode: randomstring.generate(10)
   })
-  const accessCodeProps = text("accessCode")
   const createGame = useMutation(CREATE_GAME)
   const client = useApolloClient()
 
-  const [state, setState] = useState(null)
+  const [{ isLoading, error }, runAsync] = useAsync()
   const [nameExists, setNameExistence] = useState(false)
 
-  async function checkNameExistence(name) {
-    const res = await client.query({
-      query: GAME_COUNT_BY_SLUG,
-      variables: {
-        creatorSlug: userSlug,
-        gameSlug: slugify(name)
-      }
-    })
-
-    return res.data.gamesConnection.aggregate.count !== 0
+  if (error && !error.params) {
+    throw error
+  }
+  const errors = {
+    ...(error ? error.params : {}),
+    ...(nameExists ? { name: "This name is already taken" } : {})
   }
 
-  useEffect(
-    () => {
-      setNameExistence(false)
-      checkNameExistence(formState.values.name).then(setNameExistence)
+  const checkNameExistence = useCallback(
+    async name => {
+      const res = await client.query({
+        query: GAME_COUNT_BY_SLUG,
+        variables: {
+          creatorSlug: userSlug,
+          gameSlug: slugify(name)
+        }
+      })
+
+      return res.data.gamesConnection.aggregate.count !== 0
     },
-    [formState.values.name]
+    [client, userSlug]
   )
 
-  async function onSubmit(event) {
-    event.preventDefault()
+  useEffect(() => {
+    setNameExistence(false)
+    checkNameExistence(formState.values.name).then(setNameExistence)
+  }, [formState.values.name])
 
-    setState("loading")
+  const onSubmit = useCallback(
+    runAsync(async event => {
+      event.preventDefault()
 
-    try {
       const gameSlug = slugify(formState.values.name)
-
-      const creatorId = user.id
 
       await createGame({
         variables: {
           name: formState.values.name,
           slug: gameSlug,
           description: formState.values.description,
-          creatorId,
+          creatorId: user.id,
           privacy: formState.values.privacy,
           accessType: formState.values.accessType,
           accessCode: formState.values.accessCode
         },
-        update: (proxy, { data: { createGame } }) => {
-          const query = {
+        refetchQueries: [
+          {
             query: USER_GAMES,
-            variables: { userId: creatorId, slugPrefix: "" }
+            variables: { userId: user.id, slugPrefix: "" }
           }
-          const data = proxy.readQuery(query)
-          user.games.push(createGame)
-
-          proxy.writeQuery({ ...query, data })
-        }
+        ]
       })
 
-      setState("success")
-      navigate(`/${userSlug}/${gameSlug}`)
-    } catch (error) {
-      console.error(error)
-      setState("error")
-    }
-  }
+      navigate(`/${userSlug}/game/${gameSlug}`)
+    }),
+    [formState.values, userSlug]
+  )
 
-  function onGenerateClick() {
-    accessCodeProps.onChange({ target: { value: randomstring.generate(10) } })
-  }
+  const onGenerateClick = useCallback(() => {
+    formState.setField("accessCode", randomstring.generate(10))
+  }, [])
 
   return (
     <Layout title="New game">
@@ -182,7 +178,7 @@ const NewGamePage = () => {
                   {...text("name")}
                   required
                   label="Hunt name"
-                  error={nameExists ? "This name is already taken" : null}
+                  error={errors.name}
                 />
               </Field>
               <small>
@@ -194,12 +190,14 @@ const NewGamePage = () => {
               <Field block>
                 <Input
                   block
-                  {...text("description")}
+                  {...textarea("description")}
+                  type="textarea"
                   label="Description"
                   info="optional"
+                  error={errors.description}
                 />
               </Field>
-              <hr />
+              <h2>Privacy</h2>
               <Field block>
                 <Input
                   block
@@ -230,7 +228,11 @@ const NewGamePage = () => {
                   {formState.values.accessType === ACCESS_TYPES.CODE && (
                     <>
                       <Field block>
-                        <Input block {...accessCodeProps} label="Access code" />
+                        <Input
+                          block
+                          {...text("accessCode")}
+                          label="Access code"
+                        />
                       </Field>
                       <small>
                         Chose a word or sentence that is significant to the
@@ -247,19 +249,16 @@ const NewGamePage = () => {
                   )}
                 </>
               )}
-              <hr />
               <Field block>
                 <Float.Right>
                   <Button
                     type="submit"
                     importance="primary"
                     color="primary"
-                    disabled={state === "loading" || nameExists}
+                    disabled={isLoading || nameExists}
                   >
                     Create
                   </Button>
-                  <br />
-                  <StatusMessage status={state} />
                 </Float.Right>
               </Field>
             </Form>

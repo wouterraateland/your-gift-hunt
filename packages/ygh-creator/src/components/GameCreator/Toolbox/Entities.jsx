@@ -80,22 +80,16 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
     []
   )
 
-  useEffect(
-    () => {
-      setExpandedEntity(null)
-    },
-    [isVisible, selectedType]
-  )
+  useEffect(() => {
+    setExpandedEntity(null)
+  }, [isVisible, selectedType])
 
-  useEffect(
-    () => {
-      if (isEntityCreated) {
-        inspectState(entities[entities.length - 1].states[0].id)
-        setEntityCreated(false)
-      }
-    },
-    [isEntityCreated]
-  )
+  useEffect(() => {
+    if (isEntityCreated) {
+      inspectState(entities[entities.length - 1].states[0].id)
+      setEntityCreated(false)
+    }
+  }, [isEntityCreated])
 
   return (
     <EntitiesContainer isVisible={isVisible}>

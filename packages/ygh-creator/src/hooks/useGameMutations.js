@@ -690,6 +690,11 @@ export const useGameMutationsProvider = () => {
           }
 
           entity.states.forEach(state => {
+            state.incomingTransitions = state.incomingTransitions.filter(
+              incomingTransition =>
+                !stateIds.includes(incomingTransition.from.id)
+            )
+
             state.outgoingTransitions.forEach(outgoingTransition => {
               outgoingTransition.unlocks = outgoingTransition.unlocks.filter(
                 ({ id }) => !stateIds.includes(id)
