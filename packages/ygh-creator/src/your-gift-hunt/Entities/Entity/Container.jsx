@@ -29,7 +29,6 @@ const EntityContainer = styled.div.attrs(props => ({
 }))`
   pointer-events: ${props => (props.isInteractive ? "auto" : "none")};
   position: absolute;
-  ${"" /* transition: transform 0.5s ease-out; */}
 `
 
 EntityContainer.defaultProps = {

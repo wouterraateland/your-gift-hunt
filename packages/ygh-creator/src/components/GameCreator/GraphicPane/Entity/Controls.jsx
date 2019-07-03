@@ -16,27 +16,41 @@ const Container = styled.div.attrs(({ zoom }) => ({
     fontSize: `${1 / zoom}em`
   }
 }))`
-  pointer-events: ${props => (props.isVisible ? "none" : "auto")};
+  pointer-events: auto;
 
   position: absolute;
   top: -0.5em;
   left: -0.5em;
   bottom: -0.5em;
   right: -0.5em;
-  z-index: ${props => (props.isVisible ? 1000 : 0)};
 
   opacity: ${props => (props.isVisible ? 1 : 0)};
 
-  border: 0.1em solid ${props => props.theme.color.primary};
+  &::after {
+    content: "";
+
+    pointer-events: none;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+
+    border: 0.1em solid ${props => props.theme.color.primary};
+  }
 `
 Container.displayName = "ControlsContainer"
 
 const controlStyles = css`
   pointer-events: auto;
+  cursor: pointer;
 
   position: absolute;
   top: ${props => (props.top ? 0 : props.bottom ? 100 : 50)}%;
   left: ${props => (props.left ? 0 : props.right ? 100 : 50)}%;
+  z-index: 1000;
 
   width: 1em;
   height: 1em;
@@ -110,7 +124,7 @@ const Controls = ({ entity, parentRotation }) => {
           <RotateControl {...rotateHandlers.topRight} top right />
           <RotateControl {...rotateHandlers.bottomRight} bottom right />
           <RotateControl {...rotateHandlers.bottomLeft} bottom left />
-          <InspectControl onClick={handleInspectClick}>+</InspectControl>
+          <InspectControl onMouseDown={handleInspectClick}>+</InspectControl>
         </>
       )}
     </Container>

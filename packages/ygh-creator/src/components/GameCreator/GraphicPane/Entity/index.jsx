@@ -34,6 +34,7 @@ const EntityContainer = ({ entity, parentRotation }) => {
 
   return (
     <EntityComponent
+      isInteractive={false}
       entity={entity}
       position={position}
       state={entity.states[0]}

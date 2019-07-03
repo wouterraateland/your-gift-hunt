@@ -13,15 +13,12 @@ const useClickOutside = ({ ref, onClickOutside, inputs = [] }) => {
     [ref, onClickOutside, ...inputs]
   )
 
-  useEffect(
-    () => {
-      window.addEventListener("mouseup", onClick)
-      return () => {
-        window.removeEventListener("mouseup", onClick)
-      }
-    },
-    [ref, onClickOutside, ...inputs]
-  )
+  useEffect(() => {
+    window.addEventListener("mouseup", onClick)
+    return () => {
+      window.removeEventListener("mouseup", onClick)
+    }
+  }, [ref, onClickOutside, ...inputs])
 }
 
 export default useClickOutside

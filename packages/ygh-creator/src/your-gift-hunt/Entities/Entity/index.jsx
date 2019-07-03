@@ -23,7 +23,10 @@ const Entity = forwardRef((props, ref) => {
 
   const childrenWithParentRotation = Children.map(children, child =>
     isValidElement(child)
-      ? cloneElement(child, { parentRotation: rotation })
+      ? cloneElement(child, {
+          parentRotation: rotation,
+          ...(isInteractive ? {} : { isInteractive: false })
+        })
       : child
   )
 
