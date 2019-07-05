@@ -9,11 +9,11 @@ const useAsync = () => {
 
   const runAsync = f => async (...args) => {
     try {
-      setState(state => ({ ...state, isLoading: true }))
+      setState(state => ({ ...state, isLoading: true, success: false }))
       await f(...args)
-      setState(state => ({ ...state, isLoading: false, error: null }))
+      setState({ isLoading: false, error: null, success: true })
     } catch (error) {
-      setState(state => ({ ...state, isLoading: false, error }))
+      setState({ isLoading: false, error, success: false })
     }
   }
 

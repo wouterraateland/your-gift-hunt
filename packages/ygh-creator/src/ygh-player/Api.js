@@ -153,6 +153,22 @@ class Api {
 
   logoutUser = t(() => this.post("logoutUser"))
 
+  requestPasswordReset = t(({ email }) =>
+    this.post("requestPasswordReset", { body: { email } })
+  )
+  isResetTokenValid = t(({ resetToken }) =>
+    this.post("isResetTokenValid", { body: { resetToken } })
+  )
+  resetPassword = t(({ resetToken, newPassword, confirmPassword }) =>
+    this.post("resetPassword", {
+      body: {
+        resetToken,
+        newPassword,
+        confirmPassword
+      }
+    })
+  )
+
   updateUserProfile = t(body => this.post("updateUserProfile", { body }))
   updateUserPassword = t(body => this.post("updateUserPassword", { body }))
 

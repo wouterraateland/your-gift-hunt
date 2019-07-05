@@ -1,4 +1,4 @@
-import querystring from "querystring"
+import queryString from "querystring"
 import YGHPlayer from "./YGHPlayer"
 import playTokensStore from "./playTokensStore"
 import userStore from "./userStore"
@@ -19,7 +19,7 @@ class YGHPlayerWeb extends YGHPlayer {
       throw Error("No game identifier")
     }
 
-    const params = querystring.decode(window.location.search.substr(1))
+    const params = queryString.decode(window.location.search.substr(1))
     window.history.replaceState({}, "", window.location.pathname)
 
     if (params.playToken) {
