@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useEffect, useRef } from "react"
 import { Link, navigate } from "@reach/router"
 import queryString from "querystring"
 
@@ -9,7 +9,10 @@ import { Button, Column, Field, Input, Row, VSpace } from "your-gift-hunt/ui"
 import Layout from "layouts/Auth"
 
 const SignupPage = props => {
-  const { redirect = "/" } = queryString.parse(props.location.search.substr(1))
+  const { redirect = "/", email } = queryString.parse(
+    props.location.search.substr(1)
+  )
+  const emailRef = useRef(null)
   const [{ isLoading, error }, runAsync] = useAsync()
   const { registerUser } = useAuth()
 
@@ -39,6 +42,12 @@ const SignupPage = props => {
     }),
     []
   )
+
+  useEffect(() => {
+    if (email && emailRef.current) {
+      emailRef.current.value = email
+    }
+  }, [])
 
   if (error && !error.params) {
     throw error
@@ -94,6 +103,7 @@ const SignupPage = props => {
         </Field>
         <Field block>
           <Input
+            ref={emailRef}
             block
             label="Email"
             name="email"
