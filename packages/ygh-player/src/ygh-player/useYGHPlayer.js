@@ -48,9 +48,7 @@ const useYGHPlayer = ({ apiKey }) => {
     []
   )
 
-  const updateUser = useCallback(() => {
-    setUser(yghPlayer.current.user)
-  }, [])
+  const updateUser = useCallback(() => setUser(yghPlayer.current.user), [])
 
   const loginUser = useCallback(async (...args) => {
     await yghPlayer.current.loginUser(...args)
@@ -66,6 +64,19 @@ const useYGHPlayer = ({ apiKey }) => {
     await yghPlayer.current.logoutUser(...args)
     updateUser()
   }, [])
+
+  const requestPasswordReset = useCallback(
+    (...args) => yghPlayer.current.requestPasswordReset(...args),
+    []
+  )
+  const isResetTokenValid = useCallback(
+    (...args) => yghPlayer.current.isResetTokenValid(...args),
+    []
+  )
+  const resetPassword = useCallback(
+    (...args) => yghPlayer.current.resetPassword(...args),
+    []
+  )
 
   const updateUserProfile = useCallback(async (...args) => {
     await yghPlayer.current.updateUserProfile(...args)
@@ -174,6 +185,10 @@ const useYGHPlayer = ({ apiKey }) => {
     loginUser,
     registerUser,
     logoutUser,
+    requestPasswordReset,
+    isResetTokenValid,
+    resetPassword,
+
     updateUserProfile,
     updateUserPassword,
     updateGameImage,

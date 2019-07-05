@@ -1,4 +1,4 @@
-import querystring from "querystring"
+import queryString from "querystring"
 import YGHPlayer from "./YGHPlayer"
 import playTokensStore from "./playTokensStore"
 import userStore from "./userStore"
@@ -19,7 +19,7 @@ class YGHPlayerWeb extends YGHPlayer {
       throw Error("No game identifier")
     }
 
-    const params = querystring.decode(window.location.search.substr(1))
+    const params = queryString.decode(window.location.search.substr(1))
     window.history.replaceState({}, "", window.location.pathname)
 
     if (params.playToken) {
@@ -58,10 +58,12 @@ class YGHPlayerWeb extends YGHPlayer {
         { id: playToken, createdAt: new Date(), game: { id: this.game.id } },
         ...this.user.plays.filter(({ id }) => id !== playToken)
       ]
-      userStore.write({
-        ...this.user,
-        plays
-      })
+      if (userStore.read()) {
+        userStore.write({
+          ...this.user,
+          plays
+        })
+      }
       this.gamePlays = plays
     } else {
       const plays = [
@@ -89,7 +91,9 @@ class YGHPlayerWeb extends YGHPlayer {
     const gamePlays = playTokensStore.read()
     const playTokens = gamePlays.map(({ id }) => id)
     const user = await super.loginUser({ ...options, playTokens })
-    userStore.write(user)
+    if (options.shouldRemind) {
+      userStore.write(user)
+    }
     if (user) {
       const userPlayTokens = user.plays.map(({ id }) => id)
       playTokensStore.write(
@@ -105,7 +109,9 @@ class YGHPlayerWeb extends YGHPlayer {
     const playTokens = gamePlays.map(({ id }) => id)
     const user = await super.registerUser({ ...options, playTokens })
     if (user) {
-      userStore.write(user)
+      if (options.shouldRemind) {
+        userStore.write(user)
+      }
       const userPlayTokens = user.plays.map(({ id }) => id)
       playTokensStore.write(
         gamePlays.filter(({ id }) => !userPlayTokens.includes(id))
@@ -117,7 +123,9 @@ class YGHPlayerWeb extends YGHPlayer {
 
   async getUser(...args) {
     const user = await super.getUser(...args)
-    userStore.write(user)
+    if (userStore.read()) {
+      userStore.write(user)
+    }
     if (user) {
       this.gamePlays = user.plays
     } else {
@@ -135,13 +143,17 @@ class YGHPlayerWeb extends YGHPlayer {
 
   async updateUserProfile(...args) {
     const user = await super.updateUserProfile(...args)
-    userStore.write(user)
+    if (userStore.read()) {
+      userStore.write(user)
+    }
     return user
   }
 
   async updateUserPassword(...args) {
     const user = await super.updateUserPassword(...args)
-    userStore.write(user)
+    if (userStore.read()) {
+      userStore.write(user)
+    }
     return user
   }
 }

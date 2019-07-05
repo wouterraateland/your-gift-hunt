@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React from "react"
 import { Link, navigate } from "@reach/router"
 import queryString from "querystring"
 
+import useMutation from "hooks/useMutation"
 import useAuth from "hooks/useAuth"
 
 import { Field, Input, Button } from "your-gift-hunt/ui"
@@ -9,23 +10,23 @@ import Layout from "layouts/Auth"
 
 const LoginPage = props => {
   const { redirect = "/" } = queryString.parse(props.location.search.substr(1))
-  const [errors, setErrors] = useState({})
   const { loginUser } = useAuth()
 
-  async function handleSubmit(event) {
+  const [{ isLoading, error }, handleSubmit] = useMutation(async event => {
     event.preventDefault()
 
     const email = event.target.email.value
     const password = event.target.password.value
     const shouldRemind = event.target.remind.checked
 
-    try {
-      await loginUser({ email, password, shouldRemind })
-      navigate(redirect)
-    } catch ({ params }) {
-      setErrors(params)
-    }
+    await loginUser({ email, password, shouldRemind })
+    navigate(redirect)
+  }, [])
+
+  if (error && !error.params) {
+    throw error
   }
+  const errors = error ? error.params : {}
 
   return (
     <Layout>
@@ -54,7 +55,7 @@ const LoginPage = props => {
         <Input
           block
           label="Remember me"
-          info="This will keep you logged in."
+          info="This will keep you logged in for 60 days."
           name="remind"
           type="checkbox"
           error={errors["remind"]}
@@ -64,7 +65,13 @@ const LoginPage = props => {
           <Link to="/auth/amnesia">Forgot your password?</Link>
         </small>
         <Field block>
-          <Button block type="submit" color="primary" importance="primary">
+          <Button
+            block
+            type="submit"
+            color="primary"
+            importance="primary"
+            disabled={isLoading}
+          >
             Log in
           </Button>
         </Field>

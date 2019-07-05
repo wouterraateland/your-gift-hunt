@@ -1,35 +1,33 @@
-import React, { useState } from "react"
+import React from "react"
 import { Link } from "@reach/router"
 
 import useAuth from "hooks/useAuth"
+import useMutation from "hooks/useMutation"
 
 import Layout from "layouts/Auth"
 import { Field, Input, Button } from "your-gift-hunt/ui"
 
 const AmnesiaPage = () => {
-  const { requestPasswordRecovery } = useAuth()
-  const [isSent, setSent] = useState(false)
+  const { requestPasswordReset } = useAuth()
+  const [{ success, isLoading, error }, handleSubmit] = useMutation(
+    async event => {
+      event.preventDefault()
 
-  async function handleSubmit(event) {
-    event.preventDefault()
+      const email = event.target.email.value
+      await requestPasswordReset({ email })
+    },
+    []
+  )
 
-    const email = event.target.email.value
-
-    try {
-      await requestPasswordRecovery(email)
-      setSent(true)
-    } catch (error) {
-      if (error.status === 404) {
-        setSent(true)
-      } else {
-        console.error(error)
-      }
-    }
+  if (error && !error.params) {
+    throw error
   }
+
+  const errors = error ? error.params : {}
 
   return (
     <Layout>
-      {isSent ? (
+      {success ? (
         <p>Check your inbox for your reset link.</p>
       ) : (
         <>
@@ -39,10 +37,23 @@ const AmnesiaPage = () => {
               in.
             </p>
             <Field block>
-              <Input block label="Email" name="email" type="email" required />
+              <Input
+                block
+                label="Email"
+                name="email"
+                type="email"
+                required
+                error={errors.email}
+              />
             </Field>
             <Field block>
-              <Button block type="submit" color="primary" importance="primary">
+              <Button
+                block
+                type="submit"
+                color="primary"
+                importance="primary"
+                disabled={isLoading}
+              >
                 Get reset link
               </Button>
             </Field>

@@ -1,54 +1,101 @@
-import React, { useState } from "react"
-import { navigate } from "@reach/router"
+import React, { useEffect, useRef, useState } from "react"
+import { Link } from "@reach/router"
+import queryString from "querystring"
 
 import useAuth from "hooks/useAuth"
+import useMutation from "hooks/useMutation"
 
 import Layout from "layouts/Auth"
-import { Field, Input, Button } from "your-gift-hunt/ui"
+import { Button, Field, Input, Loader } from "your-gift-hunt/ui"
 
 const PasswordResetPage = () => {
-  const { isLoggedIn, updateUser } = useAuth()
-  const [errors, setErrors] = useState({})
+  const { isResetTokenValid, resetPassword } = useAuth()
 
-  async function handleSubmit(event) {
-    event.preventDefault()
+  const resetToken = useRef(null)
+  const [resetTokenValidity, setResetTokenValidity] = useState(null)
 
-    const password = event.target.password.value
+  const [{ isLoading, error, success }, handleSubmit] = useMutation(
+    async event => {
+      event.preventDefault()
 
-    if (password.length < 8) {
-      setErrors({ password: "Password requires at least 8 characters" })
-      try {
-        await updateUser({ password })
-        navigate("/")
-      } catch (error) {
-        console.error(error)
-      }
-    }
+      const newPassword = event.target.newPassword.value
+      const confirmPassword = event.target.confirmPassword.value
+
+      await resetPassword({
+        resetToken: resetToken.current,
+        newPassword,
+        confirmPassword
+      })
+    },
+    []
+  )
+
+  useEffect(() => {
+    const params = queryString.decode(window.location.search.substr(1))
+    window.history.replaceState({}, "", window.location.pathname)
+    resetToken.current = params.resetToken
+    isResetTokenValid({ resetToken: resetToken.current }).then(
+      setResetTokenValidity
+    )
+  }, [])
+
+  if (error && !error.params) {
+    throw error
   }
+  const errors = error ? error.params : {}
 
   return (
     <Layout>
-      {isLoggedIn ? (
-        <form onSubmit={handleSubmit}>
-          <p>Type your new password.</p>
-          <Field block>
-            <Input
-              block
-              label="New password"
-              name="password"
-              type="password"
-              error={errors["password"]}
-              required
-            />
-          </Field>
-          <Field block>
-            <Button block type="submit" color="primary" importance="primary">
-              Reset password
-            </Button>
-          </Field>
-        </form>
+      {resetTokenValidity === null ? (
+        <Loader />
+      ) : resetTokenValidity ? (
+        success ? (
+          <p>
+            Password reset successfully!
+            <br />
+            Continue to <Link to="/auth/login">login</Link>.
+          </p>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <p>Reset your password.</p>
+            <Field block>
+              <Input
+                block
+                type="password"
+                required
+                label="New password"
+                name="newPassword"
+                error={errors["newPassword"]}
+              />
+            </Field>
+            <Field block>
+              <Input
+                block
+                type="password"
+                required
+                label="Confirm password"
+                name="confirmPassword"
+                error={errors["confirmPassword"]}
+              />
+            </Field>
+            <Field block>
+              <Button
+                block
+                type="submit"
+                color="primary"
+                importance="primary"
+                disabled={isLoading}
+              >
+                Reset password
+              </Button>
+            </Field>
+          </form>
+        )
       ) : (
-        <p>Invalid reset code.</p>
+        <p>
+          The reset code is invalid or expired. Request a new one{" "}
+          <Link to="/auth/amnesia">here</Link>.
+        </p>
       )}
     </Layout>
   )

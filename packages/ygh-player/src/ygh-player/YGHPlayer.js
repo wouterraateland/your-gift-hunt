@@ -172,24 +172,31 @@ class YGHPlayer {
   }
 
   async loginUser(...args) {
-    const user = await this.api.loginUser(...args)
-    return this.setUser(user)
+    return this.setUser(await this.api.loginUser(...args))
   }
 
   async registerUser(...args) {
-    const user = await this.api.registerUser(...args)
-    return this.setUser(user)
+    return this.setUser(await this.api.registerUser(...args))
   }
 
   async getUser(...args) {
-    const user = await this.api.getUser(...args)
-    return this.setUser(user)
+    return this.setUser(await this.api.getUser(...args))
   }
 
   async logoutUser(...args) {
     const res = await this.api.logoutUser(...args)
     this.setUser(null)
     return res
+  }
+
+  async requestPasswordReset(...args) {
+    return await this.api.requestPasswordReset(...args)
+  }
+  async isResetTokenValid(...args) {
+    return await this.api.isResetTokenValid(...args)
+  }
+  async resetPassword(...args) {
+    return await this.api.resetPassword(...args)
   }
 
   async updateUserProfile(...args) {
