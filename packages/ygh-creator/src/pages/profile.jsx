@@ -28,8 +28,15 @@ const Form = styled.form`
   padding: 0 1em;
 `
 
-const ProfilePage = () => {
-  const [{ isLoading, error }, runAsync] = useAsync()
+const Title = styled.h1`
+  margin: 0;
+`
+const SubTitle = styled.h2`
+  margin: 0 0 0.5em;
+`
+
+const ProfileEditForm = () => {
+  const [{ isLoading, error, success }, runAsync] = useAsync()
   const { user } = useAuth()
   const { updateUserProfile } = useYGHPlayerContext()
 
@@ -73,90 +80,178 @@ const ProfilePage = () => {
         }
       })
     }),
-    []
+    [formState.values, user.id]
   )
 
   const errors = error ? error.params : {}
 
   return (
-    <Layout title="Profile">
-      <Wrapper size="large">
-        <Paper>
-          <Paper.Section>
-            <BackButton />
-            <h1>Edit your profile</h1>
-            <Form onSubmit={onSubmit}>
-              <Row>
-                <Column size={4} mSize={12}>
-                  <EditableAvatar
-                    placeholder={user.avatar}
-                    onChange={avatar => formState.setField("avatar", avatar)}
-                  />
-                </Column>
-                <Column size={8} mSize={12}>
-                  <Field block>
-                    <Row>
-                      <Column size={4} sSize={12}>
-                        <Input
-                          block
-                          {...text("firstName")}
-                          label="First name"
-                        />
-                      </Column>
-                      <Column size={3} sSize={12}>
-                        <Input
-                          block
-                          {...text("middleName")}
-                          label="Middle name"
-                        />
-                      </Column>
-                      <Column size={5} sSize={12}>
-                        <Input block {...text("lastName")} label="Last name" />
-                      </Column>
-                    </Row>
-                  </Field>
-                  <Field block>
-                    <Input
-                      block
-                      {...text("email")}
-                      label="Email"
-                      error={errors["email"]}
-                    />
-                  </Field>
-                  <Field block>
-                    <Input
-                      block
-                      {...text("username")}
-                      label="Username"
-                      error={errors["username"]}
-                    />
-                  </Field>
-                  <small>
-                    https://play.yourgifthunt.com/{formState.values.username}
-                  </small>
-                </Column>
-              </Row>
-              <Field block>
-                <Float.Right>
-                  <StatusMessage
-                    status={isLoading ? "loading" : error ? "error" : null}
-                  />{" "}
-                  <Button
-                    type="submit"
-                    importance="primary"
-                    color="primary"
-                    disabled={isLoading}
-                  >
-                    Update profile
-                  </Button>
-                </Float.Right>
-              </Field>
-            </Form>
-          </Paper.Section>
-        </Paper>
-      </Wrapper>
-    </Layout>
+    <Form onSubmit={onSubmit}>
+      <SubTitle>Basic</SubTitle>
+      <Row>
+        <Column size={4} mSize={12}>
+          <EditableAvatar
+            placeholder={user.avatar}
+            onChange={avatar => formState.setField("avatar", avatar)}
+          />
+        </Column>
+        <Column size={8} mSize={12}>
+          <Field block>
+            <Row>
+              <Column size={4} sSize={12}>
+                <Input block {...text("firstName")} label="First name" />
+              </Column>
+              <Column size={3} sSize={12}>
+                <Input block {...text("middleName")} label="Middle name" />
+              </Column>
+              <Column size={5} sSize={12}>
+                <Input block {...text("lastName")} label="Last name" />
+              </Column>
+            </Row>
+          </Field>
+          <Field block>
+            <Input
+              block
+              {...text("email")}
+              label="Email"
+              error={errors["email"]}
+            />
+          </Field>
+          <Field block>
+            <Input
+              block
+              {...text("username")}
+              label="Username"
+              error={errors["username"]}
+            />
+          </Field>
+          <small>
+            https://play.yourgifthunt.com/{formState.values.username}
+          </small>
+        </Column>
+      </Row>
+      <Field block>
+        <Float.Right>
+          <StatusMessage
+            status={
+              success
+                ? "success"
+                : isLoading
+                ? "loading"
+                : error
+                ? "error"
+                : null
+            }
+          />{" "}
+          <Button
+            type="submit"
+            importance="primary"
+            color="primary"
+            disabled={isLoading}
+          >
+            Update profile
+          </Button>
+        </Float.Right>
+      </Field>
+    </Form>
   )
 }
+
+const PasswordEditForm = () => {
+  const [{ isLoading, error, success }, runAsync] = useAsync()
+
+  const { updateUserPassword } = useYGHPlayerContext()
+
+  const [formState, { password }] = useFormState({
+    currentPassword: null,
+    newPassword: null,
+    confirmPassword: null
+  })
+
+  const onSubmit = useCallback(
+    runAsync(async event => {
+      event.preventDefault()
+
+      const { currentPassword, newPassword, confirmPassword } = formState.values
+
+      await updateUserPassword({
+        currentPassword,
+        newPassword,
+        confirmPassword
+      })
+
+      formState.clear()
+    }),
+    [formState.values]
+  )
+
+  const errors = error ? error.params : {}
+
+  return (
+    <Form onSubmit={onSubmit}>
+      <SubTitle>Password</SubTitle>
+      <Field block>
+        <Input
+          block
+          {...password("currentPassword")}
+          label="Current password"
+          error={errors["currentPassword"]}
+        />
+      </Field>
+      <Field block>
+        <Input block {...password("newPassword")} label="New password" />
+      </Field>
+      <Field block>
+        <Input
+          block
+          {...password("confirmPassword")}
+          label="Confirm new password"
+        />
+      </Field>
+      <Field block>
+        <Float.Right>
+          <StatusMessage
+            status={
+              success
+                ? "success"
+                : isLoading
+                ? "loading"
+                : error
+                ? "error"
+                : null
+            }
+          />{" "}
+          <Button
+            type="submit"
+            importance="primary"
+            color="primary"
+            disabled={isLoading}
+          >
+            Update password
+          </Button>
+        </Float.Right>
+      </Field>
+    </Form>
+  )
+}
+
+const ProfilePage = () => (
+  <Layout title="Profile">
+    <Wrapper size="large">
+      <Paper>
+        <Paper.Section>
+          <BackButton />
+          <Title>Edit your profile</Title>
+        </Paper.Section>
+        <Paper.Section>
+          <ProfileEditForm />
+        </Paper.Section>
+        <Paper.Section>
+          <PasswordEditForm />
+        </Paper.Section>
+      </Paper>
+    </Wrapper>
+  </Layout>
+)
 
 export default ProfilePage
