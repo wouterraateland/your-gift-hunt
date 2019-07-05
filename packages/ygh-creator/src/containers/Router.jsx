@@ -1,5 +1,5 @@
 import React from "react"
-import { Router, Redirect } from "@reach/router"
+import { Router } from "@reach/router"
 
 import useAuth from "hooks/useAuth"
 
@@ -25,7 +25,9 @@ const MainRouter = () => {
 
   return isLoggedIn ? (
     <Router>
-      <Redirect from="/auth/login" to="/" noThrow />
+      <Login path="/auth/login" />
+      <Signup path="/auth/signup" />
+      <Amnesia path="/auth/amnesia" />
       <PasswordReset path="/auth/password-reset" />
       <Profile path="/profile" />
 
