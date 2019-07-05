@@ -184,6 +184,7 @@ const Computer = forwardRef(
                 onKeyPress={event =>
                   event.keyCode === 13 ? handleOnSubmit(event) : true
                 }
+                onBlur={() => input.current.focus()}
                 onChange={event => setAnswer(event.target.value)}
                 value={answer}
               />

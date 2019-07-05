@@ -1,11 +1,11 @@
-import React, { useCallback } from "react"
+import React from "react"
 import { Link, navigate } from "@reach/router"
 import queryString from "querystring"
 
 import useMutation from "hooks/useMutation"
 import useAuth from "hooks/useAuth"
 
-import { Button, Column, Field, Input, Row, VSpace } from "your-gift-hunt/ui"
+import { Button, Column, Field, Input, Row } from "your-gift-hunt/ui"
 import Layout from "layouts/Auth"
 
 const SignupPage = props => {

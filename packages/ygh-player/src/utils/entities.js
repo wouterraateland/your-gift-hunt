@@ -21,3 +21,9 @@ export const getInformationSlotValue = name => entity =>
     .map(e => e.informationSlots)
     .map(slots => slots.find(slot => slot.name === name))
     .fold(s => s.value)
+
+export const stripEntity = entity =>
+  Maybe(entity).fold(
+    ({ left, top, rotation, width, height, z, ...strippedEntity }) =>
+      strippedEntity
+  )

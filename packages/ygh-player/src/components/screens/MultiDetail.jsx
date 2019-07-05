@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
+import _ from "utils"
 
 import {
   DefaultEntityDetail,
@@ -46,7 +47,7 @@ export default ({ entity, close, ...props }) => {
   const { width, height, rem, orientation } = useWindowSize()
 
   const currentEntity =
-    entityIndex === -1 ? null : containedEntities[entityIndex]
+    entityIndex === -1 ? null : _.stripEntity(containedEntities[entityIndex])
 
   const Component = currentEntity
     ? getEntityDetailComponent(currentEntity.template.name) ||

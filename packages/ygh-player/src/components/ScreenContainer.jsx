@@ -1,14 +1,14 @@
 import React from "react"
 import useScreen from "hooks/useScreen"
 import useGame from "hooks/useGame"
+import _ from "utils"
 
 const ScreenContainer = () => {
   const { getEntityById } = useGame()
   const { screen, close } = useScreen()
   const Component = screen ? screen.component : null
   const entity = getEntityById(screen.entityId)
-  const { left, top, rotation, width, height, z, ...strippedEntity } =
-    entity || {}
+  const strippedEntity = _.stripEntity(entity)
 
   return Component ? <Component entity={strippedEntity} close={close} /> : null
 }
