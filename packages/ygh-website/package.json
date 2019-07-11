@@ -1,7 +1,7 @@
 {
   "name": "ygh-website",
   "description": "Marketing website for Your Gift Hunt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://yourgifthunt.com/",
   "repository": "https://github.com/wouterraateland/your-gift-hunt/tree/master/packages/ygh-icons",
   "author": "Wouter Raateland <wouterraateland@gmail.com>",
