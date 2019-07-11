@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import { Paper, VSpace } from "your-gift-hunt/ui"
+import { Paper, VSpace } from "ygh-ui"
 import EntityTypeIcon from "components/EntityTypeIcon"
 import StateTag from "components/Primitives/StateTag"
 

@@ -4,7 +4,7 @@ import { graphql } from "gatsby"
 import Helmet from "react-helmet"
 
 import Content, { HTMLContent } from "components/Content"
-import { Wrapper } from "your-gift-hunt/ui"
+import { Wrapper } from "ygh-ui"
 import Layout from "components/Layout"
 import QuestionList from "components/QuestionList"
 

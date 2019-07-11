@@ -1,7 +1,7 @@
 import React from "react"
 import styled, { css } from "styled-components"
 
-import { ToolTip } from "your-gift-hunt/ui"
+import { ToolTip } from "ygh-ui"
 
 const TypeEntryContainer = styled.div`
   cursor: pointer;
@@ -23,13 +23,13 @@ const TypeEntryContainer = styled.div`
   }
 
   &:first-child {
-    border-radius: ${props => props.theme.borderRadius}
-      ${props => props.theme.borderRadius} 0 0;
+    border-radius: ${props =>
+      `${props.theme.borderRadius} ${props.theme.borderRadius} 0 0`};
   }
 
   &:last-child {
-    border-radius: 0 0 ${props => props.theme.borderRadius}
-      ${props => props.theme.borderRadius};
+    border-radius: ${props =>
+      `0 0 ${props.theme.borderRadius} ${props.theme.borderRadius}`};
   }
 `
 

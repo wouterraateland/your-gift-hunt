@@ -1,7 +1,7 @@
 import React from "react"
 import styled, { keyframes } from "styled-components"
 
-import Logo from "your-gift-hunt/icons/Logo"
+import Logo from "ygh-icons/Logo"
 
 const Container = styled.div`
   width: 100%;

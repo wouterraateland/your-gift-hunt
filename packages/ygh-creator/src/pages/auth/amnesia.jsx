@@ -5,7 +5,7 @@ import useAuth from "hooks/useAuth"
 import useAsync from "hooks/useAsync"
 
 import Layout from "layouts/Auth"
-import { Field, Input, Button } from "your-gift-hunt/ui"
+import { Field, Input, Button } from "ygh-ui"
 
 const AmnesiaPage = () => {
   const { requestPasswordReset } = useAuth()

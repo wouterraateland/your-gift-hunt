@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Cog } from "your-gift-hunt/icons"
+import { Cog } from "ygh-icons"
 
 import { Link } from "@reach/router"
 

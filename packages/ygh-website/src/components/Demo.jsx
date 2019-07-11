@@ -3,8 +3,8 @@ import styled from "styled-components"
 
 import useModal from "hooks/useModal"
 
-import { Play } from "your-gift-hunt/icons"
-import { Button } from "your-gift-hunt/ui"
+import { Play } from "ygh-icons"
+import { Button } from "ygh-ui"
 import PreviewCompatibleImage from "components/PreviewCompatibleImage"
 import SubscribeModal from "components/SubscribeModal"
 

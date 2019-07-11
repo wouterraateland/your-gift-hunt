@@ -4,7 +4,7 @@ import styled from "styled-components"
 import useGameMutations from "hooks/useGameMutations"
 import useDebounce from "hooks/useDebounce"
 
-import { Eye, Field, Input, Paper, ToolTip } from "your-gift-hunt/ui"
+import { Eye, Field, Input, Paper, ToolTip } from "ygh-ui"
 
 import Display from "./Display"
 

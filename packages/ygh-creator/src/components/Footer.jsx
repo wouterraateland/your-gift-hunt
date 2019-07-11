@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import moment from "moment"
 
-import { Wrapper } from "your-gift-hunt/ui"
+import { Wrapper } from "ygh-ui"
 
 const StyledFooter = styled.footer`
   padding: 2em 0;

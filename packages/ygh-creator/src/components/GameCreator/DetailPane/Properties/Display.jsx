@@ -7,7 +7,7 @@ import useAsync from "hooks/useAsync"
 
 import { components } from "react-select"
 
-import { Field, Select, Message } from "your-gift-hunt/ui"
+import { Field, Select, Message } from "ygh-ui"
 import InformationSlotTag from "components/Primitives/InformationSlotTag"
 
 const Option = ({ data, ...otherProps }) => (

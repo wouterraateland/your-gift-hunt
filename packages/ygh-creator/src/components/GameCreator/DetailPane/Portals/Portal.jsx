@@ -8,7 +8,7 @@ import useAsync from "hooks/useAsync"
 
 import { components } from "react-select"
 
-import { Field, Message, Paper, Select } from "your-gift-hunt/ui"
+import { Field, Message, Paper, Select } from "ygh-ui"
 import EntranceTag from "components/Primitives/EntranceTag"
 
 const Blockquote = styled.blockquote`

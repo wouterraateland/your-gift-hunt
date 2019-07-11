@@ -1,6 +1,6 @@
 import React from "react"
-import { ActionButton } from "your-gift-hunt/ui"
-import { Bin } from "your-gift-hunt/icons"
+import { ActionButton } from "ygh-ui"
+import { Bin } from "ygh-icons"
 
 import styled from "styled-components"
 import EntityTag from "components/GameCreator/ClickableEntityTag"

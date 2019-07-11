@@ -8,7 +8,7 @@ import useTemplateSet from "hooks/useTemplateSet"
 import useTemplateInspector from "hooks/useTemplateInspector"
 import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 
-import { Align, Button, Input, Message, Paper, VSpace } from "your-gift-hunt/ui"
+import { Align, Button, Input, Message, Paper, VSpace } from "ygh-ui"
 import EntityTypeIcon from "components/EntityTypeIcon"
 
 const ScrollablePaper = styled(Paper)`

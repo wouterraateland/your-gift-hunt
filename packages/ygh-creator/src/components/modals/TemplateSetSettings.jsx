@@ -8,7 +8,7 @@ import useAsync from "hooks/useAsync"
 import { useFormState } from "react-use-form-state"
 
 import Modal from "containers/Modal"
-import { Button, Field, Float, Input, Paper } from "your-gift-hunt/ui"
+import { Button, Field, Float, Input, Paper } from "ygh-ui"
 import StatusMessage from "components/StatusMessage"
 
 const StyledPaper = styled(Paper.Container)`

@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import { ToolTip } from "your-gift-hunt/ui"
+import { ToolTip } from "ygh-ui"
 
 const InputTagContainer = styled.span`
   position: relative;

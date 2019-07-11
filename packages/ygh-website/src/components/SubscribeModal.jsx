@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react"
 
-import { Align, Paper, Wrapper } from "your-gift-hunt/ui"
+import { Align, Paper, Wrapper } from "ygh-ui"
 import CTA from "components/CTA"
 
 const SubscribeModal = forwardRef((_, ref) => (

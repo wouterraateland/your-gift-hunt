@@ -6,7 +6,9 @@ export const MenuContainer = styled.div`
   vertical-align: middle;
 `
 
-export const MenuItem = styled.div`
+export const MenuItem = styled.div.attrs(() => ({
+  tabIndex: 0
+}))`
   cursor: pointer;
 
   display: block;
@@ -36,7 +38,8 @@ const MenuToggle = styled.div`
 
   color: ${props => props.theme.color.text};
 
-  ${MenuContainer}:hover & {
+  ${MenuContainer}:hover &,
+  ${MenuContainer}:focus-within & {
     color: ${props => props.theme.color.emphasis};
   }
 
@@ -109,7 +112,8 @@ export const MenuItems = styled.div`
     transform: translate(50%, -50%) rotate(45deg);
   }
 
-  ${MenuContainer}:hover & {
+  ${MenuContainer}:hover &,
+  ${MenuContainer}:focus-within & {
     box-shadow: 0 0 60em 60em #0004;
 
     transform: scale(1);

@@ -8,8 +8,8 @@ import useGameMutations from "hooks/useGameMutations"
 
 import useClickOutside from "hooks/useClickOutside"
 
-import { Button } from "your-gift-hunt/ui"
-import { Bin } from "your-gift-hunt/icons"
+import { Button } from "ygh-ui"
+import { Bin } from "ygh-icons"
 
 const Container = styled.div`
   margin-top: 1em;

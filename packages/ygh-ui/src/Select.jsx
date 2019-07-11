@@ -17,6 +17,7 @@ const Label = styled.label`
 const createStyles = theme => ({
   control: (base, state) => ({
     ...base,
+    minHeight: "43px",
     borderWidth: ".1em",
     boxShadow: "none",
     borderColor: state.isDisabled
@@ -29,7 +30,11 @@ const createStyles = theme => ({
     }
   }),
   dropdownIndicator: base => ({ ...base, cursor: "pointer" }),
-  indicatorsContainer: base => ({ ...base, backgroundColor: "#0001" }),
+  indicatorsContainer: base => ({
+    ...base,
+    backgroundColor: "#0001",
+    borderRadius: "0 .1em .1em 0"
+  }),
   indicatorSeparator: () => ({}),
   menu: base => ({
     ...base,

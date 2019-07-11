@@ -4,8 +4,8 @@ import styled from "styled-components"
 import useGameMutations from "hooks/useGameMutations"
 import useClickOutside from "hooks/useClickOutside"
 
-import { Input, ActionButton, Button } from "your-gift-hunt/ui"
-import { Pen } from "your-gift-hunt/icons"
+import { Input, ActionButton, Button } from "ygh-ui"
+import { Pen } from "ygh-icons"
 
 const Form = styled.form`
   display: inline-block;

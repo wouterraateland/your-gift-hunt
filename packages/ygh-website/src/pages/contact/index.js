@@ -11,7 +11,7 @@ import {
   Row,
   Section,
   Wrapper
-} from "your-gift-hunt/ui"
+} from "ygh-ui"
 
 function encode(data) {
   return Object.keys(data)

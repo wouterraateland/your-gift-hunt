@@ -5,7 +5,7 @@ import queryString from "querystring"
 import useAsync from "hooks/useAsync"
 import useAuth from "hooks/useAuth"
 
-import { Field, Input, Button } from "your-gift-hunt/ui"
+import { Field, Input, Button } from "ygh-ui"
 import Layout from "layouts/Auth"
 
 const LoginPage = props => {

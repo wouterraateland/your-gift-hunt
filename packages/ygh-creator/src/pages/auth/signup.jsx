@@ -5,7 +5,7 @@ import queryString from "querystring"
 import useAsync from "hooks/useAsync"
 import useAuth from "hooks/useAuth"
 
-import { Button, Column, Field, Input, Row, VSpace } from "your-gift-hunt/ui"
+import { Button, Column, Field, Input, Row, VSpace } from "ygh-ui"
 import Layout from "layouts/Auth"
 
 const SignupPage = props => {

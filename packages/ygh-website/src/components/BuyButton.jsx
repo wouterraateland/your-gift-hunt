@@ -1,7 +1,7 @@
 import React from "react"
 import useCheckout from "hooks/useCheckout"
 
-import { Field, Button } from "your-gift-hunt/ui"
+import { Field, Button } from "ygh-ui"
 
 const BuyButton = ({ title, variantId, quantity = 1 }) => {
   const handleCheckout = useCheckout()

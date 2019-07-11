@@ -7,7 +7,7 @@ import Theme from "containers/Theme"
 import Router from "containers/Router"
 import ErrorBoundary from "containers/ErrorBoundary"
 
-import { Loader } from "your-gift-hunt/ui"
+import { Loader } from "ygh-ui"
 
 const App = () => (
   <Theme>

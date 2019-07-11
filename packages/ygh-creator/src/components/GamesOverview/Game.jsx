@@ -5,7 +5,7 @@ import { navigate } from "@reach/router"
 
 import useAuth from "hooks/useAuth"
 
-import { Edit } from "your-gift-hunt/icons"
+import { Edit } from "ygh-icons"
 import { Present } from "your-gift-hunt/components"
 
 import MoreActions from "./MoreActions"
@@ -125,7 +125,7 @@ const Game = ({ game }) => {
       <Info>
         <Title>{game.name}</Title>
         <small>
-          {game.privacy === "PRIVATE" ? "Private" : "Public"} hunt
+          {game.privacy === "PRIVATE" ? "Private" : "Public"} game
           {" • "}
           {game.publishedAt ? (
             `Played ${playCount} time${playCount === 1 ? "" : `s`}`

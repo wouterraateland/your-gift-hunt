@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import useDebounce from "hooks/useDebounce"
 
-import { Paper } from "your-gift-hunt/ui"
+import { Paper } from "ygh-ui"
 
 const SectionTitle = styled.h4`
   cursor: pointer;

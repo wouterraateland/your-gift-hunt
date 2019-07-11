@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-import { Paper } from "your-gift-hunt/ui"
+import { Paper } from "ygh-ui"
 import Section from "components/Section"
 
 const TabbedSection = ({

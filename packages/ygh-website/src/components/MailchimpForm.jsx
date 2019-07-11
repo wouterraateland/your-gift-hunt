@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 
 import MailchimpSubscribe from "react-mailchimp-subscribe"
-import { Input, Button, Field } from "your-gift-hunt/ui"
+import { Input, Button, Field } from "ygh-ui"
 
 const Form = styled.form`
   margin: 0 -1em;

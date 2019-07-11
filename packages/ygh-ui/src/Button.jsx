@@ -1,8 +1,10 @@
 import styled, { css } from "styled-components"
-import { opacify } from "polished"
+import { opacify, transparentize } from "polished"
 import _ from "ygh-utils"
 
-const Button = styled.button`
+const Button = styled.button.attrs(({ disabled }) => ({
+  tabIndex: disabled ? -1 : 0
+}))`
   cursor: pointer;
 
   position: relative;
@@ -110,6 +112,12 @@ const Button = styled.button`
   &:focus {
     outline: none;
     box-shadow: inset 0 0 0 0.1em ${props => props.theme.color.primary};
+    ${props =>
+      props.color === "primary" &&
+      props.importance === "primary" &&
+      css`
+        background-color: ${transparentize(0.5, props.theme.color.primary)};
+      `}
   }
 `
 

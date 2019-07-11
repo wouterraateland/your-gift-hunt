@@ -20,13 +20,13 @@ import {
   Input,
   Select,
   Button
-} from "your-gift-hunt/ui"
-import Present from "components/Present"
+} from "ygh-ui"
+import { Present } from "ygh-icons"
 import BackButton from "components/BackButton"
 
 import { USER_GAMES, GAME_COUNT_BY_SLUG } from "gql/queries"
 import { CREATE_GAME } from "gql/mutations"
-import { ACCESS_TYPES, PRIVACY, accessOptions, nameOptions } from "../data"
+import { ACCESS_TYPES, PRIVACY, accessOptions, nameOptions } from "data"
 
 const CornerDecoration = styled(Float.Right)`
   position: relative;
@@ -163,7 +163,11 @@ const NewGamePage = () => {
             </Float.Left>
             <CornerDecoration>
               <Present
-                style={{ height: "7em", marginRight: "2em", marginTop: "-2em" }}
+                style={{
+                  height: "7em",
+                  marginRight: "2em",
+                  marginTop: "-2em"
+                }}
                 boxColor="#49e"
               />
             </CornerDecoration>
@@ -177,7 +181,8 @@ const NewGamePage = () => {
                 <Input
                   {...text("name")}
                   required
-                  label="Hunt name"
+                  label="Name"
+                  info="You can always edit this"
                   error={errors.name}
                 />
               </Field>
@@ -224,28 +229,27 @@ const NewGamePage = () => {
                       label="Protection type"
                       info=""
                     />
+                    {formState.values.accessType === ACCESS_TYPES.CODE && (
+                      <>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <Input {...text("accessCode")} label="Password" />
+                      </>
+                    )}
                   </Field>
                   {formState.values.accessType === ACCESS_TYPES.CODE && (
-                    <>
-                      <Field block>
-                        <Input
-                          block
-                          {...text("accessCode")}
-                          label="Access code"
-                        />
-                      </Field>
-                      <small>
-                        Chose a word or sentence that is significant to the
-                        player. Or generate a{" "}
-                        <u
-                          style={{ cursor: "pointer" }}
-                          onClick={onGenerateClick}
-                        >
-                          new random code
-                        </u>
-                        .
-                      </small>
-                    </>
+                    <small>
+                      Chose a word or sentence or{" "}
+                      <u
+                        style={{ cursor: "pointer" }}
+                        onClick={onGenerateClick}
+                      >
+                        generate a random password
+                      </u>
+                      .
+                    </small>
+                  )}
+                  {formState.values.accessType === ACCESS_TYPES.NONE && (
+                    <small>Only people you invite can play this game.</small>
                   )}
                 </>
               )}

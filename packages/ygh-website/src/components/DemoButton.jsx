@@ -3,8 +3,8 @@ import styled from "styled-components"
 
 import { Link } from "gatsby"
 
-import { Button } from "your-gift-hunt/ui"
-import Path from "your-gift-hunt/icons/Path"
+import { Button } from "ygh-ui"
+import Path from "ygh-icons/Path"
 
 const StyledPath = styled(Path)`
   margin: -0.25em 0;

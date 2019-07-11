@@ -9,7 +9,7 @@ import {
   Section,
   VSpace,
   Wrapper
-} from "your-gift-hunt/ui"
+} from "ygh-ui"
 
 import Layout from "components/Layout"
 import Hexagon from "components/Hexagon"

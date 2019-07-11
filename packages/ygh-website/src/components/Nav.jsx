@@ -2,8 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
 
-import { Button, Float, Menu, Wrapper } from "your-gift-hunt/ui"
-import { Logo } from "your-gift-hunt/icons"
+import { Button, Float, Menu, Wrapper } from "ygh-ui"
+import { Logo } from "ygh-icons"
 import Account from "components/Account"
 
 const Nav = styled.nav`

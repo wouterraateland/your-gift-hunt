@@ -1,6 +1,6 @@
 import React from "react"
 
-import { InputType } from "your-gift-hunt/ui"
+import { InputType } from "ygh-ui"
 import EntityTag from "./EntityTag"
 import _ from "utils"
 

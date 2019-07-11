@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Align } from "your-gift-hunt/ui"
+import { Align } from "ygh-ui"
 
 import Present from "components/Present"
 
@@ -54,8 +54,8 @@ const EmptyGamesOverview = () => (
       <Present boxColor="#ffcb11" ribbonColor="#3d9d29" />
       <Present boxColor="#fff" ribbonColor="#1484ec" />
     </Inner>
-    <h2>Oops, no games here yet.</h2>
-    <p>Click the button to get started.</p>
+    <h2>No games here yet.</h2>
+    <p>Click the "New game" button to get started.</p>
   </Outer>
 )
 

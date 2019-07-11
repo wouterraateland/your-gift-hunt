@@ -10,8 +10,8 @@ import {
   Align,
   Button,
   VSpace
-} from "your-gift-hunt/ui"
-import { Picture, Location, Friend } from "your-gift-hunt/icons"
+} from "ygh-ui"
+import { Picture, Location, Friend } from "ygh-icons"
 
 import Layout from "components/Layout"
 import CTA from "components/CTA"

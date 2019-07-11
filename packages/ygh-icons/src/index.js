@@ -10,15 +10,20 @@ export { default as Seek } from "./challenges/Seek"
 export { default as Time } from "./challenges/Time"
 
 export { default as Challenge } from "./entities/Challenge"
+export { default as Container } from "./entities/Container"
+export { default as Entrance } from "./entities/Entrance"
 export { default as Info } from "./entities/Info"
 export { default as Item } from "./entities/Item"
 export { default as Object } from "./entities/Object"
+export { default as Portal } from "./entities/Portal"
 export { default as Trigger } from "./entities/Trigger"
 
 export { default as Bin } from "./Bin"
 export { default as Cog } from "./Cog"
 export { default as Edit } from "./Edit"
 export { default as Pen } from "./Pen"
+export { default as Resize } from "./Resize"
+export { default as Rotate } from "./Rotate"
 
 export { default as Present } from "./Present"
 

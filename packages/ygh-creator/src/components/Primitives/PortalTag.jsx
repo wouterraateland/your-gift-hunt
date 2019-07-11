@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Portal } from "your-gift-hunt/icons"
+import { Portal } from "ygh-icons"
 import EntityTag from "./EntityTag"
 
 const PortalTag = ({ entity, portal, showEntity = false }) => (

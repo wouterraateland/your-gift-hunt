@@ -17,7 +17,7 @@ import {
   Paper,
   Row,
   Wrapper
-} from "your-gift-hunt/ui"
+} from "ygh-ui"
 import BackButton from "components/BackButton"
 import StatusMessage from "components/StatusMessage"
 import EditableAvatar from "components/EditableAvatar"

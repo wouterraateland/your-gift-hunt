@@ -1,6 +1,6 @@
 import React from "react"
 import Layout from "components/Layout"
-import { Wrapper } from "your-gift-hunt/ui"
+import { Wrapper } from "ygh-ui"
 
 export default () => (
   <Layout>

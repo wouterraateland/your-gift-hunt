@@ -6,7 +6,7 @@ import useAsync from "hooks/useAsync"
 
 import { components } from "react-select"
 
-import { Field, Message, Select } from "your-gift-hunt/ui"
+import { Field, Message, Select } from "ygh-ui"
 import ClickableEntityTag from "components/GameCreator/ClickableEntityTag"
 import EntityTag from "components/Primitives/EntityTag"
 

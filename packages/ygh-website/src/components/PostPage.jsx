@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Helmet from "react-helmet"
 
-import { Header, Wrapper, Row, Column } from "your-gift-hunt/ui"
+import { Header, Wrapper, Row, Column } from "ygh-ui"
 
 import MailchimpForm from "components/MailchimpForm"
 

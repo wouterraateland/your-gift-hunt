@@ -4,7 +4,7 @@ import styled from "styled-components"
 import useGame from "hooks/useGame"
 
 import Modal from "containers/Modal"
-import { Paper } from "your-gift-hunt/ui"
+import { Paper } from "ygh-ui"
 
 const StyledPaper = styled(Paper.Container)`
   width: 45em;

@@ -4,7 +4,7 @@ import styled from "styled-components"
 import Helmet from "react-helmet"
 
 import Layout from "components/Layout"
-import { Section, Wrapper } from "your-gift-hunt/ui"
+import { Section, Wrapper } from "ygh-ui"
 import Content, { HTMLContent } from "components/Content"
 import Present from "components/Present"
 

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components"
 
-import { Paper } from "your-gift-hunt/ui"
+import { Paper } from "ygh-ui"
 
 const DetailPaneBackground = styled(Paper.Container)`
   position: absolute;

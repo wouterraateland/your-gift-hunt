@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 
-import { Paper, Float, Button } from "your-gift-hunt/ui"
+import { Paper, Float, Button } from "ygh-ui"
 import GoogleMap from "./GoogleMap"
 
 const FloatingBox = styled.div`

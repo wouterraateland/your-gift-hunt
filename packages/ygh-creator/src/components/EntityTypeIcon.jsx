@@ -1,5 +1,5 @@
 import React from "react"
-import * as Icon from "your-gift-hunt/icons"
+import * as Icon from "ygh-icons"
 
 const EntityTypeIcon = ({
   isItem,

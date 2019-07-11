@@ -3,8 +3,8 @@ import styled from "styled-components"
 
 import useGameMutations from "hooks/useGameMutations"
 
-import { ActionButton, Float } from "your-gift-hunt/ui"
-import { Bin, Pen } from "your-gift-hunt/icons"
+import { ActionButton, Float } from "ygh-ui"
+import { Bin, Pen } from "ygh-icons"
 
 const Text = styled.span`
   display: inline-block;

@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Align } from "your-gift-hunt/ui"
+import { Align } from "ygh-ui"
 
 import Present from "components/Present"
 
@@ -55,7 +55,7 @@ const TemplateSetsOverview = () => (
       <Present boxColor="#fff" ribbonColor="#1484ec" />
     </Inner>
     <h2>You haven't created any template sets yet.</h2>
-    <p>Click the button to get started.</p>
+    <p>Click the "New set" button to get started.</p>
   </Outer>
 )
 

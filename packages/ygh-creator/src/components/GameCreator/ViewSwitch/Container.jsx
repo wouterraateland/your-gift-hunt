@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import { Paper } from "your-gift-hunt/ui"
+import { Paper } from "ygh-ui"
 
 const views = ["graphic", "logic"]
 

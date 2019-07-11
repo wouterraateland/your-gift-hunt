@@ -17,7 +17,7 @@ import {
   Field,
   Input,
   Button
-} from "your-gift-hunt/ui"
+} from "ygh-ui"
 import Present from "components/Present"
 import BackButton from "components/BackButton"
 

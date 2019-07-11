@@ -9,7 +9,7 @@ import useResizeRotateControls from "hooks/useResizeRotateControls"
 
 import PanZoomContext from "contexts/PanZoom"
 
-import { Resize, Rotate } from "your-gift-hunt/icons"
+import { Resize, Rotate } from "ygh-icons"
 
 const Container = styled.div.attrs(({ zoom }) => ({
   style: {

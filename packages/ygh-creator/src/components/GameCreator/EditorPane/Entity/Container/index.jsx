@@ -7,7 +7,7 @@ import useGameQueries from "hooks/useGameQueries"
 import useInspector from "hooks/useInspector"
 import useEditor from "hooks/useEditor"
 
-import { ToolTip } from "your-gift-hunt/ui"
+import { ToolTip } from "ygh-ui"
 import Entity from "components/GameCreator/EditorPane/Entity"
 import Nodes from "components/GameCreator/EditorPane/Entity/Nodes"
 

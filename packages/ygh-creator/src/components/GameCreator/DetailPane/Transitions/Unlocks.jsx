@@ -9,8 +9,8 @@ import useGameMutations from "hooks/useGameMutations"
 
 import useAsync from "hooks/useAsync"
 
-import { ActionButton, Button, Message, Options } from "your-gift-hunt/ui"
-import { Bin } from "your-gift-hunt/icons"
+import { ActionButton, Button, Message, Options } from "ygh-ui"
+import { Bin } from "ygh-icons"
 import ClickableEntityTag from "components/GameCreator/ClickableEntityTag"
 import ClickableStateTag from "components/GameCreator/ClickableStateTag"
 import EntityTag from "components/Primitives/EntityTag"

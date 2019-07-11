@@ -6,7 +6,7 @@ import useGameMutations from "hooks/useGameMutations"
 import { useFormState } from "react-use-form-state"
 import useClickOutside from "hooks/useClickOutside"
 
-import { Field, Input, Button } from "your-gift-hunt/ui"
+import { Field, Input, Button } from "ygh-ui"
 
 const Form = styled.form`
   margin-top: 0.25em;

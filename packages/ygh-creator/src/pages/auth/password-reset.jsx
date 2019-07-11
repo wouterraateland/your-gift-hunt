@@ -6,7 +6,7 @@ import useAuth from "hooks/useAuth"
 import useAsync from "hooks/useAsync"
 
 import Layout from "layouts/Auth"
-import { Button, Field, Input, Loader } from "your-gift-hunt/ui"
+import { Button, Field, Input, Loader } from "ygh-ui"
 
 const PasswordResetPage = () => {
   const { isResetTokenValid, resetPassword } = useAuth()

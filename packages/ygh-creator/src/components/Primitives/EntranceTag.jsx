@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Entrance } from "your-gift-hunt/icons"
+import { Entrance } from "ygh-icons"
 import EntityTag from "./EntityTag"
 
 const EntranceTag = ({ entity, entrance, showEntity = false }) => (

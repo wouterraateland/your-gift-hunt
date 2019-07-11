@@ -7,7 +7,7 @@ import urljoin from "url-join"
 
 import Content, { HTMLContent } from "components/Content"
 import MailchimpForm from "components/MailchimpForm"
-import { Wrapper, Article } from "your-gift-hunt/ui"
+import { Wrapper, Article } from "ygh-ui"
 
 import Layout from "components/Layout"
 import Disqus from "components/Disqus"

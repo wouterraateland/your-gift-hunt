@@ -4,7 +4,7 @@ import { StaticQuery, graphql } from "gatsby"
 
 import { ModalProvider } from "contexts/Modal"
 
-import { FullHeight } from "your-gift-hunt/ui"
+import { FullHeight } from "ygh-ui"
 import Theme from "containers/Theme"
 import SEO from "components/SEO"
 import Nav from "components/Nav"

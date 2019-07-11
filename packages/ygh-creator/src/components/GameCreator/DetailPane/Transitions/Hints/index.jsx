@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 
-import { Button, VSpace } from "your-gift-hunt/ui"
+import { Button, VSpace } from "ygh-ui"
 
 import Hint from "./Hint"
 import HintForm from "./HintForm"

@@ -7,7 +7,7 @@ import useGame from "hooks/useGame"
 import useMetaActions from "hooks/useMetaActions"
 
 import Modal from "containers/Modal"
-import { Paper, Float, Button } from "your-gift-hunt/ui"
+import { Paper, Float, Button } from "ygh-ui"
 
 const StyledPaper = styled(Paper.Container)`
   width: 45em;

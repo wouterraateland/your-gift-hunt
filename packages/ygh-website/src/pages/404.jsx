@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import { Wrapper } from "your-gift-hunt/ui"
+import { Wrapper } from "ygh-ui"
 import Layout from "components/Layout"
 import { Floor } from "your-gift-hunt/entities"
 

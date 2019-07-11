@@ -2,13 +2,13 @@ import React, { useCallback } from "react"
 import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 import useTemplateInspector from "hooks/useTemplateInspector"
 
-import { Paper } from "your-gift-hunt/ui"
+import { Paper } from "ygh-ui"
 import {
   Item,
   Object as ObjectIcon,
   Container,
   Trigger
-} from "your-gift-hunt/icons"
+} from "ygh-icons"
 
 import Form from "components/TemplateSetCreator/DetailPane/Form"
 

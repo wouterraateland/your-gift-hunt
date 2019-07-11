@@ -4,7 +4,7 @@ import { Link } from "@reach/router"
 
 import useAuth from "hooks/useAuth"
 
-import Menu from "components/Menu"
+import { Menu } from "ygh-ui"
 
 const Avatar = styled.div`
   width: 3em;
@@ -21,13 +21,15 @@ const Profile = () => {
 
   return (
     <Menu.Container>
-      <Avatar src={user.avatar} />
-      <Menu>
+      <Menu.Toggle>
+        <Avatar src={user.avatar} />
+      </Menu.Toggle>
+      <Menu.Items>
         <Menu.Item as={Link} to="/profile">
           Profile
         </Menu.Item>
         <Menu.Item onClick={logoutUser}>Log out</Menu.Item>
-      </Menu>
+      </Menu.Items>
     </Menu.Container>
   )
 }

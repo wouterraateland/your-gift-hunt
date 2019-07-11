@@ -1,24 +1,30 @@
 import React from "react"
 import styled from "styled-components"
 
-const BackButtonContainer = styled.div`
-  cursor: pointer;
-
-  margin-left: -1em;
-  margin-top: -1em;
-
+const BackButtonOuter = styled.div`
   width: 10em;
   height: 5.75em;
-  padding: 1em;
-  margin-bottom: -3em;
+  padding: 0.5em;
+  margin: -1em 0 -3em -1em;
 
   background-image: linear-gradient(150deg, #0001 50%, transparent 50%);
 `
 
+const Inner = styled.span`
+  cursor: pointer;
+
+  display: inline-block;
+  padding: 0.5em;
+`
+
+const goBack = () => window.history.back()
+
 const BackButton = () => (
-  <BackButtonContainer onClick={() => window.history.back()}>
-    <span>&larr;</span> Back
-  </BackButtonContainer>
+  <BackButtonOuter>
+    <Inner onClick={goBack} onKeyPress={goBack} tabIndex={0}>
+      &larr; Back
+    </Inner>
+  </BackButtonOuter>
 )
 
 export default BackButton

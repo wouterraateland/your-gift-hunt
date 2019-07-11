@@ -17,8 +17,8 @@ export const PRIVACY = {
 }
 
 export const accessOptions = [
-  { label: "Access code", value: ACCESS_TYPES.CODE },
-  { label: "None", value: ACCESS_TYPES.NONE }
+  { label: "Password protected", value: ACCESS_TYPES.CODE },
+  { label: "Invite only", value: ACCESS_TYPES.NONE }
 ]
 
 export const nameOptions = {

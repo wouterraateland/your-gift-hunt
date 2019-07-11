@@ -3,8 +3,8 @@ import { OutboundLink } from "gatsby-plugin-google-analytics"
 import { Link } from "gatsby"
 import styled from "styled-components"
 
-import { Wrapper, Row, Column } from "your-gift-hunt/ui"
-import { Logo, Twitter, Facebook } from "your-gift-hunt/icons"
+import { Wrapper, Row, Column } from "ygh-ui"
+import { Logo, Twitter, Facebook } from "ygh-icons"
 
 const Footer = styled.footer`
   font-size: smaller;

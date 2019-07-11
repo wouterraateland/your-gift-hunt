@@ -8,7 +8,7 @@ import useGameMutations from "hooks/useGameMutations"
 
 import useAsync from "hooks/useAsync"
 
-import { Button, Message, Options, VSpace } from "your-gift-hunt/ui"
+import { Button, Message, Options, VSpace } from "ygh-ui"
 
 import EntityTag from "components/Primitives/EntityTag"
 import Transition from "components/Primitives/Transition"

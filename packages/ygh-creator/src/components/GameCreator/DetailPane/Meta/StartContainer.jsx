@@ -4,7 +4,7 @@ import useGame from "hooks/useGame"
 import useGameMutations from "hooks/useGameMutations"
 import useAsync from "hooks/useAsync"
 
-import { Button, Message } from "your-gift-hunt/ui"
+import { Button, Message } from "ygh-ui"
 
 const Container = ({ entity }) => {
   const {

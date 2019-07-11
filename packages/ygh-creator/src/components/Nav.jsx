@@ -2,10 +2,9 @@ import React from "react"
 import styled from "styled-components"
 import { Link } from "@reach/router"
 
-import { Wrapper, Float } from "your-gift-hunt/ui"
-import { Logo } from "your-gift-hunt/icons"
+import { Float, Menu, Wrapper } from "ygh-ui"
+import { Logo } from "ygh-icons"
 
-import Menu from "components/Menu"
 import Profile from "components/Profile"
 
 const NavBackground = styled.nav`
@@ -120,13 +119,13 @@ const Nav = ({ goBack, title, children, items = [], compact }) => {
         <Small>
           <Menu.Container>
             <Menu.Toggle />
-            <Menu>
+            <Menu.Items>
               {items.map(({ label, ...item }, i) => (
                 <Menu.Item key={i} {...item}>
                   {label}
                 </Menu.Item>
               ))}
-            </Menu>
+            </Menu.Items>
           </Menu.Container>
         </Small>
       )}

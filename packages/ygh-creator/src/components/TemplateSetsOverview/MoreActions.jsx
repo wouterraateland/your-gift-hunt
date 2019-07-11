@@ -3,7 +3,7 @@ import React, { useCallback } from "react"
 import useAuth from "hooks/useAuth"
 import { useMutation } from "react-apollo-hooks"
 
-import { Menu } from "your-gift-hunt/ui"
+import { Menu } from "ygh-ui"
 
 import { USER_TEMPLATE_SETS } from "gql/queries"
 import { DELETE_TEMPLATE_SET } from "gql/mutations"

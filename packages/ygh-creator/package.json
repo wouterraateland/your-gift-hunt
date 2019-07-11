@@ -7,9 +7,10 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
     "get-schema": "graphql get-schema"
   },
   "eslintConfig": {
@@ -58,6 +59,16 @@
     "tinyqueue": "^2.0.0",
     "typeface-montserrat": "^0.0.54",
     "typeface-playfair-display": "^0.0.54",
-    "use-pan-and-zoom": "0.3.0"
+    "use-pan-and-zoom": "0.3.0",
+    "ygh-entities": "^0.1.2",
+    "ygh-hooks": "^0.1.2",
+    "ygh-icons": "^0.1.2",
+    "ygh-sdk": "^0.1.2",
+    "ygh-ui": "^0.1.2",
+    "ygh-utils": "^0.1.2"
+  },
+  "devDependencies": {
+    "customize-cra": "^0.2.14",
+    "react-app-rewired": "^2.1.3"
   }
 }

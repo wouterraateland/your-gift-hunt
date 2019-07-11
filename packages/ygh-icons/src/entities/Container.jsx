@@ -2,11 +2,12 @@ import React from "react"
 import Icon from "../Icon"
 
 export default props => (
-  <Icon viewBox="-8 0 32 32" {...props}>
+  <Icon viewBox="-3 -3 32 32" {...props}>
     <path
-      d="M12 1L1 17h7L6 31l11-16h-7z"
+      d="M1 12V1h24v24H1V12z"
       strokeWidth={2}
       fill="none"
+      strokeDasharray="4,4"
       strokeLinejoin="round"
     />
   </Icon>

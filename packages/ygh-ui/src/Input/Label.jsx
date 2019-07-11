@@ -16,8 +16,32 @@ const Label = styled.label`
     `}
 
   ${props =>
-    !props.isSelect &&
-    css`
+    props.isSelect
+      ? css`
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 1.5em;
+            bottom: 0;
+            right: 0;
+
+            border: 0.1em solid transparent;
+            border-radius: ${props => props.theme.borderRadius};
+          }
+
+          ${!props.disabled &&
+            css`
+              &:hover::before {
+                border-color: #0004;
+              }
+
+              &:focus-within::before {
+                border-color: ${props => props.theme.color.primary};
+              }
+            `}
+        `
+      : css`
           border: 0.1em solid ${transparentize(0.5, props.theme.color.text)};
           border-radius: ${props => props.theme.borderRadius};
 

@@ -21,7 +21,7 @@ import {
   Paper,
   Row,
   Select
-} from "your-gift-hunt/ui"
+} from "ygh-ui"
 import StatusMessage from "components/StatusMessage"
 import ImageInput from "components/ImageInput"
 
@@ -180,7 +180,7 @@ const SettingsModal = () => {
                   <Input
                     block
                     {...text("name")}
-                    label="Hunt name"
+                    label="Game name"
                     error={nameExists ? "This name is already taken" : null}
                   />
                 </Field>

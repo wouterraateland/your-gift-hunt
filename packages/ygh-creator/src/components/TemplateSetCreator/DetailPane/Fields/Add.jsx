@@ -5,7 +5,7 @@ import useAsync from "hooks/useAsync"
 import useTemplateOptions from "hooks/useTemplateOptions"
 import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 
-import { Button, Message } from "your-gift-hunt/ui"
+import { Button, Message } from "ygh-ui"
 
 const StyledButton = styled(Button)`
   margin: -0.5em;

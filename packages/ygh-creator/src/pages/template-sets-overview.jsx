@@ -7,7 +7,7 @@ import { useQuery } from "react-apollo-hooks"
 import useDebounce from "hooks/useDebounce"
 
 import { Link } from "@reach/router"
-import { Wrapper, Paper, Input, Button, Loader } from "your-gift-hunt/ui"
+import { Wrapper, Paper, Input, Button, Loader } from "ygh-ui"
 import Layout from "layouts/Overview"
 import TemplateSetsOverview from "components/TemplateSetsOverview"
 

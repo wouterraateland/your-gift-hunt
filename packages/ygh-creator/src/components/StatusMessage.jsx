@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Message } from "your-gift-hunt/ui"
+import { Message } from "ygh-ui"
 
 const StatusMessage = ({ isLoading, error, success }) =>
   isLoading ? (

@@ -6,8 +6,8 @@ import useSaveState from "hooks/useSaveState"
 import useMetaActions from "hooks/useMetaActions"
 import useForceUpdate from "hooks/useForceUpdate"
 
-import { Cog, Logo } from "your-gift-hunt/icons"
-import { ToolTip } from "your-gift-hunt/ui"
+import { Cog, Logo } from "ygh-icons"
+import { ToolTip } from "ygh-ui"
 
 import PageContainer from "components/PageContainer"
 import Nav from "components/CreatorNav"

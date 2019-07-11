@@ -1,16 +1,30 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import styled from "styled-components"
+import { transparentize } from "polished"
 import { diff } from "deep-diff"
 
 import { useFormState } from "react-use-form-state"
 import useDebounce from "hooks/useDebounce"
 import useClickOutside from "hooks/useClickOutside"
 
-import { Align, Button, Field, Float, Form, Input } from "your-gift-hunt/ui"
-import { Bin, Pen } from "your-gift-hunt/icons"
-import LabelText from "your-gift-hunt/ui/Input/LabelText"
+import { Align, Button, Field, Float, Form, Input } from "ygh-ui"
+import { Bin, Pen } from "ygh-icons"
 
 import DisabledSelect from "./DisabledSelect"
+
+const LabelText = styled.span`
+  pointer-events: none;
+
+  position: absolute;
+  top: -1.7em;
+  left: 0;
+
+  color: ${props => transparentize(0.2, props.theme.color.text)};
+
+  font-size: 0.7em;
+
+  transition: left 0.2s ease-out, top 0.2s ease-out, font-size 0.2s ease-out;
+`
 
 const StyledForm = styled(Form)`
   position: relative;

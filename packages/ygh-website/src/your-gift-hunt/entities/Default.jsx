@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState } from "react"
 import styled from "styled-components"
 import Entity from "./Entity"
-import { ToolTip } from "your-gift-hunt/ui"
+import { ToolTip } from "ygh-ui"
 
 const DefaultEntityContainer = styled(Entity)`
   border: 1px solid #f00;
