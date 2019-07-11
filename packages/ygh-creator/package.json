@@ -1,7 +1,26 @@
 {
   "name": "ygh-creator",
   "version": "0.1.0",
+  "homepage": "https://create.yourgifthunt.com/",
+  "repository": "https://github.com/wouterraateland/your-gift-hunt/tree/master/packages/ygh-creator",
+  "author": "Wouter Raateland <wouterraateland@gmail.com>",
+  "license": "MIT",
   "private": false,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "get-schema": "graphql get-schema"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "dependencies": {
     "@reach/router": "^1.2.1",
     "@types/react": "^16.8.8",
@@ -40,20 +59,5 @@
     "typeface-montserrat": "^0.0.54",
     "typeface-playfair-display": "^0.0.54",
     "use-pan-and-zoom": "0.3.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "get-schema": "graphql get-schema"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  }
 }
