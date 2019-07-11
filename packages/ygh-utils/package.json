@@ -14,7 +14,8 @@
     "build:umd": "BABEL_ENV=esm yarn rollup -c",
     "build": "yarn clean && yarn build:umd",
     "test": "jest",
-    "tdd": "yest --watch"
+    "tdd": "yest --watch",
+    "prepublishOnly": "yarn build"
   },
   "peerDependencies": {
     "polished": "^3.4.1",

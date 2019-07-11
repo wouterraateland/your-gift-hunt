@@ -15,13 +15,16 @@
     "test": "jest",
     "tdd": "yest --watch",
     "storybook": "start-storybook -p 9009 -s public",
-    "storybook-build": "build-storybook -s public"
+    "storybook-build": "build-storybook -s public",
+    "prepublishOnly": "yarn build"
+  },
+  "dependencies": {
+    "ygh-ui": "^0.1.1",
+    "ygh-utils": "^0.1.1"
   },
   "peerDependencies": {
     "react": "^16.8.6",
-    "styled-components": "^4.3.2",
-    "ygh-ui": "^0.1.0",
-    "ygh-utils": "^0.1.0"
+    "styled-components": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.5.0",
