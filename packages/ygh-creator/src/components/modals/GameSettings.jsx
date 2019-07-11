@@ -84,7 +84,7 @@ const SettingsModal = () => {
     label: name
   }))
 
-  const [{ isLoading, error }, runAsync] = useAsync()
+  const [{ isLoading, error, success }, runAsync] = useAsync()
   const [formState, { text, textarea, select, selectMultiple }] = useFormState({
     image: null,
     name: game.name,
@@ -250,13 +250,7 @@ const SettingsModal = () => {
             )}
             <Field block>
               <Float.Right>
-                <Button
-                  onClick={() => window.history.back()}
-                  importance="tertiary"
-                  color="error"
-                >
-                  Cancel
-                </Button>
+                <StatusMessage {...{ success, isLoading, error }} />{" "}
                 <Button
                   type="submit"
                   importance="primary"
@@ -265,10 +259,6 @@ const SettingsModal = () => {
                 >
                   Update settings
                 </Button>
-                <br />
-                <StatusMessage
-                  status={isLoading ? "loading" : error ? "error" : null}
-                />
               </Float.Right>
             </Field>
           </Form>

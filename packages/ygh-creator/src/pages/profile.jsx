@@ -132,17 +132,7 @@ const ProfileEditForm = () => {
       </Row>
       <Field block>
         <Float.Right>
-          <StatusMessage
-            status={
-              success
-                ? "success"
-                : isLoading
-                ? "loading"
-                : error
-                ? "error"
-                : null
-            }
-          />{" "}
+          <StatusMessage {...{ success, isLoading, error }} />{" "}
           <Button
             type="submit"
             importance="primary"
@@ -210,17 +200,7 @@ const PasswordEditForm = () => {
       </Field>
       <Field block>
         <Float.Right>
-          <StatusMessage
-            status={
-              success
-                ? "success"
-                : isLoading
-                ? "loading"
-                : error
-                ? "error"
-                : null
-            }
-          />{" "}
+          <StatusMessage {...{ success, isLoading, error }} />{" "}
           <Button
             type="submit"
             importance="primary"

@@ -9,6 +9,7 @@ import { useFormState } from "react-use-form-state"
 
 import Modal from "containers/Modal"
 import { Button, Field, Float, Input, Paper } from "your-gift-hunt/ui"
+import StatusMessage from "components/StatusMessage"
 
 const StyledPaper = styled(Paper.Container)`
   width: 45em;
@@ -31,7 +32,7 @@ const SettingsModal = () => {
   const { templateSet } = useTemplateSet()
   const { updateTemplateSetSettings } = useTemplateSetMutations()
 
-  const [{ isLoading, error }, runAsync] = useAsync()
+  const [{ isLoading, error, success }, runAsync] = useAsync()
   const [formState, { text, textarea }] = useFormState({
     name: templateSet.name,
     description: templateSet.description
@@ -84,13 +85,7 @@ const SettingsModal = () => {
             </Field>
             <Field block>
               <Float.Right>
-                <Button
-                  onClick={() => window.history.back()}
-                  importance="tertiary"
-                  color="error"
-                >
-                  Cancel
-                </Button>
+                <StatusMessage {...{ success, isLoading, error }} />{" "}
                 <Button
                   type="submit"
                   importance="primary"
