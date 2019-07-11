@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react"
 import styled, { css, keyframes } from "styled-components"
-import _ from "utils"
+import _ from "ygh-utils"
 
 import useGame from "hooks/useGame"
-import { createInputAction } from "ygh-player"
+import { createInputAction } from "ygh-sdk"
 
 import QrReader from "react-qr-reader"
 
@@ -30,7 +30,8 @@ const CloseButton = styled.div`
   cursor: pointer;
 
   position: absolute;
-  left: 50%; top: 3rem;
+  left: 50%;
+  top: 3rem;
   z-index: 2;
 
   width: 3rem;
@@ -38,12 +39,15 @@ const CloseButton = styled.div`
 
   transform: translate(-50%, -50%);
 
-  &::before, &::after {
-    content: '';
+  &::before,
+  &::after {
+    content: "";
 
-    position: absolute
-    left: 0; top: 0;
-    right: 0; bottom: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
 
     width: 100%;
     height: 10%;
@@ -52,8 +56,12 @@ const CloseButton = styled.div`
     background-color: currentColor;
   }
 
-  &::before { transform: rotate(45deg); }
-  &::after { transform: rotate(-45deg); }
+  &::before {
+    transform: rotate(45deg);
+  }
+  &::after {
+    transform: rotate(-45deg);
+  }
 `
 
 const StyledQrReader = styled(QrReader)`

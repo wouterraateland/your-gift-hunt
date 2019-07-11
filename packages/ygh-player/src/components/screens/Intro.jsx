@@ -4,7 +4,7 @@ import styled from "styled-components"
 import useGame from "hooks/useGame"
 
 import Base from "./Base"
-import { Align, Button, VSpace, Wrapper } from "your-gift-hunt/ui"
+import { Align, Button, VSpace, Wrapper } from "ygh-ui"
 
 const IntroScreen = styled(Base)`
   display: flex;

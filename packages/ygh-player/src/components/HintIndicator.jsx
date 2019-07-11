@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react"
 import styled from "styled-components"
-import _ from "utils"
+import _ from "ygh-utils"
 
-import { ProgressRing } from "your-gift-hunt/ui"
+import { ProgressRing } from "ygh-ui"
 
 const Container = styled.div`
   position: relative;

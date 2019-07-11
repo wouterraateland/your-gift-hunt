@@ -1,11 +1,11 @@
 import React from "react"
 import styled from "styled-components"
 
-import { useYGHPlayerContext } from "ygh-player/react-hook"
+import { useYGHPlayerContext } from "ygh-sdk"
 
 import { Link } from "@reach/router"
-import { Button, Float, Menu, Wrapper } from "your-gift-hunt/ui"
-import { Logo } from "your-gift-hunt/icons"
+import { Button, Float, Menu, Wrapper } from "ygh-ui"
+import { Logo } from "ygh-icons"
 import Account from "components/Account"
 
 const Nav = styled.nav`

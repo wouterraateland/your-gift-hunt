@@ -1,5 +1,7 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
+
+import { useYGHPlayerContext } from "ygh-sdk"
 
 import HintsIndicator from "./HintsIndicator"
 import Inventory from "./Inventory"
@@ -43,14 +45,28 @@ const SidebarContainer = styled.div`
       transparent
     );
   }
+
+  ${props =>
+    !props.isInteractive &&
+    css`
+      & * {
+        pointer-events: none !important;
+      }
+    `}
 `
 
-const Sidebar = () => (
-  <SidebarContainer>
-    <HintsIndicator />
-    <Inventory />
-    <MenuToggle />
-  </SidebarContainer>
-)
+const Sidebar = () => {
+  const { gameState } = useYGHPlayerContext()
+
+  return (
+    <SidebarContainer
+      isInteractive={gameState.startedAt && !gameState.finishedAt}
+    >
+      <HintsIndicator />
+      <Inventory />
+      <MenuToggle />
+    </SidebarContainer>
+  )
+}
 
 export default Sidebar

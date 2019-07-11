@@ -2,7 +2,7 @@ import React from "react"
 import styled, { css, keyframes } from "styled-components"
 
 import BaseScreen from "./Base"
-import { getEntityComponent, DefaultEntity } from "your-gift-hunt/Entities"
+import { getEntityComponent, DefaultEntity } from "ygh-entities"
 import EntityContainer from "components/EntityContainer"
 
 const animationKeyframes = {

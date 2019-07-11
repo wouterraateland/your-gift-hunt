@@ -1,4 +1,4 @@
-import { useYGHPlayerContext } from "ygh-player/react-hook"
+import { useYGHPlayerContext } from "ygh-sdk"
 
 const useAuth = () => {
   const {

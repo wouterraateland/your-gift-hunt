@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import { useYGHPlayerContext } from "ygh-player/react-hook"
+import { useYGHPlayerContext } from "ygh-sdk"
 
-import { Menu } from "your-gift-hunt/ui"
+import { Menu } from "ygh-ui"
 import { Link } from "@reach/router"
 
 const Avatar = styled.div`

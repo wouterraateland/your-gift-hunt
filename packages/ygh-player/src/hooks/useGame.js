@@ -1,7 +1,8 @@
 import { useCallback, useContext, useEffect, useMemo } from "react"
 import GameContext from "contexts/Game"
-import { useYGHPlayerContext } from "ygh-player/react-hook"
-import useStore, { localStorageStoreCreator } from "hooks/useStore"
+import { useYGHPlayerContext } from "ygh-sdk"
+import { useStore } from "ygh-hooks"
+import _ from "ygh-utils"
 import useScreen from "hooks/useScreen"
 
 import Screens from "components/screens"
@@ -13,7 +14,7 @@ export const useGameProvider = gameIdentifier => {
   const config = useMemo(
     () =>
       yghPlayer.playToken
-        ? localStorageStoreCreator({ name: yghPlayer.playToken })
+        ? _.localStorageStoreCreator({ name: yghPlayer.playToken })
         : {},
     [yghPlayer.playToken]
   )

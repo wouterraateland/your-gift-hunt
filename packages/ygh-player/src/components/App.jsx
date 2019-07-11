@@ -1,8 +1,8 @@
 import React from "react"
 
-import { YGHPlayerProvider } from "ygh-player/react-hook"
+import { YGHPlayerProvider } from "ygh-sdk"
+import { Theme } from "ygh-ui"
 
-import Theme from "containers/Theme"
 import Router from "containers/Router"
 
 const App = () => (

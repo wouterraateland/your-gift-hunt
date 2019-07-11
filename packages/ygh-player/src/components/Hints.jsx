@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 
 import useHints from "hooks/useHints"
-import useClickOutside from "hooks/useClickOutside"
+import { useClickOutside } from "ygh-hooks"
 
 import HintIndicator from "components/HintIndicator"
 

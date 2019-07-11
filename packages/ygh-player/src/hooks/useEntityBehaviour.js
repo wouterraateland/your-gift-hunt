@@ -3,14 +3,14 @@ import { useCallback, useRef } from "react"
 import useGame from "hooks/useGame"
 import useScreen from "hooks/useScreen"
 import useDrop from "hooks/useDrop"
-import { createInputAction } from "ygh-player"
+import { createInputAction } from "ygh-sdk"
 
 import Screens from "components/screens"
 
 const useEntityBehaviour = (props, options = {}) => {
   const ref = useRef(null)
   const { dispatchAction, isInInventory, pickupEntity } = useGame()
-  const { popup } = useScreen()
+  const { popup, close } = useScreen()
 
   useDrop({
     ref,
@@ -36,18 +36,21 @@ const useEntityBehaviour = (props, options = {}) => {
     [(options.detailScreen, props.id)]
   )
 
+  const closeInspector = close
+
   return props.isReachable && props.isItem && !isInInventory(props.id)
     ? {
         ref,
         dispatchInputAction,
         inspect,
+        closeInspector,
         onMouseDownCapture: event => {
           event.stopPropagation()
           event.preventDefault()
           pickupEntity(props.id)
         }
       }
-    : { ref, dispatchInputAction, inspect }
+    : { ref, dispatchInputAction, inspect, closeInspector }
 }
 
 export default useEntityBehaviour

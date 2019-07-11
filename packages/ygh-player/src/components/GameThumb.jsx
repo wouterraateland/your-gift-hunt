@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import _ from "utils"
+import _ from "ygh-utils"
 
 import { Link } from "@reach/router"
 import GamePreview from "components/GamePreview"

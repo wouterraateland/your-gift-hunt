@@ -3,10 +3,9 @@ import styled, { css } from "styled-components"
 import { Link } from "@reach/router"
 import moment from "moment"
 
-import useQuery from "hooks/useQuery"
-import { useYGHPlayerContext } from "ygh-player/react-hook"
-
-import { Loader } from "your-gift-hunt/ui"
+import { useQuery } from "ygh-hooks"
+import { useYGHPlayerContext } from "ygh-sdk"
+import { Loader } from "ygh-ui"
 
 const Entry = styled.div`
   display: flex;

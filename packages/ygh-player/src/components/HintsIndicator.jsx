@@ -1,6 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import _ from "utils"
+import _ from "ygh-utils"
 
 import useHints from "hooks/useHints"
 

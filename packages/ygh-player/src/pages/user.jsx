@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react"
 import styled from "styled-components"
 
-import useQuery from "hooks/useQuery"
-import useMutation from "hooks/useMutation"
-import { useYGHPlayerContext } from "ygh-player/react-hook"
+import { useQuery } from "ygh-hooks"
+import { useMutation } from "ygh-hooks"
+import { useYGHPlayerContext } from "ygh-sdk"
 import { useFormState } from "react-use-form-state"
 
 import Helmet from "react-helmet"
@@ -19,7 +19,7 @@ import {
   Row,
   VSpace,
   Wrapper
-} from "your-gift-hunt/ui"
+} from "ygh-ui"
 
 import NotFoundPage from "pages/404"
 

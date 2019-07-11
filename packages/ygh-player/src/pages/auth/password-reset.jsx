@@ -3,10 +3,10 @@ import { Link } from "@reach/router"
 import queryString from "querystring"
 
 import useAuth from "hooks/useAuth"
-import useMutation from "hooks/useMutation"
+import { useMutation } from "ygh-hooks"
 
 import Layout from "layouts/Auth"
-import { Button, Field, Input, Loader } from "your-gift-hunt/ui"
+import { Button, Field, Input, Loader } from "ygh-ui"
 
 const PasswordResetPage = () => {
   const { isResetTokenValid, resetPassword } = useAuth()

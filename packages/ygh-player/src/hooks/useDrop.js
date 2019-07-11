@@ -1,6 +1,6 @@
 import { useEffect } from "react"
-import { createUseAction } from "ygh-player"
-import _ from "utils"
+import { createUseAction } from "ygh-sdk"
+import _ from "ygh-utils"
 
 import useDrag from "hooks/useDrag"
 import useGame from "hooks/useGame"

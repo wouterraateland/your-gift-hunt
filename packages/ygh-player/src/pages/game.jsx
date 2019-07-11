@@ -1,10 +1,10 @@
 import React from "react"
 import styled from "styled-components"
 import { navigate } from "@reach/router"
-import _ from "utils"
+import _ from "ygh-utils"
 
-import useQuery from "hooks/useQuery"
-import { useYGHPlayerContext } from "ygh-player/react-hook"
+import { useQuery } from "ygh-hooks"
+import { useYGHPlayerContext } from "ygh-sdk"
 
 import Helmet from "react-helmet"
 import {
@@ -17,7 +17,7 @@ import {
   Row,
   VSpace,
   Wrapper
-} from "your-gift-hunt/ui"
+} from "ygh-ui"
 
 import NotFoundPage from "pages/404"
 

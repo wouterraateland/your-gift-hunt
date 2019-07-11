@@ -1,7 +1,7 @@
 import React from "react"
 import styled, { css } from "styled-components"
 
-import { Present } from "your-gift-hunt/components"
+import { Present } from "ygh-icons"
 
 const ScreenShot = styled.div`
   position: relative;

@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 
-import { Wrapper, Align } from "your-gift-hunt/ui"
-import { Logo } from "your-gift-hunt/icons"
+import { Wrapper, Align } from "ygh-ui"
+import { Logo } from "ygh-icons"
 
 const Center = styled.div`
   height: 100vh;

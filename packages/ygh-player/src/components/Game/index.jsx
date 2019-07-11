@@ -2,7 +2,7 @@ import React from "react"
 
 import useGame from "hooks/useGame"
 
-import { Loader, FullHeight } from "your-gift-hunt/ui"
+import { Loader, FullHeight } from "ygh-ui"
 
 import UnauthenticatedPage from "pages/unauthenticated"
 import NotFoundPage from "pages/404"

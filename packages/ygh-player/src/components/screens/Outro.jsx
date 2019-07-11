@@ -7,7 +7,7 @@ import useAuth from "hooks/useAuth"
 
 import { Link } from "@reach/router"
 import Base from "./Base"
-import { Align, Button, VSpace, Wrapper } from "your-gift-hunt/ui"
+import { Align, Button, VSpace, Wrapper } from "ygh-ui"
 import Rating from "components/Rating"
 
 const OutroScreen = styled(Base)`
@@ -15,7 +15,11 @@ const OutroScreen = styled(Base)`
   justify-content: center;
   align-items: center;
 
-  color: #fffc;
+  &,
+  p,
+  a {
+    color: #fffc;
+  }
 
   h1,
   strong {
@@ -79,6 +83,11 @@ export default ({ close, ...props }) => {
           >
             Play related games
           </Button>
+          <p>
+            <a href={`/play/${game.creator.slug}/${game.slug}?restart`}>
+              Replay game
+            </a>
+          </p>
         </Wrapper>
       </Align.Center>
     </OutroScreen>

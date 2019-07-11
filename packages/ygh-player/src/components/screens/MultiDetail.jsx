@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import _ from "utils"
+import _ from "ygh-utils"
 
 import {
   DefaultEntityDetail,
@@ -10,7 +10,7 @@ import EntityContainer from "components/EntityContainer"
 import BaseScreen from "./Base"
 
 import useGame from "hooks/useGame"
-import useWindowSize from "hooks/useWindowSize"
+import { useWindowSize } from "ygh-hooks"
 
 const Navigation = styled.div`
   position: relative;

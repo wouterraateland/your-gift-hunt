@@ -1,7 +1,7 @@
 import React from "react"
-import _ from "utils"
+import _ from "ygh-utils"
 
-import Entities from "your-gift-hunt/Entities"
+import Entities from "ygh-entities"
 import * as Screens from "components/screens"
 
 import withEntityBehaviour from "containers/withEntityBehaviour"
@@ -12,50 +12,42 @@ import withContainedEntities from "containers/withContainedEntities"
 
 export const DefaultEntity = withEntityBehaviour(Entities.DefaultEntity)
 
-const entityComponents = [
-  withEntityBehaviour(Entities.Armchair),
-  withEntityBehaviour(Entities.Battery),
-  withContainedEntities(
+const entityComponents = {
+  ...Object.values(Entities).reduce(
+    (acc, Entity) => ({
+      ...acc,
+      [Entity.name]: withEntityBehaviour(Entity)
+    }),
+    {}
+  ),
+  Camera: withContainedEntities(
     withEntityBehaviour(Entities.Camera, {
       detailScreen: Screens.Camera
     })
   ),
-  withContainedEntities(
+  Carpet: withContainedEntities(
     withCarpetBehaviour(withEntityBehaviour(Entities.Carpet))
   ),
-  withContainedEntities(withEntityBehaviour(Entities.Computer)),
-  withEntityBehaviour(Entities.Desk),
-  withEntityBehaviour(Entities.DeskChair),
-  withEntityBehaviour(Entities.Door),
-  withEntityBehaviour(Entities.DoorKey),
-  withEntityBehaviour(Entities.DoorWithLock),
-  withEntityBehaviour(Entities.Flashlight),
-  withEntityBehaviour(Entities.Floor),
-  withEntityBehaviour(Entities.Grass),
-  withEntityBehaviour(Entities.InstructionNote),
-  withEntityBehaviour(Entities.Lamp),
-  withContainedEntities(withEntityBehaviour(Entities.Mailbox)),
-  withEntityBehaviour(Entities.Map),
-  withEntityBehaviour(Entities.MapPiece),
-  withContainedEntities(
+  Computer: withContainedEntities(withEntityBehaviour(Entities.Computer)),
+  Mailbox: withContainedEntities(withEntityBehaviour(Entities.Mailbox)),
+  Package: withContainedEntities(
     withPackageBehaviour(withEntityBehaviour(Entities.Package))
   ),
-  withContainedEntities(withPathBehaviour(withEntityBehaviour(Entities.Path))),
-  withEntityBehaviour(Entities.PlantPot),
-  withEntityBehaviour(Entities.Room),
-  withEntityBehaviour(Entities.SafeKey),
-  withContainedEntities(withEntityBehaviour(Entities.SafeWithCode)),
-  withContainedEntities(withEntityBehaviour(Entities.SafeWithKeyhole)),
-  withEntityBehaviour(Entities.Seeds),
-  withEntityBehaviour(Entities.Tree),
-  withEntityBehaviour(Entities.TreeStump),
-  withEntityBehaviour(Entities.Wall),
-  withEntityBehaviour(Entities.WateringCan),
-  withEntityBehaviour(Entities.WorktopWithSink)
-]
+  Path: withContainedEntities(
+    withPathBehaviour(withEntityBehaviour(Entities.Path))
+  ),
+  SafeWithCode: withContainedEntities(
+    withEntityBehaviour(Entities.SafeWithCode)
+  ),
+  SafeWithKeyhole: withContainedEntities(
+    withEntityBehaviour(Entities.SafeWithKeyhole)
+  )
+}
 
 export const getEntityComponent = templateName =>
-  entityComponents.find(component => component.templateName === templateName)
+  Object.values(entityComponents).find(
+    component => component.templateName === templateName
+  )
 
 export const GenericEntity = props =>
   _.compose(
@@ -64,7 +56,4 @@ export const GenericEntity = props =>
     getEntityComponent
   )(props.template.name)
 
-export default entityComponents.reduce(
-  (acc, x) => ({ ...acc, [x.name]: x }),
-  {}
-)
+export default entityComponents

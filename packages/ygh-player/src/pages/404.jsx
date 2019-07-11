@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import { Link } from "@reach/router"
-import { Logo } from "your-gift-hunt/icons"
+import { Logo } from "ygh-icons"
 import Layout from "layouts/Page"
 
 const Center = styled.div`

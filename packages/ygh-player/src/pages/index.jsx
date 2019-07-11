@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react"
 import Helmet from "react-helmet"
 
-import { useYGHPlayerContext } from "ygh-player/react-hook"
+import { useYGHPlayerContext } from "ygh-sdk"
 
 import {
   Align,
@@ -12,10 +12,10 @@ import {
   Row,
   VSpace,
   Wrapper
-} from "your-gift-hunt/ui"
-import { MailchimpForm } from "your-gift-hunt/components"
+} from "ygh-ui"
 import Layout from "layouts/Page"
 import GameThumb from "components/GameThumb"
+import MailchimpForm from "components/MailchimpForm"
 
 const ActiveIndexPage = ({ games, gamePlays, user }) => {
   const [type, setType] = useState("public")

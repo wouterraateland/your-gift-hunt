@@ -1,7 +1,7 @@
 import React from "react"
 import useScreen from "hooks/useScreen"
 import useGame from "hooks/useGame"
-import _ from "utils"
+import _ from "ygh-utils"
 
 const ScreenContainer = () => {
   const { getEntityById } = useGame()

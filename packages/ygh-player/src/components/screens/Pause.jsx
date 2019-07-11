@@ -7,7 +7,7 @@ import useAuth from "hooks/useAuth"
 
 import { Link } from "@reach/router"
 import Base from "./Base"
-import { Align, VSpace, Wrapper } from "your-gift-hunt/ui"
+import { Align, VSpace, Wrapper } from "ygh-ui"
 
 const PauseScreen = styled(Base)`
   display: flex;
@@ -78,9 +78,9 @@ export default props => {
           </p>
           <VSpace.Large />
           <p>
-            <Link to={`/play/${game.creator.slug}/${game.slug}?restart`}>
+            <a href={`/play/${game.creator.slug}/${game.slug}?restart`}>
               Restart
-            </Link>
+            </a>
           </p>
           <p>
             <Link to={`/${game.creator.slug}/${game.slug}`}>Leaderboard</Link>

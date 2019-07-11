@@ -2,10 +2,10 @@ import React from "react"
 import { Link, navigate } from "@reach/router"
 import queryString from "querystring"
 
-import useMutation from "hooks/useMutation"
+import { useMutation } from "ygh-hooks"
 import useAuth from "hooks/useAuth"
 
-import { Button, Column, Field, Input, Row } from "your-gift-hunt/ui"
+import { Button, Column, Field, Input, Row } from "ygh-ui"
 import Layout from "layouts/Auth"
 
 const SignupPage = props => {

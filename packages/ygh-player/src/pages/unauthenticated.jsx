@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react"
 import styled from "styled-components"
 import useGame from "hooks/useGame"
 
-import { Input, Button, Field, Wrapper } from "your-gift-hunt/ui"
+import { Input, Button, Field, Wrapper } from "ygh-ui"
 
 const Container = styled.div`
   display: flex;

@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react"
 
 import MailchimpSubscribe from "react-mailchimp-subscribe"
-import { Input, Button, Field } from "your-gift-hunt/ui"
+import { Input, Button, Field } from "ygh-ui"
 
 const MAILCHIMP_SUBSCRIBE_URL =
   "https://yourgifthunt.us19.list-manage.com/subscribe/post?u=309a27bcdbc1a2943a6081ffb&id=c073769b3b"

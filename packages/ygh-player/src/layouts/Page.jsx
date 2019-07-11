@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import { FullHeight } from "your-gift-hunt/ui"
+import { FullHeight } from "ygh-ui"
 import Nav from "components/Nav"
 import Body from "components/Body"
 import Footer from "components/Footer"
