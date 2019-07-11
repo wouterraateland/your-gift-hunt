@@ -1,6 +1,6 @@
 {
   "name": "ygh-ui",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "UI library for Your Gift Hunt.",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
@@ -23,9 +23,9 @@
     "react-select": "^3.0.4",
     "typeface-montserrat": "^0.0.54",
     "typeface-playfair-display": "^0.0.54",
-    "ygh-hooks": "^0.1.1",
-    "ygh-icons": "^0.1.1",
-    "ygh-utils": "^0.1.1"
+    "ygh-hooks": "^0.1.2",
+    "ygh-icons": "^0.1.2",
+    "ygh-utils": "^0.1.2"
   },
   "peerDependencies": {
     "polished": "^3.4.1",
