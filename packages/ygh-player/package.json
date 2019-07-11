@@ -1,7 +1,7 @@
 {
   "name": "your-gift-hunt-player",
   "version": "0.2.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
