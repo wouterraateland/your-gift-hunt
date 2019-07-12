@@ -6,7 +6,7 @@ import Helmet from "react-helmet"
 import Layout from "components/Layout"
 import { Section, Wrapper } from "ygh-ui"
 import Content, { HTMLContent } from "components/Content"
-import Present from "components/Present"
+import { Present } from "ygh-icons"
 
 const PresentsContainer = styled.div`
   position: relative;

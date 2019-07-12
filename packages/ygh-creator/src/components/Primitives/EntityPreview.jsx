@@ -1,6 +1,6 @@
 import React from "react"
 
-import { getEntityComponent } from "your-gift-hunt/Entities"
+import { getEntityComponent } from "ygh-entities"
 import EntityContainer from "components/Primitives/EntityContainer"
 
 const EntityPreview = ({

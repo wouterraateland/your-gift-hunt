@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from "react"
 import styled from "styled-components"
 import slugify from "limax"
 
-import { useYGHPlayerContext } from "ygh-player/react-hook"
-import useAsync from "hooks/useAsync"
+import { useYGHPlayerContext } from "ygh-sdk"
+import { useAsync } from "ygh-hooks"
 import useAuth from "hooks/useAuth"
 import useGame from "hooks/useGame"
 import useGameMutations from "hooks/useGameMutations"
@@ -12,16 +12,7 @@ import { useFormState } from "react-use-form-state"
 import { useQuery, useApolloClient } from "react-apollo-hooks"
 
 import Modal from "containers/Modal"
-import {
-  Button,
-  Column,
-  Field,
-  Float,
-  Input,
-  Paper,
-  Row,
-  Select
-} from "ygh-ui"
+import { Button, Column, Field, Float, Input, Paper, Row, Select } from "ygh-ui"
 import StatusMessage from "components/StatusMessage"
 import ImageInput from "components/ImageInput"
 

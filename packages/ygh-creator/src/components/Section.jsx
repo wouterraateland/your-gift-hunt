@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react"
 import styled from "styled-components"
 
-import useDebounce from "hooks/useDebounce"
+import { useDebounce } from "ygh-hooks"
 
 import { Paper } from "ygh-ui"
 
@@ -50,22 +50,17 @@ const Section = ({
   )
   const debouncedIsExpanded = useDebounce(isExpanded)
 
-  useEffect(
-    () => {
-      const prefs = JSON.parse(
-        window.localStorage.getItem("sectionPreferences")
-      )
+  useEffect(() => {
+    const prefs = JSON.parse(window.localStorage.getItem("sectionPreferences"))
 
-      window.localStorage.setItem(
-        "sectionPreferences",
-        JSON.stringify({
-          ...prefs,
-          [title]: debouncedIsExpanded
-        })
-      )
-    },
-    [title, debouncedIsExpanded]
-  )
+    window.localStorage.setItem(
+      "sectionPreferences",
+      JSON.stringify({
+        ...prefs,
+        [title]: debouncedIsExpanded
+      })
+    )
+  }, [title, debouncedIsExpanded])
 
   return (
     <>

@@ -3,8 +3,8 @@ import styled from "styled-components"
 
 import { useFormState } from "react-use-form-state"
 import { useMutation } from "react-apollo-hooks"
-import { useYGHPlayerContext } from "ygh-player/react-hook"
-import useAsync from "hooks/useAsync"
+import { useYGHPlayerContext } from "ygh-sdk"
+import { useAsync } from "ygh-hooks"
 import useAuth from "hooks/useAuth"
 
 import Layout from "layouts/Overview"

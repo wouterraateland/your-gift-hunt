@@ -15,7 +15,7 @@ import { GameMutationsProvider } from "contexts/GameMutations"
 import { EditorProvider } from "contexts/Editor"
 import { InspectorProvider } from "contexts/Inspector"
 
-import useClickOutside from "hooks/useClickOutside"
+import { useClickOutside } from "ygh-hooks"
 import useGame from "hooks/useGame"
 import useInspector from "hooks/useInspector"
 import useEditor from "hooks/useEditor"

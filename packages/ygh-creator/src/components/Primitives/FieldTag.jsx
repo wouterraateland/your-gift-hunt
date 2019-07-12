@@ -1,8 +1,8 @@
 import React from "react"
 
+import _ from "ygh-utils"
 import { InputType } from "ygh-ui"
 import EntityTag from "./EntityTag"
-import _ from "utils"
 
 const FieldTag = ({ entity, field, showEntity = false, showInfo = true }) => {
   return (

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react"
 import styled from "styled-components"
 
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 
 import { Button, Message } from "ygh-ui"

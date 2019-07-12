@@ -6,7 +6,7 @@ import { navigate } from "@reach/router"
 import useAuth from "hooks/useAuth"
 
 import { Edit } from "ygh-icons"
-import { Present } from "your-gift-hunt/components"
+import { Present } from "ygh-icons"
 
 import MoreActions from "./MoreActions"
 

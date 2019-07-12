@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from "react"
 import { Link, navigate } from "@reach/router"
 import queryString from "querystring"
 
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 import useAuth from "hooks/useAuth"
 
 import { Button, Column, Field, Input, Row, VSpace } from "ygh-ui"

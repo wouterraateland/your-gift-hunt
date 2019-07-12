@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
-import { getEntityComponent } from "your-gift-hunt/Entities"
+import { getEntityComponent } from "ygh-entities"
 
 import EntityPositionsContext from "contexts/EntityPositions"
 
-import useContext from "hooks/useContext"
+import { useContext } from "ygh-hooks"
 import useEntities from "hooks/useEntities"
 
 const clean = o =>

@@ -7,7 +7,7 @@ import useGameQueries from "hooks/useGameQueries"
 import useEntityDependencies from "hooks/useEntityDependencies"
 import useGameMutations from "hooks/useGameMutations"
 
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 
 import { ActionButton, Button, Message, Options } from "ygh-ui"
 import { Bin } from "ygh-icons"

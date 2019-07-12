@@ -2,7 +2,7 @@ import React, { useRef, useState, useCallback, useEffect } from "react"
 import styled from "styled-components"
 
 import useGameMutations from "hooks/useGameMutations"
-import useClickOutside from "hooks/useClickOutside"
+import { useClickOutside } from "ygh-hooks"
 
 import { Input, ActionButton, Button } from "ygh-ui"
 import { Pen } from "ygh-icons"

@@ -4,8 +4,8 @@ import { transparentize } from "polished"
 import { diff } from "deep-diff"
 
 import { useFormState } from "react-use-form-state"
-import useDebounce from "hooks/useDebounce"
-import useClickOutside from "hooks/useClickOutside"
+import { useDebounce } from "ygh-hooks"
+import { useClickOutside } from "ygh-hooks"
 
 import { Align, Button, Field, Float, Form, Input } from "ygh-ui"
 import { Bin, Pen } from "ygh-icons"

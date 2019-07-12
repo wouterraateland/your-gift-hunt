@@ -3,6 +3,26 @@ const path = require("path")
 const { createFilePath } = require("gatsby-source-filesystem")
 const { fmImagesToRelative } = require("gatsby-remark-relative-images")
 
+exports.onCreateWebpackConfig = ({ getConfig }) => {
+  const config = getConfig()
+
+  config.resolve.modules = [path.resolve(__dirname, "src"), "node_modules"]
+  config.resolve.alias["react"] = path.resolve(__dirname, "node_modules/react")
+  config.resolve.alias["react-dom"] = path.resolve(
+    __dirname,
+    "node_modules/react-dom"
+  )
+  config.resolve.alias["styled-components"] = path.resolve(
+    __dirname,
+    "node_modules/styled-components"
+  )
+  config.resolve.alias["polished"] = path.resolve(
+    __dirname,
+    "node_modules/polished"
+  )
+  return config
+}
+
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
 

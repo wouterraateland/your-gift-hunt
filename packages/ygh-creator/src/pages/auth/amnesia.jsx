@@ -2,7 +2,7 @@ import React, { useCallback } from "react"
 import { Link } from "@reach/router"
 
 import useAuth from "hooks/useAuth"
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 
 import Layout from "layouts/Auth"
 import { Field, Input, Button } from "ygh-ui"

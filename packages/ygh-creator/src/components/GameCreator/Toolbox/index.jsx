@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from "react"
 
-import useClickOutside from "hooks/useClickOutside"
+import { useClickOutside } from "ygh-hooks"
 
 import Container from "./Container"
 import Types from "./Types"

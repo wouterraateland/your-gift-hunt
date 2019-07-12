@@ -4,7 +4,7 @@ import styled from "styled-components"
 import useTemplateSet from "hooks/useTemplateSet"
 import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 import { useFormState } from "react-use-form-state"
 
 import Modal from "containers/Modal"

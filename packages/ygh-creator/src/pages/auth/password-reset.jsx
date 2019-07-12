@@ -3,7 +3,7 @@ import { Link } from "@reach/router"
 import queryString from "querystring"
 
 import useAuth from "hooks/useAuth"
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 
 import Layout from "layouts/Auth"
 import { Button, Field, Input, Loader } from "ygh-ui"

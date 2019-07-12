@@ -6,7 +6,7 @@ import useEditor from "hooks/useEditor"
 import useEntityDependencies from "hooks/useEntityDependencies"
 import useGameMutations from "hooks/useGameMutations"
 
-import useClickOutside from "hooks/useClickOutside"
+import { useClickOutside } from "ygh-hooks"
 
 import { Button } from "ygh-ui"
 import { Bin } from "ygh-icons"

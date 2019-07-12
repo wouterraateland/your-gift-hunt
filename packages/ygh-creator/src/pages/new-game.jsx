@@ -4,7 +4,7 @@ import styled from "styled-components"
 import randomstring from "randomstring"
 import slugify from "limax"
 
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 import { useFormState } from "react-use-form-state"
 import { useMutation, useApolloClient } from "react-apollo-hooks"
 

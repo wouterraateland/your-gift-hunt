@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react"
 import EntityFocusContext from "contexts/EntityFocus"
 
-import useContext from "hooks/useContext"
+import { useContext } from "ygh-hooks"
 
 export const useEntityFocusProvider = () => {
   const [focusedEntityId, focus] = useState(null)

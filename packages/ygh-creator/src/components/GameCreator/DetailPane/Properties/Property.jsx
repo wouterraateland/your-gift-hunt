@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
-import useGameMutations from "hooks/useGameMutations"
-import useDebounce from "hooks/useDebounce"
-
+import { useDebounce } from "ygh-hooks"
 import { Eye, Field, Input, Paper, ToolTip } from "ygh-ui"
+import _ from "ygh-utils"
+
+import useGameMutations from "hooks/useGameMutations"
 
 import Display from "./Display"
-
-import _ from "utils"
 
 const Blockquote = styled.blockquote`
   margin: -0.5em 0 1.5em;
@@ -22,15 +21,12 @@ const Property = ({ field }) => {
 
   const debouncedValue = useDebounce(newValue, 1000)
 
-  useEffect(
-    () => {
-      const newValue = JSON.stringify(debouncedValue)
-      if (newValue !== field.value) {
-        updateFieldValue(field.id, newValue)
-      }
-    },
-    [field.id, field.value, debouncedValue]
-  )
+  useEffect(() => {
+    const newValue = JSON.stringify(debouncedValue)
+    if (newValue !== field.value) {
+      updateFieldValue(field.id, newValue)
+    }
+  }, [field.id, field.value, debouncedValue])
 
   return (
     <>

@@ -2,7 +2,7 @@ import React, { useCallback } from "react"
 
 import useGame from "hooks/useGame"
 import useGameMutations from "hooks/useGameMutations"
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 
 import { Button, Message } from "ygh-ui"
 

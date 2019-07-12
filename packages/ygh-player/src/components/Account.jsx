@@ -45,10 +45,10 @@ const Account = () => {
     <Menu.Container>
       <Menu.Toggle as={Avatar} bgImage={user.avatar} />
       <Menu.Items>
-        <Menu.Item to={`/${user.username}`}>Profile</Menu.Item>
-        <Menu.Item as="a" onClick={logoutUser}>
-          Log out
+        <Menu.Item as={Link} to={`/${user.username}`}>
+          Profile
         </Menu.Item>
+        <Menu.Item onClick={logoutUser}>Log out</Menu.Item>
       </Menu.Items>
     </Menu.Container>
   ) : (

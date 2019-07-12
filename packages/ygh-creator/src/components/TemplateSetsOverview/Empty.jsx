@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Align } from "ygh-ui"
 
-import Present from "components/Present"
+import { Present } from "ygh-icons"
 
 const Outer = styled(Align.Center)`
   padding: 2em 0;

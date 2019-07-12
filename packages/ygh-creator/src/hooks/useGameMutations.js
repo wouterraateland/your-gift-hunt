@@ -1,7 +1,8 @@
-import _ from "utils"
 import { ACTION_TYPES } from "data"
 import { useContext } from "react"
 import { useMutation, useApolloClient } from "react-apollo-hooks"
+
+import _ from "ygh-utils"
 
 import useGameTemplates from "hooks/useGameTemplates"
 import useGame from "hooks/useGame"

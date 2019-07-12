@@ -4,7 +4,7 @@ import slugify from "limax"
 import useAuth from "hooks/useAuth"
 
 import { useQuery } from "react-apollo-hooks"
-import useDebounce from "hooks/useDebounce"
+import { useDebounce } from "ygh-hooks"
 
 import { Link } from "@reach/router"
 import { Wrapper, Paper, Input, Button, Loader } from "ygh-ui"

@@ -1,7 +1,7 @@
 import { cloneElement, Children, useRef } from "react"
 import { createPortal } from "react-dom"
 
-import useClickOutside from "hooks/useClickOutside"
+import { useClickOutside } from "ygh-hooks"
 
 const modalRoot = document.getElementById("modal-root")
 

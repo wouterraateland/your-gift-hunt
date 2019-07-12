@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 
 import PanZoomContext from "contexts/PanZoom"
 
-import useContext from "hooks/useContext"
+import { useContext } from "ygh-hooks"
 import useEntityAreas from "./useEntityAreas"
 
 const useDragOnGrid = entity => {

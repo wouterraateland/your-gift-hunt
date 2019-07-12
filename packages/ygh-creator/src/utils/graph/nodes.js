@@ -1,6 +1,6 @@
 import { NODE_TYPES } from "data"
 import PriorityQueue from "tinyqueue"
-import _ from "utils"
+import _ from "ygh-utils"
 
 const getSortedStates = entity => {
   const startStates = _.getMinimalStateSpanInverse(entity.states)

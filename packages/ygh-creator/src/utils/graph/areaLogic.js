@@ -1,6 +1,6 @@
-import { compose } from "utils/functions"
+import _ from "ygh-utils"
 
-export const completeArea = compose(
+export const completeArea = _.compose(
   edges => ({
     ...edges,
     centerX: (edges.left + edges.right) / 2,

@@ -4,7 +4,7 @@ import styled, { css, keyframes } from "styled-components"
 import useAuth from "hooks/useAuth"
 import useTemplateSet from "hooks/useTemplateSet"
 import useSaveState from "hooks/useSaveState"
-import useForceUpdate from "hooks/useForceUpdate"
+import { useForceUpdate } from "ygh-hooks"
 
 import { Cog, Logo } from "ygh-icons"
 import { ToolTip } from "ygh-ui"

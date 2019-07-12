@@ -108,7 +108,9 @@ export default props => {
               <Btn>Menu</Btn>
             </Menu.Toggle>
             <Menu.Items>
-              <Menu.Item to="/">Showcase</Menu.Item>
+              <Menu.Item as={Link} to="/">
+                Showcase
+              </Menu.Item>
               <Menu.Item as="a" href="https://create.yourgifthunt.com">
                 Creator
               </Menu.Item>
@@ -123,7 +125,9 @@ export default props => {
               </Menu.Item>
               {isLoggedIn ? (
                 <>
-                  <Menu.Item to={`/${user.username}`}>Profile</Menu.Item>
+                  <Menu.Item as={Link} to={`/${user.username}`}>
+                    Profile
+                  </Menu.Item>
                   <Menu.Item as="a" onClick={logoutUser}>
                     Log out
                   </Menu.Item>

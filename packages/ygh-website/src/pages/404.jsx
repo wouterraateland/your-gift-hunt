@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import { Wrapper } from "ygh-ui"
 import Layout from "components/Layout"
-import { Floor } from "your-gift-hunt/entities"
+import { Floor } from "ygh-entities"
 
 const FullHeightWrapper = styled(Wrapper)`
   position: relative;

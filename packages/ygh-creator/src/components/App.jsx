@@ -1,6 +1,6 @@
 import React, { Suspense } from "react"
 
-import { YGHPlayerProvider } from "ygh-player/react-hook"
+import { YGHPlayerProvider } from "ygh-sdk"
 import { ViewportProvider } from "contexts/Viewport"
 
 import Theme from "containers/Theme"

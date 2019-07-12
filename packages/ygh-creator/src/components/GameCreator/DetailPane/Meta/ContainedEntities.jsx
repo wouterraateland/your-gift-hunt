@@ -2,7 +2,7 @@ import React, { useCallback } from "react"
 
 import useEntities from "hooks/useEntities"
 import useGameMutations from "hooks/useGameMutations"
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 
 import { components } from "react-select"
 

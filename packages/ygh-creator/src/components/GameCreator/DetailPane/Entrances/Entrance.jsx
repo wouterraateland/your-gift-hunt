@@ -4,7 +4,7 @@ import styled from "styled-components"
 import useEntities from "hooks/useEntities"
 import useGameMutations from "hooks/useGameMutations"
 import useGameTemplates from "hooks/useGameTemplates"
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 
 import { components } from "react-select"
 

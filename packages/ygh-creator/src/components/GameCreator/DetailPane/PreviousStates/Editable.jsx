@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import useGameMutations from "hooks/useGameMutations"
 
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 
 import { Button, Message, Options, VSpace } from "ygh-ui"
 import StateTag from "components/Primitives/StateTag"

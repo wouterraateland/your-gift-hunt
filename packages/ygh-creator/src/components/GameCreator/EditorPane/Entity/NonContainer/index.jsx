@@ -9,7 +9,7 @@ import EntityPreview from "components/Primitives/EntityPreview"
 import Nodes from "components/GameCreator/EditorPane/Entity/Nodes"
 import States from "./States"
 
-import { getEntityComponent } from "your-gift-hunt/Entities"
+import { getEntityComponent } from "ygh-entities"
 
 const Outer = styled.div`
   cursor: pointer;

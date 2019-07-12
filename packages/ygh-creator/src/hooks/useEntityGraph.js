@@ -1,5 +1,5 @@
 import { NODE_TYPES } from "data"
-import _ from "utils"
+import creatorUtils from "utils"
 import { useContext } from "react"
 
 import EntityGraphContext from "contexts/EntityGraph"
@@ -8,8 +8,8 @@ import useEntities from "hooks/useEntities"
 
 export const useEntityGraphProvider = () => {
   const { entities } = useEntities()
-  const nodes = _.calcNodes(entities)
-  const edges = _.calcEdges(nodes)
+  const nodes = creatorUtils.calcNodes(entities)
+  const edges = creatorUtils.calcEdges(nodes)
 
   const getNodeById = nodeId => nodes.find(({ id }) => id === nodeId)
   const getEdgeById = edgeId => edges.find(({ id }) => id === edgeId)

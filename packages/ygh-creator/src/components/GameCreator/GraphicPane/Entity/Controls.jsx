@@ -1,9 +1,9 @@
 import React, { useCallback, useRef } from "react"
 import styled, { css } from "styled-components"
 
-import useClickOutside from "hooks/useClickOutside"
+import { useClickOutside } from "ygh-hooks"
 import useInspector from "hooks/useInspector"
-import useContext from "hooks/useContext"
+import { useContext } from "ygh-hooks"
 import useEntityFocus from "hooks/useEntityFocus"
 import useResizeRotateControls from "hooks/useResizeRotateControls"
 

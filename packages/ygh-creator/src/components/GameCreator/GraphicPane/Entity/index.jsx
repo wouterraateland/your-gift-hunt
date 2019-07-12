@@ -4,7 +4,7 @@ import useEntities from "hooks/useEntities"
 import { useEntityPosition } from "hooks/useEntityPositions"
 import usePhysicalDrag from "hooks/usePhysicalDrag"
 
-import { GenericEntity } from "your-gift-hunt/Entities"
+import { GenericEntity } from "ygh-entities"
 import Controls from "./Controls"
 
 const EntityComponent = memo(

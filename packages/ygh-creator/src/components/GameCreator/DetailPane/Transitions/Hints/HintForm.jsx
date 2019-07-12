@@ -4,7 +4,7 @@ import styled from "styled-components"
 import useGameMutations from "hooks/useGameMutations"
 
 import { useFormState } from "react-use-form-state"
-import useClickOutside from "hooks/useClickOutside"
+import { useClickOutside } from "ygh-hooks"
 
 import { Field, Input, Button } from "ygh-ui"
 

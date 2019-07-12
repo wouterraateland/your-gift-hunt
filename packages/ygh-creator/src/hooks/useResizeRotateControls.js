@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from "react"
 
 import PanZoomContext from "contexts/PanZoom"
 
-import useContext from "hooks/useContext"
+import { useContext } from "ygh-hooks"
 import { useEntityPosition } from "./useEntityPositions"
 
 const getCornerAngle = (corner, width, height) => {

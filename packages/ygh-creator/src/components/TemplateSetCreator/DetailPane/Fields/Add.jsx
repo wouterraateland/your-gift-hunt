@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react"
 import styled from "styled-components"
 
-import useAsync from "hooks/useAsync"
+import { useAsync } from "ygh-hooks"
 import useTemplateOptions from "hooks/useTemplateOptions"
 import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 

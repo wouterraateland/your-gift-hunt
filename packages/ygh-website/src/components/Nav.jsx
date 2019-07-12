@@ -108,9 +108,15 @@ export default props => (
             <Menu.Item as="a" href="https://create.yourgifthunt.com">
               Creator
             </Menu.Item>
-            <Menu.Item to="/pricing">Pricing</Menu.Item>
-            <Menu.Item to="/about">About</Menu.Item>
-            <Menu.Item to="/contact">Contact</Menu.Item>
+            <Menu.Item as={Link} to="/pricing">
+              Pricing
+            </Menu.Item>
+            <Menu.Item as={Link} to="/about">
+              About
+            </Menu.Item>
+            <Menu.Item as={Link} to="/contact">
+              Contact
+            </Menu.Item>
             <AccountMenuItem>
               <Button
                 size="tiny"
@@ -141,11 +147,17 @@ export default props => (
           </IndexLink>
           <NavLink href="https://play.yourgifthunt.com">Showcase</NavLink>
           <NavLink href="https://create.yourgifthunt.com">Creator</NavLink>
-          <NavLink to="/pricing">Pricing</NavLink>
-          <NavLink to="/about">About</NavLink>
+          <NavLink as={Link} to="/pricing">
+            Pricing
+          </NavLink>
+          <NavLink as={Link} to="/about">
+            About
+          </NavLink>
         </Float.Left>
         <Float.Right>
-          <NavLink to="/contact">Contact</NavLink>
+          <NavLink as={Link} to="/contact">
+            Contact
+          </NavLink>
           <Account />
         </Float.Right>
       </Large>

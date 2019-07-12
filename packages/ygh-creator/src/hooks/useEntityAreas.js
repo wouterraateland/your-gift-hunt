@@ -1,11 +1,11 @@
-import _ from "utils"
+import creatorUtils from "utils"
 import { NODE_TYPES } from "data"
 import { useCallback, useContext, useEffect, useRef } from "react"
 
 import EntityAreasContext from "contexts/EntityAreas"
 
-import useForceUpdate from "hooks/useForceUpdate"
-import useGetSet from "hooks/useGetSet"
+import { useForceUpdate } from "ygh-hooks"
+import { useGetSet } from "ygh-hooks"
 import useEntities from "hooks/useEntities"
 import useEntityGraph from "hooks/useEntityGraph"
 
@@ -40,7 +40,7 @@ export const useEntityAreasProvider = () => {
   const entityContainerMap = useRef(getEntityContainerMap(entities))
 
   const [getEntityAreas, setEntityAreas] = useGetSet(
-    _.calcEntityAreas(entities, nodes)
+    creatorUtils.calcEntityAreas(entities, nodes)
   )
 
   const _getEntityArea = useCallback(entityId => getEntityAreas()[entityId], [])
@@ -48,19 +48,19 @@ export const useEntityAreasProvider = () => {
     (entityId, area) =>
       setEntityAreas(entityAreas => ({
         ...entityAreas,
-        [entityId]: _.completeArea(area)
+        [entityId]: creatorUtils.completeArea(area)
       })),
     []
   )
 
   const [getNodeAreas, setNodeAreas] = useGetSet(
-    _.calcNodeAreas(entities, nodes, edges)
+    creatorUtils.calcNodeAreas(entities, nodes, edges)
   )
   const _getNodeArea = useCallback(nodeId => getNodeAreas()[nodeId], [])
 
   const getAbsoluteEntityArea = entityId => {
     if (!entityId) {
-      return _.completeArea({ top: 0, left: 0, width: 0, height: 0 })
+      return creatorUtils.completeArea({ top: 0, left: 0, width: 0, height: 0 })
     } else if (entityContainerMap.current[entityId]) {
       const area = _getEntityArea(entityId)
       const containerArea = getAbsoluteEntityArea(
@@ -68,7 +68,7 @@ export const useEntityAreasProvider = () => {
       )
 
       return area && containerArea
-        ? _.completeArea({
+        ? creatorUtils.completeArea({
             top: area.top + containerArea.top,
             left: area.left + containerArea.left,
             bottom: area.bottom + containerArea.top,
@@ -90,7 +90,7 @@ export const useEntityAreasProvider = () => {
     const entityArea = getAbsoluteEntityArea(node.entity.id)
     const area = _getNodeArea(node.id)
     return area && entityArea
-      ? _.completeArea({
+      ? creatorUtils.completeArea({
           top: area.top + entityArea.top,
           left: area.left + entityArea.left,
           width: area.width,
@@ -186,7 +186,7 @@ export const useEntityAreasProvider = () => {
       )
       .map(({ id }) => getEntityAreas()[id])
 
-    return _.completeArea(
+    return creatorUtils.completeArea(
       areas.length
         ? {
             top: Math.min(...areas.map(({ top }) => top)),
@@ -224,7 +224,7 @@ export const useEntityAreasProvider = () => {
       ) {
         setNodeAreas(nodeAreas => ({
           ...nodeAreas,
-          ..._.calcEntityNodeAreas(entity, nodes, edges)
+          ...creatorUtils.calcEntityNodeAreas(entity, nodes, edges)
         }))
 
         const entityArea = _getEntityArea(entity.id) || {
@@ -249,7 +249,7 @@ export const useEntityAreasProvider = () => {
               node.type === NODE_TYPES.EXIT && node.entity.id === entity.id
           )
 
-          const width = _.NON_CONTAINER_WIDTH
+          const width = creatorUtils.NON_CONTAINER_WIDTH
           const height =
             2 +
             2 * entity.states.length +
