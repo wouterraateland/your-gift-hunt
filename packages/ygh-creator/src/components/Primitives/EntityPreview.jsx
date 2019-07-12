@@ -32,6 +32,7 @@ const EntityPreview = ({
         {...entity}
         rotation={rotateObjects && entity.isObject ? 45 : undefined}
         state={state}
+        isInteractive={false}
       />
     </EntityContainer>
   )

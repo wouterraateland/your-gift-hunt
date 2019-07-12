@@ -21,7 +21,7 @@ const Types = ({ onTypeClick, selectedType }) => (
         isSelected={selectedType === name}
         icon={icon}
         label={`Add ${name}`}
-        onClick={() => onTypeClick(name)}
+        onMouseDown={() => onTypeClick(name)}
       />
     ))}
   </TypesContainer>

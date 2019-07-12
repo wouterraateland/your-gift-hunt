@@ -16,10 +16,10 @@ const Toolbox = () => {
 
   const hideEntities = useCallback(
     () =>
-      setState(state => ({
-        ...state,
+      setState({
+        selectedType: null,
         entitiesVisible: false
-      })),
+      }),
     []
   )
 
@@ -31,7 +31,6 @@ const Toolbox = () => {
   const toggleSelectedType = useCallback(
     selectedType =>
       setState(state => ({
-        ...state,
         selectedType,
         entitiesVisible:
           state.selectedType === selectedType ? !state.entitiesVisible : true
