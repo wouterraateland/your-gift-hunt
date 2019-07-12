@@ -6,6 +6,10 @@ import useAuth from "hooks/useAuth"
 
 import { Menu } from "ygh-ui"
 
+const MenuToggle = styled(Menu.Toggle)`
+  height: 3em;
+`
+
 const Avatar = styled.div`
   width: 3em;
   height: 3em;
@@ -21,9 +25,9 @@ const Profile = () => {
 
   return (
     <Menu.Container>
-      <Menu.Toggle>
+      <MenuToggle>
         <Avatar src={user.avatar} />
-      </Menu.Toggle>
+      </MenuToggle>
       <Menu.Items>
         <Menu.Item as={Link} to="/profile">
           Profile

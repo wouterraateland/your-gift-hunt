@@ -47,6 +47,16 @@ export const Input = styled.input`
           float: left;
         `
       : _.blockStyles(props)}
+
+  ${props =>
+    props.type === "search" &&
+    css`
+      line-height: 1.5;
+      -webkit-appearance: textfield;
+      &::-webkit-search-decoration {
+        -webkit-appearance: none;
+      }
+    `}
 `
 
 Input.displayName = "Input"
@@ -62,12 +72,9 @@ const setHeight = el => {
 const SingleInput = forwardRef(({ value, onChange, ...otherProps }, ref) => {
   const myRef = useRef(null)
 
-  useEffect(
-    () => {
-      myRef && myRef.current && setHeight(myRef.current)
-    },
-    [value]
-  )
+  useEffect(() => {
+    myRef && myRef.current && setHeight(myRef.current)
+  }, [value])
 
   return (
     <Input

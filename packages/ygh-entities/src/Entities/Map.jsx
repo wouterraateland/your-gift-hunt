@@ -11,7 +11,13 @@ const incompleteClipPath =
 const completeClipPath =
   "1.5% 50%, 5% 10%, 12% 3%, 20% 2%, 18% 10%, 28% 12%, 25% 5%, 47.5% 5%, 70% 8%, 96% 2%, 100% 20%, 90% 25%, 95% 30%, 100% 60%, 95% 90%, 90% 98%, 70% 95%, 20% 100%, 0% 95%, 5% 60%"
 
-const StyledMap = styled(Entity)`
+const StyledMap = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
   background-color: #d0c6b0;
 
   clip-path: polygon(
@@ -24,6 +30,10 @@ const StyledMap = styled(Entity)`
 
   &::before,
   &::after {
+    content: "";
+
+    position: absolute;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
@@ -69,37 +79,41 @@ const StyledMap = styled(Entity)`
 `
 StyledMap.displayName = "Map"
 
-const StatefulMap = forwardRef(({ dispatchInputAction, ...props }, ref) => {
-  const [isTurned, setTurned] = useState(false)
-  const isClean = _.hasState("Clean")(props)
-  const isComplete = _.hasState("Dusty")(props) || isClean
+const StatefulMap = forwardRef(
+  ({ dispatchInputAction, children, ...props }, ref) => {
+    const [isTurned, setTurned] = useState(false)
+    const isClean = _.hasState("Clean")(props)
+    const isComplete = _.hasState("Dusty")(props) || isClean
 
-  const cleanliness = _.getInputValue("part_cleaned")(props) || 0
-  const code = _.getInformationSlotValue("Code")(props) || ""
+    const cleanliness = _.getInputValue("part_cleaned")(props) || 0
+    const code = _.getInformationSlotValue("Code")(props) || ""
 
-  const onClick = useCallback(() => {
-    if (isClean) {
-      setTurned(isTurned => !isTurned)
-    } else if (isComplete) {
-      dispatchInputAction(props.state, "part_cleaned", cleanliness + 0.1)
-    }
-  }, [props.state, isClean, isComplete, cleanliness])
+    const onClick = useCallback(() => {
+      if (isClean) {
+        setTurned(isTurned => !isTurned)
+      } else if (isComplete) {
+        dispatchInputAction(props.state, "part_cleaned", cleanliness + 0.1)
+      }
+    }, [props.state, isClean, isComplete, cleanliness])
 
-  return (
-    <StyledMap
-      {...props}
-      onClick={onClick}
-      ref={ref}
-      isComplete={isComplete}
-      isClean={isClean}
-      isTurned={isTurned}
-      cleanliness={cleanliness}
-      code={code}
-    >
-      <MapTexture />
-    </StyledMap>
-  )
-})
+    return (
+      <Entity {...props} noVisual>
+        <StyledMap
+          onClick={onClick}
+          ref={ref}
+          isComplete={isComplete}
+          isClean={isClean}
+          isTurned={isTurned}
+          cleanliness={cleanliness}
+          code={code}
+        >
+          <MapTexture />
+        </StyledMap>
+        {children}
+      </Entity>
+    )
+  }
+)
 StatefulMap.name = "Map"
 StatefulMap.templateName = "Map"
 StatefulMap.defaultProps = {

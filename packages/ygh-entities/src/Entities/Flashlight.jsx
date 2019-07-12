@@ -107,23 +107,26 @@ const Button = styled.div`
   transform: translate(-50%, -50%);
 `
 
-const Flashlight = forwardRef(({ dispatchInputAction, ...props }, ref) => {
-  const isOn = _.hasState("on")(props)
-  const isEmpty = _.hasState("empty")(props)
+const Flashlight = forwardRef(
+  ({ dispatchInputAction, children, ...props }, ref) => {
+    const isOn = _.hasState("on")(props)
+    const isEmpty = _.hasState("empty")(props)
 
-  return (
-    <Body {...props} ref={ref}>
-      <Holder isEmpty={isEmpty} left={0.8} top={-0.0} />
-      <Button
-        onClick={() =>
-          !isEmpty &&
-          dispatchInputAction(props.state, "power", isOn ? "off" : "on")
-        }
-      />
-      <Head isOn={isOn} left={1.75} />
-    </Body>
-  )
-})
+    return (
+      <Body {...props} ref={ref}>
+        <Holder isEmpty={isEmpty} left={0.8} top={-0.0} />
+        <Button
+          onClick={() =>
+            !isEmpty &&
+            dispatchInputAction(props.state, "power", isOn ? "off" : "on")
+          }
+        />
+        <Head isOn={isOn} left={1.75} />
+        {children}
+      </Body>
+    )
+  }
+)
 Flashlight.name = "Flashlight"
 Flashlight.templateName = "Flashlight"
 Flashlight.defaultProps = {

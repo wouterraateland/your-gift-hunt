@@ -61,7 +61,7 @@ DoorPart.defaultProps = {
   origin: { left: "0%", top: "100%" }
 }
 
-const Door = forwardRef(({ dispatchInputAction, ...props }, ref) => {
+const Door = forwardRef(({ dispatchInputAction, children, ...props }, ref) => {
   const isOpen = _.hasState("open")(props)
   return (
     <Frame
@@ -72,6 +72,7 @@ const Door = forwardRef(({ dispatchInputAction, ...props }, ref) => {
       ref={ref}
     >
       <DoorPart left={0} top={0.75} rotation={isOpen ? 60 : 0} />
+      {children}
     </Frame>
   )
 })

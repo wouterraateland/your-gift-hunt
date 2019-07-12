@@ -62,11 +62,12 @@ DoorPart.defaultProps = {
   origin: { left: "0%", top: "100%" }
 }
 
-const DoorWithLock = forwardRef(({ inspect, ...props }, ref) => {
+const DoorWithLock = forwardRef(({ inspect, children, ...props }, ref) => {
   const isOpen = _.hasState("Unlocked")(props)
   return (
     <Frame {...props} onClick={inspect} ref={ref}>
       <DoorPart left={0} top={0.75} rotation={isOpen ? 60 : 0} />
+      {children}
     </Frame>
   )
 })

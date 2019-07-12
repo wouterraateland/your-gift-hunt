@@ -2,7 +2,6 @@ import React, { useCallback, useRef } from "react"
 import styled, { css } from "styled-components"
 
 import { useClickOutside } from "ygh-hooks"
-import useInspector from "hooks/useInspector"
 import { useContext } from "ygh-hooks"
 import useEntityFocus from "hooks/useEntityFocus"
 import useResizeRotateControls from "hooks/useResizeRotateControls"
@@ -50,7 +49,7 @@ const controlStyles = css`
   position: absolute;
   top: ${props => (props.top ? 0 : props.bottom ? 100 : 50)}%;
   left: ${props => (props.left ? 0 : props.right ? 100 : 50)}%;
-  z-index: 1000;
+  z-index: 1001;
 
   width: 1em;
   height: 1em;
@@ -82,23 +81,14 @@ const RotateControl = styled(Rotate)`
 `
 RotateControl.displayName = "RotateControl"
 
-const InspectControl = styled.div`
-  ${controlStyles}
-`
-InspectControl.displayName = "InspectControl"
-
 const Controls = ({ entity, parentRotation }) => {
   const ref = useRef(null)
   const { focusedEntityId, focus, blur } = useEntityFocus()
-  const { inspectEntity } = useInspector()
   const { zoom } = useContext(PanZoomContext, 0b100)
 
   const isVisible = focusedEntityId === entity.id
 
   const handleClick = useCallback(() => focus(entity.id), [entity.id])
-  const handleInspectClick = useCallback(() => inspectEntity(entity.id), [
-    entity.id
-  ])
 
   useClickOutside({ ref, onClickOutside: blur })
 
@@ -124,7 +114,6 @@ const Controls = ({ entity, parentRotation }) => {
           <RotateControl {...rotateHandlers.topRight} top right />
           <RotateControl {...rotateHandlers.bottomRight} bottom right />
           <RotateControl {...rotateHandlers.bottomLeft} bottom left />
-          <InspectControl onMouseDown={handleInspectClick}>+</InspectControl>
         </>
       )}
     </Container>

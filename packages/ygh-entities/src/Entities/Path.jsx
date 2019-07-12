@@ -119,7 +119,7 @@ const Path = forwardRef(({ dispatchInputAction, children, ...props }, ref) => {
           <Stone key={i} style={stone} />
         )
       )}
-      {isTurned && children}
+      {children}
     </Entity>
   )
 })

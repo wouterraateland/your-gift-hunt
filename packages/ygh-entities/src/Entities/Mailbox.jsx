@@ -86,15 +86,18 @@ Door.defaultProps = {
   height: 2
 }
 
-const Mailbox = forwardRef(({ containedEntities, inspect, ...props }, ref) => (
-  <Entity noVisual {...props} onClick={inspect} ref={ref}>
-    <Box />
-    <Door
-      isOpen={containedEntities.some(entity => _.hasState("unread")(entity))}
-      left={2.875}
-    />
-  </Entity>
-))
+const Mailbox = forwardRef(
+  ({ containedEntities, inspect, children, ...props }, ref) => (
+    <Entity noVisual {...props} onClick={inspect} ref={ref}>
+      <Box />
+      <Door
+        isOpen={containedEntities.some(entity => _.hasState("unread")(entity))}
+        left={2.875}
+      />
+      {children}
+    </Entity>
+  )
+)
 Mailbox.name = "Mailbox"
 Mailbox.templateName = "Mailbox"
 Mailbox.defaultProps = {

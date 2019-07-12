@@ -4,8 +4,19 @@ import styled from "styled-components"
 import Entity from "../Entity"
 import MapTexture from "./MapTexture"
 
-const StyledMapPiece = styled(Entity)`
+const StyledMapPiece = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
   &::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     box-shadow: inset 1em 1em 1em -1em #0009;
@@ -32,10 +43,13 @@ const StyledMapPiece = styled(Entity)`
   background-color: #d0c6b0;
 `
 
-const MapPiece = forwardRef((props, ref) => (
-  <StyledMapPiece ref={ref} {...props}>
-    <MapTexture size={2} />
-  </StyledMapPiece>
+const MapPiece = forwardRef(({ children, ...props }, ref) => (
+  <Entity {...props} noVisual>
+    <StyledMapPiece ref={ref}>
+      <MapTexture size={2} />
+    </StyledMapPiece>
+    {children}
+  </Entity>
 ))
 MapPiece.name = "MapPiece"
 MapPiece.displayName = "Map piece"

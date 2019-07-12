@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef } from "react"
+import { useGetSet, useForceUpdate } from "ygh-hooks"
 
 const clamp = (min, max) => value => Math.max(min, Math.min(value, max))
 const identity = x => x
@@ -52,11 +53,13 @@ const usePanZoom = ({
   if (container === undefined) {
     throw Error("Container cannot be empty and should be a ref")
   }
+  const forceUpdate = useForceUpdate()
   const wasPanning = useRef(false)
   const prev = useRef([])
+  const prevZoom = useRef(1)
 
-  const [isPanning, setPanning] = useState(false)
-  const [transform, setTransform] = useState({
+  const [isPanning, setPanning] = useGetSet(false)
+  const [getTransform, _setTransform] = useGetSet({
     ...initialPan,
     zoom: initialZoom
   })
@@ -64,6 +67,12 @@ const usePanZoom = ({
   const clampX = useCallback(clamp(minX, maxX), [minX, maxX])
   const clampY = useCallback(clamp(minY, maxY), [minY, maxY])
   const clampZoom = useCallback(clamp(minZoom, maxZoom), [minZoom, maxZoom])
+
+  const setTransform = useCallback(v => {
+    const r = _setTransform(v)
+    forceUpdate()
+    return r
+  }, [])
 
   const setPan = useCallback(
     f =>
@@ -116,7 +125,7 @@ const usePanZoom = ({
 
   const movePanZoom = useCallback(
     pointers => {
-      if (isPanning) {
+      if (isPanning()) {
         wasPanning.current = true
 
         const prevPointers = prev.current
@@ -141,18 +150,15 @@ const usePanZoom = ({
         onPan(pointers)
       }
     },
-    [isPanning, onPan, minX, maxX, minY, maxY]
+    [onPan, minX, maxX, minY, maxY]
   )
 
-  const endPanZoom = useCallback(
-    () => {
-      if (isPanning) {
-        setPanning(false)
-        onPanEnd()
-      }
-    },
-    [isPanning, onPanEnd]
-  )
+  const endPanZoom = useCallback(() => {
+    if (isPanning()) {
+      setPanning(false)
+      onPanEnd()
+    }
+  }, [onPanEnd])
 
   const onClickCapture = useCallback(
     event => {
@@ -194,11 +200,36 @@ const usePanZoom = ({
     [enableZoom, requirePinch, onZoom, minX, maxX, minY, maxY, minZoom, maxZoom]
   )
 
+  const onGestureStart = useCallback(event => {
+    event.preventDefault()
+    prevZoom.current = getTransform().zoom
+  }, [])
+
+  const onGesture = useCallback(event => {
+    event.preventDefault()
+
+    const { pageX, pageY, scale } = event
+    const pointerPosition = getPositionOnElement(container.current)(
+      pageX,
+      pageY
+    )
+
+    setZoom(prevZoom.current * scale, pointerPosition)
+
+    onZoom()
+  }, [])
+
   useEffect(() => {
     if (container.current) {
       container.current.addEventListener("wheel", onWheel)
+      container.current.addEventListener("gesturestart", onGestureStart)
+      container.current.addEventListener("gesturechange", onGesture)
+      container.current.addEventListener("gestureend", onGesture)
       return () => {
         container.current.removeEventListener("wheel", onWheel)
+        container.current.removeEventListener("gesturestart", onGestureStart)
+        container.current.removeEventListener("gesturechange", onGesture)
+        container.current.removeEventListener("gestureend", onGesture)
       }
     }
   }, [])
@@ -220,6 +251,7 @@ const usePanZoom = ({
   const onMouseUp = () => endPanZoom()
   const onMouseLeave = () => endPanZoom()
 
+  const transform = getTransform()
   return {
     transform: `translate3D(${transform.x}px, ${transform.y}px, 0) scale(${
       transform.zoom
