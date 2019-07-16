@@ -16,6 +16,7 @@ export const MenuItem = styled.div.attrs(() => ({
 
   text-decoration: none;
   text-align: left;
+  font-weight: bold;
 
   &:nth-child(2n) {
     background: #0001;
