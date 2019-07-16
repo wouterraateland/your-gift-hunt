@@ -103,7 +103,7 @@ export const useEntityAreasProvider = () => {
     absolute ? getAbsoluteNodeArea(getNodeById(nodeId)) : _getNodeArea(nodeId)
 
   const fitContainer = containerId => {
-    const containerArea = getEntityArea(containerId)
+    const containerArea = _getEntityArea(containerId)
     const containedEntityIds = Object.entries(
       entityContainerMap.current
     ).reduce(

@@ -1,6 +1,8 @@
 import React, { memo, useEffect, useRef } from "react"
 import { navigate } from "@reach/router"
 
+import { PanZoomEditorProvider } from "contexts/PanZoomEditor"
+import { PanZoomGraphicProvider } from "contexts/PanZoomGraphic"
 import { SaveStateProvider } from "contexts/SaveState"
 import { GameTemplatesProvider } from "contexts/GameTemplates"
 import { GameProvider } from "contexts/Game"
@@ -83,33 +85,37 @@ const CreatorWithModal = props => {
 }
 
 const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => (
-  <SaveStateProvider>
-    <EntityFocusProvider>
-      <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
-        <GameTemplatesProvider>
-          <EntitiesProvider>
-            <EntityGraphProvider>
-              <EntityAreasProvider>
-                <EntityPositionsProvider>
-                  <EntityDependenciesProvider>
-                    <GameQueriesProvider>
-                      <GameMutationsProvider>
-                        <EditorProvider>
-                          <InspectorProvider>
-                            <CreatorWithModal {...otherProps} />
-                          </InspectorProvider>
-                        </EditorProvider>
-                      </GameMutationsProvider>
-                    </GameQueriesProvider>
-                  </EntityDependenciesProvider>
-                </EntityPositionsProvider>
-              </EntityAreasProvider>
-            </EntityGraphProvider>
-          </EntitiesProvider>
-        </GameTemplatesProvider>
-      </GameProvider>
-    </EntityFocusProvider>
-  </SaveStateProvider>
+  <PanZoomEditorProvider>
+    <PanZoomGraphicProvider>
+      <SaveStateProvider>
+        <EntityFocusProvider>
+          <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
+            <GameTemplatesProvider>
+              <EntitiesProvider>
+                <EntityGraphProvider>
+                  <EntityAreasProvider>
+                    <EntityPositionsProvider>
+                      <EntityDependenciesProvider>
+                        <GameQueriesProvider>
+                          <GameMutationsProvider>
+                            <EditorProvider>
+                              <InspectorProvider>
+                                <CreatorWithModal {...otherProps} />
+                              </InspectorProvider>
+                            </EditorProvider>
+                          </GameMutationsProvider>
+                        </GameQueriesProvider>
+                      </EntityDependenciesProvider>
+                    </EntityPositionsProvider>
+                  </EntityAreasProvider>
+                </EntityGraphProvider>
+              </EntitiesProvider>
+            </GameTemplatesProvider>
+          </GameProvider>
+        </EntityFocusProvider>
+      </SaveStateProvider>
+    </PanZoomGraphicProvider>
+  </PanZoomEditorProvider>
 )
 
 export default CreatorPage

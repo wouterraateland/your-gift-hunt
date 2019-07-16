@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react"
 
-import PanZoomContext from "contexts/PanZoom"
+import PanZoomContext from "contexts/PanZoomGraphic"
 
 import { useContext } from "ygh-hooks"
 import { useEntityPosition } from "./useEntityPositions"

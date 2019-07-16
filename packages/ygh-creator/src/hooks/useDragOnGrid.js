@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 
-import PanZoomContext from "contexts/PanZoom"
+import PanZoomContext from "contexts/PanZoomEditor"
 
 import { useContext } from "ygh-hooks"
 import useEntityAreas from "./useEntityAreas"
@@ -52,16 +52,13 @@ const useDragOnGrid = entity => {
     [isDragging, entityId, setEntityPosition]
   )
 
-  useEffect(
-    () => {
-      window.addEventListener("mousemove", onWindowMouseMove)
+  useEffect(() => {
+    window.addEventListener("mousemove", onWindowMouseMove)
 
-      return () => {
-        window.removeEventListener("mousemove", onWindowMouseMove)
-      }
-    },
-    [isDragging, entityId, setEntityPosition]
-  )
+    return () => {
+      window.removeEventListener("mousemove", onWindowMouseMove)
+    }
+  }, [isDragging, entityId, setEntityPosition])
 
   const onWindowMouseUp = useCallback(() => {
     dragStart.current = null

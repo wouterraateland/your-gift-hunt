@@ -30,7 +30,6 @@ const getPositionOnElement = compose(
 )
 
 const usePanZoom = ({
-  container,
   enablePan = true,
   enableZoom = true,
   requirePinch = false,
@@ -50,9 +49,7 @@ const usePanZoom = ({
   onPanEnd = noop,
   onZoom = noop
 }) => {
-  if (container === undefined) {
-    throw Error("Container cannot be empty and should be a ref")
-  }
+  const container = useRef(null)
   const forceUpdate = useForceUpdate()
   const wasPanning = useRef(false)
   const prev = useRef([])
@@ -219,6 +216,23 @@ const usePanZoom = ({
     onZoom()
   }, [])
 
+  const setContainer = useCallback(el => {
+    if (el) {
+      el.addEventListener("wheel", onWheel)
+      el.addEventListener("gesturestart", onGestureStart)
+      el.addEventListener("gesturechange", onGesture)
+      el.addEventListener("gestureend", onGesture)
+    } else if (container.current) {
+      return () => {
+        container.current.removeEventListener("wheel", onWheel)
+        container.current.removeEventListener("gesturestart", onGestureStart)
+        container.current.removeEventListener("gesturechange", onGesture)
+        container.current.removeEventListener("gestureend", onGesture)
+      }
+    }
+    container.current = el
+  }, [])
+
   useEffect(() => {
     if (container.current) {
       container.current.addEventListener("wheel", onWheel)
@@ -253,6 +267,8 @@ const usePanZoom = ({
 
   const transform = getTransform()
   return {
+    container,
+    setContainer,
     transform: `translate3D(${transform.x}px, ${transform.y}px, 0) scale(${
       transform.zoom
     })`,

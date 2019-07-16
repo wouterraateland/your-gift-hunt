@@ -1,12 +1,11 @@
 import React, { useCallback, useRef } from "react"
 import styled, { css } from "styled-components"
 
-import { useClickOutside } from "ygh-hooks"
-import { useContext } from "ygh-hooks"
+import { useClickOutside, useContext } from "ygh-hooks"
 import useEntityFocus from "hooks/useEntityFocus"
 import useResizeRotateControls from "hooks/useResizeRotateControls"
 
-import PanZoomContext from "contexts/PanZoom"
+import PanZoomContext from "contexts/PanZoomGraphic"
 
 import { Resize, Rotate } from "ygh-icons"
 

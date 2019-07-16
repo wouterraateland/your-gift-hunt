@@ -1,14 +1,12 @@
-import React, { useRef } from "react"
+import React from "react"
 import styled from "styled-components"
 
-import { PanZoomProvider } from "contexts/PanZoom"
-
-import usePanZoom from "hooks/usePanZoom" //"use-pan-and-zoom"
+import { usePanZoomGraphicContext } from "hooks/usePanZoomGraphic"
 
 import ZoomControls from "./ZoomControls"
 // import PanControls from "./PanControls"
 
-const StyledEditorPane = styled.div`
+const StyledGraphicPane = styled.div`
   touch-action: none;
   overflow: hidden;
 
@@ -29,22 +27,16 @@ const PanContainer = styled.div`
   will-change: transform;
 `
 
-const EditorPane = ({ children }) => {
-  const container = useRef(null)
+const GraphicPane = ({ children }) => {
   const {
+    setContainer,
     transform,
     pan: { x, y },
     // setPan,
     zoom,
     setZoom,
     panZoomHandlers
-  } = usePanZoom({
-    container,
-    enableZoom: true,
-    minZoom: 0.1,
-    maxZoom: 2,
-    requirePinch: true
-  })
+  } = usePanZoomGraphicContext()
 
   // useEffect(() => {
   //   if (container.current) {
@@ -58,30 +50,28 @@ const EditorPane = ({ children }) => {
   // }, [])
 
   return (
-    <PanZoomProvider pan={{ x, y }} zoom={zoom}>
-      <StyledEditorPane
-        ref={container}
-        {...panZoomHandlers}
-        style={{
-          backgroundSize: `${2 * zoom}em ${2 * zoom}em`,
-          backgroundPosition: `${x}px ${y}px`
-        }}
-      >
-        <PanContainer style={{ transform }}>{children}</PanContainer>
-        <ZoomControls
-          steps={[0.1, 0.25, 0.5, 1, 1.5, 2]}
-          zoom={zoom}
-          setZoom={setZoom}
-        />
-        {/* <PanControls
+    <StyledGraphicPane
+      ref={container => setContainer(container)}
+      {...panZoomHandlers}
+      style={{
+        backgroundSize: `${2 * zoom}em ${2 * zoom}em`,
+        backgroundPosition: `${x}px ${y}px`
+      }}
+    >
+      <PanContainer style={{ transform }}>{children}</PanContainer>
+      <ZoomControls
+        steps={[0.1, 0.25, 0.5, 1, 1.5, 2]}
+        zoom={zoom}
+        setZoom={setZoom}
+      />
+      {/* <PanControls
           container={container}
           zoom={zoom}
           pan={{ x, y }}
           setPan={setPan}
         /> */}
-      </StyledEditorPane>
-    </PanZoomProvider>
+    </StyledGraphicPane>
   )
 }
 
-export default EditorPane
+export default GraphicPane
