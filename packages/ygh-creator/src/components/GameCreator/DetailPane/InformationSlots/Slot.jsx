@@ -16,7 +16,15 @@ const Blockquote = styled.blockquote`
 `
 
 const Option = ({ data, ...otherProps }) => (
-  <components.Option {...otherProps}>
+  <components.Option
+    {...otherProps}
+    cx={(a, b, c) =>
+      `${Object.keys(b).reduce(
+        (acc, key) => (b[key] ? `${acc} ${key}` : acc),
+        a
+      )} ${c}`
+    }
+  >
     <FieldTag
       entity={data.entity}
       field={data.field}

@@ -11,7 +11,15 @@ import { Field, Select, Message } from "ygh-ui"
 import InformationSlotTag from "components/Primitives/InformationSlotTag"
 
 const Option = ({ data, ...otherProps }) => (
-  <components.Option {...otherProps}>
+  <components.Option
+    {...otherProps}
+    cx={(a, b, c) =>
+      `${Object.keys(b).reduce(
+        (acc, key) => (b[key] ? `${acc} ${key}` : acc),
+        a
+      )} ${c}`
+    }
+  >
     <InformationSlotTag
       entity={data.entity}
       informationSlot={data.informationSlot}

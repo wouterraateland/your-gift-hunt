@@ -10,16 +10,24 @@ import { Field, Message, Select } from "ygh-ui"
 import ClickableEntityTag from "components/GameCreator/ClickableEntityTag"
 import EntityTag from "components/Primitives/EntityTag"
 
-const Option = ({ data, ...otherProps }) => (
-  <components.Option {...otherProps}>
-    <EntityTag entity={data.entity} />
+const Option = props => (
+  <components.Option
+    {...props}
+    cx={(a, b, c) =>
+      `${Object.keys(b).reduce(
+        (acc, key) => (b[key] ? `${acc} ${key}` : acc),
+        a
+      )} ${c}`
+    }
+  >
+    <EntityTag entity={props.data.entity} />
   </components.Option>
 )
 
-const MultiValue = ({ data, ...otherProps }) => (
-  <components.MultiValue {...otherProps}>
+const MultiValueLabel = ({ data, ...otherProps }) => (
+  <components.MultiValueLabel {...otherProps}>
     <ClickableEntityTag entity={data.entity} />
-  </components.MultiValue>
+  </components.MultiValueLabel>
 )
 
 const Container = ({ entity }) => {
@@ -30,8 +38,16 @@ const Container = ({ entity }) => {
   } = useGameMutations()
   const [{ error, isLoading }, runAsync] = useAsync()
 
+  const isContainedIn = (entity, containerId) =>
+    entity.container &&
+    (entity.container.id === containerId ||
+      isContainedIn(
+        entities.find(({ id }) => id === entity.container.id),
+        containerId
+      ))
+
   const options = entities
-    .filter(({ id }) => id !== entity.id)
+    .filter(({ id }) => id !== entity.id && !isContainedIn(entity, id))
     .map(entity => ({
       value: entity.id,
       entity
@@ -66,7 +82,7 @@ const Container = ({ entity }) => {
         isMulti
         components={{
           Option,
-          MultiValue
+          MultiValueLabel
         }}
         label="Contained entities"
         placeholder="None"

@@ -23,10 +23,6 @@ const FloatingButton = styled.button`
   font-size: 1.5em;
 
   background: #fff;
-
-  @media (min-width: 40em) {
-    display: none;
-  }
 `
 
 const CloseButton = () => {

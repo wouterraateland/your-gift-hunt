@@ -11,7 +11,15 @@ import EntityTag from "components/Primitives/EntityTag"
 import ClickableEntityTag from "components/GameCreator/ClickableEntityTag"
 
 const Option = ({ data, ...otherProps }) => (
-  <components.Option {...otherProps}>
+  <components.Option
+    {...otherProps}
+    cx={(a, b, c) =>
+      `${Object.keys(b).reduce(
+        (acc, key) => (b[key] ? `${acc} ${key}` : acc),
+        a
+      )} ${c}`
+    }
+  >
     <EntityTag entity={data.entity} />
   </components.Option>
 )
@@ -30,8 +38,21 @@ const Container = ({ entity }) => {
   } = useGameMutations()
   const [{ error, isLoading }, runAsync] = useAsync()
 
+  const isContainedIn = (entity, containerId) =>
+    entity.container &&
+    (entity.container.id === containerId ||
+      isContainedIn(
+        entities.find(({ id }) => id === entity.container.id),
+        containerId
+      ))
+
   const options = entities
-    .filter(({ id, isContainer }) => isContainer && id !== entity.id)
+    .filter(
+      containerEntity =>
+        containerEntity.isContainer &&
+        containerEntity.id !== entity.id &&
+        !isContainedIn(containerEntity, entity.id)
+    )
     .map(entity => ({
       value: entity.id,
       entity
