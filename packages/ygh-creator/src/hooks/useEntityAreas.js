@@ -18,7 +18,7 @@ const getEntityContainerMap = entities =>
     {}
   )
 
-const getEntityStateNodesMap = (entities, nodes = []) =>
+const getEntityNodesMap = (entities, nodes = []) =>
   entities.reduce(
     (map, entity) => ({
       ...map,
@@ -36,7 +36,7 @@ export const useEntityAreasProvider = () => {
   const forceUpdate = useForceUpdate()
   const hasChanged = useRef(false)
 
-  const entityStateNodesMap = useRef(getEntityStateNodesMap(entities, nodes))
+  const entityNodesMap = useRef(getEntityNodesMap(entities, nodes))
   const entityContainerMap = useRef(getEntityContainerMap(entities))
 
   const [getEntityAreas, setEntityAreas] = useGetSet(
@@ -115,10 +115,10 @@ export const useEntityAreasProvider = () => {
 
     const top = containedAreas.length
       ? Math.min(...containedAreas.map(({ top }) => top)) - 1
-      : containerArea.top
+      : 0
     const left = containedAreas.length
       ? Math.min(...containedAreas.map(({ left }) => left)) - 1
-      : containerArea.left
+      : 0
     const width = containedAreas.length
       ? Math.max(...containedAreas.map(({ right }) => right)) + 1 - left
       : 4
@@ -208,45 +208,49 @@ export const useEntityAreasProvider = () => {
   }
 
   useEffect(() => {
+    let shouldUpdate = false
     const prevEntityContainerMap = entityContainerMap.current
     entityContainerMap.current = getEntityContainerMap(entities)
 
-    const prevEntityStateNodesMap = entityStateNodesMap.current
-    entityStateNodesMap.current = getEntityStateNodesMap(entities, nodes)
+    const prevEntityNodesMap = entityNodesMap.current
+    entityNodesMap.current = getEntityNodesMap(entities, nodes)
 
     entities.forEach(entity => {
       const prevContainerId = prevEntityContainerMap[entity.id]
       const nextContainerId = entityContainerMap.current[entity.id]
 
-      if (
-        entityStateNodesMap.current[entity.id] !==
-        prevEntityStateNodesMap[entity.id]
-      ) {
-        setNodeAreas(nodeAreas => ({
-          ...nodeAreas,
-          ...creatorUtils.calcEntityNodeAreas(entity, nodes, edges)
-        }))
-
-        const entityArea =
-          _getEntityArea(entity.id) ||
-          (entity.graphPosition
+      if (!_getEntityArea(entity.id)) {
+        _setEntityArea(
+          entity.id,
+          entity.graphPosition
             ? {
                 top: entity.graphPosition.top,
-                left: entity.graphPosition.left
+                left: entity.graphPosition.left,
+                width: 0,
+                height: 0
               }
             : {
                 top: 0,
-                left: 0
-              })
+                left: 0,
+                width: 0,
+                height: 0
+              }
+        )
 
+        shouldUpdate = true
+      }
+
+      if (
+        entityNodesMap.current[entity.id] !== prevEntityNodesMap[entity.id] ||
+        entity.containedEntities.length !==
+          Object.values(prevEntityContainerMap).filter(id => id === entity.id)
+            .length
+      ) {
         if (entity.isContainer) {
-          _setEntityArea(entity.id, {
-            top: entityArea.top,
-            left: entityArea.left,
-            width: 4,
-            height: 4
-          })
+          fitContainer(entity.id)
         } else {
+          const entityArea = _getEntityArea(entity.id)
+
           const hasEntryNode = nodes.some(
             node =>
               node.type === NODE_TYPES.ENTRY && node.entity.id === entity.id
@@ -269,7 +273,8 @@ export const useEntityAreasProvider = () => {
             height
           })
         }
-        forceUpdate()
+
+        shouldUpdate = true
       }
 
       if (nextContainerId !== prevContainerId) {
@@ -285,12 +290,26 @@ export const useEntityAreasProvider = () => {
           height: entityArea.height
         })
 
-        prevContainerId && fitContainer(prevContainerId)
-        nextContainerId && fitContainer(nextContainerId)
-
-        forceUpdate()
+        shouldUpdate = true
       }
+
+      if (entityNodesMap[entity.id] !== prevEntityNodesMap[entity.id]) {
+        setNodeAreas(nodeAreas => ({
+          ...nodeAreas,
+          ...creatorUtils.calcEntityNodeAreas(entity, nodes, edges)
+        }))
+
+        shouldUpdate = true
+      }
+
+      prevContainerId && fitContainer(prevContainerId)
+      nextContainerId && fitContainer(nextContainerId)
     })
+
+    if (shouldUpdate) {
+      forceUpdate()
+    }
+
     hasChanged.current = false
   }, [entities, edges, nodes])
 
