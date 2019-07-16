@@ -24,133 +24,125 @@ const useMetaActions = game => {
   const createGamePlayMutation = useMutation(CREATE_GAME_PLAY)
   const publishGamePlayMutation = useMutation(PUBLISH_GAME)
 
-  const deleteGame = useCallback(
-    async () => {
-      await deleteGameMutation({
-        variables: { gameId },
-        update: (
-          proxy,
-          {
-            data: {
-              deleteGame: { id }
-            }
+  const deleteGame = useCallback(async () => {
+    await deleteGameMutation({
+      variables: { gameId },
+      update: (
+        proxy,
+        {
+          data: {
+            deleteGame: { id }
           }
-        ) => {
-          const query = {
-            query: USER_GAMES,
-            variables: {
-              userId,
-              slugPrefix: ""
-            }
-          }
-
-          const { user } = proxy.readQuery(query)
-          const gameIndex = user.games.findIndex(game => game.id === id)
-          if (gameIndex !== -1) {
-            user.games.splice(gameIndex, 1)
-          }
-
-          proxy.writeQuery({
-            ...query,
-            data: {
-              user
-            }
-          })
         }
-      })
-    },
-    [gameId, userId]
-  )
+      ) => {
+        const query = {
+          query: USER_GAMES,
+          variables: {
+            userId,
+            slugPrefix: ""
+          }
+        }
 
-  const testGame = useCallback(
-    async () => {
-      if (loading) {
-        return
+        const { user } = proxy.readQuery(query)
+        const gameIndex = user.games.findIndex(game => game.id === id)
+        if (gameIndex !== -1) {
+          user.games.splice(gameIndex, 1)
+        }
+
+        proxy.writeQuery({
+          ...query,
+          data: {
+            user
+          }
+        })
       }
+    })
+  }, [gameId, userId])
 
-      const response = await createGamePlayMutation({
+  const testGame = useCallback(async () => {
+    if (loading) {
+      return
+    }
+
+    const newWindow = window.open("", "_blank")
+
+    const response = await createGamePlayMutation({
+      variables: {
+        gameId,
+        userId,
+        serviceId: data.service.id
+      }
+    })
+
+    const playToken = response.data.createGamePlay.id
+
+    newWindow.location = `${PLAY_URL}/${game.creator.slug}/${
+      game.slug
+    }?playToken=${playToken}`
+  }, [gameId, userId, loading, data])
+
+  const publishGame = useCallback(async () => {
+    let paid = true
+    if (game.privacy === PRIVACY.PRIVATE) {
+      const variantId =
+        "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xNjg2MzAxNjkxMDk0OA=="
+      const checkout = await client.checkout.create()
+      await client.checkout.addLineItems(checkout.id, [
+        {
+          variantId,
+          quantity: 1,
+          customAttributes: [{ key: "Game name", value: game.name }]
+        }
+      ])
+      await client.checkout.updateEmail(checkout.id, user.user_metadata.email)
+      await client.checkout.updateShippingAddress(checkout.id, {
+        address1: null,
+        address2: null,
+        city: null,
+        company: null,
+        country: null,
+        firstName: user.user_metadata.first_name,
+        lastName: user.user_metadata.last_name,
+        phone: null,
+        province: null,
+        zip: null
+      })
+
+      const checkoutWindow = window.open(checkout.webUrl)
+      await new Promise(resolve => {
+        let i1, i2
+        i1 = setInterval(() => {
+          if (checkoutWindow.closed) {
+            clearInterval(i1)
+            clearInterval(i2)
+            resolve()
+          }
+        }, 500)
+        i2 = setInterval(async () => {
+          const resultingCheckout = await client.checkout.fetch(checkout.id)
+          if (resultingCheckout.completedAt !== null) {
+            clearInterval(i1)
+            clearInterval(i2)
+            resolve()
+          }
+        }, 2000)
+      })
+      const resultingCheckout = await client.checkout.fetch(checkout.id)
+      paid = resultingCheckout.completedAt !== null
+    }
+
+    if (paid) {
+      await publishGamePlayMutation({
         variables: {
           gameId,
-          userId,
-          serviceId: data.service.id
+          now: new Date().toJSON()
         }
       })
-
-      const playToken = response.data.createGamePlay.id
-
-      window.open(
-        `${PLAY_URL}/${game.creator.slug}/${game.slug}?playToken=${playToken}`,
-        "_blank"
-      )
-    },
-    [gameId, userId, loading, data]
-  )
-
-  const publishGame = useCallback(
-    async () => {
-      let paid = true
-      if (game.privacy === PRIVACY.PRIVATE) {
-        const variantId =
-          "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xNjg2MzAxNjkxMDk0OA=="
-        const checkout = await client.checkout.create()
-        await client.checkout.addLineItems(checkout.id, [
-          {
-            variantId,
-            quantity: 1,
-            customAttributes: [{ key: "Game name", value: game.name }]
-          }
-        ])
-        await client.checkout.updateEmail(checkout.id, user.user_metadata.email)
-        await client.checkout.updateShippingAddress(checkout.id, {
-          address1: null,
-          address2: null,
-          city: null,
-          company: null,
-          country: null,
-          firstName: user.user_metadata.first_name,
-          lastName: user.user_metadata.last_name,
-          phone: null,
-          province: null,
-          zip: null
-        })
-
-        const checkoutWindow = window.open(checkout.webUrl)
-        await new Promise(resolve => {
-          let i1, i2
-          i1 = setInterval(() => {
-            if (checkoutWindow.closed) {
-              clearInterval(i1)
-              clearInterval(i2)
-              resolve()
-            }
-          }, 500)
-          i2 = setInterval(async () => {
-            const resultingCheckout = await client.checkout.fetch(checkout.id)
-            if (resultingCheckout.completedAt !== null) {
-              clearInterval(i1)
-              clearInterval(i2)
-              resolve()
-            }
-          }, 2000)
-        })
-        const resultingCheckout = await client.checkout.fetch(checkout.id)
-        paid = resultingCheckout.completedAt !== null
-      }
-
-      if (paid) {
-        await publishGamePlayMutation({
-          variables: {
-            gameId,
-            now: new Date().toJSON()
-          }
-        })
-        return true
-      } else {
-        return false
-      }
-    },
-    [gameId, userId]
-  )
+      return true
+    } else {
+      return false
+    }
+  }, [gameId, userId])
 
   return {
     deleteGame,
