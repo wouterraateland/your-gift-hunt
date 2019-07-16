@@ -1,6 +1,6 @@
 {
   "name": "ygh-creator",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://create.yourgifthunt.com/",
   "repository": "https://github.com/wouterraateland/your-gift-hunt/tree/master/packages/ygh-creator",
   "author": "Wouter Raateland <wouterraateland@gmail.com>",
@@ -60,12 +60,12 @@
     "typeface-montserrat": "^0.0.54",
     "typeface-playfair-display": "^0.0.54",
     "use-pan-and-zoom": "0.3.0",
-    "ygh-entities": "^0.1.2",
-    "ygh-hooks": "^0.1.2",
-    "ygh-icons": "^0.1.2",
-    "ygh-sdk": "^0.1.2",
-    "ygh-ui": "^0.1.2",
-    "ygh-utils": "^0.1.2"
+    "ygh-entities": "^0.1.3",
+    "ygh-hooks": "^0.1.3",
+    "ygh-icons": "^0.1.3",
+    "ygh-sdk": "^0.1.3",
+    "ygh-ui": "^0.1.3",
+    "ygh-utils": "^0.1.3"
   },
   "devDependencies": {
     "customize-cra": "^0.2.14",
