@@ -31,6 +31,7 @@ import EditorPane from "components/GameCreator/EditorPane"
 import GraphicPane from "components/GameCreator/GraphicPane"
 import DetailPane from "components/GameCreator/DetailPane"
 import Toolbox from "components/GameCreator/Toolbox"
+import ActionBar from "../components/GameCreator/ActionBar"
 import ViewSwitch from "components/GameCreator/ViewSwitch"
 
 import SettingsModal from "components/modals/GameSettings"
@@ -57,7 +58,12 @@ const Creator = memo(() => {
   return (
     <Layout>
       {selectedView === "logic" && <EditorPane />}
-      {selectedView === "graphic" && <GraphicPane />}
+      {selectedView === "graphic" && (
+        <>
+          <GraphicPane />
+          <ActionBar />
+        </>
+      )}
       <Toolbox />
       <ViewSwitch />
       <ClosableDetailPane />

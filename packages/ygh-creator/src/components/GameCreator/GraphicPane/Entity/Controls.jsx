@@ -1,13 +1,11 @@
 import React, { useCallback, useRef } from "react"
 import styled, { css } from "styled-components"
 
-import { useClickOutside, useContext } from "ygh-hooks"
+import { useContext } from "ygh-hooks"
 import useEntityFocus from "hooks/useEntityFocus"
 import useResizeRotateControls from "hooks/useResizeRotateControls"
 
 import PanZoomContext from "contexts/PanZoomGraphic"
-
-import { Resize, Rotate } from "ygh-icons"
 
 const Container = styled.div.attrs(({ zoom }) => ({
   style: {
@@ -43,7 +41,6 @@ Container.displayName = "ControlsContainer"
 
 const controlStyles = css`
   pointer-events: auto;
-  cursor: pointer;
 
   position: absolute;
   top: ${props => (props.top ? 0 : props.bottom ? 100 : 50)}%;
@@ -52,44 +49,35 @@ const controlStyles = css`
 
   width: 1em;
   height: 1em;
-  padding: 0.2em;
 
-  text-align: center;
-  line-height: 1;
+  border-radius: ${props => props.theme.borderRadius};
+  box-shadow: ${props => props.theme.boxShadow.small};
 
-  background-color: ${props => props.theme.color.primary};
-  color: #fff;
+  background-color: #fff;
 
   transform: translate(-50%, -50%);
 `
 
-const ResizeControl = styled(Resize)`
+const ResizeControl = styled.div`
   ${controlStyles}
-  transform: translate(-50%, -50%)
-    rotate(${props => (props.horizontal ? 90 : 0)}deg);
+  cursor: ${props => (props.horizontal ? "ew-resize" : "ns-resize")};
 `
 ResizeControl.displayName = "ResizeControl"
 
-const RotateControl = styled(Rotate)`
+const RotateControl = styled.div`
   ${controlStyles}
-  transform: translate(-50%, -50%)
-    rotate(
-      ${props =>
-        props.top ? (props.left ? -90 : 0) : props.left ? 180 : 90}deg
-    );
+  cursor: alias;
 `
 RotateControl.displayName = "RotateControl"
 
 const Controls = ({ entity, parentRotation }) => {
   const ref = useRef(null)
-  const { focusedEntityId, focus, blur } = useEntityFocus()
+  const { focusedEntityId, focus } = useEntityFocus()
   const { zoom } = useContext(PanZoomContext, 0b100)
 
   const isVisible = focusedEntityId === entity.id
 
   const handleClick = useCallback(() => focus(entity.id), [entity.id])
-
-  useClickOutside({ ref, onClickOutside: blur })
 
   const { resizeHandlers, rotateHandlers } = useResizeRotateControls(
     entity,
