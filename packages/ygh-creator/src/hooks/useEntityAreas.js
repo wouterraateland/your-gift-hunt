@@ -227,10 +227,17 @@ export const useEntityAreasProvider = () => {
           ...creatorUtils.calcEntityNodeAreas(entity, nodes, edges)
         }))
 
-        const entityArea = _getEntityArea(entity.id) || {
-          top: 0,
-          left: 0
-        }
+        const entityArea =
+          _getEntityArea(entity.id) ||
+          (entity.graphPosition
+            ? {
+                top: entity.graphPosition.top,
+                left: entity.graphPosition.left
+              }
+            : {
+                top: 0,
+                left: 0
+              })
 
         if (entity.isContainer) {
           _setEntityArea(entity.id, {

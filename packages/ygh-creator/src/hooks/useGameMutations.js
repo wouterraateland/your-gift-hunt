@@ -530,7 +530,12 @@ export const useGameMutationsProvider = () => {
     await updateEntities(gameId, entityUpdates)
   }
 
-  const createNodes = async (sourceStateTemplateIds, originStateId) => {
+  const createNodes = async (
+    sourceStateTemplateIds,
+    originStateId,
+    graphCenter,
+    physicalCenter
+  ) => {
     const originEntity = originStateId
       ? entities.find(({ states }) =>
           states.some(({ id }) => originStateId === id)
@@ -610,6 +615,18 @@ export const useGameMutationsProvider = () => {
               }
             })
           )
+        },
+        graphPosition: {
+          create: {
+            top: graphCenter ? graphCenter.top - 2 : 0,
+            left: graphCenter ? graphCenter.left - 3 : 0
+          }
+        },
+        physicalPosition: {
+          create: {
+            top: physicalCenter ? physicalCenter.top : 0,
+            left: physicalCenter ? physicalCenter.left : 0
+          }
         }
       }
     })
@@ -644,7 +661,11 @@ export const useGameMutationsProvider = () => {
     await completeEntitiesWithTemplates(game.id)
   }
 
-  const createEntity = async entityTemplateId => {
+  const createEntity = async (
+    entityTemplateId,
+    graphCenter,
+    physicalCenter
+  ) => {
     const entityTemplate = getEntityTemplateById(entityTemplateId)
     const entityStateTemplates = _.getMinimalStateSpan(entityTemplate.states)
 
@@ -660,7 +681,12 @@ export const useGameMutationsProvider = () => {
       )
     }
 
-    await createNodes(entityStateTemplates.map(({ id }) => id))
+    await createNodes(
+      entityStateTemplates.map(({ id }) => id),
+      null,
+      graphCenter,
+      physicalCenter
+    )
   }
 
   const addPreviousState = async (stateTemplateId, stateId) => {

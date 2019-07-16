@@ -5,6 +5,8 @@ import useEntities from "hooks/useEntities"
 import useGameTemplates from "hooks/useGameTemplates"
 import useInspector from "hooks/useInspector"
 import useGameMutations from "hooks/useGameMutations"
+import { usePanZoomEditorContext } from "hooks/usePanZoomEditor"
+import { usePanZoomGraphicContext } from "hooks/usePanZoomGraphic"
 
 import EntitiesContainer from "./EntitiesContainer"
 import EntityEntry from "./EntityEntry"
@@ -56,6 +58,9 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
   const { createEntity } = useGameMutations()
   const { inspectState } = useInspector()
   const { entityTemplates } = useGameTemplates()
+  const panZoomEditor = usePanZoomEditorContext()
+  const panZoomGraphic = usePanZoomGraphicContext()
+
   const visibleEntityTemplates = entityTemplates.filter(
     getEntitiesFilter(selectedType)
   )
@@ -65,11 +70,25 @@ const Entities = ({ isVisible, selectedType, onBackClick }) => {
 
   const onEntityTemplateClick = useCallback(
     async entityTemplateId => {
-      await createEntity(entityTemplateId)
+      const getEditorCenter = ({ center }) => ({
+        left: Math.round(center.left / 32),
+        top: Math.round(center.top / 32)
+      })
+
+      const getGraphicCenter = ({ center }) => ({
+        left: center.left / 16,
+        top: center.top / 16
+      })
+
+      await createEntity(
+        entityTemplateId,
+        getEditorCenter(panZoomEditor),
+        getGraphicCenter(panZoomGraphic)
+      )
       onBackClick()
       setEntityCreated(true)
     },
-    [createEntity]
+    [createEntity, panZoomEditor, panZoomGraphic]
   )
 
   const onEntityTemplateInfoClick = useCallback(

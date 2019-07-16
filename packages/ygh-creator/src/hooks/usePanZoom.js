@@ -54,6 +54,7 @@ const usePanZoom = ({
   const wasPanning = useRef(false)
   const prev = useRef([])
   const prevZoom = useRef(1)
+  const [getCenter, setCenter] = useGetSet({ top: 0, left: 0 })
 
   const [isPanning, setPanning] = useGetSet(false)
   const [getTransform, _setTransform] = useGetSet({
@@ -67,6 +68,11 @@ const usePanZoom = ({
 
   const setTransform = useCallback(v => {
     const r = _setTransform(v)
+    const { x, y, zoom } = getTransform()
+    setCenter({
+      top: (container.current.offsetHeight / 2 - y) / zoom,
+      left: (container.current.offsetWidth / 2 - x) / zoom
+    })
     forceUpdate()
     return r
   }, [])
@@ -272,6 +278,7 @@ const usePanZoom = ({
     transform: `translate3D(${transform.x}px, ${transform.y}px, 0) scale(${
       transform.zoom
     })`,
+    center: getCenter(),
     pan: { x: transform.x, y: transform.y },
     zoom: transform.zoom,
     setPan,
