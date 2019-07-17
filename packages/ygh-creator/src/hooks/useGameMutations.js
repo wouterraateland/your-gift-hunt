@@ -556,80 +556,86 @@ export const useGameMutationsProvider = () => {
         id !== originEntityTemplateId &&
         (!(isObject || isItem) || !existingEntityTemplateIds.includes(id))
     )
-    const entitiesToCreate = entityTemplatesToCreate.map(entityTemplate => {
-      const existingEntitiesWithTemplate = entities.filter(
-        ({ template }) => template.id === entityTemplate.id
-      )
-      return {
-        template: { connect: { id: entityTemplate.id } },
-        name: existingEntitiesWithTemplate.length
-          ? `${entityTemplate.name} ${existingEntitiesWithTemplate.length + 1}`
-          : entityTemplate.name,
-        description: entityTemplate.description,
-        isItem: entityTemplate.isItem,
-        isObject: entityTemplate.isObject,
-        isTrigger: entityTemplate.isTrigger,
-        isContainer: entityTemplate.isContainer,
-        fields: {
-          create: entityTemplate.fields.map(fieldTemplate => ({
-            template: { connect: { id: fieldTemplate.id } },
-            name: fieldTemplate.name,
-            description: fieldTemplate.description,
-            type: { connect: { id: fieldTemplate.type.id } },
-            isSecret: fieldTemplate.isSecret
-          }))
-        },
-        states: {
-          create: entityTemplate.states
-            .filter(({ id }) => stateTemplateIds.includes(id))
-            .map(stateTemplate => ({
-              template: { connect: { id: stateTemplate.id } },
-              name: stateTemplate.name,
-              description: stateTemplate.description
+    const entitiesToCreate = entityTemplatesToCreate.map(
+      (entityTemplate, i) => {
+        const existingEntitiesWithTemplate = entities.filter(
+          ({ template }) => template.id === entityTemplate.id
+        )
+        return {
+          template: { connect: { id: entityTemplate.id } },
+          name: existingEntitiesWithTemplate.length
+            ? `${entityTemplate.name} ${existingEntitiesWithTemplate.length +
+                1}`
+            : entityTemplate.name,
+          description: entityTemplate.description,
+          isItem: entityTemplate.isItem,
+          isObject: entityTemplate.isObject,
+          isTrigger: entityTemplate.isTrigger,
+          isContainer: entityTemplate.isContainer,
+          fields: {
+            create: entityTemplate.fields.map(fieldTemplate => ({
+              template: { connect: { id: fieldTemplate.id } },
+              name: fieldTemplate.name,
+              description: fieldTemplate.description,
+              type: { connect: { id: fieldTemplate.type.id } },
+              isSecret: fieldTemplate.isSecret
             }))
-        },
-        entrances: {
-          create: entityTemplate.entrances.map(entranceTemplate => ({
-            template: { connect: { id: entranceTemplate.id } },
-            name: entranceTemplate.name,
-            description: entranceTemplate.description
-          }))
-        },
-        portals: {
-          create: entityTemplate.portals.map(portalTemplate => ({
-            template: { connect: { id: portalTemplate.id } },
-            name: portalTemplate.name,
-            description: portalTemplate.description
-          }))
-        },
-        informationSlots: {
-          create: entityTemplate.informationSlots.map(
-            informationSlotTemplate => ({
-              template: { connect: { id: informationSlotTemplate.id } },
-              name: informationSlotTemplate.name,
-              description: informationSlotTemplate.description,
-              allowedTypes: {
-                connect: informationSlotTemplate.allowedTypes.map(({ id }) => ({
-                  id
-                }))
-              }
-            })
-          )
-        },
-        graphPosition: {
-          create: {
-            top: graphCenter ? graphCenter.top - 2 : 0,
-            left: graphCenter ? graphCenter.left - 3 : 0
-          }
-        },
-        physicalPosition: {
-          create: {
-            top: physicalCenter ? physicalCenter.top : 0,
-            left: physicalCenter ? physicalCenter.left : 0
+          },
+          states: {
+            create: entityTemplate.states
+              .filter(({ id }) => stateTemplateIds.includes(id))
+              .map(stateTemplate => ({
+                template: { connect: { id: stateTemplate.id } },
+                name: stateTemplate.name,
+                description: stateTemplate.description
+              }))
+          },
+          entrances: {
+            create: entityTemplate.entrances.map(entranceTemplate => ({
+              template: { connect: { id: entranceTemplate.id } },
+              name: entranceTemplate.name,
+              description: entranceTemplate.description
+            }))
+          },
+          portals: {
+            create: entityTemplate.portals.map(portalTemplate => ({
+              template: { connect: { id: portalTemplate.id } },
+              name: portalTemplate.name,
+              description: portalTemplate.description
+            }))
+          },
+          informationSlots: {
+            create: entityTemplate.informationSlots.map(
+              informationSlotTemplate => ({
+                template: { connect: { id: informationSlotTemplate.id } },
+                name: informationSlotTemplate.name,
+                description: informationSlotTemplate.description,
+                allowedTypes: {
+                  connect: informationSlotTemplate.allowedTypes.map(
+                    ({ id }) => ({
+                      id
+                    })
+                  )
+                }
+              })
+            )
+          },
+          graphPosition: {
+            create: {
+              top: graphCenter ? graphCenter.top - 2 : 0,
+              left: graphCenter ? graphCenter.left - 3 : 0
+            }
+          },
+          physicalPosition: {
+            create: {
+              top: physicalCenter ? physicalCenter.top : 0,
+              left: physicalCenter ? physicalCenter.left : 0,
+              z: entities.length + i
+            }
           }
         }
       }
-    })
+    )
 
     const entitiesToUpdate = originEntity
       ? [
