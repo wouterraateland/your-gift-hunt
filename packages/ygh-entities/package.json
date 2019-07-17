@@ -1,6 +1,6 @@
 {
   "name": "ygh-entities",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Package containing all custom entities made for Your Gift Hunt.",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
