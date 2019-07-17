@@ -42,7 +42,7 @@ const CameraBody = styled(Entity)`
 `
 CameraBody.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.5,
+  z: 1,
   width: 3.5,
   height: 1,
   origin: { left: "50%", top: "100%" }

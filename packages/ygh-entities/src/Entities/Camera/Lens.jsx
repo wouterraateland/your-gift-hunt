@@ -21,7 +21,7 @@ const CameraLens = styled(Entity)`
 `
 CameraLens.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.4,
+  z: 0,
   width: 1.5,
   height: 1.25,
   origin: { left: "50%", top: "0%" }

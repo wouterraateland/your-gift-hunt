@@ -95,7 +95,7 @@ const Wheel = styled(Entity)`
 `
 Wheel.defaultProps = {
   ...Entity.defaultProps,
-  z: 1.5,
+  z: 2,
   width: 3,
   height: 0.25
 }
@@ -116,7 +116,7 @@ SafeWithKeyhole.name = "SafeWithKeyhole"
 SafeWithKeyhole.templateName = "Safe with keyhole"
 SafeWithKeyhole.defaultProps = {
   ...Entity.defaultProps,
-  z: 2,
+  z: 3,
   width: 5,
   height: 5
 }

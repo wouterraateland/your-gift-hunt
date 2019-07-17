@@ -75,7 +75,7 @@ DoorWithLock.name = "DoorWithLock"
 DoorWithLock.templateName = "Door with lock"
 DoorWithLock.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.25,
+  z: 2,
   width: 5,
   height: 1
 }

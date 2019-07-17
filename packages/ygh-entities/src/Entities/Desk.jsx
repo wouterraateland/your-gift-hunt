@@ -44,7 +44,7 @@ const Plank = styled(Entity)`
 `
 Plank.defaultProps = {
   baseColor: "#584630",
-  z: 2.5,
+  z: 0,
   height: "100%",
   width: "31%"
 }

@@ -156,7 +156,7 @@ PlantPot.defaultProps = {
   ...Entity.defaultProps,
   width: 4,
   height: 4,
-  z: 1.5
+  z: 2
 }
 
 export default PlantPot

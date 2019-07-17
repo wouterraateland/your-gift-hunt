@@ -34,7 +34,7 @@ Mouse.defaultProps = {
   ...Entity.defaultProps,
   width: 0.75,
   height: 1,
-  z: 0.25
+  z: 1
 }
 
 export default Mouse

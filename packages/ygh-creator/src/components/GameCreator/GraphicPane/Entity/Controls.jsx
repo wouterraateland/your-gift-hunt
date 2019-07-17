@@ -2,6 +2,7 @@ import React, { useCallback, useRef } from "react"
 import styled, { css } from "styled-components"
 
 import { useContext } from "ygh-hooks"
+import useEditor from "hooks/useEditor"
 import useEntityFocus from "hooks/useEntityFocus"
 import useResizeRotateControls from "hooks/useResizeRotateControls"
 
@@ -20,7 +21,7 @@ const Container = styled.div.attrs(({ zoom }) => ({
   bottom: -0.5em;
   right: -0.5em;
 
-  opacity: ${props => (props.isVisible ? 1 : 0)};
+  opacity: ${props => (props.mayBeDeleted ? 0.8 : props.isVisible ? 1 : 0)};
 
   &::after {
     content: "";
@@ -36,6 +37,18 @@ const Container = styled.div.attrs(({ zoom }) => ({
 
     border: 0.1em solid ${props => props.theme.color.primary};
   }
+
+  ${props =>
+    props.mayBeDeleted &&
+    css`
+      &::after {
+        border: none;
+        background-color: ${props => props.theme.color.error};
+      }
+      & > * {
+        display: none;
+      }
+    `}
 `
 Container.displayName = "ControlsContainer"
 
@@ -84,12 +97,26 @@ const Controls = ({ entity, parentRotation }) => {
     parentRotation
   )
 
+  const { ACTION_TYPES, upcomingAction } = useEditor()
+
+  const mayBeDeleted =
+    upcomingAction &&
+    upcomingAction.type === ACTION_TYPES.DELETE_NODE &&
+    entity.states.every(state =>
+      upcomingAction.payload.dependentStates.includes(state.id)
+    )
+
+  if (mayBeDeleted) {
+    console.log(entity.name)
+  }
+
   return (
     <Container
       ref={ref}
       onClick={handleClick}
       isVisible={isVisible}
       zoom={zoom}
+      mayBeDeleted={mayBeDeleted}
     >
       {isVisible && (
         <>

@@ -17,7 +17,7 @@ Camera.defaultProps = {
   ...Entity.defaultProps,
   width: 3.5,
   height: 2.25,
-  z: 0.5
+  z: 1
 }
 
 export default Camera

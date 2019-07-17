@@ -30,7 +30,7 @@ Battery.defaultProps = {
   width: 1,
   height: 1.5,
   rotation: 45,
-  z: 0.5
+  z: 0
 }
 Battery.Detail = Battery
 

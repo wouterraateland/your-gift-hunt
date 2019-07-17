@@ -96,7 +96,7 @@ Carpet.name = "Carpet"
 Carpet.templateName = "Carpet"
 Carpet.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.25,
+  z: 1,
   width: 10,
   height: 14
 }

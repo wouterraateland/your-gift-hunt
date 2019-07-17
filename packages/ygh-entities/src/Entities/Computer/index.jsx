@@ -35,7 +35,7 @@ Computer.name = "Computer"
 Computer.templateName = "Computer screen"
 Computer.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.25,
+  z: 2,
   width: 4,
   height: 4
 }

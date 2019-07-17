@@ -56,7 +56,6 @@ MapPiece.displayName = "Map piece"
 MapPiece.templateName = "Map piece"
 MapPiece.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.25,
   width: 2,
   height: 2
 }

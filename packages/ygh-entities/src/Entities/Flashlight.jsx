@@ -24,7 +24,7 @@ const Body = styled(Entity)`
 `
 Body.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.25,
+  z: 1,
   width: 2,
   height: 0.5,
   rotation: -45
@@ -43,6 +43,7 @@ Holder.defaultProps = {
   ...Entity.defaultProps,
   width: 0.7,
   height: 0.3,
+  z: 0,
   origin: { left: "50%", top: "100%" }
 }
 
@@ -85,7 +86,7 @@ const Head = styled(Entity)`
 `
 Head.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.5,
+  z: 2,
   width: 0.75,
   height: 0.75
 }

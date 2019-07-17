@@ -24,7 +24,7 @@ const EntityContainer = styled.div.attrs(props => ({
     transform: `translate(-${or50(props.origin.left)}, -${or50(
       props.origin.top
     )}) rotate(${props.rotation}deg)`,
-    zIndex: 100 * props.z
+    zIndex: props.z
   }
 }))`
   pointer-events: ${props => (props.isInteractive ? "auto" : "none")};

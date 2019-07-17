@@ -18,19 +18,19 @@ const EntityComponent = styled.div.attrs(props =>
     ? {}
     : {
         style: {
-          boxShadow: `
-      ${(Math.cos(
-        (-(-45 + props.parentRotation + props.rotation) * Math.PI) / 180
-      ) *
-        props.z) /
-        3}em
-      ${(Math.sin(
-        (-(-45 + props.parentRotation + props.rotation) * Math.PI) / 180
-      ) *
-        props.z) /
-        3}em
-      ${props.z / 2}em ${-props.z / 8}em
-      #0009`,
+          //     boxShadow: `
+          // ${(Math.cos(
+          //   (-(-45 + props.parentRotation + props.rotation) * Math.PI) / 180
+          // ) *
+          //   props.z) /
+          //   3}em
+          // ${(Math.sin(
+          //   (-(-45 + props.parentRotation + props.rotation) * Math.PI) / 180
+          // ) *
+          //   props.z) /
+          //   3}em
+          // ${props.z / 2}em ${-props.z / 8}em
+          // #0009`,
           transformOrigin: `${or50(props.origin.left)} ${or50(
             props.origin.top
           )}`

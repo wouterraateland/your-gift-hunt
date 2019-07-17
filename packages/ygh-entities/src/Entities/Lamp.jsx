@@ -25,7 +25,7 @@ const Foot = styled(Entity)`
   background-color: #424242;
 `
 Foot.defaultProps = {
-  z: 0.25,
+  z: 0,
   width: 2.5,
   height: 2.5
 }
@@ -46,7 +46,7 @@ Neck.defaultProps = {
   width: 5,
   height: 0.25,
   origin: { left: 0.125 },
-  z: 1.5
+  z: 3
 }
 
 const Head = styled(Entity)`
@@ -59,7 +59,7 @@ Head.defaultProps = {
   ...Entity.defaultProps,
   width: 1.25,
   height: 1.25,
-  z: 1.25
+  z: 2
 }
 
 const Light = styled(Entity)`
@@ -109,7 +109,7 @@ Lamp.defaultProps = {
   width: 2.5,
   height: 2.5,
   rotation: 180,
-  z: 2.5
+  z: 1
 }
 Lamp.states = ["Off", "On"]
 

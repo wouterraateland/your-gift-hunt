@@ -80,7 +80,7 @@ Door.name = "Door"
 Door.templateName = "Door"
 Door.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.25,
+  z: 2,
   width: 5,
   height: 1
 }

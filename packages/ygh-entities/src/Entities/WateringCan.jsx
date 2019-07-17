@@ -61,7 +61,6 @@ WateringCan.name = "WateringCan"
 WateringCan.templateName = "Watering can"
 WateringCan.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.25,
   width: 1,
   height: 1.5,
   origin: { left: 0.7, top: 0.5 }

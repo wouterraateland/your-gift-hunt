@@ -80,7 +80,6 @@ InstructionNote.name = "InstructionNote"
 InstructionNote.templateName = "Instruction note"
 InstructionNote.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.1,
   width: 2,
   height: 3
 }

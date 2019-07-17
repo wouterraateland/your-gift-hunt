@@ -102,7 +102,7 @@ const Faucet = styled(Entity)`
 `
 Faucet.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.1,
+  z: 1,
   width: 0.6,
   height: 0.6
 }
@@ -121,7 +121,7 @@ const Knob = styled(Entity)`
 `
 Knob.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.2,
+  z: 2,
   width: 0.5,
   height: 0.5,
   origin: { left: "50%", top: "100%" }
@@ -158,8 +158,6 @@ const Warm = styled(Knob)`
 Warm.defaultProps = Knob.defaultProps
 
 const Neck = styled(Entity)`
-  z-index: 1;
-
   border-radius: 0.1em;
 
   background-color: #999;
@@ -175,7 +173,7 @@ Neck.defaultProps = {
   origin: { left: 0.1, top: 1.9 },
   width: 0.2,
   height: 2,
-  z: 0.5
+  z: 3
 }
 
 const Sink = forwardRef((props, ref) => {
@@ -197,7 +195,7 @@ SinkContainer.defaultProps = {
   ...Entity.defaultProps,
   width: 6,
   height: 5,
-  z: 0.1
+  z: 1
 }
 
 export default Sink

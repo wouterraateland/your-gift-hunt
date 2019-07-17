@@ -118,7 +118,6 @@ StatefulMap.name = "Map"
 StatefulMap.templateName = "Map"
 StatefulMap.defaultProps = {
   ...Entity.defaultProps,
-  z: 0.25,
   width: 2,
   height: 2
 }

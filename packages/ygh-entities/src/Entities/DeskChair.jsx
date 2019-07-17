@@ -90,7 +90,7 @@ const Backrest = styled(Entity)`
 `
 Backrest.defaultProps = {
   ...Entity.defaultProps,
-  z: 1.5,
+  z: 2,
   width: 4,
   height: 1
 }

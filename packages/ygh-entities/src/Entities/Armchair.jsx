@@ -136,7 +136,7 @@ Armchair.defaultProps = {
   ...Entity.defaultProps,
   width: 6,
   height: 5,
-  z: 1.5
+  z: 2
 }
 
 export default Armchair

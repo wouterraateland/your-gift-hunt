@@ -32,7 +32,7 @@ const getDefaultProps = entity => {
 }
 
 export const useEntityPositionsProvider = () => {
-  const { entities } = useEntities()
+  const { getContainer, entities } = useEntities()
   const hasChanged = useRef(false)
   const lastUpdated = useRef(null)
 
@@ -64,7 +64,33 @@ export const useEntityPositionsProvider = () => {
     hasChanged.current = false
   }, [entities])
 
-  const getEntityPosition = entityId => entityPositions[entityId]
+  const getEntityPosition = useCallback(entityId => entityPositions[entityId], [
+    entityPositions
+  ])
+
+  const getAbsoluteEntityPosition = useCallback(
+    entityId => {
+      const position = entityPositions[entityId]
+      const container = getContainer(entityId)
+      const containerPosition = container
+        ? getAbsoluteEntityPosition(container.id)
+        : { width: 0, height: 0, z: 0, left: 0, top: 0, rotation: 0 }
+
+      const cos = Math.cos((containerPosition.rotation * Math.PI) / 180)
+      const sin = Math.sin((containerPosition.rotation * Math.PI) / 180)
+
+      const dy = position.top - containerPosition.height / 2
+      const dx = position.left - containerPosition.width / 2
+
+      return {
+        ...position,
+        top: containerPosition.top + dy * cos + dx * sin,
+        left: containerPosition.left + dx * cos - dy * sin,
+        rotation: position.rotation + containerPosition.rotation
+      }
+    },
+    [entities, entityPositions]
+  )
 
   const setEntityPosition = useCallback((entityId, position) => {
     lastUpdated.current = entityId
@@ -90,6 +116,7 @@ export const useEntityPositionsProvider = () => {
       : null,
     entityPositions,
     getEntityPosition,
+    getAbsoluteEntityPosition,
     setEntityPosition,
     hasChanged,
     flush

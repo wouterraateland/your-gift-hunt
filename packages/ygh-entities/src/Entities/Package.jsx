@@ -104,7 +104,7 @@ Package.defaultProps = {
   ...Entity.defaultProps,
   width: 3.5,
   height: 3.5,
-  z: 1.5
+  z: 2
 }
 
 export default Package
