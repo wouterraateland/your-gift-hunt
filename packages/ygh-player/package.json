@@ -1,6 +1,6 @@
 {
   "name": "ygh-player",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://yourgifthunt.com/",
   "repository": "https://github.com/wouterraateland/your-gift-hunt/tree/master/packages/ygh-player",
   "author": "Wouter Raateland <wouterraateland@gmail.com>",
@@ -41,7 +41,7 @@
     "react-scripts": "2.1.0",
     "react-use-form-state": "^0.10.4",
     "styled-components": "^4.3.2",
-    "ygh-entities": "^0.2.1",
+    "ygh-entities": "^0.2.2",
     "ygh-hooks": "^0.2.0",
     "ygh-icons": "^0.2.0",
     "ygh-sdk": "^0.2.0",
