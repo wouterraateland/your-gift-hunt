@@ -50,7 +50,7 @@ const Safe = forwardRef(({ Front, children, ...props }, ref) => {
     <SafeBack {...props}>
       {children}
       <SafeFront {...props} isUnlocked={isUnlocked} isInteractive={!isUnlocked}>
-        <Front ref={ref} {...props} />
+        <Front ref={ref} {...props} isInteractive={!isUnlocked} />
       </SafeFront>
     </SafeBack>
   )
