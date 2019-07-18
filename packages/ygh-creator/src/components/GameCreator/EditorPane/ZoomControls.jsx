@@ -30,8 +30,8 @@ const Display = styled.span`
   width: 4em;
   height: 2em;
   padding: 0.5em;
-  border-left: 0.1em solid #0001;
-  border-right: 0.1em solid #0001;
+  border-left: 1px solid #0001;
+  border-right: 1px solid #0001;
 `
 
 const ZoomControls = ({ steps, zoom, setZoom }) => {

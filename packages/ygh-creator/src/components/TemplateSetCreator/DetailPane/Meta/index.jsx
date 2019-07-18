@@ -1,18 +1,20 @@
 import React, { useCallback } from "react"
+import styled from "styled-components"
 import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 import useTemplateInspector from "hooks/useTemplateInspector"
 
 import { Paper } from "ygh-ui"
-import {
-  Item,
-  Object as ObjectIcon,
-  Container,
-  Trigger
-} from "ygh-icons"
+import { Item, Object as ObjectIcon, Container, Trigger } from "ygh-icons"
 
 import Form from "components/TemplateSetCreator/DetailPane/Form"
 
 import FieldTag from "components/Primitives/FieldTag"
+
+const StyledPaper = styled(Paper)`
+  border-bottom: 1px solid #0002;
+  border-radius: 0;
+  box-shadow: none;
+`
 
 const Meta = ({ template }) => {
   const {
@@ -57,16 +59,13 @@ const Meta = ({ template }) => {
     [template.id]
   )
 
-  const onDelete = useCallback(
-    () => {
-      closeTemplateInspector()
-      deleteEntityTemplate(template.id)
-    },
-    [template.id]
-  )
+  const onDelete = useCallback(() => {
+    closeTemplateInspector()
+    deleteEntityTemplate(template.id)
+  }, [template.id])
 
   return (
-    <Paper>
+    <StyledPaper>
       <Paper.Section>
         <Form
           getInitialValues={getInitialValues}
@@ -135,7 +134,7 @@ const Meta = ({ template }) => {
           ]}
         />
       </Paper.Section>
-    </Paper>
+    </StyledPaper>
   )
 }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
 import { useDebounce } from "ygh-hooks"
-import { Eye, Field, Input, Paper, ToolTip } from "ygh-ui"
+import { Eye, FieldGroup, Field, Paper, ToolTip } from "ygh-ui"
 import _ from "ygh-utils"
 
 import useGameMutations from "hooks/useGameMutations"
@@ -37,8 +37,8 @@ const Property = ({ field }) => {
         {field.name}
       </Paper.Title>
       {field.description && <Blockquote>{field.description}</Blockquote>}
-      <Field block>
-        <Input
+      <FieldGroup block>
+        <Field
           block
           label={field.type.isMulti ? "Values" : "Value"}
           isMulti={field.type.isMulti}
@@ -47,7 +47,7 @@ const Property = ({ field }) => {
           value={newValue}
           onChange={event => setNewValue(event.target.value)}
         />
-      </Field>
+      </FieldGroup>
       {field.isSecret && <Display field={field} />}
     </>
   )

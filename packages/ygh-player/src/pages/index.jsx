@@ -6,7 +6,7 @@ import { useYGHPlayerContext } from "ygh-sdk"
 import {
   Align,
   Column,
-  Input,
+  Field,
   Loader,
   Message,
   Row,
@@ -68,11 +68,11 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
           content="https://play.yourgifthunt.com/og-image.png"
         />
       </Helmet>
-      <Wrapper>
+      <Wrapper.Medium>
         <VSpace.Large />
         <Align.Center>
           <h1>Games made by the community, for everyone.</h1>
-          <Input
+          <Field
             type="select"
             format="horizontal"
             value={type}
@@ -97,7 +97,7 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
           <p>And be the first to create your own unique puzzle games</p>
           <MailchimpForm />
         </Align.Center>
-      </Wrapper>
+      </Wrapper.Medium>
     </Layout>
   )
 }

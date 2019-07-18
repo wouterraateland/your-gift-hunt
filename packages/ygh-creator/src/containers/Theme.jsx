@@ -7,7 +7,7 @@ const theme = {
     text: "#0009",
     emphasis: "#000d",
     primary: "#3f51b5",
-    accent: "#ffd65a",
+    secondary: "#ffd65a",
     error: "#d34d4e",
     warning: "#f7a600",
     success: "#41ac57"
@@ -95,7 +95,7 @@ export const GlobalStyles = createGlobalStyle`
 
   blockquote {
     padding-left: .5em;
-    margin: 1em 0 0;
+    margin: .5em 0;
 
     border-left: .5em solid #0002;
   }

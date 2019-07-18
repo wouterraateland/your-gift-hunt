@@ -1,15 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import {
-  Align,
-  Column,
-  Paper,
-  Row,
-  Section,
-  VSpace,
-  Wrapper
-} from "ygh-ui"
+import { Align, Column, Paper, Row, Section, VSpace, Wrapper } from "ygh-ui"
 
 import Layout from "components/Layout"
 import Hexagon from "components/Hexagon"
@@ -32,7 +24,7 @@ const Banner = styled.span`
   border-radius: ${props => props.theme.borderRadius};
   font-size: 0.75em;
 
-  background: ${props => props.theme.color.accent};
+  background: ${props => props.theme.color.secondary};
 
   sup {
     font-size: 1.33em;
@@ -69,7 +61,7 @@ const Item = styled.li`
 export default () => (
   <Layout>
     <Section id="pricing">
-      <Wrapper>
+      <Wrapper.Medium>
         <Align.Center>
           <h1>Simple pricing for your games</h1>
         </Align.Center>
@@ -125,7 +117,7 @@ export default () => (
             </Paper>
           </Column>
         </Row>
-      </Wrapper>
+      </Wrapper.Medium>
     </Section>
   </Layout>
 )

@@ -9,7 +9,7 @@ import useAuth from "hooks/useAuth"
 import { useAsync } from "ygh-hooks"
 
 import Layout from "layouts/Overview"
-import { Wrapper, Paper, Float, Clear, Field, Input, Button } from "ygh-ui"
+import { Wrapper, Paper, Float, Clear, FieldGroup, Field, Button } from "ygh-ui"
 import { Present } from "ygh-icons"
 import BackButton from "components/BackButton"
 
@@ -92,7 +92,7 @@ const NewTemplateSetPage = () => {
 
   return (
     <Layout title="New template set">
-      <Wrapper size="large">
+      <Wrapper.Medium>
         <Paper fullWidthOnMobile>
           <Paper.Section>
             <Float.Left>
@@ -108,17 +108,17 @@ const NewTemplateSetPage = () => {
             <Title>Create a new template set</Title>
             <br />
             <Form onSubmit={onSubmit}>
-              <Field block>
-                <Input
+              <FieldGroup block>
+                <Field
                   block
                   {...text("name")}
                   required
                   label="Name"
                   error={errors.name}
                 />
-              </Field>
-              <Field block>
-                <Input
+              </FieldGroup>
+              <FieldGroup block>
+                <Field
                   block
                   {...textarea("description")}
                   type="textarea"
@@ -126,8 +126,8 @@ const NewTemplateSetPage = () => {
                   info="optional"
                   error={errors.description}
                 />
-              </Field>
-              <Field block>
+              </FieldGroup>
+              <FieldGroup block>
                 <Float.Right>
                   <Button
                     type="submit"
@@ -138,11 +138,11 @@ const NewTemplateSetPage = () => {
                     Create
                   </Button>
                 </Float.Right>
-              </Field>
+              </FieldGroup>
             </Form>
           </Paper.Section>
         </Paper>
-      </Wrapper>
+      </Wrapper.Medium>
     </Layout>
   )
 }

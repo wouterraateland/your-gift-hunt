@@ -40,7 +40,7 @@ const UseLocationPrompt = ({ onAcceptClick, onDenyClick }) => (
           <Button
             onClick={onAcceptClick}
             importance="primary"
-            color="accent"
+            color="secondary"
             size="small"
           >
             Allow

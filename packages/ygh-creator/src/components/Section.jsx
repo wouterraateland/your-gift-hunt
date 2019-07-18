@@ -1,37 +1,51 @@
 import React, { useCallback, useEffect, useState } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import { useDebounce } from "ygh-hooks"
 
 import { Paper } from "ygh-ui"
 
-const SectionTitle = styled.h4`
+const SectionTitle = styled.strong`
   cursor: pointer;
   position: relative;
 
-  margin-bottom: 0.5em;
+  display: block;
+  margin: 0.5em;
 
   &::after {
     content: "›";
 
     position: absolute;
     right: 0;
-    top: 50%;
+    top: 60%;
 
-    width: 2rem;
-    height: 2rem;
-
-    text-align: center;
-    vertical-align: middle;
-    line-height: 0.8;
     font-size: 2rem;
+    font-weight: normal;
     font-family: ${props => props.theme.font.copy};
 
     color: ${props => props.theme.color.text};
 
     transform: translate(0, -50%)
       scale(1, ${props => (props.isExpanded ? 1 : -1)}) rotate(90deg);
+
+    &:hover {
+      color: ${props => props.theme.color.emphasis};
+    }
   }
+`
+
+const StyledPaper = styled(Paper)`
+  ${props =>
+    !props.isFlat &&
+    css`
+      ${props.isExpanded &&
+        css`
+          border: 1px solid #0002;
+          border-width: 1px 0;
+        `}
+      border-radius: 0;
+      box-shadow: none;
+    `}
 `
 
 const Section = ({
@@ -67,7 +81,7 @@ const Section = ({
       <SectionTitle onClick={toggleExpanded} isExpanded={isExpanded}>
         {title}
       </SectionTitle>
-      <Paper expanding isExpanded={isExpanded} {...otherProps}>
+      <StyledPaper expanding isExpanded={isExpanded} {...otherProps}>
         {wrapChildren ? (
           children.map((child, i) => (
             <Paper.Section key={i}>{child}</Paper.Section>
@@ -77,7 +91,7 @@ const Section = ({
         ) : (
           <Paper.Section>{children}</Paper.Section>
         )}
-      </Paper>
+      </StyledPaper>
     </>
   )
 }

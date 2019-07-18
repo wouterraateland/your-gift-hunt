@@ -5,7 +5,7 @@ import useAuth from "hooks/useAuth"
 import { useMutation } from "ygh-hooks"
 
 import Layout from "layouts/Auth"
-import { Field, Input, Button } from "ygh-ui"
+import { FieldGroup, Field, Button } from "ygh-ui"
 
 const AmnesiaPage = () => {
   const { requestPasswordReset } = useAuth()
@@ -36,8 +36,8 @@ const AmnesiaPage = () => {
               To reset your password, enter the email address you use to sign
               in.
             </p>
-            <Field block>
-              <Input
+            <FieldGroup block>
+              <Field
                 block
                 label="Email"
                 name="email"
@@ -45,8 +45,8 @@ const AmnesiaPage = () => {
                 required
                 error={errors.email}
               />
-            </Field>
-            <Field block>
+            </FieldGroup>
+            <FieldGroup block>
               <Button
                 block
                 type="submit"
@@ -56,7 +56,7 @@ const AmnesiaPage = () => {
               >
                 Get reset link
               </Button>
-            </Field>
+            </FieldGroup>
           </form>
           <p>
             Nevermind! <Link to="/auth/login">Take me back to login</Link>

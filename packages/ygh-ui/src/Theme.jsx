@@ -8,13 +8,14 @@ import { useWindowSize } from "ygh-hooks"
 
 const theme = {
   color: {
+    caption: "#0007",
     text: "#0009",
     emphasis: "#000d",
     primary: "#3f51b5",
-    accent: "#ffd65a",
-    error: "#d34d4e",
-    warning: "#f7a600",
-    success: "#41ac57"
+    secondary: "#ffd65a",
+    error: "#e02d51",
+    warning: "#f9673e",
+    success: "#3dc169"
   },
   borderRadius: "0.25em",
   boxShadow: {

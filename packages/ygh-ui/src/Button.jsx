@@ -1,8 +1,15 @@
+import React, { forwardRef } from "react"
 import styled, { css } from "styled-components"
-import { opacify, transparentize } from "polished"
+import {
+  darken,
+  lighten,
+  opacify,
+  transparentize,
+  readableColor
+} from "polished"
 import _ from "ygh-utils"
 
-const Button = styled.button.attrs(({ disabled }) => ({
+const ButtonContainer = styled.button.attrs(({ disabled }) => ({
   tabIndex: disabled ? -1 : 0
 }))`
   cursor: pointer;
@@ -22,103 +29,102 @@ const Button = styled.button.attrs(({ disabled }) => ({
         return "0.85em 1em"
     }
   }};
+  border: none;
   border-radius: ${props => props.theme.borderRadius};
 
   line-height: 1;
   text-align: center;
+  text-decoration: none;
   vertical-align: middle;
   font-weight: bold;
 
-  transition: background-color 0.2s ease-out;
+  transition-property: color, background-color, box-shadow;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: initial;
+    pointer-events: none;
+  }
 
   ${props => {
-    let color
-    let secondaryColor = props.theme.color.emphasis
-
-    switch (props.color) {
-      case "accent":
-        color = _.darken(0.05)(props.theme.color.accent)
-        break
-      case "error":
-        color = props.theme.color.error
-        secondaryColor = "#fff"
-        break
-      case "primary":
-        color = props.theme.color.primary
-        secondaryColor = "#fff"
-        break
-      case "warning":
-        color = props.theme.color.warning
-        break
-      case "success":
-        color = props.theme.color.success
-        break
-      default:
-        color = props.theme.color.emphasis
-        break
-    }
+    const color = props.disabled
+      ? "#d4d4d4"
+      : opacify(1)(props.theme.color[props.color] || props.theme.color.emphasis)
+    const secondaryColor = props.disabled
+      ? "#f2f2f2"
+      : readableColor(color, opacify(1)(props.theme.color.emphasis), "#fff")
+    const hoverColor = props.disabled
+      ? "#d4d4d4"
+      : readableColor(color, darken, lighten)(0.1)(color)
 
     switch (props.importance) {
       case "primary":
         return css`
-          border: none;
-
           background-color: ${color};
           color: ${secondaryColor};
 
           &:hover {
-            background-color: ${opacify(0.3, _.darken(0.05)(color))};
+            background-color: ${hoverColor};
+          }
+
+          &:focus {
+            box-shadow: 0 0 0 4px ${transparentize(0.5, color)};
           }
         `
       case "tertiary":
         return css`
-          border: none;
+          background-color: #fff;
+          color: ${color};
+
+          &:hover {
+            color: ${hoverColor};
+          }
+
+          &:focus {
+            box-shadow: 0 0 0 4px ${transparentize(0.5, color)};
+          }
+        `
+      default:
+        return css`
+          box-shadow: inset 0 0 0 2px;
 
           background-color: #fff;
           color: ${color};
 
           &:hover {
-            background-color: ${_.darken(0.05)("#fff")};
+            color: ${hoverColor};
           }
-        `
-      default:
-        return css`
-          border: 0.1em solid;
 
-          ${"" /* background-color: #fff; */}
-          color: ${color};
-
-          &:hover {
-            background-color: ${_.darken(0.05)("#fff")};
+          &:focus {
+            box-shadow: inset 0 0 0 2px, 0 0 0 4px ${transparentize(0.5, color)};
           }
         `
     }
   }}
 
   ${_.blockStyles}
-
-  &:disabled {
-    pointer-events: none;
-    filter: grayscale(100%);
-  }
-
-  ${props =>
-    props.disabled &&
-    css`
-      pointer-events: none;
-      filter: grayscale(100%);
-    `}
-
-  &:focus {
-    outline: none;
-    box-shadow: inset 0 0 0 0.1em ${props => props.theme.color.primary};
-    ${props =>
-      props.color === "primary" &&
-      props.importance === "primary" &&
-      css`
-        background-color: ${transparentize(0.5, props.theme.color.primary)};
-      `}
-  }
 `
+
+const Prefix = styled.span`
+  margin-right: 0.5em;
+`
+const Suffix = styled.span`
+  margin-left: 0.5em;
+`
+
+const Button = forwardRef(
+  ({ prefix, suffix, children, ...otherProps }, ref) => (
+    <ButtonContainer {...otherProps} ref={ref}>
+      {prefix && <Prefix>{prefix}</Prefix>}
+      {children}
+      {suffix && <Suffix>{suffix}</Suffix>}
+    </ButtonContainer>
+  )
+)
 
 export default Button

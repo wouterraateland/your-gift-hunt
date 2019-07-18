@@ -16,8 +16,8 @@ import {
   Paper,
   Float,
   Clear,
+  FieldGroup,
   Field,
-  Input,
   Select,
   Button
 } from "ygh-ui"
@@ -155,7 +155,7 @@ const NewGamePage = () => {
 
   return (
     <Layout title="New game">
-      <Wrapper size="large">
+      <Wrapper.Medium>
         <Paper fullWidthOnMobile>
           <Paper.Section>
             <Float.Left>
@@ -175,25 +175,25 @@ const NewGamePage = () => {
             <Title>Create a new game</Title>
             <Tagline>Lets get you up and running.</Tagline>
             <Form onSubmit={onSubmit}>
-              <Field block>
-                <Input label="Owner" value={userSlug} disabled />
+              <FieldGroup block>
+                <Field label="Owner" value={userSlug} disabled />
                 <Slash>/</Slash>
-                <Input
+                <Field
                   {...text("name")}
                   required
-                  label="Name"
+                  label="Game name"
                   info="You can always edit this"
                   error={errors.name}
                 />
-              </Field>
+              </FieldGroup>
               <small>
                 A good name is short and descriptive. Need some inspiration? How
                 about <strong>{exampleName}</strong>?
               </small>
               <br />
               <br />
-              <Field block>
-                <Input
+              <FieldGroup block>
+                <Field
                   block
                   {...textarea("description")}
                   type="textarea"
@@ -201,28 +201,28 @@ const NewGamePage = () => {
                   info="optional"
                   error={errors.description}
                 />
-              </Field>
+              </FieldGroup>
               <h2>Privacy</h2>
-              <Field block>
-                <Input
+              <FieldGroup block>
+                <Field
                   block
                   {...radio("privacy", PRIVACY.PUBLIC)}
                   required
                   label="Public"
                   info="Playable for everyone from an url and from the showcase. Can't use friend based puzzles. Free to publish."
                 />
-                <Input
+                <Field
                   block
                   {...radio("privacy", PRIVACY.PRIVATE)}
                   required
                   label="Private"
                   info="Playable for players you choose. You can include friend based puzzles. Only 5,- to publish while in Beta."
                 />
-              </Field>
+              </FieldGroup>
               {formState.values.privacy === PRIVACY.PRIVATE && (
                 <>
                   <br />
-                  <Field block>
+                  <FieldGroup block>
                     <Select
                       {...select("accessType")}
                       options={accessOptions}
@@ -232,10 +232,10 @@ const NewGamePage = () => {
                     {formState.values.accessType === ACCESS_TYPES.CODE && (
                       <>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <Input {...text("accessCode")} label="Password" />
+                        <Field {...text("accessCode")} label="Password" />
                       </>
                     )}
-                  </Field>
+                  </FieldGroup>
                   {formState.values.accessType === ACCESS_TYPES.CODE && (
                     <small>
                       Chose a word or sentence or{" "}
@@ -253,7 +253,7 @@ const NewGamePage = () => {
                   )}
                 </>
               )}
-              <Field block>
+              <FieldGroup block>
                 <Float.Right>
                   <Button
                     type="submit"
@@ -264,11 +264,11 @@ const NewGamePage = () => {
                     Create
                   </Button>
                 </Float.Right>
-              </Field>
+              </FieldGroup>
             </Form>
           </Paper.Section>
         </Paper>
-      </Wrapper>
+      </Wrapper.Medium>
     </Layout>
   )
 }

@@ -15,7 +15,7 @@ const PresentsContainer = styled.div`
 
   background: radial-gradient(
       ellipse 10em 5.2em at 50% 55%,
-      ${props => props.theme.color.accent} 99%,
+      ${props => props.theme.color.secondary} 99%,
       transparent 100%
     )
     no-repeat;
@@ -63,9 +63,9 @@ export const InfoPageTemplate = ({ content, contentComponent }) => {
 
   return (
     <Section>
-      <Wrapper medium>
+      <Wrapper.Small>
         <PageContent className="content" content={content} />
-      </Wrapper>
+      </Wrapper.Small>
     </Section>
   )
 }

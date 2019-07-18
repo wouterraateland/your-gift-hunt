@@ -12,10 +12,10 @@ export const FAQPageTemplate = ({ content, questions, contentComponent }) => {
   const PageContent = contentComponent || Content
 
   return (
-    <Wrapper medium>
+    <Wrapper.Small>
       <PageContent className="content" content={content} />
       <QuestionList questions={questions} />
-    </Wrapper>
+    </Wrapper.Small>
   )
 }
 

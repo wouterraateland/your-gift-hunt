@@ -1,34 +1,37 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
-const Wrapper = styled.div`
-  max-width: 60rem;
+const BaseWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
 
   flex-grow: 1;
-
-  ${props =>
-    !props.nopadding &&
-    css`
-      padding-left: 2rem;
-      padding-right: 2rem;
-    `}
-
-  ${props =>
-    props.small &&
-    css`
-      max-width: 30rem;
-    `}
-  ${props =>
-    props.medium &&
-    css`
-      max-width: 45rem;
-    `}
-  ${props =>
-    props.xlarge &&
-    css`
-      max-width: 75rem;
-    `}
 `
+
+const TinyWrapper = styled(BaseWrapper)`
+  max-width: 30rem;
+`
+
+const SmallWrapper = styled(BaseWrapper)`
+  max-width: 45rem;
+`
+
+const MediumWrapper = styled(BaseWrapper)`
+  max-width: 60rem;
+`
+
+const LargeWrapper = styled(BaseWrapper)`
+  max-width: 75rem;
+`
+
+const Wrapper = styled(BaseWrapper)`
+  max-width: ${props => props.width}rem;
+`
+
+Wrapper.Tiny = TinyWrapper
+Wrapper.Small = SmallWrapper
+Wrapper.Medium = MediumWrapper
+Wrapper.Large = LargeWrapper
 
 export default Wrapper

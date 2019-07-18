@@ -1,4 +1,3 @@
-import React from "react"
 import styled from "styled-components"
 import { darken } from "polished"
 import { Link } from "@reach/router"
@@ -8,39 +7,47 @@ const Container = styled.nav`
   z-index: 1;
 
   display: flex;
-  height: 3.1em;
-  border-bottom: 0.1em solid #0001;
+  height: calc(3em + 1px);
+  border-bottom: 1px solid #0002;
 
-  flex-direction: row;
+  align-items: center;
   flex-shrink: 0;
 
   white-space: nowrap;
 
-  background-color: ${props => props.theme.color.accent};
+  background-color: #f9f9f9;
 `
 
-const BackControlContainer = styled(Link)`
+const BackControl = styled(Link)`
   cursor: pointer;
+  position: relative;
+
   display: inline-block;
-  width: 1.5em;
-  height: 1.5em;
+  width: 3em;
+  height: 3em;
 
-  border-right: 0.1rem solid #0001;
+  &::after {
+    content: "";
 
-  font-size: 2em;
-  font-weight: bold;
-  line-height: 1.4em;
-  text-align: center;
-  text-decoration: none;
+    position: absolute;
+    top: 0.875em;
+    left: 0.75em;
+
+    width: 1.5em;
+    height: 0.5em;
+    border-radius: 2px;
+    box-shadow: 0 0.75em;
+
+    background-color: currentColor;
+  }
 
   &:hover {
-    background-color: #0001;
+    color: ${props => props.theme.color.emphasis};
   }
 `
-
-const BackControl = ({ to = "/" }) => (
-  <BackControlContainer to={to}>&larr;</BackControlContainer>
-)
+BackControl.defaultProps = {
+  to: "/"
+}
 
 const Center = styled.div`
   display: flex;
@@ -50,33 +57,8 @@ const Center = styled.div`
   flex-grow: 1;
 `
 
-const Title = styled.h1`
-  display: inline-block;
-  max-width: calc(100% - 2ch - 4em);
-  margin: 0 1ch;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  line-height: 1;
-  font-weight: bold;
-`
-
-const Item = styled(Link)`
-  cursor: pointer;
-
-  display: inline-block;
-  padding: 1em;
-  border-left: 0.1em solid #0001;
-
-  vertical-align: middle;
-  font-weight: bold;
-  line-height: 1;
-
-  &:hover {
-    background-color: #0001;
-  }
+const Item = styled.div`
+  margin: 0.5em;
 
   @media (max-width: 30rem) {
     display: block;
@@ -84,21 +66,23 @@ const Item = styled(Link)`
     margin-left: -12em;
     border: none;
 
-    background-color: ${props => props.theme.color.accent};
+    background-color: ${props => props.theme.color.secondary};
 
     &:hover {
-      background-color: ${props => darken(0.1)(props.theme.color.accent)};
+      background-color: ${props => darken(0.1)(props.theme.color.secondary)};
     }
   }
 `
 
 const Items = styled.div`
+  display: flex;
+
   @media (max-width: 30rem) {
+    display: block;
     position: relative;
 
     width: 3em;
-    padding-top: 3.1em;
-    border-left: 0.1em solid #0001;
+    padding-top: calc(3em + 1px);
 
     &:not(:hover) {
       ${Item} {
@@ -126,7 +110,6 @@ const Nav = {
   Container,
   BackControl,
   Center,
-  Title,
   Items,
   Item
 }

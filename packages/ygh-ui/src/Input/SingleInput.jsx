@@ -1,103 +1,28 @@
-import React, { forwardRef, useRef, useEffect } from "react"
-import styled, { css } from "styled-components"
-import { transparentize } from "polished"
-import _ from "ygh-utils"
+import React, { forwardRef } from "react"
+import styled from "styled-components"
 
-import { LabelText } from "./LabelText"
+import BareInput from "./BareInput"
+import InputContainer from "./InputContainer"
 
-export const Input = styled.input`
-  display: inline-block;
-  width: 15em;
-  max-width: 100%;
-  height: 1.5em;
-  min-height: 1.5em;
-  padding: 0;
-  margin: 0;
-  border: none;
-
-  resize: none;
-
-  background: transparent;
-  color: ${props =>
-    props.disabled
-      ? transparentize(0.2, props.theme.color.text)
-      : props.theme.color.text};
-
-  &:focus,
-  &:active {
-    outline: none;
-
-    ${props =>
-      !props.isSelect &&
-      css`
-        & + ${LabelText} {
-          left: 0;
-          top: -1.7em;
-          font-size: 0.7em;
-        }
-      `}
-  }
-
-  ${props =>
-    props.isSelect
-      ? css`
-          width: 1em;
-          height: 1em;
-          min-height: none;
-          float: left;
-        `
-      : _.blockStyles(props)}
-
-  ${props =>
-    props.type === "search" &&
-    css`
-      line-height: 1.5;
-      -webkit-appearance: textfield;
-      &::-webkit-search-decoration {
-        -webkit-appearance: none;
-      }
-    `}
+const SingleInputContainer = styled(InputContainer)`
+  padding: calc(0.5em - 2px) 0.75em;
 `
 
-Input.displayName = "Input"
+const Prefix = styled.span`
+  display: inline-block;
+  margin: 0.25em 0.5em 0.25em 0;
+`
+const Suffix = styled.span`
+  display: inline-block;
+  margin: 0.25em 0 0.25em 0.5em;
+`
 
-const setHeight = el => {
-  if (el.nodeName === "TEXTAREA") {
-    el.style.height = "0"
-    const offset = el.offsetHeight
-    el.style.height = `${Math.max(offset, el.scrollHeight)}px`
-  }
-}
-
-const SingleInput = forwardRef(({ value, onChange, ...otherProps }, ref) => {
-  const myRef = useRef(null)
-
-  useEffect(() => {
-    myRef && myRef.current && setHeight(myRef.current)
-  }, [value])
-
-  return (
-    <Input
-      as={otherProps.type === "textarea" ? "textarea" : "input"}
-      ref={otherProps.type === "textarea" ? myRef : ref}
-      value={value === undefined ? undefined : value === null ? "" : value}
-      onChange={
-        onChange === undefined
-          ? undefined
-          : otherProps.type === "number"
-          ? event =>
-              onChange({
-                ...event,
-                target: {
-                  ...event.target,
-                  value: parseInt(event.target.value, 10)
-                }
-              })
-          : onChange
-      }
-      {...otherProps}
-    />
-  )
-})
+const SingleInput = forwardRef(({ prefix, suffix, ...otherProps }, ref) => (
+  <SingleInputContainer {...otherProps}>
+    {prefix && <Prefix>{prefix}</Prefix>}
+    <BareInput ref={ref} {...otherProps} />
+    {suffix && <Suffix>{suffix}</Suffix>}
+  </SingleInputContainer>
+))
 
 export default SingleInput

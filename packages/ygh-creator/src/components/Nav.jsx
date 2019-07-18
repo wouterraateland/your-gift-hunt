@@ -15,7 +15,7 @@ const NavBackground = styled.nav`
 
   flex-shrink: 0;
 
-  background-color: ${props => props.theme.color.accent};
+  background-color: ${props => props.theme.color.secondary};
 `
 
 const BackArrow = styled.strong`
@@ -89,7 +89,7 @@ const NavContainer = ({ compact, children }) =>
     <NavBackground compact>{children}</NavBackground>
   ) : (
     <NavBackground>
-      <Wrapper>{children}</Wrapper>
+      <Wrapper.Medium>{children}</Wrapper.Medium>
     </NavBackground>
   )
 

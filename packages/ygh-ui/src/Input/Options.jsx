@@ -16,7 +16,7 @@ const OptionsLocation = styled.div`
 
         position: absolute;
         left: 2em;
-        bottom: -0.65em;
+        bottom: -0.6em;
         z-index: 1;
 
         width: 1em;

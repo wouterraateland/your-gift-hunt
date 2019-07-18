@@ -17,7 +17,7 @@ const Container = styled.label.attrs(({ src }) => ({
   background: #0001 no-repeat center / cover;
 `
 
-const Input = styled.input`
+const Field = styled.input`
   cursor: pointer;
   position: absolute;
   top: 0;
@@ -48,7 +48,7 @@ const EditableAvatar = ({ placeholder, onChange }) => {
 
   return (
     <Container src={uploadedAvatar ? uploadedAvatar : placeholder}>
-      <Input type="file" accept="image/*" onChange={handleOnChange} />
+      <Field type="file" accept="image/*" onChange={handleOnChange} />
     </Container>
   )
 }

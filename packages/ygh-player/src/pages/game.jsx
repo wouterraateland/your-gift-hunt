@@ -58,7 +58,7 @@ const ActiveGamePage = ({ game, gamePlays }) => (
   <Layout>
     <Helmet title={`${game.name} by ${game.creator.name} | Your Gift Hunt`} />
     <VSpace.Large />
-    <Wrapper>
+    <Wrapper.Medium>
       <Row align="left">
         <Column size={6}>
           <GamePreview src={game.image} progress={game.progress} />
@@ -132,7 +132,7 @@ const ActiveGamePage = ({ game, gamePlays }) => (
           <Leaderboard game={game} />
         </Column>
       </Row>
-    </Wrapper>
+    </Wrapper.Medium>
   </Layout>
 )
 

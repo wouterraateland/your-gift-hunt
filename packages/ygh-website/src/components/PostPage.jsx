@@ -4,12 +4,14 @@ import styled from "styled-components"
 import { Link, StaticQuery, graphql } from "gatsby"
 import Helmet from "react-helmet"
 
-import { Header, Wrapper, Row, Column } from "ygh-ui"
+import { Wrapper, Row, Column } from "ygh-ui"
 
 import MailchimpForm from "components/MailchimpForm"
 
 import Layout from "components/Layout"
 import PostList from "components/PostList"
+
+const Header = styled.header``
 
 const FormMargins = styled.div`
   margin-bottom: 2em;
@@ -30,7 +32,7 @@ const PostPageWithCategories = ({ postEdges, categories, filter }) => (
         </p>
       </article>
     </Header>
-    <Wrapper xlarge>
+    <Wrapper.Large>
       <Row vAlign="top">
         <Column size={8} mSize={12}>
           <h1>
@@ -67,7 +69,7 @@ const PostPageWithCategories = ({ postEdges, categories, filter }) => (
           )}
         </Column>
       </Row>
-    </Wrapper>
+    </Wrapper.Large>
   </Layout>
 )
 

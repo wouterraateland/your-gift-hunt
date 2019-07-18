@@ -6,7 +6,7 @@ import useGameMutations from "hooks/useGameMutations"
 import { useFormState } from "react-use-form-state"
 import { useClickOutside } from "ygh-hooks"
 
-import { Field, Input, Button } from "ygh-ui"
+import { FieldGroup, Field, Button } from "ygh-ui"
 
 const Form = styled.form`
   margin-top: 0.25em;
@@ -70,8 +70,8 @@ const HintForm = ({ actionRequirementId, onClose, hint }) => {
 
   return (
     <Form onSubmit={onSubmit} ref={ref}>
-      <Field>
-        <Input
+      <FieldGroup>
+        <Field
           block
           {...text("text")}
           type="textarea"
@@ -79,9 +79,9 @@ const HintForm = ({ actionRequirementId, onClose, hint }) => {
           disabled={isLoading}
           error={error}
         />
-      </Field>
-      <Field>
-        <Input
+      </FieldGroup>
+      <FieldGroup>
+        <Field
           {...number("delay")}
           type="number"
           label="Delay"
@@ -89,8 +89,8 @@ const HintForm = ({ actionRequirementId, onClose, hint }) => {
           min={0}
           disabled={isLoading}
         />
-      </Field>
-      <Field>
+      </FieldGroup>
+      <FieldGroup>
         <Button
           size="medium"
           type="submit"
@@ -100,7 +100,7 @@ const HintForm = ({ actionRequirementId, onClose, hint }) => {
         >
           ✓
         </Button>
-      </Field>
+      </FieldGroup>
     </Form>
   )
 }

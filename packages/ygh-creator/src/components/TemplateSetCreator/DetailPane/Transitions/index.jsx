@@ -10,23 +10,23 @@ const Transitions = ({ template }) => (
   <TabbedSection
     title="State transitions"
     placeholder="This template has no transitions yet."
-    tabs={[
-      ...template.states.flatMap(state =>
-        state.outgoingTransitions.map(transition => ({
-          id: transition.id,
-          label: (
-            <TransitionTag
-              from={state}
-              to={
-                transition.to
-                  ? template.states.find(({ id }) => id === transition.to.id)
-                  : null
-              }
-            />
-          ),
-          content: <Transition template={template} transition={transition} />
-        }))
-      ),
+    tabs={template.states.flatMap(state =>
+      state.outgoingTransitions.map(transition => ({
+        id: transition.id,
+        label: (
+          <TransitionTag
+            from={state}
+            to={
+              transition.to
+                ? template.states.find(({ id }) => id === transition.to.id)
+                : null
+            }
+          />
+        ),
+        content: <Transition template={template} transition={transition} />
+      }))
+    )}
+    actions={[
       {
         label: <Add template={template} />
       }

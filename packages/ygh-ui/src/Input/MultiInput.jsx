@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react"
 import styled from "styled-components"
 
-import SingleInput from "./SingleInput"
+import BareInput from "./BareInput"
 
 const MultiInputContainer = styled.span`
   display: inline-block;
@@ -38,12 +38,9 @@ const MultiInput = ({ value, onChange }) => {
   const input = useRef(null)
   const [nextValue, setNextValue] = useState("")
 
-  useEffect(
-    () => {
-      setSize(input.current)
-    },
-    [nextValue]
-  )
+  useEffect(() => {
+    setSize(input.current)
+  }, [nextValue])
 
   function updateNextValue(event) {
     setNextValue(event.target.value)
@@ -86,7 +83,7 @@ const MultiInput = ({ value, onChange }) => {
           {v} <Close onClick={() => removeValue(i)}>&times;</Close>
         </InputValue>
       ))}
-      <SingleInput
+      <BareInput
         ref={input}
         value={nextValue}
         onChange={updateNextValue}

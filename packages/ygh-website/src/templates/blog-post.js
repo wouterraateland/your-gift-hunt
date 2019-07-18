@@ -25,7 +25,7 @@ export const BlogPostTemplate = ({
   const PostContent = contentComponent || Content
 
   return (
-    <Wrapper medium>
+    <Wrapper.Small>
       {helmet || null}
       <Article>
         <small>
@@ -48,7 +48,7 @@ export const BlogPostTemplate = ({
       <MailchimpForm />
       <hr />
       <Disqus title={title} url={slug} />
-    </Wrapper>
+    </Wrapper.Small>
   )
 }
 

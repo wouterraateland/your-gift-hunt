@@ -4,7 +4,7 @@ import styled from "styled-components"
 import useGameMutations from "hooks/useGameMutations"
 import { useClickOutside } from "ygh-hooks"
 
-import { Input, ActionButton, Button } from "ygh-ui"
+import { Field, ActionButton, Button } from "ygh-ui"
 import { Pen } from "ygh-icons"
 
 const Form = styled.form`
@@ -15,7 +15,7 @@ const Form = styled.form`
   font-family: ${props => props.theme.font.copy};
 `
 
-const StyledInput = styled(Input)`
+const StyledInput = styled(Field)`
   width: calc(100% - 2.8em);
 `
 

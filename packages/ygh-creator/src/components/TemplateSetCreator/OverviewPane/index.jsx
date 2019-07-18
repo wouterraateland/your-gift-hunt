@@ -8,16 +8,17 @@ import useTemplateSet from "hooks/useTemplateSet"
 import useTemplateInspector from "hooks/useTemplateInspector"
 import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 
-import { Align, Button, Input, Message, Paper, VSpace } from "ygh-ui"
+import { Align, Button, Field, Message, Paper, VSpace } from "ygh-ui"
 import EntityTypeIcon from "components/EntityTypeIcon"
 
-const ScrollablePaper = styled(Paper)`
+const ScrollablePaper = styled.div`
   width: 17em;
-  border-radius: 0;
+  border-right: 1px solid #0002;
 
   overflow-x: hidden;
   overflow-y: auto;
 
+  background-color: #f9f9f9;
   @media (max-width: 30em) {
     width: 100vw;
     transition: margin-left 0.4s ease-in-out;
@@ -85,7 +86,7 @@ const OverviewPane = () => {
           <Message.Error>{JSON.stringify(error.message)}</Message.Error>
         )}
         <VSpace.Medium />
-        <Input
+        <Field
           block
           type="search"
           value={query}

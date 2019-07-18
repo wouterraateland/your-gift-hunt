@@ -10,10 +10,10 @@ import Helmet from "react-helmet"
 import {
   Button,
   Column,
-  Field,
+  FieldGroup,
   Float,
   Form,
-  Input,
+  Field,
   Loader,
   Message,
   Row,
@@ -133,52 +133,52 @@ const UserMetaForm = ({ user }) => {
       />
       <Row vAlign="top">
         <Column size={4}>
-          <Field block>
-            <Input
+          <FieldGroup block>
+            <Field
               block
               {...text("firstName")}
               label="First name"
               error={errors["firstName"]}
             />
-          </Field>
+          </FieldGroup>
         </Column>
         <Column size={3}>
-          <Field block>
-            <Input
+          <FieldGroup block>
+            <Field
               block
               {...text("middleName")}
               label="Middle name"
               error={errors["middleName"]}
             />
-          </Field>
+          </FieldGroup>
         </Column>
         <Column size={5}>
-          <Field block>
-            <Input
+          <FieldGroup block>
+            <Field
               block
               {...text("lastName")}
               label="Last name"
               error={errors["lastName"]}
             />
-          </Field>
+          </FieldGroup>
         </Column>
       </Row>
-      <Field block>
-        <Input
+      <FieldGroup block>
+        <Field
           block
           {...email("email")}
           label="Email address"
           error={errors["email"]}
         />
-      </Field>
-      <Field block>
-        <Input
+      </FieldGroup>
+      <FieldGroup block>
+        <Field
           block
           {...text("username")}
           label="Username"
           error={errors["username"]}
         />
-      </Field>
+      </FieldGroup>
       <Float.Right>
         {error && <Message.Error>{error.message}</Message.Error>}{" "}
         <Button
@@ -217,33 +217,33 @@ const PasswordForm = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <h2>Change password</h2>
-      <Field block>
-        <Input
+      <FieldGroup block>
+        <Field
           block
           type="password"
           {...password("currentPassword")}
           label="Current password"
           error={errors["currentPassword"]}
         />
-      </Field>
-      <Field block>
-        <Input
+      </FieldGroup>
+      <FieldGroup block>
+        <Field
           block
           type="password"
           {...password("newPassword")}
           label="New password"
           error={errors["newPassword"]}
         />
-      </Field>
-      <Field block>
-        <Input
+      </FieldGroup>
+      <FieldGroup block>
+        <Field
           block
           type="password"
           {...password("confirmPassword")}
           label="Confirm new password"
           error={errors["confirmPassword"]}
         />
-      </Field>
+      </FieldGroup>
       <Float.Right>
         {error && <Message.Error>{error.message}</Message.Error>}{" "}
         <Button
@@ -283,7 +283,7 @@ const ActiveUserProfilePage = ({ user, userProfile }) => {
   return (
     <Layout>
       <Helmet title={`${userProfile.name} | Your Gift Hunt`} />
-      <Wrapper medium>
+      <Wrapper.Small>
         <VSpace.Large />
         {isEditing ? (
           <EditableUserProfile
@@ -298,7 +298,7 @@ const ActiveUserProfilePage = ({ user, userProfile }) => {
             onEditClick={onEditClick}
           />
         )}
-      </Wrapper>
+      </Wrapper.Small>
     </Layout>
   )
 }

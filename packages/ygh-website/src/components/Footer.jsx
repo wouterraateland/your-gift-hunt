@@ -23,7 +23,7 @@ const SocialLink = styled(OutboundLink)`
 
 export default () => (
   <Footer>
-    <Wrapper xlarge>
+    <Wrapper.Large>
       <Row vAlign="top">
         <Column size={3} sSize={6}>
           <FooterLogo size={4} />
@@ -77,6 +77,6 @@ export default () => (
           </p>
         </Column>
       </Row>
-    </Wrapper>
+    </Wrapper.Large>
   </Footer>
 )

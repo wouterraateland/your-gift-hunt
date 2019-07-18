@@ -6,8 +6,13 @@ const Row = styled.div`
 
   display: flex;
   flex-wrap: wrap;
-  flex-direction: ${props => (props.rtl ? "row-reverse" : "row")};
-  align-items: ${props => (props.vAlign === "top" ? "stretch" : "center")};
+  flex-direction: ${props => (props.align === "right" ? "row-reverse" : "row")};
+  align-items: ${props =>
+    props.vAlign === "top"
+      ? "flex-start"
+      : props.vAlign === "bottom"
+      ? "flex-end"
+      : "center"};
   justify-content: ${props =>
     props.align === "left" ? "flex-start" : "center"};
 `

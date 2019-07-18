@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react"
 
 import MailchimpSubscribe from "react-mailchimp-subscribe"
-import { Input, Button, Field } from "ygh-ui"
+import { Field, Button, FieldGroup } from "ygh-ui"
 
 const MAILCHIMP_SUBSCRIBE_URL =
   "https://yourgifthunt.us19.list-manage.com/subscribe/post?u=309a27bcdbc1a2943a6081ffb&id=c073769b3b"
@@ -22,19 +22,19 @@ const MailchimpForm = ({ status, message, subscribe }) => {
     <div dangerouslySetInnerHTML={{ __html: message }} />
   ) : (
     <form disabled={status === "sending"} onSubmit={handleOnSubmit}>
-      <Field>
-        <Input
+      <FieldGroup>
+        <Field
           label="Your email address"
           type="email"
           value={email}
           onChange={event => setEmail(event.target.value)}
         />
-      </Field>
-      <Field>
+      </FieldGroup>
+      <FieldGroup>
         <Button importance="primary" color="primary" type="submit">
           Subscribe
         </Button>
-      </Field>
+      </FieldGroup>
       {status === "error" && (
         <div dangerouslySetInnerHTML={{ __html: message }} />
       )}

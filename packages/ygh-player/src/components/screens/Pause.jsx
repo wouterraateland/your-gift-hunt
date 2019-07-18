@@ -70,7 +70,7 @@ export default props => {
         </AccountContainer>
       )}
       <Align.Center>
-        <Wrapper small>
+        <Wrapper.Tiny>
           <h1>Game paused</h1>
           <p>
             <strong>Time playing:</strong> {playTime.hours()}:
@@ -88,7 +88,7 @@ export default props => {
           <p>
             <span onClick={props.close}>Resume</span>
           </p>
-        </Wrapper>
+        </Wrapper.Tiny>
       </Align.Center>
     </PauseScreen>
   )

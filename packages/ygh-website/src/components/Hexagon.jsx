@@ -11,7 +11,7 @@ const Outer = styled.div`
   &::after {
     border-radius: ${props => props.theme.borderRadius};
     box-shadow: ${props => props.theme.boxShadow.small};
-    background: ${props => props.theme.color.accent};
+    background: ${props => props.theme.color.secondary};
   }
 
   &::before,
@@ -48,7 +48,7 @@ const Outer = styled.div`
     height: 2.6em;
     border-radius: ${props => props.theme.borderRadius};
 
-    background-color: ${props => props.theme.color.accent};
+    background-color: ${props => props.theme.color.secondary};
   }
 `
 

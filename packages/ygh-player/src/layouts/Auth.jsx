@@ -28,7 +28,7 @@ const AuthLayout = ({ children }) => {
         <LogoWithMargin size={6} />
       </Align.Center>
       <div>
-        <Wrapper small>{children}</Wrapper>
+        <Wrapper.Tiny>{children}</Wrapper.Tiny>
       </div>
     </Center>
   )

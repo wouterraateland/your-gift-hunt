@@ -6,7 +6,7 @@ import deepmerge from "deepmerge"
 import { useTheme } from "ygh-hooks"
 
 import Paper from "../Paper"
-import Input from "./"
+import Field from "../Field"
 
 const MapContainer = styled.div`
   position: relative;
@@ -141,7 +141,7 @@ const GoogleMap = ({
             onClick={toggleInputVisibility}
           />
           <InlineField>
-            <Input
+            <Field
               type="number"
               label="Lat"
               value={value && value.center ? value.center.lat : null}
@@ -157,7 +157,7 @@ const GoogleMap = ({
             />
           </InlineField>
           <InlineField>
-            <Input
+            <Field
               type="number"
               label="Lng"
               value={value && value.center ? value.center.lng : null}
@@ -173,7 +173,7 @@ const GoogleMap = ({
             />
           </InlineField>
           <InlineField>
-            <Input
+            <Field
               type="number"
               label="Radius"
               value={value ? value.radius : null}

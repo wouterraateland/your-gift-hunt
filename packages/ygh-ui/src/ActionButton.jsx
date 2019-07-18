@@ -4,25 +4,23 @@ const ActionButton = styled.button`
   cursor: pointer;
 
   display: inline-block;
-  width: 1.4em;
-  height: 1.4em;
-  padding: 0.2em 0.3em 0.3em;
-  margin-left: 0.5em;
+  width: 1em;
+  height: 1em;
+  padding: 0;
   border: none;
-  border-radius: 100%;
 
   line-height: 1;
   font-size: smaller;
-  text-align: center;
   vertical-align: middle;
 
-  background-color: #0002;
+  background: transparent;
+  color: ${props => props.theme.color.text};
 
-  transition: background-color 0.2s ease-out;
+  transition: color 0.2s ease-out;
 
   &:hover {
-    background-color: ${props =>
-      (props.color && props.theme.color[props.color]) || "#0004"};
+    color: ${props =>
+      props.theme.color[props.color] || props.theme.color.emphasis};
   }
 `
 ActionButton.displayName = "ActionButton"

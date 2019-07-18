@@ -8,7 +8,7 @@ import { useAsync } from "ygh-hooks"
 import { useFormState } from "react-use-form-state"
 
 import Modal from "containers/Modal"
-import { Button, Field, Float, Input, Paper } from "ygh-ui"
+import { Button, FieldGroup, Float, Field, Paper } from "ygh-ui"
 import StatusMessage from "components/StatusMessage"
 
 const StyledPaper = styled(Paper.Container)`
@@ -70,11 +70,11 @@ const SettingsModal = () => {
             .
           </Tagline>
           <Form onSubmit={handleSubmit}>
-            <Field block>
-              <Input block {...text("name")} label="Name" error={errors.name} />
-            </Field>
-            <Field block>
-              <Input
+            <FieldGroup block>
+              <Field block {...text("name")} label="Name" error={errors.name} />
+            </FieldGroup>
+            <FieldGroup block>
+              <Field
                 block
                 {...textarea("description")}
                 type="textarea"
@@ -82,8 +82,8 @@ const SettingsModal = () => {
                 info="optional"
                 error={errors.description}
               />
-            </Field>
-            <Field block>
+            </FieldGroup>
+            <FieldGroup block>
               <Float.Right>
                 <StatusMessage {...{ success, isLoading, error }} />{" "}
                 <Button
@@ -95,7 +95,7 @@ const SettingsModal = () => {
                   Update settings
                 </Button>
               </Float.Right>
-            </Field>
+            </FieldGroup>
           </Form>
         </Paper.Section>
       </StyledPaper>

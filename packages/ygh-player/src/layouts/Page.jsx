@@ -9,7 +9,7 @@ import Footer from "components/Footer"
 const StyledFullHeight = styled(FullHeight)`
   background: linear-gradient(
       150deg,
-      ${props => props.theme.color.accent} 30vw,
+      ${props => props.theme.color.secondary} 30vw,
       #ebedf5 30vw,
       #ebedf5 40vw,
       transparent 40vw

@@ -11,7 +11,7 @@ const StyledPath = styled(Path)`
 `
 
 export default () => (
-  <Button importance="primary" color="accent" as={Link} to="/demo">
+  <Button importance="primary" color="secondary" as={Link} to="/demo">
     <StyledPath size={1.5} />
     &nbsp;&nbsp;Play a Demo Hunt
   </Button>

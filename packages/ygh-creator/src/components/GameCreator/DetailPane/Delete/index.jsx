@@ -12,7 +12,7 @@ import { Button } from "ygh-ui"
 import { Bin } from "ygh-icons"
 
 const Container = styled.div`
-  margin-top: 1em;
+  margin: 1em;
 `
 
 const Info = styled.small`

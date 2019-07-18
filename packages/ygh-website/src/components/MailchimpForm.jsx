@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 
 import MailchimpSubscribe from "react-mailchimp-subscribe"
-import { Input, Button, Field } from "ygh-ui"
+import { Field, Button, FieldGroup } from "ygh-ui"
 
 const Form = styled.form`
   margin: 0 -1em;
@@ -24,19 +24,19 @@ const MailchimpForm = ({ status, message, subscribe }) => {
     <div dangerouslySetInnerHTML={{ __html: message }} />
   ) : (
     <Form disabled={status === "sending"} onSubmit={handleOnSubmit}>
-      <Field>
-        <Input
+      <FieldGroup>
+        <Field
           label="Your email address"
           type="email"
           value={email}
           onChange={event => setEmail(event.target.value)}
         />
-      </Field>
-      <Field>
+      </FieldGroup>
+      <FieldGroup>
         <Button importance="primary" color="primary" type="submit">
           Subscribe
         </Button>
-      </Field>
+      </FieldGroup>
       {status === "error" && (
         <div dangerouslySetInnerHTML={{ __html: message }} />
       )}

@@ -18,8 +18,8 @@ const Outer = styled.div`
   box-sizing: content-box;
   width: 100%;
   height: 100%;
-  margin: -0.1em;
-  border: 0.1em dashed;
+  margin: -2px;
+  border: 2px dashed;
   border-radius: ${props => props.theme.borderRadius};
 
   background-color: #0001;

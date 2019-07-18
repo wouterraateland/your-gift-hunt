@@ -58,7 +58,7 @@ const ProLabel = styled.span`
   text-transform: uppercase;
   vertical-align: middle;
 
-  background: ${props => props.theme.color.accent};
+  background: ${props => props.theme.color.secondary};
   color: ${props => props.theme.color.emphasis};
 `
 

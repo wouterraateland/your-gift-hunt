@@ -12,7 +12,7 @@ import { useFormState } from "react-use-form-state"
 import { useQuery, useApolloClient } from "react-apollo-hooks"
 
 import Modal from "containers/Modal"
-import { Button, Column, Field, Float, Input, Paper, Row, Select } from "ygh-ui"
+import { Button, Column, FieldGroup, Float, Field, Paper, Row, Select } from "ygh-ui"
 import StatusMessage from "components/StatusMessage"
 import ImageInput from "components/ImageInput"
 
@@ -167,14 +167,14 @@ const SettingsModal = () => {
                 <br />
               </Column>
               <Column size={8} mSize={12}>
-                <Field block>
-                  <Input
+                <FieldGroup block>
+                  <Field
                     block
                     {...text("name")}
                     label="Game name"
                     error={nameExists ? "This name is already taken" : null}
                   />
-                </Field>
+                </FieldGroup>
                 <Small>
                   Available at{" "}
                   <strong>
@@ -183,34 +183,34 @@ const SettingsModal = () => {
                   </strong>
                 </Small>
                 <br />
-                <Field block>
-                  <Input
+                <FieldGroup block>
+                  <Field
                     block
                     {...textarea("description")}
                     type="textarea"
                     label="Description"
                     info="optional"
                   />
-                </Field>
-                <Field block>
-                  <Input
+                </FieldGroup>
+                <FieldGroup block>
+                  <Field
                     block
                     {...textarea("intro")}
                     type="textarea"
                     label="Introduction"
                     info="optional"
                   />
-                </Field>
-                <Field block>
-                  <Input
+                </FieldGroup>
+                <FieldGroup block>
+                  <Field
                     block
                     {...textarea("outro")}
                     type="textarea"
                     label="Outro text"
                     info="optional"
                   />
-                </Field>
-                <Field block>
+                </FieldGroup>
+                <FieldGroup block>
                   <Select
                     block
                     {...selectMultiple("entityTemplateSets")}
@@ -218,28 +218,28 @@ const SettingsModal = () => {
                     options={templateSetOptions}
                     label="Included template sets"
                   />
-                </Field>
+                </FieldGroup>
               </Column>
             </Row>
             {game.privacy === PRIVACY.PRIVATE && (
               <>
                 <h2>Privacy</h2>
-                <Field block>
+                <FieldGroup block>
                   <Select
                     {...select("accessType")}
                     options={accessOptions}
                     label="Protection type"
                     info=""
                   />
-                </Field>
+                </FieldGroup>
                 {formState.values.accessType === ACCESS_TYPES.CODE && (
-                  <Field block>
-                    <Input block {...text("accessCode")} label="Access code" />
-                  </Field>
+                  <FieldGroup block>
+                    <Field block {...text("accessCode")} label="Access code" />
+                  </FieldGroup>
                 )}
               </>
             )}
-            <Field block>
+            <FieldGroup block>
               <Float.Right>
                 <StatusMessage {...{ success, isLoading, error }} />{" "}
                 <Button
@@ -251,7 +251,7 @@ const SettingsModal = () => {
                   Update settings
                 </Button>
               </Float.Right>
-            </Field>
+            </FieldGroup>
           </Form>
         </Paper.Section>
       </StyledPaper>

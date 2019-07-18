@@ -3138,10 +3138,10 @@ type Entity implements Node {
   isItem: Boolean!
   isObject: Boolean!
   isContainer: Boolean!
-  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldGroup!]
   states(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [State!]
   informationSlots(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlot!]
-  featuredField: Field
+  featuredField: FieldGroup
   defaultState: State
   container: Entity
   containedEntities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity!]
@@ -7522,7 +7522,7 @@ input EntranceWhereUniqueInput {
   id: ID
 }
 
-type Field implements Node {
+type FieldGroup implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -7598,7 +7598,7 @@ input FieldCreateWithoutInformationSlotsInput {
 """An edge in a connection."""
 type FieldEdge {
   """The item at the end of the edge."""
-  node: Field!
+  node: FieldGroup!
 
   """A cursor for use in pagination."""
   cursor: String!
@@ -7852,7 +7852,7 @@ input FieldScalarWhereInput {
 
 type FieldSubscriptionPayload {
   mutation: MutationType!
-  node: Field
+  node: FieldGroup
   updatedFields: [String!]
   previousValues: FieldPreviousValues
 }
@@ -12345,7 +12345,7 @@ type InformationSlot implements Node {
   name: String
   description: String
   allowedTypes(where: FieldTypeWhereInput, orderBy: FieldTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldType!]
-  field: Field
+  field: FieldGroup
   entity: Entity!
   states(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [State!]
 }
@@ -13567,7 +13567,7 @@ type InputRequirement implements Node {
   updatedAt: DateTime!
   template: InputRequirementTemplate
   key: String!
-  field: Field
+  field: FieldGroup
   value: String
   not: Boolean!
   comparator: ComparatorType!
@@ -14335,7 +14335,7 @@ type Mutation {
   createEntranceTemplate(data: EntranceTemplateCreateInput!): EntranceTemplate!
   createEntity(data: EntityCreateInput!): Entity!
   createPayloadRequirementTemplate(data: PayloadRequirementTemplateCreateInput!): PayloadRequirementTemplate!
-  createField(data: FieldCreateInput!): Field!
+  createField(data: FieldCreateInput!): FieldGroup!
   createActionRequirementTemplate(data: ActionRequirementTemplateCreateInput!): ActionRequirementTemplate!
   createStateTransitionTemplate(data: StateTransitionTemplateCreateInput!): StateTransitionTemplate!
   createStateTemplate(data: StateTemplateCreateInput!): StateTemplate!
@@ -14372,7 +14372,7 @@ type Mutation {
   updateEntranceTemplate(data: EntranceTemplateUpdateInput!, where: EntranceTemplateWhereUniqueInput!): EntranceTemplate
   updateEntity(data: EntityUpdateInput!, where: EntityWhereUniqueInput!): Entity
   updatePayloadRequirementTemplate(data: PayloadRequirementTemplateUpdateInput!, where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
-  updateField(data: FieldUpdateInput!, where: FieldWhereUniqueInput!): Field
+  updateField(data: FieldUpdateInput!, where: FieldWhereUniqueInput!): FieldGroup
   updateActionRequirementTemplate(data: ActionRequirementTemplateUpdateInput!, where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   updateStateTransitionTemplate(data: StateTransitionTemplateUpdateInput!, where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
   updateStateTemplate(data: StateTemplateUpdateInput!, where: StateTemplateWhereUniqueInput!): StateTemplate
@@ -14409,7 +14409,7 @@ type Mutation {
   deleteEntranceTemplate(where: EntranceTemplateWhereUniqueInput!): EntranceTemplate
   deleteEntity(where: EntityWhereUniqueInput!): Entity
   deletePayloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
-  deleteField(where: FieldWhereUniqueInput!): Field
+  deleteField(where: FieldWhereUniqueInput!): FieldGroup
   deleteActionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   deleteStateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
   deleteStateTemplate(where: StateTemplateWhereUniqueInput!): StateTemplate
@@ -14446,7 +14446,7 @@ type Mutation {
   upsertEntranceTemplate(where: EntranceTemplateWhereUniqueInput!, create: EntranceTemplateCreateInput!, update: EntranceTemplateUpdateInput!): EntranceTemplate!
   upsertEntity(where: EntityWhereUniqueInput!, create: EntityCreateInput!, update: EntityUpdateInput!): Entity!
   upsertPayloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!, create: PayloadRequirementTemplateCreateInput!, update: PayloadRequirementTemplateUpdateInput!): PayloadRequirementTemplate!
-  upsertField(where: FieldWhereUniqueInput!, create: FieldCreateInput!, update: FieldUpdateInput!): Field!
+  upsertField(where: FieldWhereUniqueInput!, create: FieldCreateInput!, update: FieldUpdateInput!): FieldGroup!
   upsertActionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!, create: ActionRequirementTemplateCreateInput!, update: ActionRequirementTemplateUpdateInput!): ActionRequirementTemplate!
   upsertStateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!, create: StateTransitionTemplateCreateInput!, update: StateTransitionTemplateUpdateInput!): StateTransitionTemplate!
   upsertStateTemplate(where: StateTemplateWhereUniqueInput!, create: StateTemplateCreateInput!, update: StateTemplateUpdateInput!): StateTemplate!
@@ -16984,7 +16984,7 @@ type Query {
   entranceTemplates(where: EntranceTemplateWhereInput, orderBy: EntranceTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntranceTemplate]!
   entities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity]!
   payloadRequirementTemplates(where: PayloadRequirementTemplateWhereInput, orderBy: PayloadRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayloadRequirementTemplate]!
-  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldGroup]!
   actionRequirementTemplates(where: ActionRequirementTemplateWhereInput, orderBy: ActionRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirementTemplate]!
   stateTransitionTemplates(where: StateTransitionTemplateWhereInput, orderBy: StateTransitionTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTransitionTemplate]!
   stateTemplates(where: StateTemplateWhereInput, orderBy: StateTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTemplate]!
@@ -17021,7 +17021,7 @@ type Query {
   entranceTemplate(where: EntranceTemplateWhereUniqueInput!): EntranceTemplate
   entity(where: EntityWhereUniqueInput!): Entity
   payloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
-  field(where: FieldWhereUniqueInput!): Field
+  field(where: FieldWhereUniqueInput!): FieldGroup
   actionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   stateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
   stateTemplate(where: StateTemplateWhereUniqueInput!): StateTemplate

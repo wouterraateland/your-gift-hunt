@@ -26,13 +26,6 @@ const Main = styled.main`
   }
 `
 
-const StyledLogo = styled(Logo)`
-  color: #000;
-  .background {
-    fill: #fff;
-  }
-`
-
 const rotate = keyframes`
   to { transform: rotate(1turn); }
 `
@@ -44,7 +37,7 @@ const SaveContainer = styled.span`
   width: 1em;
   height: 1em;
 
-  margin-top: 0.5em;
+  margin: 0.3em 0 0 0.5em;
 
   &::before {
     content: "";
@@ -112,19 +105,18 @@ const TemplateSetCreatorLayout = ({ children }) => {
       <Nav.Container>
         <Nav.BackControl to={`/${user.username}/template-sets`} />
         <Nav.Center>
-          <StyledLogo size={2} />
-          <Nav.Title>{templateSet.name}</Nav.Title>
+          <p>
+            {templateSet.creator.id === user.id
+              ? "My template sets"
+              : templateSet.creator.name}{" "}
+            / <strong>{templateSet.name}</strong>
+          </p>
           <SaveState
             isSaving={isSaving}
             isDirty={isDirty}
             lastSaved={lastSaved}
           />
         </Nav.Center>
-        <Nav.Items>
-          <Nav.Item to="settings">
-            <Cog size={0.8} /> Settings
-          </Nav.Item>
-        </Nav.Items>
       </Nav.Container>
       <Main>{children}</Main>
     </PageContainer>

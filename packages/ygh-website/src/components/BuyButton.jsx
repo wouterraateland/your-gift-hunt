@@ -1,17 +1,17 @@
 import React from "react"
 import useCheckout from "hooks/useCheckout"
 
-import { Field, Button } from "ygh-ui"
+import { FieldGroup, Button } from "ygh-ui"
 
 const BuyButton = ({ title, variantId, quantity = 1 }) => {
   const handleCheckout = useCheckout()
 
   return (
-    <Field>
+    <FieldGroup>
       <Button onClick={() => handleCheckout(variantId, quantity)}>
         Buy {title}
       </Button>
-    </Field>
+    </FieldGroup>
   )
 }
 

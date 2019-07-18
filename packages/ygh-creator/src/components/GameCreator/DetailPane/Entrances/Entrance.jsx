@@ -8,7 +8,7 @@ import { useAsync } from "ygh-hooks"
 
 import { components } from "react-select"
 
-import { Field, Message, Paper, Select } from "ygh-ui"
+import { FieldGroup, Message, Paper, Select } from "ygh-ui"
 import PortalTag from "components/Primitives/PortalTag"
 
 const Blockquote = styled.blockquote`
@@ -84,7 +84,7 @@ const Entrance = ({ entrance }) => {
     <>
       <Paper.Title as="h3">{entrance.name || "Default"}</Paper.Title>
       {entrance.description && <Blockquote>{entrance.description}</Blockquote>}
-      <Field block>
+      <FieldGroup block>
         <Select
           block
           components={{
@@ -100,7 +100,7 @@ const Entrance = ({ entrance }) => {
           disabled={isLoading}
         />
         {error && <Message.Error>{error.message}</Message.Error>}
-      </Field>
+      </FieldGroup>
     </>
   )
 }

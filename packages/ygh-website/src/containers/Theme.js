@@ -7,7 +7,7 @@ const theme = {
     text: "#0009",
     emphasis: "#000d",
     primary: "#3f51b5",
-    accent: "#ffd65a",
+    secondary: "#ffd65a",
     error: "#d34d4e",
     warning: "#f7a600",
     success: "#41ac57"
@@ -57,10 +57,10 @@ export const GlobalStyles = createGlobalStyle`
 
     background:
       linear-gradient(-30deg, ${
-        theme.color.accent
+        theme.color.secondary
       } 30vw, #EBEDF5 30vw, #EBEDF5 40vw, transparent 40vw) no-repeat bottom right,
       linear-gradient(150deg, ${
-        theme.color.accent
+        theme.color.secondary
       } 30vw, #EBEDF5 30vw, #EBEDF5 40vw, transparent 40vw) no-repeat top left;
 
     background-color: ${transparentize(0.95, theme.color.primary)};

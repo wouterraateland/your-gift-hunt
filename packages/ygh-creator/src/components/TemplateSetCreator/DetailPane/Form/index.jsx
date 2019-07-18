@@ -7,7 +7,7 @@ import { useFormState } from "react-use-form-state"
 import { useDebounce } from "ygh-hooks"
 import { useClickOutside } from "ygh-hooks"
 
-import { Align, Button, Field, Float, Form, Input } from "ygh-ui"
+import { Align, Button, FieldGroup, Float, Form, Field } from "ygh-ui"
 import { Bin, Pen } from "ygh-icons"
 
 import DisabledSelect from "./DisabledSelect"
@@ -92,7 +92,7 @@ const FormInput = props => {
     )
   }
 
-  return <Input {...props} />
+  return <Field {...props} />
 }
 
 export default ({
@@ -180,7 +180,7 @@ export default ({
         </FloatRight>
       )}
       {fields.map((field, i) => (
-        <Field key={i} block>
+        <FieldGroup key={i} block>
           {Array.isArray(field) ? (
             field.map((f, i) => (
               <FormInput
@@ -200,7 +200,7 @@ export default ({
               {...getInputProps(field)}
             />
           )}
-        </Field>
+        </FieldGroup>
       ))}
       {isEditable && (
         <Align.Center>

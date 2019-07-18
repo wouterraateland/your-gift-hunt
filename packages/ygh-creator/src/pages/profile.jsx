@@ -11,9 +11,9 @@ import Layout from "layouts/Overview"
 import {
   Button,
   Column,
-  Field,
+  FieldGroup,
   Float,
-  Input,
+  Field,
   Paper,
   Row,
   Wrapper
@@ -96,41 +96,41 @@ const ProfileEditForm = () => {
           />
         </Column>
         <Column size={8} mSize={12}>
-          <Field block>
+          <FieldGroup block>
             <Row>
               <Column size={4} sSize={12}>
-                <Input block {...text("firstName")} label="First name" />
+                <Field block {...text("firstName")} label="First name" />
               </Column>
               <Column size={3} sSize={12}>
-                <Input block {...text("middleName")} label="Middle name" />
+                <Field block {...text("middleName")} label="Middle name" />
               </Column>
               <Column size={5} sSize={12}>
-                <Input block {...text("lastName")} label="Last name" />
+                <Field block {...text("lastName")} label="Last name" />
               </Column>
             </Row>
-          </Field>
-          <Field block>
-            <Input
+          </FieldGroup>
+          <FieldGroup block>
+            <Field
               block
               {...text("email")}
               label="Email"
               error={errors["email"]}
             />
-          </Field>
-          <Field block>
-            <Input
+          </FieldGroup>
+          <FieldGroup block>
+            <Field
               block
               {...text("username")}
               label="Username"
               error={errors["username"]}
             />
-          </Field>
+          </FieldGroup>
           <small>
             https://play.yourgifthunt.com/{formState.values.username}
           </small>
         </Column>
       </Row>
-      <Field block>
+      <FieldGroup block>
         <Float.Right>
           <StatusMessage {...{ success, isLoading, error }} />{" "}
           <Button
@@ -142,7 +142,7 @@ const ProfileEditForm = () => {
             Update profile
           </Button>
         </Float.Right>
-      </Field>
+      </FieldGroup>
     </Form>
   )
 }
@@ -180,25 +180,25 @@ const PasswordEditForm = () => {
   return (
     <Form onSubmit={onSubmit}>
       <SubTitle>Password</SubTitle>
-      <Field block>
-        <Input
+      <FieldGroup block>
+        <Field
           block
           {...password("currentPassword")}
           label="Current password"
           error={errors["currentPassword"]}
         />
-      </Field>
-      <Field block>
-        <Input block {...password("newPassword")} label="New password" />
-      </Field>
-      <Field block>
-        <Input
+      </FieldGroup>
+      <FieldGroup block>
+        <Field block {...password("newPassword")} label="New password" />
+      </FieldGroup>
+      <FieldGroup block>
+        <Field
           block
           {...password("confirmPassword")}
           label="Confirm new password"
         />
-      </Field>
-      <Field block>
+      </FieldGroup>
+      <FieldGroup block>
         <Float.Right>
           <StatusMessage {...{ success, isLoading, error }} />{" "}
           <Button
@@ -210,14 +210,14 @@ const PasswordEditForm = () => {
             Update password
           </Button>
         </Float.Right>
-      </Field>
+      </FieldGroup>
     </Form>
   )
 }
 
 const ProfilePage = () => (
   <Layout title="Profile">
-    <Wrapper size="large">
+    <Wrapper.Medium>
       <Paper>
         <Paper.Section>
           <BackButton />
@@ -230,7 +230,7 @@ const ProfilePage = () => (
           <PasswordEditForm />
         </Paper.Section>
       </Paper>
-    </Wrapper>
+    </Wrapper.Medium>
   </Layout>
 )
 

@@ -1,25 +1,33 @@
 import styled from "styled-components"
 
-export const Both = styled.div`
+export const ClearBoth = styled.div`
   clear: both;
 `
-export const Left = styled.div`
+ClearBoth.displayName = "ClearBoth"
+
+export const ClearLeft = styled.div`
   clear: left;
 `
-export const None = styled.div`
+ClearLeft.displayName = "ClearLeft"
+
+export const ClearNone = styled.div`
   clear: none;
 `
-export const Right = styled.div`
+ClearNone.displayName = "ClearNone"
+
+export const ClearRight = styled.div`
   clear: right;
 `
-export const Inherit = styled.div`
+ClearRight.displayName = "ClearRight"
+
+export const Clear = styled.div`
   clear: inherit;
 `
+Clear.displayName = "Clear"
 
-export default {
-  Both,
-  Left,
-  None,
-  Right,
-  Inherit
-}
+Clear.Both = ClearBoth
+Clear.Left = ClearLeft
+Clear.None = ClearNone
+Clear.Right = ClearRight
+
+export default Clear

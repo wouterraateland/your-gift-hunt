@@ -13,7 +13,7 @@ const Outer = styled.span`
   font-size: smaller;
   line-height: 1;
 
-  box-shadow: inset 0 0 0 0.1em #999;
+  box-shadow: inset 0 0 0 1px #999;
 
   background-color: #eee;
   color: ${props => props.theme.color.text};

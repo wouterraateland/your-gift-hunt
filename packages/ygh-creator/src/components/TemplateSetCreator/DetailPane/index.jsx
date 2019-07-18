@@ -8,7 +8,6 @@ import EditableTemplate from "./EditableTemplate"
 
 const Container = styled.div`
   width: calc(100% - 17em);
-  padding: 1em;
   flex-grow: 1;
 
   overflow-x: hidden;

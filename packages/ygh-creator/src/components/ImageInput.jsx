@@ -9,7 +9,7 @@ const Container = styled.label.attrs(({ src }) => ({
   position: relative;
 
   display: block;
-  border: 0.1em solid #0002;
+  border: 2px solid #0002;
 
   background: #0001 no-repeat center padding-box / cover;
 

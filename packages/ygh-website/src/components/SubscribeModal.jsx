@@ -4,7 +4,7 @@ import { Align, Paper, Wrapper } from "ygh-ui"
 import CTA from "components/CTA"
 
 const SubscribeModal = forwardRef((_, ref) => (
-  <Wrapper>
+  <Wrapper.Medium>
     <Paper ref={ref}>
       <Paper.Section>
         <Align.Center>
@@ -17,7 +17,7 @@ const SubscribeModal = forwardRef((_, ref) => (
         </Align.Center>
       </Paper.Section>
     </Paper>
-  </Wrapper>
+  </Wrapper.Medium>
 ))
 
 export default SubscribeModal

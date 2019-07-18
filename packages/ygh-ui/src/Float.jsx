@@ -1,21 +1,27 @@
 import styled from "styled-components"
 
-export const Left = styled.div`
+export const FloatLeft = styled.div`
   float: left;
 `
-export const None = styled.div`
+FloatLeft.displayName = "FloatLeft"
+
+export const FloatNone = styled.div`
   float: none;
 `
-export const Right = styled.div`
+FloatNone.displayName = "FloatNone"
+
+export const FloatRight = styled.div`
   float: right;
 `
-export const Inherit = styled.div`
+FloatRight.displayName = "FloatRight"
+
+export const Float = styled.div`
   float: inherit;
 `
+Float.displayName = "FloatInherit"
 
-export default {
-  Left,
-  None,
-  Right,
-  Inherit
-}
+Float.Left = FloatLeft
+Float.None = FloatNone
+Float.Right = FloatRight
+
+export default Float

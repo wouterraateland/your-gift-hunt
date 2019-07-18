@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react"
 import styled from "styled-components"
 import useGame from "hooks/useGame"
 
-import { Input, Button, Field, Wrapper } from "ygh-ui"
+import { Field, Button, FieldGroup, Wrapper } from "ygh-ui"
 
 const Container = styled.div`
   display: flex;
@@ -28,18 +28,18 @@ const RequestAccess = ({ authenticate }) => {
   return (
     <form onSubmit={onFormSubmit}>
       <h1>This game requires an access code to play.</h1>
-      <Field block>
-        <Input
+      <FieldGroup block>
+        <Field
           label="Access code"
           value={accessCode}
           onChange={event => setAccessCode(event.target.value)}
         />
-      </Field>
-      <Field block>
-        <Button type="submit" color="accent" importance="primary">
+      </FieldGroup>
+      <FieldGroup block>
+        <Button type="submit" color="secondary" importance="primary">
           Confirm
         </Button>
-      </Field>
+      </FieldGroup>
     </form>
   )
 }
@@ -56,13 +56,13 @@ const UnauthenticatedPage = () => {
 
   return (
     <Container>
-      <Wrapper medium>
+      <Wrapper.Small>
         {authenticationMethod === "CODE" ? (
           <RequestAccess authenticate={authenticate} />
         ) : (
           <NoAccess />
         )}
-      </Wrapper>
+      </Wrapper.Small>
     </Container>
   )
 }

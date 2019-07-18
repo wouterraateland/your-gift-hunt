@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState } from "react"
 import styled from "styled-components"
 
-import { Input, Button } from "ygh-ui"
+import { Field, Button } from "ygh-ui"
 
 import Entity from "../Entity"
 
@@ -37,7 +37,7 @@ const InputForm = ({ value, label, isEnabled, onSubmit }) => {
         onSubmit(state)
       }}
     >
-      <Input
+      <Field
         label={label}
         value={state === undefined || state === null ? "" : state}
         onChange={event => setState(event.target.value)}

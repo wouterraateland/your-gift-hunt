@@ -29,14 +29,14 @@ export default ({ close, ...props }) => {
   return (
     <IntroScreen {...props}>
       <Align.Center>
-        <Wrapper small>
+        <Wrapper.Tiny>
           <h1>{game.name}</h1>
           <p>{game.description}</p>
           <VSpace.Small />
-          <Button onClick={onClick} importance="primary" color="accent">
+          <Button onClick={onClick} importance="primary" color="secondary">
             Start game
           </Button>
-        </Wrapper>
+        </Wrapper.Tiny>
       </Align.Center>
     </IntroScreen>
   )

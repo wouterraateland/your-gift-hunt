@@ -236,7 +236,7 @@ export const ENTRANCE_FRAGMENT = gql`
 `
 
 export const FIELD_FRAGMENT = gql`
-  fragment FieldFragment on Field {
+  fragment FieldFragment on FieldGroup {
     id
     template {
       id

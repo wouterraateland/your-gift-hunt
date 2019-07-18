@@ -5,9 +5,9 @@ import Layout from "components/Layout"
 import {
   Button,
   Column,
-  Field,
+  FieldGroup,
   Float,
-  Input,
+  Field,
   Row,
   Section,
   Wrapper
@@ -56,7 +56,7 @@ const ContactPage = () => {
   return (
     <Layout>
       <Section>
-        <Wrapper medium>
+        <Wrapper.Small>
           <h1>Contact</h1>
           <form
             name="contact"
@@ -75,8 +75,8 @@ const ContactPage = () => {
                     Don’t fill this out: <input name="bot-field" />
                   </label>
                 </div>
-                <Field block>
-                  <Input
+                <FieldGroup block>
+                  <Field
                     block
                     label="Your name"
                     name="name"
@@ -84,9 +84,9 @@ const ContactPage = () => {
                     onChange={handleChange}
                     value={values["name"]}
                   />
-                </Field>
-                <Field block>
-                  <Input
+                </FieldGroup>
+                <FieldGroup block>
+                  <Field
                     block
                     label="Your email"
                     name="email"
@@ -95,9 +95,9 @@ const ContactPage = () => {
                     onChange={handleChange}
                     value={values["email"]}
                   />
-                </Field>
-                <Field block>
-                  <Input
+                </FieldGroup>
+                <FieldGroup block>
+                  <Field
                     block
                     label="Subject"
                     name="subject"
@@ -105,11 +105,11 @@ const ContactPage = () => {
                     onChange={handleChange}
                     value={values["subject"]}
                   />
-                </Field>
+                </FieldGroup>
               </Column>
               <Column size={6} mSize={12}>
-                <Field block>
-                  <Input
+                <FieldGroup block>
+                  <Field
                     block
                     type="textarea"
                     label="How can we help you?"
@@ -119,18 +119,18 @@ const ContactPage = () => {
                     value={values["message"]}
                     style={{ height: "11.25em" }}
                   />
-                </Field>
-                <Field block>
+                </FieldGroup>
+                <FieldGroup block>
                   <Float.Right>
-                    <Button color="accent" importance="primary" type="submit">
+                    <Button color="secondary" importance="primary" type="submit">
                       Send Message
                     </Button>
                   </Float.Right>
-                </Field>
+                </FieldGroup>
               </Column>
             </Row>
           </form>
-        </Wrapper>
+        </Wrapper.Small>
       </Section>
     </Layout>
   )

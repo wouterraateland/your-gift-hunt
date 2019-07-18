@@ -5,7 +5,7 @@ import queryString from "querystring"
 import { useAsync } from "ygh-hooks"
 import useAuth from "hooks/useAuth"
 
-import { Button, Column, Field, Input, Row, VSpace } from "ygh-ui"
+import { Button, Column, FieldGroup, Field, Row, VSpace } from "ygh-ui"
 import Layout from "layouts/Auth"
 
 const SignupPage = props => {
@@ -63,36 +63,36 @@ const SignupPage = props => {
         </p>
         <Row vAlign="top">
           <Column size={4}>
-            <Field block>
-              <Input
+            <FieldGroup block>
+              <Field
                 block
                 label="First name"
                 name="firstName"
                 type="text"
                 required
               />
-            </Field>
+            </FieldGroup>
           </Column>
           <Column size={3}>
-            <Field block>
-              <Input block label="Middle name" name="middleName" type="text" />
-            </Field>
+            <FieldGroup block>
+              <Field block label="Middle name" name="middleName" type="text" />
+            </FieldGroup>
           </Column>
           <Column size={5}>
-            <Field block>
-              <Input
+            <FieldGroup block>
+              <Field
                 block
                 label="Last name"
                 name="lastName"
                 type="text"
                 required
               />
-            </Field>
+            </FieldGroup>
           </Column>
         </Row>
         <VSpace.Medium />
-        <Field block>
-          <Input
+        <FieldGroup block>
+          <Field
             block
             label="Username"
             name="username"
@@ -100,9 +100,9 @@ const SignupPage = props => {
             error={errors["username"]}
             required
           />
-        </Field>
-        <Field block>
-          <Input
+        </FieldGroup>
+        <FieldGroup block>
+          <Field
             ref={emailRef}
             block
             label="Email"
@@ -111,9 +111,9 @@ const SignupPage = props => {
             error={errors["email"]}
             required
           />
-        </Field>
-        <Field block>
-          <Input
+        </FieldGroup>
+        <FieldGroup block>
+          <Field
             block
             label="Password"
             name="password"
@@ -121,8 +121,8 @@ const SignupPage = props => {
             error={errors["password"]}
             required
           />
-        </Field>
-        <Input
+        </FieldGroup>
+        <Field
           block
           label="Remember me"
           info="This will keep you logged in for 60 days."
@@ -130,7 +130,7 @@ const SignupPage = props => {
           type="checkbox"
           error={errors["remind"]}
         />
-        <Field block>
+        <FieldGroup block>
           <Button
             block
             type="submit"
@@ -140,7 +140,7 @@ const SignupPage = props => {
           >
             Sign up
           </Button>
-        </Field>
+        </FieldGroup>
       </form>
       <p>
         Already have an account? <Link to="/auth/login">Log in</Link>

@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components"
 
-import { Paper } from "ygh-ui"
-
-const DetailPaneBackground = styled(Paper.Container)`
+const DetailPaneBackground = styled.div`
   position: absolute;
   top: 0;
   right: 0;
@@ -11,10 +9,9 @@ const DetailPaneBackground = styled(Paper.Container)`
   overflow-y: auto;
 
   width: 25em;
-  padding: 4.5em 1em 1em;
+  padding: 4.5em 0 1em;
   max-width: 100%;
-  border-radius: 0;
-  margin: 0 !important;
+  border-left: 1px solid #0002;
 
   transform: translate3D(${props => (props.isOpen ? 0 : 100)}%, 0, 0);
 
@@ -32,11 +29,7 @@ const DetailPaneBackground = styled(Paper.Container)`
 
   transition: transform ease-in-out 0.3s;
 
-  will-change: transition;
-
-  @media (min-width: 40em) {
-    padding: 1em;
-  }
+  will-change: transform;
 `
 
 export default DetailPaneBackground

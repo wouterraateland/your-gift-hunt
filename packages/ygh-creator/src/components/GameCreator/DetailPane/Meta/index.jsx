@@ -10,15 +10,22 @@ import Container from "./Container"
 import ContainedEntities from "./ContainedEntities"
 import StartContainer from "./StartContainer"
 
+const StyledPaper = styled(Paper)`
+  border-radius: 0;
+  border: 1px solid #0002;
+  border-width: 1px 0;
+  box-shadow: none;
+`
+
 const Name = styled.h2`
-  margin: 0 0 0.25em;
+  margin: 0.25em 0;
   line-height: 1;
 `
 
 const Description = styled.blockquote``
 
 const Meta = ({ entity, state }) => (
-  <Paper>
+  <StyledPaper>
     <Paper.Section>
       <Name>
         <EntityTypeIcon {...entity} /> <EditableEntityName entity={entity} />
@@ -27,14 +34,13 @@ const Meta = ({ entity, state }) => (
       <Description>
         {entity.description} {state && state.description}
       </Description>
-      <VSpace.Small />
       <Container entity={entity} />
       {entity.isContainer && <ContainedEntities entity={entity} />}
       {entity.isContainer && entity.isObject && (
         <StartContainer entity={entity} />
       )}
     </Paper.Section>
-  </Paper>
+  </StyledPaper>
 )
 
 export default Meta

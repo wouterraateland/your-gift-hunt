@@ -5,7 +5,7 @@ const Section = styled.div`
   padding: 0.25em;
 
   & + & {
-    border-left: 0.1em solid #fff1;
+    border-left: 1px solid #fff1;
   }
 `
 

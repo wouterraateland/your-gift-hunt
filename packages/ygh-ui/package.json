@@ -11,10 +11,11 @@
   "private": false,
   "scripts": {
     "clean": "rimraf lib",
-    "build:umd": "BABEL_ENV=esm yarn rollup -c",
-    "build": "yarn clean && yarn build:umd",
+    "build": "yarn clean && BABEL_ENV=esm yarn rollup -c",
     "test": "jest",
     "tdd": "yest --watch",
+    "storybook": "start-storybook -p 9009 -s public",
+    "storybook-build": "build-storybook -s public",
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
@@ -38,7 +39,11 @@
     "@babel/plugin-proposal-class-properties": "^7.5.0",
     "@babel/preset-env": "^7.5.0",
     "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-actions": "^5.1.9",
+    "@storybook/addon-knobs": "^5.1.9",
+    "@storybook/react": "^5.1.9",
     "babel-jest": "^24.8.0",
+    "babel-loader": "^8.0.6",
     "jest": "^24.8.0",
     "rimraf": "^2.6.3",
     "rollup": "^1.16.6",

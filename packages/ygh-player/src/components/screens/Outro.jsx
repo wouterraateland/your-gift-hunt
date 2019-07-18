@@ -38,7 +38,7 @@ export default ({ close, ...props }) => {
   return (
     <OutroScreen {...props}>
       <Align.Center>
-        <Wrapper small>
+        <Wrapper.Tiny>
           <h1>Game Complete</h1>
           <p>
             <strong>Time played:</strong> {f(duration.hours())}:
@@ -54,7 +54,7 @@ export default ({ close, ...props }) => {
             <Button
               as={Link}
               to={`/${game.creator.slug}/${game.slug}`}
-              color="accent"
+              color="secondary"
               size="large"
               importance="primary"
             >
@@ -66,7 +66,7 @@ export default ({ close, ...props }) => {
               to={`/auth/login?redirect=/play/${game.creator.slug}/${
                 game.slug
               }`}
-              color="accent"
+              color="secondary"
               size="large"
               importance="primary"
             >
@@ -88,7 +88,7 @@ export default ({ close, ...props }) => {
               Replay game
             </a>
           </p>
-        </Wrapper>
+        </Wrapper.Tiny>
       </Align.Center>
     </OutroScreen>
   )

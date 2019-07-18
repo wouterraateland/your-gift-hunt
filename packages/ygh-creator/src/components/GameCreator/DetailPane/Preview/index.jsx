@@ -9,7 +9,7 @@ const Preview = ({ entity, state }) =>
     <PreviewContainer>
       <EntityPreview
         entity={entity.template}
-        state={state ? state.name : null}
+        state={state}
         maxWidth={19}
         maxHeight={6}
       />

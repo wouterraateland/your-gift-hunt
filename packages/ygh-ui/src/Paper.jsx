@@ -52,15 +52,22 @@ export const PaperContainer = styled.div`
     `}
 `
 
+export const PaperHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  border-bottom: 1px solid #0002;
+`
+
 export const PaperTabs = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
 
   white-space: nowrap;
+`
 
-  border-bottom: 1px solid #0002;
-  border-radius: ${props => props.theme.borderRadius}
-    ${props => props.theme.borderRadius} 0 0;
+export const PaperActions = styled.div`
+  flex-shrink: 0;
 `
 
 export const PaperTab = styled.strong`
@@ -154,7 +161,9 @@ Paper.Section = PaperSection
 Paper.Title = ({ size, ...otherProps }) => (
   <PaperTitle as={`h${size}`} {...otherProps} />
 )
+Paper.Header = PaperHeader
 Paper.Tabs = PaperTabs
+Paper.Actions = PaperActions
 Paper.Tab = PaperTab
 
 export default Paper

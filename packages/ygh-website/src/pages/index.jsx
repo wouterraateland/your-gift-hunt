@@ -2,15 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { graphql, navigate } from "gatsby"
 
-import {
-  Section,
-  Wrapper,
-  Row,
-  Column,
-  Align,
-  Button,
-  VSpace
-} from "ygh-ui"
+import { Section, Wrapper, Row, Column, Align, Button, VSpace } from "ygh-ui"
 import { Picture, Location, Friend } from "ygh-icons"
 
 import Layout from "components/Layout"
@@ -86,7 +78,7 @@ export default ({ data }) => {
   return (
     <Layout index>
       <Header>
-        <Wrapper>
+        <Wrapper.Medium>
           <Row>
             <Column size={6} mSize={12}>
               <h1>Create your own unique, personalized escape games</h1>
@@ -101,11 +93,11 @@ export default ({ data }) => {
               />
             </Column>
           </Row>
-        </Wrapper>
+        </Wrapper.Medium>
         <LearnMore>Learn More</LearnMore>
       </Header>
       <Section id="process">
-        <Wrapper>
+        <Wrapper.Medium>
           <Align.Center>
             <h2>Get started in 3 easy steps</h2>
             <Row>
@@ -135,10 +127,10 @@ export default ({ data }) => {
               </Column>
             </Row>
           </Align.Center>
-        </Wrapper>
+        </Wrapper.Medium>
       </Section>
       <Section id="features">
-        <Wrapper>
+        <Wrapper.Medium>
           <Align.Center>
             <h2>Go beyond traditional puzzle games</h2>
           </Align.Center>
@@ -158,7 +150,7 @@ export default ({ data }) => {
             </Column>
           </Row>
           <VSpace.Small />
-          <Row rtl>
+          <Row align="right">
             <Column size={2} sSize={12}>
               <StyledHexagon>
                 <Location size={4} />
@@ -197,16 +189,16 @@ export default ({ data }) => {
               View more features
             </Button>
           </Align.Center>
-        </Wrapper>
+        </Wrapper.Medium>
       </Section>
       <Section id="signup">
-        <Wrapper>
+        <Wrapper.Medium>
           <Align.Center>
             <h2>Subscribe for Beta access</h2>
             <p>Be the first to create your own unique puzzle games</p>
             <CTA />
           </Align.Center>
-        </Wrapper>
+        </Wrapper.Medium>
       </Section>
     </Layout>
   )

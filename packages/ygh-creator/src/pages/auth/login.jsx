@@ -5,7 +5,7 @@ import queryString from "querystring"
 import { useAsync } from "ygh-hooks"
 import useAuth from "hooks/useAuth"
 
-import { Field, Input, Button } from "ygh-ui"
+import { FieldGroup, Field, Button } from "ygh-ui"
 import Layout from "layouts/Auth"
 
 const LoginPage = props => {
@@ -37,8 +37,8 @@ const LoginPage = props => {
     <Layout>
       <form onSubmit={handleSubmit}>
         <p>Enter your email address and password.</p>
-        <Field block>
-          <Input
+        <FieldGroup block>
+          <Field
             block
             label="Email"
             name="email"
@@ -46,9 +46,9 @@ const LoginPage = props => {
             error={errors["email"]}
             required
           />
-        </Field>
-        <Field block>
-          <Input
+        </FieldGroup>
+        <FieldGroup block>
+          <Field
             block
             label="Password"
             name="password"
@@ -56,8 +56,8 @@ const LoginPage = props => {
             error={errors["password"]}
             required
           />
-        </Field>
-        <Input
+        </FieldGroup>
+        <Field
           block
           label="Remember me"
           info="This will keep you logged in for 60 days."
@@ -69,7 +69,7 @@ const LoginPage = props => {
         <small>
           <Link to="/auth/amnesia">Forgot your password?</Link>
         </small>
-        <Field block>
+        <FieldGroup block>
           <Button
             block
             type="submit"
@@ -79,7 +79,7 @@ const LoginPage = props => {
           >
             Log in
           </Button>
-        </Field>
+        </FieldGroup>
       </form>
       <p>
         Don't have an account yet? <Link to="/auth/signup">Sign up</Link>

@@ -10,12 +10,12 @@ const States = ({ template }) => (
   <TabbedSection
     title="States"
     placeholder="This template has no states yet."
-    tabs={[
-      ...template.states.map(state => ({
-        id: state.id,
-        label: <StateTag state={state} />,
-        content: <State template={template} state={state} />
-      })),
+    tabs={template.states.map(state => ({
+      id: state.id,
+      label: <StateTag state={state} />,
+      content: <State template={template} state={state} />
+    }))}
+    actions={[
       {
         label: <Add template={template} />
       }

@@ -1,6 +1,12 @@
 import React from "react"
 
-const ProgressRing = ({ radius, stroke, progress, bgColor, ...otherProps }) => {
+const ProgressRing = ({
+  radius = 16,
+  stroke = 2,
+  progress = 0,
+  bgColor = "#0002",
+  ...otherProps
+}) => {
   const normalizedRadius = radius - stroke / 2
   const circumference = normalizedRadius * 2 * Math.PI
 
@@ -23,6 +29,7 @@ const ProgressRing = ({ radius, stroke, progress, bgColor, ...otherProps }) => {
         r={normalizedRadius}
         cx={radius}
         cy={radius}
+        transform={`rotate(-90 ${radius} ${radius})`}
       />
     </svg>
   )

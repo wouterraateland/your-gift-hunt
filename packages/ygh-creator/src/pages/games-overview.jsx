@@ -7,7 +7,7 @@ import { useQuery } from "react-apollo-hooks"
 import { useDebounce } from "ygh-hooks"
 
 import { Link } from "@reach/router"
-import { Wrapper, Paper, Input, Button, Loader } from "ygh-ui"
+import { Wrapper, Paper, Field, Button, Loader } from "ygh-ui"
 import Layout from "layouts/Overview"
 import GamesOverview from "components/GamesOverview"
 
@@ -43,10 +43,10 @@ const OverviewPage = () => {
         }
       ]}
     >
-      <Wrapper>
+      <Wrapper.Medium>
         <Paper fullWidthOnMobile>
           <Paper.Section>
-            <Input
+            <Field
               style={{ float: "left" }}
               type="search"
               value={query}
@@ -69,7 +69,7 @@ const OverviewPage = () => {
             <Overview searchQuery={debouncedQuery} user={user} />
           </Suspense>
         </Paper>
-      </Wrapper>
+      </Wrapper.Medium>
     </Layout>
   )
 }

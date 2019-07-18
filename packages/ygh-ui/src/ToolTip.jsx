@@ -1,13 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import styled from "styled-components"
+import _ from "ygh-utils"
 
-const ToolTip = styled.div.attrs(({ position }) => ({
-  style: {
-    left: position.x,
-    top: position.y
-  }
-}))`
+const ToolTip = styled.div`
   pointer-events: none;
   position: fixed;
   z-index: 10;
@@ -27,32 +23,13 @@ const ToolTip = styled.div.attrs(({ position }) => ({
   & strong {
     color: #fff;
   }
-
-  transform: translate(
-    -50%,
-    ${({ bottom }) => (bottom ? "1em" : "calc(-1em - 100%)")}
-  );
-
-  &::after {
-    content: "";
-
-    position: absolute;
-
-    border: 0.4em solid;
-    left: 50%;
-    top: ${props => (props.bottom ? "1px" : "calc(100% - 1px)")};
-
-    border-color: transparent #222 #222 transparent;
-    border-bottom-right-radius: 0.25em;
-
-    transform: translate(-50%, -50%)
-      rotate(${props => (props.bottom ? 225 : 45)}deg);
-  }
 `
 
-const toolTipRoot = document.querySelector("#tooltip-root")
+const MARGIN = 8
 
 export default props => {
+  const toolTipRoot = document.querySelector("#tooltip-root")
+
   const container = useRef(null)
   const toolTip = useRef(null)
   const [position, _setPosition] = useState({ x: 0, y: 0 })
@@ -69,11 +46,13 @@ export default props => {
   const show = useCallback(() => {
     setPosition()
     window.addEventListener("mousewheel", setPosition)
+    window.addEventListener("mousemove", setPosition)
     setVisibility(true)
   }, [])
 
   const hide = useCallback(() => {
     window.removeEventListener("mousewheel", setPosition)
+    window.removeEventListener("mousemove", setPosition)
     setVisibility(false)
   }, [])
 
@@ -85,10 +64,15 @@ export default props => {
       container.current.parentElement.removeEventListener("mouseenter", show)
       container.current.parentElement.removeEventListener("mouseleave", hide)
       window.removeEventListener("mousewheel", setPosition)
+      window.removeEventListener("mousemove", setPosition)
     }
   }, [])
 
-  const isBottom = position.y < window.innerHeight / 2
+  const wWidth = typeof window === "undefined" ? 0 : window.innerWidth
+  const wHeight = typeof window === "undefined" ? 0 : window.innerHeight
+  const isBottom = position.y < wHeight / 2
+  const width = toolTip.current ? toolTip.current.offsetWidth : 0
+  const height = toolTip.current ? toolTip.current.offsetHeight : 0
 
   return (
     <div ref={container}>
@@ -97,8 +81,15 @@ export default props => {
           <ToolTip
             {...props}
             ref={toolTip}
-            position={position}
-            bottom={isBottom}
+            style={{
+              left: _.clamp(MARGIN, wWidth - (width + MARGIN))(
+                position.x - width / 2
+              ),
+              top: isBottom
+                ? position.y + MARGIN
+                : position.y - (height + MARGIN)
+            }}
+            isBottom={isBottom}
           />,
           toolTipRoot
         )}

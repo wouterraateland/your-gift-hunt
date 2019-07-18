@@ -6,7 +6,7 @@ import useAuth from "hooks/useAuth"
 import { useMutation } from "ygh-hooks"
 
 import Layout from "layouts/Auth"
-import { Button, Field, Input, Loader } from "ygh-ui"
+import { Button, FieldGroup, Field, Loader } from "ygh-ui"
 
 const PasswordResetPage = () => {
   const { isResetTokenValid, resetPassword } = useAuth()
@@ -58,8 +58,8 @@ const PasswordResetPage = () => {
         ) : (
           <form onSubmit={handleSubmit}>
             <p>Reset your password.</p>
-            <Field block>
-              <Input
+            <FieldGroup block>
+              <Field
                 block
                 type="password"
                 required
@@ -67,9 +67,9 @@ const PasswordResetPage = () => {
                 name="newPassword"
                 error={errors["newPassword"]}
               />
-            </Field>
-            <Field block>
-              <Input
+            </FieldGroup>
+            <FieldGroup block>
+              <Field
                 block
                 type="password"
                 required
@@ -77,8 +77,8 @@ const PasswordResetPage = () => {
                 name="confirmPassword"
                 error={errors["confirmPassword"]}
               />
-            </Field>
-            <Field block>
+            </FieldGroup>
+            <FieldGroup block>
               <Button
                 block
                 type="submit"
@@ -88,7 +88,7 @@ const PasswordResetPage = () => {
               >
                 Reset password
               </Button>
-            </Field>
+            </FieldGroup>
           </form>
         )
       ) : (

@@ -325,7 +325,7 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
           label: "Type",
           options: [
             {
-              label: "Input",
+              label: "Field",
               value: "INPUT"
             },
             {
@@ -367,7 +367,7 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
         {
           name: "requiredInputKey",
           type: "text",
-          label: "Input key",
+          label: "Field key",
           isHidden: currentValues.type !== "INPUT"
         },
         {
@@ -395,7 +395,7 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
           isHidden: currentValues.type !== "INPUT",
           options: [
             { label: "Literal value", value: "VALUE" },
-            { label: "Field value", value: "FIELD" }
+            { label: "FieldGroup value", value: "FIELD" }
           ]
         },
         [
@@ -447,7 +447,7 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
         {
           name: "requiredInputField",
           type: "select",
-          label: "Field",
+          label: "FieldGroup",
           isHidden:
             currentValues.type !== "INPUT" ||
             currentValues.compareTo !== "FIELD",

@@ -1,16 +1,19 @@
 import React, { useEffect } from "react"
 import styled, { css, keyframes } from "styled-components"
+import { Link } from "@reach/router"
 
 import useGame from "hooks/useGame"
 import useSaveState from "hooks/useSaveState"
 import useMetaActions from "hooks/useMetaActions"
 import { useForceUpdate } from "ygh-hooks"
 
-import { Cog, Logo } from "ygh-icons"
-import { ToolTip } from "ygh-ui"
+import * as Icons from "ygh-icons"
+import { Button, ToolTip } from "ygh-ui"
 
 import PageContainer from "components/PageContainer"
 import Nav from "components/CreatorNav"
+
+const Editable = styled.strong``
 
 const Main = styled.main`
   position: relative;
@@ -20,13 +23,6 @@ const Main = styled.main`
   flex-grow: 1;
 
   overflow: hidden;
-`
-
-const StyledLogo = styled(Logo)`
-  color: #000;
-  .background {
-    fill: #fff;
-  }
 `
 
 const rotate = keyframes`
@@ -39,8 +35,7 @@ const SaveContainer = styled.span`
   display: inline-block;
   width: 1em;
   height: 1em;
-
-  margin-top: 0.5em;
+  margin: 0.3em 0 0 0.5em;
 
   &::before {
     content: "";
@@ -108,8 +103,9 @@ const CreatorLayout = ({ children }) => {
       <Nav.Container>
         <Nav.BackControl />
         <Nav.Center>
-          <StyledLogo size={2} />
-          <Nav.Title>{game.name}</Nav.Title>
+          <p>
+            {game.creator.name} / <Editable>{game.name}</Editable>
+          </p>
           <SaveState
             isSaving={isSaving}
             isDirty={isDirty}
@@ -117,17 +113,27 @@ const CreatorLayout = ({ children }) => {
           />
         </Nav.Center>
         <Nav.Items>
-          <Nav.Item to="settings">
-            <Cog size={0.8} /> Settings
+          <Nav.Item>
+            <Button
+              color="primary"
+              importance="primary"
+              size="small"
+              onClick={testGame}
+            >
+              <Icons.Play /> Test
+            </Button>
           </Nav.Item>
-          <Nav.Item as="u" onClick={testGame}>
-            Test
+          <Nav.Item>
+            <Button
+              color="primary"
+              importance="secondary"
+              size="small"
+              as={Link}
+              to={game.publishedAt ? "published" : "publish"}
+            >
+              {game.publishedAt ? "Share" : "Publish"}
+            </Button>
           </Nav.Item>
-          {game.publishedAt ? (
-            <Nav.Item to="published">Share</Nav.Item>
-          ) : (
-            <Nav.Item to="publish">Publish</Nav.Item>
-          )}
         </Nav.Items>
       </Nav.Container>
       <Main>{children}</Main>

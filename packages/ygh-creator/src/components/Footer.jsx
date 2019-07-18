@@ -23,7 +23,7 @@ const StyledFooter = styled.footer`
 
 const Footer = () => (
   <StyledFooter>
-    <Wrapper>
+    <Wrapper.Medium>
       <p>
         <a href="https://yourgifthunt.com/contact">Support</a>
         <a href="https://yourgifthunt.com/terms">Terms</a>
@@ -31,7 +31,7 @@ const Footer = () => (
       <p>
         <small>© {moment().format("YYYY")} Your Gift Hunt</small>
       </p>
-    </Wrapper>
+    </Wrapper.Medium>
   </StyledFooter>
 )
 
