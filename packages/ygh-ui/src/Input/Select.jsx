@@ -21,9 +21,9 @@ const createStyles = theme => ({
   dropdownIndicator: base => ({ ...base, cursor: "pointer" }),
   indicatorsContainer: (base, state) => ({
     ...base,
-    backgroundColor: "#0001",
+    backgroundColor: "#f2f2f2",
     borderRadius: "0 .1em .1em 0",
-    borderLeft: "2px solid #0002",
+    borderLeft: `${theme.border.width} solid #0002`,
     borderColor: state.isFocused
       ? theme.color.primary
       : state.isHovered
@@ -34,7 +34,7 @@ const createStyles = theme => ({
   indicatorSeparator: () => ({}),
   menu: base => ({
     ...base,
-    border: `2px solid ${theme.color.primary}`,
+    border: `${theme.border.width} solid ${theme.color.primary}`,
     boxShadow: theme.boxShadow.medium
   })
 })

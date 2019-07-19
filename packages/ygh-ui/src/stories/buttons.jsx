@@ -41,7 +41,7 @@ storiesOf("Buttons", module)
     const prefix = boolean("Prefix icon", false) ? (
       <Icons.Bin size={0.85} />
     ) : null
-    const suffix = boolean("Suffix icon", false) ? <Icons.Close /> : null
+    const suffix = boolean("Suffix icon", false) ? <Icons.Cross /> : null
     const disabled = boolean("Disabled", false)
 
     const size = options(

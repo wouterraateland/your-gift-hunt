@@ -10,7 +10,8 @@ const input = "src/index.js"
 const name = "ygh-icons"
 const globals = {
   react: "React",
-  "styled-components": "styled"
+  "styled-components": "styled",
+  polished: "polished"
 }
 
 const babelOptions = {

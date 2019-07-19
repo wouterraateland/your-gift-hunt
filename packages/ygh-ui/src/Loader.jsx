@@ -25,13 +25,13 @@ const Text = styled.p``
 
 const TinyLoader = () => (
   <Container>
-    <Spinner as={Icons.Object} />
+    <Spinner as={Icons.Cube} />
   </Container>
 )
 
 const SmallLoader = () => (
   <Container row>
-    <Spinner as={Icons.Object} /> <Text>Loading...</Text>
+    <Spinner as={Icons.Cube} /> <Text>Loading...</Text>
   </Container>
 )
 

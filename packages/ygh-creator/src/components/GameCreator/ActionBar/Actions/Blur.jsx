@@ -9,7 +9,7 @@ import Action from "./Action"
 const Blur = () => {
   const { blur } = useEntityFocus()
 
-  return <Action title="Unselect" icon={Icons.Close} onAct={blur} />
+  return <Action title="Unselect" icon={Icons.Cross} onAct={blur} />
 }
 
 export default Blur

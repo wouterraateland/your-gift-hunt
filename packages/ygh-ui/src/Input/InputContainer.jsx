@@ -2,7 +2,7 @@ import styled, { css } from "styled-components"
 import { transparentize } from "polished"
 
 const InputContainer = styled.div`
-  border: 2px solid #0002;
+  border: ${props => props.theme.borderWidth} solid #0002;
   border-radius: ${props => props.theme.borderRadius};
 
   background-color: #fff;

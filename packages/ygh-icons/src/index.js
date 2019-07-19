@@ -1,37 +1,19 @@
-export { default as Friend } from "./challenges/Friend"
-export { default as Location } from "./challenges/Location"
-export { default as Picture } from "./challenges/Picture"
-export { default as Question } from "./challenges/Question"
-export { default as Seek } from "./challenges/Seek"
-export { default as Time } from "./challenges/Time"
+import Social from "./Social"
+import UI from "./UI"
 
-export { default as Challenge } from "./entities/Challenge"
-export { default as Container } from "./entities/Container"
-export { default as Entrance } from "./entities/Entrance"
-export { default as Info } from "./entities/Info"
-export { default as Item } from "./entities/Item"
-export { default as Object } from "./entities/Object"
-export { default as Portal } from "./entities/Portal"
-export { default as Trigger } from "./entities/Trigger"
+export * from "./Social"
+export * from "./UI"
 
-export { default as Bin } from "./Bin"
-export { default as BringForward } from "./BringForward"
-export { default as Close } from "./Close"
-export { default as Cog } from "./Cog"
-export { default as Down } from "./Down"
-export { default as Edit } from "./Edit"
-export { default as Eye } from "./Eye"
-export { default as Facebook } from "./Facebook"
-export { default as Logo } from "./Logo"
-export { default as Loop } from "./Loop"
-export { default as Path } from "./Path"
-export { default as Pen } from "./Pen"
-export { default as Play } from "./Play"
-export { default as Resize } from "./Resize"
-export { default as Rotate } from "./Rotate"
-export { default as SendBackward } from "./SendBackward"
-export { default as Twitter } from "./Twitter"
+import Logo from "./Logo"
+import Present from "./Present"
+import Icon from "./Icon"
 
-export { default as Present } from "./Present"
+export { Social, UI, Logo, Present, Icon }
 
-export { default as Icon } from "./Icon"
+export default {
+  ...Social,
+  ...UI,
+  Logo,
+  Present,
+  Icon
+}

@@ -7,7 +7,8 @@ const Icon = styled.svg.attrs(({ size }) => ({
 }))`
   fill: currentColor;
   stroke: currentColor;
-  stroke-width: 0;
+  stroke-width: 2;
+  stroke-linejoin: round;
 `
 
 Icon.defaultProps = {

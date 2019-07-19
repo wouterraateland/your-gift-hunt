@@ -5,7 +5,7 @@ import BareInput from "./BareInput"
 import InputContainer from "./InputContainer"
 
 const SingleInputContainer = styled(InputContainer)`
-  padding: calc(0.5em - 2px) 0.75em;
+  padding: calc(0.5em - ${props => props.theme.borderWidth}) 0.75em;
 `
 
 const Prefix = styled.span`

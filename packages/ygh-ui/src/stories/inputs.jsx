@@ -18,8 +18,8 @@ import {
   Form,
   FieldGroup,
   Field,
-  SingleInput,
   MultiInput,
+  ImageInput,
   Select,
   HorizontalSelect,
   GeopointInput
@@ -65,6 +65,19 @@ storiesOf("Inputs", module)
           disabled={boolean("Disabled", false)}
           resizeH={boolean("Resize horizontal", false)}
           error={boolean("Error", false) ? "Something went wrong!" : null}
+        />
+      </Paper.Section>
+    </Paper>
+  ))
+  .add("Image input", () => (
+    <Paper>
+      <Paper.Section>
+        <Field
+          label="Avatar"
+          type="file"
+          disabled={boolean("Disabled", false)}
+          error={boolean("Error", false) ? "Something went wrong!" : null}
+          component={ImageInput}
         />
       </Paper.Section>
     </Paper>

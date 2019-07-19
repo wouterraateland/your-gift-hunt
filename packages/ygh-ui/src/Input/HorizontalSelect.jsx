@@ -10,7 +10,7 @@ const Container = styled.div`
 
   display: inline-block;
   max-width: 100%;
-  border: 2px solid #0002;
+  border: ${props => props.theme.borderWidth} solid #0002;
   border-radius: ${props => props.theme.borderRadius};
 
   background-color: #fff;
@@ -26,7 +26,7 @@ const Option = styled.label`
   line-height: 1;
 
   &:not(:first-of-type) {
-    border-left: 2px solid #0002;
+    border-left: ${props => props.theme.borderWidth} solid #0002;
   }
 
   & input {

@@ -17,6 +17,7 @@ const theme = {
     warning: "#f9673e",
     success: "#3dc169"
   },
+  borderWidth: "2px",
   borderRadius: "0.25em",
   boxShadow: {
     small: "0 0.25rem 0.75rem -0.25rem #0004",
