@@ -1,10 +1,31 @@
 import React, { useCallback, useState } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
+
+import { Plus } from "ygh-icons"
 
 import InputContainer from "./InputContainer"
 
+const ImageInputContainer = styled(InputContainer)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 8em;
+  height: 6em;
+
+  color: #0002;
+
+  ${props =>
+    !props.disabled &&
+    css`
+      cursor: pointer;
+      &:hover {
+        color: #0004;
+      }
+    `}
+`
+
 const Input = styled.input`
-  cursor: pointer;
   position: absolute;
   top: 0;
   left: 0;
@@ -28,18 +49,24 @@ const ImageInput = ({ placeholder, onChange, ...otherProps }) => {
       setUploadedImage(e.target.result)
     }
     reader.readAsDataURL(event.target.files[0])
-    onChange(event.target.files[0])
+    onChange && onChange(event.target.files[0])
   }, [])
 
   return (
-    <InputContainer
+    <ImageInputContainer
       style={{
-        backgroundImage: `url(${uploadedImage ? uploadedImage : placeholder}})`
+        backgroundImage: `url(${uploadedImage ? uploadedImage : placeholder})`
       }}
       {...otherProps}
     >
-      <Input type="file" accept="image/*" onChange={handleOnChange} />
-    </InputContainer>
+      <Input
+        type="file"
+        accept="image/*"
+        onChange={handleOnChange}
+        {...otherProps}
+      />
+      <Plus size={2} />
+    </ImageInputContainer>
   )
 }
 

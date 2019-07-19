@@ -35,7 +35,12 @@ const ErrorMessage = styled.small`
 `
 ErrorMessage.displayName = "ErrorMessage"
 
-const Field = ({ label, info, Component = SingleInput, ...otherProps }) => (
+const Field = ({
+  label,
+  info,
+  component: Component = SingleInput,
+  ...otherProps
+}) => (
   <Label disabled={otherProps.disabled} block={otherProps.block}>
     <LabelText>
       {label}

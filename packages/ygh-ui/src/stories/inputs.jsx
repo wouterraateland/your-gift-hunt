@@ -18,6 +18,7 @@ import {
   Form,
   FieldGroup,
   Field,
+  ColorInput,
   MultiInput,
   ImageInput,
   Select,
@@ -76,8 +77,23 @@ storiesOf("Inputs", module)
           label="Avatar"
           type="file"
           disabled={boolean("Disabled", false)}
-          error={boolean("Error", false) ? "Something went wrong!" : null}
+          error={
+            boolean("Error", false) ? "Image doesn't meet requirements!" : null
+          }
           component={ImageInput}
+        />
+      </Paper.Section>
+    </Paper>
+  ))
+  .add("Color input", () => (
+    <Paper>
+      <Paper.Section>
+        <Field
+          label="Favorite color"
+          type="color"
+          disabled={boolean("Disabled", false)}
+          error={boolean("Error", false) ? "Wrong color!" : null}
+          component={ColorInput}
         />
       </Paper.Section>
     </Paper>
