@@ -1,98 +1,73 @@
-import React, { useRef, useState, useEffect } from "react"
-import styled from "styled-components"
+import React, { useCallback, useState } from "react"
 
-import BareInput from "./BareInput"
+import CreatableSelect from "react-select/creatable"
+import SelectOptions from "../Select"
 
-const MultiInputContainer = styled.span`
-  display: inline-block;
-  max-width: 100%;
-  margin-bottom: -0.25rem;
-  margin-right: -0.25rem;
-  font-size: smaller;
-`
-
-const InputValue = styled.span`
-  display: inline-block;
-  padding: 0.25em 0.5em;
-  margin: 0 0.25em 0.25em 0;
-  border-radius: ${props => props.theme.borderRadius};
-
-  word-break: break-word;
-
-  background-color: #e6e6e6;
-`
-
-const Close = styled.strong`
-  cursor: pointer;
-`
-
-const setSize = el => {
-  if (el) {
-    el.style.width = "0"
-    const offset = el.offsetWidth
-    el.style.width = `${Math.max(offset, el.scrollWidth - el.clientWidth)}px`
-  }
+const components = {
+  DropdownIndicator: null
 }
 
-const MultiInput = ({ value, onChange }) => {
-  const input = useRef(null)
-  const [nextValue, setNextValue] = useState("")
+const TagInput = ({ value, onChange = () => {}, ...props }) => {
+  const [inputValue, setInputValue] = useState("")
 
-  useEffect(() => {
-    setSize(input.current)
-  }, [nextValue])
+  const handleChange = useCallback(
+    values => {
+      onChange({
+        target: {
+          value: values.map(({ value }) => value),
+          validity: {
+            valid: true
+          },
+          validationMessage: ""
+        }
+      })
+    },
+    [onChange]
+  )
 
-  function updateNextValue(event) {
-    setNextValue(event.target.value)
-  }
+  const handleKeyDown = useCallback(
+    event => {
+      if (!inputValue) return
 
-  function removeValue(i) {
-    setValue([...value.slice(0, i), ...value.slice(i + 1)])
-  }
-
-  function setValue(value) {
-    onChange({
-      target: {
-        value,
-        validity: {
-          valid: true
-        },
-        validationMessage: ""
+      switch (event.key) {
+        case "Enter":
+        case "Tab":
+          setInputValue("")
+          onChange({
+            target: {
+              value: Array.isArray(value)
+                ? [...value, inputValue]
+                : [inputValue]
+            },
+            validity: {
+              valid: true
+            },
+            validationMessage: ""
+          })
+          event.preventDefault()
       }
-    })
-  }
-
-  function handleOnKeyDown(event) {
-    if (["Tab", "Enter"].includes(event.key)) {
-      event.preventDefault()
-    }
-  }
-
-  function handleOnKeyUp(event) {
-    if (["Tab", "Enter"].includes(event.key) && nextValue !== "") {
-      event.preventDefault()
-      setValue([...(value || []), nextValue])
-      setNextValue("")
-    }
-  }
+    },
+    [inputValue, value, onChange]
+  )
 
   return (
-    <MultiInputContainer>
-      {(value || []).map((v, i) => (
-        <InputValue key={i}>
-          {v} <Close onClick={() => removeValue(i)}>&times;</Close>
-        </InputValue>
-      ))}
-      <BareInput
-        ref={input}
-        value={nextValue}
-        onChange={updateNextValue}
-        onKeyDown={handleOnKeyDown}
-        onKeyUp={handleOnKeyUp}
-        isSelect={false}
-      />
-    </MultiInputContainer>
+    <SelectOptions
+      selectComponent={CreatableSelect}
+      components={components}
+      inputValue={inputValue}
+      isMulti
+      menuIsOpen={false}
+      onChange={handleChange}
+      onInputChange={value => setInputValue(value)}
+      onKeyDown={handleKeyDown}
+      value={
+        Array.isArray(value)
+          ? value.map(value => ({ value, label: value }))
+          : []
+      }
+      {...props}
+    />
   )
 }
 
-export default MultiInput
+export default TagInput

@@ -109,19 +109,24 @@ storiesOf("Forms.Fields.Inputs", module)
       </Paper.Section>
     </Paper>
   ))
-  .add("Tag input", () => (
-    <Paper>
-      <Paper.Section>
-        <Field
-          label="Tags"
-          type="text"
-          disabled={boolean("Disabled", false)}
-          error={boolean("Error", false) ? "Wrong color!" : null}
-          component={TagInput}
-        />
-      </Paper.Section>
-    </Paper>
-  ))
+  .add("Tag input", () => {
+    const [value, setValue] = useState([])
+    return (
+      <Paper>
+        <Paper.Section>
+          <Field
+            label="Tags"
+            type="text"
+            disabled={boolean("Disabled", false)}
+            error={boolean("Error", false) ? "Wrong color!" : null}
+            component={TagInput}
+            value={value}
+            onChange={event => setValue(event.target.value)}
+          />
+        </Paper.Section>
+      </Paper>
+    )
+  })
 
 const OptionsStory = ({ component }) => {
   const [value, setValue] = useState(null)
