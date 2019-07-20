@@ -1,23 +1,12 @@
 import React from "react"
 
 import { storiesOf } from "@storybook/react"
-import {
-  withKnobs,
-  boolean,
-  optionsKnob as options,
-  text
-} from "@storybook/addon-knobs"
-
-import withTheme from "./decorators/withTheme"
-import withToolTipRoot from "./decorators/withToolTipRoot"
+import { boolean, optionsKnob as options, text } from "@storybook/addon-knobs"
 
 import { ActionButton, Button, Paper } from "../"
 import * as Icons from "ygh-icons"
 
 storiesOf("Buttons", module)
-  .addDecorator(withTheme)
-  .addDecorator(withToolTipRoot)
-  .addDecorator(withKnobs)
   .add("Action Button", () => (
     <ActionButton
       color={options(
@@ -38,10 +27,8 @@ storiesOf("Buttons", module)
     </ActionButton>
   ))
   .add("Buttons", () => {
-    const prefix = boolean("Prefix icon", false) ? (
-      <Icons.Bin size={0.85} />
-    ) : null
-    const suffix = boolean("Suffix icon", false) ? <Icons.Cross /> : null
+    const lead = boolean("lead icon", false) ? <Icons.Bin size={0.85} /> : null
+    const trail = boolean("trail icon", false) ? <Icons.Cross /> : null
     const disabled = boolean("Disabled", false)
 
     const size = options(
@@ -73,8 +60,8 @@ storiesOf("Buttons", module)
         <Paper.Section>
           <Button
             disabled={disabled}
-            prefix={prefix}
-            suffix={suffix}
+            lead={lead}
+            trail={trail}
             size={size}
             importance={importance}
             color="primary"
@@ -85,8 +72,8 @@ storiesOf("Buttons", module)
         <Paper.Section>
           <Button
             disabled={disabled}
-            prefix={prefix}
-            suffix={suffix}
+            lead={lead}
+            trail={trail}
             size={size}
             importance={importance}
             color="secondary"
@@ -97,8 +84,8 @@ storiesOf("Buttons", module)
         <Paper.Section>
           <Button
             disabled={disabled}
-            prefix={prefix}
-            suffix={suffix}
+            lead={lead}
+            trail={trail}
             size={size}
             importance={importance}
             color="success"
@@ -109,8 +96,8 @@ storiesOf("Buttons", module)
         <Paper.Section>
           <Button
             disabled={disabled}
-            prefix={prefix}
-            suffix={suffix}
+            lead={lead}
+            trail={trail}
             size={size}
             importance={importance}
             color="warning"
@@ -121,8 +108,8 @@ storiesOf("Buttons", module)
         <Paper.Section>
           <Button
             disabled={disabled}
-            prefix={prefix}
-            suffix={suffix}
+            lead={lead}
+            trail={trail}
             size={size}
             importance={importance}
             color="error"
@@ -133,8 +120,8 @@ storiesOf("Buttons", module)
         <Paper.Section>
           <Button
             disabled={disabled}
-            prefix={prefix}
-            suffix={suffix}
+            lead={lead}
+            trail={trail}
             size={size}
             importance={importance}
             color="default"

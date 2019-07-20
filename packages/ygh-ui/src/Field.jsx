@@ -2,7 +2,15 @@ import React from "react"
 import styled from "styled-components"
 import _ from "ygh-utils"
 
-import SingleInput from "./Input/SingleInput"
+import DefaultInput from "./Input/DefaultInput"
+
+const LabelText = styled.span`
+  display: block;
+  color: ${props => props.theme.color[props.hasError ? "error" : "caption"]};
+  font-size: 0.75rem;
+  padding-bottom: 0.25rem;
+`
+LabelText.displayName = "LabelText"
 
 const Label = styled.label`
   display: inline-block;
@@ -12,25 +20,22 @@ const Label = styled.label`
   vertical-align: top;
 
   ${_.blockStyles}
+
+  &:focus-within {
+    ${LabelText} {
+      color: ${props => props.theme.color.primary};
+    }
+  }
 `
 Label.displayName = "Label"
 
-const LabelText = styled.span`
-  color: ${props => props.theme.color.caption};
-  font-size: 0.7em;
-`
-LabelText.displayName = "LabelText"
-
-const Info = styled.small`
-  margin-left: 0.5em;
-  vertical-align: baseline;
-`
-Info.displayName = "Info"
-
-const ErrorMessage = styled.small`
+const Message = styled.small`
   display: block;
-  margin: 0.25em 0 0.5em;
+  margin: 0.25em 0;
+`
+Message.displayName = "Message"
 
+const ErrorMessage = styled(Message)`
   color: ${props => props.theme.color.error};
 `
 ErrorMessage.displayName = "ErrorMessage"
@@ -38,16 +43,17 @@ ErrorMessage.displayName = "ErrorMessage"
 const Field = ({
   label,
   info,
-  component: Component = SingleInput,
+  component: Component = DefaultInput,
   ...otherProps
 }) => (
   <Label disabled={otherProps.disabled} block={otherProps.block}>
-    <LabelText>
-      {label}
-      {info && <Info>({info})</Info>}
-    </LabelText>
+    <LabelText hasError={otherProps.error}>{label}</LabelText>
     <Component {...otherProps} />
-    {!!otherProps.error && <ErrorMessage>{otherProps.error}</ErrorMessage>}
+    {otherProps.error ? (
+      <ErrorMessage>{otherProps.error}</ErrorMessage>
+    ) : (
+      info && <Message>{info}</Message>
+    )}
   </Label>
 )
 

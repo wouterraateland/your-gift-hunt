@@ -8,6 +8,11 @@ export const flip = f => x => y => f(y)(x)
 export const identity = x => x
 export const iff = p => (a, b) => v => (p(v) ? a(v) : b(v))
 export const is = x => y => x === y
+export const keep = keys => object =>
+  Object.keys(object).reduce(
+    (acc, key) => (keys.includes(key) ? { ...acc, [key]: object[key] } : acc),
+    {}
+  )
 export const maybe = iff(Maybe.isNothing)
 export const noop = () => {}
 export const omit = keys => object =>
@@ -48,6 +53,7 @@ export default {
   identity,
   iff,
   is,
+  keep,
   maybe,
   noop,
   omit,

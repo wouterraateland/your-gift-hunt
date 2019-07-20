@@ -1,14 +1,10 @@
 import React from "react"
+import styled from "styled-components"
 
 import { storiesOf } from "@storybook/react"
-import { withKnobs, boolean, color, number } from "@storybook/addon-knobs"
-
-import withTheme from "./decorators/withTheme"
-import withToolTipRoot from "./decorators/withToolTipRoot"
+import { boolean, color, number } from "@storybook/addon-knobs"
 
 import { Social, UI, Logo, Present } from "ygh-icons"
-
-import styled from "styled-components"
 
 const Checkerboard = styled.div`
   position: relative;
@@ -63,9 +59,6 @@ const GridHorizontal = styled(Grid)`
 `
 
 storiesOf("Icons", module)
-  .addDecorator(withTheme)
-  .addDecorator(withToolTipRoot)
-  .addDecorator(withKnobs)
   .add("Social", () => {
     const size = number("Size", 8, { min: 0, max: 12 })
     const iconColor = color("Color", "#0009")

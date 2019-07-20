@@ -24,3 +24,4 @@ export { default as VSpace } from "./VSpace"
 export { default as Wrapper } from "./Wrapper"
 
 export * from "./Input"
+export * from "./Options"

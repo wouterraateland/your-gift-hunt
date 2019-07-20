@@ -20,6 +20,10 @@ const InputContainer = styled.div`
           background-color: #f2f2f2;
         `
       : css`
+          ${props.error &&
+            css`
+              border-color: ${props => props.theme.color.error};
+            `}
           &:hover {
             border-color: #0004;
           }

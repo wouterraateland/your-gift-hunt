@@ -1,14 +1,7 @@
 import React from "react"
 
 import { storiesOf } from "@storybook/react"
-import {
-  withKnobs,
-  number,
-  optionsKnob as options
-} from "@storybook/addon-knobs"
-
-import withTheme from "./decorators/withTheme"
-import withToolTipRoot from "./decorators/withToolTipRoot"
+import { number, optionsKnob as options } from "@storybook/addon-knobs"
 
 import {
   Align,
@@ -32,9 +25,6 @@ const C = props => (
 )
 
 storiesOf("Layout.Basic", module)
-  .addDecorator(withTheme)
-  .addDecorator(withToolTipRoot)
-  .addDecorator(withKnobs)
   .add("Align", () => (
     <>
       <Align.Left>
@@ -137,76 +127,72 @@ storiesOf("Layout.Basic", module)
     </>
   ))
 
-storiesOf("Layout.Grid", module)
-  .addDecorator(withTheme)
-  .addDecorator(withToolTipRoot)
-  .addDecorator(withKnobs)
-  .add("Grid", () => {
-    const size = number("Column size", 12, {
-      min: 1,
-      max: 12,
-      step: 1,
-      range: true
-    })
-    const style = { backgroundColor: "#fff", textAlign: "center" }
-
-    return (
-      <Row
-        align={options(
-          "Horizontal align",
-          {
-            Left: "left",
-            Center: "center",
-            Right: "right"
-          },
-          "center",
-          { display: "inline-radio" }
-        )}
-        vAlign={options(
-          "Vertical align",
-          {
-            Top: "top",
-            Center: "center",
-            Bottom: "bottom"
-          },
-          "center",
-          { display: "inline-radio" }
-        )}
-      >
-        <Column style={style} size={size}>
-          <C>
-            {size}
-            <br />
-            {size}
-          </C>
-        </Column>
-        <Column style={style} size={size}>
-          <C>{size}</C>
-        </Column>
-        <Column style={style} size={size}>
-          <C>{size}</C>
-        </Column>
-        <Column style={style} size={size}>
-          <C>{size}</C>
-        </Column>
-        <Column style={style} size={size}>
-          <C>{size}</C>
-        </Column>
-        <Column style={style} size={size}>
-          <C>{size}</C>
-        </Column>
-        <Column style={style} size={size}>
-          <C>{size}</C>
-        </Column>
-        <Column style={style} size={size}>
-          <C>{size}</C>
-        </Column>
-        <Column style={style} size={size}>
-          <C>{size}</C>
-        </Column>
-        <Column style={style} size={size}>
-          <C>{size}</C>
-        </Column>
-      </Row>
-    )
+storiesOf("Layout.Grid", module).add("Grid", () => {
+  const size = number("Column size", 12, {
+    min: 1,
+    max: 12,
+    step: 1,
+    range: true
   })
+  const style = { backgroundColor: "#fff", textAlign: "center" }
+
+  return (
+    <Row
+      align={options(
+        "Horizontal align",
+        {
+          Left: "left",
+          Center: "center",
+          Right: "right"
+        },
+        "center",
+        { display: "inline-radio" }
+      )}
+      vAlign={options(
+        "Vertical align",
+        {
+          Top: "top",
+          Center: "center",
+          Bottom: "bottom"
+        },
+        "center",
+        { display: "inline-radio" }
+      )}
+    >
+      <Column style={style} size={size}>
+        <C>
+          {size}
+          <br />
+          {size}
+        </C>
+      </Column>
+      <Column style={style} size={size}>
+        <C>{size}</C>
+      </Column>
+      <Column style={style} size={size}>
+        <C>{size}</C>
+      </Column>
+      <Column style={style} size={size}>
+        <C>{size}</C>
+      </Column>
+      <Column style={style} size={size}>
+        <C>{size}</C>
+      </Column>
+      <Column style={style} size={size}>
+        <C>{size}</C>
+      </Column>
+      <Column style={style} size={size}>
+        <C>{size}</C>
+      </Column>
+      <Column style={style} size={size}>
+        <C>{size}</C>
+      </Column>
+      <Column style={style} size={size}>
+        <C>{size}</C>
+      </Column>
+      <Column style={style} size={size}>
+        <C>{size}</C>
+      </Column>
+    </Row>
+  )
+})

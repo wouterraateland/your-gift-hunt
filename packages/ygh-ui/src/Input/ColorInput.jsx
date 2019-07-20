@@ -4,7 +4,7 @@ import styled from "styled-components"
 import BareInput from "./BareInput"
 import InputContainer from "./InputContainer"
 
-const SingleInputContainer = styled(InputContainer)`
+const ColorInputContainer = styled(InputContainer)`
   padding: calc(0.5em - ${props => props.theme.borderWidth}) 0.75em;
 `
 
@@ -17,12 +17,12 @@ const Suffix = styled.span`
   margin: 0.25em 0 0.25em 0.5em;
 `
 
-const SingleInput = forwardRef(({ prefix, suffix, ...otherProps }, ref) => (
-  <SingleInputContainer {...otherProps}>
+const ColorInput = forwardRef(({ prefix, suffix, ...otherProps }, ref) => (
+  <ColorInputContainer {...otherProps}>
     {prefix && <Prefix>{prefix}</Prefix>}
     <BareInput ref={ref} {...otherProps} />
     {suffix && <Suffix>{suffix}</Suffix>}
-  </SingleInputContainer>
+  </ColorInputContainer>
 ))
 
-export default SingleInput
+export default ColorInput

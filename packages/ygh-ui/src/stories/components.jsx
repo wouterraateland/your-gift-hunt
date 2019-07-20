@@ -1,15 +1,7 @@
 import React from "react"
 
 import { storiesOf } from "@storybook/react"
-import {
-  withKnobs,
-  boolean,
-  number,
-  optionsKnob as options
-} from "@storybook/addon-knobs"
-
-import withTheme from "./decorators/withTheme"
-import withToolTipRoot from "./decorators/withToolTipRoot"
+import { boolean, number, optionsKnob as options } from "@storybook/addon-knobs"
 
 import {
   InputType,
@@ -33,9 +25,6 @@ const Abs = styled.div`
 `
 
 storiesOf("Components", module)
-  .addDecorator(withTheme)
-  .addDecorator(withToolTipRoot)
-  .addDecorator(withKnobs)
   .add("InputType", () => (
     <InputType
       type={options(

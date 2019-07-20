@@ -20,13 +20,13 @@ const ButtonContainer = styled.button.attrs(({ disabled }) => ({
   padding: ${props => {
     switch (props.size) {
       case "tiny":
-        return "0.35em 0.5em"
+        return "0.25em 0.5em"
       case "small":
-        return "0.5em 0.65em"
+        return "0.5em 0.75em"
       case "large":
-        return "1em 1.15em"
+        return "1em 1.25em"
       default:
-        return "0.85em 1em"
+        return "0.75em 1em"
     }
   }};
   border: none;
@@ -110,21 +110,19 @@ const ButtonContainer = styled.button.attrs(({ disabled }) => ({
   ${_.blockStyles}
 `
 
-const Prefix = styled.span`
+const Lead = styled.span`
   margin-right: 0.5em;
 `
-const Suffix = styled.span`
+const Trail = styled.span`
   margin-left: 0.5em;
 `
 
-const Button = forwardRef(
-  ({ prefix, suffix, children, ...otherProps }, ref) => (
-    <ButtonContainer {...otherProps} ref={ref}>
-      {prefix && <Prefix>{prefix}</Prefix>}
-      {children}
-      {suffix && <Suffix>{suffix}</Suffix>}
-    </ButtonContainer>
-  )
-)
+const Button = forwardRef(({ lead, trail, children, ...otherProps }, ref) => (
+  <ButtonContainer {...otherProps} ref={ref}>
+    {lead && <Lead>{lead}</Lead>}
+    {children}
+    {trail && <Trail>{trail}</Trail>}
+  </ButtonContainer>
+))
 
 export default Button

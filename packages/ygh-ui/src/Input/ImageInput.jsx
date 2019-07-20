@@ -5,7 +5,7 @@ import { Plus } from "ygh-icons"
 
 import InputContainer from "./InputContainer"
 
-const ImageInputContainer = styled(InputContainer)`
+const Container = styled(InputContainer)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,7 +53,7 @@ const ImageInput = ({ placeholder, onChange, ...otherProps }) => {
   }, [])
 
   return (
-    <ImageInputContainer
+    <Container
       style={{
         backgroundImage: `url(${uploadedImage ? uploadedImage : placeholder})`
       }}
@@ -66,7 +66,7 @@ const ImageInput = ({ placeholder, onChange, ...otherProps }) => {
         {...otherProps}
       />
       <Plus size={2} />
-    </ImageInputContainer>
+    </Container>
   )
 }
 
