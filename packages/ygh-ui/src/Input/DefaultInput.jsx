@@ -8,21 +8,29 @@ const DefaultInputContainer = styled(InputContainer)`
   padding: calc(0.5em - ${props => props.theme.borderWidth}) 0.75em;
 `
 
-const Prefix = styled.span`
+const Affix = styled.span`
+  display: inline-block;
+  margin: 0.25em 0;
+`
+const Lead = styled.span`
   display: inline-block;
   margin: 0.25em 0.5em 0.25em 0;
 `
-const Suffix = styled.span`
+const Tail = styled.span`
   display: inline-block;
   margin: 0.25em 0 0.25em 0.5em;
 `
 
-const DefaultInput = forwardRef(({ prefix, suffix, ...otherProps }, ref) => (
-  <DefaultInputContainer {...otherProps}>
-    {prefix && <Prefix>{prefix}</Prefix>}
-    <BareInput ref={ref} {...otherProps} />
-    {suffix && <Suffix>{suffix}</Suffix>}
-  </DefaultInputContainer>
-))
+const DefaultInput = forwardRef(
+  ({ lead, tail, prefix, suffix, ...otherProps }, ref) => (
+    <DefaultInputContainer {...otherProps}>
+      {lead && <Lead>{lead}</Lead>}
+      {prefix && <Affix>{prefix}</Affix>}
+      <BareInput ref={ref} {...otherProps} />
+      {suffix && <Affix>{suffix}</Affix>}
+      {tail && <Tail>{tail}</Tail>}
+    </DefaultInputContainer>
+  )
+)
 
 export default DefaultInput

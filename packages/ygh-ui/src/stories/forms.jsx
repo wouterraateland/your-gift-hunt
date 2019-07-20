@@ -83,19 +83,24 @@ storiesOf("Forms.Fields.Inputs", module)
       </Paper.Section>
     </Paper>
   ))
-  .add("Color input", () => (
-    <Paper>
-      <Paper.Section>
-        <Field
-          label="Favorite color"
-          type="color"
-          disabled={boolean("Disabled", false)}
-          error={boolean("Error", false) ? "Wrong color!" : null}
-          component={ColorInput}
-        />
-      </Paper.Section>
-    </Paper>
-  ))
+  .add("Color input", () => {
+    const [value, setValue] = useState("")
+    return (
+      <Paper>
+        <Paper.Section>
+          <Field
+            label="Favourite color"
+            type="color"
+            disabled={boolean("Disabled", false)}
+            error={boolean("Error", false) ? "Wrong color!" : null}
+            component={ColorInput}
+            value={value}
+            onChange={event => setValue(event.target.value)}
+          />
+        </Paper.Section>
+      </Paper>
+    )
+  })
   .add("Geopoint input", () => (
     <Paper>
       <Paper.Section>
