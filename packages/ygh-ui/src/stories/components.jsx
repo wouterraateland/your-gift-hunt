@@ -1,20 +1,23 @@
-import React from "react"
+import React, { useState } from "react"
 
 import { storiesOf } from "@storybook/react"
 import { boolean, number, optionsKnob as options } from "@storybook/addon-knobs"
 
 import {
+  Accordion,
   InputType,
   Loader,
   Menu,
   Message,
   Paper,
   ProgressRing,
+  SplitPane,
   ToolTip
 } from "../"
 
 import styled from "styled-components"
 import Align from "../Align"
+import FullHeight from "../FullHeight"
 
 const Abs = styled.div`
   position: absolute;
@@ -25,6 +28,27 @@ const Abs = styled.div`
 `
 
 storiesOf("Components", module)
+  .add("Accordion", () => {
+    const [state, setState] = useState(null)
+
+    return (
+      <Accordion state={state} setState={setState}>
+        <Accordion.Section collapsible={false}>
+          Non collapsible section. Accordion state:
+          <pre>{JSON.stringify(state)}</pre>
+        </Accordion.Section>
+        <Accordion.Section title="Section 1">
+          Content for section 1
+        </Accordion.Section>
+        <Accordion.Section title="Section 2">
+          Content for section 2
+        </Accordion.Section>
+        <Accordion.Section title="Section 3">
+          Content for section 2
+        </Accordion.Section>
+      </Accordion>
+    )
+  })
   .add("InputType", () => (
     <InputType
       type={options(
@@ -93,6 +117,22 @@ storiesOf("Components", module)
     <ProgressRing
       progress={number("Progress", 0.65, { min: 0, max: 1, step: 0.01 })}
     />
+  ))
+  .add("Split Pane", () => (
+    <FullHeight>
+      <SplitPane split="vertical">
+        <SplitPane.Pane initialSize={400}>A</SplitPane.Pane>
+        <SplitPane.Pane minSize={50}>
+          <SplitPane split="horizontal">
+            <SplitPane.Pane minSize={100} maxSize={200}>
+              B
+            </SplitPane.Pane>
+            <SplitPane.Pane>C</SplitPane.Pane>
+          </SplitPane>
+        </SplitPane.Pane>
+        <SplitPane.Pane initialSize={100}>D</SplitPane.Pane>
+      </SplitPane>
+    </FullHeight>
   ))
   .add("ToolTip", () => (
     <>
