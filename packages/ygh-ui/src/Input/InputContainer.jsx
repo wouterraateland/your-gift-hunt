@@ -4,6 +4,7 @@ import { transparentize } from "polished"
 const InputContainer = styled.div`
   position: relative;
 
+  display: flex;
   border: ${props => props.theme.borderWidth} solid #0002;
   border-radius: ${props => props.theme.borderRadius};
 

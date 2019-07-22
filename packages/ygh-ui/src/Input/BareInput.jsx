@@ -4,8 +4,7 @@ import _ from "ygh-utils"
 import { useForceUpdate } from "ygh-hooks"
 
 export const Input = styled.input`
-  display: inline-block;
-  max-width: 100%;
+  width: 100%;
   height: 1.5em;
   min-height: 1.5em;
   padding: 0;
@@ -33,17 +32,18 @@ export const Input = styled.input`
     color: #d4d4d4;
   }
 
-  ${_.blockStyles}
-
   ${props =>
     props.type === "search" &&
     css`
-      line-height: 1.5;
       -webkit-appearance: textfield;
-      &::-webkit-search-decoration {
-        -webkit-appearance: none;
-      }
     `}
+
+  &::-webkit-search-decoration,
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `
 Input.displayName = "Input"
 

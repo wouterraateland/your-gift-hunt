@@ -12,7 +12,7 @@ const MapContainer = styled.div`
   position: relative;
   overflow: hidden;
 
-  width: 100%;
+  width: 20em;
   height: 15em;
   border-radius: 0.15em;
 `
@@ -31,17 +31,21 @@ const ValueControls = styled.div`
   );
 
   transition: transform 0.2s ease-out;
+
+  & > div {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+`
+
+const Fields = styled.div`
+  padding: 0 0.25em;
 `
 
 const InlineField = styled.div`
   display: inline-block;
-  width: calc(33% - 1em);
-  margin: 1.5em 0.5em 0.5em;
-
-  & > div {
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-  }
+  width: calc(33.33% - 0.5em);
+  margin: 0.5em 0.25em;
 `
 
 const VisibilityToggle = styled.div`
@@ -76,6 +80,7 @@ const GoogleMap = ({
   const [isInputVisible, setInputVisibility] = useState(false)
   const onMapClick = useCallback(
     (_1, { zoom }, e) =>
+      onChange &&
       onChange({
         target: {
           value: {
@@ -105,14 +110,9 @@ const GoogleMap = ({
             : 14
         }
         onClick={onMapClick}
-        initialCenter={
-          value && value.center && value.center.lat && value.center.lng
-            ? value.center
-            : {
-                lat: 37.774929,
-                lng: -122.419416
-              }
-        }
+        {...(value && value.center && value.center.lat && value.center.lng
+          ? { initialCenter: value.center }
+          : {})}
         zoomControl={false}
         mapTypeControl={false}
         streetViewControl={false}
@@ -140,55 +140,63 @@ const GoogleMap = ({
             isVisible={isInputVisible}
             onClick={toggleInputVisibility}
           />
-          <InlineField>
-            <Field
-              type="number"
-              label="Lat"
-              value={value && value.center ? value.center.lat : null}
-              onChange={event =>
-                onChange({
-                  target: {
-                    value: deepmerge(value || {}, {
-                      center: { lat: event.target.value }
-                    })
-                  }
-                })
-              }
-            />
-          </InlineField>
-          <InlineField>
-            <Field
-              type="number"
-              label="Lng"
-              value={value && value.center ? value.center.lng : null}
-              onChange={event =>
-                onChange({
-                  target: {
-                    value: deepmerge(value || {}, {
-                      center: { lng: event.target.value }
-                    })
-                  }
-                })
-              }
-            />
-          </InlineField>
-          <InlineField>
-            <Field
-              type="number"
-              label="Radius"
-              value={value ? value.radius : null}
-              min={1}
-              onChange={event =>
-                onChange({
-                  target: {
-                    value: deepmerge(value || {}, {
-                      radius: event.target.value
-                    })
-                  }
-                })
-              }
-            />
-          </InlineField>
+          <Fields>
+            <InlineField>
+              <Field
+                type="number"
+                label="Lat"
+                suffix="°"
+                disabled={!isInputVisible}
+                value={value && value.center ? value.center.lat : null}
+                onChange={event =>
+                  onChange({
+                    target: {
+                      value: deepmerge(value || {}, {
+                        center: { lat: event.target.value }
+                      })
+                    }
+                  })
+                }
+              />
+            </InlineField>
+            <InlineField>
+              <Field
+                type="number"
+                label="Lng"
+                suffix="°"
+                disabled={!isInputVisible}
+                value={value && value.center ? value.center.lng : null}
+                onChange={event =>
+                  onChange({
+                    target: {
+                      value: deepmerge(value || {}, {
+                        center: { lng: event.target.value }
+                      })
+                    }
+                  })
+                }
+              />
+            </InlineField>
+            <InlineField>
+              <Field
+                type="number"
+                label="Radius"
+                disabled={!isInputVisible}
+                value={value ? value.radius : null}
+                min={1}
+                suffix="m"
+                onChange={event =>
+                  onChange({
+                    target: {
+                      value: deepmerge(value || {}, {
+                        radius: event.target.value
+                      })
+                    }
+                  })
+                }
+              />
+            </InlineField>
+          </Fields>
         </Paper>
       </ValueControls>
     </MapContainer>

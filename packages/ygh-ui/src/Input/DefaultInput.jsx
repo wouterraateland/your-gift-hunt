@@ -9,26 +9,29 @@ const DefaultInputContainer = styled(InputContainer)`
 `
 
 const Affix = styled.span`
-  display: inline-block;
   margin: 0.25em 0;
+  color: ${props => props.theme.color.caption};
 `
 const Lead = styled.span`
-  display: inline-block;
   margin: 0.25em 0.5em 0.25em 0;
 `
-const Tail = styled.span`
-  display: inline-block;
+const Trail = styled.span`
   margin: 0.25em 0 0.25em 0.5em;
 `
 
 const DefaultInput = forwardRef(
-  ({ lead, tail, prefix, suffix, ...otherProps }, ref) => (
+  ({ lead, trail, prefix, suffix, tabIndex, ...otherProps }, ref) => (
     <DefaultInputContainer {...otherProps}>
       {lead && <Lead>{lead}</Lead>}
       {prefix && <Affix>{prefix}</Affix>}
-      <BareInput ref={ref} {...otherProps} />
+      <BareInput
+        ref={ref}
+        tabIndex={tabIndex}
+        style={{ textAlign: suffix && !prefix ? "right" : undefined }}
+        {...otherProps}
+      />
       {suffix && <Affix>{suffix}</Affix>}
-      {tail && <Tail>{tail}</Tail>}
+      {trail && <Trail>{trail}</Trail>}
     </DefaultInputContainer>
   )
 )

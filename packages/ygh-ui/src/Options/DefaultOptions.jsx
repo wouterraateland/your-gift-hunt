@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import _ from "ygh-utils"
 
 import useOptions from "./useOptions"
@@ -17,9 +17,20 @@ const Meta = styled.div``
 
 const LabelText = styled.strong`
   display: block;
+  ${props =>
+    props.disabled &&
+    css`
+      color: ${props.theme.color.caption};
+    `}
 `
 
-const InfoText = styled.small``
+const InfoText = styled.small`
+  ${props =>
+    props.disabled &&
+    css`
+      color: ${props.theme.color.caption};
+    `}
+`
 
 const DefaultOptions = props => {
   const getOptionProps = useOptions(props)
@@ -28,11 +39,11 @@ const DefaultOptions = props => {
   const labelProps = _.keep(["disabled"])(props)
 
   return props.options.map(option => (
-    <Label key={option.value} {...labelProps}>
+    <Label key={option.value}>
       <Input type={type} {...getOptionProps(option)} />
       <Meta>
-        <LabelText>{option.label}</LabelText>
-        {option.info && <InfoText>{option.info}</InfoText>}
+        <LabelText {...labelProps}>{option.label}</LabelText>
+        {option.info && <InfoText {...labelProps}>{option.info}</InfoText>}
       </Meta>
     </Label>
   ))

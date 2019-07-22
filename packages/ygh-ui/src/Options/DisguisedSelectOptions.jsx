@@ -12,8 +12,8 @@ const DisguisedSelectOptions = ({ render: Component, ...props }) => (
       valueContainer: () => ({ display: "none" })
     }}
     components={{
-      DropdownIndicator: ({ innerProps }) => (
-        <Component {...innerProps} disabled={props.isDisabled} />
+      DropdownIndicator: ({ innerProps, isDisabled }) => (
+        <Component {...innerProps} disabled={isDisabled} />
       )
     }}
   />

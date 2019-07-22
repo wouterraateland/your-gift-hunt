@@ -37,7 +37,7 @@ const ColorInput = forwardRef((props, ref) => (
     {...props}
     type="text"
     prefix="#"
-    tail={<ColorIndicator color={`#${props.value}`} />}
+    trail={<ColorIndicator color={`#${props.value}`} />}
   />
 ))
 

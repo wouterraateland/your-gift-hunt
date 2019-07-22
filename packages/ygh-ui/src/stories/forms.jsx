@@ -22,52 +22,57 @@ import {
 } from "../"
 
 storiesOf("Forms.Fields.Inputs", module)
-  .add("Default input", () => (
-    <Paper>
-      <Paper.Section>
-        <Field
-          prefix={boolean("Prefix icon", false) ? <Icons.Loop /> : null}
-          suffix={boolean("Suffix icon", false) ? <Icons.Play /> : null}
-          label="Input label"
-          info={
-            boolean("Extra info", false)
-              ? "Lorem ipsum dolor, sit amet consectetur adipisicing elit."
-              : null
-          }
-          type={options(
-            "Type",
-            {
-              Date: "date",
-              DateTime: "datetime-local",
-              Month: "month",
-              Week: "week",
-              Time: "time",
+  .add("Default input", () => {
+    const [value, setValue] = useState("")
+    return (
+      <Paper>
+        <Paper.Section>
+          <Field
+            lead={boolean("Leading icon", false) ? <Icons.Loop /> : null}
+            trail={boolean("Trailing icon", false) ? <Icons.Play /> : null}
+            prefix={boolean("Prefix text", false) ? "#" : null}
+            suffix={boolean("Suffix text", false) ? "@gmail.com" : null}
+            label="Input label"
+            info={
+              boolean("Extra info", false)
+                ? "Lorem ipsum dolor, sit amet consectetur adipisicing elit."
+                : null
+            }
+            type={options(
+              "Type",
+              {
+                Date: "date",
+                DateTime: "datetime-local",
+                Month: "month",
+                Week: "week",
+                Time: "time",
 
-              Text: "text",
-              Number: "number",
-              Textarea: "textarea",
-              Password: "password",
-              Search: "search",
+                Text: "text",
+                Number: "number",
+                Textarea: "textarea",
+                Password: "password",
+                Search: "search",
 
-              Email: "email",
-              Telephone: "tel",
-              URL: "url",
+                Email: "email",
+                Telephone: "tel",
+                URL: "url",
 
-              Color: "color",
-              File: "file"
-            },
-            "text",
-            { display: "inline-radio" }
-          )}
-          placeholder="Jan"
-          disabled={boolean("Disabled", false)}
-          resizeH={boolean("Resize horizontal", false)}
-          error={boolean("Error", false) ? "Something went wrong!" : null}
-          component={DefaultInput}
-        />
-      </Paper.Section>
-    </Paper>
-  ))
+                Color: "color",
+                File: "file"
+              },
+              "text",
+              { display: "inline-radio" }
+            )}
+            placeholder="Jan"
+            disabled={boolean("Disabled", false)}
+            resizeH={boolean("Resize horizontal", false)}
+            error={boolean("Error", false) ? "Something went wrong!" : null}
+            component={DefaultInput}
+          />
+        </Paper.Section>
+      </Paper>
+    )
+  })
   .add("Image input", () => (
     <Paper>
       <Paper.Section>
@@ -101,19 +106,24 @@ storiesOf("Forms.Fields.Inputs", module)
       </Paper>
     )
   })
-  .add("Geopoint input", () => (
-    <Paper>
-      <Paper.Section>
-        <Field
-          label="Your location"
-          type="geopoint"
-          disabled={boolean("Disabled", false)}
-          error={boolean("Error", false) ? "Wrong color!" : null}
-          component={GeopointInput}
-        />
-      </Paper.Section>
-    </Paper>
-  ))
+  .add("Geopoint input", () => {
+    const [value, setValue] = useState("")
+    return (
+      <Paper>
+        <Paper.Section>
+          <Field
+            label="Your location"
+            type="geopoint"
+            disabled={boolean("Disabled", false)}
+            error={boolean("Error", false) ? "Wrong color!" : null}
+            component={GeopointInput}
+            value={value}
+            onChange={event => setValue(event.target.value)}
+          />
+        </Paper.Section>
+      </Paper>
+    )
+  })
   .add("Tag input", () => {
     const [value, setValue] = useState([])
     return (
@@ -137,6 +147,7 @@ const OptionsStory = ({ component }) => {
   const [value, setValue] = useState(null)
 
   const showInfo = boolean("Show info", false)
+  const showOptionInfo = boolean("Show option info", false)
   const isMulti = boolean("Multi select", false)
 
   return (
@@ -144,24 +155,24 @@ const OptionsStory = ({ component }) => {
       <Paper.Section>
         <Field
           label="Privacy"
-          information="Choose your privacy wisely"
+          info={showInfo ? "Choose your privacy wisely" : null}
           type="options"
           name="privacy"
           options={[
             {
               value: "PUBLIC",
               label: "Public",
-              info: showInfo ? "Option with info" : null
+              info: showOptionInfo ? "Option with info" : null
             },
             {
               value: "UNDEFINED",
               label: "I don't know...",
-              info: showInfo ? "No info " : null
+              info: showOptionInfo ? "No info " : null
             },
             {
               value: "PRIVATE",
               label: "Private",
-              info: showInfo ? "Option with even more info" : null
+              info: showOptionInfo ? "Option with even more info" : null
             }
           ]}
           component={component}

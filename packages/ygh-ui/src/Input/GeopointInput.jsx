@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 
 import Button from "../Button"
 import Float from "../Float"
 import Paper from "../Paper"
+
+import InputContainer from "./InputContainer"
 import GoogleMap from "./GoogleMap"
 
 const FloatingBox = styled.div`
@@ -26,7 +28,7 @@ const UseLocationPrompt = ({ onAcceptClick, onDenyClick }) => (
     <Paper>
       <Paper.Section>
         <Prompt>
-          Do you allow Your Gift Hunt to use your current location as default?
+          Do you allow Your Gift Hunt to use your current location?
         </Prompt>
         <Float.Right>
           <Button
@@ -51,15 +53,9 @@ const UseLocationPrompt = ({ onAcceptClick, onDenyClick }) => (
   </FloatingBox>
 )
 
-const GeopointInputWithCurrentLocation = props => (
-  <GoogleMap {...props} centerAroundCurrentLocation={props.value === null} />
-)
-
 const GeopointInput = props => {
   const mounted = useRef(false)
-  const [geolocationStatus, setGeolocationStatus] = useState(
-    window.localStorage.getItem("geolocationStatus")
-  )
+  const [geolocationStatus, setGeolocationStatus] = useState("denied")
 
   useEffect(() => {
     mounted.current = true
@@ -73,28 +69,25 @@ const GeopointInput = props => {
     }
   }, [])
 
-  const updateGeolocationStatus = useCallback(status => {
-    setGeolocationStatus(status)
-    window.localStorage.setItem("geolocationStatus", status)
-  }, [])
-
-  switch (geolocationStatus) {
-    case "granted":
-      return <GeopointInputWithCurrentLocation {...props} />
-    case "denied":
-      return <GoogleMap {...props} />
-    case "prompt":
-    default:
-      return (
-        <>
-          <GoogleMap {...props} />
-          <UseLocationPrompt
-            onAcceptClick={() => updateGeolocationStatus("granted")}
-            onDenyClick={() => updateGeolocationStatus("denied")}
-          />
-        </>
-      )
-  }
+  return (
+    <InputContainer>
+      {geolocationStatus === "granted" ? (
+        <GoogleMap
+          key={2}
+          {...props}
+          centerAroundCurrentLocation={!props.value}
+        />
+      ) : (
+        <GoogleMap key={1} {...props} />
+      )}
+      {geolocationStatus === "prompt" && (
+        <UseLocationPrompt
+          onAcceptClick={() => setGeolocationStatus("granted")}
+          onDenyClick={() => setGeolocationStatus("denied")}
+        />
+      )}
+    </InputContainer>
+  )
 }
 
 export default GeopointInput
