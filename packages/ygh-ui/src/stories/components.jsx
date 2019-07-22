@@ -44,7 +44,7 @@ storiesOf("Components", module)
           Content for section 2
         </Accordion.Section>
         <Accordion.Section title="Section 3">
-          Content for section 2
+          Content for section 3
         </Accordion.Section>
       </Accordion>
     )
