@@ -20,7 +20,10 @@ const Trail = styled.span`
 `
 
 const DefaultInput = forwardRef(
-  ({ lead, trail, prefix, suffix, tabIndex, ...otherProps }, ref) => (
+  (
+    { lead, trail, prefix, suffix, tabIndex, value, onChange, ...otherProps },
+    ref
+  ) => (
     <DefaultInputContainer {...otherProps}>
       {lead && <Lead>{lead}</Lead>}
       {prefix && <Affix>{prefix}</Affix>}
@@ -28,6 +31,8 @@ const DefaultInput = forwardRef(
         ref={ref}
         tabIndex={tabIndex}
         style={{ textAlign: suffix && !prefix ? "right" : undefined }}
+        value={value}
+        onChange={onChange}
         {...otherProps}
       />
       {suffix && <Affix>{suffix}</Affix>}

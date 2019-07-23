@@ -1,7 +1,6 @@
 import React, { forwardRef, useEffect, useRef } from "react"
 import styled, { css } from "styled-components"
 import _ from "ygh-utils"
-import { useForceUpdate } from "ygh-hooks"
 
 export const Input = styled.input`
   width: 100%;
@@ -64,12 +63,29 @@ const setDimensions = (el, resizeH) => {
 const BareInput = forwardRef(
   ({ value, onChange, resizeH, ...otherProps }, ref) => {
     const myRef = useRef(null)
-    const forceUpdate = useForceUpdate()
     useEffect(() => setDimensions(myRef.current, resizeH), [
       otherProps.type,
       value,
       resizeH
     ])
+
+    const _value = value === undefined ? undefined : value === null ? "" : value
+    const _onChange = onChange
+      ? event => {
+          switch (otherProps.type) {
+            case "number":
+              return onChange({
+                ...event,
+                target: {
+                  ...event.target,
+                  value: parseFloat(event.target.value)
+                }
+              })
+            default:
+              return onChange(event)
+          }
+        }
+      : undefined
 
     return (
       <Input
@@ -85,24 +101,8 @@ const BareInput = forwardRef(
           }
           myRef.current = el
         }}
-        value={value === undefined ? undefined : value === null ? "" : value}
-        onChange={_.maybe(onChange, _.constant(undefined), event => {
-          forceUpdate()
-          if (onChange) {
-            switch (otherProps.type) {
-              case "number":
-                return onChange({
-                  ...event,
-                  target: {
-                    ...event.target,
-                    value: parseFloat(event.target.value)
-                  }
-                })
-              default:
-                return onChange(event)
-            }
-          }
-        })}
+        value={_value}
+        onChange={_onChange}
         {...otherProps}
       />
     )

@@ -1,12 +1,15 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import styled from "styled-components"
-import { Map, Circle, GoogleApiWrapper } from "google-maps-react"
 import deepmerge from "deepmerge"
 
 import { useTheme } from "ygh-hooks"
+import { GoogleProvider } from "./GoogleContext"
 
-import Paper from "../Paper"
-import Field from "../Field"
+import Map from "./Map"
+import Circle from "./Circle"
+
+import Paper from "../../Paper"
+import Field from "../../Field"
 
 const MapContainer = styled.div`
   position: relative;
@@ -70,16 +73,11 @@ const VisibilityToggle = styled.div`
   }
 `
 
-const GoogleMap = ({
-  google,
-  centerAroundCurrentLocation = false,
-  value,
-  onChange
-}) => {
+const GoogleMap = ({ center, value, onChange }) => {
   const theme = useTheme()
   const [isInputVisible, setInputVisibility] = useState(false)
   const onMapClick = useCallback(
-    (_1, { zoom }, e) =>
+    ({ zoom }, e) =>
       onChange &&
       onChange({
         target: {
@@ -92,7 +90,7 @@ const GoogleMap = ({
           }
         }
       }),
-    []
+    [onChange]
   )
 
   const toggleInputVisibility = useCallback(
@@ -103,20 +101,22 @@ const GoogleMap = ({
   return (
     <MapContainer>
       <Map
-        google={google}
-        zoom={
+        initialZoom={
           value && value.radius
             ? Math.log2((100 * Math.pow(2, 14)) / value.radius)
             : 14
         }
+        initialCenter={
+          center
+            ? center
+            : value && value.center && value.center.lat && value.center.lng
+            ? value.center
+            : { lat: 0, lng: 0 }
+        }
         onClick={onMapClick}
-        {...(value && value.center && value.center.lat && value.center.lng
-          ? { initialCenter: value.center }
-          : {})}
         zoomControl={false}
         mapTypeControl={false}
         streetViewControl={false}
-        centerAroundCurrentLocation={centerAroundCurrentLocation}
       >
         {value &&
           value.center &&
@@ -203,6 +203,10 @@ const GoogleMap = ({
   )
 }
 
-export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GOOGLE_API_KEY
-})(GoogleMap)
+const GoogleMapWithContext = props => (
+  <GoogleProvider apiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
+    <GoogleMap {...props} />
+  </GoogleProvider>
+)
+
+export default GoogleMapWithContext

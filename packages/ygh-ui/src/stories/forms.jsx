@@ -67,6 +67,8 @@ storiesOf("Forms.Fields.Inputs", module)
             disabled={boolean("Disabled", false)}
             resizeH={boolean("Resize horizontal", false)}
             error={boolean("Error", false) ? "Something went wrong!" : null}
+            value={value}
+            onChange={event => setValue(event.target.value)}
             component={DefaultInput}
           />
         </Paper.Section>
@@ -107,7 +109,7 @@ storiesOf("Forms.Fields.Inputs", module)
     )
   })
   .add("Geopoint input", () => {
-    const [value, setValue] = useState("")
+    const [value, setValue] = useState(null)
     return (
       <Paper>
         <Paper.Section>

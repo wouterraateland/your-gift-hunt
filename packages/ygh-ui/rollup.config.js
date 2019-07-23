@@ -22,19 +22,7 @@ const babelOptions = {
 }
 
 const commonjsOptions = {
-  include: /node_modules/,
-  namedExports: {
-    "google-maps-react": [
-      "GoogleApiWrapper",
-      "Marker",
-      "InfoWindow",
-      "HeatMap",
-      "Polygon",
-      "Polyline",
-      "Circle",
-      "Map"
-    ]
-  }
+  include: /node_modules/
 }
 
 const nodeResolveOptions = {
