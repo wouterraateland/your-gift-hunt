@@ -1,4 +1,10 @@
-import React, { cloneElement, useLayoutEffect, useRef, useState } from "react"
+import React, {
+  Children,
+  cloneElement,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react"
 import styled from "styled-components"
 import _ from "ygh-utils"
 
@@ -31,8 +37,9 @@ const SplitPane = ({
   ...otherProps
 }) => {
   const ref = useRef(null)
-  const paneProps = children.map(child =>
-    _.keep(["initialSize", "minSize", "maxSize"])(child.props)
+  const nonNullChildren = children.filter(child => child !== null)
+  const paneProps = nonNullChildren.map(child =>
+    _.keep(["initialSize", "minSize", "maxSize"])(child && child.props)
   )
   const [paneSizes, setPaneSizes] = useState([])
 
@@ -95,7 +102,7 @@ const SplitPane = ({
       split
     })
 
-  const panesWithResizers = children.reduce(
+  const panesWithResizers = nonNullChildren.reduce(
     (acc, child, i) =>
       acc.length
         ? [...acc, createResizer(i), enhanceChild(child, i)]

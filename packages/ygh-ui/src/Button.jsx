@@ -1,12 +1,6 @@
 import React, { forwardRef } from "react"
 import styled, { css } from "styled-components"
-import {
-  darken,
-  lighten,
-  opacify,
-  transparentize,
-  readableColor
-} from "polished"
+import { darken, opacify, transparentize, readableColor } from "polished"
 import _ from "ygh-utils"
 
 const ButtonContainer = styled.button.attrs(({ disabled }) => ({
@@ -57,10 +51,12 @@ const ButtonContainer = styled.button.attrs(({ disabled }) => ({
       : opacify(1)(props.theme.color[props.color] || props.theme.color.emphasis)
     const secondaryColor = props.disabled
       ? "#f2f2f2"
-      : readableColor(color, opacify(1)(props.theme.color.emphasis), "#fff")
-    const hoverColor = props.disabled
-      ? "#d4d4d4"
-      : readableColor(color, darken, lighten)(0.1)(color)
+      : readableColor(
+          darken(0.2)(color),
+          opacify(1)(props.theme.color.emphasis),
+          "#fff"
+        )
+    const hoverColor = props.disabled ? "#d4d4d4" : darken(0.1)(color)
 
     switch (props.importance) {
       case "primary":

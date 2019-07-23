@@ -18,7 +18,7 @@ import {
   Clear,
   FieldGroup,
   Field,
-  Select,
+  SelectOptions,
   Button
 } from "ygh-ui"
 import { Present } from "ygh-icons"
@@ -223,11 +223,12 @@ const NewGamePage = () => {
                 <>
                   <br />
                   <FieldGroup block>
-                    <Select
+                    <Field
                       {...select("accessType")}
                       options={accessOptions}
                       label="Protection type"
                       info=""
+                      component={SelectOptions}
                     />
                     {formState.values.accessType === ACCESS_TYPES.CODE && (
                       <>

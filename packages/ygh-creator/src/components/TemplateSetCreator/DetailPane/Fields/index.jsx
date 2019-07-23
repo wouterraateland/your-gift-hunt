@@ -1,7 +1,7 @@
 import React from "react"
 
 import TabbedSection from "components/TabbedSection"
-import FieldGroup from "./FieldGroup"
+import Field from "./Field"
 import Add from "./Add"
 
 const Fields = ({ template }) => (
@@ -11,7 +11,7 @@ const Fields = ({ template }) => (
     tabs={template.fields.map(field => ({
       id: field.id,
       label: field.name || <em>Nameless</em>,
-      content: <FieldGroup template={template} field={field} />
+      content: <Field template={template} field={field} />
     }))}
     actions={[
       {

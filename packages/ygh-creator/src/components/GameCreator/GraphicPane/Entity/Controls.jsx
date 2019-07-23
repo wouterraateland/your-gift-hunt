@@ -106,10 +106,6 @@ const Controls = ({ entity, parentRotation }) => {
       upcomingAction.payload.dependentStates.includes(state.id)
     )
 
-  if (mayBeDeleted) {
-    console.log(entity.name)
-  }
-
   return (
     <Container
       ref={ref}

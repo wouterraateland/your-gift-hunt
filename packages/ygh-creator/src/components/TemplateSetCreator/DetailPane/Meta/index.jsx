@@ -4,7 +4,7 @@ import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 import useTemplateInspector from "hooks/useTemplateInspector"
 
 import { Paper } from "ygh-ui"
-import { Item, Object as ObjectIcon, Container, Trigger } from "ygh-icons"
+import Icons from "ygh-icons"
 
 import Form from "components/TemplateSetCreator/DetailPane/Form"
 
@@ -92,7 +92,7 @@ const Meta = ({ template }) => {
                   value: "isItem",
                   label: (
                     <>
-                      <Item /> Item
+                      <Icons.Key /> Item
                     </>
                   )
                 },
@@ -100,7 +100,7 @@ const Meta = ({ template }) => {
                   value: "isObject",
                   label: (
                     <>
-                      <ObjectIcon /> Object
+                      <Icons.Cube /> Object
                     </>
                   )
                 },
@@ -108,7 +108,7 @@ const Meta = ({ template }) => {
                   value: "isContainer",
                   label: (
                     <>
-                      <Container /> Container
+                      <Icons.Container /> Container
                     </>
                   )
                 },
@@ -116,7 +116,7 @@ const Meta = ({ template }) => {
                   value: "isTrigger",
                   label: (
                     <>
-                      <Trigger /> Trigger
+                      <Icons.Trigger /> Trigger
                     </>
                   )
                 }

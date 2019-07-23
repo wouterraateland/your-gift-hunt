@@ -11,9 +11,6 @@ const DetailPaneBackground = styled.div`
   width: 25em;
   padding: 4.5em 0 1em;
   max-width: 100%;
-  border-left: 1px solid #0002;
-
-  transform: translate3D(${props => (props.isOpen ? 0 : 100)}%, 0, 0);
 
   background-color: #f2f2f2;
   ${props =>
@@ -26,10 +23,6 @@ const DetailPaneBackground = styled.div`
         transparent
       );
     `}
-
-  transition: transform ease-in-out 0.3s;
-
-  will-change: transform;
 `
 
 export default DetailPaneBackground

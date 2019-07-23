@@ -8,7 +8,7 @@ import useGameMutations from "hooks/useGameMutations"
 
 import { useAsync } from "ygh-hooks"
 
-import { Button, Message, Options, VSpace } from "ygh-ui"
+import { Button, Message, VSpace } from "ygh-ui"
 
 import EntityTag from "components/Primitives/EntityTag"
 import Transition from "components/Primitives/Transition"
@@ -106,7 +106,7 @@ const EditableUnlockConditions = ({ entity, state }) => {
         <DefaultUnlockConditions entity={entity} />
       )}
       <VSpace.Small />
-      <Options
+      {/* <Options
         closeOnClick
         components={{
           Option: ({ data }) => (
@@ -119,7 +119,7 @@ const EditableUnlockConditions = ({ entity, state }) => {
         onClose={onOptionsClose}
         onOptionClick={onOptionClick}
         isVisible={optionsVisible}
-      />
+      /> */}
       <Button
         disabled={isLoading}
         onClick={onAddButtonClick}

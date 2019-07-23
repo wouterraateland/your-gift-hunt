@@ -8,6 +8,8 @@ import { useDebounce } from "ygh-hooks"
 
 import { Link } from "@reach/router"
 import { Wrapper, Paper, Field, Button, Loader } from "ygh-ui"
+import Icons from "ygh-icons"
+
 import Layout from "layouts/Overview"
 import GamesOverview from "components/GamesOverview"
 
@@ -49,6 +51,7 @@ const OverviewPage = () => {
             <Field
               style={{ float: "left" }}
               type="search"
+              lead={<Icons.Loop />}
               value={query}
               onChange={event => setQuery(event.target.value)}
               placeholder="Search games"

@@ -1,4 +1,5 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
+import { darken } from "polished"
 
 export const MenuContainer = styled.div`
   position: relative;
@@ -6,8 +7,8 @@ export const MenuContainer = styled.div`
   vertical-align: middle;
 `
 
-export const MenuItem = styled.div.attrs(() => ({
-  tabIndex: 0
+export const MenuItem = styled.div.attrs(({ disabled }) => ({
+  tabIndex: disabled ? -1 : 0
 }))`
   cursor: pointer;
 
@@ -18,16 +19,19 @@ export const MenuItem = styled.div.attrs(() => ({
   text-align: left;
   font-weight: bold;
 
-  &:nth-child(2n) {
-    background: #0001;
-  }
-
-  &:hover {
-    background: #0002;
-  }
-
-  color: ${props =>
-    (props.color && props.theme.color[props.color]) || "currentColor"};
+  ${props =>
+    props.disabled
+      ? css`
+          color: #d4d4d4;
+        `
+      : css`
+          color: ${props.theme.color[props.color || "text"]};
+          &:hover {
+            color: ${props.color
+              ? darken(0.1)(props.theme.color[props.color])
+              : props.theme.color.emphasis};
+          }
+        `}
 `
 
 const MenuToggle = styled.div`

@@ -5,8 +5,7 @@ import { navigate } from "@reach/router"
 
 import useAuth from "hooks/useAuth"
 
-import { Edit } from "ygh-icons"
-import { Present } from "ygh-icons"
+import Icons from "ygh-icons"
 
 import MoreActions from "./MoreActions"
 
@@ -24,7 +23,7 @@ const Container = styled.div`
   }
 `
 
-const StyledPresent = styled(Present)`
+const StyledPresent = styled(Icons.Present)`
   position: absolute;
   left: 50%;
   top: 50%;
@@ -84,9 +83,8 @@ const EditProject = styled.span`
   position: relative;
 
   display: inline-block;
-  width: 2em;
-  height: 2em;
-  padding: 0.25em 0.675em;
+  padding: 0.25em;
+
   color: ${props => props.theme.color.text};
 
   ${Container}:hover & {
@@ -98,7 +96,7 @@ const Actions = ({ game }) => (
   <ActionsContainer>
     <MoreActions game={game} />
     <EditProject>
-      <Edit size={1.5} />
+      <Icons.Caret direction="right" size={1.5} />
     </EditProject>
   </ActionsContainer>
 )

@@ -7,7 +7,7 @@ import { useAsync } from "ygh-hooks"
 
 import { components } from "react-select"
 
-import { FieldGroup, Select, Message } from "ygh-ui"
+import { Field, FieldGroup, SelectOptions } from "ygh-ui"
 import InformationSlotTag from "components/Primitives/InformationSlotTag"
 
 const Option = ({ data, ...otherProps }) => (
@@ -88,7 +88,7 @@ const Display = ({ field }) => {
 
   return (
     <FieldGroup block>
-      <Select
+      <Field
         block
         components={{
           Option,
@@ -103,8 +103,9 @@ const Display = ({ field }) => {
         onChange={onChange}
         placeholder="Player should find out by itself"
         disabled={isLoading}
+        error={error}
+        component={SelectOptions}
       />
-      {error && <Message.Error>{error.message}</Message.Error>}
     </FieldGroup>
   )
 }

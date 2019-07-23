@@ -1,16 +1,16 @@
 import React from "react"
 
-import * as Icon from "ygh-icons"
+import Icons from "ygh-icons"
 
 import TypesContainer from "./TypesContainer"
 import TypeEntry from "./TypeEntry"
 
 const types = [
-  { name: "challenge", icon: Icon.Challenge },
-  { name: "container", icon: Icon.Container },
-  { name: "object", icon: Icon.Object },
-  // { name: "item", icon: Icon.Item },
-  { name: "trigger", icon: Icon.Trigger }
+  { name: "challenge", icon: Icons.Piece },
+  { name: "container", icon: Icons.Container },
+  { name: "object", icon: Icons.Cube },
+  // { name: "item", icon: Icons.Item },
+  { name: "trigger", icon: Icons.Trigger }
 ]
 
 const Types = ({ onTypeClick, selectedType }) => (

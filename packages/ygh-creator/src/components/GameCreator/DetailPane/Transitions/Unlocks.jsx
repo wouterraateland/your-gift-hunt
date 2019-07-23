@@ -9,7 +9,7 @@ import useGameMutations from "hooks/useGameMutations"
 
 import { useAsync } from "ygh-hooks"
 
-import { ActionButton, Button, Message, Options } from "ygh-ui"
+import { ActionButton, Button, Message } from "ygh-ui"
 import { Bin } from "ygh-icons"
 import ClickableEntityTag from "components/GameCreator/ClickableEntityTag"
 import ClickableStateTag from "components/GameCreator/ClickableStateTag"
@@ -110,7 +110,7 @@ const Unlocks = ({ from, to }) => {
       ) : (
         <Em>Nothing</Em>
       )}
-      <Options
+      {/* <Options
         closeOnClick
         components={{
           Option: ({ data }) => (
@@ -128,7 +128,7 @@ const Unlocks = ({ from, to }) => {
         onClose={onOptionsClose}
         onOptionClick={onOptionClick}
         isVisible={optionsVisible}
-      />
+      /> */}
       <Button
         disabled={isLoading}
         onClick={onAddButtonClick}

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from "react"
+import React, { memo, useEffect } from "react"
 import { navigate } from "@reach/router"
 
 import { PanZoomEditorProvider } from "contexts/PanZoomEditor"
@@ -17,16 +17,16 @@ import { GameMutationsProvider } from "contexts/GameMutations"
 import { EditorProvider } from "contexts/Editor"
 import { InspectorProvider } from "contexts/Inspector"
 
-import { useClickOutside } from "ygh-hooks"
 import useGame from "hooks/useGame"
-import useInspector from "hooks/useInspector"
 import useEditor from "hooks/useEditor"
 
 import useEntityPositionUpdates from "hooks/useEntityPositionUpdates"
 import useEntityAreaUpdates from "hooks/useEntityAreaUpdates"
 
 import Layout from "layouts/GameCreator"
+import { SplitPane } from "ygh-ui"
 
+import EntityExplorer from "components/GameCreator/EntityExplorer"
 import EditorPane from "components/GameCreator/EditorPane"
 import GraphicPane from "components/GameCreator/GraphicPane"
 import DetailPane from "components/GameCreator/DetailPane"
@@ -38,25 +38,17 @@ import SettingsModal from "components/modals/GameSettings"
 import PublishModal from "components/modals/Publish"
 import PublishedModal from "components/modals/Published"
 
-const ClosableDetailPane = () => {
-  const detailPane = useRef(null)
-  const { closeInspector } = useInspector()
-
-  useClickOutside({
-    ref: detailPane,
-    onClickOutside: closeInspector
-  })
-
-  return <DetailPane ref={detailPane} />
+const InfoSwitch = ({ selectedPane }) => {
+  return null
 }
 
-const Creator = memo(() => {
+const MainPane = memo(() => {
   useEntityPositionUpdates()
   useEntityAreaUpdates()
 
   const { selectedView } = useEditor()
   return (
-    <Layout>
+    <>
       {selectedView === "logic" && <EditorPane />}
       {selectedView === "graphic" && (
         <>
@@ -66,12 +58,62 @@ const Creator = memo(() => {
       )}
       <Toolbox />
       <ViewSwitch />
-      <ClosableDetailPane />
-    </Layout>
+    </>
   )
 })
 
-const CreatorWithModal = props => {
+const getInfoComponent = (selectedPane, INFO_TYPES) => {
+  switch (selectedPane) {
+    case INFO_TYPES.INFO:
+      return SettingsModal
+    case INFO_TYPES.EXPLORE:
+    default:
+      return EntityExplorer
+  }
+}
+
+const getActionComponent = (upcomingAction, ACTION_TYPES) => {
+  switch (upcomingAction) {
+    case ACTION_TYPES.PUBLISH_GAME:
+      return PublishModal
+    case ACTION_TYPES.SHARE_GAME:
+      return PublishedModal
+    default:
+      return DetailPane
+  }
+}
+
+const Creator = () => {
+  const { selectedPane, upcomingAction, INFO_TYPES, ACTION_TYPES } = useEditor()
+
+  const InfoComponent = getInfoComponent(selectedPane, INFO_TYPES)
+  const ActionComponent = getActionComponent(upcomingAction, ACTION_TYPES)
+
+  return (
+    <Layout>
+      <SplitPane split="vertical">
+        <SplitPane.Pane minSize={48} maxSize={48} initialSize={48}>
+          <InfoSwitch selectedPane={selectedPane} />
+        </SplitPane.Pane>
+        {InfoComponent && (
+          <SplitPane.Pane initialSize={256}>
+            <InfoComponent />
+          </SplitPane.Pane>
+        )}
+        <SplitPane.Pane>
+          <MainPane />
+        </SplitPane.Pane>
+        {ActionComponent && (
+          <SplitPane.Pane initialSize={256} maxSize={384}>
+            <ActionComponent />
+          </SplitPane.Pane>
+        )}
+      </SplitPane>
+    </Layout>
+  )
+}
+
+const CreatorWithModal = () => {
   const { gameExists } = useGame()
 
   useEffect(() => {
@@ -80,17 +122,10 @@ const CreatorWithModal = props => {
     }
   }, [gameExists])
 
-  return gameExists ? (
-    <>
-      <Creator />
-      {props["*"] === "settings" && <SettingsModal />}
-      {props["*"] === "publish" && <PublishModal />}
-      {props["*"] === "published" && <PublishedModal />}
-    </>
-  ) : null
+  return gameExists ? <Creator /> : null
 }
 
-const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => (
+const CreatorPage = ({ creatorSlug, gameSlug }) => (
   <PanZoomEditorProvider>
     <PanZoomGraphicProvider>
       <SaveStateProvider>
@@ -106,7 +141,7 @@ const CreatorPage = ({ creatorSlug, gameSlug, ...otherProps }) => (
                           <GameMutationsProvider>
                             <EditorProvider>
                               <InspectorProvider>
-                                <CreatorWithModal {...otherProps} />
+                                <CreatorWithModal />
                               </InspectorProvider>
                             </EditorProvider>
                           </GameMutationsProvider>

@@ -4,17 +4,21 @@ import { opacify, transparentize } from "polished"
 
 const theme = {
   color: {
+    caption: "#0007",
     text: "#0009",
     emphasis: "#000d",
     primary: "#3f51b5",
     secondary: "#ffd65a",
-    error: "#d34d4e",
-    warning: "#f7a600",
-    success: "#41ac57"
+    error: "#e02d51",
+    warning: "#f9673e",
+    success: "#3dc169"
   },
+  borderWidth: "2px",
   borderRadius: "0.25em",
   boxShadow: {
-    medium: "0 0.5rem 1.5rem -.5rem #0004"
+    small: "0 0.25rem 0.75rem -0.25rem #0004",
+    medium: "0 0.5rem 1.5rem -0.5rem #0006",
+    large: "0 1rem 3rem -1rem #0009"
   },
   columns: {
     count: 12,
@@ -22,7 +26,7 @@ const theme = {
   },
   font: {
     copy: "Montserrat, sans-serif",
-    heading: '"Playfair Display", serif'
+    heading: "Montserrat, sans-serif"
   }
 }
 

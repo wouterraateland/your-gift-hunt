@@ -5,7 +5,7 @@ import { navigate } from "@reach/router"
 
 import useAuth from "hooks/useAuth"
 
-import { Edit } from "ygh-icons"
+import Icons from "ygh-icons"
 
 import MoreActions from "./MoreActions"
 
@@ -74,7 +74,7 @@ const Actions = ({ templateSet }) => (
   <ActionsContainer>
     <MoreActions templateSet={templateSet} />
     <EditTemplateSet>
-      <Edit size={1.5} />
+      <Icons.Pen size={1.5} />
     </EditTemplateSet>
   </ActionsContainer>
 )

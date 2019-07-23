@@ -1,5 +1,5 @@
 import React from "react"
-import * as Icon from "ygh-icons"
+import Icons from "ygh-icons"
 
 const EntityTypeIcon = ({
   isItem,
@@ -9,15 +9,15 @@ const EntityTypeIcon = ({
   ...otherProps
 }) =>
   isContainer ? (
-    <Icon.Container {...otherProps} />
+    <Icons.Container {...otherProps} />
   ) : isItem ? (
-    <Icon.Item {...otherProps} />
+    <Icons.Key {...otherProps} />
   ) : isObject ? (
-    <Icon.Object {...otherProps} />
+    <Icons.Cube {...otherProps} />
   ) : isTrigger ? (
-    <Icon.Trigger {...otherProps} />
+    <Icons.Trigger {...otherProps} />
   ) : (
-    <Icon.Challenge {...otherProps} />
+    <Icons.Piece {...otherProps} />
   )
 
 export default EntityTypeIcon

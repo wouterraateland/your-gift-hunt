@@ -13,10 +13,7 @@ const Blur = ({ entity }) => {
     <Action
       title="Inspect entity"
       icon={Icons.Loop}
-      onAct={() => {
-        console.log("inspecting....")
-        inspectEntity(entity.id)
-      }}
+      onAct={() => inspectEntity(entity.id)}
     />
   )
 }

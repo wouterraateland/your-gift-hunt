@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
 import { useDebounce } from "ygh-hooks"
-import { Eye, FieldGroup, Field, Paper, ToolTip } from "ygh-ui"
+import { FieldGroup, Field, Paper, ToolTip } from "ygh-ui"
+import Icons from "ygh-icons"
 import _ from "ygh-utils"
 
 import useGameMutations from "hooks/useGameMutations"
@@ -31,9 +32,9 @@ const Property = ({ field }) => {
   return (
     <>
       <Paper.Title as="h3">
-        <Eye isOpen={!field.isSecret}>
+        <Icons.Eye isOpen={!field.isSecret}>
           <ToolTip>{field.isSecret ? "Hidden" : "Visible"} for player</ToolTip>
-        </Eye>
+        </Icons.Eye>
         {field.name}
       </Paper.Title>
       {field.description && <Blockquote>{field.description}</Blockquote>}

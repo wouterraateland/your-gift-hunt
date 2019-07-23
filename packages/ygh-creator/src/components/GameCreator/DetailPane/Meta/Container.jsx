@@ -6,7 +6,7 @@ import { useAsync } from "ygh-hooks"
 
 import { components } from "react-select"
 
-import { FieldGroup, Message, Select } from "ygh-ui"
+import { Field, FieldGroup, SelectOptions } from "ygh-ui"
 import EntityTag from "components/Primitives/EntityTag"
 import ClickableEntityTag from "components/GameCreator/ClickableEntityTag"
 
@@ -71,7 +71,7 @@ const Container = ({ entity }) => {
 
   return (
     <FieldGroup block>
-      <Select
+      <Field
         block
         components={{
           Option,
@@ -84,8 +84,9 @@ const Container = ({ entity }) => {
         value={entity.container ? entity.container.id : null}
         onChange={onChange}
         disabled={isLoading}
+        error={error}
+        component={SelectOptions}
       />
-      {error && <Message.Error>{error.message}</Message.Error>}
     </FieldGroup>
   )
 }

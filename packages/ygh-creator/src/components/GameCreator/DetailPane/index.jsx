@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 
 import useGameQueries from "hooks/useGameQueries"
 import useInspector from "hooks/useInspector"
@@ -18,7 +18,8 @@ import UnlockConditions from "./UnlockConditions"
 import Background from "./Background"
 import CloseButton from "./CloseButton"
 
-const DetailPane = forwardRef((_, ref) => {
+const DetailPane = () => {
+  const ref = useRef(null)
   const { isOpen, inspectedEntity, inspectedState } = useInspector()
   const { getEntityById, getStateById } = useGameQueries()
 
@@ -51,6 +52,6 @@ const DetailPane = forwardRef((_, ref) => {
       <CloseButton />
     </Background>
   )
-})
+}
 
 export default DetailPane

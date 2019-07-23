@@ -12,7 +12,16 @@ import { useFormState } from "react-use-form-state"
 import { useQuery, useApolloClient } from "react-apollo-hooks"
 
 import Modal from "containers/Modal"
-import { Button, Column, FieldGroup, Float, Field, Paper, Row, Select } from "ygh-ui"
+import {
+  Button,
+  Column,
+  FieldGroup,
+  Float,
+  Field,
+  Paper,
+  Row,
+  SelectOptions
+} from "ygh-ui"
 import StatusMessage from "components/StatusMessage"
 import ImageInput from "components/ImageInput"
 
@@ -211,12 +220,13 @@ const SettingsModal = () => {
                   />
                 </FieldGroup>
                 <FieldGroup block>
-                  <Select
+                  <Field
                     block
                     {...selectMultiple("entityTemplateSets")}
                     isMulti
                     options={templateSetOptions}
                     label="Included template sets"
+                    component={SelectOptions}
                   />
                 </FieldGroup>
               </Column>
@@ -225,11 +235,12 @@ const SettingsModal = () => {
               <>
                 <h2>Privacy</h2>
                 <FieldGroup block>
-                  <Select
+                  <Field
                     {...select("accessType")}
                     options={accessOptions}
                     label="Protection type"
                     info=""
+                    component={SelectOptions}
                   />
                 </FieldGroup>
                 {formState.values.accessType === ACCESS_TYPES.CODE && (

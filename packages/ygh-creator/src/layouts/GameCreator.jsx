@@ -119,8 +119,9 @@ const CreatorLayout = ({ children }) => {
               importance="primary"
               size="small"
               onClick={testGame}
+              lead={<Icons.Play />}
             >
-              <Icons.Play /> Test
+              Test
             </Button>
           </Nav.Item>
           <Nav.Item>
@@ -129,6 +130,7 @@ const CreatorLayout = ({ children }) => {
               importance="secondary"
               size="small"
               as={Link}
+              lead={<Icons.Share />}
               to={game.publishedAt ? "published" : "publish"}
             >
               {game.publishedAt ? "Share" : "Publish"}
