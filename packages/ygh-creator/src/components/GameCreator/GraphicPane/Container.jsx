@@ -55,7 +55,8 @@ const GraphicPane = ({ children }) => {
       {...panZoomHandlers}
       style={{
         backgroundSize: `${2 * zoom}em ${2 * zoom}em`,
-        backgroundPosition: `${x}px ${y}px`
+        backgroundPosition: `${x}px ${y}px`,
+        height: "100%"
       }}
     >
       <PanContainer style={{ transform }}>{children}</PanContainer>

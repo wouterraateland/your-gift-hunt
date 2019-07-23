@@ -4,7 +4,7 @@ import { HORIZONTAL } from "./constants"
 
 import { useGetSet } from "ygh-hooks"
 
-const ResizerContainer = styled.div`
+const DividerContainer = styled.div`
   position: relative;
   z-index: 1;
 
@@ -23,7 +23,7 @@ const ResizerContainer = styled.div`
   }
 `
 
-const HorizontalResizerContainer = styled(ResizerContainer)`
+const HorizontalDividerContainer = styled(DividerContainer)`
   cursor: row-resize;
   height: 1px;
 
@@ -35,7 +35,7 @@ const HorizontalResizerContainer = styled(ResizerContainer)`
   }
 `
 
-const VerticalResizerContainer = styled(ResizerContainer)`
+const VerticalDividerContainer = styled(DividerContainer)`
   cursor: col-resize;
   width: 1px;
 
@@ -47,7 +47,7 @@ const VerticalResizerContainer = styled(ResizerContainer)`
   }
 `
 
-const Resizer = ({ split, onResizeStart, onResize, onResizeEnd }) => {
+const Divider = ({ split, onResizeStart, onResize, onResizeEnd }) => {
   const [getPrevPosition, setPrevPosition] = useGetSet(null)
 
   const start = useCallback(
@@ -100,9 +100,9 @@ const Resizer = ({ split, onResizeStart, onResize, onResizeEnd }) => {
   }, [onResizeStart, onResize, onResizeEnd])
 
   const Container =
-    split === HORIZONTAL ? HorizontalResizerContainer : VerticalResizerContainer
+    split === HORIZONTAL ? HorizontalDividerContainer : VerticalDividerContainer
 
   return <Container onMouseDown={onMouseDown} onTouchStart={onTouchStart} />
 }
 
-export default Resizer
+export default Divider
