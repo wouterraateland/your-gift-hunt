@@ -56,9 +56,9 @@ const GameCreator = () => {
   return (
     <Layout>
       <InfoSwitch />
-      <SplitPane initialSizeFirst={256}>
+      <SplitPane primary="first" initialSize={256}>
         {InfoComponent && <InfoComponent />}
-        <SplitPane initialSizeSecond={256} maxSizeSecond={384}>
+        <SplitPane primary="second" initialSize={256} maxSize={384}>
           <MainPane />
           {ActionComponent && <ActionComponent />}
         </SplitPane>

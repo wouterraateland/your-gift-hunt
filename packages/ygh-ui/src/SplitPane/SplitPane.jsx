@@ -8,7 +8,7 @@ import React, {
 import styled from "styled-components"
 import _ from "ygh-utils"
 
-import { HORIZONTAL } from "./constants"
+import { HORIZONTAL, FIRST, SECOND } from "./constants"
 import Pane from "./Pane"
 import Divider from "./Divider"
 
@@ -24,12 +24,10 @@ const Container = styled.div`
 const SplitPane = ({
   split,
   children,
-  minSizeFirst = 0,
-  maxSizeFirst = Infinity,
-  initialSizeFirst,
-  minSizeSecond = 0,
-  maxSizeSecond = Infinity,
-  initialSizeSecond,
+  minSize = 0,
+  maxSize = Infinity,
+  initialSize,
+  primary = FIRST,
   onResizeStart = _.noop,
   onResize = _.noop,
   onResizeEnd = _.noop,
@@ -51,8 +49,7 @@ const SplitPane = ({
   const ref = useRef(null)
   const prevAvailableSize = useRef(null)
 
-  const [paneSizes, setPaneSizes] = useState([null, null])
-  const sizeSet = paneSizes[0] !== null && paneSizes[1] !== null
+  const [paneSize, setPaneSize] = useState(initialSize || "50%")
 
   const getAvailableSize = useCallback(() => {
     const container = ref.current
@@ -62,65 +59,36 @@ const SplitPane = ({
   }, [])
 
   const resolveConstraints = useCallback(
-    ([firstSize, secondSize]) => {
-      if (firstSize < minSizeFirst) {
-        return [minSizeFirst, secondSize - (minSizeFirst - firstSize)]
-      }
-      if (secondSize < minSizeSecond) {
-        return [firstSize - (minSizeSecond - secondSize), minSizeSecond]
-      }
-      if (firstSize > maxSizeFirst) {
-        return [maxSizeFirst, secondSize + (firstSize - maxSizeFirst)]
-      }
-      if (secondSize > maxSizeSecond) {
-        return [firstSize + (secondSize - maxSizeSecond), maxSizeSecond]
-      }
-      return [Math.round(firstSize), Math.round(secondSize)]
-    },
-    [minSizeFirst, maxSizeFirst, minSizeSecond, maxSizeSecond]
+    paneSize =>
+      _.clamp(minSize, maxSize)(_.clamp(0, getAvailableSize())(paneSize)),
+    [minSize, maxSize]
   )
 
   const onDividerChange = useCallback(
     firstSize => {
       const availableSize = getAvailableSize()
 
-      const paneSizes = resolveConstraints([
-        firstSize,
-        availableSize - firstSize
-      ])
+      const paneSize = resolveConstraints(
+        primary === FIRST ? firstSize : availableSize - firstSize
+      )
 
-      setPaneSizes(paneSizes)
-      onResize(paneSizes)
+      setPaneSize(paneSize)
+      onResize(paneSize)
     },
-    [onResize, resolveConstraints]
+    [onResize, resolveConstraints, primary]
   )
 
   useLayoutEffect(() => {
-    if (first && second && !sizeSet) {
-      const availableSize = getAvailableSize()
-
-      setPaneSizes(
-        resolveConstraints(
-          initialSizeFirst && initialSizeSecond
-            ? [initialSizeFirst && initialSizeSecond]
-            : initialSizeFirst
-            ? [initialSizeFirst, availableSize - initialSizeFirst]
-            : initialSizeSecond
-            ? [availableSize - initialSizeSecond, initialSizeSecond]
-            : [availableSize / 2, availableSize / 2]
-        )
-      )
+    if (first && second && isNaN(paneSize) && ref.current) {
+      setPaneSize(resolveConstraints(initialSize || getAvailableSize() / 2))
     }
-  }, [first, second, sizeSet, resolveConstraints])
+  }, [first, second, paneSize, resolveConstraints])
 
   const checkResize = useCallback(() => {
     const availableSize = getAvailableSize()
     if (prevAvailableSize.current !== availableSize) {
       if (prevAvailableSize.current !== null) {
-        const scale = availableSize / prevAvailableSize.current
-        setPaneSizes(paneSizes =>
-          resolveConstraints([paneSizes[0] * scale, paneSizes[1] * scale])
-        )
+        setPaneSize(resolveConstraints)
       }
       prevAvailableSize.current = availableSize
     }
@@ -135,16 +103,16 @@ const SplitPane = ({
 
   return (
     <ContainerComponent ref={ref} split={split} {...otherProps}>
-      {first && (sizeSet || !second) && (
+      {first && (!isNaN(paneSize) || !second) && (
         <PaneComponent
-          size={second ? paneSizes[0] : "100%"}
+          size={second && primary === FIRST ? paneSize : null}
           split={split}
           {...firstPaneProps}
         >
           {first}
         </PaneComponent>
       )}
-      {first && second && sizeSet && (
+      {first && second && !isNaN(paneSize) && (
         <DividerComponent
           containerRef={ref}
           split={split}
@@ -154,9 +122,9 @@ const SplitPane = ({
           {...dividerProps}
         />
       )}
-      {second && (sizeSet || !first) && (
+      {second && (!isNaN(paneSize) || !first) && (
         <PaneComponent
-          size={first ? paneSizes[1] : "100%"}
+          size={first && primary === SECOND ? paneSize : null}
           split={split}
           {...secondPaneProps}
         >
