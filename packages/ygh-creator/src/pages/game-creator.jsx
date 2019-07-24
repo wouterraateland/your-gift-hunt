@@ -55,14 +55,12 @@ const GameCreator = () => {
 
   return (
     <Layout>
-      <SplitPane split="vertical" minSizeFirst={48} maxSizeFirst={48}>
-        <InfoSwitch />
-        <SplitPane initialSizeFirst={256}>
-          {InfoComponent && <InfoComponent />}
-          <SplitPane initialSizeSecond={256} maxSizeSecond={384}>
-            <MainPane />
-            {ActionComponent && <ActionComponent />}
-          </SplitPane>
+      <InfoSwitch />
+      <SplitPane initialSizeFirst={256}>
+        {InfoComponent && <InfoComponent />}
+        <SplitPane initialSizeSecond={256} maxSizeSecond={384}>
+          <MainPane />
+          {ActionComponent && <ActionComponent />}
         </SplitPane>
       </SplitPane>
     </Layout>

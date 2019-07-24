@@ -16,11 +16,12 @@ const Header = styled.div`
   padding: 0.5rem;
 `
 
-const Title = styled.span`
+const Title = styled.strong`
   display: block;
 
   line-height: 1;
   text-transform: uppercase;
+  color: ${props => props.theme.color.caption};
 `
 
 const Body = styled.div`

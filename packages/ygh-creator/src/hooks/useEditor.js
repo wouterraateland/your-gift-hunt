@@ -25,8 +25,13 @@ export const useEditorProvider = () => {
   )
 
   const selectTab = useCallback(v => {
-    _selectTab(v)
-    window.localStorage.setItem("tabPreference", v)
+    _selectTab(selectedTab => {
+      const newSelectedTab = typeof v === "function" ? v(selectedTab) : v
+
+      window.localStorage.setItem("tabPreference", newSelectedTab)
+
+      return newSelectedTab
+    })
   }, [])
 
   const [selectedView, _selectView] = useState(
