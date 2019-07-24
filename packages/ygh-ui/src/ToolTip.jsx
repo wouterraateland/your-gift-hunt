@@ -27,7 +27,7 @@ const ToolTip = styled.div`
 
 const MARGIN = 8
 
-export default props => {
+export default ({ direction = "vertical", ...props }) => {
   const toolTipRoot = document.querySelector("#tooltip-root")
 
   const container = useRef(null)
@@ -70,9 +70,19 @@ export default props => {
 
   const wWidth = typeof window === "undefined" ? 0 : window.innerWidth
   const wHeight = typeof window === "undefined" ? 0 : window.innerHeight
-  const isBottom = position.y < wHeight / 2
   const width = toolTip.current ? toolTip.current.offsetWidth : 0
   const height = toolTip.current ? toolTip.current.offsetHeight : 0
+
+  const _direction =
+    direction === "vertical"
+      ? position.y < wHeight / 2
+        ? "bottom"
+        : "top"
+      : direction === "horizontal"
+      ? position.x < wWidth / 2
+        ? "right"
+        : "left"
+      : direction
 
   return (
     <div ref={container}>
@@ -82,14 +92,23 @@ export default props => {
             {...props}
             ref={toolTip}
             style={{
-              left: _.clamp(MARGIN, wWidth - (width + MARGIN))(
-                position.x - width / 2
-              ),
-              top: isBottom
-                ? position.y + MARGIN
-                : position.y - (height + MARGIN)
+              left:
+                _direction === "left"
+                  ? position.x - (width + MARGIN)
+                  : _direction === "right"
+                  ? position.x + MARGIN
+                  : _.clamp(MARGIN, wWidth - (width + MARGIN))(
+                      position.x - width / 2
+                    ),
+              top:
+                _direction === "bottom"
+                  ? position.y + MARGIN
+                  : _direction === "top"
+                  ? position.y - (height + MARGIN)
+                  : _.clamp(MARGIN, wHeight - (height + MARGIN))(
+                      position.y - height / 2
+                    )
             }}
-            isBottom={isBottom}
           />,
           toolTipRoot
         )}

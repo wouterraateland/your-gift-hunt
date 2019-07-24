@@ -47,46 +47,42 @@ const VerticalDividerContainer = styled(DividerContainer)`
   }
 `
 
-const Divider = ({
-  containerRef,
-  split,
-  onChangeStart,
-  onChange,
-  onChangeEnd
-}) => {
-  const [getChangeState, setChangeState] = useGetSet(false)
+const Divider = ({ split, onResizeStart, onResize, onResizeEnd }) => {
+  const [getPrevPosition, setPrevPosition] = useGetSet(null)
 
-  const start = useCallback(() => {
-    setChangeState(true)
-    onChangeStart()
-  }, [onChangeStart])
+  const start = useCallback(
+    ({ pageX, pageY }) => {
+      setPrevPosition({ pageX, pageY })
+      onResizeStart()
+    },
+    [onResizeStart]
+  )
 
   const move = useCallback(
     ({ pageX, pageY }) => {
-      if (getChangeState()) {
-        const container = containerRef.current
-        const rect = container.getClientRects()[0]
-
-        onChange(split === HORIZONTAL ? pageY - rect.y : pageX - rect.x)
+      const prevPosition = getPrevPosition()
+      if (prevPosition) {
+        setPrevPosition({ pageX, pageY })
+        onResize({
+          dx: pageX - prevPosition.pageX,
+          dy: pageY - prevPosition.pageY
+        })
       }
     },
-    [onChange, split]
+    [onResize]
   )
 
   const end = useCallback(() => {
-    setChangeState(false)
-    onChangeEnd()
-  }, [onChangeEnd])
+    setPrevPosition(null)
+    onResizeEnd()
+  }, [onResizeEnd])
 
   const onMouseDown = start
   const onMouseMove = move
   const onMouseUp = end
 
-  const onTouchStart = start
-  const onTouchMove = useCallback(event => move(event.touches[0]), [
-    onChange,
-    split
-  ])
+  const onTouchStart = useCallback(event => start(event.touches[0]), [])
+  const onTouchMove = useCallback(event => move(event.touches[0]), [])
   const onTouchEnd = end
 
   useEffect(() => {
@@ -101,7 +97,7 @@ const Divider = ({
       window.removeEventListener("touchmove", onTouchMove)
       window.removeEventListener("touchend", onTouchEnd)
     }
-  }, [onChangeStart, onChange, onChangeEnd, split])
+  }, [onResizeStart, onResize, onResizeEnd])
 
   const Container =
     split === HORIZONTAL ? HorizontalDividerContainer : VerticalDividerContainer

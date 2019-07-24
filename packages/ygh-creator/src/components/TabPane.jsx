@@ -8,13 +8,17 @@ const Container = styled.div`
 `
 const Tabs = styled.div`
   display: flex;
-  background: #d4d4d4;
+  background: #f2f2f2;
   border-bottom: 1px solid #0002;
 `
 const Tab = styled.div`
   cursor: pointer;
 
-  padding: 0.5em;
+  padding: 0.5rem;
+
+  font-size: 1rem;
+  line-height: 1rem;
+
   color: ${props => props.theme.color.text};
 
   &:hover {
@@ -24,7 +28,7 @@ const Tab = styled.div`
   ${props =>
     props.isSelected &&
     css`
-      background-color: #f2f2f2;
+      background-color: #f9f9f9;
       color: ${props.theme.color.emphasis};
     `}
 `

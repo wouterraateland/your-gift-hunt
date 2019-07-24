@@ -120,17 +120,15 @@ storiesOf("Components", module)
   ))
   .add("Split Pane", () => (
     <FullHeight>
-      <SplitPane split="vertical">
-        <SplitPane.Pane initialSize={400}>A</SplitPane.Pane>
-        <SplitPane.Pane minSize={50}>
-          <SplitPane split="horizontal">
-            <SplitPane.Pane minSize={100} maxSize={200}>
-              B
-            </SplitPane.Pane>
-            <SplitPane.Pane>C</SplitPane.Pane>
+      <SplitPane split="vertical" initialSizeFirst={256}>
+        {boolean("Show left pane", false) && <strong>Left pane</strong>}
+        <SplitPane split="vertical" initialSizeSecond={256} maxSizeSecond={384}>
+          <SplitPane split="horizontal" minSizeFirst={100} maxSizeFirst={200}>
+            <strong>B</strong>
+            <strong>C</strong>
           </SplitPane>
-        </SplitPane.Pane>
-        <SplitPane.Pane initialSize={100}>D</SplitPane.Pane>
+          {boolean("Show inspector", false) && <strong>Inspector pane</strong>}
+        </SplitPane>
       </SplitPane>
     </FullHeight>
   ))

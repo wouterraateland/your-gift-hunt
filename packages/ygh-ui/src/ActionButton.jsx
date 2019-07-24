@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { transparentize } from "polished"
 
 const ActionButton = styled.button`
   cursor: pointer;
@@ -8,10 +9,9 @@ const ActionButton = styled.button`
   height: 1em;
   padding: 0;
   border: none;
+  border-radius: 100%;
 
   line-height: 1;
-  font-size: smaller;
-  vertical-align: middle;
 
   background: transparent;
   color: ${props => props.theme.color.text};
@@ -21,6 +21,23 @@ const ActionButton = styled.button`
   &:hover {
     color: ${props =>
       props.theme.color[props.color] || props.theme.color.emphasis};
+  }
+
+  & + & {
+    margin-left: 0.5em;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px
+      ${props =>
+        transparentize(0.5)(
+          props.theme.color[props.color] || props.theme.color.emphasis
+        )};
+    background-color: ${props =>
+      transparentize(0.5)(
+        props.theme.color[props.color] || props.theme.color.emphasis
+      )};
   }
 `
 ActionButton.displayName = "ActionButton"

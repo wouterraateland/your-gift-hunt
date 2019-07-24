@@ -6,15 +6,15 @@ const FieldGroup = styled.div`
     css`
       display: inline-block;
       & {
-        padding: 1em;
+        margin: 1em;
       }
     `}
 
   max-width: 100%;
-  padding: 1em 0;
+  margin: 1em 0;
 
   &:last-of-type {
-    padding-bottom: 0;
+    margin-bottom: 0;
   }
 
   &:empty {

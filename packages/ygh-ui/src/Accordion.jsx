@@ -1,5 +1,5 @@
 import React, { Children, cloneElement } from "react"
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import Icons from "ygh-icons"
 
 const StyledAccordionSection = styled.div`

@@ -12,17 +12,18 @@ import GameCreatorContainer from "containers/GameCreator"
 
 import InfoSwitch from "components/GameCreator/InfoSwitch"
 import MainPane from "components/GameCreator/MainPane"
-import EntityExplorer from "components/GameCreator/EntityExplorer"
 import DetailPane from "components/GameCreator/DetailPane"
 
-import SettingsModal from "components/modals/GameSettings"
+import GameSettings from "components/GameCreator/GameSettings"
+import EntityExplorer from "components/GameCreator/EntityExplorer"
+
 import PublishModal from "components/modals/Publish"
 import PublishedModal from "components/modals/Published"
 
 const getInfoComponent = (selectedPane, INFO_TYPES) => {
   switch (selectedPane) {
     case INFO_TYPES.INFO:
-      return SettingsModal
+      return GameSettings
     case INFO_TYPES.EXPLORE:
       return EntityExplorer
     default:
@@ -42,10 +43,10 @@ const getActionComponent = (upcomingAction, ACTION_TYPES, isOpen) => {
 }
 
 const GameCreator = () => {
-  const { selectedPane, upcomingAction, INFO_TYPES, ACTION_TYPES } = useEditor()
+  const { selectedTab, upcomingAction, INFO_TYPES, ACTION_TYPES } = useEditor()
   const { isOpen } = useInspector()
 
-  const InfoComponent = getInfoComponent(selectedPane, INFO_TYPES)
+  const InfoComponent = getInfoComponent(selectedTab, INFO_TYPES)
   const ActionComponent = getActionComponent(
     upcomingAction,
     ACTION_TYPES,
@@ -54,23 +55,15 @@ const GameCreator = () => {
 
   return (
     <Layout>
-      <SplitPane split="vertical">
-        <SplitPane.Pane minSize={48} maxSize={48} initialSize={48}>
-          <InfoSwitch selectedPane={selectedPane} />
-        </SplitPane.Pane>
-        {InfoComponent && (
-          <SplitPane.Pane initialSize={256}>
-            <InfoComponent />
-          </SplitPane.Pane>
-        )}
-        <SplitPane.Pane>
-          <MainPane />
-        </SplitPane.Pane>
-        {ActionComponent && (
-          <SplitPane.Pane initialSize={256} maxSize={384}>
-            <ActionComponent />
-          </SplitPane.Pane>
-        )}
+      <SplitPane split="vertical" minSizeFirst={48} maxSizeFirst={48}>
+        <InfoSwitch />
+        <SplitPane initialSizeFirst={256}>
+          {InfoComponent && <InfoComponent />}
+          <SplitPane initialSizeSecond={256} maxSizeSecond={384}>
+            <MainPane />
+            {ActionComponent && <ActionComponent />}
+          </SplitPane>
+        </SplitPane>
       </SplitPane>
     </Layout>
   )
