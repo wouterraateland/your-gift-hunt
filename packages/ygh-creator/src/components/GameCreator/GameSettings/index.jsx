@@ -229,10 +229,9 @@ const SettingsModal = () => {
               <h2>Privacy</h2>
               <FieldGroup block>
                 <Field
-                  label="Privacy"
+                  label="Protection type"
                   {...select("accessType")}
                   options={accessOptions}
-                  label="Protection type"
                   component={SelectOptions}
                 />
               </FieldGroup>

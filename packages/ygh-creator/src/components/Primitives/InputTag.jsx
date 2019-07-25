@@ -8,6 +8,7 @@ const InputTagContainer = styled.span`
 
   display: inline-block;
   padding: 0.125rem 0.25rem;
+  margin: 0.25rem 0;
   border-radius: ${props => props.theme.borderRadius};
 
   font-size: 0.75rem;

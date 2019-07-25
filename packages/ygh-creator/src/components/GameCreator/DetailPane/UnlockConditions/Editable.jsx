@@ -1,5 +1,5 @@
 import { EDGE_TYPES } from "data"
-import React, { useState, useCallback } from "react"
+import React, { useCallback } from "react"
 
 import useEntityGraph from "hooks/useEntityGraph"
 import useEntityDependencies from "hooks/useEntityDependencies"
@@ -8,13 +8,31 @@ import useGameMutations from "hooks/useGameMutations"
 
 import { useAsync } from "ygh-hooks"
 
-import { Button, Message, VSpace } from "ygh-ui"
+import { Button, Field, DisguisedSelectOptions } from "ygh-ui"
+import Icons from "ygh-icons"
+import { components } from "react-select"
 
 import EntityTag from "components/Primitives/EntityTag"
 import Transition from "components/Primitives/Transition"
 
 import DefaultUnlockConditions from "./Default"
 import UnlockCondition from "./UnlockCondition"
+
+const Option = ({ data, ...otherProps }) => (
+  <components.Option
+    {...otherProps}
+    cx={(a, b, c) =>
+      `${Object.keys(b).reduce(
+        (acc, key) => (b[key] ? `${acc} ${key}` : acc),
+        a
+      )} ${c}`
+    }
+  >
+    <EntityTag entity={data.entity}>
+      <Transition from={data.from} to={data.to} />
+    </EntityTag>
+  </components.Option>
+)
 
 const EditableUnlockConditions = ({ entity, state }) => {
   const { edges, getEdgeById } = useEntityGraph()
@@ -43,6 +61,7 @@ const EditableUnlockConditions = ({ entity, state }) => {
     )
     .map(({ from, to, ...edge }) => ({
       ...edge,
+      value: edge.id,
       entity: getEntityByStateId(from),
       from: getStateById(from),
       to: getStateById(to)
@@ -55,19 +74,24 @@ const EditableUnlockConditions = ({ entity, state }) => {
         )
     )
 
-  const [optionsVisible, setOptionsVisibility] = useState(false)
   const [{ isLoading, error }, runAsync] = useAsync()
 
-  const addUnlockCondition = useCallback(
-    runAsync(id => {
-      const edge = getEdgeById(id)
-      return addUnlockToStateTransition(
-        edge.from,
-        edge.to.endsWith("-exit") ? null : edge.to,
-        state.id
+  const onChange = useCallback(
+    runAsync(event =>
+      Promise.all(
+        event.target.value
+          .map(edgeId => options.find(option => option.value === edgeId))
+          .filter(edge => !!edge)
+          .map(edge =>
+            addUnlockToStateTransition(
+              edge.from.id,
+              edge.to ? edge.to.id : null,
+              state.id
+            )
+          )
       )
-    }),
-    [state, edges]
+    ),
+    [state, options]
   )
 
   const removeUnlockCondition = useCallback(
@@ -81,12 +105,6 @@ const EditableUnlockConditions = ({ entity, state }) => {
     }),
     [state, edges]
   )
-
-  const onAddButtonClick = useCallback(() => setOptionsVisibility(true), [])
-  const onOptionsClose = useCallback(() => setOptionsVisibility(false), [])
-  const onOptionClick = useCallback(id => addUnlockCondition(id), [
-    addUnlockCondition
-  ])
 
   if (error) {
     console.error(error)
@@ -105,31 +123,30 @@ const EditableUnlockConditions = ({ entity, state }) => {
       ) : (
         <DefaultUnlockConditions entity={entity} />
       )}
-      <VSpace.Small />
-      {/* <Options
-        closeOnClick
+      <Field
+        component={DisguisedSelectOptions}
         components={{
-          Option: ({ data }) => (
-            <EntityTag entity={data.entity}>
-              <Transition from={data.from} to={data.to} />
-            </EntityTag>
-          )
+          Option
         }}
+        block
         options={options}
-        onClose={onOptionsClose}
-        onOptionClick={onOptionClick}
-        isVisible={optionsVisible}
-      /> */}
-      <Button
+        isMulti
+        value={unlockConditions.map(({ id }) => id)}
+        onChange={onChange}
+        error={error}
         disabled={isLoading}
-        onClick={onAddButtonClick}
-        size="small"
-        importance="primary"
-        color="primary"
-      >
-        + Add condition
-      </Button>
-      {error && <Message.Error>{error.message}</Message.Error>}
+        render={props => (
+          <Button
+            {...props}
+            size="small"
+            importance="primary"
+            color="primary"
+            lead={<Icons.Plus />}
+          >
+            Add condition
+          </Button>
+        )}
+      />
     </>
   )
 }

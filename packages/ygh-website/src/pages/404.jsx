@@ -3,7 +3,6 @@ import styled from "styled-components"
 
 import { Wrapper } from "ygh-ui"
 import Layout from "components/Layout"
-import { Floor } from "ygh-entities"
 
 const FullHeightWrapper = styled(Wrapper)`
   position: relative;
@@ -24,7 +23,6 @@ const FullHeightWrapper = styled(Wrapper)`
 const NotFoundPage = () => (
   <Layout>
     <FullHeightWrapper>
-      <Floor />
       <h1>Nothing Here</h1>
       <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
     </FullHeightWrapper>

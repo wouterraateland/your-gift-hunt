@@ -62,7 +62,7 @@ const EditTemplateSet = styled.span`
   display: inline-block;
   width: 2em;
   height: 2em;
-  padding: 0.25em 0.675em;
+  padding: 0.25em;
   color: ${props => props.theme.color.text};
 
   ${Container}:hover & {
@@ -74,7 +74,7 @@ const Actions = ({ templateSet }) => (
   <ActionsContainer>
     <MoreActions templateSet={templateSet} />
     <EditTemplateSet>
-      <Icons.Pen size={1.5} />
+      <Icons.Caret direction="right" size={1.5} />
     </EditTemplateSet>
   </ActionsContainer>
 )

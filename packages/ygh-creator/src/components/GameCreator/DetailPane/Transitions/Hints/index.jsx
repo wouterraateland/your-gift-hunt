@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 
 import { Button, VSpace } from "ygh-ui"
+import Icons from "ygh-icons"
 
 import Hint from "./Hint"
 import HintForm from "./HintForm"
@@ -126,8 +127,9 @@ const Hints = ({ id, hints }) => {
         importance="primary"
         color="primary"
         onClick={addHint}
+        lead={<Icons.Plus />}
       >
-        + Add hint
+        Add hint
       </Button>
     </HintsContainer>
   )

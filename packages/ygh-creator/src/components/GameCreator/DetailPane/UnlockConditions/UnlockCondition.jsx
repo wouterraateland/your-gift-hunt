@@ -7,6 +7,8 @@ import EntityTag from "components/GameCreator/ClickableEntityTag"
 import Transition from "components/GameCreator/ClickableTransition"
 
 const UnlockConditionContainer = styled.div`
+  position: relative;
+
   display: block;
 
   &:not(:first-child) {
@@ -22,6 +24,14 @@ const UnlockConditionContainer = styled.div`
 
     color: #39f;
   }
+`
+
+const Actions = styled.div`
+  position: absolute;
+  right: -0.25rem;
+  top: 50%;
+
+  transform: translate(0, -50%);
 `
 
 const UnlockCondition = ({
@@ -42,11 +52,13 @@ const UnlockCondition = ({
     ) : (
       "Game starts"
     )}
-    {isDeletable && (
-      <ActionButton color="error" onClick={onDeleteClick}>
-        <Bin />
-      </ActionButton>
-    )}
+    <Actions>
+      {isDeletable && (
+        <ActionButton color="error" onClick={onDeleteClick}>
+          <Bin />
+        </ActionButton>
+      )}
+    </Actions>
   </UnlockConditionContainer>
 )
 

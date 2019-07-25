@@ -1,5 +1,5 @@
 import { EDGE_TYPES } from "data"
-import React, { useCallback, useState } from "react"
+import React, { useCallback } from "react"
 import styled from "styled-components"
 
 import useEntityGraph from "hooks/useEntityGraph"
@@ -9,14 +9,17 @@ import useGameMutations from "hooks/useGameMutations"
 
 import { useAsync } from "ygh-hooks"
 
-import { ActionButton, Button, Message } from "ygh-ui"
-import { Bin } from "ygh-icons"
+import { components } from "react-select"
+import { ActionButton, Button, Field, DisguisedSelectOptions } from "ygh-ui"
+import Icons from "ygh-icons"
 import ClickableEntityTag from "components/GameCreator/ClickableEntityTag"
 import ClickableStateTag from "components/GameCreator/ClickableStateTag"
 import EntityTag from "components/Primitives/EntityTag"
 import StateTag from "components/Primitives/StateTag"
 
 const UnlockContainer = styled.div`
+  position: relative;
+
   display: block;
   margin-bottom: 0.5em;
 
@@ -31,10 +34,34 @@ const UnlockContainer = styled.div`
   }
 `
 
+const Actions = styled.div`
+  position: absolute;
+  right: -0.25rem;
+  top: 50%;
+  transform: translate(0, -50%);
+`
+
 const Em = styled.em`
   display: block;
   margin-bottom: 0.5em;
 `
+
+const Option = ({ data, ...otherProps }) => (
+  <components.Option
+    {...otherProps}
+    cx={(a, b, c) =>
+      `${Object.keys(b).reduce(
+        (acc, key) => (b[key] ? `${acc} ${key}` : acc),
+        a
+      )} ${c}`
+    }
+  >
+    <EntityTag entity={data.entity}>
+      {" "}
+      <StateTag state={data.state} />
+    </EntityTag>
+  </components.Option>
+)
 
 const Unlock = ({ data, isDeletable = true, onDeleteClick }) => (
   <UnlockContainer>
@@ -43,9 +70,11 @@ const Unlock = ({ data, isDeletable = true, onDeleteClick }) => (
       <ClickableStateTag state={data.state} />
     </ClickableEntityTag>
     {isDeletable && (
-      <ActionButton color="error" onClick={onDeleteClick}>
-        <Bin />
-      </ActionButton>
+      <Actions>
+        <ActionButton color="error" onClick={onDeleteClick}>
+          <Icons.Bin />
+        </ActionButton>
+      </Actions>
     )}
   </UnlockContainer>
 )
@@ -69,7 +98,6 @@ const Unlocks = ({ from, to }) => {
     )
     .map(({ unlocks }) => getNodeById(unlocks))
 
-  const [optionsVisible, setOptionsVisibility] = useState(false)
   const [{ isLoading, error }, runAsync] = useAsync()
 
   if (error) {
@@ -77,13 +105,26 @@ const Unlocks = ({ from, to }) => {
   }
 
   const previousNodes = getPreviousNodes(from.id)
-  const options = nodes.filter(
-    node => isUnlockable(node) && !previousNodes.includes(node.id)
-  )
+  const options = nodes
+    .filter(node => isUnlockable(node) && !previousNodes.includes(node.id))
+    .filter(
+      ({ id, entity }) =>
+        entity.states.every(state => state.id !== from.id) &&
+        !unlocks.find(unlock => unlock.id === id)
+    )
+    .map(node => ({ ...node, value: node.id }))
 
-  const addUnlock = useCallback(
-    runAsync(id => addUnlockToStateTransition(from.id, to ? to.id : null, id)),
-    [from, to]
+  const onChange = useCallback(
+    runAsync(event =>
+      Promise.all(
+        event.target.value
+          .filter(nodeId => unlocks.every(({ id }) => id !== nodeId))
+          .map(stateId =>
+            addUnlockToStateTransition(from.id, to ? to.id : null, stateId)
+          )
+      )
+    ),
+    [unlocks, from, to]
   )
 
   const removeUnlock = useCallback(
@@ -92,10 +133,6 @@ const Unlocks = ({ from, to }) => {
     ),
     [from, to]
   )
-
-  const onAddButtonClick = useCallback(() => setOptionsVisibility(true), [])
-  const onOptionsClose = useCallback(() => setOptionsVisibility(false), [])
-  const onOptionClick = useCallback(id => addUnlock(id), [addUnlock])
 
   return (
     <>
@@ -110,35 +147,28 @@ const Unlocks = ({ from, to }) => {
       ) : (
         <Em>Nothing</Em>
       )}
-      {/* <Options
-        closeOnClick
-        components={{
-          Option: ({ data }) => (
-            <EntityTag entity={data.entity}>
-              {" "}
-              <StateTag state={data.state} />
-            </EntityTag>
-          )
-        }}
-        options={options.filter(
-          ({ id, entity }) =>
-            entity.states.every(state => state.id !== from.id) &&
-            !unlocks.find(unlock => unlock.id === id)
+      <Field
+        component={DisguisedSelectOptions}
+        components={{ Option }}
+        render={props => (
+          <Button
+            {...props}
+            size="small"
+            importance="primary"
+            color="primary"
+            lead={<Icons.Plus />}
+          >
+            Add unlock
+          </Button>
         )}
-        onClose={onOptionsClose}
-        onOptionClick={onOptionClick}
-        isVisible={optionsVisible}
-      /> */}
-      <Button
+        block
+        isMulti
+        options={options}
+        onChange={onChange}
         disabled={isLoading}
-        onClick={onAddButtonClick}
-        size="small"
-        importance="primary"
-        color="primary"
-      >
-        + Add unlock
-      </Button>
-      {error && <Message.Error>{error.message}</Message.Error>}
+        value={unlocks.map(({ id }) => id)}
+        error={error}
+      />
     </>
   )
 }

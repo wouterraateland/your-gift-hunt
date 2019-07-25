@@ -40,6 +40,10 @@ const StyledPaper = styled(Paper)`
     `}
 `
 
+const PaperSection = styled(Paper.Section)`
+  padding: 0.5em;
+`
+
 const Section = ({
   title,
   wrapChildren = false,
@@ -79,12 +83,12 @@ const Section = ({
       <StyledPaper expanding isExpanded={isExpanded} {...otherProps}>
         {wrapChildren ? (
           children.map((child, i) => (
-            <Paper.Section key={i}>{child}</Paper.Section>
+            <PaperSection key={i}>{child}</PaperSection>
           ))
         ) : noWrapper ? (
           children
         ) : (
-          <Paper.Section>{children}</Paper.Section>
+          <PaperSection>{children}</PaperSection>
         )}
       </StyledPaper>
     </>
