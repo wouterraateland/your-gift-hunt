@@ -9,7 +9,7 @@ const Container = styled.div`
 const Header = styled.div`
   position: relative;
   height: 2em;
-  background: #f2f2f2;
+  background: #f9f9f9;
   border-bottom: 1px solid #0002;
 `
 
@@ -42,7 +42,7 @@ const Tab = styled.div`
   ${props =>
     props.isSelected &&
     css`
-      background-color: #f9f9f9;
+      background-color: #fcfcfc;
       color: ${props.theme.color.emphasis};
     `}
 `

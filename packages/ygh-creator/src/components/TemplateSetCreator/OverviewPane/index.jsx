@@ -18,7 +18,7 @@ const ScrollablePaper = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
 
-  background-color: #f9f9f9;
+  background-color: #fcfcfc;
   @media (max-width: 30em) {
     width: 100vw;
     transition: margin-left 0.4s ease-in-out;

@@ -27,7 +27,7 @@ import { USER_TEMPLATE_SETS, GAME_COUNT_BY_SLUG } from "gql/queries"
 import defaultImage from "assets/default_thumb.png"
 
 const Container = styled.div`
-  background-color: #f2f2f2;
+  background-color: #f9f9f9;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -42,8 +42,6 @@ const Title = styled.strong`
   display: block;
 
   line-height: 1rem;
-  text-transform: uppercase;
-  color: ${props => props.theme.color.caption};
 `
 
 const Body = styled.div`

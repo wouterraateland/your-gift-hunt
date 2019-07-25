@@ -1,24 +1,22 @@
 import React from "react"
 
-import TabPane from "components/TabPane"
+import useEditor from "hooks/useEditor"
 
 import EditorPane from "components/GameCreator/EditorPane"
 import GraphicPane from "components/GameCreator/GraphicPane"
-import Toolbox from "components/GameCreator/Toolbox"
 import ActionBar from "components/GameCreator/ActionBar"
 
-const MainPane = () => (
-  <TabPane>
-    <TabPane.Tab label="Logic">
-      <EditorPane />
-      <Toolbox />
-    </TabPane.Tab>
-    <TabPane.Tab label="Floor plan">
+const MainPane = () => {
+  const { selectedView, VIEW_TYPES } = useEditor()
+
+  return selectedView === VIEW_TYPES.LOGIC ? (
+    <EditorPane />
+  ) : (
+    <>
       <GraphicPane />
       <ActionBar />
-      <Toolbox />
-    </TabPane.Tab>
-  </TabPane>
-)
+    </>
+  )
+}
 
 export default MainPane

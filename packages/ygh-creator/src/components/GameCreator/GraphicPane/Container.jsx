@@ -12,8 +12,8 @@ const StyledGraphicPane = styled.div`
 
   flex-grow: 1;
 
-  background-color: #444;
-  background-image: radial-gradient(#fff1 8%, transparent 10%);
+  background-color: #f2f2f2;
+  background-image: radial-gradient(#0001 8%, transparent 10%);
 
   will-change: background-size, background-position;
 `

@@ -16,7 +16,7 @@ export const Outer = styled.span`
 
   box-shadow: inset 0 0 0 1px #999;
 
-  background-color: #f2f2f2;
+  background-color: #f9f9f9;
   color: ${props => props.theme.color.text};
 `
 

@@ -50,7 +50,7 @@ const ButtonContainer = styled.button.attrs(({ disabled }) => ({
       ? "#d4d4d4"
       : opacify(1)(props.theme.color[props.color] || props.theme.color.emphasis)
     const secondaryColor = props.disabled
-      ? "#f2f2f2"
+      ? "#f9f9f9"
       : readableColor(
           darken(0.2)(color),
           opacify(1)(props.theme.color.emphasis),
@@ -87,7 +87,7 @@ const ButtonContainer = styled.button.attrs(({ disabled }) => ({
         `
       default:
         return css`
-          box-shadow: inset 0 0 0 2px;
+          box-shadow: inset 0 0 0 ${props.theme.borderWidth};
 
           background-color: #fff;
           color: ${color};
@@ -97,7 +97,8 @@ const ButtonContainer = styled.button.attrs(({ disabled }) => ({
           }
 
           &:focus {
-            box-shadow: inset 0 0 0 2px, 0 0 0 4px ${transparentize(0.5, color)};
+            box-shadow: inset 0 0 0 ${props.theme.borderWidth},
+              0 0 0 4px ${transparentize(0.5, color)};
           }
         `
     }

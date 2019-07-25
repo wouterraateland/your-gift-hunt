@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const Option = styled.label`
   display: inline-block;
-  padding: calc(0.75em - 2px);
+  padding: calc(0.75em - 1px);
 
   line-height: 1;
 
@@ -26,11 +26,11 @@ const Option = styled.label`
   }
 
   &:first-of-type {
-    border-radius: 2px 0 0 2px;
+    border-radius: 3px 0 0 3px;
   }
 
   &:last-of-type {
-    border-radius: 0 2px 2px 0;
+    border-radius: 0 3px 3px 0;
   }
 
   & input {
@@ -49,8 +49,8 @@ const Option = styled.label`
     props.disabled
       ? css`
           pointer-events: none;
-          background-color: ${props.checked ? "#d4d4d4" : "#f2f2f2"};
-          color: ${props.checked ? "#f2f2f2" : "#d4d4d4"};
+          background-color: ${props.checked ? "#d4d4d4" : "#f9f9f9"};
+          color: ${props.checked ? "#f9f9f9" : "#d4d4d4"};
         `
       : css`
           cursor: pointer;

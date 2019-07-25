@@ -1,4 +1,4 @@
-import React from "react"
+import React, { forwardRef } from "react"
 import styled from "styled-components"
 import _ from "ygh-utils"
 
@@ -31,7 +31,7 @@ Label.displayName = "Label"
 
 const Message = styled.small`
   display: block;
-  margin: 0.25em 0;
+  word-break: break-word;
 `
 Message.displayName = "Message"
 
@@ -40,21 +40,32 @@ const ErrorMessage = styled(Message)`
 `
 ErrorMessage.displayName = "ErrorMessage"
 
-const Field = ({
-  label,
-  info,
-  component: Component = DefaultInput,
-  ...otherProps
-}) => (
-  <Label disabled={otherProps.disabled} block={otherProps.block}>
-    <LabelText hasError={otherProps.error}>{label}</LabelText>
-    <Component {...otherProps} />
-    {otherProps.error ? (
-      <ErrorMessage>{otherProps.error}</ErrorMessage>
-    ) : (
-      info && <Message>{info}</Message>
-    )}
-  </Label>
+const Field = forwardRef(
+  (
+    {
+      label,
+      info,
+      component: Component = DefaultInput,
+      className,
+      ...otherProps
+    },
+    ref
+  ) => (
+    <Label
+      ref={ref}
+      disabled={otherProps.disabled}
+      block={otherProps.block}
+      className={className}
+    >
+      {label && <LabelText hasError={otherProps.error}>{label}</LabelText>}
+      <Component {...otherProps} />
+      {otherProps.error ? (
+        <ErrorMessage>{otherProps.error}</ErrorMessage>
+      ) : (
+        info && <Message>{info}</Message>
+      )}
+    </Label>
+  )
 )
 
 export default Field

@@ -13,7 +13,7 @@ const Container = styled.div`
   height: 100%;
   border-right: 1px solid #0002;
 
-  background-color: #f9f9f9;
+  background-color: #fcfcfc;
 `
 
 const Switch = styled.div`
@@ -21,13 +21,13 @@ const Switch = styled.div`
   color: ${props => props.theme.color.text};
 
   &:hover {
-    color: ${props => props.theme.color.emphasis};
+    color: ${props => props.theme.color.primary};
   }
 
   ${props =>
     props.isSelected &&
     css`
-      color: ${props.theme.color.emphasis};
+      color: ${props.theme.color.primary};
     `}
 `
 
@@ -57,6 +57,17 @@ const InfoSwitch = () => {
       >
         <Icons.Cube size={2} />
         <ToolTip direction="horizontal">Explorer</ToolTip>
+      </Switch>
+      <Switch
+        isSelected={selectedTab === INFO_TYPES.NEW_ENTITY}
+        onClick={() =>
+          selectTab(selectedTab =>
+            selectedTab === INFO_TYPES.NEW_ENTITY ? null : INFO_TYPES.NEW_ENTITY
+          )
+        }
+      >
+        <Icons.Plus size={2} />
+        <ToolTip direction="horizontal">New entity</ToolTip>
       </Switch>
     </Container>
   )

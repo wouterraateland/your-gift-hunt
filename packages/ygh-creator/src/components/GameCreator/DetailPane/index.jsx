@@ -15,12 +15,13 @@ import States from "./States"
 import Transitions from "./Transitions"
 import UnlockConditions from "./UnlockConditions"
 
-import Background from "./Background"
-import CloseButton from "./CloseButton"
+import Container from "./Container"
+import Header from "./Header"
+import Body from "./Body"
 
 const DetailPane = () => {
   const ref = useRef(null)
-  const { isOpen, inspectedEntity, inspectedState } = useInspector()
+  const { inspectedEntity, inspectedState } = useInspector()
   const { getEntityById, getStateById } = useGameQueries()
 
   const entity = getEntityById(inspectedEntity)
@@ -30,27 +31,25 @@ const DetailPane = () => {
     if (ref.current) {
       ref.current.scrollTo(0, 0)
     }
-  }, [isOpen, inspectedEntity, inspectedState])
+  }, [inspectedEntity, inspectedState])
 
   return (
-    <Background
-      isOpen={isOpen}
-      ref={ref}
-      hasPreview={!!entity && (entity.isObject || entity.isItem)}
-    >
-      {entity && <Preview entity={entity} state={state} />}
-      {entity && <Meta entity={entity} state={state} />}
-      {state && <PreviousStates state={state} />}
-      {state && <UnlockConditions entity={entity} state={state} />}
-      {state && <Transitions state={state} />}
-      {entity && <Properties entity={entity} />}
-      {entity && <InformationSlots entity={entity} state={state} />}
-      {entity && <Portals entity={entity} state={state} />}
-      {entity && <Entrances entity={entity} />}
-      {entity && !state && <States entity={entity} />}
-      {entity && <Delete entity={entity} state={state} />}
-      <CloseButton />
-    </Background>
+    <Container hasPreview={!!entity && (entity.isObject || entity.isItem)}>
+      <Header />
+      <Body ref={ref}>
+        {entity && <Preview entity={entity} state={state} />}
+        {entity && <Meta entity={entity} state={state} />}
+        {state && <PreviousStates state={state} />}
+        {state && <UnlockConditions entity={entity} state={state} />}
+        {state && <Transitions state={state} />}
+        {entity && <Properties entity={entity} />}
+        {entity && <InformationSlots entity={entity} state={state} />}
+        {entity && <Portals entity={entity} state={state} />}
+        {entity && <Entrances entity={entity} />}
+        {entity && !state && <States entity={entity} />}
+        {entity && <Delete entity={entity} state={state} />}
+      </Body>
+    </Container>
   )
 }
 

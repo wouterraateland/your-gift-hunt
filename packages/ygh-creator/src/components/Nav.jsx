@@ -76,6 +76,7 @@ const NavItem = styled(Link)`
 
   vertical-align: middle;
   font-weight: bold;
+  color: ${props => props.theme.color.emphasis};
 `
 
 const FloatRight = styled(Float.Right)`

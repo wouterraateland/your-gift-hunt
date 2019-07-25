@@ -23,9 +23,7 @@ const ActionButton = styled.button`
       props.theme.color[props.color] || props.theme.color.emphasis};
   }
 
-  & + & {
-    margin-left: 0.5em;
-  }
+  margin: 0.25em;
 
   &:focus {
     outline: none;

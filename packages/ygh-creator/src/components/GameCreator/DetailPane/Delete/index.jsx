@@ -19,21 +19,21 @@ const Info = styled.small`
   display: inline-block;
   margin-top: 0.5em;
 
-  opacity: 0.5;
+  color: ${props => props.theme.color.caption};
 
   &::before {
     content: "i";
 
     display: inline-block;
-    width: 1.2em;
-    height: 1.2em;
+    width: 1rem;
+    height: 1rem;
     margin-right: 0.5em;
     border-radius: 100%;
 
     text-align: center;
     font-style: italic;
 
-    background: #0002;
+    background-color: #0002;
   }
 `
 

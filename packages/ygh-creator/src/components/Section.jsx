@@ -3,7 +3,8 @@ import styled, { css } from "styled-components"
 
 import { useDebounce } from "ygh-hooks"
 
-import { Paper } from "ygh-ui"
+import { ActionButton, Paper } from "ygh-ui"
+import Icons from "ygh-icons"
 
 const SectionTitle = styled.strong`
   cursor: pointer;
@@ -13,30 +14,19 @@ const SectionTitle = styled.strong`
   margin: 0.5em;
 
   line-height: 1;
+`
 
-  &::after {
-    content: "›";
+const StyledActionButton = styled(ActionButton)`
+  position: absolute;
+  top: 0;
+  right: 0;
 
-    position: absolute;
-    right: 0;
-    top: 60%;
-
-    font-size: 2rem;
-    font-weight: normal;
-    font-family: ${props => props.theme.font.copy};
-
-    color: ${props => props.theme.color.text};
-
-    transform: translate(0, -50%)
-      scale(1, ${props => (props.isExpanded ? 1 : -1)}) rotate(90deg);
-
-    &:hover {
-      color: ${props => props.theme.color.emphasis};
-    }
-  }
+  margin: 0;
 `
 
 const StyledPaper = styled(Paper)`
+  background-color: #fcfcfc;
+
   ${props =>
     !props.isFlat &&
     css`
@@ -80,8 +70,11 @@ const Section = ({
 
   return (
     <>
-      <SectionTitle onClick={toggleExpanded} isExpanded={isExpanded}>
+      <SectionTitle onClick={toggleExpanded}>
         {title}
+        <StyledActionButton>
+          <Icons.Caret direction={isExpanded ? "down" : "right"} />
+        </StyledActionButton>
       </SectionTitle>
       <StyledPaper expanding isExpanded={isExpanded} {...otherProps}>
         {wrapChildren ? (

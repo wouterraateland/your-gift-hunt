@@ -18,7 +18,7 @@ const InputContainer = styled.div`
     props.disabled
       ? css`
           color: #d4d4d4;
-          background-color: #f2f2f2;
+          background-color: #f9f9f9;
         `
       : css`
           ${props.error &&

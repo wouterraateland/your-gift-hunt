@@ -16,6 +16,7 @@ import DetailPane from "components/GameCreator/DetailPane"
 
 import GameSettings from "components/GameCreator/GameSettings"
 import EntityExplorer from "components/GameCreator/EntityExplorer"
+import Toolbox from "components/GameCreator/Toolbox"
 
 import PublishModal from "components/modals/Publish"
 import PublishedModal from "components/modals/Published"
@@ -26,6 +27,8 @@ const getInfoComponent = (selectedPane, INFO_TYPES) => {
       return GameSettings
     case INFO_TYPES.EXPLORE:
       return EntityExplorer
+    case INFO_TYPES.NEW_ENTITY:
+      return Toolbox
     default:
       return null
   }

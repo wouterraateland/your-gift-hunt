@@ -13,7 +13,7 @@ const StyledEditorPane = styled.div`
 
   flex-grow: 1;
 
-  background-color: #f5f6fb;
+  background-color: #f2f2f2;
   background-image: radial-gradient(#0001 8%, transparent 10%);
 
   will-change: background-size, background-position;

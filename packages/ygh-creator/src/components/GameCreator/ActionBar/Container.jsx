@@ -13,8 +13,7 @@ const Component = styled.div`
   border-radius: ${props => props.theme.borderRadius};
   box-shadow: ${props => props.theme.boxShadow.medium};
 
-  background-color: #444;
-  color: #fff;
+  background-color: #fff;
 
   transform: translate(-50%, -50%);
 `

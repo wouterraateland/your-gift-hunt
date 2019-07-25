@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import { Paper, VSpace } from "ygh-ui"
+import { Paper } from "ygh-ui"
 import EntityTypeIcon from "components/EntityTypeIcon"
 import StateTag from "components/Primitives/StateTag"
 
@@ -15,11 +15,15 @@ const StyledPaper = styled(Paper)`
   border: 1px solid #0002;
   border-width: 1px 0;
   box-shadow: none;
+  background-color: #fcfcfc;
 `
 
 const Name = styled.h2`
-  margin: 0.25em 0;
-  line-height: 1;
+  margin: 0;
+
+  & > svg {
+    margin: 0.25em 0;
+  }
 `
 
 const Description = styled.blockquote``

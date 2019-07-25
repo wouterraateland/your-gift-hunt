@@ -1,7 +1,6 @@
 import React from "react"
-import { createGlobalStyle, ThemeProvider } from "styled-components"
-import { opacify, transparentize } from "polished"
-import { Theme as BaseTheme } from "ygh-ui"
+import { createGlobalStyle } from "styled-components"
+import { Theme } from "ygh-ui"
 
 const extendTheme = base => ({
   ...base,
@@ -22,7 +21,7 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     overflow-x: hidden;
-    background-color: #f9f9f9;
+    background-color: #fcfcfc;
   }
 
   #modal-root {
@@ -50,12 +49,8 @@ export const GlobalStyles = createGlobalStyle`
 `
 
 export default ({ children }) => (
-  <BaseTheme>
-    <ThemeProvider theme={extendTheme}>
-      <>
-        <GlobalStyles />
-        {children}
-      </>
-    </ThemeProvider>
-  </BaseTheme>
+  <Theme extendTheme={extendTheme}>
+    <GlobalStyles />
+    {children}
+  </Theme>
 )

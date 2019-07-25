@@ -11,7 +11,7 @@ const Container = styled.div`
 
   height: 100vh;
 
-  background-color: #f9f9f9;
+  background-color: #fcfcfc;
 `
 
 const RequestAccess = ({ authenticate }) => {

@@ -17,8 +17,8 @@ const theme = {
     warning: "#f9673e",
     success: "#3dc169"
   },
-  borderWidth: "2px",
-  borderRadius: "0.25em",
+  borderWidth: "1px",
+  borderRadius: "0.25rem",
   boxShadow: {
     small: "0 0.25rem 0.75rem -0.25rem #0004",
     medium: "0 0.5rem 1.5rem -0.5rem #0006",
@@ -42,7 +42,7 @@ export const StaticGlobalStyle = createGlobalStyle`
   }
 
   html {
-    font-family: ${theme.font.copy};
+    font-family: ${props => props.theme.font.copy};
 
     @media (max-width: 20em) {
       font-size: 70%;
@@ -61,7 +61,8 @@ export const StaticGlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
 
-    background-color: ${transparentize(0.95, theme.color.primary)};
+    background-color: ${props =>
+      transparentize(0.95, props.theme.color.primary)};
     color: ${theme.color.text};
   }
 
@@ -72,21 +73,24 @@ export const StaticGlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     color: ${theme.color.emphasis};
-    font-family: "Playfair Display", serif;
+    font-family: ${props => props.theme.font.heading};
   }
 
   strong {
-    color: ${theme.color.emphasis};
+    color: ${props => props.theme.color.emphasis};
     font-weight: 600;
+  }
+
+  small {
+    font-size: .75rem;
+    line-height: 1rem;
   }
 
   hr {
     clear: both;
     height: 1px;
-    background: linear-gradient(90deg, transparent, ${transparentize(
-      0.5,
-      theme.color.text
-    )}, transparent);
+    background: linear-gradient(90deg, transparent, ${props =>
+      transparentize(0.5)(props.theme.color.text)}, transparent);
   }
 
   a {
@@ -94,7 +98,7 @@ export const StaticGlobalStyle = createGlobalStyle`
 
     text-decoration: none;
 
-    color: ${theme.color.primary};
+    color: ${props => props.theme.color.primary};
 
     &:hover {
       text-decoration: underline;
@@ -156,8 +160,8 @@ const GooFilter = () => (
   </svg>
 )
 
-export default ({ children }) => (
-  <ThemeProvider theme={theme}>
+export default ({ children, extendTheme = x => x }) => (
+  <ThemeProvider theme={extendTheme(theme)}>
     <>
       <VariableGlobalStyle />
       <StaticGlobalStyle />

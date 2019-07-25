@@ -21,7 +21,7 @@ const Outer = styled.div`
   border-radius: ${props => props.theme.borderRadius};
   box-shadow: ${props => props.theme.boxShadow.medium};
 
-  background-color: #f2f2f2;
+  background-color: #f9f9f9;
 
   &::before,
   &::after {

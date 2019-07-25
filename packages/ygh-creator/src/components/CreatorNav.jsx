@@ -10,12 +10,13 @@ const Container = styled.nav`
   height: calc(3em + 1px);
   border-bottom: 1px solid #0002;
 
+  justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
 
   white-space: nowrap;
 
-  background-color: #f9f9f9;
+  background-color: #fcfcfc;
 `
 
 const BackControl = styled(Link)`
@@ -41,8 +42,9 @@ const BackControl = styled(Link)`
     background-color: currentColor;
   }
 
+  color: ${props => props.theme.color.text};
   &:hover {
-    color: ${props => props.theme.color.emphasis};
+    color: ${props => props.theme.color.primary};
   }
 `
 BackControl.defaultProps = {
@@ -53,8 +55,6 @@ const Center = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  flex-grow: 1;
 `
 
 const Item = styled.div`

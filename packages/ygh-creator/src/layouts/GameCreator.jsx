@@ -93,6 +93,58 @@ const SaveState = ({ isSaving, isDirty, lastSaved }) => {
   )
 }
 
+const SwitchContainer = styled.div`
+  display: flex;
+
+  line-height: 1;
+
+  box-shadow: inset 0 0 0 1px #0002;
+  border-radius: ${props => props.theme.borderRadius};
+
+  background-color: #fff;
+`
+
+const Switch = styled.div`
+  cursor: pointer;
+
+  padding: 0.5rem;
+
+  &:hover {
+    color: ${props => props.theme.color.primary};
+  }
+
+  ${props =>
+    props.isSelected &&
+    css`
+      color: ${props.theme.color.primary};
+    `}
+
+  & + & {
+    border-left: 1px solid #0002;
+  }
+`
+
+const ViewSwitch = () => {
+  const { selectView, selectedView, VIEW_TYPES } = useEditor()
+
+  return (
+    <SwitchContainer>
+      <Switch
+        onClick={() => selectView(VIEW_TYPES.LOGIC)}
+        isSelected={selectedView === VIEW_TYPES.LOGIC}
+      >
+        Logic
+      </Switch>
+      <Switch
+        onClick={() => selectView(VIEW_TYPES.GRAPHIC)}
+        isSelected={selectedView === VIEW_TYPES.GRAPHIC}
+      >
+        Floor plan
+      </Switch>
+    </SwitchContainer>
+  )
+}
+
 const CreatorLayout = ({ children }) => {
   const { isSaving, isDirty, lastSaved } = useSaveState()
   const { game } = useGame()
@@ -113,6 +165,7 @@ const CreatorLayout = ({ children }) => {
             lastSaved={lastSaved}
           />
         </Nav.Center>
+        <ViewSwitch />
         <Nav.Items>
           <Nav.Item>
             <Button

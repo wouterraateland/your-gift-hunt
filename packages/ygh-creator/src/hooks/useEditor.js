@@ -3,7 +3,8 @@ import EditorContext from "contexts/Editor"
 
 const INFO_TYPES = {
   EXPLORE: "EXPLORE",
-  INFO: "INFO"
+  INFO: "INFO",
+  NEW_ENTITY: "NEW_ENTITY"
 }
 
 const VIEW_TYPES = {
@@ -24,24 +25,29 @@ export const useEditorProvider = () => {
     window.localStorage.getItem("tabPreference") || INFO_TYPES.INFO
   )
 
-  const selectTab = useCallback(v => {
-    _selectTab(selectedTab => {
-      const newSelectedTab = typeof v === "function" ? v(selectedTab) : v
-
-      window.localStorage.setItem("tabPreference", newSelectedTab)
-
-      return newSelectedTab
-    })
-  }, [])
+  const selectTab = useCallback(
+    v =>
+      _selectTab(current => {
+        const next = typeof v === "function" ? v(current) : v
+        window.localStorage.setItem("tabPreference", next)
+        return next
+      }),
+    []
+  )
 
   const [selectedView, _selectView] = useState(
     window.localStorage.getItem("viewPreference") || VIEW_TYPES.GRAPHIC
   )
 
-  const selectView = useCallback(v => {
-    _selectView(v)
-    window.localStorage.setItem("viewPreference", v)
-  }, [])
+  const selectView = useCallback(
+    v =>
+      _selectView(current => {
+        const next = typeof v === "function" ? v(current) : v
+        window.localStorage.setItem("viewPreference", next)
+        return next
+      }),
+    []
+  )
 
   return {
     INFO_TYPES,

@@ -41,6 +41,7 @@ const Delete = ({ entity }) => {
     <Action
       ref={ref}
       title={isDeleting ? "Confirm deletion" : "Delete entity"}
+      color="error"
       icon={Icons.Bin}
       onAct={onAct}
     />
