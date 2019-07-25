@@ -5,8 +5,8 @@ const InputContainer = styled.div`
   position: relative;
 
   display: flex;
-  border: ${props => props.theme.borderWidth} solid #0002;
   border-radius: ${props => props.theme.borderRadius};
+  box-shadow: inset 0 0 0 ${props => props.theme.borderWidth} #0002;
 
   background: #fff no-repeat center padding-box / cover;
 
@@ -23,16 +23,18 @@ const InputContainer = styled.div`
       : css`
           ${props.error &&
             css`
-              border-color: ${props => props.theme.color.error};
+              box-shadow: inset 0 0 0 ${props => props.theme.borderWidth}
+                ${props => props.theme.color.error};
             `}
           &:hover {
-            border-color: #0004;
+            box-shadow: inset 0 0 0 ${props => props.theme.borderWidth} #0004;
           }
 
           &:focus-within {
-            border-color: ${props => props.theme.color.primary};
-            box-shadow: 0 0 0 4px
-              ${props => transparentize(0.5)(props.theme.color.primary)};
+            box-shadow: inset 0 0 0 ${props => props.theme.borderWidth}
+                ${props => props.theme.color.primary},
+              0 0 0 4px
+                ${props => transparentize(0.5)(props.theme.color.primary)};
           }
         `}
 `

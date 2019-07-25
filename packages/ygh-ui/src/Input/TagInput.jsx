@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react"
 
 import CreatableSelect from "react-select/creatable"
-import SelectOptions from "../Select"
+import Select from "../Select"
 
 const components = {
   DropdownIndicator: null
@@ -51,7 +51,7 @@ const TagInput = ({ value, onChange = () => {}, ...props }) => {
   )
 
   return (
-    <SelectOptions
+    <Select
       selectComponent={CreatableSelect}
       components={components}
       inputValue={inputValue}

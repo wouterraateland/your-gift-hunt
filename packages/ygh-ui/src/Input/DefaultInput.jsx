@@ -5,7 +5,19 @@ import BareInput from "./BareInput"
 import InputContainer from "./InputContainer"
 
 const DefaultInputContainer = styled(InputContainer)`
-  padding: calc(0.5em - ${props => props.theme.borderWidth}) 0.75em;
+  padding: ${props => {
+    switch (props.size) {
+      case "tiny":
+        return `0 0.25rem`
+      case "small":
+        return `0.25rem 0.5rem`
+      default:
+      case "medium":
+        return `0.5rem 0.75rem`
+      case "large":
+        return `0.75rem 1rem`
+    }
+  }};
 `
 
 const Affix = styled.span`

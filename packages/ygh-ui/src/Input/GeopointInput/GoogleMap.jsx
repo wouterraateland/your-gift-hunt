@@ -17,6 +17,7 @@ const MapContainer = styled.div`
 
   width: 20em;
   height: 15em;
+  margin: ${props => props.theme.borderWidth};
   border-radius: 0.15em;
 `
 

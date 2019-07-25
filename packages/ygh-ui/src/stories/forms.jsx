@@ -28,6 +28,17 @@ storiesOf("Forms.Fields.Inputs", module)
       <Paper>
         <Paper.Section>
           <Field
+            size={options(
+              "Size",
+              {
+                Tiny: "tiny",
+                Small: "small",
+                Medium: "medium",
+                Large: "large"
+              },
+              "medium",
+              { display: "inline-radio" }
+            )}
             lead={boolean("Leading icon", false) ? <Icons.Loop /> : null}
             trail={boolean("Trailing icon", false) ? <Icons.Play /> : null}
             prefix={boolean("Prefix text", false) ? "#" : null}

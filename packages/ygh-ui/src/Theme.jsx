@@ -3,7 +3,7 @@ import "typeface-montserrat"
 
 import React, { useMemo } from "react"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
-import { opacify, transparentize } from "polished"
+import { transparentize } from "polished"
 import { useWindowSize } from "ygh-hooks"
 
 const theme = {
@@ -11,7 +11,7 @@ const theme = {
     caption: "#0007",
     text: "#0009",
     emphasis: "#000d",
-    primary: "#3f51b5",
+    primary: "#05f",
     secondary: "#ffd65a",
     error: "#e02d51",
     warning: "#f9673e",
