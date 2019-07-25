@@ -35,7 +35,15 @@ const Option = ({ data, ...otherProps }) => (
 )
 
 const SingleValue = ({ data, ...otherProps }) => (
-  <components.SingleValue {...otherProps}>
+  <components.SingleValue
+    {...otherProps}
+    cx={(a, b, c) =>
+      `${Object.keys(b).reduce(
+        (acc, key) => (b[key] ? `${acc} ${key}` : acc),
+        a
+      )} ${c}`
+    }
+  >
     <EntranceTag
       entity={data.entity}
       entrance={data.entrance}

@@ -6,14 +6,28 @@ const Container = styled.div`
   flex-direction: column;
   height: 100%;
 `
-const Tabs = styled.div`
-  display: flex;
+const Header = styled.div`
+  position: relative;
+  height: 2em;
   background: #f2f2f2;
   border-bottom: 1px solid #0002;
 `
+
+const Tabs = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  overflow-x: auto;
+  white-space: nowrap;
+`
+
 const Tab = styled.div`
   cursor: pointer;
 
+  display: inline-block;
   padding: 0.5rem;
 
   font-size: 1rem;
@@ -59,21 +73,23 @@ const TabPane = ({ children, actions, placeholder, ...otherProps }) => {
 
   return (
     <Container {...otherProps}>
-      <Tabs>
-        {labeledChildren.map((tab, i) => (
-          <Tab
-            key={i}
-            onClick={
-              tab.props.label ? () => selectTab(tab.props.label) : undefined
-            }
-            isSelected={
-              selectedTab && selectedTab.props.label === tab.props.label
-            }
-          >
-            {tab.props.label}
-          </Tab>
-        ))}
-      </Tabs>
+      <Header>
+        <Tabs>
+          {labeledChildren.map((tab, i) => (
+            <Tab
+              key={i}
+              onClick={
+                tab.props.label ? () => selectTab(tab.props.label) : undefined
+              }
+              isSelected={
+                selectedTab && selectedTab.props.label === tab.props.label
+              }
+            >
+              {tab.props.label}
+            </Tab>
+          ))}
+        </Tabs>
+      </Header>
       <Main>
         {selectedTab ? selectedTab.props.children : <em>{placeholder}</em>}
       </Main>

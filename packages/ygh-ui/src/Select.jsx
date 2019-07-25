@@ -9,7 +9,7 @@ import Icons from "ygh-icons"
 const createStyles = theme => ({
   control: (base, state) => ({
     ...base,
-    width: "15em",
+    width: "100%",
     borderWidth: theme.borderWidth,
     boxShadow: state.isFocused
       ? `0 0 0 4px ${transparentize(0.5)(theme.color.primary)}`

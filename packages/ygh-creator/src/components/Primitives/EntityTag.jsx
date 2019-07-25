@@ -3,19 +3,20 @@ import styled from "styled-components"
 
 import EntityTypeIcon from "components/EntityTypeIcon"
 
-const Outer = styled.span`
+export const Outer = styled.span`
   cursor: pointer;
 
   display: inline-block;
-  padding: 0.25em 0.5em;
+  padding: 0.125rem 0.25rem;
+  margin: 0.25rem 0;
   border-radius: ${props => props.theme.borderRadius};
 
-  font-size: smaller;
+  font-size: 0.75rem;
   line-height: 1;
 
   box-shadow: inset 0 0 0 1px #999;
 
-  background-color: #eee;
+  background-color: #f2f2f2;
   color: ${props => props.theme.color.text};
 `
 

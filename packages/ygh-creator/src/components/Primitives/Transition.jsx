@@ -16,12 +16,14 @@ const StyledEntryState = styled(EntryState)`
   display: inline-block;
   width: 1em;
   height: 1em;
+  margin: 0.25rem 0;
 `
 
 const StyledExitState = styled(ExitState)`
   display: inline-block;
   width: 1em;
   height: 1em;
+  margin: 0.25rem 0;
 `
 
 const Transition = ({ from, to, onStateClick = () => {} }) => (

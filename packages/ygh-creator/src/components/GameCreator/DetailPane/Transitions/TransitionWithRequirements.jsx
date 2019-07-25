@@ -14,7 +14,7 @@ const Label = styled.strong`
   display: block;
   margin: 1em 0 0.5em;
 
-  font-size: smaller;
+  font-size: 0.75rem;
 `
 
 const TransitionWithRequirements = ({ from, to, requiredActions = [] }) => (

@@ -12,6 +12,8 @@ const SectionTitle = styled.strong`
   display: block;
   margin: 0.5em;
 
+  line-height: 1;
+
   &::after {
     content: "›";
 

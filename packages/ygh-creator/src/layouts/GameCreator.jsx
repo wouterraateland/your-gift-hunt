@@ -1,8 +1,8 @@
 import React, { useEffect } from "react"
 import styled, { css, keyframes } from "styled-components"
-import { Link } from "@reach/router"
 
 import useGame from "hooks/useGame"
+import useEditor from "hooks/useEditor"
 import useSaveState from "hooks/useSaveState"
 import useMetaActions from "hooks/useMetaActions"
 import { useForceUpdate } from "ygh-hooks"
@@ -96,6 +96,7 @@ const SaveState = ({ isSaving, isDirty, lastSaved }) => {
 const CreatorLayout = ({ children }) => {
   const { isSaving, isDirty, lastSaved } = useSaveState()
   const { game } = useGame()
+  const { setUpcomingAction, ACTION_TYPES } = useEditor()
   const { testGame } = useMetaActions(game)
 
   return (
@@ -129,9 +130,20 @@ const CreatorLayout = ({ children }) => {
               color="primary"
               importance="secondary"
               size="small"
-              as={Link}
               lead={<Icons.Share />}
-              to={game.publishedAt ? "published" : "publish"}
+              onClick={() =>
+                setUpcomingAction(upcomingAction =>
+                  game.publishedAt
+                    ? upcomingAction &&
+                      upcomingAction.type === ACTION_TYPES.SHARE_GAME
+                      ? null
+                      : { type: ACTION_TYPES.SHARE_GAME }
+                    : upcomingAction &&
+                      upcomingAction.type === ACTION_TYPES.PUBLISH_GAME
+                    ? null
+                    : { type: ACTION_TYPES.PUBLISH_GAME }
+                )
+              }
             >
               {game.publishedAt ? "Share" : "Publish"}
             </Button>

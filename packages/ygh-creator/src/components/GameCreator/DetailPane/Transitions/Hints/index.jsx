@@ -18,7 +18,7 @@ const Label = styled.strong`
   display: block;
   margin: 0 0 0.5em;
 
-  font-size: smaller;
+  font-size: 0.75rem;
 `
 
 const Ol = styled.ol`

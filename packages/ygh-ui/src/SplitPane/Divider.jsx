@@ -8,6 +8,8 @@ const DividerContainer = styled.div`
   position: relative;
   z-index: 1;
 
+  flex-shrink: 0;
+
   background-color: #0002;
 
   &::before {

@@ -6,6 +6,8 @@ const Pane = styled.div`
   position: relative;
   z-index: 0;
 
+  flex-shrink: 0;
+
   ${props =>
     props.constraintFailed &&
     css`

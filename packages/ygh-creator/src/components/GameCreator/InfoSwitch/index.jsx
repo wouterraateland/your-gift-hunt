@@ -7,6 +7,8 @@ import Icons from "ygh-icons"
 import { ToolTip } from "ygh-ui"
 
 const Container = styled.div`
+  flex-shrink: 0;
+
   width: 3em;
   height: 100%;
   border-right: 1px solid #0002;

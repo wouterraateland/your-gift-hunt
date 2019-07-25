@@ -12,7 +12,7 @@ const Text = styled.span`
 `
 
 const Delay = styled.em`
-  font-size: smaller;
+  font-size: 0.75rem;
 `
 
 const Hint = ({ hint: { id, text, delay }, onEditClick }) => {

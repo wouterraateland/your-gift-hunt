@@ -7,29 +7,27 @@ const InputTagContainer = styled.span`
   position: relative;
 
   display: inline-block;
-  padding: 0.25em 0.5em;
+  padding: 0.125rem 0.25rem;
   border-radius: ${props => props.theme.borderRadius};
 
-  font-size: smaller;
+  font-size: 0.75rem;
   line-height: 1;
 
-  box-shadow: inset 0 0 0 0.1em #999;
+  box-shadow: inset 0 0 0 1px #999;
 
-  background-color: #eee;
+  background-color: #f2f2f2;
   color: ${props => props.theme.color.text};
 `
 
 const InputIcon = styled.span`
   display: inline-block;
-  padding: 0.25em 0.5em;
-  margin: -0.25em 0.5em -0.25em -0.5em;
-  border-radius: 0.25em 0 0 0.25em;
+  padding: 0.125rem 0.25rem;
+  margin: -0.125rem 0.25rem -0.125rem -0.25rem;
+  border-radius: 0.25rem 0 0 0.25rem;
 
-  font-family: monospace;
   font-weight: bold;
-  font-size: 13px;
 
-  background: #0002;
+  background-color: #0002;
 `
 
 export default ({ children, ...otherProps }) => (

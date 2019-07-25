@@ -1,6 +1,8 @@
 import React from "react"
 import styled, { css } from "styled-components"
 
+import { Outer } from "./EntityTag"
+
 const StateTag = styled.span`
   ${props =>
     props.onClick &&
@@ -9,18 +11,25 @@ const StateTag = styled.span`
     `}
 
   display: inline-block;
-  margin: 0;
-  padding: 0.125em 0.5em;
+  margin: 0.25rem 0;
+  padding: 0.125rem 0.25rem;
   border-radius: ${props => props.theme.borderRadius};
 
-  font-size: smaller;
+  font-size: 0.75rem;
   text-transform: uppercase;
   font-weight: bold;
   line-height: 1;
-  vertical-align: baseline;
 
   background-color: #999;
   color: #fff;
+
+  ${Outer} & {
+    margin: -0.125rem 0.25rem;
+
+    &:last-of-type {
+      margin-right: -0.25rem;
+    }
+  }
 `
 
 export default ({ state, onClick }) => (

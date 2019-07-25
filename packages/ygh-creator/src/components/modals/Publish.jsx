@@ -98,7 +98,6 @@ const SettingsModal = () => {
             </>
           )}
 
-          <hr />
           <Float.Right>
             <Button
               onClick={() => window.history.back()}

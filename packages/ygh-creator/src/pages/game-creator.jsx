@@ -32,7 +32,7 @@ const getInfoComponent = (selectedPane, INFO_TYPES) => {
 }
 
 const getActionComponent = (upcomingAction, ACTION_TYPES, isOpen) => {
-  switch (upcomingAction) {
+  switch (upcomingAction ? upcomingAction.type : null) {
     case ACTION_TYPES.PUBLISH_GAME:
       return PublishModal
     case ACTION_TYPES.SHARE_GAME:

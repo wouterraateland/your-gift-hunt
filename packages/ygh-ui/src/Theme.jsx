@@ -42,7 +42,7 @@ export const StaticGlobalStyle = createGlobalStyle`
   }
 
   html {
-    font-family: Montserrat, sans-serif;
+    font-family: ${theme.font.copy};
 
     @media (max-width: 20em) {
       font-size: 70%;
@@ -77,11 +77,12 @@ export const StaticGlobalStyle = createGlobalStyle`
 
   strong {
     color: ${theme.color.emphasis};
+    font-weight: 600;
   }
 
   hr {
     clear: both;
-    height: .1em;
+    height: 1px;
     background: linear-gradient(90deg, transparent, ${transparentize(
       0.5,
       theme.color.text
@@ -91,19 +92,25 @@ export const StaticGlobalStyle = createGlobalStyle`
   a {
     display: inline-block;
 
-    text-decoration-color: ${transparentize(0.5, theme.color.text)};
+    text-decoration: none;
 
-    color: ${opacify(0.1, theme.color.text)};
-
-    transition: color .2s ease-out;
+    color: ${theme.color.primary};
 
     &:hover {
-      color: ${opacify(0.3, theme.color.text)};
+      text-decoration: underline;
     }
   }
 
   img, svg {
     max-width: 100%;
+  }
+
+  blockquote {
+    padding-left: .5em;
+    margin: .5em 0;
+    border-left: .5em solid #0002;
+
+    font-style: italic;
   }
 `
 
