@@ -1,6 +1,6 @@
 {
   "name": "ygh-utils",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Utilities for Your Gift Hunt.",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
