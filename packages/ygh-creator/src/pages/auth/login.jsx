@@ -1,16 +1,18 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useState } from "react"
 import { Link, navigate } from "@reach/router"
 import queryString from "querystring"
 
 import { useAsync } from "ygh-hooks"
 import useAuth from "hooks/useAuth"
 
-import { FieldGroup, Field, Button } from "ygh-ui"
+import { FieldGroup, Field, DefaultOptions, Button } from "ygh-ui"
 import Layout from "layouts/Auth"
 
 const LoginPage = props => {
-  const { redirect = "/" } = queryString.parse(props.location.search.substr(1))
+  const { redirect } = queryString.parse(props.location.search.substr(1))
   const { loginUser } = useAuth()
+
+  const [rememberMe, setRememberMe] = useState([])
 
   const [{ isLoading, error }, runAsync] = useAsync()
 
@@ -23,9 +25,11 @@ const LoginPage = props => {
       const shouldRemind = event.target.remind.checked
 
       await loginUser({ email, password, shouldRemind })
-      navigate(redirect)
+      if (redirect) {
+        navigate(redirect)
+      }
     }),
-    []
+    [redirect]
   )
 
   if (error && !error.params) {
@@ -59,11 +63,20 @@ const LoginPage = props => {
         </FieldGroup>
         <Field
           block
-          label="Remember me"
-          info="This will keep you logged in for 60 days."
+          onChange={event => setRememberMe(event.target.value)}
+          options={[
+            {
+              value: "rememberMe",
+              label: "Remember me",
+              info: "This will keep you logged in for 60 days."
+            }
+          ]}
+          value={rememberMe}
+          isMulti
           name="remind"
           type="checkbox"
           error={errors["remind"]}
+          component={DefaultOptions}
         />
         <br />
         <small>

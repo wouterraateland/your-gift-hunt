@@ -22,24 +22,26 @@ const MARGIN = 48
 const WIDTH = 200
 
 const Container = ({ entity, children }) => {
-  const { pan, container } = usePanZoomGraphicContext()
+  const { pan, zoom, container } = usePanZoomGraphicContext()
   const { getAbsoluteEntityPosition } = useEntityPositions()
 
   const entityPosition = getAbsoluteEntityPosition(entity.id)
 
+  const scale = 16 * zoom
+
   const cWidth = container.current ? container.current.offsetWidth : 0
   const cHeight = container.current ? container.current.offsetHeight : 0
-  const isTop = entityPosition.top * 16 + pan.y < cHeight / 2
+  const isTop = entityPosition.top * scale + pan.y < cHeight / 2
 
   const a = (entityPosition.rotation * Math.PI) / 180
   const eHeight =
     entityPosition.height * Math.abs(Math.cos(a)) +
     entityPosition.width * Math.abs(Math.sin(a))
   const top = _.clamp(MARGIN, cHeight - (48 + MARGIN))(
-    (entityPosition.top + (3 + eHeight / 2) * (isTop ? 1 : -1)) * 16 + pan.y
+    (entityPosition.top + (3 + eHeight / 2) * (isTop ? 1 : -1)) * scale + pan.y
   )
-  const left = _.clamp(MARGIN + WIDTH / 2, cWidth - (MARGIN + WIDTH / 2))(
-    entityPosition.left * 16 + pan.x
+  const left = _.clamp((MARGIN + WIDTH) / 2, cWidth - (MARGIN + WIDTH) / 2)(
+    entityPosition.left * scale + pan.x
   )
 
   return (

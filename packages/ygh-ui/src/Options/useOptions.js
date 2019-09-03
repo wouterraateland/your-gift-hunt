@@ -4,7 +4,7 @@ const useOptions = ({
   name,
   isMulti,
   options,
-  onChange = _.noop,
+  onChange = () => {},
   value = null,
   disabled
 }) => {

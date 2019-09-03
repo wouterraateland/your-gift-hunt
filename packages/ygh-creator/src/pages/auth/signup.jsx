@@ -9,9 +9,7 @@ import { Button, Column, FieldGroup, Field, Row, VSpace } from "ygh-ui"
 import Layout from "layouts/Auth"
 
 const SignupPage = props => {
-  const { redirect = "/", email } = queryString.parse(
-    props.location.search.substr(1)
-  )
+  const { redirect, email } = queryString.parse(props.location.search.substr(1))
   const emailRef = useRef(null)
   const [{ isLoading, error }, runAsync] = useAsync()
   const { registerUser } = useAuth()
@@ -38,9 +36,11 @@ const SignupPage = props => {
         shouldRemind
       })
 
-      navigate(redirect)
+      if (redirect) {
+        navigate(redirect)
+      }
     }),
-    []
+    [redirect]
   )
 
   useEffect(() => {

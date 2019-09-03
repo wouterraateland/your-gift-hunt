@@ -13,7 +13,7 @@
     "clean": "rimraf lib",
     "build": "yarn clean && BABEL_ENV=esm yarn rollup -c",
     "test": "jest",
-    "tdd": "yest --watch",
+    "tdd": "jest --watch",
     "storybook": "start-storybook -p 9009 -s public",
     "storybook-build": "build-storybook -s public",
     "prepublishOnly": "yarn build"
