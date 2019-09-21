@@ -15,7 +15,13 @@ const Delete = ({ entity }) => {
   const { getDependentNodes } = useEntityDependencies()
   const { deleteNodes } = useGameMutations()
 
-  useClickOutside({ ref, onClickOutside: () => setUpcomingAction(null) })
+  useClickOutside({
+    ref,
+    onClickOutside:
+      upcomingAction && upcomingAction.type === ACTION_TYPES.DELETE_NODE
+        ? () => setUpcomingAction(null)
+        : () => {}
+  })
 
   const isDeleting =
     upcomingAction &&

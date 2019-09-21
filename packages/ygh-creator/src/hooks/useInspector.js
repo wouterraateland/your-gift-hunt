@@ -1,11 +1,13 @@
 import { useCallback, useContext, useState } from "react"
 import InspectorContext from "contexts/Inspector"
 
+import useEditor from "hooks/useEditor"
 import useEntities from "hooks/useEntities"
 import useGameTemplates from "hooks/useGameTemplates"
 
 export const useInspectorProvider = () => {
   const { entities } = useEntities()
+  const { setUpcomingAction } = useEditor()
   const { entityTemplates } = useGameTemplates()
 
   const [state, setState] = useState({
@@ -24,6 +26,7 @@ export const useInspectorProvider = () => {
     inspectedEntity => {
       const entity = entities.find(({ id }) => id === inspectedEntity)
       if (entityTemplates.some(({ id }) => id === entity.template.id)) {
+        setUpcomingAction(null)
         setState({
           inspectedEntity,
           inspectedState: null,
@@ -40,6 +43,7 @@ export const useInspectorProvider = () => {
         states.some(({ id }) => id === inspectedState)
       )
       if (entityTemplates.some(({ id }) => id === entity.template.id)) {
+        setUpcomingAction(null)
         setState({
           inspectedEntity: entity.id,
           inspectedState,

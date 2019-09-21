@@ -28,6 +28,9 @@ const SharePane = () => {
   return (
     <Container>
       <h2>Congrats, you published your game!</h2>
+      <a href={`${process.env.REACT_APP_SHOWCASE_URL}/${game.id}`}>
+        View in the showcase
+      </a>
       <p>Copy the link</p>
       <Field
         ref={ref}

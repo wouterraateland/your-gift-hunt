@@ -44,13 +44,25 @@ const DeleteButton = ({ entity, state }) => {
   const { getDependentNodes } = useEntityDependencies()
   const { deleteNodes } = useGameMutations()
 
-  useClickOutside({ ref, onClickOutside: () => setUpcomingAction(null) })
+  useClickOutside({
+    ref,
+    onClickOutside:
+      upcomingAction && upcomingAction.type === ACTION_TYPES.DELETE_NODE
+        ? () => setUpcomingAction(null)
+        : () => {}
+  })
 
   useEffect(() => {
     return () => {
-      setUpcomingAction(null)
+      if (
+        !isOpen &&
+        upcomingAction &&
+        upcomingAction.type === ACTION_TYPES.DELETE_NODE
+      ) {
+        setUpcomingAction(null)
+      }
     }
-  }, [entity, state, isOpen])
+  }, [upcomingAction, entity, state, isOpen])
 
   const isDeleting =
     upcomingAction &&

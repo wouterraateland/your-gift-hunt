@@ -184,19 +184,17 @@ const CreatorLayout = ({ children }) => {
               importance="secondary"
               size="small"
               lead={<Icons.Share />}
-              onClick={() =>
+              onClick={() => {
+                const targetType = game.publishedAt
+                  ? ACTION_TYPES.SHARE_GAME
+                  : ACTION_TYPES.PUBLISH_GAME
+
                 setUpcomingAction(upcomingAction =>
-                  game.publishedAt
-                    ? upcomingAction &&
-                      upcomingAction.type === ACTION_TYPES.SHARE_GAME
-                      ? null
-                      : { type: ACTION_TYPES.SHARE_GAME }
-                    : upcomingAction &&
-                      upcomingAction.type === ACTION_TYPES.PUBLISH_GAME
+                  upcomingAction && upcomingAction.type === targetType
                     ? null
-                    : { type: ACTION_TYPES.PUBLISH_GAME }
+                    : { type: targetType }
                 )
-              }
+              }}
             >
               {game.publishedAt ? "Share" : "Publish"}
             </Button>
