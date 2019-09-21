@@ -1,26 +1,26 @@
-import { PRIVACY, ACCESS_TYPES } from "data"
+import { PRIVACY } from "data"
 import React, { useCallback, useState } from "react"
-import { navigate } from "@reach/router"
 import styled from "styled-components"
 
 import useGame from "hooks/useGame"
+import useEditor from "hooks/useEditor"
 import useMetaActions from "hooks/useMetaActions"
 
-import Modal from "containers/Modal"
-import { Paper, Float, Button } from "ygh-ui"
+import { Float, Button } from "ygh-ui"
 
-const StyledPaper = styled(Paper.Container)`
-  width: 45em;
-  max-width: calc(100% - 2em);
-`
+const Container = styled.div`
+  height: 100%;
+  padding: 0.5rem;
 
-const Description = styled.p`
-  max-width: 35em;
+  line-height: 1.5;
+
+  background-color: #f9f9f9;
 `
 
 const SettingsModal = () => {
   const { game } = useGame()
   const { publishGame } = useMetaActions(game)
+  const { setUpcomingAction, ACTION_TYPES } = useEditor()
   const [isLoading, setLoading] = useState(false)
 
   const onPublishClick = useCallback(async () => {
@@ -28,99 +28,46 @@ const SettingsModal = () => {
     const published = await publishGame()
     setLoading(false)
     if (published) {
-      navigate(`/${game.creator.slug}/game/${game.slug}/published`, {
-        replace: true
-      })
+      setUpcomingAction({ type: ACTION_TYPES.SHARE_GAME })
     }
-  }, [])
+  }, [ACTION_TYPES, setUpcomingAction])
 
   return (
-    <Modal>
-      <StyledPaper>
-        <Paper.Section>
-          <h1>Nice work, time to publish your game!</h1>
-          {game.privacy === PRIVACY.PUBLIC ? (
-            <>
-              <Description>
-                <strong>{game.name}</strong> is a public game. You can publish
-                it for free.
-              </Description>
-              <Description>
-                It will be available at{" "}
-                <a
-                  href={`https://play.yourgifthunt.com/${game.creator.slug}/${
-                    game.slug
-                  }`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  play.yourgifthunt.com/{game.creator.slug}/{game.slug}
-                </a>{" "}
-                and in{" "}
-                <a
-                  href="https://play.yourgifthunt.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  the showcase
-                </a>{" "}
-                for anyone to play!
-              </Description>
-            </>
-          ) : (
-            <>
-              <Description>
-                <strong>{game.name}</strong> is a private game. While Your Gift
-                Hunt is in Beta, you can publish it for only 5,-.
-              </Description>
-              <Description>
-                {game.accessType === ACCESS_TYPES.CODE ? (
-                  <>
-                    Your game is only playable by people with whom you share the
-                    access code <strong>{game.accessCode}</strong>
-                  </>
-                ) : (
-                  <>Your game is only playable by the following people:</>
-                )}
-              </Description>
-              <Description>
-                They can play it at{" "}
-                <a
-                  href={`https://play.yourgifthunt.com/${game.creator.slug}/${
-                    game.slug
-                  }`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  play.yourgifthunt.com/{game.creator.slug}/{game.slug}
-                </a>
-              </Description>
-            </>
-          )}
-
+    <Container>
+      <h2>Nice work, time to publish {game.name}!</h2>
+      {game.privacy === PRIVACY.PUBLIC ? (
+        <>
+          <p>
+            After publishing, you can share this game with your friends and it
+            will be available for anyone to play in the showcase.
+          </p>
           <Float.Right>
             <Button
-              onClick={() => window.history.back()}
+              onClick={() => setUpcomingAction(null)}
               importance="tertiary"
-              color="error"
+              color="#ccc"
               disabled={isLoading}
             >
-              Cancel
-            </Button>
+              Later
+            </Button>{" "}
             <Button
               onClick={onPublishClick}
               importance="primary"
               color="primary"
               disabled={isLoading}
             >
-              {game.privacy === PRIVACY.PUBLIC
-                ? "Publish"
-                : "Checkout and publish"}
-            </Button>{" "}
+              Publish
+            </Button>
           </Float.Right>
-        </Paper.Section>
-      </StyledPaper>
-    </Modal>
+        </>
+      ) : (
+        <p>
+          This is a private game. To publish it, send an email to{" "}
+          <a href="mailto:info@yourgifthunt.com">info@yourgifthunt.com</a> and
+          we'll take care of it.
+        </p>
+      )}
+    </Container>
   )
 }
 
