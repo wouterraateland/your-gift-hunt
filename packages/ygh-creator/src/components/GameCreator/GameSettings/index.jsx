@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useCallback } from "react"
 import styled from "styled-components"
 import slugify from "limax"
 
@@ -9,7 +9,7 @@ import useGame from "hooks/useGame"
 import useGameMutations from "hooks/useGameMutations"
 
 import { useFormState } from "react-use-form-state"
-import { useQuery, useApolloClient } from "react-apollo-hooks"
+import { useQuery } from "react-apollo-hooks"
 
 import {
   Button,
@@ -22,7 +22,7 @@ import {
 import StatusMessage from "components/StatusMessage"
 
 import { accessOptions, PRIVACY, ACCESS_TYPES } from "data"
-import { USER_TEMPLATE_SETS, GAME_COUNT_BY_SLUG } from "gql/queries"
+import { USER_TEMPLATE_SETS } from "gql/queries"
 
 import defaultImage from "assets/default_thumb.png"
 
@@ -52,11 +52,19 @@ const Body = styled.div`
   padding: 0.5em;
 `
 
+const Footer = styled.div`
+  padding: 0.5rem;
+  border-top: 1px solid #0001;
+`
+
 const Form = styled.form`
+  height: 100%;
   margin: 0;
 `
 
-const Tagline = styled.p``
+const Tagline = styled.p`
+  word-break: break-word;
+`
 
 const SettingsModal = () => {
   const { game } = useGame()
@@ -90,35 +98,6 @@ const SettingsModal = () => {
     entityTemplateSets: game.entityTemplateSets.map(({ id }) => id)
   })
 
-  const client = useApolloClient()
-  const [nameExists, setNameExistence] = useState(false)
-
-  const checkNameExistence = useCallback(
-    async name => {
-      const slug = slugify(name)
-
-      if (slug === game.slug) {
-        return false
-      }
-
-      const res = await client.query({
-        query: GAME_COUNT_BY_SLUG,
-        variables: {
-          creatorSlug: game.creator.slug,
-          gameSlug: slug
-        }
-      })
-
-      return res.data.gamesConnection.aggregate.count !== 0
-    },
-    [client]
-  )
-
-  useEffect(() => {
-    setNameExistence(false)
-    checkNameExistence(formState.values.name).then(setNameExistence)
-  }, [formState.values.name])
-
   const handleSubmit = useCallback(
     runAsync(async event => {
       event.preventDefault()
@@ -144,39 +123,32 @@ const SettingsModal = () => {
   }
 
   return (
-    <Container>
-      <Head>
-        <Title>Settings</Title>
-      </Head>
-      <Body>
-        <Tagline>
-          {game.name} is a{" "}
-          <strong>
-            {game.privacy === PRIVACY.PUBLIC ? "Public" : "Private"}
-          </strong>{" "}
-          game, created by{" "}
-          <strong>
-            {game.creator.id === user.id ? "you" : game.creator.name}
-          </strong>
-          .
-        </Tagline>
-        <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
+      <Container>
+        <Head>
+          <Title>Settings</Title>
+        </Head>
+        <Body>
+          <Tagline>
+            Game created by{" "}
+            <strong>
+              {game.creator.id === user.id ? "you" : game.creator.name}
+            </strong>
+            .{" "}
+            {game.publishedAt ? (
+              <>
+                Playable at{" "}
+                <a href={`${process.env.REACT_APP_PLAY_URL}/${game.id}`}>
+                  {process.env.REACT_APP_PLAY_URL}/{game.id}
+                </a>
+                .
+              </>
+            ) : (
+              "Not published yet."
+            )}
+          </Tagline>
           <FieldGroup block>
-            <Field
-              block
-              {...text("name")}
-              label="Game name"
-              error={nameExists ? "This name is already taken" : null}
-              info={
-                <>
-                  Available at{" "}
-                  <strong>
-                    https://play.yourgifthunt.com/{game.creator.slug}/
-                    {slugify(formState.values.name)}
-                  </strong>
-                </>
-              }
-            />
+            <Field block {...text("name")} label="Game name" />
           </FieldGroup>
           <FieldGroup block>
             <Field
@@ -242,22 +214,22 @@ const SettingsModal = () => {
               )}
             </>
           )}
-          <FieldGroup block>
-            <Float.Right>
-              <StatusMessage {...{ success, isLoading, error }} />{" "}
-              <Button
-                type="submit"
-                importance="primary"
-                color="primary"
-                disabled={isLoading || nameExists}
-              >
-                Update settings
-              </Button>
-            </Float.Right>
-          </FieldGroup>
-        </Form>
-      </Body>
-    </Container>
+        </Body>
+        <Footer>
+          <Float.Right>
+            <StatusMessage {...{ success, isLoading, error }} />{" "}
+            <Button
+              type="submit"
+              importance="primary"
+              color="primary"
+              disabled={isLoading}
+            >
+              Update settings
+            </Button>
+          </Float.Right>
+        </Footer>
+      </Container>
+    </Form>
   )
 }
 

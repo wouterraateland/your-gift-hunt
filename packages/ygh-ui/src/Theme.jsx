@@ -103,6 +103,13 @@ export const StaticGlobalStyle = createGlobalStyle`
     &:hover {
       text-decoration: underline;
     }
+
+    &:focus {
+      outline: none;
+      text-decoration: underline;
+      background-color: ${props =>
+        transparentize(0.5)(props.theme.color.primary)};
+    }
   }
 
   img, svg {
