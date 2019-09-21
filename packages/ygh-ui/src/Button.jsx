@@ -48,7 +48,11 @@ const ButtonContainer = styled.button.attrs(({ disabled }) => ({
   ${props => {
     const color = props.disabled
       ? "#d4d4d4"
-      : opacify(1)(props.theme.color[props.color] || props.theme.color.emphasis)
+      : opacify(1)(
+          props.theme.color[props.color] ||
+            props.color ||
+            props.theme.color.emphasis
+        )
     const secondaryColor = props.disabled
       ? "#f9f9f9"
       : readableColor(

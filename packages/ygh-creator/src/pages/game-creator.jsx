@@ -18,8 +18,8 @@ import GameSettings from "components/GameCreator/GameSettings"
 import EntityExplorer from "components/GameCreator/EntityExplorer"
 import Toolbox from "components/GameCreator/Toolbox"
 
-import PublishModal from "components/modals/Publish"
-import PublishedModal from "components/modals/Published"
+import PublishPane from "components/GameCreator/PublishPane"
+import SharePane from "components/GameCreator/SharePane"
 
 const getInfoComponent = (selectedPane, INFO_TYPES) => {
   switch (selectedPane) {
@@ -37,9 +37,9 @@ const getInfoComponent = (selectedPane, INFO_TYPES) => {
 const getActionComponent = (upcomingAction, ACTION_TYPES, isOpen) => {
   switch (upcomingAction ? upcomingAction.type : null) {
     case ACTION_TYPES.PUBLISH_GAME:
-      return PublishModal
+      return PublishPane
     case ACTION_TYPES.SHARE_GAME:
-      return PublishedModal
+      return SharePane
     default:
       return isOpen ? DetailPane : null
   }

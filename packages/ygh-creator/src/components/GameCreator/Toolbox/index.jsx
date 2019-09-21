@@ -1,56 +1,79 @@
-import React, { useCallback, useRef, useState } from "react"
+import React, { useCallback, useState } from "react"
+import styled from "styled-components"
 
-import { useClickOutside } from "ygh-hooks"
+import Icons from "ygh-icons"
+import { ActionButton, Field } from "ygh-ui"
 
-import Container from "./Container"
-import Types from "./Types"
-import Entities from "./Entities"
+import TemplateSets from "./TemplateSets"
 
-const Toolbox = () => {
-  const ref = useRef(null)
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f9f9f9;
+`
 
-  const [{ selectedType, entitiesVisible }, setState] = useState({
-    selectedType: null,
-    entitiesVisible: false
-  })
+const Header = styled.div`
+  position: relative;
+  height: 2rem;
+  padding: 0.5rem;
+`
 
-  const hideEntities = useCallback(
-    () =>
-      setState({
-        selectedType: null,
-        entitiesVisible: false
-      }),
-    []
-  )
+const Title = styled.strong`
+  display: block;
 
-  useClickOutside({
-    ref,
-    onClickOutside: hideEntities
-  })
+  line-height: 1;
+`
 
-  const toggleSelectedType = useCallback(
-    selectedType =>
-      setState(state => ({
-        selectedType,
-        entitiesVisible:
-          state.selectedType === selectedType ? !state.entitiesVisible : true
-      })),
-    []
-  )
+const Actions = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.25rem;
+`
+
+const Body = styled.div`
+  flex-grow: 1;
+  overflow-y: auto;
+`
+
+const Footer = styled.div`
+  position: relative;
+  padding: 0.5rem;
+`
+
+const EntityExplorer = () => {
+  const [filter, setFilter] = useState("")
+  const openTemplateSetManager = useCallback(() => {}, [])
 
   return (
-    <Container ref={ref}>
-      <Types
-        onTypeClick={toggleSelectedType}
-        selectedType={entitiesVisible ? selectedType : null}
-      />
-      <Entities
-        isVisible={entitiesVisible}
-        selectedType={selectedType}
-        onBackClick={hideEntities}
-      />
+    <Container>
+      <Header>
+        <Title>Packs</Title>
+        <Actions>
+          <ActionButton
+            color="primary"
+            onClick={() => openTemplateSetManager()}
+          >
+            <Icons.Plus />
+          </ActionButton>
+        </Actions>
+      </Header>
+      <Body>
+        <TemplateSets filter={filter} />
+      </Body>
+      <Footer>
+        <Field
+          block
+          value={filter}
+          onChange={event => setFilter(event.target.value)}
+          type="search"
+          lead={<Icons.Loop />}
+          placeholder="Filter..."
+        />
+      </Footer>
     </Container>
   )
 }
 
-export default Toolbox
+export default EntityExplorer
