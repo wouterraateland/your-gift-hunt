@@ -6,11 +6,14 @@ import useGameTemplates from "hooks/useGameTemplates"
 import { Accordion } from "ygh-ui"
 import TemplateSet from "./TemplateSet"
 
+const matchesFilter = (templateName, filter) =>
+  templateName.toLowerCase().includes(filter.toLowerCase())
+
 const TemplateSets = ({ filter }) => {
   const { game } = useGame()
   const { entityTemplates } = useGameTemplates()
 
-  const creatableEntityTemplates = entityTemplates.filter(
+  const visibleEntityTemplates = entityTemplates.filter(
     ({ isPlaceable, isContainer }) => isPlaceable || !isContainer
   )
 
@@ -32,8 +35,10 @@ const TemplateSets = ({ filter }) => {
             templateSet={{
               name: "Default",
               description: "Entities usable in all games",
-              entityTemplates: creatableEntityTemplates.filter(
-                entityTemplate => !entityTemplate.set
+              entityTemplates: visibleEntityTemplates.filter(
+                entityTemplate =>
+                  !entityTemplate.set &&
+                  matchesFilter(entityTemplate.name, filter)
               )
             }}
             filter={filter}
@@ -44,9 +49,11 @@ const TemplateSets = ({ filter }) => {
             <TemplateSet
               templateSet={{
                 ...set,
-                entityTemplates: creatableEntityTemplates.filter(
+                entityTemplates: visibleEntityTemplates.filter(
                   entityTemplate =>
-                    entityTemplate.set && entityTemplate.set.id === set.id
+                    entityTemplate.set &&
+                    entityTemplate.set.id === set.id &&
+                    matchesFilter(entityTemplate.name, filter)
                 )
               }}
               filter={filter}

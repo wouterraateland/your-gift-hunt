@@ -20,12 +20,16 @@ const TemplateSet = ({ templateSet }) => {
     <Container>
       <blockquote>{templateSet.description}</blockquote>
       <Templates>
-        {templateSet.entityTemplates.map(entityTemplate => (
-          <EntityTemplatePreview
-            key={entityTemplate.id}
-            entityTemplate={entityTemplate}
-          />
-        ))}
+        {templateSet.entityTemplates.length ? (
+          templateSet.entityTemplates.map(entityTemplate => (
+            <EntityTemplatePreview
+              key={entityTemplate.id}
+              entityTemplate={entityTemplate}
+            />
+          ))
+        ) : (
+          <em>No entities found</em>
+        )}
       </Templates>
     </Container>
   )
