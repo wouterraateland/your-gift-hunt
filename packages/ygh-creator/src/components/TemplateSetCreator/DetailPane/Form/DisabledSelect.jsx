@@ -1,19 +1,11 @@
 import React from "react"
 import styled from "styled-components"
-import { transparentize } from "polished"
 
 const LabelText = styled.span`
-  pointer-events: none;
+  display: block;
+  font-size: 0.75rem;
 
-  position: absolute;
-  top: -1.7em;
-  left: 0;
-
-  color: ${props => transparentize(0.2, props.theme.color.text)};
-
-  font-size: 0.7em;
-
-  transition: left 0.2s ease-out, top 0.2s ease-out, font-size 0.2s ease-out;
+  color: ${props => props.theme.color.caption};
 `
 
 const Label = styled.div`
@@ -22,11 +14,12 @@ const Label = styled.div`
 
 const Option = styled.span`
   display: inline-block;
-  margin: 0 0.5em 0.5em 0;
+  margin: 0 0.5rem 0.5rem 0;
 `
 
 const DisabledSelect = ({ label, isMulti, value, options, placeholder }) => (
   <Label>
+    <LabelText>{label}</LabelText>
     {isMulti ? (
       value.length ? (
         options
@@ -44,7 +37,6 @@ const DisabledSelect = ({ label, isMulti, value, options, placeholder }) => (
     ) : (
       <em>None</em>
     )}
-    <LabelText>{label}</LabelText>
   </Label>
 )
 

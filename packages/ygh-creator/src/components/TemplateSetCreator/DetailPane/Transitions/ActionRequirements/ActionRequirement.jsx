@@ -126,8 +126,8 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
 
   const [currentValues, setCurrentValues] = useState(getInitialValues())
 
-  const onChange = useCallback((event, stateValues, nextStateValues) => {
-    setCurrentValues(nextStateValues)
+  const onChange = useCallback(values => {
+    setCurrentValues(values)
   }, [])
 
   const onFlush = useCallback(
@@ -282,34 +282,31 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
     [actionRequirement.id]
   )
 
-  const onDelete = useCallback(
-    () => {
-      updateEntityTemplate(template.id, {
-        states: {
-          update: [
-            {
-              where: { id: transition.from.id },
-              data: {
-                outgoingTransitions: {
-                  update: [
-                    {
-                      where: { id: transition.id },
-                      data: {
-                        requiredActions: {
-                          delete: { id: actionRequirement.id }
-                        }
+  const onDelete = useCallback(() => {
+    updateEntityTemplate(template.id, {
+      states: {
+        update: [
+          {
+            where: { id: transition.from.id },
+            data: {
+              outgoingTransitions: {
+                update: [
+                  {
+                    where: { id: transition.id },
+                    data: {
+                      requiredActions: {
+                        delete: { id: actionRequirement.id }
                       }
                     }
-                  ]
-                }
+                  }
+                ]
               }
             }
-          ]
-        }
-      })
-    },
-    [actionRequirement.id]
-  )
+          }
+        ]
+      }
+    })
+  }, [actionRequirement.id])
 
   return (
     <Form

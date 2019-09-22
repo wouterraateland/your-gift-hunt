@@ -27,12 +27,12 @@ const EntityContainer = ({ entity, parentRotation }) => {
   const [position] = useEntityPosition(entity.id)
   const dragProps = usePhysicalDrag(entity, parentRotation)
 
-  const containedEntities = entities.filter(({ isObject, isItem, id }) => {
+  const containedEntities = entities.filter(({ isPlaceable, id }) => {
     const container = getContainer(id)
-    return (isObject || isItem) && container && container.id === entity.id
+    return isPlaceable && container && container.id === entity.id
   })
 
-  return (
+  return entity.isPlaceable ? (
     <EntityComponent
       isInteractive={false}
       entity={entity}
@@ -41,7 +41,7 @@ const EntityContainer = ({ entity, parentRotation }) => {
       {...dragProps}
       containedEntities={containedEntities}
     />
-  )
+  ) : null
 }
 
 export default EntityContainer

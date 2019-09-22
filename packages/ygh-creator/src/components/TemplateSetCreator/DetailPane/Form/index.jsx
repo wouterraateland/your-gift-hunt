@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import styled from "styled-components"
-import { transparentize } from "polished"
 import { diff } from "deep-diff"
 
 import { useFormState } from "react-use-form-state"
@@ -13,17 +12,9 @@ import { Bin, Pen } from "ygh-icons"
 import DisabledSelect from "./DisabledSelect"
 
 const LabelText = styled.span`
-  pointer-events: none;
+  font-size: 0.75rem;
 
-  position: absolute;
-  top: -1.7em;
-  left: 0;
-
-  color: ${props => transparentize(0.2, props.theme.color.text)};
-
-  font-size: 0.7em;
-
-  transition: left 0.2s ease-out, top 0.2s ease-out, font-size 0.2s ease-out;
+  color: ${props => props.theme.color.caption};
 `
 
 const StyledForm = styled(Form)`
@@ -36,18 +27,19 @@ const FloatRight = styled(Float.Right)`
 `
 
 const StyledVSpace = styled.div`
-  margin-bottom: 1.5em;
+  margin-bottom: 1.5rem;
   &:first-child {
     display: none;
   }
 `
 
 const Title = styled.h3`
-  margin: -1em 0;
+  margin: -1rem 0;
+  line-height: 1.5rem;
 `
 
 const Blockquote = styled.blockquote`
-  margin: -0.5em 0 1em;
+  margin: 0 0 1rem;
 `
 
 const Label = styled.div`
@@ -75,6 +67,7 @@ const FormInput = props => {
       <>
         {props.grouped && <StyledVSpace />}
         <Label>
+          <LabelText label={props.label} />
           {props.type === "checkbox" ? (
             props.checked ? (
               "True"
@@ -86,7 +79,6 @@ const FormInput = props => {
           ) : (
             props.value.toString()
           )}
-          <LabelText label={props.label} />
         </Label>
       </>
     )
@@ -104,7 +96,7 @@ export default ({
 }) => {
   const ref = useRef(null)
   const [isEditable, setEditable] = useState(false)
-  const [formState, inputs] = useFormState(getInitialValues(), { onChange })
+  const [formState, inputs] = useFormState(getInitialValues())
   const initialValues = useMemo(getInitialValues, [getInitialValues])
 
   useClickOutside({ ref, onClickOutside: () => setEditable(false) })
@@ -140,6 +132,10 @@ export default ({
       formState.setField(name, initialValues[name])
     )
   }, [initialValues])
+
+  useEffect(() => {
+    onChange(formState.values, formState.setField)
+  }, [formState.values])
 
   const debouncedValues = useDebounce(formState.values, 1000)
 

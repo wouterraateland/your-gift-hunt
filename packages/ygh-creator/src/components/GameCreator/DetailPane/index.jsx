@@ -34,7 +34,7 @@ const DetailPane = () => {
   }, [inspectedEntity, inspectedState])
 
   return (
-    <Container hasPreview={!!entity && (entity.isObject || entity.isItem)}>
+    <Container hasPreview={!!entity && entity.isPlaceable}>
       <Header />
       <Body ref={ref}>
         {entity && <Preview entity={entity} state={state} />}

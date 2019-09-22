@@ -17,7 +17,7 @@ const EditableTemplate = ({ template }) => (
     {!template.isContainer && <Fields template={template} />}
     {!template.isContainer && <InformationSlots template={template} />}
     {template.isContainer && <Entrances template={template} />}
-    {!template.isContainer && <Portals template={template} />}
+    {template.isPortal && <Portals template={template} />}
     {!template.isContainer && <States template={template} />}
     {!template.isContainer && template.states && (
       <Transitions template={template} />

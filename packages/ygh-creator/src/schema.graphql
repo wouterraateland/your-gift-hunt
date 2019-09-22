@@ -1,5 +1,5 @@
 # source: https://api.yourgifthunt.com/prisma/hunt-api/dev
-# timestamp: Wed Jul 03 2019 14:45:53 GMT+0200 (Midden-Europese zomertijd)
+# timestamp: Sun Sep 22 2019 17:06:16 GMT+0200 (Midden-Europese zomertijd)
 
 enum AccessType {
   NONE
@@ -3138,10 +3138,12 @@ type Entity implements Node {
   isItem: Boolean!
   isObject: Boolean!
   isContainer: Boolean!
-  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldGroup!]
+  isPlaceable: Boolean!
+  isPortal: Boolean!
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field!]
   states(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [State!]
   informationSlots(where: InformationSlotWhereInput, orderBy: InformationSlotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlot!]
-  featuredField: FieldGroup
+  featuredField: Field
   defaultState: State
   container: Entity
   containedEntities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity!]
@@ -3170,6 +3172,8 @@ input EntityCreateInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateCreateOneInput
   fields: FieldCreateManyWithoutEntityInput
   states: StateCreateManyWithoutEntityInput
@@ -3238,6 +3242,8 @@ input EntityCreateWithoutContainedEntitiesInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateCreateOneInput
   fields: FieldCreateManyWithoutEntityInput
   states: StateCreateManyWithoutEntityInput
@@ -3260,6 +3266,8 @@ input EntityCreateWithoutContainerInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateCreateOneInput
   fields: FieldCreateManyWithoutEntityInput
   states: StateCreateManyWithoutEntityInput
@@ -3282,6 +3290,8 @@ input EntityCreateWithoutEntrancesInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateCreateOneInput
   fields: FieldCreateManyWithoutEntityInput
   states: StateCreateManyWithoutEntityInput
@@ -3304,6 +3314,8 @@ input EntityCreateWithoutFieldsInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateCreateOneInput
   states: StateCreateManyWithoutEntityInput
   informationSlots: InformationSlotCreateManyWithoutEntityInput
@@ -3326,6 +3338,8 @@ input EntityCreateWithoutGameInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateCreateOneInput
   fields: FieldCreateManyWithoutEntityInput
   states: StateCreateManyWithoutEntityInput
@@ -3348,6 +3362,8 @@ input EntityCreateWithoutInformationSlotsInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateCreateOneInput
   fields: FieldCreateManyWithoutEntityInput
   states: StateCreateManyWithoutEntityInput
@@ -3370,6 +3386,8 @@ input EntityCreateWithoutPortalsInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateCreateOneInput
   fields: FieldCreateManyWithoutEntityInput
   states: StateCreateManyWithoutEntityInput
@@ -3392,6 +3410,8 @@ input EntityCreateWithoutStatesInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateCreateOneInput
   fields: FieldCreateManyWithoutEntityInput
   informationSlots: InformationSlotCreateManyWithoutEntityInput
@@ -3434,6 +3454,10 @@ enum EntityOrderByInput {
   isObject_DESC
   isContainer_ASC
   isContainer_DESC
+  isPlaceable_ASC
+  isPlaceable_DESC
+  isPortal_ASC
+  isPortal_DESC
 }
 
 type EntityPreviousValues {
@@ -3446,6 +3470,8 @@ type EntityPreviousValues {
   isItem: Boolean!
   isObject: Boolean!
   isContainer: Boolean!
+  isPlaceable: Boolean!
+  isPortal: Boolean!
 }
 
 type EntityRequirement implements Node {
@@ -4238,6 +4264,14 @@ input EntityScalarWhereInput {
 
   """All values that are not equal to given value."""
   isContainer_not: Boolean
+  isPlaceable: Boolean
+
+  """All values that are not equal to given value."""
+  isPlaceable_not: Boolean
+  isPortal: Boolean
+
+  """All values that are not equal to given value."""
+  isPortal_not: Boolean
 }
 
 type EntitySubscriptionPayload {
@@ -4287,6 +4321,8 @@ type EntityTemplate implements Node {
   isItem: Boolean!
   isObject: Boolean!
   isContainer: Boolean!
+  isPlaceable: Boolean!
+  isPortal: Boolean!
   fields(where: FieldTemplateWhereInput, orderBy: FieldTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldTemplate!]
   states(where: StateTemplateWhereInput, orderBy: StateTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTemplate!]
   informationSlots(where: InformationSlotTemplateWhereInput, orderBy: InformationSlotTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InformationSlotTemplate!]
@@ -4315,6 +4351,8 @@ input EntityTemplateCreateInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateCreateManyWithoutEntityInput
   states: StateTemplateCreateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateCreateManyWithoutEntityInput
@@ -4368,6 +4406,8 @@ input EntityTemplateCreateWithoutEntrancesInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateCreateManyWithoutEntityInput
   states: StateTemplateCreateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateCreateManyWithoutEntityInput
@@ -4385,6 +4425,8 @@ input EntityTemplateCreateWithoutFieldsInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   states: StateTemplateCreateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateCreateManyWithoutEntityInput
   entrances: EntranceTemplateCreateManyWithoutEntityTemplateInput
@@ -4402,6 +4444,8 @@ input EntityTemplateCreateWithoutInformationSlotsInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateCreateManyWithoutEntityInput
   states: StateTemplateCreateManyWithoutEntityInput
   entrances: EntranceTemplateCreateManyWithoutEntityTemplateInput
@@ -4419,6 +4463,8 @@ input EntityTemplateCreateWithoutPortalsInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateCreateManyWithoutEntityInput
   states: StateTemplateCreateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateCreateManyWithoutEntityInput
@@ -4436,6 +4482,8 @@ input EntityTemplateCreateWithoutSetInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateCreateManyWithoutEntityInput
   states: StateTemplateCreateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateCreateManyWithoutEntityInput
@@ -4453,6 +4501,8 @@ input EntityTemplateCreateWithoutStatesInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateCreateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateCreateManyWithoutEntityInput
   entrances: EntranceTemplateCreateManyWithoutEntityTemplateInput
@@ -4490,6 +4540,10 @@ enum EntityTemplateOrderByInput {
   isObject_DESC
   isContainer_ASC
   isContainer_DESC
+  isPlaceable_ASC
+  isPlaceable_DESC
+  isPortal_ASC
+  isPortal_DESC
 }
 
 type EntityTemplatePreviousValues {
@@ -4502,6 +4556,8 @@ type EntityTemplatePreviousValues {
   isItem: Boolean!
   isObject: Boolean!
   isContainer: Boolean!
+  isPlaceable: Boolean!
+  isPortal: Boolean!
 }
 
 input EntityTemplateScalarWhereInput {
@@ -4693,6 +4749,14 @@ input EntityTemplateScalarWhereInput {
 
   """All values that are not equal to given value."""
   isContainer_not: Boolean
+  isPlaceable: Boolean
+
+  """All values that are not equal to given value."""
+  isPlaceable_not: Boolean
+  isPortal: Boolean
+
+  """All values that are not equal to given value."""
+  isPortal_not: Boolean
 }
 
 type EntityTemplateSet implements Node {
@@ -5340,6 +5404,8 @@ input EntityTemplateUpdateDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateUpdateManyWithoutEntityInput
   states: StateTemplateUpdateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateUpdateManyWithoutEntityInput
@@ -5357,6 +5423,8 @@ input EntityTemplateUpdateInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateUpdateManyWithoutEntityInput
   states: StateTemplateUpdateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateUpdateManyWithoutEntityInput
@@ -5374,6 +5442,8 @@ input EntityTemplateUpdateManyDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
 }
 
 input EntityTemplateUpdateManyMutationInput {
@@ -5383,6 +5453,8 @@ input EntityTemplateUpdateManyMutationInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
 }
 
 input EntityTemplateUpdateManyWithoutSetInput {
@@ -5453,6 +5525,8 @@ input EntityTemplateUpdateWithoutEntrancesDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateUpdateManyWithoutEntityInput
   states: StateTemplateUpdateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateUpdateManyWithoutEntityInput
@@ -5469,6 +5543,8 @@ input EntityTemplateUpdateWithoutFieldsDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   states: StateTemplateUpdateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateUpdateManyWithoutEntityInput
   entrances: EntranceTemplateUpdateManyWithoutEntityTemplateInput
@@ -5485,6 +5561,8 @@ input EntityTemplateUpdateWithoutInformationSlotsDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateUpdateManyWithoutEntityInput
   states: StateTemplateUpdateManyWithoutEntityInput
   entrances: EntranceTemplateUpdateManyWithoutEntityTemplateInput
@@ -5501,6 +5579,8 @@ input EntityTemplateUpdateWithoutPortalsDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateUpdateManyWithoutEntityInput
   states: StateTemplateUpdateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateUpdateManyWithoutEntityInput
@@ -5517,6 +5597,8 @@ input EntityTemplateUpdateWithoutSetDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateUpdateManyWithoutEntityInput
   states: StateTemplateUpdateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateUpdateManyWithoutEntityInput
@@ -5533,6 +5615,8 @@ input EntityTemplateUpdateWithoutStatesDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   fields: FieldTemplateUpdateManyWithoutEntityInput
   informationSlots: InformationSlotTemplateUpdateManyWithoutEntityInput
   entrances: EntranceTemplateUpdateManyWithoutEntityTemplateInput
@@ -5772,6 +5856,14 @@ input EntityTemplateWhereInput {
 
   """All values that are not equal to given value."""
   isContainer_not: Boolean
+  isPlaceable: Boolean
+
+  """All values that are not equal to given value."""
+  isPlaceable_not: Boolean
+  isPortal: Boolean
+
+  """All values that are not equal to given value."""
+  isPortal_not: Boolean
   fields_every: FieldTemplateWhereInput
   fields_some: FieldTemplateWhereInput
   fields_none: FieldTemplateWhereInput
@@ -5803,6 +5895,8 @@ input EntityUpdateDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
   states: StateUpdateManyWithoutEntityInput
@@ -5825,6 +5919,8 @@ input EntityUpdateInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
   states: StateUpdateManyWithoutEntityInput
@@ -5847,6 +5943,8 @@ input EntityUpdateManyDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
 }
 
 input EntityUpdateManyMutationInput {
@@ -5856,6 +5954,8 @@ input EntityUpdateManyMutationInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
 }
 
 input EntityUpdateManyWithoutContainerInput {
@@ -5947,6 +6047,8 @@ input EntityUpdateWithoutContainedEntitiesDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
   states: StateUpdateManyWithoutEntityInput
@@ -5968,6 +6070,8 @@ input EntityUpdateWithoutContainerDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
   states: StateUpdateManyWithoutEntityInput
@@ -5989,6 +6093,8 @@ input EntityUpdateWithoutEntrancesDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
   states: StateUpdateManyWithoutEntityInput
@@ -6010,6 +6116,8 @@ input EntityUpdateWithoutFieldsDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateUpdateOneInput
   states: StateUpdateManyWithoutEntityInput
   informationSlots: InformationSlotUpdateManyWithoutEntityInput
@@ -6031,6 +6139,8 @@ input EntityUpdateWithoutGameDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
   states: StateUpdateManyWithoutEntityInput
@@ -6052,6 +6162,8 @@ input EntityUpdateWithoutInformationSlotsDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
   states: StateUpdateManyWithoutEntityInput
@@ -6073,6 +6185,8 @@ input EntityUpdateWithoutPortalsDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
   states: StateUpdateManyWithoutEntityInput
@@ -6094,6 +6208,8 @@ input EntityUpdateWithoutStatesDataInput {
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
+  isPlaceable: Boolean
+  isPortal: Boolean
   template: EntityTemplateUpdateOneInput
   fields: FieldUpdateManyWithoutEntityInput
   informationSlots: InformationSlotUpdateManyWithoutEntityInput
@@ -6354,6 +6470,14 @@ input EntityWhereInput {
 
   """All values that are not equal to given value."""
   isContainer_not: Boolean
+  isPlaceable: Boolean
+
+  """All values that are not equal to given value."""
+  isPlaceable_not: Boolean
+  isPortal: Boolean
+
+  """All values that are not equal to given value."""
+  isPortal_not: Boolean
   template: EntityTemplateWhereInput
   fields_every: FieldWhereInput
   fields_some: FieldWhereInput
@@ -7522,7 +7646,7 @@ input EntranceWhereUniqueInput {
   id: ID
 }
 
-type FieldGroup implements Node {
+type Field implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -7598,7 +7722,7 @@ input FieldCreateWithoutInformationSlotsInput {
 """An edge in a connection."""
 type FieldEdge {
   """The item at the end of the edge."""
-  node: FieldGroup!
+  node: Field!
 
   """A cursor for use in pagination."""
   cursor: String!
@@ -7852,7 +7976,7 @@ input FieldScalarWhereInput {
 
 type FieldSubscriptionPayload {
   mutation: MutationType!
-  node: FieldGroup
+  node: Field
   updatedFields: [String!]
   previousValues: FieldPreviousValues
 }
@@ -12345,7 +12469,7 @@ type InformationSlot implements Node {
   name: String
   description: String
   allowedTypes(where: FieldTypeWhereInput, orderBy: FieldTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldType!]
-  field: FieldGroup
+  field: Field
   entity: Entity!
   states(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [State!]
 }
@@ -13567,7 +13691,7 @@ type InputRequirement implements Node {
   updatedAt: DateTime!
   template: InputRequirementTemplate
   key: String!
-  field: FieldGroup
+  field: Field
   value: String
   not: Boolean!
   comparator: ComparatorType!
@@ -14335,7 +14459,7 @@ type Mutation {
   createEntranceTemplate(data: EntranceTemplateCreateInput!): EntranceTemplate!
   createEntity(data: EntityCreateInput!): Entity!
   createPayloadRequirementTemplate(data: PayloadRequirementTemplateCreateInput!): PayloadRequirementTemplate!
-  createField(data: FieldCreateInput!): FieldGroup!
+  createField(data: FieldCreateInput!): Field!
   createActionRequirementTemplate(data: ActionRequirementTemplateCreateInput!): ActionRequirementTemplate!
   createStateTransitionTemplate(data: StateTransitionTemplateCreateInput!): StateTransitionTemplate!
   createStateTemplate(data: StateTemplateCreateInput!): StateTemplate!
@@ -14372,7 +14496,7 @@ type Mutation {
   updateEntranceTemplate(data: EntranceTemplateUpdateInput!, where: EntranceTemplateWhereUniqueInput!): EntranceTemplate
   updateEntity(data: EntityUpdateInput!, where: EntityWhereUniqueInput!): Entity
   updatePayloadRequirementTemplate(data: PayloadRequirementTemplateUpdateInput!, where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
-  updateField(data: FieldUpdateInput!, where: FieldWhereUniqueInput!): FieldGroup
+  updateField(data: FieldUpdateInput!, where: FieldWhereUniqueInput!): Field
   updateActionRequirementTemplate(data: ActionRequirementTemplateUpdateInput!, where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   updateStateTransitionTemplate(data: StateTransitionTemplateUpdateInput!, where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
   updateStateTemplate(data: StateTemplateUpdateInput!, where: StateTemplateWhereUniqueInput!): StateTemplate
@@ -14409,7 +14533,7 @@ type Mutation {
   deleteEntranceTemplate(where: EntranceTemplateWhereUniqueInput!): EntranceTemplate
   deleteEntity(where: EntityWhereUniqueInput!): Entity
   deletePayloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
-  deleteField(where: FieldWhereUniqueInput!): FieldGroup
+  deleteField(where: FieldWhereUniqueInput!): Field
   deleteActionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   deleteStateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
   deleteStateTemplate(where: StateTemplateWhereUniqueInput!): StateTemplate
@@ -14446,7 +14570,7 @@ type Mutation {
   upsertEntranceTemplate(where: EntranceTemplateWhereUniqueInput!, create: EntranceTemplateCreateInput!, update: EntranceTemplateUpdateInput!): EntranceTemplate!
   upsertEntity(where: EntityWhereUniqueInput!, create: EntityCreateInput!, update: EntityUpdateInput!): Entity!
   upsertPayloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!, create: PayloadRequirementTemplateCreateInput!, update: PayloadRequirementTemplateUpdateInput!): PayloadRequirementTemplate!
-  upsertField(where: FieldWhereUniqueInput!, create: FieldCreateInput!, update: FieldUpdateInput!): FieldGroup!
+  upsertField(where: FieldWhereUniqueInput!, create: FieldCreateInput!, update: FieldUpdateInput!): Field!
   upsertActionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!, create: ActionRequirementTemplateCreateInput!, update: ActionRequirementTemplateUpdateInput!): ActionRequirementTemplate!
   upsertStateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!, create: StateTransitionTemplateCreateInput!, update: StateTransitionTemplateUpdateInput!): StateTransitionTemplate!
   upsertStateTemplate(where: StateTemplateWhereUniqueInput!, create: StateTemplateCreateInput!, update: StateTemplateUpdateInput!): StateTemplate!
@@ -16984,7 +17108,7 @@ type Query {
   entranceTemplates(where: EntranceTemplateWhereInput, orderBy: EntranceTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EntranceTemplate]!
   entities(where: EntityWhereInput, orderBy: EntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Entity]!
   payloadRequirementTemplates(where: PayloadRequirementTemplateWhereInput, orderBy: PayloadRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PayloadRequirementTemplate]!
-  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldGroup]!
+  fields(where: FieldWhereInput, orderBy: FieldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Field]!
   actionRequirementTemplates(where: ActionRequirementTemplateWhereInput, orderBy: ActionRequirementTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionRequirementTemplate]!
   stateTransitionTemplates(where: StateTransitionTemplateWhereInput, orderBy: StateTransitionTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTransitionTemplate]!
   stateTemplates(where: StateTemplateWhereInput, orderBy: StateTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StateTemplate]!
@@ -17021,7 +17145,7 @@ type Query {
   entranceTemplate(where: EntranceTemplateWhereUniqueInput!): EntranceTemplate
   entity(where: EntityWhereUniqueInput!): Entity
   payloadRequirementTemplate(where: PayloadRequirementTemplateWhereUniqueInput!): PayloadRequirementTemplate
-  field(where: FieldWhereUniqueInput!): FieldGroup
+  field(where: FieldWhereUniqueInput!): Field
   actionRequirementTemplate(where: ActionRequirementTemplateWhereUniqueInput!): ActionRequirementTemplate
   stateTransitionTemplate(where: StateTransitionTemplateWhereUniqueInput!): StateTransitionTemplate
   stateTemplate(where: StateTemplateWhereUniqueInput!): StateTemplate
@@ -20320,9 +20444,11 @@ type User implements Node {
   slug: String!
   email: String!
   emailConfirmed: Boolean!
+  emailConfirmationToken: String
   password: String!
   avatar: String
   token: String!
+  resetToken: String
   gamesCreated(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game!]
   games(where: GameWhereInput, orderBy: GameOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Game!]
   plays(where: GamePlayWhereInput, orderBy: GamePlayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GamePlay!]
@@ -20348,9 +20474,11 @@ input UserCreateInput {
   slug: String!
   email: String!
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String!
   avatar: String
   token: String!
+  resetToken: String
   gamesCreated: GameCreateManyWithoutCreatorInput
   games: GameCreateManyWithoutCooperatorsInput
   plays: GamePlayCreateManyWithoutPlayerInput
@@ -20386,9 +20514,11 @@ input UserCreateWithoutEntityTemplateSetsCreatedInput {
   slug: String!
   email: String!
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String!
   avatar: String
   token: String!
+  resetToken: String
   gamesCreated: GameCreateManyWithoutCreatorInput
   games: GameCreateManyWithoutCooperatorsInput
   plays: GamePlayCreateManyWithoutPlayerInput
@@ -20403,9 +20533,11 @@ input UserCreateWithoutGamesCreatedInput {
   slug: String!
   email: String!
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String!
   avatar: String
   token: String!
+  resetToken: String
   games: GameCreateManyWithoutCooperatorsInput
   plays: GamePlayCreateManyWithoutPlayerInput
   entityTemplateSetsCreated: EntityTemplateSetCreateManyWithoutCreatorInput
@@ -20420,9 +20552,11 @@ input UserCreateWithoutGamesInput {
   slug: String!
   email: String!
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String!
   avatar: String
   token: String!
+  resetToken: String
   gamesCreated: GameCreateManyWithoutCreatorInput
   plays: GamePlayCreateManyWithoutPlayerInput
   entityTemplateSetsCreated: EntityTemplateSetCreateManyWithoutCreatorInput
@@ -20437,9 +20571,11 @@ input UserCreateWithoutPlaysInput {
   slug: String!
   email: String!
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String!
   avatar: String
   token: String!
+  resetToken: String
   gamesCreated: GameCreateManyWithoutCreatorInput
   games: GameCreateManyWithoutCooperatorsInput
   entityTemplateSetsCreated: EntityTemplateSetCreateManyWithoutCreatorInput
@@ -20475,12 +20611,16 @@ enum UserOrderByInput {
   email_DESC
   emailConfirmed_ASC
   emailConfirmed_DESC
+  emailConfirmationToken_ASC
+  emailConfirmationToken_DESC
   password_ASC
   password_DESC
   avatar_ASC
   avatar_DESC
   token_ASC
   token_DESC
+  resetToken_ASC
+  resetToken_DESC
 }
 
 type UserPreviousValues {
@@ -20494,9 +20634,11 @@ type UserPreviousValues {
   slug: String!
   email: String!
   emailConfirmed: Boolean!
+  emailConfirmationToken: String
   password: String!
   avatar: String
   token: String!
+  resetToken: String
 }
 
 input UserScalarWhereInput {
@@ -20836,6 +20978,46 @@ input UserScalarWhereInput {
 
   """All values that are not equal to given value."""
   emailConfirmed_not: Boolean
+  emailConfirmationToken: String
+
+  """All values that are not equal to given value."""
+  emailConfirmationToken_not: String
+
+  """All values that are contained in given list."""
+  emailConfirmationToken_in: [String!]
+
+  """All values that are not contained in given list."""
+  emailConfirmationToken_not_in: [String!]
+
+  """All values less than the given value."""
+  emailConfirmationToken_lt: String
+
+  """All values less than or equal the given value."""
+  emailConfirmationToken_lte: String
+
+  """All values greater than the given value."""
+  emailConfirmationToken_gt: String
+
+  """All values greater than or equal the given value."""
+  emailConfirmationToken_gte: String
+
+  """All values containing the given string."""
+  emailConfirmationToken_contains: String
+
+  """All values not containing the given string."""
+  emailConfirmationToken_not_contains: String
+
+  """All values starting with the given string."""
+  emailConfirmationToken_starts_with: String
+
+  """All values not starting with the given string."""
+  emailConfirmationToken_not_starts_with: String
+
+  """All values ending with the given string."""
+  emailConfirmationToken_ends_with: String
+
+  """All values not ending with the given string."""
+  emailConfirmationToken_not_ends_with: String
   password: String
 
   """All values that are not equal to given value."""
@@ -20956,6 +21138,46 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   token_not_ends_with: String
+  resetToken: String
+
+  """All values that are not equal to given value."""
+  resetToken_not: String
+
+  """All values that are contained in given list."""
+  resetToken_in: [String!]
+
+  """All values that are not contained in given list."""
+  resetToken_not_in: [String!]
+
+  """All values less than the given value."""
+  resetToken_lt: String
+
+  """All values less than or equal the given value."""
+  resetToken_lte: String
+
+  """All values greater than the given value."""
+  resetToken_gt: String
+
+  """All values greater than or equal the given value."""
+  resetToken_gte: String
+
+  """All values containing the given string."""
+  resetToken_contains: String
+
+  """All values not containing the given string."""
+  resetToken_not_contains: String
+
+  """All values starting with the given string."""
+  resetToken_starts_with: String
+
+  """All values not starting with the given string."""
+  resetToken_not_starts_with: String
+
+  """All values ending with the given string."""
+  resetToken_ends_with: String
+
+  """All values not ending with the given string."""
+  resetToken_not_ends_with: String
 }
 
 type UserSubscriptionPayload {
@@ -21003,9 +21225,11 @@ input UserUpdateInput {
   slug: String
   email: String
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String
   avatar: String
   token: String
+  resetToken: String
   gamesCreated: GameUpdateManyWithoutCreatorInput
   games: GameUpdateManyWithoutCooperatorsInput
   plays: GamePlayUpdateManyWithoutPlayerInput
@@ -21020,9 +21244,11 @@ input UserUpdateManyDataInput {
   slug: String
   email: String
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String
   avatar: String
   token: String
+  resetToken: String
 }
 
 input UserUpdateManyMutationInput {
@@ -21033,9 +21259,11 @@ input UserUpdateManyMutationInput {
   slug: String
   email: String
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String
   avatar: String
   token: String
+  resetToken: String
 }
 
 input UserUpdateManyWithoutGamesInput {
@@ -21088,9 +21316,11 @@ input UserUpdateWithoutEntityTemplateSetsCreatedDataInput {
   slug: String
   email: String
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String
   avatar: String
   token: String
+  resetToken: String
   gamesCreated: GameUpdateManyWithoutCreatorInput
   games: GameUpdateManyWithoutCooperatorsInput
   plays: GamePlayUpdateManyWithoutPlayerInput
@@ -21104,9 +21334,11 @@ input UserUpdateWithoutGamesCreatedDataInput {
   slug: String
   email: String
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String
   avatar: String
   token: String
+  resetToken: String
   games: GameUpdateManyWithoutCooperatorsInput
   plays: GamePlayUpdateManyWithoutPlayerInput
   entityTemplateSetsCreated: EntityTemplateSetUpdateManyWithoutCreatorInput
@@ -21120,9 +21352,11 @@ input UserUpdateWithoutGamesDataInput {
   slug: String
   email: String
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String
   avatar: String
   token: String
+  resetToken: String
   gamesCreated: GameUpdateManyWithoutCreatorInput
   plays: GamePlayUpdateManyWithoutPlayerInput
   entityTemplateSetsCreated: EntityTemplateSetUpdateManyWithoutCreatorInput
@@ -21136,9 +21370,11 @@ input UserUpdateWithoutPlaysDataInput {
   slug: String
   email: String
   emailConfirmed: Boolean
+  emailConfirmationToken: String
   password: String
   avatar: String
   token: String
+  resetToken: String
   gamesCreated: GameUpdateManyWithoutCreatorInput
   games: GameUpdateManyWithoutCooperatorsInput
   entityTemplateSetsCreated: EntityTemplateSetUpdateManyWithoutCreatorInput
@@ -21507,6 +21743,46 @@ input UserWhereInput {
 
   """All values that are not equal to given value."""
   emailConfirmed_not: Boolean
+  emailConfirmationToken: String
+
+  """All values that are not equal to given value."""
+  emailConfirmationToken_not: String
+
+  """All values that are contained in given list."""
+  emailConfirmationToken_in: [String!]
+
+  """All values that are not contained in given list."""
+  emailConfirmationToken_not_in: [String!]
+
+  """All values less than the given value."""
+  emailConfirmationToken_lt: String
+
+  """All values less than or equal the given value."""
+  emailConfirmationToken_lte: String
+
+  """All values greater than the given value."""
+  emailConfirmationToken_gt: String
+
+  """All values greater than or equal the given value."""
+  emailConfirmationToken_gte: String
+
+  """All values containing the given string."""
+  emailConfirmationToken_contains: String
+
+  """All values not containing the given string."""
+  emailConfirmationToken_not_contains: String
+
+  """All values starting with the given string."""
+  emailConfirmationToken_starts_with: String
+
+  """All values not starting with the given string."""
+  emailConfirmationToken_not_starts_with: String
+
+  """All values ending with the given string."""
+  emailConfirmationToken_ends_with: String
+
+  """All values not ending with the given string."""
+  emailConfirmationToken_not_ends_with: String
   password: String
 
   """All values that are not equal to given value."""
@@ -21627,6 +21903,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   token_not_ends_with: String
+  resetToken: String
+
+  """All values that are not equal to given value."""
+  resetToken_not: String
+
+  """All values that are contained in given list."""
+  resetToken_in: [String!]
+
+  """All values that are not contained in given list."""
+  resetToken_not_in: [String!]
+
+  """All values less than the given value."""
+  resetToken_lt: String
+
+  """All values less than or equal the given value."""
+  resetToken_lte: String
+
+  """All values greater than the given value."""
+  resetToken_gt: String
+
+  """All values greater than or equal the given value."""
+  resetToken_gte: String
+
+  """All values containing the given string."""
+  resetToken_contains: String
+
+  """All values not containing the given string."""
+  resetToken_not_contains: String
+
+  """All values starting with the given string."""
+  resetToken_starts_with: String
+
+  """All values not starting with the given string."""
+  resetToken_not_starts_with: String
+
+  """All values ending with the given string."""
+  resetToken_ends_with: String
+
+  """All values not ending with the given string."""
+  resetToken_not_ends_with: String
   gamesCreated_every: GameWhereInput
   gamesCreated_some: GameWhereInput
   gamesCreated_none: GameWhereInput
@@ -21645,7 +21961,9 @@ input UserWhereUniqueInput {
   id: ID
   slug: String
   email: String
+  emailConfirmationToken: String
   token: String
+  resetToken: String
 }
 
 enum ValueType {

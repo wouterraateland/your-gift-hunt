@@ -2,9 +2,11 @@ import Bin from "./Bin"
 import BringForward from "./BringForward"
 import Caret from "./Caret"
 import Cog from "./Cog"
-import Container from "./Container"
+import ContainerNonPlaceable from "./ContainerNonPlaceable"
+import ContainerPlaceable from "./ContainerPlaceable"
 import Cross from "./Cross"
 import Cube from "./Cube"
+import Door from "./Door"
 import DotsHorizontal from "./DotsHorizontal"
 import DotsVertical from "./DotsVertical"
 import Entrance from "./Entrance"
@@ -28,9 +30,11 @@ export {
   BringForward,
   Caret,
   Cog,
-  Container,
+  ContainerNonPlaceable,
+  ContainerPlaceable,
   Cross,
   Cube,
+  Door,
   DotsHorizontal,
   DotsVertical,
   Entrance,
@@ -55,9 +59,11 @@ export default {
   BringForward,
   Caret,
   Cog,
-  Container,
+  ContainerNonPlaceable,
+  ContainerPlaceable,
   Cross,
   Cube,
+  Door,
   DotsHorizontal,
   DotsVertical,
   Entrance,

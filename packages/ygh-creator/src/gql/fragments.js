@@ -28,6 +28,8 @@ export const ENTITY_TEMPLATE_FRAGMENT = gql`
     isObject
     isTrigger
     isContainer
+    isPortal
+    isPlaceable
 
     fields {
       id
@@ -318,6 +320,8 @@ export const ENTITY_FRAGMENT = gql`
       isItem
       isObject
       isTrigger
+      isPortal
+      isPlaceable
     }
     name
     description
@@ -326,6 +330,8 @@ export const ENTITY_FRAGMENT = gql`
     isObject
     isTrigger
     isContainer
+    isPortal
+    isPlaceable
 
     fields {
       ...FieldFragment

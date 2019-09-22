@@ -1,9 +1,9 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useState } from "react"
 import styled from "styled-components"
 import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 import useTemplateInspector from "hooks/useTemplateInspector"
 
-import { Paper } from "ygh-ui"
+import { Paper, DefaultOptions, TabOptions } from "ygh-ui"
 import Icons from "ygh-icons"
 
 import Form from "components/TemplateSetCreator/DetailPane/Form"
@@ -22,19 +22,26 @@ const Meta = ({ template }) => {
     deleteEntityTemplate
   } = useTemplateSetMutations()
   const { closeTemplateInspector } = useTemplateInspector()
+  const [isPlaceable, setIsPlaceable] = useState(template.isPlaceable)
 
   const getInitialValues = useCallback(
     () => ({
       name: template.name,
       description: template.description,
-      attributes: Object.entries({
-        isItem: template.isItem,
-        isObject: template.isObject,
-        isTrigger: template.isTrigger,
-        isContainer: template.isContainer
-      })
-        .filter(([_, value]) => value)
-        .map(([key]) => key),
+      isPlaceable: template.isPlaceable ? [true] : [],
+      type: template.isPlaceable
+        ? template.isContainer
+          ? "container"
+          : template.isItem
+          ? "item"
+          : template.isPortal
+          ? "portal"
+          : "object"
+        : template.isContainer
+        ? "container"
+        : template.isTrigger
+        ? "trigger"
+        : "challenge",
       featuredField: template.featuredField ? template.featuredField.id : null
     }),
     [template]
@@ -45,10 +52,12 @@ const Meta = ({ template }) => {
       updateEntityTemplate(template.id, {
         name: values.name,
         description: values.description,
-        isItem: values.attributes.includes("isItem"),
-        isObject: values.attributes.includes("isObject"),
-        isTrigger: values.attributes.includes("isTrigger"),
-        isContainer: values.attributes.includes("isContainer"),
+        isPlaceable: values.isPlaceable.includes(true),
+        isItem: values.type === "item",
+        isObject: values.type === "object" || values.isPlaceable.includes(true),
+        isTrigger: values.type === "trigger",
+        isContainer: values.type === "container",
+        isPortal: values.type === "portal",
         featuredField: values.featuredField
           ? { connect: { id: values.featuredField } }
           : template.featuredField
@@ -71,6 +80,22 @@ const Meta = ({ template }) => {
           getInitialValues={getInitialValues}
           onFlush={onFlush}
           onDelete={onDelete}
+          onChange={(values, setField) => {
+            const _isPlaceable = values.isPlaceable.length === 1
+            setIsPlaceable(_isPlaceable)
+            if (
+              _isPlaceable &&
+              ["trigger", "challenge"].includes(values.type)
+            ) {
+              setField("type", "object")
+            }
+            if (
+              !_isPlaceable &&
+              ["item", "object", "portal"].includes(values.type)
+            ) {
+              setField("type", "challenge")
+            }
+          }}
           fields={[
             {
               name: "name",
@@ -83,44 +108,83 @@ const Meta = ({ template }) => {
               label: "Description"
             },
             {
-              name: "attributes",
+              name: "isPlaceable",
               type: "selectMultiple",
-              label: "Attributes",
-              format: "horizontal",
+              label: "Placeable",
+              component: DefaultOptions,
               options: [
                 {
-                  value: "isItem",
-                  label: (
-                    <>
-                      <Icons.Key /> Item
-                    </>
-                  )
-                },
-                {
-                  value: "isObject",
-                  label: (
-                    <>
-                      <Icons.Cube /> Object
-                    </>
-                  )
-                },
-                {
-                  value: "isContainer",
-                  label: (
-                    <>
-                      <Icons.Container /> Container
-                    </>
-                  )
-                },
-                {
-                  value: "isTrigger",
-                  label: (
-                    <>
-                      <Icons.Trigger /> Trigger
-                    </>
-                  )
+                  value: true,
+                  label: "Is placeable in the visual editor"
                 }
               ]
+            },
+            {
+              name: "type",
+              type: "select",
+              label: "Type",
+              component: TabOptions,
+              options: isPlaceable
+                ? [
+                    {
+                      value: "item",
+                      label: (
+                        <>
+                          <Icons.Key /> Item
+                        </>
+                      )
+                    },
+                    {
+                      value: "object",
+                      label: (
+                        <>
+                          <Icons.Cube /> Object
+                        </>
+                      )
+                    },
+                    {
+                      value: "portal",
+                      label: (
+                        <>
+                          <Icons.Door /> Portal
+                        </>
+                      )
+                    },
+                    {
+                      value: "container",
+                      label: (
+                        <>
+                          <Icons.ContainerPlaceable /> Container
+                        </>
+                      )
+                    }
+                  ]
+                : [
+                    {
+                      value: "container",
+                      label: (
+                        <>
+                          <Icons.ContainerNonPlaceable /> Container
+                        </>
+                      )
+                    },
+                    {
+                      value: "challenge",
+                      label: (
+                        <>
+                          <Icons.Piece /> Challenge
+                        </>
+                      )
+                    },
+                    {
+                      value: "trigger",
+                      label: (
+                        <>
+                          <Icons.Trigger /> Trigger
+                        </>
+                      )
+                    }
+                  ]
             },
             {
               name: "featuredField",

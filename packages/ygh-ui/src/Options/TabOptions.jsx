@@ -64,6 +64,7 @@ const Option = styled.label`
             `}
 
           &:hover {
+            position: relative;
             box-shadow: 0 0 0 2px #0004;
           }
           &:focus-within {

@@ -35,6 +35,9 @@ import {
   SET_START_CONTAINER
 } from "gql/mutations"
 
+const isChallenge = ({ isPlaceable, isContainer }) =>
+  !isPlaceable && !isContainer
+
 const useMutationWith = save => (mutation, transform) => {
   const actualMutation = useMutation(mutation)
   return save((...args) => actualMutation(transform(...args)))
@@ -572,6 +575,8 @@ export const useGameMutationsProvider = () => {
           isObject: entityTemplate.isObject,
           isTrigger: entityTemplate.isTrigger,
           isContainer: entityTemplate.isContainer,
+          isPortal: entityTemplate.isPortal,
+          isPlaceable: entityTemplate.isPlaceable,
           fields: {
             create: entityTemplate.fields.map(fieldTemplate => ({
               template: { connect: { id: fieldTemplate.id } },
@@ -677,9 +682,7 @@ export const useGameMutationsProvider = () => {
 
     if (
       entityStateTemplates.length === 1 &&
-      !entityTemplate.isObject &&
-      !entityTemplate.isItem &&
-      !entityTemplate.isTrigger &&
+      isChallenge(entityTemplate) &&
       entityStateTemplates[0].incomingTransitions.length > 0
     ) {
       entityStateTemplates.push(

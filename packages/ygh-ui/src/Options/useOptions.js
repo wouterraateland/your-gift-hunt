@@ -29,6 +29,8 @@ const useOptions = ({
       ...event,
       target: {
         ...event.target,
+        validity: { valid: true },
+        validationMessage: "",
         value: newValue,
         options: options.map(option => ({
           value: option.value,

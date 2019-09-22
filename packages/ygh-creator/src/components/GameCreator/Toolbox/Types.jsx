@@ -7,7 +7,7 @@ import TypeEntry from "./TypeEntry"
 
 const types = [
   { name: "challenge", icon: Icons.Piece },
-  { name: "container", icon: Icons.Container },
+  { name: "container", icon: Icons.ContainerNonPlaceable },
   { name: "object", icon: Icons.Cube },
   // { name: "item", icon: Icons.Item },
   { name: "trigger", icon: Icons.Trigger }
