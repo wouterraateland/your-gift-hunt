@@ -10,12 +10,26 @@ import useGameMutations from "hooks/useGameMutations"
 import { useAsync } from "ygh-hooks"
 
 import { components } from "react-select"
-import { ActionButton, Button, Field, DisguisedSelectOptions } from "ygh-ui"
+import {
+  ActionButton,
+  ToolTip,
+  Float,
+  Field,
+  DisguisedSelectOptions
+} from "ygh-ui"
 import Icons from "ygh-icons"
 import ClickableEntityTag from "components/GameCreator/ClickableEntityTag"
-import ClickableStateTag from "components/GameCreator/ClickableStateTag"
+// import ClickableStateTag from "components/GameCreator/ClickableStateTag"
 import EntityTag from "components/Primitives/EntityTag"
-import StateTag from "components/Primitives/StateTag"
+// import StateTag from "components/Primitives/StateTag"
+
+const Label = styled.strong`
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+
+  line-height: 1.5rem;
+`
 
 const UnlockContainer = styled.div`
   position: relative;
@@ -57,8 +71,8 @@ const Option = ({ data, ...otherProps }) => (
     }
   >
     <EntityTag entity={data.entity}>
-      {" "}
-      <StateTag state={data.state} />
+      {/* {" "}
+      <StateTag state={data.state} /> */}
     </EntityTag>
   </components.Option>
 )
@@ -66,8 +80,8 @@ const Option = ({ data, ...otherProps }) => (
 const Unlock = ({ data, isDeletable = true, onDeleteClick }) => (
   <UnlockContainer>
     <ClickableEntityTag entity={data.entity}>
-      {" "}
-      <ClickableStateTag state={data.state} />
+      {/* {" "}
+      <ClickableStateTag state={data.state} /> */}
     </ClickableEntityTag>
     {isDeletable && (
       <Actions>
@@ -136,6 +150,28 @@ const Unlocks = ({ from, to }) => {
 
   return (
     <>
+      <Field
+        component={DisguisedSelectOptions}
+        components={{ Option }}
+        render={props => (
+          <Label>
+            Unlocks
+            <Float.Right style={{ marginRight: "-.25rem" }}>
+              <ActionButton {...props} color="primary">
+                <ToolTip>Add unlock</ToolTip>
+                <Icons.Plus />
+              </ActionButton>
+            </Float.Right>
+          </Label>
+        )}
+        block
+        isMulti
+        options={options}
+        onChange={onChange}
+        disabled={isLoading}
+        value={unlocks.map(({ id }) => id)}
+        error={error}
+      />
       {unlocks.length ? (
         unlocks.map(unlock => (
           <Unlock
@@ -147,28 +183,6 @@ const Unlocks = ({ from, to }) => {
       ) : (
         <Em>Nothing</Em>
       )}
-      <Field
-        component={DisguisedSelectOptions}
-        components={{ Option }}
-        render={props => (
-          <Button
-            {...props}
-            size="small"
-            importance="primary"
-            color="primary"
-            lead={<Icons.Plus />}
-          >
-            Add unlock
-          </Button>
-        )}
-        block
-        isMulti
-        options={options}
-        onChange={onChange}
-        disabled={isLoading}
-        value={unlocks.map(({ id }) => id)}
-        error={error}
-      />
     </>
   )
 }

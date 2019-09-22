@@ -16,12 +16,9 @@ const SectionTitle = styled.strong`
   line-height: 1;
 `
 
-const StyledActionButton = styled(ActionButton)`
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  margin: 0;
+const Actions = styled.div`
+  float: right;
+  margin: -0.25rem;
 `
 
 const StyledPaper = styled(Paper)`
@@ -48,6 +45,7 @@ const Section = ({
   title,
   wrapChildren = false,
   noWrapper = false,
+  actions = null,
   children,
   ...otherProps
 }) => {
@@ -76,9 +74,12 @@ const Section = ({
     <>
       <SectionTitle onClick={toggleExpanded}>
         {title}
-        <StyledActionButton>
-          <Icons.Caret direction={isExpanded ? "down" : "right"} />
-        </StyledActionButton>
+        <Actions>
+          {actions}
+          <ActionButton>
+            <Icons.Caret direction={isExpanded ? "down" : "right"} />
+          </ActionButton>
+        </Actions>
       </SectionTitle>
       <StyledPaper expanding isExpanded={isExpanded} {...otherProps}>
         {wrapChildren ? (

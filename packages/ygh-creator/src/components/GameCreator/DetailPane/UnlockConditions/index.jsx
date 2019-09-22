@@ -7,6 +7,7 @@ import Section from "components/Section"
 
 import DefaultUnlockConditions from "./Default"
 import EditableUnlockConditions from "./Editable"
+import EditAction from "./EditAction"
 
 const UnlockConditions = ({ entity, state }) => {
   const { isUnlockable } = useGameQueries()
@@ -14,10 +15,14 @@ const UnlockConditions = ({ entity, state }) => {
 
   const stateNodes = getStateNodes(entity.id)
 
+  const actions = entity.isObject ? null : (
+    <EditAction entity={entity} state={state} />
+  )
+
   return stateNodes.length &&
     (isUnlockable(state) ||
       (entity.isObject && state.id === stateNodes[0].id)) ? (
-    <Section title="Unlock conditions">
+    <Section actions={actions} title="Unlock conditions">
       {entity.isObject ? (
         <DefaultUnlockConditions entity={entity} state={state} />
       ) : (

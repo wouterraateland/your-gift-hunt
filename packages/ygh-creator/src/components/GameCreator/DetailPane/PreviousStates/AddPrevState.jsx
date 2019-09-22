@@ -5,7 +5,7 @@ import useGameMutations from "hooks/useGameMutations"
 
 import { components } from "react-select"
 
-import { DisguisedSelectOptions, Button, Field } from "ygh-ui"
+import { DisguisedSelectOptions, ActionButton, ToolTip, Field } from "ygh-ui"
 import Icons from "ygh-icons"
 import StateTag from "components/Primitives/StateTag"
 
@@ -44,27 +44,34 @@ const EditablePrevStates = ({ state, prevStates, prevStateTemplates }) => {
 
   return (
     <Field
+      onClick={event => event.stopPropagation()}
       component={DisguisedSelectOptions}
       components={{
         Option
       }}
-      render={props => (
-        <Button
+      styles={{
+        option: base => ({ ...base, padding: ".5rem", lineHeight: "1.5rem" }),
+        container: base => ({ ...base, position: "static" }),
+        menu: base => ({ ...base, left: 0 })
+      }}
+      render={({ onClick, ...props }) => (
+        <ActionButton
           {...props}
-          size="small"
-          importance="primary"
+          onClick={event => {
+            event.stopPropagation()
+            typeof onClick === "function" && onClick(event)
+          }}
           color="primary"
-          lead={<Icons.Plus />}
         >
-          Add previous state
-        </Button>
+          <Icons.Plus />
+          <ToolTip>Add previous state</ToolTip>
+        </ActionButton>
       )}
       options={options}
       value={prevStates.map(({ id }) => id)}
       onChange={onChange}
       error={error}
       disabled={isLoading || hasUnlocks}
-      block
     />
   )
 }

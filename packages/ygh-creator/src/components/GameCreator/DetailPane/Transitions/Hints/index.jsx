@@ -1,52 +1,20 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 
-import { Button, VSpace } from "ygh-ui"
+import { ActionButton, Float, ToolTip } from "ygh-ui"
 import Icons from "ygh-icons"
 
 import Hint from "./Hint"
 import HintForm from "./HintForm"
 
 const HintsContainer = styled.div`
-  padding: 1em;
-  margin-bottom: 1em;
-  border-radius: ${props => props.theme.borderRadius};
-
-  background-color: #0001;
+  margin-right: 0.25rem;
 `
 
 const Label = styled.strong`
   display: block;
-  margin: 0 0 0.5em;
-
-  font-size: 0.75rem;
+  line-height: 1.5rem;
 `
-
-const Ol = styled.ol`
-  padding-left: 1em;
-  counter-reset: ol;
-
-  li {
-    counter-increment: ol;
-    display: block;
-
-    &:not(:last-child) {
-      margin-bottom: 0.5em;
-    }
-  }
-
-  li::before {
-    content: counter(ol) ".";
-
-    display: inline-block;
-    width: 1em;
-    margin-left: -1em;
-
-    opacity: 0.5;
-  }
-`
-
-const Em = styled.em``
 
 const Placeholder = styled.p`
   margin: 0;
@@ -82,55 +50,40 @@ const Hints = ({ id, hints }) => {
 
   return (
     <HintsContainer>
-      <Label>Hints</Label>
-      {hints.length ? (
-        <Ol>
-          {hints.map(hint => (
-            <li key={hint.id}>
-              {state.selectedHint === hint.id ? (
-                <HintForm
-                  hint={hint}
-                  actionRequirementId={id}
-                  onClose={() => selectHint(null)}
-                />
-              ) : (
-                <Hint hint={hint} onEditClick={() => selectHint(hint.id)} />
-              )}
-            </li>
-          ))}
-          {state.isNewHint && (
-            <li>
+      <Label>
+        Hints
+        <Float.Right>
+          <ActionButton size="small" color="primary" onClick={addHint}>
+            <Icons.Plus />
+            <ToolTip>Add hint</ToolTip>
+          </ActionButton>
+        </Float.Right>
+      </Label>
+      {hints.length
+        ? hints.map(hint =>
+            state.selectedHint === hint.id ? (
               <HintForm
+                key={hint.id}
+                hint={hint}
                 actionRequirementId={id}
                 onClose={() => selectHint(null)}
               />
-            </li>
+            ) : (
+              <Hint
+                key={hint.id}
+                hint={hint}
+                onEditClick={() => selectHint(hint.id)}
+              />
+            )
+          )
+        : !state.isNewHint && (
+            <Placeholder>
+              <em>None</em>
+            </Placeholder>
           )}
-        </Ol>
-      ) : state.isNewHint ? (
-        <Ol>
-          <li>
-            <HintForm
-              actionRequirementId={id}
-              onClose={() => selectHint(null)}
-            />
-          </li>
-        </Ol>
-      ) : (
-        <Placeholder>
-          <Em>None</Em>
-        </Placeholder>
+      {state.isNewHint && (
+        <HintForm actionRequirementId={id} onClose={() => selectHint(null)} />
       )}
-      <VSpace.Small />
-      <Button
-        size="small"
-        importance="primary"
-        color="primary"
-        onClick={addHint}
-        lead={<Icons.Plus />}
-      >
-        Add hint
-      </Button>
     </HintsContainer>
   )
 }

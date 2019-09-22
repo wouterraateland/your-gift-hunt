@@ -6,7 +6,7 @@ import useGameTemplates from "hooks/useGameTemplates"
 import Section from "components/Section"
 import StateTagList from "components/GameCreator/DetailPane/StateTagList"
 
-import EditablePrevStates from "./Editable"
+import AddPrevState from "./AddPrevState"
 
 const PreviousStates = ({ state }) => {
   const { getStateById } = useGameQueries()
@@ -21,16 +21,18 @@ const PreviousStates = ({ state }) => {
     getStateTemplateById(from.id)
   )
 
+  const actions =
+    prevStates.length < prevStateTemplates.length ? (
+      <AddPrevState
+        state={state}
+        prevStates={prevStates}
+        prevStateTemplates={prevStateTemplates}
+      />
+    ) : null
+
   return prevStateTemplates.length ? (
-    <Section title="Previous states">
+    <Section actions={actions} title="Previous states">
       <StateTagList states={prevStates} connector={" or "} />
-      {prevStates.length < prevStateTemplates.length && (
-        <EditablePrevStates
-          state={state}
-          prevStates={prevStates}
-          prevStateTemplates={prevStateTemplates}
-        />
-      )}
     </Section>
   ) : null
 }

@@ -9,29 +9,30 @@ import Transition from "components/GameCreator/ClickableTransition"
 const UnlockConditionContainer = styled.div`
   position: relative;
 
-  display: block;
+  display: flex;
+  align-items: center;
 
   &:not(:first-child) {
     margin-top: 0.5em;
   }
+`
 
-  &::before {
-    content: ${props => (props.type ? '"\u2192"' : '"\u2022"')};
+const Condition = styled.div`
+  flex-grow: 1;
+`
 
-    margin-right: 0.5em;
+const Arrow = styled.span`
+  width: 1rem;
+  flex-shrink: 0;
 
-    font-weight: bold;
+  font-weight: bold;
 
-    color: #39f;
-  }
+  color: #39f;
 `
 
 const Actions = styled.div`
-  position: absolute;
-  right: -0.25rem;
-  top: 50%;
-
-  transform: translate(0, -50%);
+  margin-right: -0.25rem;
+  flex-shrink: 0;
 `
 
 const UnlockCondition = ({
@@ -41,12 +42,12 @@ const UnlockCondition = ({
   isDeletable = true,
   onDeleteClick
 }) => (
-  <UnlockConditionContainer type={from}>
+  <UnlockConditionContainer>
+    <Arrow>{from ? "\u2192" : "\u2022"}</Arrow>
     {from ? (
-      <EntityTag entity={entity}>
-        {" "}
-        <Transition from={from} to={to} />
-      </EntityTag>
+      <Condition>
+        <EntityTag entity={entity} />(<Transition from={from} to={to} />)
+      </Condition>
     ) : entity.container ? (
       "Entity accessible"
     ) : (

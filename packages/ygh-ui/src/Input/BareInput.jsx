@@ -78,6 +78,8 @@ const BareInput = forwardRef(
                 ...event,
                 target: {
                   ...event.target,
+                  validity: { valid: true },
+                  validationMessage: "",
                   value: parseFloat(event.target.value)
                 }
               })

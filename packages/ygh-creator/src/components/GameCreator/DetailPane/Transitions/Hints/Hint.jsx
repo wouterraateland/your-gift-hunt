@@ -3,35 +3,44 @@ import styled from "styled-components"
 
 import useGameMutations from "hooks/useGameMutations"
 
-import { ActionButton, Float } from "ygh-ui"
+import { ActionButton } from "ygh-ui"
 import { Bin, Pen } from "ygh-icons"
 
-const Text = styled.span`
-  display: inline-block;
-  max-width: calc(100% - 3.5em);
+const Container = styled.div`
+  display: flex;
+  align-items: flex-start;
 `
 
-const Delay = styled.em`
-  font-size: 0.75rem;
+const Text = styled.span`
+  flex-grow: 1;
+`
+
+const Delay = styled.span`
+  width: 2rem;
+  flex-shrink: 0;
+  color: ${props => props.theme.color.caption};
+`
+
+const Actions = styled.div`
+  flex-shrink: 0;
 `
 
 const Hint = ({ hint: { id, text, delay }, onEditClick }) => {
   const { deleteHint } = useGameMutations()
 
   return (
-    <>
-      <Float.Right>
+    <Container>
+      <Delay>{delay}s</Delay>
+      <Text>{text}</Text>
+      <Actions>
         <ActionButton color="error" onClick={() => deleteHint(id)}>
           <Bin />
         </ActionButton>
         <ActionButton onClick={onEditClick}>
           <Pen />
         </ActionButton>
-      </Float.Right>
-      <Text>{text}</Text>
-      <br />
-      <Delay>After {delay}s</Delay>{" "}
-    </>
+      </Actions>
+    </Container>
   )
 }
 

@@ -60,7 +60,11 @@ const Field = forwardRef(
       {label && <LabelText hasError={otherProps.error}>{label}</LabelText>}
       <Component {...otherProps} />
       {otherProps.error ? (
-        <ErrorMessage>{otherProps.error}</ErrorMessage>
+        <ErrorMessage>
+          {typeof otherProps.error === "string"
+            ? otherProps.error
+            : JSON.stringify(otherProps.error)}
+        </ErrorMessage>
       ) : (
         info && <Message>{info}</Message>
       )}

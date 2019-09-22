@@ -6,7 +6,10 @@ import EntryState from "./EntryState"
 import ExitState from "./ExitState"
 
 const Arrow = styled.span`
-  margin: 0 0.5em;
+  display: inline-block;
+  width: 1rem;
+
+  text-align: center;
   font-weight: bold;
 
   color: #f93;

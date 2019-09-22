@@ -4,21 +4,22 @@ import styled from "styled-components"
 const ListItem = styled.li`
   display: block;
   padding: 0;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 
   &::before {
-    content: "${({ type }) => {
+    content: ${({ type }) => {
       switch (type) {
         case EDGE_TYPES.ENTRY:
-          return "\u2022"
+          return '"\u2022"'
         default:
-          return "\u2192"
+          return '"\u2192"'
       }
-    }}";
+    }};
 
     font-weight: bold;
 
-    margin-right: 0.5em;
+    width: 1rem;
+    margin-left: -1rem;
 
     color: ${({ type }) => {
       switch (type) {

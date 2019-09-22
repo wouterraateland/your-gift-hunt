@@ -6,17 +6,25 @@ import useGameMutations from "hooks/useGameMutations"
 import { useFormState } from "react-use-form-state"
 import { useClickOutside } from "ygh-hooks"
 
-import { FieldGroup, Field, Button } from "ygh-ui"
+import { Field, Button } from "ygh-ui"
 
 const Form = styled.form`
-  margin-top: 0.25em;
+  display: flex;
+  align-items: flex-end;
 
-  & > div:nth-child(1) {
-    width: 100%;
-    margin-top: -0.79em;
+  margin-bottom: 0.5rem;
+
+  & > label:nth-of-type(1) {
+    width: 2.5rem;
+    flex-shrink: 0;
   }
-  & > div:nth-child(2) {
-    width: calc(100% - 4.4em);
+  & > label:nth-of-type(2) {
+    margin: 0 0.5rem;
+    flex-grow: 1;
+  }
+
+  & > button {
+    flex-shrink: 0;
   }
 `
 
@@ -70,37 +78,32 @@ const HintForm = ({ actionRequirementId, onClose, hint }) => {
 
   return (
     <Form onSubmit={onSubmit} ref={ref}>
-      <FieldGroup>
-        <Field
-          block
-          {...text("text")}
-          type="textarea"
-          label="Text"
-          disabled={isLoading}
-          error={error}
-        />
-      </FieldGroup>
-      <FieldGroup>
-        <Field
-          {...number("delay")}
-          type="number"
-          label="Delay"
-          info="in seconds"
-          min={0}
-          disabled={isLoading}
-        />
-      </FieldGroup>
-      <FieldGroup>
-        <Button
-          size="medium"
-          type="submit"
-          importance="tertiary"
-          color="success"
-          disabled={isLoading}
-        >
-          ✓
-        </Button>
-      </FieldGroup>
+      <Field
+        {...number("delay")}
+        type="number"
+        label="Delay"
+        suffix="s"
+        size="small"
+        min={0}
+        disabled={isLoading}
+      />
+      <Field
+        {...text("text")}
+        type="textarea"
+        label="Text"
+        size="small"
+        disabled={isLoading}
+        error={error}
+      />
+      <Button
+        size="small"
+        type="submit"
+        importance="primary"
+        color="success"
+        disabled={isLoading}
+      >
+        ✓
+      </Button>
     </Form>
   )
 }
