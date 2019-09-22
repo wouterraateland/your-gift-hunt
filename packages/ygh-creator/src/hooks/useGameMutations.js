@@ -12,7 +12,7 @@ import useEntityDependencies from "hooks/useEntityDependencies"
 
 import GameMutationsContext from "contexts/GameMutations"
 
-import { ENTITY_TEMPLATES, GAME_BY_SLUG, STATE_TRANSITIONS } from "gql/queries"
+import { ENTITY_TEMPLATES, GAME_BY_ID, STATE_TRANSITIONS } from "gql/queries"
 import {
   UPDATE_GAME_SETTINGS,
   UPDATE_ENTITY_NAME,
@@ -57,7 +57,7 @@ export const useGameMutationsProvider = () => {
   const useMutationWithSave = useMutationWith(save)
   const client = useApolloClient()
 
-  const query = { query: GAME_BY_SLUG, variables }
+  const query = { query: GAME_BY_ID, variables }
 
   const updateGameSettings = useMutationWithSave(
     UPDATE_GAME_SETTINGS,
@@ -89,7 +89,7 @@ export const useGameMutationsProvider = () => {
       },
       update: proxy => {
         const data = proxy.readQuery(query)
-        const entities = data.games[0].entities
+        const entities = data.game.entities
         entities.forEach(entity => {
           if (entity.id === containerId) {
             entity.containedEntities.push(
@@ -113,7 +113,7 @@ export const useGameMutationsProvider = () => {
       variables: { entityId },
       update: proxy => {
         const data = proxy.readQuery(query)
-        const entities = data.games[0].entities
+        const entities = data.game.entities
         entities.forEach(entity => {
           if (entity.isContainer && entity.containedEntities.length) {
             entity.containedEntities = entity.containedEntities.filter(
@@ -148,7 +148,7 @@ export const useGameMutationsProvider = () => {
       update: (proxy, { data: { createHint } }) => {
         const data = proxy.readQuery(query)
 
-        data.games[0].entities.forEach(entity =>
+        data.game.entities.forEach(entity =>
           entity.states.forEach(state =>
             state.outgoingTransitions.forEach(transition =>
               transition.requiredActions.forEach(actionRequirement => {
@@ -190,7 +190,7 @@ export const useGameMutationsProvider = () => {
     ) => {
       const data = proxy.readQuery(query)
 
-      data.games[0].entities.forEach(entity =>
+      data.game.entities.forEach(entity =>
         entity.states.forEach(state =>
           state.outgoingTransitions.forEach(transition =>
             transition.requiredActions.forEach(actionRequirement => {
@@ -216,7 +216,7 @@ export const useGameMutationsProvider = () => {
       update: (proxy, { data: { updateStateTransition } }) => {
         const data = proxy.readQuery(query)
 
-        data.games[0].entities.forEach(entity => {
+        data.game.entities.forEach(entity => {
           entity.states.forEach(state => {
             if (state.id === stateId) {
               const index = state.unlockedBy.findIndex(
@@ -259,7 +259,7 @@ export const useGameMutationsProvider = () => {
       update: proxy => {
         const data = proxy.readQuery(query)
 
-        data.games[0].entities.forEach(instance => {
+        data.game.entities.forEach(instance => {
           instance.states.forEach(state => {
             if (state.id === stateId) {
               const index = state.unlockedBy.findIndex(
@@ -321,7 +321,7 @@ export const useGameMutationsProvider = () => {
   const completeEntitiesWithTemplates = async gameId => {
     const { data } = await client.query(query)
 
-    const allEntities = data.games[0].entities
+    const allEntities = data.game.entities
     const entities = allEntities.filter(({ template }) => !!template)
     const states = allEntities.flatMap(({ states }) => states)
 
@@ -451,10 +451,15 @@ export const useGameMutationsProvider = () => {
             outgoingTransitions: {
               create: stateTemplate.outgoingTransitions
                 .filter(
-                  ({ id }) =>
+                  ({ id, to }) =>
                     !state.outgoingTransitions.some(
                       ({ template }) => template.id === id
-                    )
+                    ) &&
+                    (!to ||
+                      (to &&
+                        entity.states.some(
+                          state => state.template.id === to.id
+                        )))
                 )
                 .map(createStateTransitionFromTemplate)
             }
@@ -712,11 +717,11 @@ export const useGameMutationsProvider = () => {
       update: proxy => {
         const data = proxy.readQuery(query)
 
-        data.games[0].entities = data.games[0].entities.filter(
+        data.game.entities = data.game.entities.filter(
           ({ id }) => !entityIds.includes(id)
         )
 
-        data.games[0].entities.forEach(entity => {
+        data.game.entities.forEach(entity => {
           entity.states = entity.states.filter(
             ({ id }) => !stateIds.includes(id)
           )
@@ -766,7 +771,7 @@ export const useGameMutationsProvider = () => {
       update: (proxy, { data: { updateInformationSlot } }) => {
         const data = proxy.readQuery(query)
 
-        data.games[0].entities.forEach(entity => {
+        data.game.entities.forEach(entity => {
           entity.fields.forEach(field => {
             if (field.id === fieldId) {
               const index = field.informationSlots.findIndex(
@@ -793,7 +798,7 @@ export const useGameMutationsProvider = () => {
       update: proxy => {
         const data = proxy.readQuery(query)
 
-        data.games[0].entities.forEach(entity => {
+        data.game.entities.forEach(entity => {
           entity.fields.forEach(field => {
             const index = field.informationSlots.findIndex(
               ({ id }) => informationSlotId === id
@@ -847,7 +852,7 @@ export const useGameMutationsProvider = () => {
       update: proxy => {
         const data = proxy.readQuery(query)
 
-        data.games[0].startContainer = data.games[0].entities.find(
+        data.game.startContainer = data.game.entities.find(
           ({ id }) => id === containerId
         )
 

@@ -15,7 +15,7 @@ export const useGameProvider = variables => {
     ? data.games.length === 1
       ? {
           gameExists: true,
-          game: data.games[0],
+          game: data.game,
           variables
         }
       : {

@@ -69,7 +69,7 @@ export const GAME_BY_SLUG = gql`
 `
 
 export const GAME_BY_ID = gql`
-  query gameBySlug($gameId: ID!) {
+  query gameById($gameId: ID!) {
     game(where: { id: $gameId }) {
       ...GameFragment
     }

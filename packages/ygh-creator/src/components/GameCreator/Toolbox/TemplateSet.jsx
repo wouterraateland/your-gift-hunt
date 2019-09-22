@@ -15,24 +15,23 @@ const Templates = styled.div`
   justify-content: space-evenly;
 `
 
-const TemplateSet = ({ templateSet }) => {
-  return (
-    <Container>
-      <blockquote>{templateSet.description}</blockquote>
-      <Templates>
-        {templateSet.entityTemplates.length ? (
-          templateSet.entityTemplates.map(entityTemplate => (
-            <EntityTemplatePreview
-              key={entityTemplate.id}
-              entityTemplate={entityTemplate}
-            />
-          ))
-        ) : (
-          <em>No entities found</em>
-        )}
-      </Templates>
-    </Container>
-  )
-}
+const TemplateSet = ({ templateSet, onEntityTemplateClick }) => (
+  <Container>
+    <blockquote>{templateSet.description}</blockquote>
+    <Templates>
+      {templateSet.entityTemplates.length ? (
+        templateSet.entityTemplates.map(entityTemplate => (
+          <EntityTemplatePreview
+            onClick={() => onEntityTemplateClick(entityTemplate.id)}
+            key={entityTemplate.id}
+            entityTemplate={entityTemplate}
+          />
+        ))
+      ) : (
+        <em>No entities found</em>
+      )}
+    </Templates>
+  </Container>
+)
 
 export default TemplateSet

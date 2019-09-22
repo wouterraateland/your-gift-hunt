@@ -44,9 +44,9 @@ const EntityName = styled.small`
   text-align: center;
 `
 
-const EntityTemplatePreview = ({ entityTemplate }) => {
+const EntityTemplatePreview = ({ entityTemplate, onClick }) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <Inner>
         <EntityTypeIconContainer>
           <EntityTypeIcon {...entityTemplate} />
