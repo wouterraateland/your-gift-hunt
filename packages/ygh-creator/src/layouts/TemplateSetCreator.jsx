@@ -6,7 +6,6 @@ import useTemplateSet from "hooks/useTemplateSet"
 import useSaveState from "hooks/useSaveState"
 import { useForceUpdate } from "ygh-hooks"
 
-import { Cog, Logo } from "ygh-icons"
 import { ToolTip } from "ygh-ui"
 
 import PageContainer from "components/PageContainer"
@@ -103,7 +102,7 @@ const TemplateSetCreatorLayout = ({ children }) => {
   return (
     <PageContainer>
       <Nav.Container>
-        <Nav.BackControl to={`/${user.username}/template-sets`} />
+        <Nav.BackControl to={`/my-template-sets`} />
         <Nav.Center>
           <p>
             {templateSet.creator.id === user.id

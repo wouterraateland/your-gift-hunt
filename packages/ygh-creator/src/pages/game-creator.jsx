@@ -82,8 +82,8 @@ const MaybeGameCreator = () => {
   return gameExists ? <GameCreator /> : null
 }
 
-const CreatorPage = ({ creatorSlug, gameSlug }) => (
-  <GameCreatorContainer creatorSlug={creatorSlug} gameSlug={gameSlug}>
+const CreatorPage = ({ gameId }) => (
+  <GameCreatorContainer gameId={gameId}>
     <MaybeGameCreator />
   </GameCreatorContainer>
 )

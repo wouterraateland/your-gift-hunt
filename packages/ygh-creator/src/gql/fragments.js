@@ -431,3 +431,40 @@ export const ENTITY_FRAGMENT = gql`
   ${INFORMATION_SLOT_FRAGMENT}
   ${ACTION_REQUIREMENT_FRAGMENT}
 `
+
+export const GAME_FRAGMENT = gql`
+  fragment GameFragment on Game {
+    id
+    name
+    slug
+    description
+    image
+
+    intro
+    outro
+
+    publishedAt
+
+    privacy
+    accessType
+    accessCode
+
+    creator {
+      id
+      name
+      slug
+    }
+    entities {
+      ...EntityFragment
+    }
+    entityTemplateSets {
+      id
+      name
+      description
+    }
+    startContainer {
+      id
+    }
+  }
+  ${ENTITY_FRAGMENT}
+`

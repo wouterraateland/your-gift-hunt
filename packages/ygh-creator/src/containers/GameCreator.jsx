@@ -25,12 +25,12 @@ const Updater = ({ children }) => {
   return children
 }
 
-const GameCreatorContainer = ({ creatorSlug, gameSlug, children }) => (
+const GameCreatorContainer = ({ gameId, children }) => (
   <PanZoomEditorProvider>
     <PanZoomGraphicProvider>
       <SaveStateProvider>
         <EntityFocusProvider>
-          <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
+          <GameProvider gameId={gameId}>
             <GameTemplatesProvider>
               <EntitiesProvider>
                 <EntityGraphProvider>

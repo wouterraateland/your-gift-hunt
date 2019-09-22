@@ -87,11 +87,7 @@ const TemplateSet = ({ templateSet }) => {
   const sameDay = editDate.day() === now.day()
 
   return (
-    <Container
-      onClick={() =>
-        navigate(`/${templateSet.creator.slug}/template-set/${templateSet.id}`)
-      }
-    >
+    <Container onClick={() => navigate(`/edit-template-set/${templateSet.id}`)}>
       <Info>
         <Title>{templateSet.name}</Title>
         <small>{templateSet.description}</small>

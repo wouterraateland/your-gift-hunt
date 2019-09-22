@@ -1,7 +1,7 @@
 import gql from "graphql-tag"
 import {
+  GAME_FRAGMENT,
   ENTITY_TEMPLATE_FRAGMENT,
-  ENTITY_FRAGMENT,
   STATE_TRANSITION_FRAGMENT
 } from "./fragments"
 
@@ -62,40 +62,19 @@ export const TEMPLATE_SET_BY_ID = gql`
 export const GAME_BY_SLUG = gql`
   query gameBySlug($creatorSlug: String!, $gameSlug: String!) {
     games(where: { creator: { slug: $creatorSlug }, slug: $gameSlug }) {
-      id
-      name
-      slug
-      description
-      image
-
-      intro
-      outro
-
-      publishedAt
-
-      privacy
-      accessType
-      accessCode
-
-      creator {
-        id
-        name
-        slug
-      }
-      entities {
-        ...EntityFragment
-      }
-      entityTemplateSets {
-        id
-        name
-        description
-      }
-      startContainer {
-        id
-      }
+      ...GameFragment
     }
   }
-  ${ENTITY_FRAGMENT}
+  ${GAME_FRAGMENT}
+`
+
+export const GAME_BY_ID = gql`
+  query gameBySlug($gameId: ID!) {
+    game(where: { id: $gameId }) {
+      ...GameFragment
+    }
+  }
+  ${GAME_FRAGMENT}
 `
 
 export const USER_GAMES = gql`

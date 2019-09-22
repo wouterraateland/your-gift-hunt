@@ -110,9 +110,7 @@ const Game = ({ game }) => {
   const playCount = game.plays.filter(({ isTest }) => !isTest).length
 
   return (
-    <Container
-      onClick={() => navigate(`/${game.creator.slug}/game/${game.slug}`)}
-    >
+    <Container onClick={() => navigate(`/edit/${game.id}`)}>
       {game.image ? (
         <Preview src={game.image} />
       ) : (

@@ -1,12 +1,15 @@
-import React, { Suspense, useState } from "react"
+import { PRIVACY, ACCESS_TYPES } from "data"
+import React, { Suspense, useCallback, useState } from "react"
 import slugify from "limax"
+import randomString from "randomstring"
 
+import { useMutation } from "react-apollo-hooks"
 import useAuth from "hooks/useAuth"
 
 import { useQuery } from "react-apollo-hooks"
 import { useDebounce } from "ygh-hooks"
 
-import { Link } from "@reach/router"
+import { navigate } from "@reach/router"
 import { Wrapper, Paper, Field, Button, Loader } from "ygh-ui"
 import Icons from "ygh-icons"
 
@@ -14,6 +17,7 @@ import Layout from "layouts/Overview"
 import GamesOverview from "components/GamesOverview"
 
 import { USER_GAMES } from "gql/queries"
+import { CREATE_GAME } from "gql/mutations"
 
 const Overview = ({ searchQuery, user }) => {
   const { data, error } = useQuery(USER_GAMES, {
@@ -31,17 +35,45 @@ const OverviewPage = () => {
   const [query, setQuery] = useState("")
   const debouncedQuery = useDebounce(query, 500)
 
+  const createGameMutation = useMutation(CREATE_GAME)
+
+  const createGame = useCallback(async () => {
+    const {
+      data: {
+        createGame: { id }
+      }
+    } = await createGameMutation({
+      variables: {
+        name: "Nameless",
+        slug: randomString.generate(10),
+        description: "",
+        creatorId: user.id,
+        privacy: PRIVACY.PUBLIC,
+        accessType: ACCESS_TYPES.NONE,
+        accessCode: ""
+      },
+      refetchQueries: [
+        {
+          query: USER_GAMES,
+          variables: { userId: user.id, slugPrefix: "" }
+        }
+      ]
+    })
+
+    navigate(`/edit/${id}`)
+  }, [])
+
   return (
     <Layout
       title="Creator"
       items={[
         {
           label: "Games",
-          to: `/${user.username}/games`
+          to: `/my-games`
         },
         {
           label: "Template sets",
-          to: `/${user.username}/template-sets`
+          to: `/my-template-sets`
         }
       ]}
     >
@@ -61,8 +93,7 @@ const OverviewPage = () => {
               style={{ float: "right" }}
               importance="primary"
               color="primary"
-              as={Link}
-              to={`/${user.username}/new-game`}
+              onClick={createGame}
               block="small"
             >
               New game

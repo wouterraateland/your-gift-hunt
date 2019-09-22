@@ -12,7 +12,7 @@ const MoreActions = ({ game }) => {
     <Menu.Container onClick={event => event.stopPropagation()}>
       <Menu.Toggle />
       <Menu.Items>
-        <Menu.Item as={Link} to={`/${game.creator.slug}/game/${game.slug}`}>
+        <Menu.Item as={Link} to={`/edit/${game.id}`}>
           Edit
         </Menu.Item>
         <Menu.Item onClick={testGame} onKeyPress={testGame}>
