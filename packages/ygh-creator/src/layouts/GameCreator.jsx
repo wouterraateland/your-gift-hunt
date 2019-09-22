@@ -1,19 +1,18 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled, { css, keyframes } from "styled-components"
 
 import useGame from "hooks/useGame"
 import useEditor from "hooks/useEditor"
 import useSaveState from "hooks/useSaveState"
+import useGameMutations from "hooks/useGameMutations"
 import useMetaActions from "hooks/useMetaActions"
-import { useForceUpdate } from "ygh-hooks"
+import { useClickOutside, useForceUpdate } from "ygh-hooks"
 
 import * as Icons from "ygh-icons"
-import { Button, ToolTip } from "ygh-ui"
+import { Button, ToolTip, Field } from "ygh-ui"
 
 import PageContainer from "components/PageContainer"
 import Nav from "components/CreatorNav"
-
-const Editable = styled.strong``
 
 const Main = styled.main`
   position: relative;
@@ -70,6 +69,39 @@ const SaveContainer = styled.span`
   }
 `
 
+const Editable = ({ onChange, value }) => {
+  const ref = useRef(null)
+  const [isEditing, setEditing] = useState(false)
+  const [state, setState] = useState(value)
+
+  const onSubmit = () => {
+    onChange(state)
+    setEditing(false)
+  }
+
+  useClickOutside({ ref, onClickOutside: onSubmit })
+
+  const onKeyPress = event => {
+    if (event.key === "Enter") {
+      onSubmit()
+    }
+  }
+
+  return isEditing ? (
+    <Field
+      ref={ref}
+      size="tiny"
+      value={state}
+      onKeyPress={onKeyPress}
+      onChange={event => setState(event.target.value)}
+    />
+  ) : (
+    <strong style={{ cursor: "pointer" }} onClick={() => setEditing(true)}>
+      {value}
+    </strong>
+  )
+}
+
 const SaveState = ({ isSaving, isDirty, lastSaved }) => {
   const forceUpdate = useForceUpdate()
 
@@ -92,6 +124,10 @@ const SaveState = ({ isSaving, isDirty, lastSaved }) => {
     </SaveContainer>
   )
 }
+
+const Center = styled.div`
+  margin: 1rem 0;
+`
 
 const SwitchContainer = styled.div`
   display: flex;
@@ -148,6 +184,7 @@ const ViewSwitch = () => {
 const CreatorLayout = ({ children }) => {
   const { isSaving, isDirty, lastSaved } = useSaveState()
   const { game } = useGame()
+  const { updateGameSettings } = useGameMutations()
   const { setUpcomingAction, ACTION_TYPES } = useEditor()
   const { testGame } = useMetaActions(game)
 
@@ -156,9 +193,17 @@ const CreatorLayout = ({ children }) => {
       <Nav.Container>
         <Nav.BackControl />
         <Nav.Center>
-          <p>
-            {game.creator.name} / <Editable>{game.name}</Editable>
-          </p>
+          <Center>
+            {game.creator.name} /{" "}
+            <Editable
+              onChange={value =>
+                updateGameSettings(game.id, {
+                  name: value
+                })
+              }
+              value={game.name}
+            />
+          </Center>
           <SaveState
             isSaving={isSaving}
             isDirty={isDirty}
