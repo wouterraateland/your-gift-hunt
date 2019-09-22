@@ -47,6 +47,10 @@ export const ENTITY_TEMPLATE_FRAGMENT = gql`
       id
     }
 
+    set {
+      id
+    }
+
     informationSlots {
       ...InformationSlotTemplateFragment
     }

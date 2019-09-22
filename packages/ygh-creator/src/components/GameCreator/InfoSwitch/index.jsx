@@ -1,5 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
+import { transparentize } from "polished"
 
 import useEditor from "hooks/useEditor"
 
@@ -16,12 +17,18 @@ const Container = styled.div`
   background-color: #fcfcfc;
 `
 
-const Switch = styled.div`
+const StyledSwitch = styled.div`
   padding: 0.5em;
   color: ${props => props.theme.color.text};
 
   &:hover {
     color: ${props => props.theme.color.primary};
+  }
+
+  &:focus {
+    background-color: ${props =>
+      transparentize(0.5)(props.theme.color.primary)};
+    outline: none;
   }
 
   ${props =>
@@ -31,14 +38,19 @@ const Switch = styled.div`
     `}
 `
 
+const Switch = ({ onSelect, ...props }) => (
+  <StyledSwitch onClick={onSelect} onKeyPress={onSelect} {...props} />
+)
+
 const InfoSwitch = () => {
   const { selectedTab, selectTab, INFO_TYPES } = useEditor()
 
   return (
     <Container>
       <Switch
+        tabIndex={0}
         isSelected={selectedTab === INFO_TYPES.INFO}
-        onClick={() =>
+        onSelect={() =>
           selectTab(selectedTab =>
             selectedTab === INFO_TYPES.INFO ? null : INFO_TYPES.INFO
           )
@@ -48,8 +60,9 @@ const InfoSwitch = () => {
         <ToolTip direction="horizontal">Game info</ToolTip>
       </Switch>
       <Switch
+        tabIndex={0}
         isSelected={selectedTab === INFO_TYPES.EXPLORE}
-        onClick={() =>
+        onSelect={() =>
           selectTab(selectedTab =>
             selectedTab === INFO_TYPES.EXPLORE ? null : INFO_TYPES.EXPLORE
           )
@@ -59,8 +72,9 @@ const InfoSwitch = () => {
         <ToolTip direction="horizontal">Explorer</ToolTip>
       </Switch>
       <Switch
+        tabIndex={0}
         isSelected={selectedTab === INFO_TYPES.NEW_ENTITY}
-        onClick={() =>
+        onSelect={() =>
           selectTab(selectedTab =>
             selectedTab === INFO_TYPES.NEW_ENTITY ? null : INFO_TYPES.NEW_ENTITY
           )

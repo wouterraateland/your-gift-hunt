@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import styled, { css, keyframes } from "styled-components"
+import { transparentize } from "polished"
 
 import useGame from "hooks/useGame"
 import useEditor from "hooks/useEditor"
@@ -79,7 +80,7 @@ const Editable = ({ onChange, value }) => {
     setEditing(false)
   }
 
-  useClickOutside({ ref, onClickOutside: onSubmit })
+  useClickOutside({ ref, onClickOutside: isEditing ? onSubmit : () => {} })
 
   const onKeyPress = event => {
     if (event.key === "Enter") {
@@ -140,13 +141,29 @@ const SwitchContainer = styled.div`
   background-color: #fff;
 `
 
-const Switch = styled.div`
+const StyledSwitch = styled.div`
   cursor: pointer;
 
   padding: 0.5rem;
 
   &:hover {
     color: ${props => props.theme.color.primary};
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px
+      ${props => transparentize(0.5)(props.theme.color.primary)};
+  }
+
+  &:first-of-type {
+    border-radius: ${props =>
+      `${props.theme.borderRadius} 0 0 ${props.theme.borderRadius}`};
+  }
+
+  &:last-of-type {
+    border-radius: ${props =>
+      `0 ${props.theme.borderRadius} ${props.theme.borderRadius} 0`};
   }
 
   ${props =>
@@ -160,19 +177,28 @@ const Switch = styled.div`
   }
 `
 
+const Switch = ({ onSelect, ...props }) => (
+  <StyledSwitch
+    tabIndex={0}
+    onClick={onSelect}
+    onKeyPress={onSelect}
+    {...props}
+  />
+)
+
 const ViewSwitch = () => {
   const { selectView, selectedView, VIEW_TYPES } = useEditor()
 
   return (
     <SwitchContainer>
       <Switch
-        onClick={() => selectView(VIEW_TYPES.LOGIC)}
+        onSelect={() => selectView(VIEW_TYPES.LOGIC)}
         isSelected={selectedView === VIEW_TYPES.LOGIC}
       >
         Logic
       </Switch>
       <Switch
-        onClick={() => selectView(VIEW_TYPES.GRAPHIC)}
+        onSelect={() => selectView(VIEW_TYPES.GRAPHIC)}
         isSelected={selectedView === VIEW_TYPES.GRAPHIC}
       >
         Floor plan

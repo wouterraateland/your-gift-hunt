@@ -2,6 +2,8 @@ import React, { Children, cloneElement } from "react"
 import styled from "styled-components"
 import Icons from "ygh-icons"
 
+import ActionButton from "./ActionButton"
+
 const StyledAccordionSection = styled.div`
   border-bottom: 1px solid #0002;
 `
@@ -9,15 +11,13 @@ const Title = styled.strong`
   position: relative;
 
   display: block;
-  padding: 0.5em;
-
-  text-transform: uppercase;
+  padding: 0.5rem;
 `
 
-const StyledCaret = styled(Icons.Caret)`
+const StyledActionButton = styled(ActionButton)`
   position: absolute;
-  right: 0.5em;
-  top: 0.5em;
+  right: 0.25rem;
+  top: 0.25rem;
 `
 
 const AccordionSection = ({
@@ -33,7 +33,9 @@ const AccordionSection = ({
       <Title onClick={toggleCollapsed}>
         {title}
         {collapsible && (
-          <StyledCaret direction={collapsed ? "right" : "down"} />
+          <StyledActionButton>
+            <Icons.Caret direction={collapsed ? "right" : "down"} />
+          </StyledActionButton>
         )}
       </Title>
     )}
