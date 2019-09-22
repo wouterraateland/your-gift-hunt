@@ -6971,15 +6971,10 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^4.0.1, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14:
-  version "4.17.14"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.14.tgz#9ce487ae66c96254fe20b599f21b6816028078ba"
-  integrity sha512-mmKYbW3GLuJeX+iGP+Y7Gp1AiGHGbXHCOh/jZmrawMmsE7MS4znI3RL2FsjbqOyMayHInjOeykW7PEajUk1/xw==
-
-lodash@^4.17.11:
-  version "4.17.11"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
-  integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
+lodash@^4.0.1, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
 
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
@@ -11266,21 +11261,21 @@ yargs@^12.0.2:
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^11.1.1"
 
-ygh-hooks@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-hooks/-/ygh-hooks-0.2.0.tgz#8fd2a6cbd350268d0e8ba1afd4100b443ac2782f"
-  integrity sha512-fxH2bdGzA4vpEMv3XuNIBovURWPLtoeBEfb9zq9Yj6PHSNyMQ03YOvx7E1ZSYqrKijGUhUk7XL9wgt7VS2IoPg==
+ygh-hooks@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ygh-hooks/-/ygh-hooks-0.3.0.tgz#848fc0d31c9ba5ab5478923ee1d9cbebef27e3c9"
+  integrity sha512-2dFk0Z/kolzgvHTisH3wb8wxJbCeiMZsJEmlPdJEyWERnqRdnngXGMWpUaOxRVMObFIcxByHyNZZ3GmEs+IFbQ==
   dependencies:
     "@babel/runtime" "^7.5.4"
 
-ygh-icons@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-icons/-/ygh-icons-0.2.0.tgz#c457832b2a05c4917be8d1915ec985b479ab79f5"
-  integrity sha512-RSNoQzZ3llLQE/qdGfJE0n8SbCwdZn7lVfefpgwJVXUGNr74Dq/SxNaFz7QEFOm3hYD0lRXHQ7TNvnCYBbiNsA==
+ygh-icons@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ygh-icons/-/ygh-icons-0.3.0.tgz#85442bb30fdcf8520365b62e15e008c879156d91"
+  integrity sha512-nXvuEfc9F3m6fj9L7Vf3QOv/YKyvhHdI3SnKtb6yGnUaNtqPSrAxGlaw8TIPwxSmGeat1LfcI1XXudzIqzXu2w==
   dependencies:
-    ygh-utils "^0.2.0"
+    ygh-utils "^0.3.0"
 
-ygh-utils@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-utils/-/ygh-utils-0.2.0.tgz#acf438da62737927d38fcb2330f95fc13fc1059a"
-  integrity sha512-ZxKEi0GQiX1GyRRFY2w0XdduWhPIjlzWMOoDcK+G9lLr5PBlEUNZZ3SilYYSp3tbV6zz9MxQTBlQ5jqDBO9cEg==
+ygh-utils@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ygh-utils/-/ygh-utils-0.3.0.tgz#1d69a5a5f647be1c32789ebf705043a4af578336"
+  integrity sha512-OsB6Z58UcNy1+0W1texoWf8krTz/4+zguNmXVs/dKCC5oRtNpf0n0foRi382PZd6+SvpPg7bRnW5Iu0Dp5ZFcg==
