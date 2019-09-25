@@ -20,7 +20,7 @@ const StateTag = styled.span`
   font-weight: bold;
   line-height: 1;
 
-  background-color: #999;
+  background-color: ${props => props.theme.color.emphasis};
   color: #fff;
 
   ${Outer} & {

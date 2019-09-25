@@ -41,7 +41,7 @@ const DetailPane = () => {
         {entity && <Meta entity={entity} state={state} />}
         {state && <PreviousStates state={state} />}
         {state && <UnlockConditions entity={entity} state={state} />}
-        {state && <Transitions state={state} />}
+        {state && <Transitions entity={entity} state={state} />}
         {entity && <Properties entity={entity} />}
         {entity && <InformationSlots entity={entity} state={state} />}
         {entity && <Portals entity={entity} state={state} />}

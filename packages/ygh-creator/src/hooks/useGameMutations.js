@@ -423,9 +423,9 @@ export const useGameMutationsProvider = () => {
               }
             : null,
           requiredActions: {
-            create: stateTransitionTemplate.requiredActions.map(
-              createActionRequirementFromTemplate
-            )
+            create: stateTransitionTemplate.requiredActions
+              .filter(({ type }) => type === ACTION_TYPES.INPUT)
+              .map(createActionRequirementFromTemplate)
           }
         })
 
@@ -554,15 +554,12 @@ export const useGameMutationsProvider = () => {
       : null
 
     const stateTemplateIds = getAdjacentStates(sourceStateTemplateIds)
-    const existingEntityTemplateIds = entities.map(({ template: { id } }) => id)
     const entityTemplatesThatShouldExist = entityTemplates.filter(
       ({ states }) => states.some(({ id }) => stateTemplateIds.includes(id))
     )
 
     const entityTemplatesToCreate = entityTemplatesThatShouldExist.filter(
-      ({ id, isObject, isItem }) =>
-        id !== originEntityTemplateId &&
-        (!(isObject || isItem) || !existingEntityTemplateIds.includes(id))
+      ({ id }) => id !== originEntityTemplateId
     )
     const entitiesToCreate = entityTemplatesToCreate.map(
       (entityTemplate, i) => {

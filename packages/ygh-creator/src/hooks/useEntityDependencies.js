@@ -25,7 +25,7 @@ export const useEntityDependenciesProvider = () => {
     )
   }
 
-  const getDependentNodes = sourceNodeIds => {
+  const getDependentNodes = (sourceNodeIds, includeUseRelations = false) => {
     const dependentStates = new Set(sourceNodeIds)
     const todo = new PriorityQueue(sourceNodeIds)
 
@@ -47,11 +47,16 @@ export const useEntityDependenciesProvider = () => {
             }
             break
           case EDGE_TYPES.USE:
-            if (to === nodeId) {
-              add(from)
-            }
-            if (from === nodeId && targetOfUseRequiredForTransition(from, to)) {
-              add(to)
+            if (includeUseRelations) {
+              if (to === nodeId) {
+                add(from)
+              }
+              if (
+                from === nodeId &&
+                targetOfUseRequiredForTransition(from, to)
+              ) {
+                add(to)
+              }
             }
             break
           default:
@@ -150,7 +155,7 @@ export const useEntityDependenciesProvider = () => {
     return Array.from(dependentStates)
   }
 
-  const getAdjacentStates = sourceStateIds => {
+  const getAdjacentStates = (sourceStateIds, includeUseRelations = false) => {
     const todo = new PriorityQueue(sourceStateIds)
     const adjacentStateIds = sourceStateIds.slice()
 
@@ -164,15 +169,17 @@ export const useEntityDependenciesProvider = () => {
         }
 
         // Use siblings
-        requiredActions.forEach(({ type, payload }) => {
-          if (
-            [ACTION_TYPES.USE, ACTION_TYPES.TARGET_OF_USE].includes(type) &&
-            !adjacentStateIds.includes(payload.requiredEntity.entityState.id)
-          ) {
-            adjacentStateIds.push(payload.requiredEntity.entityState.id)
-            todo.push(payload.requiredEntity.entityState.id)
-          }
-        })
+        if (includeUseRelations) {
+          requiredActions.forEach(({ type, payload }) => {
+            if (
+              [ACTION_TYPES.USE, ACTION_TYPES.TARGET_OF_USE].includes(type) &&
+              !adjacentStateIds.includes(payload.requiredEntity.entityState.id)
+            ) {
+              adjacentStateIds.push(payload.requiredEntity.entityState.id)
+              todo.push(payload.requiredEntity.entityState.id)
+            }
+          })
+        }
       })
     }
 

@@ -138,7 +138,7 @@ const SwitchContainer = styled.div`
   box-shadow: inset 0 0 0 1px #0002;
   border-radius: ${props => props.theme.borderRadius};
 
-  background-color: #fff;
+  background-color: #f2f2f2;
 `
 
 const StyledSwitch = styled.div`
@@ -146,14 +146,26 @@ const StyledSwitch = styled.div`
 
   padding: 0.5rem;
 
+  font-weight: 600;
+
+  ${props =>
+    props.isSelected &&
+    css`
+      box-shadow: inset 0 0 0 1px #0002;
+      color: ${props.theme.color.primary};
+      background-color: #fff;
+    `}
+
   &:hover {
     color: ${props => props.theme.color.primary};
   }
 
   &:focus {
+    position: relative;
+
     outline: none;
-    box-shadow: 0 0 0 4px
-      ${props => transparentize(0.5)(props.theme.color.primary)};
+    box-shadow: inset 0 0 0 1px ${props => props.theme.color.primary},
+      0 0 0 4px ${props => transparentize(0.5)(props.theme.color.primary)};
   }
 
   &:first-of-type {
@@ -164,16 +176,6 @@ const StyledSwitch = styled.div`
   &:last-of-type {
     border-radius: ${props =>
       `0 ${props.theme.borderRadius} ${props.theme.borderRadius} 0`};
-  }
-
-  ${props =>
-    props.isSelected &&
-    css`
-      color: ${props.theme.color.primary};
-    `}
-
-  & + & {
-    border-left: 1px solid #0002;
   }
 `
 
