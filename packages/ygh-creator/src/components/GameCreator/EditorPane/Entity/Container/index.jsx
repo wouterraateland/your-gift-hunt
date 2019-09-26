@@ -42,7 +42,7 @@ const Name = styled.h3`
   line-height: 1em;
 `
 
-const StartContainerIndicator = styled.div`
+const StartContainerIndicator = styled.em`
   position: relative;
 
   display: inline-block;
@@ -53,6 +53,7 @@ const StartContainerIndicator = styled.div`
 
   font-size: small;
   font-family: ${props => props.theme.font.copy};
+  font-weight: normal;
   line-height: 1;
 
   background: ${props => props.theme.color.emphasis};

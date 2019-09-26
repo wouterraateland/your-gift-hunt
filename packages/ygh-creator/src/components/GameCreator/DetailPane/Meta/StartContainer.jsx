@@ -1,10 +1,19 @@
 import React, { useCallback } from "react"
+import styled from "styled-components"
 
 import useGame from "hooks/useGame"
 import useGameMutations from "hooks/useGameMutations"
 import { useAsync } from "ygh-hooks"
 
-import { Button, Message } from "ygh-ui"
+import { Button, Message, VSpace } from "ygh-ui"
+
+const Start = styled.span`
+  padding: 0 0.25rem;
+  border-radius: ${props => props.theme.borderRadius};
+
+  background-color: ${props => props.theme.color.emphasis};
+  color: #fff;
+`
 
 const Container = ({ entity }) => {
   const {
@@ -21,9 +30,15 @@ const Container = ({ entity }) => {
   const isStartContainer = startContainer && startContainer.id === entity.id
 
   return isStartContainer ? (
-    <em>This container is the current start environment</em>
+    <>
+      <VSpace.Medium />
+      <em>
+        This container is the current <Start>start</Start> environment
+      </em>
+    </>
   ) : (
     <>
+      <VSpace.Medium />
       <Button
         onClick={handleOnClick}
         color="primary"
