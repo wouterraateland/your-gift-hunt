@@ -7,17 +7,18 @@ import useEntityPositions from "hooks/useEntityPositions"
 import Action from "./Action"
 
 const BringForward = ({ entity }) => {
-  const { entityPositions, setEntityPosition } = useEntityPositions()
+  const { entityPositions, setManyEntityPositions } = useEntityPositions()
 
   // Z reset
   useEffect(() => {
-    const zIndices = Object.values(entityPositions).map(({ z }) => z)
-
-    if (new Set(zIndices).size !== zIndices.length) {
-      Object.keys(entityPositions).forEach((entityId, i) =>
-        setEntityPosition(entityId, { ...entityPositions[entityId], z: i })
-      )
-    }
+    setManyEntityPositions(
+      Object.entries(entityPositions)
+        .map(([id, { z }]) => ({ id, z }))
+        .sort((a, b) => a.z - b.z)
+        .map((x, i) => ({ ...x, z: i }))
+        .filter(({ id, z }) => entityPositions[id].z !== z)
+        .map(({ id, z }) => ({ entityId: id, position: p => ({ ...p, z }) }))
+    )
   }, [])
 
   const bringForward = useCallback(() => {
@@ -27,14 +28,10 @@ const BringForward = ({ entity }) => {
     )
 
     if (otherEntityId) {
-      setEntityPosition(entity.id, position => ({
-        ...position,
-        z: position.z + 1
-      }))
-      setEntityPosition(otherEntityId, position => ({
-        ...position,
-        z: position.z - 1
-      }))
+      setManyEntityPositions([
+        { entityId: entity.id, position: p => ({ ...p, z: p.z + 1 }) },
+        { entityId: otherEntityId, position: p => ({ ...p, z: p.z - 1 }) }
+      ])
     }
   }, [entityPositions, entity])
 

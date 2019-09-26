@@ -2,7 +2,7 @@ import React, { createContext } from "react"
 import { useEntityPositionsProvider } from "hooks/useEntityPositions"
 
 const EntityPositionsContext = createContext(null, (prev, next) =>
-  next.updatedIndex ? 1 << next.updatedIndex % 31 : 0
+  next.updatedIndices.reduce((acc, index) => acc + (1 << index % 31), 0)
 )
 
 export const EntityPositionsProvider = ({ children, ...otherProps }) => {

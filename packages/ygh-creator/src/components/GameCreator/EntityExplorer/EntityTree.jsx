@@ -3,6 +3,7 @@ import styled from "styled-components"
 
 import { useClickOutside } from "ygh-hooks"
 import useEntities from "hooks/useEntities"
+import useEntityPositions from "hooks/useEntityPositions"
 import useInspector from "hooks/useInspector"
 import useGameMutations from "hooks/useGameMutations"
 
@@ -147,8 +148,13 @@ const EntityLeaf = ({ entity, children }) => {
 
 const EntityTree = ({ entities }) => {
   const { getEntityById } = useEntities()
+  const { entityPositions } = useEntityPositions()
 
-  return entities.map(entity =>
+  const sortedEntities = entities
+    .slice()
+    .sort((a, b) => entityPositions[b.id].z - entityPositions[a.id].z)
+
+  return sortedEntities.map(entity =>
     entity.isContainer ? (
       <EntityLeaf key={entity.id} entity={entity}>
         <EntityTree

@@ -34,7 +34,7 @@ const getDefaultProps = entity => {
 export const useEntityPositionsProvider = () => {
   const { getContainer, entities } = useEntities()
   const hasChanged = useRef(false)
-  const lastUpdated = useRef(null)
+  const lastUpdated = useRef([])
 
   const getEntityPositions = useCallback(
     () =>
@@ -93,7 +93,7 @@ export const useEntityPositionsProvider = () => {
   )
 
   const setEntityPosition = useCallback((entityId, position) => {
-    lastUpdated.current = entityId
+    lastUpdated.current = [entityId]
     hasChanged.current = true
 
     setEntityPositions(entityPositions => ({
@@ -106,18 +106,38 @@ export const useEntityPositionsProvider = () => {
     }))
   }, [])
 
+  const setManyEntityPositions = useCallback(updates => {
+    lastUpdated.current = updates.map(({ entityId }) => entityId)
+    hasChanged.current = true
+
+    setEntityPositions(entityPositions =>
+      updates.reduce(
+        (acc, { entityId, position }) => ({
+          ...acc,
+          [entityId]: clean(
+            typeof position === "function"
+              ? position(acc[entityId])
+              : { ...acc[entityId], ...position }
+          )
+        }),
+        entityPositions
+      )
+    )
+  }, [])
+
   const flush = useCallback(() => {
     hasChanged.current = false
   }, [])
 
   return {
-    updatedIndex: lastUpdated.current
-      ? entities.findIndex(({ id }) => id === lastUpdated.current) + 1
-      : null,
+    updatedIndices: lastUpdated.current.map(
+      entityId => entities.findIndex(({ id }) => id === entityId) + 1
+    ),
     entityPositions,
     getEntityPosition,
     getAbsoluteEntityPosition,
     setEntityPosition,
+    setManyEntityPositions,
     hasChanged,
     flush
   }
