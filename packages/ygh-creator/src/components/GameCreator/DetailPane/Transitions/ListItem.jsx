@@ -18,6 +18,7 @@ const ListItem = styled.li`
 
     font-weight: bold;
 
+    display: inline-block;
     width: 1rem;
     margin-left: -1rem;
 

@@ -5,7 +5,8 @@ import {
   PORTAL_FRAGMENT,
   ENTRANCE_FRAGMENT,
   ENTITY_FRAGMENT,
-  ENTITY_TEMPLATE_FRAGMENT
+  ENTITY_TEMPLATE_FRAGMENT,
+  ACTION_REQUIREMENT_FRAGMENT
 } from "./fragments"
 
 export const CREATE_USER = gql`
@@ -191,6 +192,86 @@ export const UPDATE_FIELD_VALUE = gql`
       value
     }
   }
+`
+
+export const CREATE_ACTION_REQUIREMENT = gql`
+  mutation addRequiredActionToStateTransition(
+    $transitionId: ID!
+    $type: ActionType!
+    $stateId: ID!
+  ) {
+    updateStateTransition(
+      where: { id: $transitionId }
+      data: {
+        requiredActions: {
+          create: {
+            type: $type
+            payload: {
+              create: {
+                requiredEntity: {
+                  create: { entityState: { connect: { id: $stateId } } }
+                }
+              }
+            }
+          }
+        }
+      }
+    ) {
+      id
+      template {
+        id
+      }
+
+      from {
+        id
+      }
+      to {
+        id
+      }
+      unlocks {
+        id
+      }
+
+      requiredActions {
+        ...ActionRequirementFragment
+      }
+    }
+  }
+  ${ACTION_REQUIREMENT_FRAGMENT}
+`
+
+export const UPDATE_ACTION_REQUIREMENT = gql`
+  mutation updateActionRequirement(
+    $actionRequirementId: ID!
+    $type: ActionType!
+    $stateId: ID!
+  ) {
+    updateActionRequirement(
+      where: { id: $actionRequirementId }
+      data: {
+        type: $type
+        payload: {
+          update: {
+            requiredEntity: {
+              update: { entityState: { connect: { id: $stateId } } }
+            }
+          }
+        }
+      }
+    ) {
+      ...ActionRequirementFragment
+    }
+  }
+  ${ACTION_REQUIREMENT_FRAGMENT}
+`
+
+export const DELETE_ACTION_REQUIREMENT = gql`
+  mutation deleteActionRequirement($actionRequirementId: ID!) {
+    deleteActionRequirement(where: { id: $actionRequirementId }) {
+      ...ActionRequirementFragment
+    }
+  }
+  ${ACTION_REQUIREMENT_FRAGMENT}
 `
 
 export const CREATE_HINT = gql`

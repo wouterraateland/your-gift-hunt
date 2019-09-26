@@ -18,15 +18,13 @@ const Container = styled.div`
   }
 `
 
-const ActionRequirement = ({ type, payload }) => {
+const ActionRequirement = ({ actionRequirement, ...props }) => {
+  const { type, payload } = actionRequirement
   switch (type) {
     case ACTION_TYPES.USE:
     case ACTION_TYPES.TARGET_OF_USE:
       return (
-        <EntityRequirement
-          type={type}
-          requiredEntity={payload.requiredEntity}
-        />
+        <EntityRequirement actionRequirement={actionRequirement} {...props} />
       )
     case ACTION_TYPES.INPUT:
       return <InputRequirement requiredInput={payload.requiredInput} />

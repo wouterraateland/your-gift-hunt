@@ -29,6 +29,9 @@ import {
   DELETE_NODES,
   CONNECT_INFORMATION_SLOT_WITH_FIELD,
   DISCONNECT_INFORMATION_SLOT_FROM_FIELD,
+  CREATE_ACTION_REQUIREMENT,
+  UPDATE_ACTION_REQUIREMENT,
+  DELETE_ACTION_REQUIREMENT,
   CONNECT_PORTAL_WITH_ENTRANCE,
   DISCONNECT_PORTAL_FROM_ENTRANCE,
   DISCONNECT_ENTRANCE_FROM_PORTAL,
@@ -758,6 +761,53 @@ export const useGameMutationsProvider = () => {
     await deleteManyNodes(entityIds, nodeIds)
   }
 
+  const createActionRequirement = useMutationWithSave(
+    CREATE_ACTION_REQUIREMENT,
+    (transitionId, type, stateId) => ({
+      variables: {
+        transitionId,
+        type,
+        stateId
+      }
+    })
+  )
+
+  const updateActionRequirement = useMutationWithSave(
+    UPDATE_ACTION_REQUIREMENT,
+    (actionRequirementId, type, stateId) => ({
+      variables: {
+        actionRequirementId,
+        type,
+        stateId
+      }
+    })
+  )
+
+  const deleteActionRequirement = useMutationWithSave(
+    DELETE_ACTION_REQUIREMENT,
+    actionRequirementId => ({
+      variables: { actionRequirementId },
+      update: proxy => {
+        const data = proxy.readQuery(query)
+
+        data.game.entities.forEach(entity =>
+          entity.states.forEach(state =>
+            state.outgoingTransitions.forEach(transition => {
+              const i = transition.requiredActions.findIndex(
+                ({ id }) => id === actionRequirementId
+              )
+              if (i !== -1) {
+                transition.requiredActions.splice(i, 1)
+              }
+            })
+          )
+        )
+
+        proxy.writeQuery({ ...query, data })
+      }
+    })
+  )
+
   const connectInformationSlotWithField = useMutationWithSave(
     CONNECT_INFORMATION_SLOT_WITH_FIELD,
     (informationSlotId, fieldId) => ({
@@ -880,6 +930,10 @@ export const useGameMutationsProvider = () => {
     deleteNodes,
     moveEntities,
     updateEntityPositions,
+
+    createActionRequirement,
+    updateActionRequirement,
+    deleteActionRequirement,
 
     connectInformationSlotWithField,
     disconnectInformationSlotFromField,

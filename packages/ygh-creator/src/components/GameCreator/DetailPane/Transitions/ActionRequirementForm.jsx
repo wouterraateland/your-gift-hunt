@@ -3,8 +3,9 @@ import { ACTION_TYPES } from "data"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import styled from "styled-components"
 
-import useEntities from "hooks/useEntities"
 import { useAsync, useClickOutside } from "ygh-hooks"
+import useEntities from "hooks/useEntities"
+import useGameMutations from "hooks/useGameMutations"
 
 import { Button, Field, SelectOptions } from "ygh-ui"
 import EntityTag from "components/Primitives/EntityTag"
@@ -36,8 +37,18 @@ const Form = styled.form`
   }
 `
 
-const AddActionRequirement = ({ entity, state, transition, onClose }) => {
+const AddActionRequirement = ({
+  entity,
+  state,
+  transition,
+  onClose,
+  actionRequirement
+}) => {
   const { entities } = useEntities()
+  const {
+    createActionRequirement,
+    updateActionRequirement
+  } = useGameMutations()
 
   const ref = useRef(null)
   useClickOutside({ ref, onClickOutside: onClose })
@@ -69,13 +80,31 @@ const AddActionRequirement = ({ entity, state, transition, onClose }) => {
       stateOptions
     },
     setState
-  ] = useState({
-    selectedType: entity.isItem ? ACTION_TYPES.USE : ACTION_TYPES.TARGET_OF_USE,
-    selectedEntity: null,
-    selectedState: null,
-    entityOptions: [],
-    stateOptions: []
-  })
+  ] = useState(
+    actionRequirement
+      ? {
+          selectedType: actionRequirement.type,
+          selectedEntity: entities.find(({ states }) =>
+            states.some(
+              ({ id }) =>
+                id === actionRequirement.payload.requiredEntity.entityState.id
+            )
+          ).id,
+          selectedState:
+            actionRequirement.payload.requiredEntity.entityState.id,
+          entityOptions: [],
+          stateOptions: []
+        }
+      : {
+          selectedType: entity.isItem
+            ? ACTION_TYPES.USE
+            : ACTION_TYPES.TARGET_OF_USE,
+          selectedEntity: null,
+          selectedState: null,
+          entityOptions: [],
+          stateOptions: []
+        }
+  )
 
   useEffect(() => {
     setState(prevState => {
@@ -123,11 +152,26 @@ const AddActionRequirement = ({ entity, state, transition, onClose }) => {
   const [{ isLoading }, runAsync] = useAsync()
 
   const onSubmit = useCallback(
-    runAsync(async () => {
-      // TODO: Implement adding action requirement
+    runAsync(async event => {
+      event.preventDefault()
+      await (actionRequirement
+        ? updateActionRequirement(
+            actionRequirement.id,
+            selectedType,
+            selectedState
+          )
+        : createActionRequirement(transition.id, selectedType, selectedState))
       onClose()
     }),
-    [onClose]
+    [
+      onClose,
+      actionRequirement,
+      updateActionRequirement,
+      createActionRequirement,
+      transition.id,
+      selectedType,
+      selectedState
+    ]
   )
 
   return (

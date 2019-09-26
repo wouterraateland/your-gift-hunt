@@ -20,7 +20,9 @@ const Placeholder = styled.p`
   margin: 0;
 `
 
-const Hints = ({ id, hints }) => {
+const Hints = ({ actionRequirement }) => {
+  const { id, hints } = actionRequirement
+
   const [state, setState] = useState({
     selectedHint: null,
     isNewHint: false,

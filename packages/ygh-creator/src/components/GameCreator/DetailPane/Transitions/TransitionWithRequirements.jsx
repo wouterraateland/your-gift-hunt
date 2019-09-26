@@ -7,7 +7,7 @@ import Icons from "ygh-icons"
 import Transition from "components/GameCreator/ClickableTransition"
 import Unlocks from "./Unlocks"
 import ActionRequirement from "./ActionRequirement"
-import AddActionRequirement from "./AddActionRequirement"
+import ActionRequirementForm from "./ActionRequirementForm"
 
 const ActionRequirements = styled.ul`
   padding: 0;
@@ -37,7 +37,7 @@ const TransitionWithRequirements = ({ entity, state, transition }) => {
         </Float.Right>
       </Label>
       {isAddingNew && (
-        <AddActionRequirement
+        <ActionRequirementForm
           entity={entity}
           state={state}
           transition={transition}
@@ -47,7 +47,13 @@ const TransitionWithRequirements = ({ entity, state, transition }) => {
       <ActionRequirements>
         {requiredActions.length
           ? requiredActions.map((actionRequirement, i) => (
-              <ActionRequirement key={i} {...actionRequirement} />
+              <ActionRequirement
+                key={i}
+                entity={entity}
+                state={state}
+                transition={transition}
+                actionRequirement={actionRequirement}
+              />
             ))
           : !isAddingNew && <em>None</em>}
       </ActionRequirements>
