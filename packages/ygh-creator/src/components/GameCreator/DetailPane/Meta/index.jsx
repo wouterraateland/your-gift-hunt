@@ -40,7 +40,7 @@ const Meta = ({ entity, state }) => (
       </Description>
       <Container entity={entity} />
       {entity.isContainer && <ContainedEntities entity={entity} />}
-      {entity.isContainer && entity.isObject && (
+      {entity.isContainer && entity.isPlaceable && (
         <StartContainer entity={entity} />
       )}
     </Paper.Section>

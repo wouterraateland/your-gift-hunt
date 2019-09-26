@@ -19,7 +19,8 @@ const Outer = styled.div`
   width: 100%;
   height: 100%;
   margin: -${props => props.theme.borderWidth};
-  border: ${props => props.theme.borderWidth} dashed;
+  border: ${props =>
+    `${props.theme.borderWidth} ${props.isPlaceable ? "solid" : "dashed"}`};
   border-radius: ${props => props.theme.borderRadius};
 
   background-color: #0001;
@@ -90,6 +91,7 @@ const ContainerEntity = ({ entity, ...props }) => {
       onClick={onClick}
       isFocused={isOpen && inspectedEntity === entity.id}
       mayBeDeleted={mayBeDeleted}
+      isPlaceable={entity.isPlaceable}
     >
       <Nodes entity={entity} />
       <Name>
