@@ -106,5 +106,6 @@ Package.defaultProps = {
   height: 3.5,
   z: 2
 }
+Package.states = ["Closed", "Open"]
 
 export default Package

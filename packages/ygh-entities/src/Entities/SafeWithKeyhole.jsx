@@ -104,8 +104,17 @@ const SafeWithKeyhole = forwardRef(({ inspect, children, ...props }, ref) => {
   const isUnlocked = _.hasState("unlocked")(props)
   return (
     <Entity noVisual {...props} onClick={inspect} ref={ref}>
-      <Safe top={2} />
-      <Door left={0} top={4} rotation={isUnlocked ? 45 : 0}>
+      <Safe
+        top={(props.height - 1) / 2}
+        width={props.width}
+        height={props.height - 1}
+      />
+      <Door
+        left={0}
+        top={props.height - 1}
+        width={props.width}
+        rotation={isUnlocked ? 45 : 0}
+      >
         <Wheel top={1.25} />
       </Door>
       {children}

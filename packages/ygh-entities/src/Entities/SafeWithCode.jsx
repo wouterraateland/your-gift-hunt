@@ -59,7 +59,7 @@ const Door = styled(Entity)`
     left: 0.5em;
     top: 100%;
 
-    width: 4em;
+    width: 80%;
     height: 1.5em;
 
     background: radial-gradient(
@@ -81,11 +81,17 @@ const SafeWithCode = forwardRef(({ inspect, children, ...props }, ref) => {
   const isUnlocked = _.hasState("unlocked")(props)
   return (
     <Entity noVisual {...props} onClick={inspect} ref={ref}>
-      <Safe top={2} />
+      <Safe
+        top={(props.height - 1) / 2}
+        width={props.width}
+        height={props.height}
+        height={props.height - 1}
+      />
       <Door
         isUnlocked={isUnlocked}
-        top={4}
+        top={props.height - 1}
         left={0}
+        width={props.width}
         rotation={isUnlocked ? 45 : 0}
       />
       {children}

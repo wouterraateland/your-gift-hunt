@@ -6,7 +6,7 @@ import TreeStump from "./TreeStump"
 
 const random = (min, max, d = x => x) => min + (max - min) * d(Math.random())
 
-const createLeafs = branches =>
+const createLeafs = (branches, _s) =>
   branches
     .flatMap(({ rotation, scale }) =>
       Array(Math.floor(6.5 * scale))
@@ -27,7 +27,8 @@ const createLeafs = branches =>
     .sort((a, b) => a.r - b.r)
     .map(
       ({ r, a, s, c }) =>
-        `${6 + r * Math.cos(a)}em ${6 + r * Math.sin(a)}em 0 ${s}em ${c}`
+        `${6 + _s * r * Math.cos(a)}em ${6 + _s * r * Math.sin(a)}em 0 ${_s *
+          s}em ${c}`
     )
     .join(",")
 
@@ -91,17 +92,20 @@ Branch.defaultProps = {
 }
 
 const Tree = forwardRef(({ children, ...props }, ref) => {
+  const s = (props.width + props.height) / 8
+
   const branches = useMemo(createBranches, [])
-  const leafs = useMemo(() => createLeafs(branches), [])
+  const leafs = useMemo(() => createLeafs(branches, s), [s])
+
   return (
     <Entity noVisual isInteractive={false} {...props} ref={ref}>
-      <TreeStump isCovered />
+      <TreeStump isCovered width={props.width} height={props.height} />
       <Branches isInteractive={false}>
         {branches.map(({ scale, rotation }, i) => (
           <Branch
             key={i}
-            width={7.5 * scale}
-            height={1.5 * scale}
+            width={7.5 * scale * s}
+            height={1.5 * scale * s}
             rotation={rotation}
           />
         ))}

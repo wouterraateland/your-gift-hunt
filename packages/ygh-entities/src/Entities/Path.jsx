@@ -106,7 +106,17 @@ const Path = forwardRef(({ dispatchInputAction, children, ...props }, ref) => {
   )
 
   return (
-    <Entity noVisual {...props} ref={ref}>
+    <Entity
+      noVisual
+      {...props}
+      ref={ref}
+      style={{
+        width: "8em",
+        height: "16em",
+        transformOrigin: "top left",
+        transform: `scale(${props.width / 8}, ${props.height / 16})`
+      }}
+    >
       {stones.map((stone, i) =>
         i === 1 ? (
           <Stone

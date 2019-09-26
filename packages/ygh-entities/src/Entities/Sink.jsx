@@ -181,8 +181,8 @@ const Sink = forwardRef((props, ref) => {
 
   return (
     <SinkContainer ref={ref} isConnected={isConnected} {...props}>
-      <Well left="50%" top="50%" />
-      <Faucet left="50%" top={4}>
+      <Well left="50%" top={(props.height - 0.5) / 2} />
+      <Faucet left="50%" bottom={0.5}>
         <Cold rotation={-60} top="30%" left="10%" />
         <Warm rotation={60} top="30%" left="90%" />
         <Neck rotation={20} top="50%" left="50%" />
@@ -197,5 +197,6 @@ SinkContainer.defaultProps = {
   height: 5,
   z: 1
 }
+Sink.states = ["Disconnected", "Connected"]
 
 export default Sink

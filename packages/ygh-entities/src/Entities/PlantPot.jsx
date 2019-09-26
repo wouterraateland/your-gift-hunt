@@ -24,8 +24,8 @@ const Pot = styled(Entity)`
   }
 
   &::before {
-    width: 133.333%;
-    height: 133.333%;
+    width: calc(100% + 1em);
+    height: calc(100% + 1em);
 
     box-shadow: inset 0.125em 0.125em 0.125em 0 rgba(255, 255, 255, 0.5),
       inset -0.125em -0.125em 0.125em 0 rgba(0, 0, 0, 0.5) !important;
@@ -158,5 +158,6 @@ PlantPot.defaultProps = {
   height: 4,
   z: 2
 }
+PlantPot.states = ["Empty", "Planted", "Grown"]
 
 export default PlantPot

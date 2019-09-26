@@ -31,8 +31,8 @@ const WateringCan = styled(Entity)`
   }
 
   &::after {
-    left: 0.8em;
     top: 0.4em;
+    right: -0.8em;
 
     width: 1em;
     height: 0.3em;

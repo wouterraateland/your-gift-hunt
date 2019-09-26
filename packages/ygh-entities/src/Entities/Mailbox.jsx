@@ -22,7 +22,7 @@ const Box = styled(Entity)`
 
   &::before {
     top: -0.1em;
-    left: 1em;
+    left: 50%;
 
     width: 1em;
     height: 0.2em;
@@ -37,7 +37,7 @@ const Box = styled(Entity)`
   }
 
   &::after {
-    left: 1.25em;
+    left: 45%;
     bottom: -0.4em;
 
     width: 0.5em;
@@ -89,10 +89,11 @@ Door.defaultProps = {
 const Mailbox = forwardRef(
   ({ containedEntities, inspect, children, ...props }, ref) => (
     <Entity noVisual {...props} onClick={inspect} ref={ref}>
-      <Box />
+      <Box width={props.width} height={props.height} />
       <Door
         isOpen={containedEntities.some(entity => _.hasState("unread")(entity))}
-        left={2.875}
+        right={0.125}
+        height={props.height}
       />
       {children}
     </Entity>
