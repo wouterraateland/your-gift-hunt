@@ -37,7 +37,7 @@ const Form = styled.form`
   }
 `
 
-const AddActionRequirement = ({
+const ActionRequirementForm = ({
   entity,
   state,
   transition,
@@ -53,23 +53,42 @@ const AddActionRequirement = ({
   const ref = useRef(null)
   useClickOutside({ ref, onClickOutside: onClose })
 
-  const allEntityOptions = useMemo(
-    () =>
-      entities
-        .filter(({ id }) => id !== entity.id)
-        .map(entity => ({
-          label: <EntityTag entity={entity} />,
-          value: entity.id,
-          entity: entity,
-          allStateOptions: entity.states.map(state => ({
+  const otherStateIds = useMemo(() => {
+    const otherActionRequirements = actionRequirement
+      ? transition.requiredActions.filter(
+          ({ id }) => id !== actionRequirement.id
+        )
+      : transition.requiredActions
+    return otherActionRequirements
+      .filter(({ payload: { requiredEntity } }) => requiredEntity)
+      .map(
+        ({
+          payload: {
+            requiredEntity: {
+              entityState: { id }
+            }
+          }
+        }) => id
+      )
+  }, [transition, actionRequirement])
+
+  const allEntityOptions = useMemo(() => {
+    return entities
+      .filter(({ id }) => id !== entity.id)
+      .map(entity => ({
+        label: <EntityTag entity={entity} />,
+        value: entity.id,
+        entity: entity,
+        allStateOptions: entity.states
+          .filter(state => !otherStateIds.includes(state.id))
+          .map(state => ({
             label: <StateTag state={state} />,
             value: state.id,
             state: state
           }))
-        })),
-    [entities, entity, state, transition]
-  )
-  // TODO: filter possible entities and states
+      }))
+      .filter(({ allStateOptions }) => allStateOptions.length > 0)
+  }, [entities, entity, state, transition, otherStateIds])
 
   const [
     {
@@ -234,4 +253,4 @@ const AddActionRequirement = ({
   )
 }
 
-export default AddActionRequirement
+export default ActionRequirementForm
