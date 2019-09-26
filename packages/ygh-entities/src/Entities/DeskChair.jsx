@@ -48,22 +48,23 @@ const Seat = styled(Entity)`
     z-index: -1;
     bottom: -0.5em;
 
-    width: 4em;
+    width: 100%;
     height: 1em;
 
     background: linear-gradient(
-      90deg,
-      transparent 1em,
-      #444 1em,
-      #999 1.2em,
-      #444 1.5em,
-      transparent 1.5em,
-      transparent 2.5em,
-      #444 2.5em,
-      #999 2.7em,
-      #444 3em,
-      transparent 3em
-    );
+        90deg,
+        transparent 1em,
+        #444 1em,
+        #999 1.2em,
+        #444 1.5em,
+        transparent 1.5em,
+        transparent 2.5em,
+        #444 2.5em,
+        #999 2.7em,
+        #444 3em,
+        transparent 3em
+      )
+      no-repeat center / 4em;
   }
 `
 Seat.defaultProps = {
@@ -97,8 +98,8 @@ Backrest.defaultProps = {
 
 const DeskChair = forwardRef(({ children, ...props }, ref) => (
   <Entity noVisual ref={ref} {...props}>
-    <Seat top="50%" left="50%" />
-    <Backrest top={4.5} left="50%" />
+    <Seat top="50%" left="50%" width={props.width} height={props.height} />
+    <Backrest bottom={-0.5} left="50%" width={props.width} />
     {children}
   </Entity>
 ))

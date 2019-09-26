@@ -18,12 +18,16 @@ const EntityContainer = styled.div.attrs(props => ({
   style: {
     width: or0(props.width),
     height: or0(props.height),
-    left: or50(props.left),
-    top: or50(props.top),
+    top: props.bottom ? undefined : or50(props.top),
+    left: props.right ? undefined : or50(props.left),
+    bottom: props.top ? undefined : or50(props.bottom),
+    right: props.left ? undefined : or50(props.right),
     transformOrigin: `${or50(props.origin.left)} ${or50(props.origin.top)}`,
-    transform: `translate(-${or50(props.origin.left)}, -${or50(
-      props.origin.top
-    )}) rotate(${props.rotation}deg)`,
+    transform: `translate(${props.right ? "" : "-"}${or50(
+      props.origin.left
+    )}, ${props.bottom ? "" : "-"}${or50(props.origin.top)}) rotate(${
+      props.rotation
+    }deg)`,
     zIndex: props.z
   }
 }))`

@@ -2,6 +2,7 @@ import styled from "styled-components"
 import Entity from "../../Entity"
 
 const CameraLens = styled(Entity)`
+  height: calc(100% - 1em);
   margin: auto;
   border-radius: 0.125em 0.125em 0.25em 0.25em / 0.125em 0.125em 1em 1em;
 
@@ -23,7 +24,7 @@ CameraLens.defaultProps = {
   ...Entity.defaultProps,
   z: 0,
   width: 1.5,
-  height: 1.25,
+  height: "100%",
   origin: { left: "50%", top: "0%" }
 }
 

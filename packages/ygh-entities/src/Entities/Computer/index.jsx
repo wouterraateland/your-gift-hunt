@@ -12,8 +12,8 @@ import Screen from "./Screen"
 const Computer = forwardRef(
   ({ containedEntities, inspect, children, ...props }, ref) => (
     <Entity noVisual {...props} onClick={inspect} ref={ref}>
-      <Keyboard left={1.25} top={3} rotation={15} />
-      <Mouse left={3.5} top={3} rotation={-15} />
+      <Keyboard left={1.25} bottom={1} rotation={15} />
+      <Mouse right={0.5} bottom={1} rotation={-15} />
       <Standard left="50%" top={0.75}>
         <Screen
           left="50%"

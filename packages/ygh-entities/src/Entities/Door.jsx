@@ -27,7 +27,7 @@ const Frame = styled(Entity)`
     width: 0.5em;
     border-radius: 0.2em 0.1em 0.1em 0.1em / 0.3em 0.2em 0.1em 0.5em;
 
-    box-shadow: 5.5em 0 #000;
+    box-shadow: ${props => props.width + 0.5}em 0 #000;
 
     background: #000;
   }
@@ -71,7 +71,11 @@ const Door = forwardRef(({ dispatchInputAction, children, ...props }, ref) => {
       }
       ref={ref}
     >
-      <DoorPart left={0} top={0.75} rotation={isOpen ? 60 : 0} />
+      <DoorPart
+        left={0}
+        top={props.height / 2 + 0.25}
+        rotation={isOpen ? 60 : 0}
+      />
       {children}
     </Frame>
   )
