@@ -20,8 +20,8 @@ const EntityContainer = styled.div.attrs(props => ({
     height: or0(props.height),
     top: props.bottom !== undefined ? undefined : or50(props.top),
     left: props.right !== undefined ? undefined : or50(props.left),
-    bottom: props.top !== undefined ? undefined : or50(props.bottom),
-    right: props.left !== undefined ? undefined : or50(props.right),
+    bottom: props.bottom !== undefined ? or50(props.bottom) : undefined,
+    right: props.right !== undefined ? or50(props.right) : undefined,
     transformOrigin: `${or50(props.origin.left)} ${or50(props.origin.top)}`,
     transform: `translate(${props.right !== undefined ? "" : "-"}${or50(
       props.origin.left

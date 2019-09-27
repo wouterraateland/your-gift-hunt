@@ -27,11 +27,7 @@ FloorContainer.displayName = "Floor.Container"
 const Plank = styled.div`
   ${plankStyles}
 `
-Plank.defaultProps = {
-  baseColor: "#b38d5c"
-}
 
-const PLANK_COUNT = 10
 const divideOne = n => {
   const parts = new Array(n).fill(0).map(() => 0.1 + 0.9 * Math.random())
   const sum = parts.reduce((acc, x) => acc + x, 0)
@@ -39,12 +35,13 @@ const divideOne = n => {
 }
 
 const Floor = forwardRef(({ children, ...props }, ref) => {
+  const plankCount = Math.ceil(props.width / 3)
   const plankHeights = useMemo(
     () =>
-      Array(PLANK_COUNT)
+      Array(plankCount)
         .fill(0)
         .flatMap(() => divideOne(2 + Math.floor(2 * Math.random()))),
-    []
+    [plankCount]
   )
 
   return (
@@ -53,9 +50,10 @@ const Floor = forwardRef(({ children, ...props }, ref) => {
         <Plank
           key={i}
           style={{
-            width: `${100 / PLANK_COUNT}%`,
+            width: `${100 / plankCount}%`,
             height: `${100 * plankHeight}%`
           }}
+          baseColor={props.color}
         />
       ))}
       {children}
@@ -69,7 +67,8 @@ Floor.defaultProps = {
   isContainer: true,
   z: 0,
   width: 29,
-  height: 35
+  height: 35,
+  color: "#b38d5c"
 }
 
 export default Floor

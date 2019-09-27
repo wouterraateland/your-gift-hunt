@@ -11,10 +11,10 @@ const Body = styled(Entity)`
 
   background: radial-gradient(
     circle closest-side at 50% 70%,
-    transparent ${props => props.height * 0.15}em,
-    ${props => props.darkColor} ${props => props.height * 0.15 + 0.025}em,
-    ${props => props.darkColor} ${props => props.height * 0.15 + 0.125}em,
-    ${props => props.color} ${props => props.height * 0.15 + 0.15}em
+    transparent ${props => props.height * 0.15 - 0.05}em,
+    ${props => props.darkColor} ${props => props.height * 0.15 - 0.025}em,
+    ${props => props.darkColor} ${props => props.height * 0.15 + 0.075}em,
+    ${props => props.color} ${props => props.height * 0.15 + 0.1}em
   );
 
   color: ${props => props.color};

@@ -11,10 +11,10 @@ const Body = styled(Entity)`
 
   background: radial-gradient(
     circle closest-side at 50% 70%,
-    transparent ${props => props.height * 0.15}em,
-    ${props => props.darkColor} ${props => props.height * 0.15 + 0.025}em,
-    ${props => props.darkColor} ${props => props.height * 0.15 + 0.125}em,
-    ${props => props.color} ${props => props.height * 0.15 + 0.15}em
+    transparent ${props => props.height * 0.15 - 0.05}em,
+    ${props => props.darkColor} ${props => props.height * 0.15 - 0.025}em,
+    ${props => props.darkColor} ${props => props.height * 0.15 + 0.075}em,
+    ${props => props.color} ${props => props.height * 0.15 + 0.1}em
   );
 
   color: ${props => props.color};
@@ -60,7 +60,7 @@ Neck.defaultProps = {
   width: 0.5
 }
 
-const DoorKey = forwardRef(({ children, ...props }, ref) => (
+const SafeKey = forwardRef(({ children, ...props }, ref) => (
   <Entity noVisual ref={ref} {...props}>
     <Body
       left="50%"
@@ -80,16 +80,16 @@ const DoorKey = forwardRef(({ children, ...props }, ref) => (
     {children}
   </Entity>
 ))
-DoorKey.name = "DoorKey"
-DoorKey.displayName = "DoorKey"
-DoorKey.templateName = "Door key"
-DoorKey.defaultProps = {
+SafeKey.name = "SafeKey"
+SafeKey.displayName = "SafeKey"
+SafeKey.templateName = "Safe key"
+SafeKey.defaultProps = {
   ...Entity.defaultProps,
   width: 1,
   height: 2,
-  color: "#9a8d7d"
+  color: "#747474"
 }
-DoorKey.states = []
-DoorKey.Detail = DoorKey
+SafeKey.states = []
+SafeKey.Detail = SafeKey
 
-export default DoorKey
+export default SafeKey
