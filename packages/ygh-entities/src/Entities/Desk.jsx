@@ -43,7 +43,6 @@ const Plank = styled(Entity)`
   }
 `
 Plank.defaultProps = {
-  baseColor: "#584630",
   z: 0,
   height: "100%",
   width: "31%"
@@ -51,9 +50,9 @@ Plank.defaultProps = {
 
 const Desk = forwardRef(({ children, ...props }, ref) => (
   <Construction noVisual ref={ref} {...props}>
-    <Plank left="18%" i={1} />
-    <Plank i={2} />
-    <Plank left="82%" i={3} />
+    <Plank baseColor={props.color} left="18%" i={1} />
+    <Plank baseColor={props.color} i={2} />
+    <Plank baseColor={props.color} left="82%" i={3} />
     <Entity noVisual width={props.width} height={props.height} z={3}>
       {children}
     </Entity>
@@ -65,7 +64,8 @@ Desk.defaultProps = {
   ...Entity.defaultProps,
   z: 2,
   width: 6,
-  height: 12
+  height: 12,
+  color: "#584630"
 }
 
 export default Desk

@@ -9,7 +9,7 @@ const Grass = styled(Entity)`
   ${props =>
     props.isReachable
       ? css`
-          background-color: ${props.baseColor};
+          background-color: ${props.color};
 
           background-image: linear-gradient(
               85deg,
@@ -55,12 +55,12 @@ const Grass = styled(Entity)`
             ),
             radial-gradient(
               ellipse 50% 50% at 50% 50%,
-              ${props => _.darken(-0.1)(props.baseColor)},
+              ${props => _.darken(-0.1)(props.color)},
               transparent
             ),
             radial-gradient(
               ellipse 50% 50% at 50% 50%,
-              ${props => _.darken(0.1)(props.baseColor)},
+              ${props => _.darken(0.1)(props.color)},
               transparent
             );
 
@@ -79,7 +79,7 @@ Grass.name = "Grass"
 Grass.templateName = "Outside"
 Grass.defaultProps = {
   ...Entity.defaultProps,
-  baseColor: "#6ab13f",
+  color: "#6ab13f",
   z: 0,
   width: 100,
   height: 80

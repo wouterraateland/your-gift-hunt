@@ -8,7 +8,7 @@ import SafeWithKeyholeDetail from "../EntityDetails/SafeWithKeyhole"
 const Safe = styled(Entity)`
   border-radius: 0.25em 0.25em 0 0;
 
-  background-color: #37474f;
+  background-color: currentColor;
 
   &::before {
     width: 100%;
@@ -28,7 +28,7 @@ const Safe = styled(Entity)`
     height: 0.5em;
 
     border-radius: 100%;
-    background-color: #37474f;
+    background-color: currentColor;
 
     transform: translate(-50%, -50%);
   }
@@ -43,7 +43,7 @@ Safe.defaultProps = {
 const Door = styled(Entity)`
   border-radius: 0 0 0.25em 0.25em;
 
-  background-color: #37474f;
+  background-color: currentColor;
 
   &::before {
     width: 100%;
@@ -66,7 +66,7 @@ Door.defaultProps = {
 const Wheel = styled(Entity)`
   border-radius: 0.125em;
 
-  background-color: #37474f;
+  background-color: currentColor;
   background-image: radial-gradient(
     ellipse 30% 20% at 40% 30%,
     #fffc,
@@ -90,7 +90,7 @@ const Wheel = styled(Entity)`
     width: 0.25em;
     height: 0.25em;
 
-    background-color: #37474f;
+    background-color: currentColor;
   }
 `
 Wheel.defaultProps = {
@@ -127,7 +127,8 @@ SafeWithKeyhole.defaultProps = {
   ...Entity.defaultProps,
   z: 3,
   width: 5,
-  height: 5
+  height: 5,
+  color: "#37474f"
 }
 SafeWithKeyhole.states = ["Locked", "Unlocked"]
 SafeWithKeyhole.Detail = SafeWithKeyholeDetail

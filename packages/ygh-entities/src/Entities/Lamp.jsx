@@ -9,12 +9,12 @@ const Foot = styled(Entity)`
 
   background: radial-gradient(
       ellipse 50% 50% at 50% 50%,
-      #212121,
+      #0009,
       transparent 25%,
       transparent 90%,
-      #212121
+      #0009
     ),
-    linear-gradient(135deg, transparent, #424242 40%),
+    linear-gradient(135deg, transparent, currentColor 40%),
     radial-gradient(
       ellipse 50% 50% at 55% 55%,
       transparent 80%,
@@ -22,7 +22,7 @@ const Foot = styled(Entity)`
       transparent 100%
     );
 
-  background-color: #424242;
+  background-color: currentColor;
 `
 Foot.defaultProps = {
   z: 0,
@@ -38,8 +38,8 @@ const Neck = styled(Entity)`
       #fff,
       transparent
     ),
-    radial-gradient(ellipse 75% 50% at 75% 50%, transparent, #212121);
-  background-color: #424242;
+    radial-gradient(ellipse 75% 50% at 75% 50%, transparent, #0009);
+  background-color: currentColor;
 `
 Neck.defaultProps = {
   ...Entity.defaultProps,
@@ -52,8 +52,8 @@ Neck.defaultProps = {
 const Head = styled(Entity)`
   border-radius: 100%;
 
-  background: radial-gradient(transparent, #212121);
-  background-color: #424242;
+  background: radial-gradient(transparent, #0009);
+  background-color: currentColor;
 `
 Head.defaultProps = {
   ...Entity.defaultProps,
@@ -118,7 +118,8 @@ Lamp.defaultProps = {
   width: 2.5,
   height: 2.5,
   rotation: 180,
-  z: 1
+  z: 1,
+  color: "#424242"
 }
 Lamp.states = ["Off", "On"]
 

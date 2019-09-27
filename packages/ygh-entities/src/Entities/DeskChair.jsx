@@ -30,7 +30,7 @@ const Seat = styled(Entity)`
       #fff0 100%,
       #fff0 100%
     ),
-    radial-gradient(#938677, #c77b44);
+    radial-gradient(#938677, currentColor);
 
   background-size: 1em, 1em, 1em, 100%;
   background-position: 0.3em 0, 0.5em 0, 0.2em 0, 0 0;
@@ -85,7 +85,7 @@ const Backrest = styled(Entity)`
 
     box-shadow: inset 0 -0.2em 0.2em #0004;
 
-    background: #c77b44;
+    background: currentColor;
     mask: radial-gradient(ellipse 50% 75% at 50% -37.5%, #0000 95%, #000);
   }
 `
@@ -107,7 +107,8 @@ DeskChair.name = "DeskChair"
 DeskChair.templateName = "Desk chair"
 DeskChair.defaultProps = {
   width: 4,
-  height: 4
+  height: 4,
+  color: "#c77b44"
 }
 
 export default DeskChair

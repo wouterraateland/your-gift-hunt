@@ -8,7 +8,7 @@ import SafeWithCodeDetail from "../EntityDetails/SafeWithCode"
 const Safe = styled(Entity)`
   border-radius: 0.25em 0.25em 0 0;
 
-  background-color: #37474f;
+  background-color: currentColor;
 
   &::before {
     width: 100%;
@@ -28,7 +28,7 @@ const Safe = styled(Entity)`
     height: 0.5em;
 
     border-radius: 100%;
-    background-color: #37474f;
+    background-color: currentColor;
 
     transform: translate(-50%, -50%);
   }
@@ -43,7 +43,7 @@ Safe.defaultProps = {
 const Door = styled(Entity)`
   border-radius: 0 0 0.25em 0.25em;
 
-  background-color: #37474f;
+  background-color: currentColor;
 
   &::before {
     width: 100%;
@@ -104,7 +104,8 @@ SafeWithCode.defaultProps = {
   ...Entity.defaultProps,
   z: 2,
   width: 5,
-  height: 5
+  height: 5,
+  color: "#37474f"
 }
 SafeWithCode.states = ["Locked", "Unlocked"]
 SafeWithCode.Detail = SafeWithCodeDetail

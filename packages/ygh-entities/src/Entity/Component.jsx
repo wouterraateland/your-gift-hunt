@@ -15,9 +15,10 @@ const or50 = or("50%")
 
 const EntityComponent = styled.div.attrs(props =>
   props.noVisual
-    ? {}
+    ? { style: { color: props.color } }
     : {
         style: {
+          color: props.color,
           //     boxShadow: `
           // ${(Math.cos(
           //   (-(-45 + props.parentRotation + props.rotation) * Math.PI) / 180
