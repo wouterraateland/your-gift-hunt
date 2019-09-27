@@ -25,7 +25,7 @@ const Paper = styled.div`
 
 const PaperClip = styled.div`
   position: absolute;
-  right: 0.3em;
+  right: 15%;
   top: -0.1em;
 
   width: 0.3em;
@@ -39,7 +39,7 @@ const PaperClip = styled.div`
 
 const PaperClip2 = styled.div`
   position: absolute;
-  right: 0.3em;
+  right: 15%;
   top: 0.1em;
 
   width: 0.2em;
@@ -54,14 +54,16 @@ const PaperClip2 = styled.div`
 `
 
 const Text = styled.span`
-  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
 
   white-space: nowrap;
 
   font-family: cursive;
   font-size: 0.6em;
 
-  transform: translate(-0.5em, 1em) rotate(90deg);
+  transform: translate(-50%, -50%) rotate(90deg);
 
   -webkit-touch-callout: none;
   user-select: none;

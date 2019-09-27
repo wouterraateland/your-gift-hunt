@@ -1,16 +1,17 @@
 import styled from "styled-components"
 
-const MapTexture = styled.div.attrs(({ size }) => ({
+const MapTexture = styled.div.attrs(({ width, height, style }) => ({
   style: {
-    left: `${size === 2 ? 3 : 1}em`,
-    top: `${size === 2 ? 3 : 1}em`,
-    transform: `scale(${size}) translate(-50%, -50%)`
+    top: "50%",
+    left: "50%",
+    ...style,
+    width: `${width}em`,
+    height: `${height}em`
   }
 }))`
   position: absolute;
 
-  width: 2em;
-  height: 2em;
+  transform: translate(-50%, -50%);
 
   background-color: #f0e4cb;
   clip-path: polygon(

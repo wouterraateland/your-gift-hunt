@@ -1,7 +1,7 @@
 import React from "react"
 
 import { storiesOf } from "@storybook/react"
-import { withKnobs, radios, number } from "@storybook/addon-knobs"
+import { withKnobs, radios, number, color } from "@storybook/addon-knobs"
 
 import withTheme from "./decorators/withTheme"
 import withCenter from "./decorators/withCenter"
@@ -13,15 +13,16 @@ const getProps = Entity => ({
     name:
       Entity.states && Entity.states.length
         ? radios(
-            "state",
+            "State",
             Entity.states.reduce((acc, name) => ({ ...acc, [name]: name }), {}),
             Entity.states[0]
           )
-        : radios("state", { Default: "" }, "")
+        : radios("State", { Default: "" }, "")
   },
-  width: number("width", Entity.defaultProps.width),
-  height: number("height", Entity.defaultProps.height),
-  rotation: number("rotation", Entity.defaultProps.rotation)
+  width: number("Width", Entity.defaultProps.width),
+  height: number("Height", Entity.defaultProps.height),
+  rotation: number("Rotation", Entity.defaultProps.rotation),
+  color: color("Color", Entity.defaultProps.color)
 })
 
 let stories = storiesOf("Entities", module)

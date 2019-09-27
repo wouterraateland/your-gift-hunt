@@ -5,7 +5,7 @@ import _ from "ygh-utils"
 import Entity from "../Entity"
 
 const Foot = styled(Entity)`
-  border-radius: 100%;
+  border-radius: 100em;
 
   background: radial-gradient(
       ellipse 50% 50% at 50% 50%,
@@ -94,10 +94,19 @@ const Lamp = forwardRef(({ dispatchInputAction, children, ...props }, ref) => {
       }
       ref={ref}
     >
-      <Light isOn={isOn} left={6.25} />
-      <Foot />
-      <Head left={6} />
-      <Neck />
+      <Foot width={props.width} height={props.height} />
+      <Light
+        isOn={isOn}
+        left={1 + props.width * 2.25}
+        width={props.width * 3}
+        height={props.height * 3}
+      />
+      <Head
+        left={1 + props.width * 2}
+        width={props.width / 2}
+        height={props.height / 2}
+      />
+      <Neck width={props.width * 1.5 + 1.25} height={props.height / 10} />
       {children}
     </Entity>
   )

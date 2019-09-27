@@ -46,7 +46,14 @@ const StyledMapPiece = styled.div`
 const MapPiece = forwardRef(({ children, ...props }, ref) => (
   <Entity {...props} noVisual>
     <StyledMapPiece ref={ref}>
-      <MapTexture size={2} />
+      <MapTexture
+        style={{
+          top: "100%",
+          left: "100%"
+        }}
+        width={props.width * 2}
+        height={props.height * 2}
+      />
     </StyledMapPiece>
     {children}
   </Entity>

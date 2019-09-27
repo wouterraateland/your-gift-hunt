@@ -107,7 +107,7 @@ const StatefulMap = forwardRef(
           cleanliness={cleanliness}
           code={code}
         >
-          <MapTexture />
+          <MapTexture width={props.width} height={props.height} />
         </StyledMap>
         {children}
       </Entity>
@@ -121,7 +121,7 @@ StatefulMap.defaultProps = {
   width: 2,
   height: 2
 }
-StatefulMap.states = ["Incomplete", "Dusty", "Complete"]
+StatefulMap.states = ["Incomplete", "Dusty", "Clean"]
 StatefulMap.Detail = StatefulMap
 
 export default StatefulMap

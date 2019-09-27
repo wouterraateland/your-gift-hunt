@@ -1,61 +1,95 @@
+import React, { forwardRef } from "react"
 import styled from "styled-components"
+import { darken } from "polished"
 
 import Entity from "../Entity"
 
-const SafeKey = styled(Entity)`
-  border-radius: 100%;
+const Body = styled(Entity)`
+  border-radius: 1em;
+
+  box-shadow: inset 0 0 0 0.1em ${props => props.darkColor};
+
+  background: radial-gradient(
+    circle closest-side at 50% 70%,
+    transparent ${props => props.height * 0.15}em,
+    ${props => props.darkColor} ${props => props.height * 0.15 + 0.025}em,
+    ${props => props.darkColor} ${props => props.height * 0.15 + 0.125}em,
+    ${props => props.color} ${props => props.height * 0.15 + 0.15}em
+  );
+
+  color: ${props => props.color};
+`
+
+const Neck = styled(Entity)`
+  left: 50%;
+  transform: translate(-50%, 0);
+
   width: 0.5em;
-  height: 0.5em;
-  margin: 0.75em;
+  height: calc(100% + 0.1em);
+  border: 0.1em solid ${props => props.darkColor};
+  border-bottom: none;
+  border-radius: 1em 1em 0 0;
 
-  box-shadow: 0 0 0 0.1em #7e6d63, 0.35em -0.35em 0 0.9em,
-    0.35em -0.35em 0 1em #7e6d63 !important;
+  background-color: ${props => props.color};
+  color: ${props => props.color};
 
-  color: #9a8d7d;
+  &::before,
+  &::after {
+    right: 100%;
 
-  transform: translate(-0.6em, 0.55em) scale(0.46);
+    height: 0.3em;
+    border: 0.1em solid ${props => props.darkColor};
+    border-right: none;
+    border-radius: 1em 0 0 1em;
+
+    background: ${props => props.color};
+  }
 
   &::before {
-    width: 0.5em;
-    height: 0.5em;
-
-    box-shadow: 1.5em -1.7em 0 0.1em, 2.1em -2.2em 0 0em, 2.6em -2.8em 0 0em,
-      3.2em -2.98em 0 0em;
+    top: ${props => props.height / 10}em;
+    width: ${props => props.width / 3}em;
   }
 
   &::after {
-    left: 1.05em;
-    top: -2.05em;
-
-    width: 2.8em;
-    height: 0.7em;
-
-    border-bottom: 0.1em solid #7e6d63;
-
-    background-color: currentColor;
-    background-image: linear-gradient(90deg, #9a8d7d, transparent 30%),
-      linear-gradient(
-        transparent 34%,
-        #0004 34%,
-        #0004 49%,
-        transparent 49%,
-        transparent 68%,
-        #0004 68%,
-        #0004 83%,
-        transparent 83%
-      );
-
-    transform: rotate(-45deg);
+    top: ${props => props.height / 10 + 0.4}em;
+    width: ${props => props.width / 4}em;
   }
 `
-SafeKey.name = "SafeKey"
-SafeKey.displayName = "SafeKey"
-SafeKey.templateName = "Safe key"
-SafeKey.defaultProps = {
+Neck.defaultProps = {
   ...Entity.defaultProps,
-  width: 2,
-  height: 2
+  width: 0.5
 }
-SafeKey.Detail = SafeKey
 
-export default SafeKey
+const DoorKey = forwardRef(({ children, ...props }, ref) => (
+  <Entity noVisual ref={ref} {...props}>
+    <Body
+      left="50%"
+      bottom={Math.min(props.width, props.height - 1) / 2}
+      width={props.width}
+      height={Math.min(props.width, props.height - 1)}
+      color={props.color}
+      darkColor={darken(0.1)(props.color)}
+    />
+    <Neck
+      top={Math.max(1, props.height - props.width) / 2}
+      width={props.width}
+      height={Math.max(1, props.height - props.width)}
+      color={props.color}
+      darkColor={darken(0.1)(props.color)}
+    />
+    {children}
+  </Entity>
+))
+DoorKey.name = "DoorKey"
+DoorKey.displayName = "DoorKey"
+DoorKey.templateName = "Door key"
+DoorKey.defaultProps = {
+  ...Entity.defaultProps,
+  width: 1,
+  height: 2,
+  color: "#9a8d7d"
+}
+DoorKey.states = []
+DoorKey.Detail = DoorKey
+
+export default DoorKey
