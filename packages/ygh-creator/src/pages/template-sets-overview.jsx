@@ -1,18 +1,18 @@
-import React, { Suspense, useCallback, useState } from "react"
+import React, { Suspense, useState } from "react"
 import slugify from "limax"
 
 import useAuth from "hooks/useAuth"
 
-import { useQuery, useMutation } from "react-apollo-hooks"
-import { useAsync, useDebounce } from "ygh-hooks"
+import { useQuery } from "react-apollo-hooks"
+import { useDebounce } from "ygh-hooks"
 
-import { navigate } from "@reach/router"
+import { Link } from "@reach/router"
+import Icons from "ygh-icons"
 import { Wrapper, Paper, Field, Button, Loader } from "ygh-ui"
 import Layout from "layouts/Overview"
 import TemplateSetsOverview from "components/TemplateSetsOverview"
 
 import { USER_TEMPLATE_SETS } from "gql/queries"
-import { CREATE_TEMPLATE_SET } from "gql/mutations"
 
 const Overview = ({ user, searchQuery }) => {
   const { data, error } = useQuery(USER_TEMPLATE_SETS, {
@@ -36,39 +36,6 @@ const OverviewPage = () => {
   const [query, setQuery] = useState("")
   const debouncedQuery = useDebounce(query, 500)
 
-  const createEntityTemplateSet = useMutation(CREATE_TEMPLATE_SET)
-
-  const [{ isLoading }, runAsync] = useAsync()
-
-  const createTemplateSet = useCallback(
-    runAsync(async event => {
-      event.preventDefault()
-
-      const { data } = await createEntityTemplateSet({
-        variables: {
-          values: {
-            name: "Nameless",
-            description: "",
-            creator: { connect: { id: user.id } }
-          }
-        },
-        update: (proxy, { data: { createEntityTemplateSet } }) => {
-          const query = {
-            query: USER_TEMPLATE_SETS,
-            variables: { userId: user.id }
-          }
-          const data = proxy.readQuery(query)
-          data.user.entityTemplateSetsCreated.push(createEntityTemplateSet)
-
-          proxy.writeQuery({ ...query, data })
-        }
-      })
-
-      navigate(`/edit-template-set/${data.createEntityTemplateSet.id}`)
-    }),
-    [user]
-  )
-
   return (
     <Layout
       title="Creator"
@@ -89,17 +56,18 @@ const OverviewPage = () => {
             <Field
               style={{ float: "left" }}
               type="search"
+              lead={<Icons.Loop />}
               value={query}
               onChange={event => setQuery(event.target.value)}
               placeholder="Search template sets"
               block="small"
             />
             <Button
-              disabled={isLoading}
               style={{ float: "right" }}
               importance="primary"
               color="primary"
-              onClick={createTemplateSet}
+              as={Link}
+              to="/new-template-set"
               block="small"
             >
               New set

@@ -1,15 +1,12 @@
-import { PRIVACY, ACCESS_TYPES } from "data"
-import React, { Suspense, useCallback, useState } from "react"
+import React, { Suspense, useState } from "react"
 import slugify from "limax"
-import randomString from "randomstring"
 
-import { useMutation } from "react-apollo-hooks"
 import useAuth from "hooks/useAuth"
 
 import { useQuery } from "react-apollo-hooks"
 import { useDebounce } from "ygh-hooks"
 
-import { navigate } from "@reach/router"
+import { Link } from "@reach/router"
 import { Wrapper, Paper, Field, Button, Loader } from "ygh-ui"
 import Icons from "ygh-icons"
 
@@ -17,7 +14,6 @@ import Layout from "layouts/Overview"
 import GamesOverview from "components/GamesOverview"
 
 import { USER_GAMES } from "gql/queries"
-import { CREATE_GAME } from "gql/mutations"
 
 const Overview = ({ searchQuery, user }) => {
   const { data, error } = useQuery(USER_GAMES, {
@@ -34,34 +30,6 @@ const OverviewPage = () => {
   const { user } = useAuth()
   const [query, setQuery] = useState("")
   const debouncedQuery = useDebounce(query, 500)
-
-  const createGameMutation = useMutation(CREATE_GAME)
-
-  const createGame = useCallback(async () => {
-    const {
-      data: {
-        createGame: { id }
-      }
-    } = await createGameMutation({
-      variables: {
-        name: "Nameless",
-        slug: randomString.generate(10),
-        description: "",
-        creatorId: user.id,
-        privacy: PRIVACY.PUBLIC,
-        accessType: ACCESS_TYPES.NONE,
-        accessCode: ""
-      },
-      refetchQueries: [
-        {
-          query: USER_GAMES,
-          variables: { userId: user.id, slugPrefix: "" }
-        }
-      ]
-    })
-
-    navigate(`/edit/${id}`)
-  }, [])
 
   return (
     <Layout
@@ -93,7 +61,8 @@ const OverviewPage = () => {
               style={{ float: "right" }}
               importance="primary"
               color="primary"
-              onClick={createGame}
+              as={Link}
+              to="/new-game"
               block="small"
             >
               New game

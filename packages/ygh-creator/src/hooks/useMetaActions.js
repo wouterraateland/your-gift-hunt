@@ -12,7 +12,7 @@ const client = Client.buildClient({
 })
 
 const PLAY_URL =
-  process.env.REACT_APP_PLAY_URL || `https://play.yourgifthunt.com/play`
+  process.env.REACT_APP_PLAY_URL || `https://yourgifthunt.com/play`
 
 const useMetaActions = game => {
   const { user } = useAuth()
@@ -76,9 +76,7 @@ const useMetaActions = game => {
 
     const playToken = response.data.createGamePlay.id
 
-    newWindow.location = `${PLAY_URL}/${game.creator.slug}/${
-      game.slug
-    }?playToken=${playToken}`
+    newWindow.location = `${PLAY_URL}/${game.id}?playToken=${playToken}`
   }, [gameId, userId, loading, data])
 
   const publishGame = useCallback(async () => {

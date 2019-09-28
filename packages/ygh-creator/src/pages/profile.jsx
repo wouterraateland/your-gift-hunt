@@ -2,7 +2,6 @@ import React, { useCallback } from "react"
 import styled from "styled-components"
 
 import { useFormState } from "react-use-form-state"
-import { useMutation } from "react-apollo-hooks"
 import { useYGHPlayerContext } from "ygh-sdk"
 import { useAsync } from "ygh-hooks"
 import useAuth from "hooks/useAuth"
@@ -22,8 +21,6 @@ import BackButton from "components/BackButton"
 import StatusMessage from "components/StatusMessage"
 import EditableAvatar from "components/EditableAvatar"
 
-import { UPDATE_USER_SLUG } from "gql/mutations"
-
 const Form = styled.form`
   padding: 0 1em;
 `
@@ -39,8 +36,6 @@ const ProfileEditForm = () => {
   const [{ isLoading, error, success }, runAsync] = useAsync()
   const { user } = useAuth()
   const { updateUserProfile } = useYGHPlayerContext()
-
-  const updateUserSlug = useMutation(UPDATE_USER_SLUG)
 
   const [formState, { text }] = useFormState({
     avatar: null,
@@ -71,13 +66,6 @@ const ProfileEditForm = () => {
         email,
         username,
         avatar
-      })
-
-      await updateUserSlug({
-        variables: {
-          userId: user.id,
-          slug: username
-        }
       })
     }),
     [formState.values, user.id]
@@ -117,17 +105,6 @@ const ProfileEditForm = () => {
               error={errors["email"]}
             />
           </FieldGroup>
-          <FieldGroup block>
-            <Field
-              block
-              {...text("username")}
-              label="Username"
-              error={errors["username"]}
-            />
-          </FieldGroup>
-          <small>
-            https://play.yourgifthunt.com/{formState.values.username}
-          </small>
         </Column>
       </Row>
       <FieldGroup block>

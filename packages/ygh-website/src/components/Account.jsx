@@ -27,7 +27,7 @@ const Account = () => {
     <Menu.Container>
       <Menu.Toggle as={Avatar} bgImage={user.avatar} />
       <Menu.Items>
-        <Menu.Item as="a" href="/dashboard">
+        <Menu.Item as="a" href="/my-games">
           My games
         </Menu.Item>
         <Menu.Item as="a" href="/profile">
