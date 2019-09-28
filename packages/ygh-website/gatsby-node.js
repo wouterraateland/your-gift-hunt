@@ -23,6 +23,18 @@ exports.onCreateWebpackConfig = ({ getConfig }) => {
   return config
 }
 
+exports.onCreateBabelConfig = ({ actions }) => {
+  if (process.env.NODE_ENV !== "development") {
+    actions.setBabelPlugin({ name: "@babel/plugin-transform-regenerator" })
+    actions.setBabelPlugin({
+      name: "@babel/plugin-transform-runtime",
+      options: {
+        corejs: 3
+      }
+    })
+  }
+}
+
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
 
