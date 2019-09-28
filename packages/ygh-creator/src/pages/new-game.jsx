@@ -10,6 +10,15 @@ import { navigate } from "@reach/router"
 import { USER_GAMES } from "gql/queries"
 import { CREATE_GAME } from "gql/mutations"
 
+const saveGame = gameId => {
+  const myGames =
+    JSON.parse(window.localStorage.getItem("ygh-creator.my-games")) || []
+  window.localStorage.setItem(
+    "ygh-creator.my-games",
+    JSON.stringify(myGames.concat(gameId))
+  )
+}
+
 const NewGamePage = () => {
   const { isLoggedIn, user } = useAuth()
   const createGameMutation = useMutation(CREATE_GAME)
@@ -25,7 +34,8 @@ const NewGamePage = () => {
           name: "Nameless",
           slug: randomString.generate(10),
           description: "",
-          creatorId: isLoggedIn ? user.id : null,
+          creator: isLoggedIn ? { connect: { id: user.id } } : null,
+          cooperators: isLoggedIn ? { connect: [{ id: user.id }] } : null,
           privacy: PRIVACY.PUBLIC,
           accessType: ACCESS_TYPES.NONE,
           accessCode: ""
@@ -39,6 +49,8 @@ const NewGamePage = () => {
             ]
           : []
       })
+
+      saveGame(id)
 
       navigate(`/edit/${id}`, { replace: true })
     }

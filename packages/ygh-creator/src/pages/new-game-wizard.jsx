@@ -131,7 +131,8 @@ const NewGamePage = () => {
           name: formState.values.name,
           slug: gameSlug,
           description: formState.values.description,
-          creatorId: user.id,
+          creator: { connect: { id: user.id } },
+          cooperators: { connect: [{ id: user.id }] },
           privacy: formState.values.privacy,
           accessType: formState.values.accessType,
           accessCode: formState.values.accessCode

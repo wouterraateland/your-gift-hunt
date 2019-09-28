@@ -33,7 +33,8 @@ export const CREATE_GAME = gql`
     $name: String!
     $slug: String!
     $description: String
-    $creatorId: ID!
+    $creator: UserCreateOneWithoutGamesCreatedInput
+    $cooperators: UserCreateManyWithoutGamesInput
     $privacy: PrivacyType!
     $accessType: AccessType!
     $accessCode: String
@@ -43,8 +44,8 @@ export const CREATE_GAME = gql`
         name: $name
         slug: $slug
         description: $description
-        creator: { connect: { id: $creatorId } }
-        cooperators: { connect: [{ id: $creatorId }] }
+        creator: $creator
+        cooperators: $cooperators
         privacy: $privacy
         accessType: $accessType
         accessCode: $accessCode
@@ -62,6 +63,20 @@ export const CREATE_GAME = gql`
         name
         slug
       }
+    }
+  }
+`
+
+export const UPDATE_GAME_CREATOR = gql`
+  mutation updateGameCreator($gameId: ID!, $userId: ID!) {
+    updateGame(
+      where: { id: $gameId }
+      data: {
+        creator: { connect: { id: $userId } }
+        cooperators: { connect: [{ id: $userId }] }
+      }
+    ) {
+      id
     }
   }
 `
@@ -134,11 +149,15 @@ export const DELETE_GAME = gql`
 `
 
 export const CREATE_GAME_PLAY = gql`
-  mutation createGamePlay($gameId: ID!, $userId: ID!, $serviceId: ID!) {
+  mutation createGamePlay(
+    $gameId: ID!
+    $player: UserCreateOneWithoutPlaysInput
+    $serviceId: ID!
+  ) {
     createGamePlay(
       data: {
         game: { connect: { id: $gameId } }
-        player: { connect: { id: $userId } }
+        player: $player
         service: { connect: { id: $serviceId } }
         isTest: true
       }

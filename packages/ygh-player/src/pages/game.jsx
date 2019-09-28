@@ -58,7 +58,11 @@ const StatLabel = styled.span`
 
 const ActiveGamePage = ({ game, gamePlays }) => (
   <Layout>
-    <Helmet title={`${game.name} by ${game.creator.name} | Your Gift Hunt`} />
+    <Helmet
+      title={`${game.name} by ${
+        game.creator ? game.creator.name : "anonymous"
+      } | Your Gift Hunt`}
+    />
     <VSpace.Large />
     <Wrapper.Medium>
       <Row align="left">
@@ -67,7 +71,11 @@ const ActiveGamePage = ({ game, gamePlays }) => (
         </Column>
         <Column size={6}>
           <Title>{game.name}</Title>
-          <Creator to={`/user/${game.creator.id}`}>{game.creator.name}</Creator>
+          {game.creator && (
+            <Creator to={`/user/${game.creator.id}`}>
+              {game.creator.name}
+            </Creator>
+          )}
           <p>{game.description}</p>
           <Align.Right>
             {game.progress !== null &&

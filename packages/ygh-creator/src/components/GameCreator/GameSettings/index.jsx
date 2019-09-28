@@ -22,7 +22,7 @@ import {
 import StatusMessage from "components/StatusMessage"
 
 import { accessOptions, PRIVACY, ACCESS_TYPES } from "data"
-import { USER_TEMPLATE_SETS } from "gql/queries"
+import { ALL_TEMPLATE_SETS } from "gql/queries"
 
 import defaultImage from "assets/default_thumb.png"
 
@@ -73,15 +73,10 @@ const SettingsModal = () => {
   const { updateGameImage } = useYGHPlayerContext()
 
   const {
-    data: {
-      user: { entityTemplateSetsCreated }
-    }
-  } = useQuery(USER_TEMPLATE_SETS, {
-    variables: {
-      userId: user.id
-    }
-  })
-  const templateSetOptions = entityTemplateSetsCreated.map(({ id, name }) => ({
+    data: { entityTemplateSets }
+  } = useQuery(ALL_TEMPLATE_SETS)
+
+  const templateSetOptions = entityTemplateSets.map(({ id, name }) => ({
     value: id,
     label: name
   }))
@@ -132,7 +127,11 @@ const SettingsModal = () => {
           <Tagline>
             Game created by{" "}
             <strong>
-              {game.creator.id === user.id ? "you" : game.creator.name}
+              {game.creator
+                ? user && game.creator.id === user.id
+                  ? "you"
+                  : game.creator.name
+                : "anonymous"}
             </strong>
             .{" "}
             {game.publishedAt ? (

@@ -75,7 +75,7 @@ const MaybeGameCreator = () => {
 
   useEffect(() => {
     if (!gameExists) {
-      navigate("/")
+      navigate("/my-games")
     }
   }, [gameExists])
 

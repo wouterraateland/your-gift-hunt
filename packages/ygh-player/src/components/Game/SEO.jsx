@@ -15,7 +15,7 @@ const GameSEO = () => {
         content={
           game.description
             ? game.description
-            : `A game made by ${game.creator.name}`
+            : `A game made by ${game.creator ? game.creator.name : "anonymous"}`
         }
       />
 
@@ -30,7 +30,7 @@ const GameSEO = () => {
         content={
           game.description
             ? game.description
-            : `A game made by ${game.creator.name}`
+            : `A game made by ${game.creator ? game.creator.name : "anonymous"}`
         }
       />
       {game.image && <meta property="og:image" content={game.image} />}
@@ -49,7 +49,7 @@ const GameSEO = () => {
         content={
           game.description
             ? game.description
-            : `A game made by ${game.creator.name}`
+            : `A game made by ${game.creator ? game.creator.name : "anonymous"}`
         }
       />
       {game.image && <meta property="twitter:image" content={game.image} />}

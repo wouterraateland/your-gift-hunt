@@ -23,7 +23,7 @@ const useEntityPositionUpdates = () => {
         })
         .map(({ id }) => ({ id, physicalPosition: entityPositions[id] }))
     )
-  }, [game.id, entities, entityPositions, flush])
+  }, [game ? game.id : null, entities, entityPositions, flush])
 
   useEffect(() => {
     if (hasChanged.current) {

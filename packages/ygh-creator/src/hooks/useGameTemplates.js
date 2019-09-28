@@ -9,7 +9,7 @@ export const useGameTemplatesProvider = () => {
   const { game } = useGame()
   const { data, error } = useQuery(ENTITY_TEMPLATES, {
     variables: {
-      gameId: game.id
+      gameId: game ? game.id : "00000000"
     }
   })
 

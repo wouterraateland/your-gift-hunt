@@ -7,9 +7,7 @@ import EntitiesContext from "contexts/Entities"
 export const useEntitiesProvider = () => {
   const { gameExists, game } = useGame()
 
-  const entities = useMemo(() => (gameExists ? game.entities : []), [
-    game.entities
-  ])
+  const entities = useMemo(() => (gameExists ? game.entities : []), [game])
   const rootEntities = useMemo(
     () => entities.filter(({ container }) => container === null),
     [entities]

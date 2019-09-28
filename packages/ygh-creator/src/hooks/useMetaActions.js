@@ -17,7 +17,7 @@ const PLAY_URL =
 const useMetaActions = game => {
   const { user } = useAuth()
   const gameId = game.id
-  const userId = user.id
+  const userId = user ? user.id : null
 
   const { loading, data } = useQuery(TEST_SERVICE)
   const deleteGameMutation = useMutation(DELETE_GAME)
@@ -69,7 +69,7 @@ const useMetaActions = game => {
     const response = await createGamePlayMutation({
       variables: {
         gameId,
-        userId,
+        player: userId ? { connect: { id: userId } } : null,
         serviceId: data.service.id
       }
     })

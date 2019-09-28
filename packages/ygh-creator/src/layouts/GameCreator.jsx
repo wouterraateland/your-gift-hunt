@@ -222,7 +222,7 @@ const CreatorLayout = ({ children }) => {
         <Nav.BackControl />
         <Nav.Center>
           <Center>
-            {game.creator.name} /{" "}
+            {game.creator ? game.creator.name : "anonymous"} /{" "}
             <Editable
               onChange={value =>
                 updateGameSettings(game.id, {

@@ -107,6 +107,14 @@ export const USER_GAMES = gql`
   }
 `
 
+export const GAMES_WITHOUT_CREATOR = gql`
+  query gamesWithoutCreator($gameIds: [ID!]!) {
+    games(where: { id_in: $gameIds, creator: null }) {
+      id
+    }
+  }
+`
+
 export const USER_TEMPLATE_SETS = gql`
   query createdEntityTemplateSets($userId: ID!) {
     user(where: { id: $userId }) {
@@ -129,6 +137,30 @@ export const USER_TEMPLATE_SETS = gql`
           id
           slug
         }
+      }
+    }
+  }
+`
+
+export const ALL_TEMPLATE_SETS = gql`
+  query allEntityTemplateSets {
+    entityTemplateSets(orderBy: updatedAt_DESC) {
+      id
+      createdAt
+      updatedAt
+
+      name
+      description
+
+      games {
+        id
+      }
+      entityTemplates {
+        id
+      }
+      creator {
+        id
+        slug
       }
     }
   }

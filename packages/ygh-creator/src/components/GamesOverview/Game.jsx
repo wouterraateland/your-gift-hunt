@@ -132,7 +132,12 @@ const Game = ({ game }) => {
       </Info>
       <Meta>
         <Creator>
-          Created by {game.creator.id === user.id ? "you" : game.creator.name}
+          Created by{" "}
+          {game.creator
+            ? user && game.creator.id === user.id
+              ? "you"
+              : game.creator.name
+            : "anonymous"}
         </Creator>
         <small>
           Last edited{" "}
