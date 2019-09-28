@@ -1,10 +1,18 @@
 import { useCallback, useEffect, useState } from "react"
 
 const getSize = () => ({
-  width: window.innerWidth,
-  height: window.innerHeight,
-  rem: parseFloat(getComputedStyle(document.documentElement).fontSize),
-  orientation: window.innerWidth > window.innerHeight ? "landscape" : "portrait"
+  width: typeof window === "undefined" ? 0 : window.innerWidth,
+  height: typeof window === "undefined" ? 0 : window.innerHeight,
+  rem:
+    typeof document === "undefined"
+      ? 16
+      : parseFloat(getComputedStyle(document.documentElement).fontSize),
+  orientation:
+    typeof window === "undefined"
+      ? "landscape"
+      : window.innerWidth > window.innerHeight
+      ? "landscape"
+      : "portrait"
 })
 
 const useWindowSize = () => {
@@ -13,9 +21,11 @@ const useWindowSize = () => {
   const handleOnWindowResize = useCallback(() => setSize(getSize()), [])
 
   useEffect(() => {
-    window.addEventListener("resize", handleOnWindowResize)
-    return () => {
-      window.removeEventListener("resize", handleOnWindowResize)
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", handleOnWindowResize)
+      return () => {
+        window.removeEventListener("resize", handleOnWindowResize)
+      }
     }
   }, [])
 

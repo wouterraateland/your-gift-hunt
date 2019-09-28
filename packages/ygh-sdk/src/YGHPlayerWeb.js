@@ -19,6 +19,10 @@ class YGHPlayerWeb extends YGHPlayer {
       throw Error("No game identifier")
     }
 
+    if (typeof window === "undefined") {
+      return
+    }
+
     const params = queryString.decode(window.location.search.substr(1))
     window.history.replaceState({}, "", window.location.pathname)
 

@@ -164,9 +164,11 @@ const useYGHPlayer = ({ apiKey }) => {
   )
 
   useEffect(() => {
-    window.addEventListener("beforeunload", closeSession)
-    return () => {
-      window.removeEventListener("beforeunload", closeSession)
+    if (typeof window !== "undefined") {
+      window.addEventListener("beforeunload", closeSession)
+      return () => {
+        window.removeEventListener("beforeunload", closeSession)
+      }
     }
   }, [])
 

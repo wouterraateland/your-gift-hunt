@@ -1,4 +1,8 @@
 const read = () => {
+  if (typeof window === "undefined") {
+    return []
+  }
+
   const value = JSON.parse(
     window.localStorage.getItem("ygh-player.playTokens") || "[]"
   )
@@ -10,10 +14,12 @@ const read = () => {
 }
 
 const write = playTokens =>
-  window.localStorage.setItem(
-    "ygh-player.playTokens",
-    JSON.stringify(playTokens)
-  )
+  typeof window === "undefined"
+    ? null
+    : window.localStorage.setItem(
+        "ygh-player.playTokens",
+        JSON.stringify(playTokens)
+      )
 
 export default {
   read,
