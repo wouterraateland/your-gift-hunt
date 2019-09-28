@@ -1,13 +1,6 @@
 import { useCallback } from "react"
 
-const useOptions = ({
-  name,
-  isMulti,
-  options,
-  onChange = () => {},
-  value = null,
-  disabled
-}) => {
+const useOptions = ({ name, isMulti, options, onChange, value, disabled }) => {
   const isChecked = useCallback(
     optionValue =>
       isMulti
@@ -45,8 +38,10 @@ const useOptions = ({
   const optionProps = option => ({
     name,
     value: option.value,
-    checked: isChecked(option.value),
-    onChange: handleChange(option.value),
+    checked:
+      typeof onChange === "function" ? isChecked(option.value) : undefined,
+    onChange:
+      typeof onChange === "function" ? handleChange(option.value) : undefined,
     disabled: disabled || option.disabled
   })
 

@@ -25,8 +25,9 @@ const Footer = () => (
   <StyledFooter>
     <Wrapper.Medium>
       <p>
-        <a href="https://yourgifthunt.com/contact">Support</a>
-        <a href="https://yourgifthunt.com/terms">Terms</a>
+        <a href="/contact">Support</a>
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
       </p>
       <p>
         <small>© {moment().format("YYYY")} Your Gift Hunt</small>

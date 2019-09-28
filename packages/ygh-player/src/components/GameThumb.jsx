@@ -27,7 +27,7 @@ const GameThumb = ({ game }) => (
     <GamePreview
       src={game.image}
       as={Link}
-      to={`/${game.creator.slug}/${game.slug}`}
+      to={`/game/${game.id}`}
       progress={game.progress}
     />
     <Name>{game.name}</Name>

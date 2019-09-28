@@ -4,21 +4,21 @@ import { Link } from "gatsby"
 import styled from "styled-components"
 
 import { Wrapper, Row, Column } from "ygh-ui"
-import { Logo, Twitter, Facebook } from "ygh-icons"
+import { Logo } from "ygh-icons"
 
 const Footer = styled.footer`
   font-size: smaller;
   margin-top: 4em;
   padding-bottom: 2em;
+
+  & a {
+    color: inherit;
+  }
 `
 
 const FooterLogo = styled(Logo)`
   margin-bottom: 1.58em;
   color: #000d;
-`
-
-const SocialLink = styled(OutboundLink)`
-  margin: 0 1em 0 0;
 `
 
 export default () => (
@@ -38,9 +38,9 @@ export default () => (
           <p>
             <Link to="/">Home</Link>
             <br />
-            <a href="https://play.yourgifthunt.com">Showcase</a>
+            <a href="/showcase">Showcase</a>
             <br />
-            <a href="https://create.yourgifthunt.com">Creator</a>
+            <a href="/my-games">Creator</a>
             <br />
             <Link to="/pricing">Pricing</Link>
             <br />
@@ -57,7 +57,7 @@ export default () => (
             <Link to="/privacy">Privacy</Link>
           </p>
         </Column>
-        <Column size={3} sSize={6}>
+        {/* <Column size={3} sSize={6}>
           <h3>Follow us</h3>
           <p>
             <SocialLink
@@ -75,7 +75,7 @@ export default () => (
               <Facebook size={2} />
             </SocialLink>
           </p>
-        </Column>
+        </Column> */}
       </Row>
     </Wrapper.Large>
   </Footer>

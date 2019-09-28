@@ -3,7 +3,6 @@ import styled from "styled-components"
 import { useYGHPlayerContext } from "ygh-sdk"
 
 import { Menu } from "ygh-ui"
-import { Link } from "@reach/router"
 
 const Avatar = styled.div`
   display: inline-block;
@@ -22,43 +21,22 @@ const Avatar = styled.div`
   }
 `
 
-const Container = styled.span`
-  position: relative;
-`
-
-const SignupLink = styled(Link)`
-  margin: 1.2em 0 0 1em;
-
-  line-height: 1.58;
-  text-decoration: none;
-`
-
-const SignInLink = styled.small`
-  position: absolute;
-  right: 0;
-  white-space: nowrap;
-`
-
 const Account = () => {
   const { isLoggedIn, user, logoutUser } = useYGHPlayerContext()
   return isLoggedIn ? (
     <Menu.Container>
       <Menu.Toggle as={Avatar} bgImage={user.avatar} />
       <Menu.Items>
-        <Menu.Item as={Link} to={`/${user.username}`}>
+        <Menu.Item as="a" href="/dashboard">
+          My games
+        </Menu.Item>
+        <Menu.Item as="a" href="/profile">
           Profile
         </Menu.Item>
         <Menu.Item onClick={logoutUser}>Log out</Menu.Item>
       </Menu.Items>
     </Menu.Container>
-  ) : (
-    <Container>
-      <SignInLink>
-        Already have an account? <Link to="/auth/login">Log in</Link>
-      </SignInLink>
-      <SignupLink to="/auth/signup">Sign up</SignupLink>
-    </Container>
-  )
+  ) : null
 }
 
 export default Account

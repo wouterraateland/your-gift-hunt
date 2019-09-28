@@ -84,7 +84,7 @@ const LeaderboardEntry = ({ netDuration, position, player, isYours }) => {
       </PositionIndicator>
       <Avatar avatar={player ? player.avatar : null} />
       {player ? (
-        <Link to={`/${player.username}`}>
+        <Link to={`/user/${player.id}`}>
           {player.name}
           {isYours && position && ` (You)`}
         </Link>

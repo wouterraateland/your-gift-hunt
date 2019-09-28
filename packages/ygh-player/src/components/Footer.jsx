@@ -3,21 +3,21 @@ import { Link } from "@reach/router"
 import styled from "styled-components"
 
 import { Wrapper, Row, Column } from "ygh-ui"
-import { Logo, Twitter, Facebook } from "ygh-icons"
+import { Logo } from "ygh-icons"
 
 const Footer = styled.footer`
   font-size: smaller;
   margin-top: 4em;
   padding-bottom: 2em;
+
+  a {
+    color: inherit;
+  }
 `
 
 const FooterLogo = styled(Logo)`
   margin-bottom: 1.58em;
-  color: #000d;
-`
-
-const SocialLink = styled.a`
-  margin: 0 1em 0 0;
+  color: ${props => props.theme.color.emphasis};
 `
 
 export default () => (
@@ -35,44 +35,25 @@ export default () => (
         <Column size={3} sSize={6}>
           <h3>Company</h3>
           <p>
-            <a href="https://yourgifthunt.com">Home</a>
+            <a href="/">Home</a>
             <br />
-            <Link to="/">Showcase</Link>
+            <Link to="/showcase">Showcase</Link>
             <br />
-            <a href="https://create.yourgifthunt.com">Creator</a>
+            <a href="/my-games">Creator</a>
+            {/* <br />
+            <a href="/pricing">Pricing</a> */}
             <br />
-            <a href="https://yourgifthunt.com/pricing">Pricing</a>
+            <a href="/about">About</a>
             <br />
-            <a href="https://yourgifthunt.com/about">About</a>
-            <br />
-            <a href="https://yourgifthunt.com/contact">Contact</a>
+            <a href="/contact">Contact</a>
           </p>
         </Column>
         <Column size={3} sSize={6}>
           <h3>Legal</h3>
           <p>
-            <a href="https://yourgifthunt.com/terms">Terms</a>
+            <a href="/terms">Terms</a>
             <br />
-            <a href="https://yourgifthunt.com/privacy">Privacy</a>
-          </p>
-        </Column>
-        <Column size={3} sSize={6}>
-          <h3>Follow us</h3>
-          <p>
-            <SocialLink
-              rel="noopener noreferrer"
-              target="_blank"
-              href="https://twitter.com/YourGiftHunt"
-            >
-              <Twitter size={2} />
-            </SocialLink>
-            <SocialLink
-              rel="noopener noreferrer"
-              target="_blank"
-              href="https://facebook.com/YourGiftHunt"
-            >
-              <Facebook size={2} />
-            </SocialLink>
+            <a href="/privacy">Privacy</a>
           </p>
         </Column>
       </Row>

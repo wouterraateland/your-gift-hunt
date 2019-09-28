@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { navigate } from "@reach/router"
+import { navigate, Link } from "@reach/router"
 import _ from "ygh-utils"
 
 import { useQuery } from "ygh-hooks"
@@ -28,8 +28,10 @@ import Leaderboard from "components/Leaderboard"
 const Title = styled.h1`
   margin: 0;
 `
-const Creator = styled.strong`
+const Creator = styled(Link)`
   margin-top: 0;
+
+  font-weight: bold;
 `
 
 const Stats = styled.div`
@@ -65,7 +67,7 @@ const ActiveGamePage = ({ game, gamePlays }) => (
         </Column>
         <Column size={6}>
           <Title>{game.name}</Title>
-          <Creator>{game.creator.name}</Creator>
+          <Creator to={`/user/${game.creator.id}`}>{game.creator.name}</Creator>
           <p>{game.description}</p>
           <Align.Right>
             {game.progress !== null &&
@@ -74,9 +76,7 @@ const ActiveGamePage = ({ game, gamePlays }) => (
                 <Menu.Container>
                   <Menu.Toggle />
                   <Menu.Items>
-                    <Menu.Item
-                      to={`/play/${game.creator.slug}/${game.slug}?restart`}
-                    >
+                    <Menu.Item to={`/play/${game.id}?restart`}>
                       Restart
                     </Menu.Item>
                   </Menu.Items>
@@ -91,9 +91,7 @@ const ActiveGamePage = ({ game, gamePlays }) => (
               }
               onClick={() =>
                 navigate(
-                  `/play/${game.creator.slug}/${game.slug}${
-                    game.progress === 1 ? "?restart" : ""
-                  }`
+                  `/play/${game.id}${game.progress === 1 ? "?restart" : ""}`
                 )
               }
             >
@@ -136,15 +134,11 @@ const ActiveGamePage = ({ game, gamePlays }) => (
   </Layout>
 )
 
-const GamePage = ({ gameSlug, creatorSlug }) => {
+const GamePage = ({ gameId }) => {
   const { listGames, gamePlays } = useYGHPlayerContext()
   const [{ data, error, isLoading }] = useQuery(listGames)
 
-  const game = data
-    ? data.find(
-        game => game.slug === gameSlug && game.creator.slug === creatorSlug
-      )
-    : null
+  const game = data ? data.find(game => game.id === gameId) : null
 
   return error ? (
     <Layout>

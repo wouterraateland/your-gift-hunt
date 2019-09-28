@@ -4,18 +4,12 @@ import styled from "styled-components"
 import useGame from "hooks/useGame"
 
 import Base from "./Base"
-import { Align, Button, VSpace, Wrapper } from "ygh-ui"
+import { Align, Button, Paper, VSpace, Wrapper } from "ygh-ui"
 
 const IntroScreen = styled(Base)`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  color: #fffc;
-
-  h1 {
-    color: #fff;
-  }
 `
 
 export default ({ close, ...props }) => {
@@ -30,10 +24,14 @@ export default ({ close, ...props }) => {
     <IntroScreen {...props}>
       <Align.Center>
         <Wrapper.Tiny>
-          <h1>{game.name}</h1>
-          <p>{game.description}</p>
+          <Paper>
+            <Paper.Section>
+              <h1>{game.name}</h1>
+              <p>{game.description}</p>
+            </Paper.Section>
+          </Paper>
           <VSpace.Small />
-          <Button onClick={onClick} importance="primary" color="secondary">
+          <Button onClick={onClick} importance="primary" color="primary">
             Start game
           </Button>
         </Wrapper.Tiny>

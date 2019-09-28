@@ -62,11 +62,7 @@ export default props => {
     <PauseScreen {...props}>
       {!isLoggedIn && (
         <AccountContainer>
-          <Link
-            to={`/auth/login?redirect=/play/${game.creator.slug}/${game.slug}`}
-          >
-            Log in
-          </Link>
+          <a href={`/auth/login?redirect=/play/${game.id}`}>Log in</a>
         </AccountContainer>
       )}
       <Align.Center>
@@ -78,12 +74,10 @@ export default props => {
           </p>
           <VSpace.Large />
           <p>
-            <a href={`/play/${game.creator.slug}/${game.slug}?restart`}>
-              Restart
-            </a>
+            <a href={`/play/${game.id}?restart`}>Restart</a>
           </p>
           <p>
-            <Link to={`/${game.creator.slug}/${game.slug}`}>Leaderboard</Link>
+            <Link to={`/game/${game.id}#leaderboard`}>Leaderboard</Link>
           </p>
           <p>
             <span onClick={props.close}>Resume</span>

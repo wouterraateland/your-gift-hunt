@@ -9,11 +9,11 @@ import { HintsProvider } from "contexts/Hints"
 
 import Game from "components/Game"
 
-const GamePage = ({ creatorSlug, gameSlug }) => (
+const GamePage = ({ gameId }) => (
   <ViewportProvider>
     <DragProvider>
       <ScreenProvider>
-        <GameProvider creatorSlug={creatorSlug} gameSlug={gameSlug}>
+        <GameProvider gameId={gameId}>
           <HintsProvider>
             <Helmet>
               <title>Private game | Your Gift Hunt</title>
@@ -26,7 +26,7 @@ const GamePage = ({ creatorSlug, gameSlug }) => (
               <meta property="og:type" content="website" />
               <meta
                 property="og:url"
-                content={`https://play.yourgifthunt.com/play/${creatorSlug}/${gameSlug}`}
+                content={`https://yourgifthunt.com/play/${gameId}`}
               />
               <meta
                 property="og:title"
@@ -38,13 +38,13 @@ const GamePage = ({ creatorSlug, gameSlug }) => (
               />
               <meta
                 property="og:image"
-                content="https://play.yourgifthunt.com/images/default_thumb.png"
+                content="https://yourgifthunt.com/images/default_thumb.png"
               />
 
               <meta property="twitter:card" content="summary_large_image" />
               <meta
                 property="twitter:url"
-                content={`https://play.yourgifthunt.com/play/${creatorSlug}/${gameSlug}`}
+                content={`https://yourgifthunt.com/play/${gameId}`}
               />
               <meta
                 property="twitter:title"
@@ -56,7 +56,7 @@ const GamePage = ({ creatorSlug, gameSlug }) => (
               />
               <meta
                 property="twitter:image"
-                content="https://play.yourgifthunt.com/images/default_thumb.png"
+                content="https://yourgifthunt.com/images/default_thumb.png"
               />
             </Helmet>
             <Game />

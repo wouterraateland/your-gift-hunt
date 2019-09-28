@@ -56,6 +56,7 @@ const IndexLink = styled.a`
 const StyledLink = styled(IndexLink)`
   margin: 1.2em 0 0 1em;
   line-height: 1.58;
+  color: ${props => props.theme.color.emphasis};
 `
 
 const NavLink = props => <StyledLink as={props.href ? "a" : Link} {...props} />
@@ -93,13 +94,18 @@ const AccountMenuItem = styled.div`
   justify-content: space-around;
 `
 
+const ButtonContainer = styled.span`
+  display: inline-block;
+  margin: 1em 0 0 1em;
+`
+
 export default props => {
-  const { isLoggedIn, user, logoutUser } = useYGHPlayerContext()
+  const { isLoggedIn } = useYGHPlayerContext()
   return (
     <Nav {...props}>
       <StyledWrapper xlarge>
         <Small>
-          <IndexLink href="https://yourgifthunt.com">
+          <IndexLink href="/">
             <StyledLogo size={3} />
             <Name>Your Gift Hunt</Name>
           </IndexLink>
@@ -108,36 +114,40 @@ export default props => {
               <Btn>Menu</Btn>
             </Menu.Toggle>
             <Menu.Items>
-              <Menu.Item as={Link} to="/">
+              <Menu.Item>
+                <Button
+                  block
+                  size="small"
+                  importance="primary"
+                  color="primary"
+                  as="a"
+                  href="/new-game"
+                >
+                  Create Game
+                </Button>
+              </Menu.Item>
+              <Menu.Item as={Link} to="/showcase">
                 Showcase
               </Menu.Item>
-              <Menu.Item as="a" href="https://create.yourgifthunt.com">
-                Creator
-              </Menu.Item>
-              <Menu.Item as="a" href="https://yourgifthunt.com/pricing">
+              {/* <Menu.Item as="a" href="/pricing">
                 Pricing
-              </Menu.Item>
-              <Menu.Item as="a" href="https://yourgifthunt.com/about">
+              </Menu.Item> */}
+              <Menu.Item as="a" href="/about">
                 About
               </Menu.Item>
-              <Menu.Item as="a" href="https://yourgifthunt.com/contact">
+              <Menu.Item as="a" href="/contact">
                 Contact
               </Menu.Item>
               {isLoggedIn ? (
-                <>
-                  <Menu.Item as={Link} to={`/${user.username}`}>
-                    Profile
-                  </Menu.Item>
-                  <Menu.Item as="a" onClick={logoutUser}>
-                    Log out
-                  </Menu.Item>
-                </>
+                <Menu.Item as="a" href="/my-games">
+                  My Dashboard
+                </Menu.Item>
               ) : (
                 <AccountMenuItem>
                   <Button
                     size="tiny"
-                    as={Link}
-                    to="/auth/signup"
+                    as="a"
+                    href="/auth/signup"
                     color="primary"
                     importance="primary"
                   >
@@ -145,8 +155,8 @@ export default props => {
                   </Button>
                   <Button
                     size="tiny"
-                    as={Link}
-                    to="/auth/login"
+                    as="a"
+                    href="/auth/login"
                     importance="tertiary"
                   >
                     Log in
@@ -158,18 +168,30 @@ export default props => {
         </Small>
         <Large>
           <Float.Left>
-            <IndexLink href="https://yourgifthunt.com">
+            <IndexLink href="/">
               <StyledLogo size={3} />
               <Name>Your Gift Hunt</Name>
             </IndexLink>
-            <NavLink to="/">Showcase</NavLink>
-            <NavLink href="https://create.yourgifthunt.com">Creator</NavLink>
-            <NavLink href="https://yourgifthunt.com/pricing">Pricing</NavLink>
-            <NavLink href="https://yourgifthunt.com/about">About</NavLink>
+            <NavLink to="/showcase">Showcase</NavLink>
+            {/* <NavLink href="/my-games">Creator</NavLink> */}
+            {/* <NavLink href="/pricing">Pricing</NavLink> */}
+            <NavLink href="/about">About</NavLink>
+            <NavLink href="/contact">Contact</NavLink>
           </Float.Left>
           <Float.Right>
-            <NavLink href="https://yourgifthunt.com/contact">Contact</NavLink>
-            <Account />
+            {!isLoggedIn && <NavLink href="/auth/login">Log in</NavLink>}
+            <ButtonContainer>
+              <Button
+                size="small"
+                color="primary"
+                importance="primary"
+                as="a"
+                href="/new-game"
+              >
+                Create Game
+              </Button>
+            </ButtonContainer>
+            {isLoggedIn && <Account />}
           </Float.Right>
         </Large>
       </StyledWrapper>

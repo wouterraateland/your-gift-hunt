@@ -53,7 +53,7 @@ export default ({ close, ...props }) => {
           {isLoggedIn ? (
             <Button
               as={Link}
-              to={`/${game.creator.slug}/${game.slug}`}
+              to={`/game/${game.id}#leaderboard`}
               color="secondary"
               size="large"
               importance="primary"
@@ -62,10 +62,8 @@ export default ({ close, ...props }) => {
             </Button>
           ) : (
             <Button
-              as={Link}
-              to={`/auth/login?redirect=/play/${game.creator.slug}/${
-                game.slug
-              }`}
+              as="a"
+              href={`/auth/login?redirect=/play/${game.id}`}
               color="secondary"
               size="large"
               importance="primary"
@@ -76,7 +74,7 @@ export default ({ close, ...props }) => {
           <VSpace.Medium />
           <Button
             as={Link}
-            to="/"
+            to="/showcase"
             color="primary"
             size="large"
             importance="primary"
@@ -84,9 +82,7 @@ export default ({ close, ...props }) => {
             Play related games
           </Button>
           <p>
-            <a href={`/play/${game.creator.slug}/${game.slug}?restart`}>
-              Replay game
-            </a>
+            <a href={`/play/${game.id}?restart`}>Replay game</a>
           </p>
         </Wrapper.Tiny>
       </Align.Center>

@@ -10,6 +10,7 @@ import {
   Loader,
   Message,
   Row,
+  TabOptions,
   VSpace,
   Wrapper
 } from "ygh-ui"
@@ -71,14 +72,14 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
       <Wrapper.Medium>
         <VSpace.Large />
         <Align.Center>
-          <h1>Games made by the community, for everyone.</h1>
+          <h1>Highlighted escape rooms, created by the community.</h1>
           <Field
             type="select"
-            format="horizontal"
+            component={TabOptions}
             value={type}
             onChange={event => setType(event.target.value)}
             options={[
-              { label: "Public games", value: "public" },
+              { label: "All games", value: "public" },
               { label: "Gameplay in progress", value: "progress" },
               { label: "Completed games", value: "completed" }
             ]}
@@ -94,7 +95,7 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
         </Row>
         <Align.Center>
           <h2>Subscribe for Beta access</h2>
-          <p>And be the first to create your own unique puzzle games</p>
+          <p>And be the first to create your own escape room games</p>
           <MailchimpForm />
         </Align.Center>
       </Wrapper.Medium>

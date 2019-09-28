@@ -59,7 +59,7 @@ const Name = styled.h1`
   margin: 0;
 `
 
-const Username = styled.strong``
+// const Username = styled.strong``
 
 const UserProfileDisplay = ({ profile, canEdit, onEditClick }) => (
   <>
@@ -79,7 +79,7 @@ const UserProfileDisplay = ({ profile, canEdit, onEditClick }) => (
           </FloatRight>
         )}
         <Name>{profile.name}</Name>
-        <Username>@{profile.username}</Username>
+        {/* <Username>@{profile.username}</Username> */}
       </Meta>
     </Info>
     <h2>Rooms created ({profile.gamesCreated.length})</h2>
@@ -171,14 +171,14 @@ const UserMetaForm = ({ user }) => {
           error={errors["email"]}
         />
       </FieldGroup>
-      <FieldGroup block>
+      {/* <FieldGroup block>
         <Field
           block
           {...text("username")}
           label="Username"
           error={errors["username"]}
         />
-      </FieldGroup>
+      </FieldGroup> */}
       <Float.Right>
         {error && <Message.Error>{error.message}</Message.Error>}{" "}
         <Button
@@ -303,10 +303,10 @@ const ActiveUserProfilePage = ({ user, userProfile }) => {
   )
 }
 
-const UserProfilePage = ({ userSlug }) => {
+const UserProfilePage = ({ userId }) => {
   const { user, getUserProfile } = useYGHPlayerContext()
   const [{ data: userProfile, error, isLoading }] = useQuery(() =>
-    getUserProfile({ userSlug })
+    getUserProfile({ userId })
   )
 
   return error ? (

@@ -19,10 +19,10 @@ const MainRouter = () => (
     <Amnesia path="/auth/amnesia" />
     <PasswordReset path="/auth/password-reset" />
 
-    <IndexPage path="/" />
-    <UserPage path="/:userSlug" />
-    <GamePage path="/:creatorSlug/:gameSlug" />
-    <GamePlayPage path="/play/:creatorSlug/:gameSlug" />
+    <IndexPage path="/showcase" />
+    <UserPage path="/user/:userId" />
+    <GamePage path="/game/:gameId" />
+    <GamePlayPage path="/play/:gameId" />
     <NotFoundPage default />
   </Router>
 )

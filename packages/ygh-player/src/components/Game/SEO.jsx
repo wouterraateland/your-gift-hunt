@@ -22,9 +22,7 @@ const GameSEO = () => {
       <meta property="og:type" content="website" />
       <meta
         property="og:url"
-        content={`https://play.yourgifthunt.com/play/${game.creator.slug}/${
-          game.slug
-        }`}
+        content={`https://yourgifthunt.com/play/${game.id}`}
       />
       <meta property="og:title" content={`${game.name} | Your Gift Hunt`} />
       <meta
@@ -40,9 +38,7 @@ const GameSEO = () => {
       <meta property="twitter:card" content="summary_large_image" />
       <meta
         property="twitter:url"
-        content={`https://play.yourgifthunt.com/play/${game.creator.slug}/${
-          game.slug
-        }`}
+        content={`https://yourgifthunt.com/play/${game.id}`}
       />
       <meta
         property="twitter:title"

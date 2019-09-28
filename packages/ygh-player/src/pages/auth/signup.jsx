@@ -1,11 +1,12 @@
 import React from "react"
 import { Link, navigate } from "@reach/router"
 import queryString from "querystring"
+import uuid from "uuid/v4"
 
 import { useMutation } from "ygh-hooks"
 import useAuth from "hooks/useAuth"
 
-import { Button, Column, FieldGroup, Field, Row } from "ygh-ui"
+import { Button, Column, DefaultOptions, FieldGroup, Field, Row } from "ygh-ui"
 import Layout from "layouts/Auth"
 
 const SignupPage = props => {
@@ -17,7 +18,7 @@ const SignupPage = props => {
     const firstName = event.target.firstName.value
     const middleName = event.target.middleName.value
     const lastName = event.target.lastName.value
-    const username = event.target.username.value
+    const username = uuid()
     const email = event.target.email.value
     const password = event.target.password.value
     const shouldRemind = event.target.remind.checked
@@ -43,10 +44,7 @@ const SignupPage = props => {
   return (
     <Layout>
       <form onSubmit={handleSubmit}>
-        <p>
-          Fill in your name, a username, your email address and password to sign
-          up.
-        </p>
+        <p>Fill in your name, email address and a password to sign up.</p>
         <Row vAlign="top">
           <Column size={4}>
             <FieldGroup block>
@@ -79,16 +77,6 @@ const SignupPage = props => {
         <FieldGroup block>
           <Field
             block
-            label="Username"
-            name="username"
-            type="username"
-            error={errors["username"]}
-            required
-          />
-        </FieldGroup>
-        <FieldGroup block>
-          <Field
-            block
             label="Email"
             name="email"
             type="email"
@@ -106,11 +94,17 @@ const SignupPage = props => {
             required
           />
         </FieldGroup>
-        <Field
+        <DefaultOptions
           block
-          label="Remember me"
-          info="This will keep you logged in for 60 days."
+          isMulti
           name="remind"
+          options={[
+            {
+              value: true,
+              label: "Remember me",
+              info: "This will keep you logged in for 60 days."
+            }
+          ]}
           type="checkbox"
           error={errors["remind"]}
         />

@@ -5,7 +5,7 @@ import queryString from "querystring"
 import { useMutation } from "ygh-hooks"
 import useAuth from "hooks/useAuth"
 
-import { FieldGroup, Field, Button } from "ygh-ui"
+import { DefaultOptions, FieldGroup, Field, Button } from "ygh-ui"
 import Layout from "layouts/Auth"
 
 const LoginPage = props => {
@@ -52,15 +52,20 @@ const LoginPage = props => {
             required
           />
         </FieldGroup>
-        <Field
+        <DefaultOptions
           block
-          label="Remember me"
-          info="This will keep you logged in for 60 days."
+          isMulti
           name="remind"
+          options={[
+            {
+              value: true,
+              label: "Remember me",
+              info: "This will keep you logged in for 60 days."
+            }
+          ]}
           type="checkbox"
           error={errors["remind"]}
         />
-        <br />
         <small>
           <Link to="/auth/amnesia">Forgot your password?</Link>
         </small>
