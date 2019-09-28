@@ -1,6 +1,6 @@
 {
   "name": "ygh-icons",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Icons for Your Gift Hunt.",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
@@ -17,7 +17,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "ygh-utils": "^0.3.0"
+    "ygh-utils": "^0.4.0"
   },
   "peerDependencies": {
     "react": "^16.8.6",
