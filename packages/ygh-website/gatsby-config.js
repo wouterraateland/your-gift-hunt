@@ -57,36 +57,18 @@ module.exports = {
       }
     },
     {
-      resolve: "gatsby-source-shopify",
-      options: {
-        shopName: process.env.SHOPIFY_STOREFRONT_SHOP_NAME,
-        accessToken: process.env.SHOPIFY_STOREFRONT_API_KEY,
-        verbose: activeEnv === "development"
-      }
-    },
-    {
       resolve: "gatsby-plugin-root-import",
       options: {
-        content: `${__dirname}/content`,
         components: `${__dirname}/src/components`,
         containers: `${__dirname}/src/containers`,
         contexts: `${__dirname}/src/contexts`,
         hooks: `${__dirname}/src/hooks`,
         images: `${__dirname}/src/images`,
-        layout: `${__dirname}/src/layout`,
-        templates: `${__dirname}/src/templates`,
-        utils: `${__dirname}/src/utils`,
-        "your-gift-hunt": `${__dirname}/src/your-gift-hunt`
+        pages: `${__dirname}/src/pages`,
+        templates: `${__dirname}/src/templates`
       }
     },
     "gatsby-plugin-styled-components",
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography`,
-        omitGoogleFont: true
-      }
-    },
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     {

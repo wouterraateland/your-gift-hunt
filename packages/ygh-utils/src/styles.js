@@ -29,5 +29,5 @@ export const blockStyles = props => {
 export const unselectableStyles = css`
   -webkit-touch-callout: none;
   user-select: none;
-  user-drag: none;
+  -webkit-user-drag: none;
 `

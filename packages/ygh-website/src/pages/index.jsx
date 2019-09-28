@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { graphql, navigate } from "gatsby"
 
 import { Section, Wrapper, Row, Column, Align, Button, VSpace } from "ygh-ui"
-import { Picture, Location, Friend } from "ygh-icons"
+import { Picture, Location, Friend } from "components/Illustrations"
 
 import Layout from "components/Layout"
 import CTA from "components/CTA"
@@ -59,11 +59,11 @@ const LearnMore = styled.p`
 `
 
 const StyledHexagon = styled(Hexagon)`
-  margin: -4em auto;
-  color: #fff;
+  margin: 0 auto;
+  color: #000;
 
   @media (max-width: 30em) {
-    margin: 0 auto 3em;
+    margin: 1em auto;
   }
 `
 
@@ -89,7 +89,7 @@ export default ({ data }) => {
             <Column size={6} mSize={12}>
               <Demo
                 imageInfo={demoImageInfo}
-                url="https://play.yourgifthunt.com/play/wouter-raateland/escape-the-shed"
+                url="/play/cjx1pg342002007328lpe2xfb"
               />
             </Column>
           </Row>
@@ -179,7 +179,7 @@ export default ({ data }) => {
               </p>
             </Column>
           </Row>
-          <Align.Center>
+          {/* <Align.Center>
             <Button
               onClick={() => navigate("/features")}
               size="medium"
@@ -188,14 +188,14 @@ export default ({ data }) => {
             >
               View more features
             </Button>
-          </Align.Center>
+          </Align.Center> */}
         </Wrapper.Medium>
       </Section>
       <Section id="signup">
         <Wrapper.Medium>
           <Align.Center>
             <h2>Subscribe for Beta access</h2>
-            <p>Be the first to create your own unique puzzle games</p>
+            <p>Be the first to create your own escape room games</p>
             <CTA />
           </Align.Center>
         </Wrapper.Medium>

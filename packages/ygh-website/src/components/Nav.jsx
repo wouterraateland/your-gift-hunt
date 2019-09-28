@@ -1,7 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import { Link } from "gatsby"
 
+import { useYGHPlayerContext } from "ygh-sdk"
+
+import { Link } from "gatsby"
 import { Button, Float, Menu, Wrapper } from "ygh-ui"
 import { Logo } from "ygh-icons"
 import Account from "components/Account"
@@ -44,6 +46,7 @@ const Name = styled.h1`
   white-space: nowrap;
 
   font-size: 1.5rem;
+  line-height: 1.1;
 `
 
 const IndexLink = styled(Link)`
@@ -52,6 +55,8 @@ const IndexLink = styled(Link)`
 
 const StyledLink = styled(IndexLink)`
   margin: 1.2em 0 0 1em;
+  line-height: 1.58;
+  color: ${props => props.theme.color.emphasis};
 `
 
 const NavLink = props => <StyledLink as={props.href ? "a" : Link} {...props} />
@@ -89,78 +94,107 @@ const AccountMenuItem = styled.div`
   justify-content: space-around;
 `
 
-export default props => (
-  <Nav {...props}>
-    <StyledWrapper xlarge>
-      <Small>
-        <IndexLink to="/">
-          <StyledLogo size={3} />
-          <Name>Your Gift Hunt</Name>
-        </IndexLink>
-        <MenuContainer>
-          <Menu.Toggle>
-            <Btn>Menu</Btn>
-          </Menu.Toggle>
-          <Menu.Items>
-            <Menu.Item as="a" href="https://play.yourgifthunt.com">
-              Showcase
-            </Menu.Item>
-            <Menu.Item as="a" href="https://create.yourgifthunt.com">
-              Creator
-            </Menu.Item>
-            <Menu.Item as={Link} to="/pricing">
-              Pricing
-            </Menu.Item>
-            <Menu.Item as={Link} to="/about">
-              About
-            </Menu.Item>
-            <Menu.Item as={Link} to="/contact">
-              Contact
-            </Menu.Item>
-            <AccountMenuItem>
-              <Button
-                size="tiny"
-                as="a"
-                href="https://create.yourgifthunt.com/auth/signup"
-                importance="primary"
-                color="primary"
-              >
-                Sign up
-              </Button>
-              <Button
-                size="tiny"
-                as="a"
-                href="https://create.yourgifthunt.com/auth/login"
-                importance="tertiary"
-              >
-                Log in
-              </Button>
-            </AccountMenuItem>
-          </Menu.Items>
-        </MenuContainer>
-      </Small>
-      <Large>
-        <Float.Left>
+const ButtonContainer = styled.span`
+  display: inline-block;
+  margin: 1em 0 0 1em;
+`
+
+export default props => {
+  const { isLoggedIn } = useYGHPlayerContext()
+  return (
+    <Nav {...props}>
+      <StyledWrapper xlarge>
+        <Small>
           <IndexLink to="/">
             <StyledLogo size={3} />
             <Name>Your Gift Hunt</Name>
           </IndexLink>
-          <NavLink href="https://play.yourgifthunt.com">Showcase</NavLink>
-          <NavLink href="https://create.yourgifthunt.com">Creator</NavLink>
-          <NavLink as={Link} to="/pricing">
-            Pricing
-          </NavLink>
-          <NavLink as={Link} to="/about">
-            About
-          </NavLink>
-        </Float.Left>
-        <Float.Right>
-          <NavLink as={Link} to="/contact">
-            Contact
-          </NavLink>
-          <Account />
-        </Float.Right>
-      </Large>
-    </StyledWrapper>
-  </Nav>
-)
+          <MenuContainer>
+            <Menu.Toggle>
+              <Btn>Menu</Btn>
+            </Menu.Toggle>
+            <Menu.Items>
+              <Menu.Item>
+                <Button
+                  block
+                  size="small"
+                  importance="primary"
+                  color="primary"
+                  as="a"
+                  href="/new-game"
+                >
+                  Create Game
+                </Button>
+              </Menu.Item>
+              <Menu.Item as="a" href="/showcase">
+                Showcase
+              </Menu.Item>
+              {/* <Menu.Item as={Link} to="/pricing">
+                Pricing
+              </Menu.Item> */}
+              <Menu.Item as={Link} to="/about">
+                About
+              </Menu.Item>
+              <Menu.Item as={Link} to="/contact">
+                Contact
+              </Menu.Item>
+              {isLoggedIn ? (
+                <Menu.Item as="a" href="/my-games">
+                  My Dashboard
+                </Menu.Item>
+              ) : (
+                <AccountMenuItem>
+                  <Button
+                    size="tiny"
+                    as="a"
+                    href="/auth/signup"
+                    color="primary"
+                    importance="primary"
+                  >
+                    Sign up
+                  </Button>
+                  <Button
+                    size="tiny"
+                    as="a"
+                    href="/auth/login"
+                    importance="tertiary"
+                  >
+                    Log in
+                  </Button>
+                </AccountMenuItem>
+              )}
+            </Menu.Items>
+          </MenuContainer>
+        </Small>
+        <Large>
+          <Float.Left>
+            <IndexLink to="/">
+              <StyledLogo size={3} />
+              <Name>Your Gift Hunt</Name>
+            </IndexLink>
+            <NavLink href="/showcase">Showcase</NavLink>
+            {/* <NavLink href="/my-games">Creator</NavLink> */}
+            {/* <NavLink href="/pricing">Pricing</NavLink> */}
+            <NavLink to="/about">About</NavLink>
+            <NavLink to="/contact">Contact</NavLink>
+          </Float.Left>
+          <Float.Right>
+            {!isLoggedIn && <NavLink href="/auth/login">Log in</NavLink>}
+            <ButtonContainer>
+              <Button
+                size="small"
+                color="primary"
+                importance="primary"
+                as="a"
+                href="/new-game"
+              >
+                Create Game
+              </Button>
+            </ButtonContainer>
+            {isLoggedIn && <Account />}
+          </Float.Right>
+        </Large>
+      </StyledWrapper>
+    </Nav>
+  )
+}

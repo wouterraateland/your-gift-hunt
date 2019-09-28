@@ -28,7 +28,8 @@ const NotFoundPage = () => (
       <StyledLogo size={4} />
       <h1>No games to play here...</h1>
       <p>
-        Visit <Link to={"/"}>the showcase</Link> to play many public games
+        Visit <Link to={"/showcase"}>the showcase</Link> to play many public
+        games
       </p>
     </Center>
   </Layout>

@@ -1,37 +1,44 @@
 import React from "react"
 import styled from "styled-components"
+import { useYGHPlayerContext } from "ygh-sdk"
 
-import { OutboundLink } from "gatsby-plugin-google-analytics"
+import { Menu } from "ygh-ui"
 
-const Container = styled.span`
-  position: relative;
+const Avatar = styled.div`
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  margin: 1em 0 0 1em;
+  border-radius: 100%;
+  box-shadow: ${props => props.theme.boxShadow.small};
+
+  vertical-align: middle;
+
+  background: url(${props => props.bgImage}) no-repeat center / cover;
+
+  &::before {
+    display: none;
+  }
 `
 
-const SignupLink = styled(OutboundLink)`
-  margin: 1.2em 0 0 1em;
-
-  line-height: 1.58;
-  text-decoration: none;
-`
-
-const SignInLink = styled.small`
-  position: absolute;
-  right: 0;
-  white-space: nowrap;
-`
-
-const Account = () => (
-  <Container>
-    <SignInLink>
-      Already have an account?{" "}
-      <OutboundLink href="https://create.yourgifthunt.com/auth/login">
-        Log in
-      </OutboundLink>
-    </SignInLink>
-    <SignupLink href="https://create.yourgifthunt.com/auth/signup">
-      Sign up
-    </SignupLink>
-  </Container>
-)
+const Account = () => {
+  const { isLoggedIn, user, logoutUser } = useYGHPlayerContext()
+  return isLoggedIn ? (
+    <Menu.Container>
+      <Menu.Toggle as={Avatar} bgImage={user.avatar} />
+      <Menu.Items>
+        <Menu.Item as="a" href="/dashboard">
+          My games
+        </Menu.Item>
+        <Menu.Item as="a" href="/profile">
+          Profile
+        </Menu.Item>
+        <Menu.Item as="a" onClick={logoutUser}>
+          Log out
+        </Menu.Item>
+      </Menu.Items>
+    </Menu.Container>
+  ) : null
+}
 
 export default Account

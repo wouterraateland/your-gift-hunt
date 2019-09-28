@@ -10,7 +10,7 @@ const SubscribeModal = forwardRef((_, ref) => (
         <Align.Center>
           <h1>Enjoyed the demo?</h1>
           <p>
-            Sign up for the Beta and be the first to make your own unique escape
+            Sign up for the Beta and be the first to make your own escape room
             games.
           </p>
           <CTA />
