@@ -1,6 +1,6 @@
 {
   "name": "ygh-sdk",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Package making it simple to communicate with the Your Gift Hunt API.",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
