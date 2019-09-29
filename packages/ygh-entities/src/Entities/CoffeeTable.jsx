@@ -10,17 +10,19 @@ const Construction = styled(Entity)`
   border-radius: 0.125em;
 
   background: repeating-linear-gradient(
-    transparent 0%,
-    transparent 20%,
-    #333 20%,
-    #333 25%,
-    transparent 25%,
-    transparent 75%,
-    #333 75%,
-    #333 80%,
-    transparent 80%,
-    transparent 100%
-  );
+        transparent 0%,
+        transparent 10%,
+        #333 10%,
+        #333 15%,
+        transparent 15%,
+        transparent 85%,
+        #333 85%,
+        #333 90%,
+        transparent 90%,
+        transparent 100%
+      )
+      no-repeat center / 2em ${props => props.height}em,
+    radial-gradient(circle 2em, #333 96%, transparent 100%);
 `
 
 const Plank = styled(Entity)`
@@ -33,11 +35,11 @@ const Plank = styled(Entity)`
     border-radius: ${props => {
       switch (props.i) {
         case 1:
-          return "5% 7% 4% 8% / 50% 60% 0.2em 70%"
-        case 2:
-          return "2% 5% 3% 9% / 0.2em 50% 70% 20%"
+          return "200% 0 0 200% / 50% 0 0 50%"
+        case 3:
+          return "0 200% 200% 0 / 0 50% 50% 0"
         default:
-          return "6% 3% 4% 7% / 20% 0.2em 40% 0.2em"
+          return "0"
       }
     }};
   }
@@ -63,9 +65,9 @@ CoffeeTable.templateName = "Coffee Table"
 CoffeeTable.defaultProps = {
   ...Entity.defaultProps,
   z: 2,
-  width: 10,
-  height: 6,
-  color: "#584630"
+  width: 6,
+  height: 10,
+  color: "#967C5B"
 }
 
 export default CoffeeTable
