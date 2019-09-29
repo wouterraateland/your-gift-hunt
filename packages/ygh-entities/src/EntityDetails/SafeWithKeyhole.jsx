@@ -103,5 +103,6 @@ const SafeWithKeyhole = forwardRef((props, ref) => (
 SafeWithKeyhole.name = "SafeWithKeyhole"
 SafeWithKeyhole.templateName = "Safe with keyhole"
 SafeWithKeyhole.defaultProps = Safe.defaultProps
+SafeWithCode.states = ["Locked", "Unlocked"]
 
 export default SafeWithKeyhole

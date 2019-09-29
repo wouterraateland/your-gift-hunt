@@ -4,33 +4,44 @@ import _ from "ygh-utils"
 
 import DefaultEntityDetail from "./Default"
 
+import Closet from "./Closet"
 import Computer from "./Computer"
 import DoorWithLock from "./DoorWithLock"
 import InstructionNote from "./InstructionNote"
 import Mailbox from "./Mailbox"
 import Note from "./Note"
+import PhotoFrame from "./PhotoFrame"
+import Planner from "./Planner"
 import SafeWithCode from "./SafeWithCode"
 import SafeWithKeyhole from "./SafeWithKeyhole"
+import TV from "./TV"
 
 export {
-  DefaultEntityDetail,
+  Closet,
   Computer,
   DoorWithLock,
   InstructionNote,
   Mailbox,
   Note,
+  PhotoFrame,
+  Planner,
   SafeWithCode,
-  SafeWithKeyhole
+  SafeWithKeyhole,
+  TV
 }
 
 const entityDetails = [
+  Closet,
   Computer,
   DoorWithLock,
   InstructionNote,
   Mailbox,
   Note,
+  PhotoFrame,
+  Planner,
   SafeWithCode,
-  SafeWithKeyhole
+  SafeWithKeyhole,
+  TV
 ]
 
 export const getEntityDetailComponent = templateName =>

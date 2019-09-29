@@ -109,5 +109,6 @@ const SafeWithCode = forwardRef((props, ref) => (
 SafeWithCode.name = "SafeWithCode"
 SafeWithCode.templateName = "Safe with code"
 SafeWithCode.defaultProps = Safe.defaultProps
+SafeWithCode.states = ["Locked", "Unlocked"]
 
 export default SafeWithCode

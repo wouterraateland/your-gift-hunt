@@ -7,8 +7,12 @@ import Entity from "../Entity"
 
 import Armchair from "./Armchair"
 import Battery from "./Battery"
+import Bed from "./Bed"
+import Cake from "./Cake"
 import Camera from "./Camera"
 import Carpet from "./Carpet"
+import Closet from "./Closet"
+import CoffeeTable from "./CoffeeTable"
 import Computer from "./Computer"
 import Desk from "./Desk"
 import DeskChair from "./DeskChair"
@@ -25,14 +29,20 @@ import Map from "./Map"
 import MapPiece from "./MapPiece"
 import Package from "./Package"
 import Path from "./Path"
+import PhotoFrame from "./PhotoFrame"
+import Planner from "./Planner"
 import PlantPot from "./PlantPot"
+import Plate from "./Plate"
 import Room from "./Room"
 import SafeKey from "./SafeKey"
 import SafeWithCode from "./SafeWithCode"
 import SafeWithKeyhole from "./SafeWithKeyhole"
 import Seeds from "./Seeds"
+import SideTable from "./SideTable"
 import Tree from "./Tree"
 import TreeStump from "./TreeStump"
+import TV from "./TV"
+import TVCabinet from "./TVCabinet"
 import Wall from "./Wall"
 import WateringCan from "./WateringCan"
 import WorktopWithSink from "./WorktopWithSink"
@@ -43,8 +53,12 @@ export {
   Entity,
   Armchair,
   Battery,
+  Bed,
+  Cake,
   Camera,
   Carpet,
+  Closet,
+  CoffeeTable,
   Computer,
   Desk,
   DeskChair,
@@ -61,14 +75,20 @@ export {
   MapPiece,
   Package,
   Path,
+  PhotoFrame,
+  Planner,
   PlantPot,
+  Plate,
   Room,
   SafeKey,
   SafeWithCode,
   SafeWithKeyhole,
   Seeds,
+  SideTable,
   Tree,
   TreeStump,
+  TV,
+  TVCabinet,
   Wall,
   WateringCan,
   WorktopWithSink
@@ -77,8 +97,12 @@ export {
 const entities = [
   Armchair,
   Battery,
+  Bed,
+  Cake,
   Camera,
   Carpet,
+  Closet,
+  CoffeeTable,
   Computer,
   Desk,
   DeskChair,
@@ -95,14 +119,20 @@ const entities = [
   MapPiece,
   Package,
   Path,
+  PhotoFrame,
+  Planner,
   PlantPot,
+  Plate,
   Room,
   SafeKey,
   SafeWithCode,
   SafeWithKeyhole,
   Seeds,
+  SideTable,
   Tree,
   TreeStump,
+  TV,
+  TVCabinet,
   Wall,
   WateringCan,
   WorktopWithSink
