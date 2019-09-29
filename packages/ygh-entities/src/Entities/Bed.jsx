@@ -3,79 +3,84 @@ import styled from "styled-components"
 
 import Entity from "../Entity"
 
-const Note = styled(Entity)`
-  padding: 0.25em;
+const Frame = styled(Entity)`
+  top: -0.25em;
+  left: -0.25em;
+  bottom: -0.25em;
+  right: -0.25em;
 
-  perspective: 100px;
-  transform-style: preserve-3d;
+  box-shadow: inset 0 0 0.2em #0009;
+
+  background-color: currentColor;
+
+  &::before {
+    top: 0.25em;
+    left: 0.25em;
+    bottom: 0.25em;
+    right: 0.25em;
+
+    box-shadow: 0 0 0.2em #0009;
+  }
+
+  &::after {
+    left: 50%;
+    top: 50%;
+
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 0.1em;
+
+    transform: translate(-50%, -50%);
+
+    box-shadow: ${({ width: w, height: h }) =>
+      `${w / 2 - 0.125}em ${h / 2 - 0.125}em, ${-w / 2 + 0.125}em ${h / 2 -
+        0.125}em, ${w / 2 - 0.125}em ${-h / 2 + 0.125}em, ${-w / 2 +
+        0.125}em ${-h / 2 + 0.125}em`};
+  }
 `
 
-const Paper = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+const Mattress = styled(Entity)`
+  border-radius: 0.25em;
+  box-shadow: inset 0 0 0.5em -0.1em #5309;
 
-  background: #f5f0d7;
-
-  transform: rotate3d(0, 0, 1, 0deg);
+  background-color: #fff;
 `
 
-const PaperClip = styled.div`
-  position: absolute;
-  right: 15%;
-  top: -0.1em;
+const Blanket = styled(Entity)`
+  border-radius: 10% 5% 15% 10% / 5% 10% 10% 15%;
+  box-shadow: inset 0 0 1em #0006, inset 0 0 0.25em #000c;
 
-  width: 0.3em;
-  height: 1em;
+  background-color: currentColor;
+`
+Blanket.defaultProps = {
+  ...Entity.defaultProps,
+  z: 1
+}
 
-  border: 0.05em solid #999;
-  border-radius: 0.15em 0.15em 0.1em 0.1em;
+const Cushion = styled(Entity)`
+  border-radius: 30% 20% 50% 40% / 50% 40% 20% 30%;
+  box-shadow: inset 0 0 1em #0006, inset 0 0 0.25em #000c;
 
-  transform: rotate3d(1, 10, 0, -5deg);
+  background-color: currentColor;
 `
 
-const PaperClip2 = styled.div`
-  position: absolute;
-  right: 15%;
-  top: 0.1em;
-
-  width: 0.2em;
-  height: 0.8em;
-
-  border-left: 0.05em solid #999;
-  border-bottom: 0.05em solid #999;
-  border-radius: 0 0 0.1em 0.1em;
-
-  box-shadow: inset 0.05em -0.05em 0.1em -0.05em #0004,
-    0.05em 0.05em 0.1em #0004;
-`
-
-const Text = styled.span`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-
-  white-space: nowrap;
-
-  font-family: cursive;
-  font-size: 0.6em;
-
-  transform: translate(-50%, -50%) rotate(90deg);
-
-  -webkit-touch-callout: none;
-  user-select: none;
-`
-
-const Bed = forwardRef(({ inspect, children, ...props }, ref) => (
-  <Note {...props} onClick={inspect} ref={ref}>
-    <Paper />
-    <PaperClip />
-    <PaperClip2 />
-    <Text>Read me</Text>
+const Bed = forwardRef(({ children, ...props }, ref) => (
+  <Frame {...props} ref={ref} color="#cebb81">
+    <Mattress height={props.height - 0.5} width={props.width - 0.5} />
+    <Blanket
+      color={props.color}
+      left={props.width * 0.25 - 0.25}
+      height={props.height + 0.25}
+      width={props.width * 0.5}
+    />
+    <Cushion
+      color={props.color}
+      right={1 + (props.height - 2) * 0.3}
+      height={props.height - 2}
+      width={(props.height - 2) * 0.75}
+    />
     {children}
-  </Note>
+  </Frame>
 ))
 Bed.name = "Bed"
 Bed.templateName = "Bed"
