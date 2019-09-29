@@ -1,82 +1,74 @@
 import React, { forwardRef } from "react"
 import styled from "styled-components"
+import _ from "ygh-utils"
 
 import Entity from "../Entity"
 import PhotoFrameDetail from "../EntityDetails/PhotoFrame"
 
-const Note = styled(Entity)`
-  padding: 0.25em;
-
-  perspective: 100px;
-  transform-style: preserve-3d;
+const Stand = styled(Entity)`
+  border-top: ${props => props.height}em solid #000;
+  border-left: 0.125em solid transparent;
+  border-right: 0.125em solid transparent;
+  background-color: #000;
+  background-clip: padding-box;
 `
+Stand.defaultProps = {
+  ...Entity.defaultProps,
+  width: 0.5
+}
 
-const Paper = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+const Frame = styled(Entity)`
+  border: solid currentColor;
+  border-width: 0.25em 0.1em 0.1em;
 
-  background: #f5f0d7;
+  &::before {
+    top: 50%;
+    left: 50%;
 
-  transform: rotate3d(0, 0, 1, 0deg);
+    width: 100%;
+    height: 400%;
+
+    background: #ddd url(${props => props.src}) no-repeat center / cover;
+
+    transform: translate(-50%, -50%) scale(1, 0.25);
+  }
+
+  &::after {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    background: linear-gradient(
+      -45deg,
+      transparent,
+      transparent,
+      transparent,
+      #fff,
+      transparent,
+      transparent,
+      #fff,
+      transparent,
+      transparent
+    );
+  }
 `
-
-const PaperClip = styled.div`
-  position: absolute;
-  right: 15%;
-  top: -0.1em;
-
-  width: 0.3em;
-  height: 1em;
-
-  border: 0.05em solid #999;
-  border-radius: 0.15em 0.15em 0.1em 0.1em;
-
-  transform: rotate3d(1, 10, 0, -5deg);
-`
-
-const PaperClip2 = styled.div`
-  position: absolute;
-  right: 15%;
-  top: 0.1em;
-
-  width: 0.2em;
-  height: 0.8em;
-
-  border-left: 0.05em solid #999;
-  border-bottom: 0.05em solid #999;
-  border-radius: 0 0 0.1em 0.1em;
-
-  box-shadow: inset 0.05em -0.05em 0.1em -0.05em #0004,
-    0.05em 0.05em 0.1em #0004;
-`
-
-const Text = styled.span`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-
-  white-space: nowrap;
-
-  font-family: cursive;
-  font-size: 0.6em;
-
-  transform: translate(-50%, -50%) rotate(90deg);
-
-  -webkit-touch-callout: none;
-  user-select: none;
-`
+Frame.defaultProps = {
+  ...Entity.defaultProps,
+  height: 0.5
+}
 
 const PhotoFrame = forwardRef(({ inspect, children, ...props }, ref) => (
-  <Note {...props} onClick={inspect} ref={ref}>
-    <Paper />
-    <PaperClip />
-    <PaperClip2 />
-    <Text>Read me</Text>
+  <Entity noVisual {...props} onClick={inspect} ref={ref}>
+    <Stand height={props.height * 0.25} top={props.height * 0.125} />
+    <Frame
+      width={props.width}
+      height={props.height * 0.75}
+      top={props.height * (0.25 + 0.75 / 2)}
+      src={_.getFieldValue("Image")(props)}
+    />
     {children}
-  </Note>
+  </Entity>
 ))
 PhotoFrame.name = "PhotoFrame"
 PhotoFrame.templateName = "Photo Frame"

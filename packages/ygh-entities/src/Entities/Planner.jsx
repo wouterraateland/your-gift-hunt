@@ -4,79 +4,51 @@ import styled from "styled-components"
 import Entity from "../Entity"
 import PlannerDetail from "../EntityDetails/Planner"
 
-const Note = styled(Entity)`
+const Backdrop = styled(Entity)`
   padding: 0.25em;
+  border-radius: 0.25em;
 
-  perspective: 100px;
-  transform-style: preserve-3d;
+  background: currentColor;
 `
 
 const Paper = styled.div`
   position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  left: 0.125em;
+  top: 0.125em;
+  right: 0.125em;
+
+  height: ${props => props.height}em;
+
+  box-shadow: 0 0.125em 0.375em -0.125em #0006;
 
   background: #f5f0d7;
-
-  transform: rotate3d(0, 0, 1, 0deg);
-`
-
-const PaperClip = styled.div`
-  position: absolute;
-  right: 15%;
-  top: -0.1em;
-
-  width: 0.3em;
-  height: 1em;
-
-  border: 0.05em solid #999;
-  border-radius: 0.15em 0.15em 0.1em 0.1em;
-
-  transform: rotate3d(1, 10, 0, -5deg);
-`
-
-const PaperClip2 = styled.div`
-  position: absolute;
-  right: 15%;
-  top: 0.1em;
-
-  width: 0.2em;
-  height: 0.8em;
-
-  border-left: 0.05em solid #999;
-  border-bottom: 0.05em solid #999;
-  border-radius: 0 0 0.1em 0.1em;
-
-  box-shadow: inset 0.05em -0.05em 0.1em -0.05em #0004,
-    0.05em 0.05em 0.1em #0004;
 `
 
 const Text = styled.span`
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: calc(50% - 0.5em);
 
   white-space: nowrap;
 
-  font-family: cursive;
   font-size: 0.6em;
 
   transform: translate(-50%, -50%) rotate(90deg);
 
   -webkit-touch-callout: none;
   user-select: none;
+
+  color: #000c;
 `
 
 const Planner = forwardRef(({ inspect, children, ...props }, ref) => (
-  <Note {...props} onClick={inspect} ref={ref}>
-    <Paper />
-    <PaperClip />
-    <PaperClip2 />
-    <Text>Read me</Text>
+  <Backdrop {...props} onClick={inspect} ref={ref}>
+    <Paper height={props.height - 0.25} />
+    <Paper height={props.height - 0.5} />
+    <Paper height={props.height - 0.75} />
+    <Text>Plans</Text>
     {children}
-  </Note>
+  </Backdrop>
 ))
 Planner.name = "Planner"
 Planner.templateName = "Planner"
