@@ -1,90 +1,118 @@
-import React, { forwardRef } from "react"
+import React, { forwardRef, useMemo } from "react"
 import styled from "styled-components"
+import { readableColor } from "polished"
+import _ from "ygh-utils"
 
 import Entity from "../Entity"
-import NoteDetail from "../EntityDetails/Note"
 
-const Note = styled(Entity)`
-  padding: 0.25em;
+const StyledCake = styled(Entity)`
+  border-radius: 100%;
+  box-shadow: inset 0 0 0.25em #0006;
 
-  perspective: 100px;
-  transform-style: preserve-3d;
+  mask: ${({ piecesLeft }) =>
+    `conic-gradient(#000 ${(piecesLeft * 360) /
+      6}deg, transparent ${(piecesLeft * 360) / 6 + 3}deg)`};
+  background: currentColor;
 `
 
-const Paper = styled.div`
+const BlackBerry = styled.div`
   position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  width: 0.5em;
+  height: 0.5em;
 
-  background: #f5f0d7;
+  border-radius: 100%;
+  box-shadow: inset 0 0 0.25em #0009, 0 0 0.25em #0009;
 
-  transform: rotate3d(0, 0, 1, 0deg);
+  background-color: #5a2cc3;
 `
 
-const PaperClip = styled.div`
+const StrawBerry = styled.div`
   position: absolute;
-  right: 15%;
-  top: -0.1em;
+  width: 0.5em;
+  height: 0.5em;
 
-  width: 0.3em;
-  height: 1em;
+  border-radius: 100% 20% 10% 20%;
+  box-shadow: inset 0 0 0.25em #0009, 0 0 0.25em #0009;
 
-  border: 0.05em solid #999;
-  border-radius: 0.15em 0.15em 0.1em 0.1em;
-
-  transform: rotate3d(1, 10, 0, -5deg);
+  background-color: #f22c21;
 `
 
-const PaperClip2 = styled.div`
+const Text = styled.em`
   position: absolute;
-  right: 15%;
-  top: 0.1em;
-
-  width: 0.2em;
-  height: 0.8em;
-
-  border-left: 0.05em solid #999;
-  border-bottom: 0.05em solid #999;
-  border-radius: 0 0 0.1em 0.1em;
-
-  box-shadow: inset 0.05em -0.05em 0.1em -0.05em #0004,
-    0.05em 0.05em 0.1em #0004;
-`
-
-const Text = styled.span`
-  position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
 
-  white-space: nowrap;
+  text-align: center;
+  text-shadow: 0 0 0.25rem #0009;
 
-  font-family: cursive;
-  font-size: 0.6em;
-
-  transform: translate(-50%, -50%) rotate(90deg);
-
-  -webkit-touch-callout: none;
-  user-select: none;
+  transform: translate(-50%, -50%);
 `
 
-const Cake = forwardRef(({ inspect, children, ...props }, ref) => (
-  <Note {...props} onClick={inspect} ref={ref}>
-    <Paper />
-    <PaperClip />
-    <PaperClip2 />
-    <Text>Read me</Text>
-    {children}
-  </Note>
-))
+const cakeStates = [
+  "Complete",
+  "5 left",
+  "4 left",
+  "3 left",
+  "2 left",
+  "1 left"
+]
+
+const Cake = forwardRef(({ children, ...props }, ref) => {
+  const berryCount = (props.width + props.height) * 2
+
+  const berries = useMemo(
+    () =>
+      Array(berryCount)
+        .fill()
+        .map((_, i) => ({
+          top: `${props.height / 2 +
+            0.5 *
+              (props.height - 1) *
+              Math.sin((2 * i * Math.PI) / berryCount)}em`,
+          left: `${props.width / 2 +
+            0.5 *
+              (props.width - 1) *
+              Math.cos((2 * i * Math.PI) / berryCount)}em`,
+          transform: `translate(-50%, -50%) scale(${0.5 +
+            0.5 * Math.abs(Math.sin(i))}) rotate(${(i * 32435) % 360}deg)`
+        })),
+    [berryCount]
+  )
+
+  const piecesLeft =
+    6 - cakeStates.findIndex(cakeState => _.hasState(cakeState)(props))
+
+  return (
+    <StyledCake {...props} ref={ref} piecesLeft={piecesLeft}>
+      {berries.map((berry, i) =>
+        i % 2 ? (
+          <BlackBerry key={i} style={berry} />
+        ) : (
+          <StrawBerry key={i} style={berry} />
+        )
+      )}
+      <Text
+        style={{
+          fontSize: `${Math.sqrt((props.width - 1) * (props.height - 1)) /
+            5}em`,
+          color: readableColor(props.color, "#f12", "#fafbf5")
+        }}
+      >
+        {_.getFieldValue("Text")(props)}
+      </Text>
+      {children}
+    </StyledCake>
+  )
+})
 Cake.name = "Cake"
 Cake.templateName = "Cake"
 Cake.defaultProps = {
   ...Entity.defaultProps,
   width: 3,
-  height: 3
+  height: 3,
+  color: "#fafbf5",
+  fields: [{ name: "Text", value: "Happy B-day!" }]
 }
-Cake.states = ["Complete", "5 left", "4 left", "3 left", "2 left", "1 left"]
+Cake.states = cakeStates
 
 export default Cake
