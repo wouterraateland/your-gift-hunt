@@ -1,7 +1,7 @@
 import React from "react"
 
 import { storiesOf } from "@storybook/react"
-import { withKnobs, radios, number } from "@storybook/addon-knobs"
+import { withKnobs, color, number, radios } from "@storybook/addon-knobs"
 
 import withTheme from "./decorators/withTheme"
 import withCenter from "./decorators/withCenter"
@@ -16,19 +16,20 @@ const getProps = Entity => {
       name:
         Entity.states && Entity.states.length
           ? radios(
-              "state",
+              "State",
               Entity.states.reduce(
                 (acc, name) => ({ ...acc, [name]: name }),
                 {}
               ),
               Entity.states[0]
             )
-          : radios("state", { Default: "" }, "")
+          : radios("State", { Default: "" }, "")
     },
-    width: number("width", EntityDetail.defaultProps.width),
-    height: number("height", EntityDetail.defaultProps.height),
-    rotation: number("rotation", EntityDetail.defaultProps.rotation),
-    containedEntities: []
+    width: number("Width", EntityDetail.defaultProps.width),
+    height: number("Height", EntityDetail.defaultProps.height),
+    rotation: number("Rotation", EntityDetail.defaultProps.rotation),
+    containedEntities: [],
+    color: color("Color", Entity.defaultProps.color)
   }
 }
 

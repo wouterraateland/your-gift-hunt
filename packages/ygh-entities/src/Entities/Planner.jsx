@@ -58,7 +58,7 @@ Planner.defaultProps = {
   height: 3,
   color: "#754C3D"
 }
-Planner.States = ["One", "Two", "Three"]
+Planner.states = ["One", "Two", "Three"]
 Planner.Detail = PlannerDetail
 
 export default Planner

@@ -39,7 +39,7 @@ Computer.defaultProps = {
   width: 4,
   height: 4
 }
-Computer.States = ["Off", "On"]
+Computer.states = ["Off", "On"]
 Computer.Detail = ComputerDetail
 
 export default Computer

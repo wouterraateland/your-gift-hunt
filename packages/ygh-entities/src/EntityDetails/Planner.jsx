@@ -3,63 +3,151 @@ import styled from "styled-components"
 import _ from "ygh-utils"
 
 import Entity from "../Entity"
-import plankStyles from "../plankStyles"
-import Keyhole from "./Keyhole"
 
-const Door = styled(Entity)`
-  clip-path: polygon(
-    0% 0%,
-    0% 100%,
-    50% 100%,
-    50% 40%,
-    35% 30%,
-    50% 20%,
-    65% 30%,
-    50% 40%,
-    50% 100%,
-    100% 100%,
-    100% 0%
-  );
+const Backdrop = styled(Entity)`
+  border-radius: 1em;
+
+  background: currentColor;
 `
 
-const Plank = styled(Entity)`
-  ${plankStyles}
-`
-Plank.defaultProps = {
-  ...Entity.defaultProps,
-  width: 2,
-  height: 16,
-  color: "#584630"
-}
-const TopPlank = styled(Plank)`
-  clip-path: polygon(0 0, 0 100%, 100% 80%, 100% 20%);
+const Paper = styled.div`
+  position: absolute;
+  left: 1em;
+  top: 1em;
+  right: 1em;
+
+  height: ${props => props.height}em;
+  padding: 0.5em 1em;
+
+  box-shadow: 0 0.5em 1.5em -0.5em #0006;
+
+  background: #f5f0d7;
 `
 
-const BottomPlank = styled(Plank)`
-  clip-path: polygon(0 20%, 0 80%, 100% 100%, 100% 0);
+const Holder = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 0.5em;
+
+  width: 6em;
+  height: 1em;
+
+  border-radius: 50% 50% 0 0 / 200% 200% 0 0;
+  box-shadow: 0.5em 0.25em 0.75em -0.25em #0004,
+    -0.5em 0.25em 0.75em -0.25em #0004;
+
+  background: linear-gradient(#ccc, #999);
+
+  transform: translate(-50%, 0);
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+
+    left: 50%;
+
+    transform: translate(-50%, 0);
+  }
+
+  &::before {
+    bottom: 100%;
+
+    width: 1.5em;
+    height: 2em;
+
+    border-radius: 5em 5em 0 0;
+
+    background: radial-gradient(
+      circle 10em at 50% 0.75em,
+      transparent 0.25em,
+      #999 0.3em,
+      #ccc 0.5em
+    );
+  }
+
+  &::after {
+    top: -0.375em;
+
+    width: 0.25em;
+    height: 0.25em;
+
+    border-radius: 100%;
+    box-shadow: inset 0 0 0.125em #0009;
+
+    background: #999;
+  }
+`
+
+const Text = styled.p`
+  margin: 0.5em 0;
+
+  -webkit-touch-callout: none;
+  user-select: none;
+
+  color: #000c;
+`
+
+const Checkbox = styled.span`
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+
+  border: 0.1em solid #0006;
+  border-radius: 0.125em;
+
+  &::before {
+    content: ${props =>
+      props.isChecked ? '"✓"' : props.isCrossed ? '"✗"' : '""'};
+
+    line-height: 0.5;
+    font-size: 1.5em;
+    text-align: center;
+
+    color: ${props =>
+      props.isChecked ? "#05f" : props.isCrossed ? "#f23" : ""};
+  }
 `
 
 const Planner = forwardRef((props, ref) => {
-  const isUnlocked = _.hasState("Unlocked")(props)
+  const isDay3 = _.hasState("Three")(props)
 
   return (
-    <Door noVisual {...props}>
-      <Plank left={1} />
-      <Plank left={3} />
-      <Plank left={5} />
-      <Plank left={7} />
-      <Plank left={9} />
-      <TopPlank left={5} top={1} height={10} rotation={90} />
-      <BottomPlank left={5} top={15} height={10} rotation={90} />
-      <Keyhole left={9} top={9} isUnlocked={isUnlocked} ref={ref} />
-    </Door>
+    <Backdrop noVisual {...props} ref={ref}>
+      <Paper height={props.height - 2} />
+      <Paper height={props.height - 2.5} />
+      <Paper height={props.height - 3}>
+        <Text>Planning:</Text>
+        <Text>
+          10-10:{" "}
+          <span role="img" aria-label="Cake">
+            🎂
+          </span>
+          <br />
+          <Checkbox isChecked /> Wandeling
+        </Text>
+        <Text>
+          11-10:
+          <br />
+          <Checkbox isChecked={isDay3} /> Squash
+          <br />
+          <Checkbox isCrossed={isDay3} /> Chillen
+        </Text>
+        <Text>
+          12-10:
+          <br />
+          <Checkbox isCrossed={isDay3} /> Studeren
+        </Text>
+      </Paper>
+      <Holder />
+    </Backdrop>
   )
 })
 Planner.name = "Planner"
 Planner.templateName = "Planner"
 Planner.defaultProps = {
   ...Entity.defaultProps,
-  width: 10,
+  width: 12,
   height: 16,
   color: "#754C3D"
 }
