@@ -52,9 +52,9 @@ Plank.defaultProps = {
 
 const CoffeeTable = forwardRef(({ children, ...props }, ref) => (
   <Construction noVisual ref={ref} {...props}>
-    <Plank baseColor={props.color} left="18%" i={1} />
-    <Plank baseColor={props.color} i={2} />
-    <Plank baseColor={props.color} left="82%" i={3} />
+    <Plank color={props.color} left="18%" i={1} />
+    <Plank color={props.color} i={2} />
+    <Plank color={props.color} left="82%" i={3} />
     <Entity noVisual width={props.width} height={props.height} z={3}>
       {children}
     </Entity>

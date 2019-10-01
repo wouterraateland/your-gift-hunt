@@ -1,89 +1,69 @@
 import React, { forwardRef } from "react"
 import styled from "styled-components"
+import { darken } from "polished"
 
 import Entity from "../Entity"
 import TVDetail from "../EntityDetails/TV"
 
-const Note = styled(Entity)`
-  padding: 0.25em;
+const Leg = styled(Entity)`
+  &::before,
+  &::after {
+    width: 100%;
+    height: 50%;
 
-  perspective: 100px;
-  transform-style: preserve-3d;
+    background-color: ${props => darken(0.15)(props.color)};
+  }
+
+  &::before {
+    bottom: 50%;
+    border-radius: 1em 1em 0 0;
+    transform: skewX(10deg);
+  }
+
+  &::after {
+    top: 50%;
+    border-radius: 0 0 1em 1em;
+    transform: skewX(-10deg);
+  }
 `
+Leg.defaultProps = {
+  ...Entity.defaultProps,
+  width: 0.25
+}
 
-const Paper = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+const Screen = styled(Entity)`
+  border-radius: 100% 100% 0 0;
+  background-color: currentColor;
 
-  background: #f5f0d7;
+  &::after {
+    left: 0;
+    top: 100%;
 
-  transform: rotate3d(0, 0, 1, 0deg);
+    width: 100%;
+    height: 1em;
+
+    background: radial-gradient(ellipse 50% 100% at 50% 0, #09f9, transparent);
+  }
 `
-
-const PaperClip = styled.div`
-  position: absolute;
-  right: 15%;
-  top: -0.1em;
-
-  width: 0.3em;
-  height: 1em;
-
-  border: 0.05em solid #999;
-  border-radius: 0.15em 0.15em 0.1em 0.1em;
-
-  transform: rotate3d(1, 10, 0, -5deg);
-`
-
-const PaperClip2 = styled.div`
-  position: absolute;
-  right: 15%;
-  top: 0.1em;
-
-  width: 0.2em;
-  height: 0.8em;
-
-  border-left: 0.05em solid #999;
-  border-bottom: 0.05em solid #999;
-  border-radius: 0 0 0.1em 0.1em;
-
-  box-shadow: inset 0.05em -0.05em 0.1em -0.05em #0004,
-    0.05em 0.05em 0.1em #0004;
-`
-
-const Text = styled.span`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-
-  white-space: nowrap;
-
-  font-family: cursive;
-  font-size: 0.6em;
-
-  transform: translate(-50%, -50%) rotate(90deg);
-
-  -webkit-touch-callout: none;
-  user-select: none;
-`
+Screen.defaultProps = {
+  ...Entity.defaultProps,
+  height: 0.5
+}
 
 const TV = forwardRef(({ inspect, children, ...props }, ref) => (
-  <Note {...props} onClick={inspect} ref={ref}>
-    <Paper />
-    <PaperClip />
-    <PaperClip2 />
-    <Text>Read me</Text>
+  <Entity noVisual {...props} onClick={inspect} ref={ref}>
+    <Leg color={props.color} height={props.height} left={1} />
+    <Leg color={props.color} height={props.height} right={1} rotation={180} />
+    <Screen width={props.width} />
     {children}
-  </Note>
+  </Entity>
 ))
 TV.name = "TV"
 TV.templateName = "TV"
 TV.defaultProps = {
   ...Entity.defaultProps,
-  width: 2,
-  height: 3,
+  width: 8,
+  height: 2,
   color: "#3F3F3F"
 }
 TV.Detail = TVDetail

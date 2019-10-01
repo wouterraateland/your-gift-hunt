@@ -53,7 +53,7 @@ const Floor = forwardRef(({ children, ...props }, ref) => {
             width: `${100 / plankCount}%`,
             height: `${100 * plankHeight}%`
           }}
-          baseColor={props.color}
+          color={props.color}
         />
       ))}
       {children}

@@ -29,7 +29,7 @@ Plank.defaultProps = {
   ...Entity.defaultProps,
   width: 2,
   height: 16,
-  baseColor: "#584630"
+  color: "#584630"
 }
 const TopPlank = styled(Plank)`
   clip-path: polygon(0 0, 0 100%, 100% 80%, 100% 20%);

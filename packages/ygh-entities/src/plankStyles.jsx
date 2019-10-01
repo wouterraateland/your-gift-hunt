@@ -17,7 +17,7 @@ const plankStyles = css`
       linear-gradient(83deg, transparent 50%, #ffffff04 50%),
       linear-gradient(84deg, transparent 50%, #ffffff04 50%);
 
-    background-color: ${props => props.baseColor};
+    background-color: ${props => props.color};
     background-size: 13px, 29px, 37px, 53px;
   }
 
@@ -36,11 +36,11 @@ const plankStyles = css`
   }
 
   &:nth-of-type(5n + 2)::before {
-    background-color: ${props => _.darken(-0.02)(props.baseColor)};
+    background-color: ${props => _.darken(-0.02)(props.color)};
   }
   &:nth-of-type(7n + 1)::before,
   &:nth-of-type(7n + 5)::before {
-    background-color: ${props => _.darken(0.02)(props.baseColor)};
+    background-color: ${props => _.darken(0.02)(props.color)};
   }
 `
 export default plankStyles

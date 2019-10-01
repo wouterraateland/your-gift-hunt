@@ -42,16 +42,16 @@ RightDoor.defaultProps = {
 }
 
 const Closet = forwardRef(({ inspect, children, ...props }, ref) => (
-  <StyledCloset {...props} baseColor={props.color} onClick={inspect} ref={ref}>
+  <StyledCloset {...props} color={props.color} onClick={inspect} ref={ref}>
     <LeftDoor
-      baseColor={props.color}
+      color={props.color}
       right={-0.5}
       top={0}
       height={props.height / 2}
       rotation={_.hasState("Unlocked")(props) ? -60 : 0}
     />
     <RightDoor
-      baseColor={props.color}
+      color={props.color}
       right={-0.5}
       top={props.height}
       height={props.height / 2}
