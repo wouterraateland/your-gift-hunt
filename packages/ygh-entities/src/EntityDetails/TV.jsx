@@ -1,67 +1,173 @@
 import React, { forwardRef } from "react"
 import styled from "styled-components"
+import { darken } from "polished"
 import _ from "ygh-utils"
 
 import Entity from "../Entity"
-import plankStyles from "../plankStyles"
-import Keyhole from "./Keyhole"
 
-const Door = styled(Entity)`
-  clip-path: polygon(
-    0% 0%,
-    0% 100%,
-    50% 100%,
-    50% 40%,
-    35% 30%,
-    50% 20%,
-    65% 30%,
-    50% 40%,
-    50% 100%,
-    100% 100%,
-    100% 0%
-  );
+const Screen = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  border-radius: 0.25em;
+  box-shadow: inset 0 -0.125em 0.375em -0.125em #0009;
+
+  background-color: currentColor;
 `
 
-const Plank = styled(Entity)`
-  ${plankStyles}
-`
-Plank.defaultProps = {
-  ...Entity.defaultProps,
-  width: 2,
-  height: 16,
-  color: "#584630"
-}
-const TopPlank = styled(Plank)`
-  clip-path: polygon(0 0, 0 100%, 100% 80%, 100% 20%);
+const Display = styled.div`
+  position: absolute;
+  top: 0.25em;
+  left: 0.25em;
+  right: 0.25em;
+  bottom: 0.75em;
+
+  overflow: hidden;
+
+  border-radius: 0.25em;
+
+  background: #000 url(${props => props.src}) no-repeat center / cover;
 `
 
-const BottomPlank = styled(Plank)`
-  clip-path: polygon(0 20%, 0 80%, 100% 100%, 100% 0);
+const Text = styled.span`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.65em;
+
+  color: #fff;
+`
+
+const Leg = styled.div`
+  position: absolute;
+  top: 100%;
+
+  width: 0.5em;
+  height: 0.5em;
+
+  border-radius: 0 0 0.25em 0.25em;
+  box-shadow: inset 0 -0.125em 0.375em -0.125em #0009;
+
+  background-color: ${props => props.color};
+
+  &::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+
+    height: 1.5em;
+
+    border-radius: 0 0 1em 1em;
+    box-shadow: inset 0 -0.125em 0.375em -0.125em #0009;
+
+    background-color: currentColor;
+
+    transform-origin: top;
+  }
+`
+
+const LeftLeg = styled(Leg)`
+  left: 3em;
+
+  &::after {
+    transform: skewX(-45deg);
+  }
+`
+
+const RightLeg = styled(Leg)`
+  right: 3em;
+
+  &::after {
+    transform: skewX(45deg);
+  }
+`
+
+const Show = styled.span`
+  position: absolute;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: ${props => props.size - 2}em;
+  height: ${props => props.size - 1}em;
+  padding: 1em;
+
+  font-weight: bold;
+
+  color: #000;
+
+  &::before {
+    content: "Nu";
+
+    margin-top: -1em;
+
+    font-weight: normal;
+
+    color: #fff;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: ${props => props.size / 2 - 0.5}em;
+    left: 1em;
+
+    z-index: -1;
+
+    width: ${props => props.size}em;
+    height: ${props => props.size}em;
+
+    border-radius: 1em;
+    box-shadow: 0.5em -0.5em #ff7f3699, 1em -1em #ff7f3655;
+
+    background: #ff7f36;
+
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
 `
 
 const TV = forwardRef((props, ref) => {
-  const isUnlocked = _.hasState("Unlocked")(props)
+  const inCommercial = _.hasState("Commercial")(props)
+  const src = _.getFieldValue(
+    inCommercial ? "commercialImage" : "programImage"
+  )(props)
 
   return (
-    <Door noVisual {...props}>
-      <Plank left={1} />
-      <Plank left={3} />
-      <Plank left={5} />
-      <Plank left={7} />
-      <Plank left={9} />
-      <TopPlank left={5} top={1} height={10} rotation={90} />
-      <BottomPlank left={5} top={15} height={10} rotation={90} />
-      <Keyhole left={9} top={9} isUnlocked={isUnlocked} ref={ref} />
-    </Door>
+    <Entity noVisual {...props} ref={ref}>
+      <LeftLeg color={darken(0.1)(props.color)} />
+      <RightLeg color={darken(0.1)(props.color)} />
+      <Screen>
+        <Display src={src}>
+          {inCommercial ? null : (
+            <Show size={props.height}>{_.getFieldValue("Program")(props)}</Show>
+          )}
+        </Display>
+        <Text>TV</Text>
+      </Screen>
+    </Entity>
   )
 })
 TV.name = "TV"
 TV.templateName = "TV"
 TV.defaultProps = {
   ...Entity.defaultProps,
-  width: 16,
+  width: 18,
   height: 10,
-  color: "#3f3f3f"
+  color: "#3f3f3f",
+  fields: [{ name: "Program", value: "TV Show" }]
 }
+TV.states = ["Commercial", "Program"]
 
 export default TV

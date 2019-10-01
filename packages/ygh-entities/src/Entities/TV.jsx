@@ -66,6 +66,7 @@ TV.defaultProps = {
   height: 2,
   color: "#3F3F3F"
 }
+TV.states = ["Commercial", "Program"]
 TV.Detail = TVDetail
 
 export default TV
