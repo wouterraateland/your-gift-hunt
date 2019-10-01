@@ -3,7 +3,7 @@ import styled from "styled-components"
 import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 import useTemplateInspector from "hooks/useTemplateInspector"
 
-import { Paper, DefaultOptions, TabOptions } from "ygh-ui"
+import { Paper, TabOptions } from "ygh-ui"
 import Icons from "ygh-icons"
 
 import Form from "components/TemplateSetCreator/DetailPane/Form"
@@ -28,7 +28,7 @@ const Meta = ({ template }) => {
     () => ({
       name: template.name,
       description: template.description,
-      isPlaceable: template.isPlaceable ? [true] : [],
+      isPlaceable: template.isPlaceable,
       type: template.isPlaceable
         ? template.isContainer
           ? "container"
@@ -52,9 +52,9 @@ const Meta = ({ template }) => {
       updateEntityTemplate(template.id, {
         name: values.name,
         description: values.description,
-        isPlaceable: values.isPlaceable.includes(true),
+        isPlaceable: values.isPlaceable,
         isItem: values.type === "item",
-        isObject: values.type === "object" || values.isPlaceable.includes(true),
+        isObject: values.type === "object" || values.isPlaceable,
         isTrigger: values.type === "trigger",
         isContainer: values.type === "container",
         isPortal: values.type === "portal",
@@ -81,16 +81,15 @@ const Meta = ({ template }) => {
           onFlush={onFlush}
           onDelete={onDelete}
           onChange={(values, setField) => {
-            const _isPlaceable = values.isPlaceable.length === 1
-            setIsPlaceable(_isPlaceable)
+            setIsPlaceable(values.isPlaceable)
             if (
-              _isPlaceable &&
+              values.isPlaceable &&
               ["trigger", "challenge"].includes(values.type)
             ) {
               setField("type", "object")
             }
             if (
-              !_isPlaceable &&
+              !values.isPlaceable &&
               ["item", "object", "portal"].includes(values.type)
             ) {
               setField("type", "challenge")
@@ -109,15 +108,8 @@ const Meta = ({ template }) => {
             },
             {
               name: "isPlaceable",
-              type: "selectMultiple",
-              label: "Placeable",
-              component: DefaultOptions,
-              options: [
-                {
-                  value: true,
-                  label: "Is placeable in the visual editor"
-                }
-              ]
+              type: "checkbox",
+              label: "Placeable"
             },
             {
               name: "type",

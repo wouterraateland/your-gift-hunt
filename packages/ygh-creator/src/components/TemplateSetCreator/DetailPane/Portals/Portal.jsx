@@ -7,6 +7,7 @@ import Form from "components/TemplateSetCreator/DetailPane/Form"
 
 import EntranceTag from "components/Primitives/EntranceTag"
 import StateTag from "components/Primitives/StateTag"
+import { SelectOptions } from "ygh-ui"
 
 const PortalForm = ({ template, portal }) => {
   const { templates } = useTemplates()
@@ -47,16 +48,13 @@ const PortalForm = ({ template, portal }) => {
     [portal.id]
   )
 
-  const onDelete = useCallback(
-    () => {
-      updateEntityTemplate(template.id, {
-        portals: {
-          delete: { id: portal.id }
-        }
-      })
-    },
-    [portal.id]
-  )
+  const onDelete = useCallback(() => {
+    updateEntityTemplate(template.id, {
+      portals: {
+        delete: { id: portal.id }
+      }
+    })
+  }, [portal.id])
 
   return (
     <Form
@@ -78,6 +76,7 @@ const PortalForm = ({ template, portal }) => {
           name: "connectableEntrances",
           type: "selectMultiple",
           label: "Connectable entrances",
+          component: SelectOptions,
           options: templates
             .filter(({ id }) => id !== template.id)
             .flatMap(({ entrances, ...rest }) =>
@@ -93,6 +92,7 @@ const PortalForm = ({ template, portal }) => {
           name: "states",
           type: "selectMultiple",
           label: "Open in states",
+          component: SelectOptions,
           options: template.states.map(state => ({
             label: <StateTag state={state} />,
             value: state.id

@@ -7,6 +7,8 @@ import Form from "components/TemplateSetCreator/DetailPane/Form"
 
 import PortalTag from "components/Primitives/PortalTag"
 
+import { SelectOptions } from "ygh-ui"
+
 const EntranceForm = ({ template, entrance }) => {
   const { templates } = useTemplates()
   const { updateEntityTemplate } = useTemplateSetMutations()
@@ -51,16 +53,13 @@ const EntranceForm = ({ template, entrance }) => {
       }))
     )
 
-  const onDelete = useCallback(
-    () => {
-      updateEntityTemplate(template.id, {
-        entrances: {
-          delete: { id: entrance.id }
-        }
-      })
-    },
-    [entrance.id]
-  )
+  const onDelete = useCallback(() => {
+    updateEntityTemplate(template.id, {
+      entrances: {
+        delete: { id: entrance.id }
+      }
+    })
+  }, [entrance.id])
 
   return (
     <Form
@@ -82,6 +81,7 @@ const EntranceForm = ({ template, entrance }) => {
           name: "connectablePortals",
           type: "selectMultiple",
           label: "Connectable portals",
+          component: SelectOptions,
           options
         }
       ]}

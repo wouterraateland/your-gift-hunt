@@ -9,6 +9,7 @@ import StateTag from "components/Primitives/StateTag"
 import ExitState from "components/Primitives/ExitState"
 
 import ActionRequirements from "./ActionRequirements"
+import { SelectOptions } from "ygh-ui"
 
 const StyledExitState = styled(ExitState)`
   width: 1em;
@@ -44,25 +45,22 @@ const TransitionForm = ({ template, transition }) => {
     [transition.id]
   )
 
-  const onDelete = useCallback(
-    () => {
-      updateEntityTemplate(template.id, {
-        states: {
-          update: [
-            {
-              where: { id: transition.from.id },
-              data: {
-                outgoingTransitions: {
-                  delete: { id: transition.id }
-                }
+  const onDelete = useCallback(() => {
+    updateEntityTemplate(template.id, {
+      states: {
+        update: [
+          {
+            where: { id: transition.from.id },
+            data: {
+              outgoingTransitions: {
+                delete: { id: transition.id }
               }
             }
-          ]
-        }
-      })
-    },
-    [transition.id, transition.from.id]
-  )
+          }
+        ]
+      }
+    })
+  }, [transition.id, transition.from.id])
 
   return (
     <>
@@ -75,6 +73,7 @@ const TransitionForm = ({ template, transition }) => {
             name: "from",
             type: "select",
             label: "Source state",
+            component: SelectOptions,
             options: template.states
               .filter(({ id }) => !transition.to || id !== transition.to.id)
               .map(state => ({
@@ -87,6 +86,7 @@ const TransitionForm = ({ template, transition }) => {
             type: "select",
             label: "Destination state",
             isClearable: true,
+            component: SelectOptions,
             options: template.states
               .filter(({ id }) => id !== transition.from.id)
               .map(state => ({

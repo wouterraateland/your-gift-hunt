@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo } from "react"
+import React, { forwardRef, useEffect, useMemo } from "react"
 import styled from "styled-components"
 import { readableColor } from "polished"
 import _ from "ygh-utils"
@@ -57,7 +57,7 @@ const cakeStates = [
   "1 left"
 ]
 
-const Cake = forwardRef(({ children, ...props }, ref) => {
+const Cake = forwardRef(({ dispatchInputAction, children, ...props }, ref) => {
   const berryCount = (props.width + props.height) * 2
 
   const berries = useMemo(
@@ -80,10 +80,25 @@ const Cake = forwardRef(({ children, ...props }, ref) => {
   )
 
   const piecesLeft =
-    6 - cakeStates.findIndex(cakeState => _.hasState(cakeState)(props))
+    6 -
+    Math.max(0, cakeStates.findIndex(cakeState => _.hasState(cakeState)(props)))
+
+  useEffect(() => {
+    const date = new Date().getDate()
+    if (_.hasState("Inedible")(props) && date > 10) {
+      dispatchInputAction(props.state, "date", date)
+    }
+  }, [props, dispatchInputAction])
 
   return (
-    <StyledCake {...props} ref={ref} piecesLeft={piecesLeft}>
+    <StyledCake
+      {...props}
+      ref={ref}
+      piecesLeft={piecesLeft}
+      onClick={() =>
+        dispatchInputAction(props.state, "date", new Date().getDate())
+      }
+    >
       {berries.map((berry, i) =>
         i % 2 ? (
           <BlackBerry key={i} style={berry} />

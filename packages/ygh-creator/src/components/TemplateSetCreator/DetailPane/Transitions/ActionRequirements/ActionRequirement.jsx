@@ -8,6 +8,7 @@ import Form from "components/TemplateSetCreator/DetailPane/Form"
 import EntityTag from "components/Primitives/EntityTag"
 import StateTag from "components/Primitives/StateTag"
 import FieldTag from "components/Primitives/FieldTag"
+import { TabOptions, SelectOptions } from "ygh-ui"
 
 const COMPARATORS = {
   lt: { comparator: "LESS_THEN", not: false },
@@ -320,9 +321,10 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
           type: "select",
           format: "horizontal",
           label: "Type",
+          component: TabOptions,
           options: [
             {
-              label: "Field",
+              label: "Input",
               value: "INPUT"
             },
             {
@@ -339,6 +341,7 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
           name: "requiredEntity",
           type: "select",
           label: "Required Entity",
+          component: SelectOptions,
           isHidden: currentValues.type === "INPUT",
           options: templates
             .filter(({ id }) => id !== template.id)
@@ -352,6 +355,7 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
           type: "select",
           label: "Required state",
           isHidden: currentValues.type === "INPUT",
+          component: SelectOptions,
           options: (
             templates.find(({ id }) => id === currentValues.requiredEntity) || {
               states: []
@@ -364,7 +368,7 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
         {
           name: "requiredInputKey",
           type: "text",
-          label: "Field key",
+          label: "Input key",
           isHidden: currentValues.type !== "INPUT"
         },
         {
@@ -373,6 +377,7 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
           format: "horizontal",
           label: "Comparator",
           isHidden: currentValues.type !== "INPUT",
+          component: TabOptions,
           options: [
             { label: "<", value: "lt" },
             { label: "≤", value: "le" },
@@ -390,9 +395,10 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
           format: "horizontal",
           label: "Compare to",
           isHidden: currentValues.type !== "INPUT",
+          component: TabOptions,
           options: [
             { label: "Literal value", value: "VALUE" },
-            { label: "FieldGroup value", value: "FIELD" }
+            { label: "Field value", value: "FIELD" }
           ]
         },
         [
@@ -401,6 +407,7 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
             type: "select",
             format: "horizontal",
             label: "Value type",
+            component: TabOptions,
             isHidden:
               currentValues.type !== "INPUT" ||
               currentValues.compareTo !== "VALUE",
@@ -448,6 +455,7 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
           isHidden:
             currentValues.type !== "INPUT" ||
             currentValues.compareTo !== "FIELD",
+          component: SelectOptions,
           options: template.fields.map(field => ({
             label: <FieldTag entity={template} field={field} />,
             value: field.id

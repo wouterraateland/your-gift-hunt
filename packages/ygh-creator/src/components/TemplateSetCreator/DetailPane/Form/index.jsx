@@ -6,7 +6,15 @@ import { useFormState } from "react-use-form-state"
 import { useDebounce } from "ygh-hooks"
 import { useClickOutside } from "ygh-hooks"
 
-import { Align, Button, FieldGroup, Float, Form, Field } from "ygh-ui"
+import {
+  Align,
+  Button,
+  DefaultOptions,
+  FieldGroup,
+  Float,
+  Form,
+  Field
+} from "ygh-ui"
 import { Bin, Pen } from "ygh-icons"
 
 import DisabledSelect from "./DisabledSelect"
@@ -102,8 +110,33 @@ export default ({
   useClickOutside({ ref, onClickOutside: () => setEditable(false) })
 
   const getInputProps = useCallback(
-    ({ type, name }) => {
+    ({ type, name, label }) => {
       switch (type) {
+        case "checkbox":
+          const inputProps = inputs["checkbox"](name)
+          return {
+            type: "select",
+            isMulti: true,
+            component: DefaultOptions,
+            options: [
+              {
+                label,
+                name: "checked",
+                value: true
+              }
+            ],
+            label: "",
+            ...inputProps,
+            value: inputProps.checked ? [true] : []
+            // onChange: event =>
+            //   inputProps.onChange({
+            //     ...event,
+            //     target: {
+            //       ...event.target,
+            //       checked: event.target.checked
+            //     }
+            //   })
+          }
         case "selectMultiple":
           return {
             ...inputs[type](name),

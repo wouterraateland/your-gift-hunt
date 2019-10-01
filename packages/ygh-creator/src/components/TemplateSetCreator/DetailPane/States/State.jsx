@@ -6,6 +6,7 @@ import Form from "components/TemplateSetCreator/DetailPane/Form"
 
 import PortalTag from "components/Primitives/PortalTag"
 import InformationSlotTag from "components/Primitives/InformationSlotTag"
+import { SelectOptions } from "ygh-ui"
 
 const StateForm = ({ template, state }) => {
   const { updateEntityTemplate } = useTemplateSetMutations()
@@ -47,16 +48,13 @@ const StateForm = ({ template, state }) => {
     [state.id]
   )
 
-  const onDelete = useCallback(
-    () => {
-      updateEntityTemplate(template.id, {
-        states: {
-          delete: { id: state.id }
-        }
-      })
-    },
-    [state.id]
-  )
+  const onDelete = useCallback(() => {
+    updateEntityTemplate(template.id, {
+      states: {
+        delete: { id: state.id }
+      }
+    })
+  }, [state.id])
 
   return (
     <Form
@@ -78,6 +76,7 @@ const StateForm = ({ template, state }) => {
           name: "openPortals",
           type: "selectMultiple",
           label: "Open portals",
+          component: SelectOptions,
           options: template.portals.map(portal => ({
             label: <PortalTag entity={template} portal={portal} />,
             value: portal.id
@@ -87,6 +86,7 @@ const StateForm = ({ template, state }) => {
           name: "availableInformationSlots",
           type: "selectMultiple",
           label: "Available information slots",
+          component: SelectOptions,
           options: template.informationSlots.map(slot => ({
             label: (
               <InformationSlotTag entity={template} informationSlot={slot} />

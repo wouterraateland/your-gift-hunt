@@ -6,6 +6,7 @@ import useTemplateOptions from "hooks/useTemplateOptions"
 import Form from "components/TemplateSetCreator/DetailPane/Form"
 
 import StateTag from "components/Primitives/StateTag"
+import { SelectOptions } from "ygh-ui"
 
 const InformationSlotForm = ({ template, slot }) => {
   const { fieldTypes } = useTemplateOptions()
@@ -55,16 +56,13 @@ const InformationSlotForm = ({ template, slot }) => {
     [slot.id]
   )
 
-  const onDelete = useCallback(
-    () => {
-      updateEntityTemplate(template.id, {
-        informationSlots: {
-          delete: { id: slot.id }
-        }
-      })
-    },
-    [slot.id]
-  )
+  const onDelete = useCallback(() => {
+    updateEntityTemplate(template.id, {
+      informationSlots: {
+        delete: { id: slot.id }
+      }
+    })
+  }, [slot.id])
 
   return (
     <Form
@@ -88,6 +86,7 @@ const InformationSlotForm = ({ template, slot }) => {
             type: "selectMultiple",
             format: "horizontal",
             label: "Allowed value types",
+            component: SelectOptions,
             options: [
               { label: "String", value: "STRING" },
               { label: "Number", value: "NUMBER" },
@@ -106,6 +105,7 @@ const InformationSlotForm = ({ template, slot }) => {
           name: "states",
           type: "selectMultiple",
           label: "Available in states",
+          component: SelectOptions,
           options: template.states.map(state => ({
             label: <StateTag state={state} />,
             value: state.id

@@ -1,7 +1,6 @@
 import React, { forwardRef } from "react"
 import styled from "styled-components"
 import { darken, desaturate } from "polished"
-import _ from "ygh-utils"
 
 import Entity from "../Entity"
 
@@ -82,7 +81,6 @@ const Bar = styled.div`
 `
 
 const Closet = forwardRef(({ children, ...props }, ref) => {
-  const isUnlocked = _.hasState("Unlocked")(props)
   const darkColor = desaturate(0.1)(darken(0.1)(props.color))
 
   return (

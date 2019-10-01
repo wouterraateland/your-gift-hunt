@@ -151,6 +151,6 @@ Planner.defaultProps = {
   height: 16,
   color: "#754C3D"
 }
-Planner.states = ["One", "Two", "Three"]
+Planner.states = ["Day 1", "Day 2", "Day 3"]
 
 export default Planner

@@ -4,6 +4,7 @@ import useTemplateSetMutations from "hooks/useTemplateSetMutations"
 import useTemplateOptions from "hooks/useTemplateOptions"
 
 import Form from "components/TemplateSetCreator/DetailPane/Form"
+import { TabOptions } from "ygh-ui"
 
 const FieldForm = ({ template, field }) => {
   const { fieldTypes } = useTemplateOptions()
@@ -55,16 +56,13 @@ const FieldForm = ({ template, field }) => {
     [field.id]
   )
 
-  const onDelete = useCallback(
-    () => {
-      updateEntityTemplate(template.id, {
-        fields: {
-          delete: { id: field.id }
-        }
-      })
-    },
-    [field.id]
-  )
+  const onDelete = useCallback(() => {
+    updateEntityTemplate(template.id, {
+      fields: {
+        delete: { id: field.id }
+      }
+    })
+  }, [field.id])
 
   return (
     <Form
@@ -88,6 +86,7 @@ const FieldForm = ({ template, field }) => {
             type: "select",
             format: "horizontal",
             label: "Value type",
+            component: TabOptions,
             options: [
               { label: "String", value: "STRING" },
               { label: "Number", value: "NUMBER" },
