@@ -65,7 +65,7 @@ const PhotoFrame = forwardRef(({ inspect, children, ...props }, ref) => (
       width={props.width}
       height={props.height * 0.75}
       top={props.height * (0.25 + 0.75 / 2)}
-      src={_.getFieldValue("Image")(props)}
+      src={_.getFieldValue("Photo")(props)}
     />
     {children}
   </Entity>

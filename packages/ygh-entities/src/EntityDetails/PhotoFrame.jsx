@@ -14,14 +14,14 @@ const PhotoFrame = styled(Entity)`
       transparent,
       transparent,
       transparent,
-      #fff,
+      #fff6,
       transparent,
       transparent,
-      #fff,
+      #fff6,
       transparent,
       transparent
     ),
-    #ddd url(${props => _.getFieldValue("Image")(props)}) no-repeat center /
+    #ddd url(${props => _.getFieldValue("Photo")(props)}) no-repeat center /
       cover;
   background-clip: padding-box;
 `
