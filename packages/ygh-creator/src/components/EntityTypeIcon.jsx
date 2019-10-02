@@ -5,6 +5,7 @@ const EntityTypeIcon = ({
   isPlaceable,
   isItem,
   isTrigger,
+  isGame,
   isPortal,
   isContainer,
   ...otherProps
@@ -21,6 +22,8 @@ const EntityTypeIcon = ({
     ? Icons.ContainerNonPlaceable
     : isTrigger
     ? Icons.Trigger
+    : isGame
+    ? Icons.Play
     : Icons.Piece
 
   return <Icon {...otherProps} />

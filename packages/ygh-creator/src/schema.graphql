@@ -1,5 +1,5 @@
 # source: https://api.yourgifthunt.com/prisma/hunt-api/dev
-# timestamp: Sun Sep 22 2019 17:06:16 GMT+0200 (Midden-Europese zomertijd)
+# timestamp: Tue Oct 01 2019 18:27:51 GMT+0200 (Midden-Europese zomertijd)
 
 enum AccessType {
   NONE
@@ -3135,6 +3135,7 @@ type Entity implements Node {
   name: String
   description: String
   isTrigger: Boolean!
+  isGame: Boolean!
   isItem: Boolean!
   isObject: Boolean!
   isContainer: Boolean!
@@ -3169,6 +3170,7 @@ input EntityCreateInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -3239,6 +3241,7 @@ input EntityCreateWithoutContainedEntitiesInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -3263,6 +3266,7 @@ input EntityCreateWithoutContainerInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -3287,6 +3291,7 @@ input EntityCreateWithoutEntrancesInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -3311,6 +3316,7 @@ input EntityCreateWithoutFieldsInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -3335,6 +3341,7 @@ input EntityCreateWithoutGameInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -3359,6 +3366,7 @@ input EntityCreateWithoutInformationSlotsInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -3383,6 +3391,7 @@ input EntityCreateWithoutPortalsInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -3407,6 +3416,7 @@ input EntityCreateWithoutStatesInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -3448,6 +3458,8 @@ enum EntityOrderByInput {
   description_DESC
   isTrigger_ASC
   isTrigger_DESC
+  isGame_ASC
+  isGame_DESC
   isItem_ASC
   isItem_DESC
   isObject_ASC
@@ -3467,6 +3479,7 @@ type EntityPreviousValues {
   name: String
   description: String
   isTrigger: Boolean!
+  isGame: Boolean!
   isItem: Boolean!
   isObject: Boolean!
   isContainer: Boolean!
@@ -4252,6 +4265,10 @@ input EntityScalarWhereInput {
 
   """All values that are not equal to given value."""
   isTrigger_not: Boolean
+  isGame: Boolean
+
+  """All values that are not equal to given value."""
+  isGame_not: Boolean
   isItem: Boolean
 
   """All values that are not equal to given value."""
@@ -4318,6 +4335,7 @@ type EntityTemplate implements Node {
   name: String
   description: String
   isTrigger: Boolean!
+  isGame: Boolean!
   isItem: Boolean!
   isObject: Boolean!
   isContainer: Boolean!
@@ -4348,6 +4366,7 @@ input EntityTemplateCreateInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -4403,6 +4422,7 @@ input EntityTemplateCreateWithoutEntrancesInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -4422,6 +4442,7 @@ input EntityTemplateCreateWithoutFieldsInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -4441,6 +4462,7 @@ input EntityTemplateCreateWithoutInformationSlotsInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -4460,6 +4482,7 @@ input EntityTemplateCreateWithoutPortalsInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -4479,6 +4502,7 @@ input EntityTemplateCreateWithoutSetInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -4498,6 +4522,7 @@ input EntityTemplateCreateWithoutStatesInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -4534,6 +4559,8 @@ enum EntityTemplateOrderByInput {
   description_DESC
   isTrigger_ASC
   isTrigger_DESC
+  isGame_ASC
+  isGame_DESC
   isItem_ASC
   isItem_DESC
   isObject_ASC
@@ -4553,6 +4580,7 @@ type EntityTemplatePreviousValues {
   name: String
   description: String
   isTrigger: Boolean!
+  isGame: Boolean!
   isItem: Boolean!
   isObject: Boolean!
   isContainer: Boolean!
@@ -4737,6 +4765,10 @@ input EntityTemplateScalarWhereInput {
 
   """All values that are not equal to given value."""
   isTrigger_not: Boolean
+  isGame: Boolean
+
+  """All values that are not equal to given value."""
+  isGame_not: Boolean
   isItem: Boolean
 
   """All values that are not equal to given value."""
@@ -5401,6 +5433,7 @@ input EntityTemplateUpdateDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5420,6 +5453,7 @@ input EntityTemplateUpdateInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5439,6 +5473,7 @@ input EntityTemplateUpdateManyDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5450,6 +5485,7 @@ input EntityTemplateUpdateManyMutationInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5522,6 +5558,7 @@ input EntityTemplateUpdateWithoutEntrancesDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5540,6 +5577,7 @@ input EntityTemplateUpdateWithoutFieldsDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5558,6 +5596,7 @@ input EntityTemplateUpdateWithoutInformationSlotsDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5576,6 +5615,7 @@ input EntityTemplateUpdateWithoutPortalsDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5594,6 +5634,7 @@ input EntityTemplateUpdateWithoutSetDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5612,6 +5653,7 @@ input EntityTemplateUpdateWithoutStatesDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5844,6 +5886,10 @@ input EntityTemplateWhereInput {
 
   """All values that are not equal to given value."""
   isTrigger_not: Boolean
+  isGame: Boolean
+
+  """All values that are not equal to given value."""
+  isGame_not: Boolean
   isItem: Boolean
 
   """All values that are not equal to given value."""
@@ -5892,6 +5938,7 @@ input EntityUpdateDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5916,6 +5963,7 @@ input EntityUpdateInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5940,6 +5988,7 @@ input EntityUpdateManyDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -5951,6 +6000,7 @@ input EntityUpdateManyMutationInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -6044,6 +6094,7 @@ input EntityUpdateWithoutContainedEntitiesDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -6067,6 +6118,7 @@ input EntityUpdateWithoutContainerDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -6090,6 +6142,7 @@ input EntityUpdateWithoutEntrancesDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -6113,6 +6166,7 @@ input EntityUpdateWithoutFieldsDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -6136,6 +6190,7 @@ input EntityUpdateWithoutGameDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -6159,6 +6214,7 @@ input EntityUpdateWithoutInformationSlotsDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -6182,6 +6238,7 @@ input EntityUpdateWithoutPortalsDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -6205,6 +6262,7 @@ input EntityUpdateWithoutStatesDataInput {
   name: String
   description: String
   isTrigger: Boolean
+  isGame: Boolean
   isItem: Boolean
   isObject: Boolean
   isContainer: Boolean
@@ -6458,6 +6516,10 @@ input EntityWhereInput {
 
   """All values that are not equal to given value."""
   isTrigger_not: Boolean
+  isGame: Boolean
+
+  """All values that are not equal to given value."""
+  isGame_not: Boolean
   isItem: Boolean
 
   """All values that are not equal to given value."""

@@ -19,6 +19,7 @@ const Card = styled.div`
   font-weight: bold;
   font-size: 0.75em;
   line-height: 1rem;
+  white-space: nowrap;
 
   background-color: #fff;
 

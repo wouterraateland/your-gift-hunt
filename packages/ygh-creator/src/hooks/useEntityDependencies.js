@@ -6,11 +6,13 @@ import { useContext } from "react"
 import EntityDependenciesContext from "contexts/EntityDependencies"
 
 import useGameTemplates from "./useGameTemplates"
+import useEntities from "./useEntities"
 import useEntityGraph from "./useEntityGraph"
 
 export const useEntityDependenciesProvider = () => {
-  const { getStateTemplateById } = useGameTemplates()
+  const { entityTemplates, getStateTemplateById } = useGameTemplates()
   const { getNodeById, edges } = useEntityGraph()
+  const { entities } = useEntities()
 
   const targetOfUseRequiredForTransition = (fromId, toId) => {
     const from = getNodeById(fromId)
@@ -63,6 +65,49 @@ export const useEntityDependenciesProvider = () => {
             break
         }
       })
+
+      const entity = entities.find(({ states }) =>
+        states.some(state => state.id === nodeId)
+      )
+      if (entity && !entity.isPlaceable && entity.isContainer) {
+        entity.entrances.forEach(({ portal }) => {
+          if (portal) {
+            const connectedEntity = entities.find(({ portals }) =>
+              portals.some(({ id }) => id === portal.id)
+            )
+            if (connectedEntity) {
+              connectedEntity.states
+                .filter(state =>
+                  state.openPortals.some(p => p.id === portal.id)
+                )
+                .forEach(state => add(state.id))
+            }
+          }
+        })
+      }
+      if (entity && entity.isPortal) {
+        const state = entity.states.find(({ id }) => id === nodeId)
+        entity.portals
+          .filter(
+            portal =>
+              portal.entrance &&
+              state.openPortals.some(({ id }) => id === portal.id)
+          )
+          .forEach(portal => {
+            const connectedEntity = entities.find(
+              ({ isContainer, isPlaceable, entrances }) =>
+                isContainer &&
+                !isPlaceable &&
+                entrances.some(entrance => entrance.portal.id === portal.id)
+            )
+
+            if (connectedEntity) {
+              connectedEntity.states.forEach(state => {
+                add(state.id)
+              })
+            }
+          })
+      }
     }
 
     return Array.from(dependentStates)
@@ -179,6 +224,23 @@ export const useEntityDependenciesProvider = () => {
               todo.push(payload.requiredEntity.entityState.id)
             }
           })
+        }
+      })
+      // Non-placeable container siblings
+      stateTemplate.openPortals.forEach(portalTemplate => {
+        const entityTemplate = entityTemplates.find(
+          ({ isPlaceable, isContainer, entrances, states }) =>
+            !isPlaceable &&
+            isContainer &&
+            states.length > 0 &&
+            entrances.some(({ connectablePortals }) =>
+              connectablePortals.some(({ id }) => id === portalTemplate.id)
+            )
+        )
+
+        if (entityTemplate) {
+          adjacentStateIds.push(entityTemplate.states[0].id)
+          todo.push(entityTemplate.states[0].id)
         }
       })
     }

@@ -1,5 +1,5 @@
 import { ACTION_TYPES } from "data"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useMutation, useApolloClient } from "react-apollo-hooks"
 
 import _ from "ygh-utils"
@@ -47,10 +47,12 @@ const useMutationWith = save => (mutation, transform) => {
 }
 
 export const useGameMutationsProvider = () => {
+  const [shouldComplete, setShouldComplete] = useState(0)
   const {
     entityTemplates,
     getEntityTemplateById,
-    getStateTemplateById
+    getStateTemplateById,
+    getEntranceTemplateById
   } = useGameTemplates()
   const { game, variables } = useGame()
   const { entities } = useEntities()
@@ -321,189 +323,253 @@ export const useGameMutationsProvider = () => {
     })
   )
 
-  const completeEntitiesWithTemplates = async gameId => {
-    const { data } = await client.query(query)
+  useEffect(() => {
+    const completeEntitiesWithTemplates = async gameId => {
+      const { data } = await client.query(query)
 
-    const allEntities = data.game.entities
-    const entities = allEntities.filter(({ template }) => !!template)
-    const states = allEntities.flatMap(({ states }) => states)
+      const allEntities = data.game.entities
+      const entities = allEntities.filter(({ template }) => !!template)
+      const states = allEntities.flatMap(({ states }) => states)
 
-    const createEntityUpdate = entity => {
-      const entityTemplate = getEntityTemplateById(entity.template.id)
+      const createEntityUpdate = entity => {
+        const entityTemplate = getEntityTemplateById(entity.template.id)
 
-      const createStateUpdate = state => {
-        const stateTemplate = getStateTemplateById(state.template.id)
+        const createStateUpdate = state => {
+          const stateTemplate = getStateTemplateById(state.template.id)
 
-        const createHintFromTemplate = hintTemplate => ({
-          template: { connect: { id: hintTemplate.id } },
-          text: hintTemplate.text,
-          delay: hintTemplate.delay
-        })
+          const createHintFromTemplate = hintTemplate => ({
+            template: { connect: { id: hintTemplate.id } },
+            text: hintTemplate.text,
+            delay: hintTemplate.delay
+          })
 
-        const createEntityRequirementFromTemplate = entityRequirementTemplate => ({
-          template: { connect: { id: entityRequirementTemplate.id } },
-          entityState: {
-            connect: {
-              id: states.find(
-                state =>
-                  state.template.id === entityRequirementTemplate.entityState.id
-              ).id
-            }
-          }
-        })
-
-        const createInputRequirementFromTemplate = inputRequirementTemplate => ({
-          template: { connect: { id: inputRequirementTemplate.id } },
-          key: inputRequirementTemplate.key,
-          comparator: inputRequirementTemplate.comparator,
-          not: inputRequirementTemplate.not,
-
-          value: inputRequirementTemplate.value,
-          field: inputRequirementTemplate.field
-            ? {
-                connect: {
-                  id: entity.fields.find(
-                    field =>
-                      field.template.id === inputRequirementTemplate.field.id
-                  ).id
-                }
+          const createEntityRequirementFromTemplate = entityRequirementTemplate => ({
+            template: { connect: { id: entityRequirementTemplate.id } },
+            entityState: {
+              connect: {
+                id: states.find(
+                  state =>
+                    state.template.id ===
+                    entityRequirementTemplate.entityState.id
+                ).id
               }
-            : null
-        })
+            }
+          })
 
-        const createPayloadRequirementFromTemplate = (
-          type,
-          payloadRequirementTemplate
-        ) => ({
-          template: { connect: { id: payloadRequirementTemplate.id } },
-          requiredEntity:
-            [ACTION_TYPES.USE, ACTION_TYPES.TARGET_OF_USE].includes(type) &&
-            payloadRequirementTemplate.requiredEntity
+          const createInputRequirementFromTemplate = inputRequirementTemplate => ({
+            template: { connect: { id: inputRequirementTemplate.id } },
+            key: inputRequirementTemplate.key,
+            comparator: inputRequirementTemplate.comparator,
+            not: inputRequirementTemplate.not,
+
+            value: inputRequirementTemplate.value,
+            field: inputRequirementTemplate.field
               ? {
-                  create: createEntityRequirementFromTemplate(
-                    payloadRequirementTemplate.requiredEntity
-                  )
-                }
-              : null,
-          requiredInput:
-            type === ACTION_TYPES.INPUT &&
-            payloadRequirementTemplate.requiredInput
-              ? {
-                  create: createInputRequirementFromTemplate(
-                    payloadRequirementTemplate.requiredInput
-                  )
+                  connect: {
+                    id: entity.fields.find(
+                      field =>
+                        field.template.id === inputRequirementTemplate.field.id
+                    ).id
+                  }
                 }
               : null
-        })
+          })
 
-        const createActionRequirementFromTemplate = actionRequirementTemplate => ({
-          template: { connect: { id: actionRequirementTemplate.id } },
-          name: actionRequirementTemplate.name,
-          description: actionRequirementTemplate.description,
-          type: actionRequirementTemplate.type,
-          hints: {
-            create: actionRequirementTemplate.hints.map(createHintFromTemplate)
-          },
-          payload: {
-            create: createPayloadRequirementFromTemplate(
-              actionRequirementTemplate.type,
-              actionRequirementTemplate.payload
-            )
-          }
-        })
+          const createPayloadRequirementFromTemplate = (
+            type,
+            payloadRequirementTemplate
+          ) => ({
+            template: { connect: { id: payloadRequirementTemplate.id } },
+            requiredEntity:
+              [ACTION_TYPES.USE, ACTION_TYPES.TARGET_OF_USE].includes(type) &&
+              payloadRequirementTemplate.requiredEntity
+                ? {
+                    create: createEntityRequirementFromTemplate(
+                      payloadRequirementTemplate.requiredEntity
+                    )
+                  }
+                : null,
+            requiredInput:
+              type === ACTION_TYPES.INPUT &&
+              payloadRequirementTemplate.requiredInput
+                ? {
+                    create: createInputRequirementFromTemplate(
+                      payloadRequirementTemplate.requiredInput
+                    )
+                  }
+                : null
+          })
 
-        const createStateTransitionFromTemplate = stateTransitionTemplate => ({
-          template: { connect: { id: stateTransitionTemplate.id } },
-          to: stateTransitionTemplate.to
-            ? {
-                connect: {
-                  id: states.find(
-                    state =>
-                      entity.states.some(({ id }) => id === state.id) &&
-                      state.template.id === stateTransitionTemplate.to.id
-                  ).id
+          const createActionRequirementFromTemplate = actionRequirementTemplate => ({
+            template: { connect: { id: actionRequirementTemplate.id } },
+            name: actionRequirementTemplate.name,
+            description: actionRequirementTemplate.description,
+            type: actionRequirementTemplate.type,
+            hints: {
+              create: actionRequirementTemplate.hints.map(
+                createHintFromTemplate
+              )
+            },
+            payload: {
+              create: createPayloadRequirementFromTemplate(
+                actionRequirementTemplate.type,
+                actionRequirementTemplate.payload
+              )
+            }
+          })
+
+          const createStateTransitionFromTemplate = stateTransitionTemplate => ({
+            template: { connect: { id: stateTransitionTemplate.id } },
+            to: stateTransitionTemplate.to
+              ? {
+                  connect: {
+                    id: states.find(
+                      state =>
+                        entity.states.some(({ id }) => id === state.id) &&
+                        state.template.id === stateTransitionTemplate.to.id
+                    ).id
+                  }
                 }
+              : null,
+            requiredActions: {
+              create: stateTransitionTemplate.requiredActions
+                .filter(({ type }) => type === ACTION_TYPES.INPUT)
+                .map(createActionRequirementFromTemplate)
+            }
+          })
+
+          return {
+            where: { id: state.id },
+            data: {
+              availableInformationSlots: {
+                connect: entity.informationSlots
+                  .filter(({ template }) =>
+                    stateTemplate.availableInformationSlots.some(
+                      ({ id }) => template.id === id
+                    )
+                  )
+                  .map(({ id }) => ({ id }))
+              },
+              openPortals: {
+                connect: entity.portals
+                  .filter(({ template }) =>
+                    stateTemplate.openPortals.some(
+                      ({ id }) => template.id === id
+                    )
+                  )
+                  .map(({ id }) => ({ id }))
+              },
+              outgoingTransitions: {
+                create: stateTemplate.outgoingTransitions
+                  .filter(
+                    ({ id, to }) =>
+                      !state.outgoingTransitions.some(
+                        ({ template }) => template.id === id
+                      ) &&
+                      (!to ||
+                        (to &&
+                          entity.states.some(
+                            state => state.template.id === to.id
+                          )))
+                  )
+                  .map(createStateTransitionFromTemplate)
               }
-            : null,
-          requiredActions: {
-            create: stateTransitionTemplate.requiredActions
-              .filter(({ type }) => type === ACTION_TYPES.INPUT)
-              .map(createActionRequirementFromTemplate)
+            }
           }
-        })
+        }
+
+        const createPortalUpdate = portal => {
+          const entity = entities.find(
+            ({ isPlaceable, isContainer, entrances, states }) =>
+              !isPlaceable &&
+              isContainer &&
+              states.length > 0 &&
+              entrances.some(
+                entrance =>
+                  !entrance.portal &&
+                  getEntranceTemplateById(
+                    entrance.template.id
+                  ).connectablePortals.some(
+                    ({ id }) => id === portal.template.id
+                  )
+              )
+          )
+
+          const entranceId = entity
+            ? entity.entrances.find(
+                entrance =>
+                  !entrance.portal &&
+                  getEntranceTemplateById(
+                    entrance.template.id
+                  ).connectablePortals.some(
+                    ({ id }) => id === portal.template.id
+                  )
+              ).id
+            : null
+
+          return {
+            where: { id: portal.id },
+            data: entranceId
+              ? {
+                  entrance: { connect: { id: entranceId } }
+                }
+              : {}
+          }
+        }
 
         return {
-          where: { id: state.id },
+          where: { id: entity.id },
           data: {
-            availableInformationSlots: {
-              connect: entity.informationSlots
-                .filter(({ template }) =>
-                  stateTemplate.availableInformationSlots.some(
-                    ({ id }) => template.id === id
-                  )
-                )
-                .map(({ id }) => ({ id }))
+            defaultState: entityTemplate.defaultState
+              ? {
+                  connect: {
+                    id: entity.states.find(
+                      state =>
+                        state.template.id === entityTemplate.defaultState.id
+                    ).id
+                  }
+                }
+              : null,
+            featuredField: entityTemplate.featuredField
+              ? {
+                  connect: {
+                    id: entity.fields.find(
+                      field =>
+                        field.template.id === entityTemplate.featuredField.id
+                    ).id
+                  }
+                }
+              : null,
+            states: {
+              update: entity.states.map(createStateUpdate)
             },
-            openPortals: {
-              connect: entity.portals
-                .filter(({ template }) =>
-                  stateTemplate.openPortals.some(({ id }) => template.id === id)
-                )
-                .map(({ id }) => ({ id }))
-            },
-            outgoingTransitions: {
-              create: stateTemplate.outgoingTransitions
+            portals: {
+              update: entity.portals
                 .filter(
-                  ({ id, to }) =>
-                    !state.outgoingTransitions.some(
-                      ({ template }) => template.id === id
-                    ) &&
-                    (!to ||
-                      (to &&
-                        entity.states.some(
-                          state => state.template.id === to.id
-                        )))
+                  portal =>
+                    !portal.entrance &&
+                    entity.states.some(({ template }) =>
+                      getStateTemplateById(template.id).openPortals.some(
+                        ({ id }) => portal.template.id === id
+                      )
+                    )
                 )
-                .map(createStateTransitionFromTemplate)
+                .map(createPortalUpdate)
             }
           }
         }
       }
 
-      return {
-        where: { id: entity.id },
-        data: {
-          defaultState: entityTemplate.defaultState
-            ? {
-                connect: {
-                  id: entity.states.find(
-                    state =>
-                      state.template.id === entityTemplate.defaultState.id
-                  ).id
-                }
-              }
-            : null,
-          featuredField: entityTemplate.featuredField
-            ? {
-                connect: {
-                  id: entity.fields.find(
-                    field =>
-                      field.template.id === entityTemplate.featuredField.id
-                  ).id
-                }
-              }
-            : null,
-          states: {
-            update: entity.states.map(createStateUpdate)
-          }
-        }
-      }
+      const entityUpdates = entities.map(createEntityUpdate)
+
+      await updateEntities(gameId, entityUpdates)
     }
 
-    const entityUpdates = entities.map(createEntityUpdate)
-
-    await updateEntities(gameId, entityUpdates)
-  }
+    if (shouldComplete !== 0) {
+      setShouldComplete(0)
+      completeEntitiesWithTemplates(game.id)
+    }
+  }, [shouldComplete])
 
   const moveEntities = async (gameId, entityMoves) => {
     const entityUpdates = entityMoves.map(
@@ -579,6 +645,7 @@ export const useGameMutationsProvider = () => {
           isItem: entityTemplate.isItem,
           isObject: entityTemplate.isObject,
           isTrigger: entityTemplate.isTrigger,
+          isGame: entityTemplate.isGame,
           isContainer: entityTemplate.isContainer,
           isPortal: entityTemplate.isPortal,
           isPlaceable: entityTemplate.isPlaceable,
@@ -673,8 +740,7 @@ export const useGameMutationsProvider = () => {
       : []
 
     await createEntities(game.id, entitiesToCreate, entitiesToUpdate)
-
-    await completeEntitiesWithTemplates(game.id)
+    setShouldComplete(1)
   }
 
   const createEntity = async (

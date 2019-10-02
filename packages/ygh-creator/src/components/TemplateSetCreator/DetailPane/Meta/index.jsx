@@ -41,6 +41,8 @@ const Meta = ({ template }) => {
         ? "container"
         : template.isTrigger
         ? "trigger"
+        : template.isGame
+        ? "game"
         : "challenge",
       featuredField: template.featuredField ? template.featuredField.id : null
     }),
@@ -54,10 +56,13 @@ const Meta = ({ template }) => {
         description: values.description,
         isPlaceable: values.isPlaceable,
         isItem: values.type === "item",
-        isObject: values.type === "object" || values.isPlaceable,
+        isObject:
+          values.type === "object" ||
+          (values.isPlaceable && values.type !== "item"),
         isTrigger: values.type === "trigger",
         isContainer: values.type === "container",
         isPortal: values.type === "portal",
+        isGame: values.type === "game",
         featuredField: values.featuredField
           ? { connect: { id: values.featuredField } }
           : template.featuredField
@@ -173,6 +178,14 @@ const Meta = ({ template }) => {
                       label: (
                         <>
                           <Icons.Trigger /> Trigger
+                        </>
+                      )
+                    },
+                    {
+                      value: "game",
+                      label: (
+                        <>
+                          <Icons.Play /> Game
                         </>
                       )
                     }

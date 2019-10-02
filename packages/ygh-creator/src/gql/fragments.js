@@ -27,6 +27,7 @@ export const ENTITY_TEMPLATE_FRAGMENT = gql`
     isItem
     isObject
     isTrigger
+    isGame
     isContainer
     isPortal
     isPlaceable
@@ -324,6 +325,7 @@ export const ENTITY_FRAGMENT = gql`
       isItem
       isObject
       isTrigger
+      isGame
       isPortal
       isPlaceable
     }
@@ -333,6 +335,7 @@ export const ENTITY_FRAGMENT = gql`
     isItem
     isObject
     isTrigger
+    isGame
     isContainer
     isPortal
     isPlaceable
