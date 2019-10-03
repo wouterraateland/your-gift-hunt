@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from "react"
+import React, { forwardRef } from "react"
 import styled from "styled-components"
 import { darken } from "polished"
 import _ from "ygh-utils"
@@ -51,30 +51,16 @@ Screen.defaultProps = {
   height: 0.5
 }
 
-const TV = forwardRef(
-  ({ dispatchInputAction, inspect, children, ...props }, ref) => {
-    useEffect(() => {
-      const date = new Date().getDate()
-      if (_.hasState("Commercial")(props) && date > 11) {
-        dispatchInputAction(props.state, "date", date)
-      }
-    }, [props, dispatchInputAction])
-
-    return (
-      <Entity noVisual {...props} onClick={inspect} ref={ref}>
-        <Leg color={props.color} height={props.height} left={1} />
-        <Leg
-          color={props.color}
-          height={props.height}
-          right={1}
-          rotation={180}
-        />
-        <Screen width={props.width} />
-        {children}
-      </Entity>
-    )
-  }
-)
+const TV = forwardRef(({ inspect, children, ...props }, ref) => {
+  return (
+    <Entity noVisual {...props} onClick={inspect} ref={ref}>
+      <Leg color={props.color} height={props.height} left={1} />
+      <Leg color={props.color} height={props.height} right={1} rotation={180} />
+      <Screen width={props.width} />
+      {children}
+    </Entity>
+  )
+})
 TV.name = "TV"
 TV.templateName = "TV"
 TV.defaultProps = {

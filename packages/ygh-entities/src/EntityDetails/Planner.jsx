@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react"
+import React, { forwardRef, useEffect } from "react"
 import styled from "styled-components"
 import _ from "ygh-utils"
 
@@ -109,8 +109,18 @@ const Checkbox = styled.span`
   }
 `
 
-const Planner = forwardRef((props, ref) => {
-  const isDay3 = _.hasState("Three")(props)
+const Planner = forwardRef(({ dispatchInputAction, ...props }, ref) => {
+  const isDay3 = _.hasState("Day 3")(props)
+
+  useEffect(() => {
+    const date = new Date().getDate()
+    if (
+      (_.hasState("Day 1")(props) && date > 10) ||
+      (_.hasState("Day 2")(props) && date > 11)
+    ) {
+      dispatchInputAction(props.state, "date", date)
+    }
+  }, [props.state.id])
 
   return (
     <Backdrop noVisual {...props} ref={ref}>

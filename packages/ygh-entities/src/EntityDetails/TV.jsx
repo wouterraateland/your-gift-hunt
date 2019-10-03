@@ -138,7 +138,7 @@ const Show = styled.span`
   }
 `
 
-const TV = forwardRef((props, ref) => {
+const TV = forwardRef(({ dispatchInputAction, ...props }, ref) => {
   const inCommercial = _.hasState("Commercial")(props)
   const images = useMemo(
     () =>
@@ -148,6 +148,13 @@ const TV = forwardRef((props, ref) => {
     [props]
   )
   const [src, setSrc] = useState(images[0])
+
+  useEffect(() => {
+    const date = new Date().getDate()
+    if (_.hasState("Commercial")(props) && date > 11) {
+      dispatchInputAction(props.state, "date", date)
+    }
+  }, [props.state.id])
 
   useEffect(() => {
     const nextImage = () =>

@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from "react"
+import React, { forwardRef } from "react"
 import styled from "styled-components"
 import _ from "ygh-utils"
 
@@ -42,29 +42,17 @@ const Text = styled.span`
   color: #000c;
 `
 
-const Planner = forwardRef(
-  ({ dispatchInputAction, inspect, children, ...props }, ref) => {
-    useEffect(() => {
-      const date = new Date().getDate()
-      if (
-        (_.hasState("Day 1")(props) && date > 10) ||
-        (_.hasState("Day 2")(props) && date > 11)
-      ) {
-        dispatchInputAction(props.state, "date", date)
-      }
-    }, [props, dispatchInputAction])
-
-    return (
-      <Backdrop {...props} onClick={inspect} ref={ref}>
-        <Paper height={props.height - 0.25} />
-        <Paper height={props.height - 0.5} />
-        <Paper height={props.height - 0.75} />
-        <Text>Plans</Text>
-        {children}
-      </Backdrop>
-    )
-  }
-)
+const Planner = forwardRef(({ inspect, children, ...props }, ref) => {
+  return (
+    <Backdrop {...props} onClick={inspect} ref={ref}>
+      <Paper height={props.height - 0.25} />
+      <Paper height={props.height - 0.5} />
+      <Paper height={props.height - 0.75} />
+      <Text>Plans</Text>
+      {children}
+    </Backdrop>
+  )
+})
 Planner.name = "Planner"
 Planner.templateName = "Planner"
 Planner.defaultProps = {
