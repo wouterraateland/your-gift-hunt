@@ -23,11 +23,13 @@ import Flashlight from "./Flashlight"
 import Floor from "./Floor"
 import Grass from "./Grass"
 import InstructionNote from "./InstructionNote"
+import Introduction from "./Introduction"
 import Lamp from "./Lamp"
 import Mailbox from "./Mailbox"
 import Map from "./Map"
 import MapPiece from "./MapPiece"
 import Package from "./Package"
+import PartyGame from "./PartyGame"
 import Path from "./Path"
 import PhotoFrame from "./PhotoFrame"
 import Planner from "./Planner"
@@ -39,6 +41,7 @@ import SafeWithCode from "./SafeWithCode"
 import SafeWithKeyhole from "./SafeWithKeyhole"
 import Seeds from "./Seeds"
 import SideTable from "./SideTable"
+import SquashMatch from "./SquashMatch"
 import Tree from "./Tree"
 import TreeStump from "./TreeStump"
 import TV from "./TV"
@@ -69,11 +72,13 @@ export {
   Floor,
   Grass,
   InstructionNote,
+  Introduction,
   Lamp,
   Mailbox,
   Map,
   MapPiece,
   Package,
+  PartyGame,
   Path,
   PhotoFrame,
   Planner,
@@ -85,6 +90,7 @@ export {
   SafeWithKeyhole,
   Seeds,
   SideTable,
+  SquashMatch,
   Tree,
   TreeStump,
   TV,
@@ -113,11 +119,13 @@ const entities = [
   Floor,
   Grass,
   InstructionNote,
+  Introduction,
   Lamp,
   Mailbox,
   Map,
   MapPiece,
   Package,
+  PartyGame,
   Path,
   PhotoFrame,
   Planner,
@@ -129,6 +137,7 @@ const entities = [
   SafeWithKeyhole,
   Seeds,
   SideTable,
+  SquashMatch,
   Tree,
   TreeStump,
   TV,

@@ -52,7 +52,11 @@ export const useGameProvider = gameIdentifier => {
 
   useEffect(() => {
     if (!isLoading && !yghPlayer.gameState.startedAt) {
-      popup(Screens.Intro)
+      if (yghPlayer.game.description) {
+        popup(Screens.Intro)
+      } else {
+        yghPlayer.startGamePlay()
+      }
     }
   }, [isLoading, yghPlayer.gameState.startedAt])
 

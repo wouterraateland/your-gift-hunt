@@ -135,7 +135,7 @@ const Closet = forwardRef(({ children, ...props }, ref) => {
   )
 })
 Closet.name = "Closet"
-Closet.templateName = "Door with lock"
+Closet.templateName = "Closet"
 Closet.defaultProps = {
   ...Entity.defaultProps,
   width: 14,

@@ -33,9 +33,10 @@ const GenericEntityWithContainedEntities = props => {
 const DefaultScene = () => {
   const { entities, isInInventory } = useGame()
   const rootEntities = entities.filter(
-    ({ id, isObject, isItem, container }) =>
-      (isObject || (isItem && !isInInventory(id))) && !container
+    ({ id, isPlaceable, container }) =>
+      isPlaceable && !container && !isInInventory(id)
   )
+  const games = entities.filter(({ isGame }) => isGame)
 
   const { top, left, bottom, right } = rootEntities
     .map(({ rotation, left, top, width, height }) => {
@@ -59,11 +60,16 @@ const DefaultScene = () => {
     .reduce((acc, rect) => (acc ? expand(acc, rect) : rect), null)
 
   return (
-    <Scene left={left} top={top} width={right - left} height={bottom - top}>
-      {rootEntities.map(entity => (
-        <GenericEntityWithContainedEntities key={entity.id} {...entity} />
+    <>
+      <Scene left={left} top={top} width={right - left} height={bottom - top}>
+        {rootEntities.map(entity => (
+          <GenericEntityWithContainedEntities key={entity.id} {...entity} />
+        ))}
+      </Scene>
+      {games.map(entity => (
+        <GenericEntity key={entity.id} {...entity} />
       ))}
-    </Scene>
+    </>
   )
 }
 

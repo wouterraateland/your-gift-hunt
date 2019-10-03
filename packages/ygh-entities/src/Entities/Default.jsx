@@ -19,27 +19,28 @@ const Name = styled.span`
 `
 
 const DefaultEntity = forwardRef(
-  ({ children, name, state, inspect, ...otherProps }, ref) => (
-    <Container
-      {...otherProps}
-      ref={ref}
-      onClick={
-        otherProps.isReachable
-          ? event => {
-              event.stopPropagation()
-              inspect()
-            }
-          : undefined
-      }
-      noVisual
-    >
-      <Name>
-        {name}
-        {state.name ? ` <${state.name}>` : null}
-      </Name>
-      {children}
-    </Container>
-  )
+  ({ children, name, state, inspect, ...otherProps }, ref) =>
+    otherProps.isGame ? null : (
+      <Container
+        {...otherProps}
+        ref={ref}
+        onClick={
+          otherProps.isReachable
+            ? event => {
+                event.stopPropagation()
+                inspect()
+              }
+            : undefined
+        }
+        noVisual
+      >
+        <Name>
+          {name}
+          {state.name ? ` <${state.name}>` : null}
+        </Name>
+        {children}
+      </Container>
+    )
 )
 DefaultEntity.defaultProps = {
   ...Entity.defaultProps,

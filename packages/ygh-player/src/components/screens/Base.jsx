@@ -12,6 +12,8 @@ const Screen = styled.div`
 
   background: #0009;
 
+  backdrop-filter: blur(1rem);
+
   @media (orientation: portrait) {
     left: 0;
     bottom: 5.5em;
