@@ -60,7 +60,10 @@ const createStyles = theme => ({
   input: base => ({
     ...base,
     height: "1.5rem",
-    margin: "0.25rem"
+    margin: "0.25rem",
+    ":not(:focus-within)": {
+      marginRight: "-0.85rem"
+    }
   }),
   singleValue: base => ({
     ...base,
@@ -68,6 +71,7 @@ const createStyles = theme => ({
   }),
   multiValue: () => ({
     display: "flex",
+    maxWidth: "calc(100% - 1px)",
     fontSize: "0.75rem",
     backgroundColor: "#0002",
     borderRadius: theme.borderRadius,
@@ -75,14 +79,13 @@ const createStyles = theme => ({
   }),
   multiValueLabel: () => ({
     padding: "0.375rem 0.5rem",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap"
+    wordBreak: "break-word"
   })
 })
 
 const _PaddedIcon = styled.div`
   padding: 0.375rem 0.5rem;
+  flex-shrink: 0;
 `
 
 const PaddedIcon = ({ icon: Icon, ...props }) => (

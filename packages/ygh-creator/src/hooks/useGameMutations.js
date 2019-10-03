@@ -530,16 +530,20 @@ export const useGameMutationsProvider = () => {
                   }
                 }
               : null,
-            featuredField: entityTemplate.featuredField
-              ? {
-                  connect: {
-                    id: entity.fields.find(
-                      field =>
-                        field.template.id === entityTemplate.featuredField.id
-                    ).id
+            featuredField:
+              entityTemplate.featuredField &&
+              entity.fields.some(
+                field => field.template.id === entityTemplate.featuredField.id
+              )
+                ? {
+                    connect: {
+                      id: entity.fields.find(
+                        field =>
+                          field.template.id === entityTemplate.featuredField.id
+                      ).id
+                    }
                   }
-                }
-              : null,
+                : null,
             states: {
               update: entity.states.map(createStateUpdate)
             },

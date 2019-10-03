@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
 import { useDebounce } from "ygh-hooks"
-import { FieldGroup, Field, Paper, ToolTip } from "ygh-ui"
+import {
+  FieldGroup,
+  Field,
+  Paper,
+  ToolTip,
+  DefaultInput,
+  TagInput
+} from "ygh-ui"
 import Icons from "ygh-icons"
 import _ from "ygh-utils"
 
@@ -44,6 +51,7 @@ const Property = ({ field }) => {
           label={field.type.isMulti ? "Values" : "Value"}
           isMulti={field.type.isMulti}
           type={_.toInputType(field.type.type)}
+          component={field.type.isMulti ? TagInput : DefaultInput}
           showType
           value={newValue}
           onChange={event => setNewValue(event.target.value)}

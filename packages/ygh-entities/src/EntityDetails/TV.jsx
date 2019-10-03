@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react"
+import React, { forwardRef, useEffect, useMemo, useState } from "react"
 import styled from "styled-components"
 import { darken } from "polished"
 import _ from "ygh-utils"
@@ -140,9 +140,27 @@ const Show = styled.span`
 
 const TV = forwardRef((props, ref) => {
   const inCommercial = _.hasState("Commercial")(props)
-  const src = _.getFieldValue(
-    inCommercial ? "commercialImage" : "programImage"
-  )(props)
+  const images = useMemo(
+    () =>
+      _.getFieldValue(inCommercial ? "Commercial Images" : "Program Images")(
+        props
+      ),
+    [props]
+  )
+  const [src, setSrc] = useState(images[0])
+
+  useEffect(() => {
+    const nextImage = () =>
+      setSrc(
+        src =>
+          images[(images.findIndex(img => img === src) + 1) % images.length]
+      )
+    const i = setInterval(nextImage, 2500)
+
+    return () => {
+      clearInterval(i)
+    }
+  }, [images])
 
   return (
     <Entity noVisual {...props} ref={ref}>

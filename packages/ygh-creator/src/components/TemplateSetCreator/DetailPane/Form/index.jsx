@@ -20,7 +20,9 @@ import { Bin, Pen } from "ygh-icons"
 import DisabledSelect from "./DisabledSelect"
 
 const LabelText = styled.span`
+  display: block;
   font-size: 0.75rem;
+  line-height: 1rem;
 
   color: ${props => props.theme.color.caption};
 `
@@ -64,7 +66,9 @@ const FormInput = props => {
     }
 
     if (props.name === "description") {
-      return <Blockquote>{props.value || <em>No description</em>}</Blockquote>
+      return props.value ? (
+        <Blockquote>{props.value || <em>No description</em>}</Blockquote>
+      ) : null
     }
 
     if (props.type === "select") {
@@ -75,7 +79,9 @@ const FormInput = props => {
       <>
         {props.grouped && <StyledVSpace />}
         <Label>
-          <LabelText label={props.label} />
+          <LabelText>
+            {props.type === "checkbox" ? props.options[0].label : props.label}
+          </LabelText>
           {props.type === "checkbox" ? (
             props.checked ? (
               "True"
@@ -128,14 +134,6 @@ export default ({
             label: "",
             ...inputProps,
             value: inputProps.checked ? [true] : []
-            // onChange: event =>
-            //   inputProps.onChange({
-            //     ...event,
-            //     target: {
-            //       ...event.target,
-            //       checked: event.target.checked
-            //     }
-            //   })
           }
         case "selectMultiple":
           return {
