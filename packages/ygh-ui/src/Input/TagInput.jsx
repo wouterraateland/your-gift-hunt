@@ -35,14 +35,14 @@ const TagInput = ({ value, onChange = () => {}, ...props }) => {
           setInputValue("")
           onChange({
             target: {
+              validity: {
+                valid: true
+              },
+              validationMessage: "",
               value: Array.isArray(value)
                 ? [...value, inputValue]
                 : [inputValue]
-            },
-            validity: {
-              valid: true
-            },
-            validationMessage: ""
+            }
           })
           event.preventDefault()
       }

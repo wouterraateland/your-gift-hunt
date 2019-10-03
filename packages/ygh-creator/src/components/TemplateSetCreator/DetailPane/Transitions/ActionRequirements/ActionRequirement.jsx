@@ -8,7 +8,7 @@ import Form from "components/TemplateSetCreator/DetailPane/Form"
 import EntityTag from "components/Primitives/EntityTag"
 import StateTag from "components/Primitives/StateTag"
 import FieldTag from "components/Primitives/FieldTag"
-import { TabOptions, SelectOptions } from "ygh-ui"
+import { TagInput, TabOptions, SelectOptions } from "ygh-ui"
 
 const COMPARATORS = {
   lt: { comparator: "LESS_THEN", not: false },
@@ -443,6 +443,7 @@ const ActionRequirementForm = ({ template, transition, actionRequirement }) => {
           type: "text",
           label: "Values",
           isMulti: true,
+          component: TagInput,
           isHidden:
             currentValues.type !== "INPUT" ||
             currentValues.compareTo !== "VALUE" ||
