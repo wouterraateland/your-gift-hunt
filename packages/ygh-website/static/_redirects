@@ -1,3 +1,6 @@
+/creator/*           https://create.yourgifthunt.com/:splat                   200
+/player/*            https://play.yourgifthunt.com/:splat                     200
+
 /auth/*              https://create.yourgifthunt.com/auth/:splat              200
 /profile             https://create.yourgifthunt.com/profile                  200
 /my-games            https://create.yourgifthunt.com/my-games                 200
