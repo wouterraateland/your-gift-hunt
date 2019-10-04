@@ -1,7 +1,7 @@
 {
   "name": "ygh-website",
   "description": "Marketing website for Your Gift Hunt",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "homepage": "https://yourgifthunt.com/",
   "repository": "https://github.com/wouterraateland/your-gift-hunt/tree/master/packages/ygh-website",
   "author": "Wouter Raateland <wouterraateland@gmail.com>",
@@ -59,11 +59,11 @@
     "react-select": "^2.4.3",
     "styled-components": "^4.1.2",
     "url-join": "^4.0.0",
-    "ygh-hooks": "^0.4.1",
-    "ygh-icons": "^0.4.0",
-    "ygh-sdk": "^0.4.2",
-    "ygh-ui": "^0.4.1",
-    "ygh-utils": "^0.4.0"
+    "ygh-hooks": "^0.5.0",
+    "ygh-icons": "^0.5.0",
+    "ygh-sdk": "^0.5.0",
+    "ygh-ui": "^0.5.0",
+    "ygh-utils": "^0.5.0"
   },
   "devDependencies": {
     "@babel/plugin-transform-regenerator": "^7.4.5",
