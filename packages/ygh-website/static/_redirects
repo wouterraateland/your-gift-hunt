@@ -1,0 +1,13 @@
+/auth/*              https://create.yourgifthunt.com/auth/:splat              200
+/profile             https://create.yourgifthunt.com/profile                  200
+/my-games            https://create.yourgifthunt.com/my-games                 200
+/new-game            https://create.yourgifthunt.com/new-game                 200
+/edit/*              https://create.yourgifthunt.com/edit/:splat              200
+/my-template-sets    https://create.yourgifthunt.com/my-template-sets         200
+/new-template-set    https://create.yourgifthunt.com/new-template-set         200
+/edit-template-set/* https://create.yourgifthunt.com/edit-template-set/:splat 200
+
+/showcase https://play.yourgifthunt.com/showcase    200
+/user/*   https://play.yourgifthunt.com/user/:splat 200
+/game/*   https://play.yourgifthunt.com/game/:splat 200
+/play/*   https://play.yourgifthunt.com/play/:splat 200

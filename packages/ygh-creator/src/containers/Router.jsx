@@ -32,7 +32,7 @@ const MainRouter = () => {
       <Profile path="/profile" />
 
       <GamesOverview path="/my-games" />
-      <NewGame path="new-game" />
+      <NewGame path="/new-game" />
       <GameCreator path="/edit/:gameId/*" />
 
       <TemplateSetsOverview path="/my-template-sets" />
@@ -48,7 +48,7 @@ const MainRouter = () => {
       <Amnesia path="/auth/amnesia" />
       <PasswordReset path="/auth/password-reset" />
 
-      <NewGame path="new-game" />
+      <NewGame path="/new-game" />
       <GameCreator path="/edit/:gameId/*" />
 
       <Login path="/" default />
