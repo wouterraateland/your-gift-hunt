@@ -67,8 +67,10 @@ const Text = styled.p`
   z-index: 1;
 
   border-radius: 0.5rem;
-  padding: 2rem;
+  padding: 1.5rem 2rem;
   margin: 1rem 0;
+
+  line-height: 1.5rem;
 
   background-color: #fff9;
   backdrop-filter: blur(1rem);
@@ -83,47 +85,71 @@ const ActionContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  height: 3rem;
-  margin: 0 -0.5rem;
+  margin: -0.5rem;
 
   text-align: center;
 `
 
 const Label = styled.span`
+  display: inline-block;
+  padding: 1rem;
+  margin: 0.5rem;
+
+  line-height: 1rem;
   color: #fff;
+`
+
+const focusStyles = css`
+  transition: box-shadow 0.2s ease-out;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.25rem #05f9;
+  }
 `
 
 const Input = styled.input`
   flex-grow: 1;
   height: 3rem;
-  padding: 0.75rem 0.5rem;
-  margin: 0 0.5rem;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem;
+  border: none;
   border-radius: 1.5rem;
 
   line-height: 1.5rem;
 
   background-color: #fff9;
   backdrop-filter: blur(1rem);
+
+  ${focusStyles}
 `
 
 const ConfirmButton = styled.button`
+  cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
   width: 3rem;
   height: 3rem;
-  margin: 0 0.5rem;
+  padding-bottom: 1rem;
+  margin: 0.5rem;
   border: none;
   border-radius: 100%;
 
+  font-size: 2rem;
   text-align: center;
 
-  background-color: #08f;
+  background-color: #05f;
   color: #fff;
+
+  ${focusStyles};
 `
 
 const OptionButton = styled.button`
+  cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -131,15 +157,17 @@ const OptionButton = styled.button`
 
   height: 3rem;
   padding: 1rem;
-  margin: 0 0.5rem;
+  margin: 0.5rem;
   border: none;
   border-radius: 0.5rem;
 
   line-height: 1rem;
 
-  color: #08f;
+  color: #05f;
   background-color: #fff9;
   backdrop-filter: blur(1rem);
+
+  ${focusStyles}
 `
 
 const Action = ({ action, act, disabled }) => {

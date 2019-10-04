@@ -1,10 +1,14 @@
 import React, { forwardRef, useEffect, useState } from "react"
 
+import useGame from "hooks/useGame"
+
 import Entity from "../Entity"
 import GameEntity from "../GameEntity"
 import _ from "ygh-utils"
 
 const SquashMatch = forwardRef(({ dispatchInputAction, ...props }, ref) => {
+  const { entities, isInInventory } = useGame()
+
   const [step, setStep] = useState(0)
   const hasLost = _.hasState("Lost")(props)
   const hasWon = _.hasState("Won")(props)
@@ -22,6 +26,16 @@ const SquashMatch = forwardRef(({ dispatchInputAction, ...props }, ref) => {
   useEffect(() => {
     setStep(0)
   }, [props.state.id])
+
+  const equipment = [
+    "Squash Racket",
+    "Sport Shirt",
+    "Sport Pants",
+    "Sport Shoes"
+  ].map(name => entities.find(entity => entity.name === name))
+  if (equipment.some(e => e && !isInInventory(e.id))) {
+    return null
+  }
 
   return (
     <GameEntity

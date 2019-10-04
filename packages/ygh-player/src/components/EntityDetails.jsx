@@ -6,6 +6,7 @@ import MultiDetail from "components/screens/MultiDetail"
 
 import withEntityBehaviour from "containers/withEntityBehaviour"
 import withSafeBehaviour from "containers/withSafeBehaviour"
+import withClosetBehaviour from "containers/withClosetBehaviour"
 import withContainedEntities from "containers/withContainedEntities"
 
 export const DefaultEntityDetail = withEntityBehaviour(
@@ -23,6 +24,9 @@ const entityDetailComponents = {
       )
     }),
     {}
+  ),
+  Closet: withContainedEntities(
+    withClosetBehaviour(withEntityBehaviour(detail(Entities.Closet)))
   ),
   Computer: withContainedEntities(
     withEntityBehaviour(detail(Entities.Computer))
