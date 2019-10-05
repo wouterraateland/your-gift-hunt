@@ -10431,6 +10431,11 @@ uuid@^3.0.1, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
 
+uuid@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.3.tgz#4568f0216e78760ee1dbf3a4d2cf53e224112866"
+  integrity sha512-pW0No1RGHgzlpHJO1nsVrHKpOEIxkGg1xB+v0ZmdNH5OAeAwzAVrCnI2/6Mtx+Uys6iaylxa+D3g4j63IKKjSQ==
+
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.4.tgz#fc91f6b9c7ba15c857f4cb2c5defeec39d4f410a"
@@ -10979,10 +10984,10 @@ yargs@^11.0.0:
     y18n "^3.2.1"
     yargs-parser "^9.0.2"
 
-ygh-entities@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/ygh-entities/-/ygh-entities-0.5.0.tgz#122c9d6f32594edeed0dde15bdeb9b50bd08ee22"
-  integrity sha512-lwmkrXUp0B3qkY5jhrgJZ/0VF9KEhRmU+ilDzcBA9N3tebedR5fAaZ/kV6FrFPkNjkAqNrf66cDlAovWXjhNtA==
+ygh-entities@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/ygh-entities/-/ygh-entities-0.5.1.tgz#80ef69c5273f9fda30a74bdb00b2812344c49f4a"
+  integrity sha512-b0JqkmK3eWtE64Ls1JHFXnwMzUQ9WF5Rc3ASmeDcucebhhc8AesWjkww6R1o91VBJt3NNlXh898LqIHDe8tiNw==
   dependencies:
     ygh-ui "^0.5.0"
     ygh-utils "^0.5.0"
