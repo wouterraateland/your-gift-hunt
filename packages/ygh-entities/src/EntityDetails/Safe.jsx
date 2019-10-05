@@ -12,6 +12,9 @@ const SafeBack = styled(Entity)`
 `
 
 const SafeFront = styled(Entity)`
+  top: 0;
+  left: 0;
+  height: 16em;
   border-radius: 1em;
 
   overflow: hidden;
@@ -38,6 +41,7 @@ const SafeFront = styled(Entity)`
     props.isUnlocked &&
     css`
       left: -1em;
+      top: -8em;
       width: 0;
       border-right: 1em solid #37474f;
     `}
@@ -49,7 +53,12 @@ const Safe = forwardRef(({ Front, children, ...props }, ref) => {
   return (
     <SafeBack {...props}>
       {children}
-      <SafeFront {...props} isUnlocked={isUnlocked} isInteractive={!isUnlocked}>
+      <SafeFront
+        {...props}
+        isUnlocked={isUnlocked}
+        height={isUnlocked ? 0 : 16}
+        isInteractive={!isUnlocked}
+      >
         <Front ref={ref} {...props} isInteractive={!isUnlocked} />
       </SafeFront>
     </SafeBack>
