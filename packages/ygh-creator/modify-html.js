@@ -5,6 +5,6 @@ const htmlString = buffer.toString()
 
 const modifiedHtmlString = htmlString
   .replace(/href="\//g, 'href="/creator/')
-  .replace(/src="\//g, 'href="/creator/')
+  .replace(/src="\//g, 'src="/creator/')
 
 fs.writeFileSync("./build/index.html", modifiedHtmlString)
