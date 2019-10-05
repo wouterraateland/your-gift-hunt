@@ -1,7 +1,7 @@
 {
   "name": "ygh-hooks",
   "version": "0.5.2",
-  "description": "React hooks for Escape Room Creator.",
+  "description": "React hooks for Escape Room Creator",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
   "homepage": "https://yourgifthunt.com/",
@@ -45,5 +45,6 @@
     "transform": {
       "^.+\\.(js|jsx)$": "babel-jest"
     }
-  }
+  },
+  "gitHead": "79481082ca27da206b253757babc293d21dbab55"
 }

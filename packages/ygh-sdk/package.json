@@ -1,7 +1,7 @@
 {
   "name": "ygh-sdk",
   "version": "0.5.2",
-  "description": "Package making it simple to communicate with the Escape Room Creator API.",
+  "description": "Package making it simple to communicate with the Escape Room Creator API",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
   "homepage": "https://yourgifthunt.com/",
@@ -44,5 +44,6 @@
     "transform": {
       "^.+\\.(js|jsx)$": "babel-jest"
     }
-  }
+  },
+  "gitHead": "79481082ca27da206b253757babc293d21dbab55"
 }
