@@ -72,6 +72,6 @@ We may update this privacy policy from time to time in order to reflect, for exa
 
 For more information about our privacy practices, if you have questions, or if you would like to make a complaint, please contact us by e‑mail at info@yourgifthunt.com or by mail using the details provided below:
 
-Your Gift Hunt  
+Escape Room Creator  
 [Re: Privacy Compliance Officer]  
 Aan 't Verlaat 33C, 2612XW Delft, Netherlands

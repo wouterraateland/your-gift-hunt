@@ -8,7 +8,7 @@ const Avatar = styled.div`
   display: inline-block;
   width: 2em;
   height: 2em;
-  margin: 1em 0 0 1em;
+  margin: 0.5em 0 0.5em 1em;
   border-radius: 100%;
   box-shadow: ${props => props.theme.boxShadow.small};
 

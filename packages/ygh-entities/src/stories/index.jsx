@@ -9,7 +9,7 @@ storiesOf("Overview", module)
   .addDecorator(withTheme)
   .add("Getting started", () => (
     <Align.Center>
-      <small>Your Gift Hunt</small>
+      <small>Escape Room Creator</small>
       <h1>Entity library</h1>
     </Align.Center>
   ))

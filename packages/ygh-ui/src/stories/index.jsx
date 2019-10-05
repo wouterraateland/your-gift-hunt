@@ -5,7 +5,7 @@ import { Align } from "../"
 
 storiesOf("Overview", module).add("Getting started", () => (
   <Align.Center>
-    <small>Your Gift Hunt</small>
+    <small>Escape Room Creator</small>
     <h1>UI library</h1>
   </Align.Center>
 ))

@@ -27,7 +27,7 @@ export default () => (
         <Column size={3} sSize={6}>
           <FooterLogo size={4} />
           <p>
-            &copy; {new Date().getUTCFullYear()} Your Gift Hunt.
+            &copy; {new Date().getUTCFullYear()} Escape Room Creator.
             <br />
             All rights reserved.
           </p>

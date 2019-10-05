@@ -16,8 +16,8 @@ const GamePage = ({ gameId }) => (
         <GameProvider gameId={gameId}>
           <HintsProvider>
             <Helmet>
-              <title>Private game | Your Gift Hunt</title>
-              <meta name="title" content="Private game | Your Gift Hunt" />
+              <title>Private game | Escape Room Creator</title>
+              <meta name="title" content="Private game | Escape Room Creator" />
               <meta
                 name="description"
                 content="A game made for specific people. Make sure you have access!"
@@ -30,7 +30,7 @@ const GamePage = ({ gameId }) => (
               />
               <meta
                 property="og:title"
-                content="Private game | Your Gift Hunt"
+                content="Private game | Escape Room Creator"
               />
               <meta
                 property="og:description"
@@ -48,7 +48,7 @@ const GamePage = ({ gameId }) => (
               />
               <meta
                 property="twitter:title"
-                content="Private game | Your Gift Hunt"
+                content="Private game | Escape Room Creator"
               />
               <meta
                 property="twitter:description"

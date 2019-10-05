@@ -1,7 +1,7 @@
 {
   "name": "ygh-utils",
   "version": "0.5.0",
-  "description": "Utilities for Your Gift Hunt.",
+  "description": "Utilities for Escape Room Creator.",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
   "homepage": "https://yourgifthunt.com/",

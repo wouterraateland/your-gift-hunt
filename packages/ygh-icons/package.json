@@ -1,7 +1,7 @@
 {
   "name": "ygh-icons",
   "version": "0.5.0",
-  "description": "Icons for Your Gift Hunt.",
+  "description": "Icons for Escape Room Creator.",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
   "homepage": "https://yourgifthunt.com/",

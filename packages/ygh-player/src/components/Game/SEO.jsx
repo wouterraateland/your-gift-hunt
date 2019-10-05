@@ -8,8 +8,8 @@ const GameSEO = () => {
 
   return (
     <Helmet>
-      <title>{game.name} | Your Gift Hunt</title>
-      <meta name="title" content={`${game.name} | Your Gift Hunt`} />
+      <title>{game.name} | Escape Room Creator</title>
+      <meta name="title" content={`${game.name} | Escape Room Creator`} />
       <meta
         name="description"
         content={
@@ -24,7 +24,7 @@ const GameSEO = () => {
         property="og:url"
         content={`https://yourgifthunt.com/play/${game.id}`}
       />
-      <meta property="og:title" content={`${game.name} | Your Gift Hunt`} />
+      <meta property="og:title" content={`${game.name} | Escape Room Creator`} />
       <meta
         property="og:description"
         content={
@@ -42,7 +42,7 @@ const GameSEO = () => {
       />
       <meta
         property="twitter:title"
-        content={`${game.name} | Your Gift Hunt`}
+        content={`${game.name} | Escape Room Creator`}
       />
       <meta
         property="twitter:description"

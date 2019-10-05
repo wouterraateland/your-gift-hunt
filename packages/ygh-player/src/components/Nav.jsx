@@ -107,7 +107,7 @@ export default props => {
         <Small>
           <IndexLink href="/">
             <StyledLogo size={3} />
-            <Name>Your Gift Hunt</Name>
+            <Name>Escape Room Creator</Name>
           </IndexLink>
           <MenuContainer>
             <Menu.Toggle>
@@ -170,7 +170,7 @@ export default props => {
           <Float.Left>
             <IndexLink href="/">
               <StyledLogo size={3} />
-              <Name>Your Gift Hunt</Name>
+              <Name>Escape Room Creator</Name>
             </IndexLink>
             <NavLink to="/showcase">Showcase</NavLink>
             {/* <NavLink href="/my-games">Creator</NavLink> */}

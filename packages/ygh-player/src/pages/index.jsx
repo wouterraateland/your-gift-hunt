@@ -18,7 +18,7 @@ import Layout from "layouts/Page"
 import GameThumb from "components/GameThumb"
 import MailchimpForm from "components/MailchimpForm"
 
-const ActiveIndexPage = ({ games, gamePlays, user }) => {
+const ActiveIndexPage = ({ games, gamePlays }) => {
   const [type, setType] = useState("public")
 
   const gameFilters = useMemo(
@@ -39,17 +39,17 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
   return (
     <Layout>
       <Helmet>
-        <title>Showcase | Your Gift Hunt</title>
+        <title>Showcase | Escape Room Creator</title>
         <meta
           name="description"
-          content="Create unique and personal escape games for each other."
+          content="Create your own unique escape room games"
         />
 
         <meta property="og:url" content="https://yourgifthunt.com" />
-        <meta property="og:title" content="Your Gift Hunt" />
+        <meta property="og:title" content="Escape Room Creator" />
         <meta
           property="og:description"
-          content="Make your gift a unique adventure with a personal scavenger gift hunt."
+          content="Create your own unique escape room games"
         />
         <meta
           property="og:image"
@@ -59,10 +59,10 @@ const ActiveIndexPage = ({ games, gamePlays, user }) => {
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="YourGiftHunt" />
-        <meta name="twitter:title" content="Your Gift Hunt" />
+        <meta name="twitter:title" content="Escape Room Creator" />
         <meta
           name="twitter:description"
-          content="Make your gift a unique adventure with a personal scavenger gift hunt."
+          content="Create your own unique escape room games"
         />
         <meta
           name="twitter:image"

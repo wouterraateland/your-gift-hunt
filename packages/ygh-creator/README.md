@@ -1,3 +1,3 @@
-# Your Gift Hunt - Creator
+# Escape Room Creator - Creator
 
 ## Getting Started

@@ -75,7 +75,7 @@ const InfoPage = ({ data }) => {
 
   return (
     <Layout>
-      <Helmet titleTemplate="%s | Your Gift Hunt">
+      <Helmet titleTemplate="%s | Escape Room Creator">
         <title>{post.frontmatter.title}</title>
         {!!post.frontmatter.description && (
           <meta name="description" content={post.frontmatter.description} />

@@ -30,7 +30,7 @@ const Footer = () => (
         <a href="/privacy">Privacy</a>
       </p>
       <p>
-        <small>© {moment().format("YYYY")} Your Gift Hunt</small>
+        <small>© {moment().format("YYYY")} Escape Room Creator</small>
       </p>
     </Wrapper.Medium>
   </StyledFooter>

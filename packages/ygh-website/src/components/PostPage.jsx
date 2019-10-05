@@ -19,7 +19,7 @@ const FormMargins = styled.div`
 
 const PostPageWithCategories = ({ postEdges, categories, filter }) => (
   <Layout>
-    <Helmet titleTemplate="%s | Your Gift Hunt Blog">
+    <Helmet titleTemplate="%s | Escape Room Creator Blog">
       <title>{filter ? filter : "All stories"}</title>
     </Helmet>
     <Header>

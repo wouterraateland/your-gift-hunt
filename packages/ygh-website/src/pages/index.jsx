@@ -1,13 +1,10 @@
 import React from "react"
 import styled from "styled-components"
-import { graphql, navigate } from "gatsby"
+import { graphql } from "gatsby"
 
-import { Section, Wrapper, Row, Column, Align, Button, VSpace } from "ygh-ui"
-import { Picture, Location, Friend } from "components/Illustrations"
+import { Section, Wrapper, Row, Column, Align, Button } from "ygh-ui"
 
 import Layout from "components/Layout"
-import CTA from "components/CTA"
-import Hexagon from "components/Hexagon"
 import Demo from "components/Demo"
 
 import createImage from "images/create.svg"
@@ -23,47 +20,53 @@ const Header = styled.header`
 
   display: flex;
   align-items: center;
-  min-height: calc(100vh - 6em);
   padding: 4em 0;
-
-  @media (max-width: 45em) {
-    min-height: auto;
-  }
 `
-const LearnMore = styled.p`
-  position: absolute;
-  left: 50%;
-  bottom: 0;
 
-  transform: translate(-50%, 0);
+const GameThumb = styled.a`
+  display: block;
+`
 
-  &::after {
-    content: "";
+const GameImage = styled.span`
+  position: relative;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding-top: 75%;
+
+  @media (max-width: 45rem) {
+    &:not(:empty) {
+      padding: 1rem;
+      & p {
+        position: static;
+        transform: none;
+      }
+    }
+  }
+
+  border-radius: ${props => props.theme.borderRadius};
+
+  box-shadow: ${props => props.theme.boxShadow.medium};
+
+  background: ${props => props.theme.color.secondary} url(${props => props.src})
+    no-repeat center / cover;
+
+  & p {
     position: absolute;
-    left: 50%;
-    top: 2em;
+    top: 50%;
+    left: 1rem;
+    right: 1rem;
 
-    width: 1em;
-    height: 1em;
-    border-right: 0.2em solid;
-    border-bottom: 0.2em solid;
-    border-radius: 0.1em;
+    margin: auto;
 
-    transform: rotate(45deg) translate(-50%);
-  }
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: 600;
 
-  @media (max-width: 45em) {
-    display: none;
-  }
-`
-
-const StyledHexagon = styled(Hexagon)`
-  margin: 0 auto;
-  color: #000;
-
-  @media (max-width: 30em) {
-    margin: 1em auto;
+    transform: translate(0, -50%);
+    color: #000;
   }
 `
 
@@ -81,10 +84,8 @@ export default ({ data }) => {
         <Wrapper.Medium>
           <Row>
             <Column size={6} mSize={12}>
-              <h1>Create your own unique, personalized escape games</h1>
-              <Tagline>
-                Go beyond traditional puzzle games and amaze your friends
-              </Tagline>
+              <h1>Escape Room Creator</h1>
+              <Tagline>Create your own unique escape room games</Tagline>
             </Column>
             <Column size={6} mSize={12}>
               <Demo
@@ -94,109 +95,84 @@ export default ({ data }) => {
             </Column>
           </Row>
         </Wrapper.Medium>
-        <LearnMore>Learn More</LearnMore>
       </Header>
       <Section id="process">
         <Wrapper.Medium>
           <Align.Center>
-            <h2>Get started in 3 easy steps</h2>
+            <h2>How does it work?</h2>
             <Row>
               <Column size={4} mSize={6} sSize={12}>
                 <h3>1. Create</h3>
                 <img src={createImage} alt="create" />
                 <p>
-                  Design your room layout, combine and modify puzzles from our
-                  collection of templates, and add your personal style.
+                  Visually design your escape room, add furniture, riddles and
+                  puzzles from our collection of templates, and modify them to
+                  your liking.
                 </p>
               </Column>
               <Column size={4} mSize={6} sSize={12}>
                 <h3>2. Share</h3>
                 <img src={shareImage} alt="share" />
                 <p>
-                  Share your creation with the world via the showcase or make it
-                  especially for someone and share it privately with them.
+                  Once you're done, you can publish your creation to the
+                  showcase. From then it will be available for anyone to play
+                  and you can share it with your friends!
                 </p>
               </Column>
               <Column size={4} mSize={6} sSize={12}>
                 <h3>3. Play</h3>
                 <img src={playImage} alt="play" />
                 <p>
-                  Play the game instantly on a mobile phone via an unique URL,
-                  no download required.
+                  Your game is instantly playable from its unique url. No
+                  download required.
                 </p>
               </Column>
             </Row>
           </Align.Center>
         </Wrapper.Medium>
       </Section>
-      <Section id="features">
+      <Section id="showcase">
         <Wrapper.Medium>
           <Align.Center>
-            <h2>Go beyond traditional puzzle games</h2>
+            <h2>Featured escape rooms</h2>
+            <Row vAlign="top">
+              <Column size={4} mSize={6} sSize={12}>
+                <GameThumb href="/game/cjx1pg342002007328lpe2xfb">
+                  <GameImage src="https://storage.googleapis.com/your-gift-hunt/escape_the_shed.png" />
+                  <h3>Escape the Shed</h3>
+                </GameThumb>
+              </Column>
+              <Column size={4} mSize={6} sSize={12}>
+                <GameThumb href="/game/cjuzqsov5000e0770uhkdnchr">
+                  <GameImage src="https://storage.googleapis.com/your-gift-hunt/1563373278559-galina-n-mizinqvjx5m-unsplash.jpg" />
+                  <h3>Rescue mission: Carl's plant</h3>
+                </GameThumb>
+              </Column>
+              <Column size={4} mSize={12}>
+                <GameThumb href="/showcase">
+                  <GameImage>
+                    <p>Play more games in the showcase &rarr;</p>
+                  </GameImage>
+                </GameThumb>
+              </Column>
+            </Row>
           </Align.Center>
-          <VSpace.Small />
-          <Row>
-            <Column size={2} sSize={12}>
-              <StyledHexagon>
-                <Picture size={4} />
-              </StyledHexagon>
-            </Column>
-            <Column size={6} mSize={10} sSize={12}>
-              <h3>Mobile play bleeding into the real world</h3>
-              <p>
-                Hide codes for the player. They can scan them with code scanner
-                built straight into the app, if they can find them…
-              </p>
-            </Column>
-          </Row>
-          <VSpace.Small />
-          <Row align="right">
-            <Column size={2} sSize={12}>
-              <StyledHexagon>
-                <Location size={4} />
-              </StyledHexagon>
-            </Column>
-            <Column size={6} mSize={10} sSize={12}>
-              <h3>Break out of the screen with location based puzzles</h3>
-              <p>
-                Send players en route to cool locations searching for hidden
-                hints.
-              </p>
-            </Column>
-          </Row>
-          <VSpace.Small />
-          <Row>
-            <Column size={2} sSize={12}>
-              <StyledHexagon>
-                <Friend size={4} />
-              </StyledHexagon>
-            </Column>
-            <Column size={6} mSize={10} sSize={12}>
-              <h3>Play is more fun together</h3>
-              <p>
-                Distribute information necessary for the puzzles among your
-                friends and have the player play together with them.
-              </p>
-            </Column>
-          </Row>
-          {/* <Align.Center>
-            <Button
-              onClick={() => navigate("/features")}
-              size="medium"
-              importance="secondary"
-              color="primary"
-            >
-              View more features
-            </Button>
-          </Align.Center> */}
         </Wrapper.Medium>
       </Section>
       <Section id="signup">
         <Wrapper.Medium>
           <Align.Center>
-            <h2>Subscribe for Beta access</h2>
-            <p>Be the first to create your own escape room games</p>
-            <CTA />
+            <h2>Ready to create?</h2>
+            <p>Create your own escape room game now.</p>
+            <Button
+              size="large"
+              color="primary"
+              importance="primary"
+              as="a"
+              href="/new-game"
+            >
+              Create game
+            </Button>
           </Align.Center>
         </Wrapper.Medium>
       </Section>

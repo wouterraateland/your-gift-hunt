@@ -28,7 +28,7 @@ const UseLocationPrompt = ({ onAcceptClick, onDenyClick }) => (
     <Paper>
       <Paper.Section>
         <Prompt>
-          Do you allow Your Gift Hunt to use your current location?
+          Do you allow Escape Room Creator to use your current location?
         </Prompt>
         <Float.Right>
           <Button

@@ -41,21 +41,14 @@ const StyledLogo = styled(Logo)`
   }
 `
 
-const Name = styled.h1`
-  margin: 0.8rem 0 0.8rem 3.6rem;
-  white-space: nowrap;
-
-  font-size: 1.5rem;
-  line-height: 1.1;
-`
-
 const IndexLink = styled(Link)`
   text-decoration: none;
 `
 
 const StyledLink = styled(IndexLink)`
-  margin: 1.2em 0 0 1em;
-  line-height: 1.58;
+  margin-left: 1rem;
+  padding: 1rem 0;
+  line-height: 1;
   color: ${props => props.theme.color.emphasis};
 `
 
@@ -96,7 +89,7 @@ const AccountMenuItem = styled.div`
 
 const ButtonContainer = styled.span`
   display: inline-block;
-  margin: 1em 0 0 1em;
+  margin: 0.5rem 0;
 `
 
 export default props => {
@@ -107,7 +100,6 @@ export default props => {
         <Small>
           <IndexLink to="/">
             <StyledLogo size={3} />
-            <Name>Your Gift Hunt</Name>
           </IndexLink>
           <MenuContainer>
             <Menu.Toggle>
@@ -170,7 +162,6 @@ export default props => {
           <Float.Left>
             <IndexLink to="/">
               <StyledLogo size={3} />
-              <Name>Your Gift Hunt</Name>
             </IndexLink>
             <NavLink href="/showcase">Showcase</NavLink>
             {/* <NavLink href="/my-games">Creator</NavLink> */}

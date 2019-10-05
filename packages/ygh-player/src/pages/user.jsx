@@ -282,7 +282,7 @@ const ActiveUserProfilePage = ({ user, userProfile }) => {
 
   return (
     <Layout>
-      <Helmet title={`${userProfile.name} | Your Gift Hunt`} />
+      <Helmet title={`${userProfile.name} | Escape Room Creator`} />
       <Wrapper.Small>
         <VSpace.Large />
         {isEditing ? (

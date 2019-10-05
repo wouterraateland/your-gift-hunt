@@ -61,7 +61,7 @@ const ActiveGamePage = ({ game, gamePlays }) => (
     <Helmet
       title={`${game.name} by ${
         game.creator ? game.creator.name : "anonymous"
-      } | Your Gift Hunt`}
+      } | Escape Room Creator`}
     />
     <VSpace.Large />
     <Wrapper.Medium>

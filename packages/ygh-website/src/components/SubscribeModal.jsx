@@ -1,23 +1,36 @@
 import React, { forwardRef } from "react"
 
-import { Align, Paper, Wrapper } from "ygh-ui"
-import CTA from "components/CTA"
+import { Align, Button, Paper, Wrapper } from "ygh-ui"
 
 const SubscribeModal = forwardRef((_, ref) => (
-  <Wrapper.Medium>
+  <Wrapper.Small>
     <Paper ref={ref}>
       <Paper.Section>
         <Align.Center>
-          <h1>Enjoyed the demo?</h1>
-          <p>
-            Sign up for the Beta and be the first to make your own escape room
-            games.
-          </p>
-          <CTA />
+          <h1 style={{ marginTop: 0 }}>Enjoyed the game?</h1>
+          <Button
+            color="secondary"
+            importance="primary"
+            size="large"
+            as="a"
+            href="/showcase"
+          >
+            Play more games
+          </Button>
+          <p>or</p>
+          <Button
+            color="primary"
+            importance="primary"
+            size="large"
+            as="a"
+            href="/new-game"
+          >
+            Create your own escape room game
+          </Button>
         </Align.Center>
       </Paper.Section>
     </Paper>
-  </Wrapper.Medium>
+  </Wrapper.Small>
 ))
 
 export default SubscribeModal

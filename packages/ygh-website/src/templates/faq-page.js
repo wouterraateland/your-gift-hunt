@@ -24,7 +24,7 @@ const FAQPage = ({ data }) => {
 
   return (
     <Layout>
-      <Helmet titleTemplate="%s | Your Gift Hunt">
+      <Helmet titleTemplate="%s | Escape Room Creator">
         <title>{post.frontmatter.title}</title>
         <meta
           name="description"

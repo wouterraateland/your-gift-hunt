@@ -2,13 +2,16 @@
   <img src="/static/logos/logo-512x512.png" width="192" />
 </center>
 
-# Your Gift Hunt
-_Make your gift a unique adventure with a personal scavenger gift hunt._
+# Escape Room Creator
+
+_Create your own unique escape room games_
 
 ## `yarn`
+
 Installs all dependencies.
 
 ## `yarn develop`
+
 Runs the complete project for development.
 
 You can also run `yarn develop:app` and `yarn develop:lambda` separately.
