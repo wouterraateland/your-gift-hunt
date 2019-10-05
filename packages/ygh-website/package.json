@@ -6,7 +6,7 @@
   "repository": "https://github.com/wouterraateland/your-gift-hunt/tree/master/packages/ygh-website",
   "author": "Wouter Raateland <wouterraateland@gmail.com>",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "keywords": [
     "gatsby"
   ],
