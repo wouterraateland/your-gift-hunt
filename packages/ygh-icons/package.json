@@ -1,6 +1,6 @@
 {
   "name": "ygh-icons",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Icons for Escape Room Creator.",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
@@ -17,7 +17,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "ygh-utils": "^0.5.2"
+    "ygh-utils": "^0.5.3"
   },
   "peerDependencies": {
     "react": "^16.8.6",

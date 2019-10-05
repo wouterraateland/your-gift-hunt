@@ -1,6 +1,6 @@
 {
   "name": "ygh-hooks",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "React hooks for Escape Room Creator",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
