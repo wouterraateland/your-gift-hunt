@@ -1,6 +1,6 @@
 {
   "name": "ygh-entities",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Package containing all custom entities made for Escape Room Creator",
   "module": "dist/index.esm.js",
   "main": "dist/index.umd.js",
