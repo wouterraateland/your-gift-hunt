@@ -110,7 +110,7 @@ const Outro = forwardRef(({ dispatchInputAction, ...props }, ref) => {
     <GameEntity
       ref={ref}
       backgroundImage={
-        "https://storage.cloud.google.com/your-gift-hunt/mailbox.jpg"
+        "https://storage.googleapis.com/your-gift-hunt/mailbox.jpg"
       }
       shouldBlur={letterReceived}
       action={{

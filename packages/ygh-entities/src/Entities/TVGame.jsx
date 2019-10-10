@@ -30,7 +30,7 @@ const TVGame = forwardRef(({ dispatchInputAction, ...props }, ref) => {
   const image = _.getFieldValue(`Image ${question}`)(props)
 
   const correctImage =
-    "https://storage.cloud.google.com/your-gift-hunt/sara/quiz-question.jpg"
+    "https://storage.googleapis.com/your-gift-hunt/sara/quiz-question.jpg"
 
   useEffect(() => {
     if (["Q2", "Q3", "Q4", "Q5", "Q6"].includes(props.state.name)) {

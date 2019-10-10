@@ -3,7 +3,7 @@ import styled from "styled-components"
 import Entity from "../Entity"
 
 const SquashRacket = styled(Entity)`
-  background: url(https://storage.cloud.google.com/your-gift-hunt/sara/squash-racket.png)
+  background: url(https://storage.googleapis.com/your-gift-hunt/sara/squash-racket.png)
     no-repeat center / contain;
 `
 SquashRacket.name = "SquashRacket"
