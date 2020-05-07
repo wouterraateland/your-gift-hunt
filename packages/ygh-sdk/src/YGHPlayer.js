@@ -4,23 +4,25 @@ const getNextState = (state, stateUpdate) => ({
   ...state,
   ...stateUpdate,
   entities: state.entities
-    .filter(entity => !stateUpdate.entities.some(({ id }) => id === entity.id))
-    .concat(stateUpdate.entities)
+    .filter(
+      (entity) => !stateUpdate.entities.some(({ id }) => id === entity.id)
+    )
+    .concat(stateUpdate.entities),
 })
 
-const parseServerState = state => ({
+const parseServerState = (state) => ({
   ...state,
-  entities: state.entities.map(entity => ({
+  entities: state.entities.map((entity) => ({
     ...entity,
-    inputs: entity.inputs.map(input => ({
+    inputs: entity.inputs.map((input) => ({
       ...input,
-      value: input.value ? JSON.parse(input.value) : undefined
+      value: input.value ? JSON.parse(input.value) : undefined,
     })),
-    fields: entity.fields.map(field => ({
+    fields: entity.fields.map((field) => ({
       ...field,
-      value: field.value ? JSON.parse(field.value) : undefined
-    }))
-  }))
+      value: field.value ? JSON.parse(field.value) : undefined,
+    })),
+  })),
 })
 
 class YGHPlayer {
@@ -72,7 +74,7 @@ class YGHPlayer {
     try {
       const isValid = await this.api.isPlayTokenValid({
         gameId: this.game.id,
-        playToken
+        playToken,
       })
 
       if (isValid) {
@@ -93,7 +95,7 @@ class YGHPlayer {
     try {
       this.playToken = await this.api.createPlayToken({
         gameId: this.game.id,
-        accessCode
+        accessCode,
       })
     } catch (error) {
       throw new Error("Access code invalid")
@@ -108,7 +110,7 @@ class YGHPlayer {
 
     this.gameState = parseServerState(
       await this.api.getGameState({
-        playToken: this.playToken
+        playToken: this.playToken,
       })
     )
 
@@ -119,7 +121,7 @@ class YGHPlayer {
     this.ensurePlayToken()
 
     const stateUpdate = await this.api.startGamePlay({
-      playToken: this.playToken
+      playToken: this.playToken,
     })
     this.gameState = getNextState(this.gameState, parseServerState(stateUpdate))
     return this.gameState
@@ -130,7 +132,7 @@ class YGHPlayer {
 
     const stateUpdate = await this.api.rateGamePlay({
       playToken: this.playToken,
-      rating
+      rating,
     })
     this.gameState = getNextState(this.gameState, parseServerState(stateUpdate))
     return this.gameState
@@ -151,7 +153,7 @@ class YGHPlayer {
 
     const stateUpdate = await this.api.dispatchAction({
       playToken: this.playToken,
-      action
+      action,
     })
     this.gameState = getNextState(this.gameState, parseServerState(stateUpdate))
     return this.gameState
@@ -184,9 +186,12 @@ class YGHPlayer {
   }
 
   async logoutUser(...args) {
-    const res = await this.api.logoutUser(...args)
+    try {
+      await this.api.logoutUser(...args)
+    } catch (error) {
+      console.error(error)
+    }
     this.setUser(null)
-    return res
   }
 
   async requestPasswordReset(...args) {
