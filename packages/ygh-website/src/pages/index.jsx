@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 
-import { Section, Wrapper, Row, Column, Align, Button } from "ygh-ui"
+import { Align, Button, Column, Paper, Row, Section, Wrapper } from "ygh-ui"
 
 import Layout from "components/Layout"
 import Demo from "components/Demo"
@@ -70,6 +70,15 @@ const GameImage = styled.span`
   }
 `
 
+const NoticePaper = styled(Paper)`
+  padding: 1rem 3rem;
+  border-left: 0.25rem solid ${props => props.theme.color.secondary};
+
+  @media (max-width: 45rem) {
+    padding: 0.25rem 1rem;
+  }
+`
+
 export default ({ data }) => {
   const demoImageInfo = {
     alt: "Demo",
@@ -96,6 +105,23 @@ export default ({ data }) => {
           </Row>
         </Wrapper.Medium>
       </Header>
+      <Section>
+        <Wrapper.Small>
+          <NoticePaper>
+            <h2>NOTICE</h2>
+            <p>
+              Escape Room Creator is no longer maintained. This means that no
+              new functionalities will be developed. You should still be able to
+              play existing escape rooms and to create new escape rooms.
+            </p>
+            <p>
+              If you like the project and are interested in developing it
+              further, please contact me via the{" "}
+              <Link to="/contact">contact page</Link>.
+            </p>
+          </NoticePaper>
+        </Wrapper.Small>
+      </Section>
       <Section id="process">
         <Wrapper.Medium>
           <Align.Center>
