@@ -3000,10 +3000,10 @@ bluebird@^3.3.5, bluebird@^3.5.5:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.5.tgz#a8d0afd73251effbbd5fe384a77d73003c17a71f"
   integrity sha512-5am6HnnfN+urzt4yfg7IgTbotDjIT/u8AJpEt0sIU9FtXfVeezXAPKswrG+xKUCOYAINpSdgZVDU6QFh+cuH3w==
 
-bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
-  version "4.11.8"
-  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
-  integrity sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==
+bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.11.9:
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.12.0.tgz#775b3f278efbb9718eec7361f483fb36fbbfea88"
+  integrity sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==
 
 body-parser@1.19.0:
   version "1.19.0"
@@ -3064,7 +3064,7 @@ braces@^2.3.1, braces@^2.3.2:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
-brorand@^1.0.1:
+brorand@^1.0.1, brorand@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
@@ -4450,17 +4450,17 @@ electron-to-chromium@^1.3.188:
   integrity sha512-tEQcughYIMj8WDMc59EGEtNxdGgwal/oLLTDw+NEqJRJwGflQvH3aiyiexrWeZOETP4/ko78PVr6gwNhdozvuQ==
 
 elliptic@^6.0.0:
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.0.tgz#2b8ed4c891b7de3200e14412a5b8248c7af505ca"
-  integrity sha512-eFOJTMyCYb7xtE/caJ6JJu+bhi67WCYNbkGSknu20pmM8Ke/bqOfdnZWxyoGN26JgfxTbXrsCkEw4KheCT/KGg==
+  version "6.5.4"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
+  integrity sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==
   dependencies:
-    bn.js "^4.4.0"
-    brorand "^1.0.1"
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
     hash.js "^1.0.0"
-    hmac-drbg "^1.0.0"
-    inherits "^2.0.1"
-    minimalistic-assert "^1.0.0"
-    minimalistic-crypto-utils "^1.0.0"
+    hmac-drbg "^1.0.1"
+    inherits "^2.0.4"
+    minimalistic-assert "^1.0.1"
+    minimalistic-crypto-utils "^1.0.1"
 
 emoji-regex@^7.0.1:
   version "7.0.3"
@@ -5450,7 +5450,7 @@ highlight.js@~9.12.0:
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.12.0.tgz#e6d9dbe57cbefe60751f02af336195870c90c01e"
   integrity sha1-5tnb5Xy+/mB1HwKvM2GVhwyQwB4=
 
-hmac-drbg@^1.0.0:
+hmac-drbg@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
   integrity sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=
@@ -5685,7 +5685,7 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.1, inherits@~2.0.3:
+inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.1, inherits@~2.0.3:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
@@ -7276,7 +7276,7 @@ minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
   integrity sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==
 
-minimalistic-crypto-utils@^1.0.0, minimalistic-crypto-utils@^1.0.1:
+minimalistic-crypto-utils@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
   integrity sha1-9sAMHAsIIkblxNmd+4x8CDsrWCo=
@@ -11266,21 +11266,21 @@ yargs@^12.0.2:
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^11.1.1"
 
-ygh-hooks@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-hooks/-/ygh-hooks-0.2.0.tgz#8fd2a6cbd350268d0e8ba1afd4100b443ac2782f"
-  integrity sha512-fxH2bdGzA4vpEMv3XuNIBovURWPLtoeBEfb9zq9Yj6PHSNyMQ03YOvx7E1ZSYqrKijGUhUk7XL9wgt7VS2IoPg==
+ygh-hooks@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/ygh-hooks/-/ygh-hooks-0.5.3.tgz#6d3dd31a75d6ce722985134f53cd52f4f82efcc9"
+  integrity sha512-dI68smXvO4nbsSdAWfT7gC/rNcUVTueOxHZIpF9tqc+fPOTA9GRXrYbMODv/Nj8ybUUAjWjZFo350LuWubmjbQ==
   dependencies:
     "@babel/runtime" "^7.5.4"
 
-ygh-icons@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-icons/-/ygh-icons-0.2.0.tgz#c457832b2a05c4917be8d1915ec985b479ab79f5"
-  integrity sha512-RSNoQzZ3llLQE/qdGfJE0n8SbCwdZn7lVfefpgwJVXUGNr74Dq/SxNaFz7QEFOm3hYD0lRXHQ7TNvnCYBbiNsA==
+ygh-icons@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/ygh-icons/-/ygh-icons-0.5.3.tgz#e555166ff7c2276c5e5e43ffa3ca7712ca32f84e"
+  integrity sha512-A1p/9MwGfyNnzKvD9x3gHD00LvqI/8G9HSNwVz9tzWg5lW2taG3iUJ+u2xnq/42Uz12WupO70MNdeuz8qjs/6A==
   dependencies:
-    ygh-utils "^0.2.0"
+    ygh-utils "^0.5.3"
 
-ygh-utils@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-utils/-/ygh-utils-0.2.0.tgz#acf438da62737927d38fcb2330f95fc13fc1059a"
-  integrity sha512-ZxKEi0GQiX1GyRRFY2w0XdduWhPIjlzWMOoDcK+G9lLr5PBlEUNZZ3SilYYSp3tbV6zz9MxQTBlQ5jqDBO9cEg==
+ygh-utils@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/ygh-utils/-/ygh-utils-0.5.3.tgz#0eb7dfabb42f2273069811636ff7b8797f8ea748"
+  integrity sha512-HEkysw5qi+2F5pBa46JWq8REAqrmY9TPvLoP97anWwVVWtPot2c+TqJYpxjGJpmaZVdG5MO7X5i/9eorQBsIjg==
