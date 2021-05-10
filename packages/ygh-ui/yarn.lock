@@ -5472,9 +5472,9 @@ hoist-non-react-statics@^3.3.0:
     react-is "^16.7.0"
 
 hosted-git-info@^2.1.4:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
-  integrity sha512-7T/BxH19zbcCTa8XkMlbK5lTo1WtgkFi3GvdWEyNuc4Vex7/9Dqbnpsf4JMydcfj9HCg4zUWFTL3Za6lapg5/w==
+  version "2.8.9"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
+  integrity sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==
 
 hsl-regex@^1.0.0:
   version "1.0.0"
@@ -11266,21 +11266,21 @@ yargs@^12.0.2:
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^11.1.1"
 
-ygh-hooks@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-hooks/-/ygh-hooks-0.2.0.tgz#8fd2a6cbd350268d0e8ba1afd4100b443ac2782f"
-  integrity sha512-fxH2bdGzA4vpEMv3XuNIBovURWPLtoeBEfb9zq9Yj6PHSNyMQ03YOvx7E1ZSYqrKijGUhUk7XL9wgt7VS2IoPg==
+ygh-hooks@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/ygh-hooks/-/ygh-hooks-0.5.3.tgz#6d3dd31a75d6ce722985134f53cd52f4f82efcc9"
+  integrity sha512-dI68smXvO4nbsSdAWfT7gC/rNcUVTueOxHZIpF9tqc+fPOTA9GRXrYbMODv/Nj8ybUUAjWjZFo350LuWubmjbQ==
   dependencies:
     "@babel/runtime" "^7.5.4"
 
-ygh-icons@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-icons/-/ygh-icons-0.2.0.tgz#c457832b2a05c4917be8d1915ec985b479ab79f5"
-  integrity sha512-RSNoQzZ3llLQE/qdGfJE0n8SbCwdZn7lVfefpgwJVXUGNr74Dq/SxNaFz7QEFOm3hYD0lRXHQ7TNvnCYBbiNsA==
+ygh-icons@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/ygh-icons/-/ygh-icons-0.5.3.tgz#e555166ff7c2276c5e5e43ffa3ca7712ca32f84e"
+  integrity sha512-A1p/9MwGfyNnzKvD9x3gHD00LvqI/8G9HSNwVz9tzWg5lW2taG3iUJ+u2xnq/42Uz12WupO70MNdeuz8qjs/6A==
   dependencies:
-    ygh-utils "^0.2.0"
+    ygh-utils "^0.5.3"
 
-ygh-utils@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-utils/-/ygh-utils-0.2.0.tgz#acf438da62737927d38fcb2330f95fc13fc1059a"
-  integrity sha512-ZxKEi0GQiX1GyRRFY2w0XdduWhPIjlzWMOoDcK+G9lLr5PBlEUNZZ3SilYYSp3tbV6zz9MxQTBlQ5jqDBO9cEg==
+ygh-utils@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/ygh-utils/-/ygh-utils-0.5.3.tgz#0eb7dfabb42f2273069811636ff7b8797f8ea748"
+  integrity sha512-HEkysw5qi+2F5pBa46JWq8REAqrmY9TPvLoP97anWwVVWtPot2c+TqJYpxjGJpmaZVdG5MO7X5i/9eorQBsIjg==
