@@ -6922,9 +6922,9 @@ locate-path@^5.0.0:
     p-locate "^4.1.0"
 
 lodash-es@^4.17.11:
-  version "4.17.14"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.14.tgz#12a95a963cc5955683cee3b74e85458954f37ecc"
-  integrity sha512-7zchRrGa8UZXjD/4ivUWP1867jDkhzTG2c/uj739utSd7O/pFFdxspCemIFKEEjErbcqRzn8nKnGsi7mvTgRPA==
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
 
 lodash.camelcase@^4.3.0:
   version "4.3.0"
@@ -11266,21 +11266,21 @@ yargs@^12.0.2:
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^11.1.1"
 
-ygh-hooks@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-hooks/-/ygh-hooks-0.2.0.tgz#8fd2a6cbd350268d0e8ba1afd4100b443ac2782f"
-  integrity sha512-fxH2bdGzA4vpEMv3XuNIBovURWPLtoeBEfb9zq9Yj6PHSNyMQ03YOvx7E1ZSYqrKijGUhUk7XL9wgt7VS2IoPg==
+ygh-hooks@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/ygh-hooks/-/ygh-hooks-0.5.3.tgz#6d3dd31a75d6ce722985134f53cd52f4f82efcc9"
+  integrity sha512-dI68smXvO4nbsSdAWfT7gC/rNcUVTueOxHZIpF9tqc+fPOTA9GRXrYbMODv/Nj8ybUUAjWjZFo350LuWubmjbQ==
   dependencies:
     "@babel/runtime" "^7.5.4"
 
-ygh-icons@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-icons/-/ygh-icons-0.2.0.tgz#c457832b2a05c4917be8d1915ec985b479ab79f5"
-  integrity sha512-RSNoQzZ3llLQE/qdGfJE0n8SbCwdZn7lVfefpgwJVXUGNr74Dq/SxNaFz7QEFOm3hYD0lRXHQ7TNvnCYBbiNsA==
+ygh-icons@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/ygh-icons/-/ygh-icons-0.5.3.tgz#e555166ff7c2276c5e5e43ffa3ca7712ca32f84e"
+  integrity sha512-A1p/9MwGfyNnzKvD9x3gHD00LvqI/8G9HSNwVz9tzWg5lW2taG3iUJ+u2xnq/42Uz12WupO70MNdeuz8qjs/6A==
   dependencies:
-    ygh-utils "^0.2.0"
+    ygh-utils "^0.5.3"
 
-ygh-utils@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ygh-utils/-/ygh-utils-0.2.0.tgz#acf438da62737927d38fcb2330f95fc13fc1059a"
-  integrity sha512-ZxKEi0GQiX1GyRRFY2w0XdduWhPIjlzWMOoDcK+G9lLr5PBlEUNZZ3SilYYSp3tbV6zz9MxQTBlQ5jqDBO9cEg==
+ygh-utils@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/ygh-utils/-/ygh-utils-0.5.3.tgz#0eb7dfabb42f2273069811636ff7b8797f8ea748"
+  integrity sha512-HEkysw5qi+2F5pBa46JWq8REAqrmY9TPvLoP97anWwVVWtPot2c+TqJYpxjGJpmaZVdG5MO7X5i/9eorQBsIjg==
