@@ -27,7 +27,7 @@
     "deepmerge": "^3.2.0",
     "dotenv": "^6.2.0",
     "http-proxy-middleware": "^0.19.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "polished": "^3.4.1",
     "querystring": "^0.2.0",
     "react": "^16.8.0-alpha.0",
