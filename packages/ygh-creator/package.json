@@ -47,7 +47,7 @@
     "react-ga": "^2.5.7",
     "react-is": "^16.8.6",
     "react-router": "^4.3.1",
-    "react-scripts": "2.1.2",
+    "react-scripts": "5.0.1",
     "react-select": "^2.4.1",
     "react-use-form-state": "^0.10.2",
     "shopify-buy": "^2.2.2",
